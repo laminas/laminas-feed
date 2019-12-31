@@ -1,28 +1,26 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Feed
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Feed\PubSubHubbub;
+namespace Laminas\Feed\PubSubHubbub;
 
+use Laminas\Http\PhpEnvironment\Response as PhpResponse;
+use Laminas\Stdlib\ArrayUtils;
 use Traversable;
-use Zend\Http\PhpEnvironment\Response as PhpResponse;
-use Zend\Stdlib\ArrayUtils;
 
 /**
- * @category   Zend
- * @package    Zend_Feed_Pubsubhubbub
+ * @category   Laminas
+ * @package    Laminas_Feed_Pubsubhubbub
  * @subpackage Callback
  */
 abstract class AbstractCallback implements CallbackInterface
 {
     /**
-     * An instance of Zend\Feed\Pubsubhubbub\Model\SubscriptionPersistenceInterface
+     * An instance of Laminas\Feed\Pubsubhubbub\Model\SubscriptionPersistenceInterface
      * used to background save any verification tokens associated with a subscription
      * or other.
      *
@@ -32,8 +30,8 @@ abstract class AbstractCallback implements CallbackInterface
 
     /**
      * An instance of a class handling Http Responses. This is implemented in
-     * Zend\Feed\Pubsubhubbub\HttpResponse which shares an unenforced interface with
-     * (i.e. not inherited from) Zend\Controller\Response\Http.
+     * Laminas\Feed\Pubsubhubbub\HttpResponse which shares an unenforced interface with
+     * (i.e. not inherited from) Laminas\Controller\Response\Http.
      *
      * @var HttpResponse|PhpResponse
      */
@@ -90,7 +88,7 @@ abstract class AbstractCallback implements CallbackInterface
 
     /**
      * Send the response, including all headers.
-     * If you wish to handle this via Zend_Http, use the getter methods
+     * If you wish to handle this via Laminas_Http, use the getter methods
      * to retrieve any data needed to be set on your HTTP Response object, or
      * simply give this object the HTTP Response instance to work with for you!
      *
@@ -102,7 +100,7 @@ abstract class AbstractCallback implements CallbackInterface
     }
 
     /**
-     * Sets an instance of Zend\Feed\Pubsubhubbub\Model\SubscriptionPersistence used
+     * Sets an instance of Laminas\Feed\Pubsubhubbub\Model\SubscriptionPersistence used
      * to background save any verification tokens associated with a subscription
      * or other.
      *
@@ -116,7 +114,7 @@ abstract class AbstractCallback implements CallbackInterface
     }
 
     /**
-     * Gets an instance of Zend\Feed\Pubsubhubbub\Model\SubscriptionPersistence used
+     * Gets an instance of Laminas\Feed\Pubsubhubbub\Model\SubscriptionPersistence used
      * to background save any verification tokens associated with a subscription
      * or other.
      *
@@ -127,15 +125,15 @@ abstract class AbstractCallback implements CallbackInterface
     {
         if ($this->storage === null) {
             throw new Exception\RuntimeException('No storage object has been'
-                . ' set that subclasses Zend\Feed\Pubsubhubbub\Model\SubscriptionPersistence');
+                . ' set that subclasses Laminas\Feed\Pubsubhubbub\Model\SubscriptionPersistence');
         }
         return $this->storage;
     }
 
     /**
      * An instance of a class handling Http Responses. This is implemented in
-     * Zend\Feed\Pubsubhubbub\HttpResponse which shares an unenforced interface with
-     * (i.e. not inherited from) Zend\Controller\Response\Http.
+     * Laminas\Feed\Pubsubhubbub\HttpResponse which shares an unenforced interface with
+     * (i.e. not inherited from) Laminas\Controller\Response\Http.
      *
      * @param  HttpResponse|PhpResponse $httpResponse
      * @return AbstractCallback
@@ -145,8 +143,8 @@ abstract class AbstractCallback implements CallbackInterface
     {
         if (!$httpResponse instanceof HttpResponse && !$httpResponse instanceof PhpResponse) {
             throw new Exception\InvalidArgumentException('HTTP Response object must'
-                . ' implement one of Zend\Feed\Pubsubhubbub\HttpResponse or'
-                . ' Zend\Http\PhpEnvironment\Response');
+                . ' implement one of Laminas\Feed\Pubsubhubbub\HttpResponse or'
+                . ' Laminas\Http\PhpEnvironment\Response');
         }
         $this->httpResponse = $httpResponse;
         return $this;
@@ -154,8 +152,8 @@ abstract class AbstractCallback implements CallbackInterface
 
     /**
      * An instance of a class handling Http Responses. This is implemented in
-     * Zend\Feed\Pubsubhubbub\HttpResponse which shares an unenforced interface with
-     * (i.e. not inherited from) Zend\Controller\Response\Http.
+     * Laminas\Feed\Pubsubhubbub\HttpResponse which shares an unenforced interface with
+     * (i.e. not inherited from) Laminas\Controller\Response\Http.
      *
      * @return HttpResponse|PhpResponse
      */
