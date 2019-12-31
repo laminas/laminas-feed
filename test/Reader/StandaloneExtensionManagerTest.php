@@ -1,15 +1,14 @@
 <?php
-/**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- */
-namespace ZendTest\Feed\Reader;
 
+/**
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
+ */
+namespace LaminasTest\Feed\Reader;
+
+use Laminas\Feed\Reader\StandaloneExtensionManager;
 use PHPUnit_Framework_TestCase as TestCase;
-use Zend\Feed\Reader\StandaloneExtensionManager;
 
 class StandaloneExtensionManagerTest extends TestCase
 {
@@ -20,28 +19,28 @@ class StandaloneExtensionManagerTest extends TestCase
 
     public function testIsAnExtensionManagerImplementation()
     {
-        $this->assertInstanceOf('Zend\Feed\Reader\ExtensionManagerInterface', $this->extensions);
+        $this->assertInstanceOf('Laminas\Feed\Reader\ExtensionManagerInterface', $this->extensions);
     }
 
     public function defaultPlugins()
     {
         return array(
-            'Atom\Entry'            => array('Atom\Entry', 'Zend\Feed\Reader\Extension\Atom\Entry'),
-            'Atom\Feed'             => array('Atom\Feed', 'Zend\Feed\Reader\Extension\Atom\Feed'),
-            'Content\Entry'         => array('Content\Entry', 'Zend\Feed\Reader\Extension\Content\Entry'),
+            'Atom\Entry'            => array('Atom\Entry', 'Laminas\Feed\Reader\Extension\Atom\Entry'),
+            'Atom\Feed'             => array('Atom\Feed', 'Laminas\Feed\Reader\Extension\Atom\Feed'),
+            'Content\Entry'         => array('Content\Entry', 'Laminas\Feed\Reader\Extension\Content\Entry'),
             'CreativeCommons\Entry' => array(
                 'CreativeCommons\Entry',
-                'Zend\Feed\Reader\Extension\CreativeCommons\Entry'
+                'Laminas\Feed\Reader\Extension\CreativeCommons\Entry'
             ),
-            'CreativeCommons\Feed'  => array('CreativeCommons\Feed', 'Zend\Feed\Reader\Extension\CreativeCommons\Feed'),
-            'DublinCore\Entry'      => array('DublinCore\Entry', 'Zend\Feed\Reader\Extension\DublinCore\Entry'),
-            'DublinCore\Feed'       => array('DublinCore\Feed', 'Zend\Feed\Reader\Extension\DublinCore\Feed'),
-            'Podcast\Entry'         => array('Podcast\Entry', 'Zend\Feed\Reader\Extension\Podcast\Entry'),
-            'Podcast\Feed'          => array('Podcast\Feed', 'Zend\Feed\Reader\Extension\Podcast\Feed'),
-            'Slash\Entry'           => array('Slash\Entry', 'Zend\Feed\Reader\Extension\Slash\Entry'),
-            'Syndication\Feed'      => array('Syndication\Feed', 'Zend\Feed\Reader\Extension\Syndication\Feed'),
-            'Thread\Entry'          => array('Thread\Entry', 'Zend\Feed\Reader\Extension\Thread\Entry'),
-            'WellFormedWeb\Entry'   => array('WellFormedWeb\Entry', 'Zend\Feed\Reader\Extension\WellFormedWeb\Entry'),
+            'CreativeCommons\Feed'  => array('CreativeCommons\Feed', 'Laminas\Feed\Reader\Extension\CreativeCommons\Feed'),
+            'DublinCore\Entry'      => array('DublinCore\Entry', 'Laminas\Feed\Reader\Extension\DublinCore\Entry'),
+            'DublinCore\Feed'       => array('DublinCore\Feed', 'Laminas\Feed\Reader\Extension\DublinCore\Feed'),
+            'Podcast\Entry'         => array('Podcast\Entry', 'Laminas\Feed\Reader\Extension\Podcast\Entry'),
+            'Podcast\Feed'          => array('Podcast\Feed', 'Laminas\Feed\Reader\Extension\Podcast\Feed'),
+            'Slash\Entry'           => array('Slash\Entry', 'Laminas\Feed\Reader\Extension\Slash\Entry'),
+            'Syndication\Feed'      => array('Syndication\Feed', 'Laminas\Feed\Reader\Extension\Syndication\Feed'),
+            'Thread\Entry'          => array('Thread\Entry', 'Laminas\Feed\Reader\Extension\Thread\Entry'),
+            'WellFormedWeb\Entry'   => array('WellFormedWeb\Entry', 'Laminas\Feed\Reader\Extension\WellFormedWeb\Entry'),
         );
     }
 
