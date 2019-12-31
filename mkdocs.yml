@@ -1,6 +1,6 @@
 docs_dir: docs/book
 site_dir: docs/html
-pages:
+nav:
     - Home: index.md
     - Introduction: intro.md
     - Reader:
@@ -15,6 +15,6 @@ pages:
         - Security: security.md
     - Writer: writer.md
     - Pubsubhubbub: pubsubhubbub.md
-site_name: zend-feed
+site_name: laminas-feed
 site_description: 'Consume and generate Atom and RSS feeds, and interact with Pubsubhubbub.'
-repo_url: 'https://github.com/zendframework/zend-feed'
+repo_url: 'https://github.com/laminas/laminas-feed'

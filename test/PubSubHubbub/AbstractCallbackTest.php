@@ -1,15 +1,16 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-feed for the canonical source repository
- * @copyright Copyright (c) 2018 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   https://github.com/zendframework/zend-feed/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Feed\PubSubHubbub;
+namespace LaminasTest\Feed\PubSubHubbub;
 
+use Laminas\Feed\PubSubHubbub\AbstractCallback;
 use PHPUnit\Framework\TestCase;
 use ReflectionMethod;
-use Zend\Feed\PubSubHubbub\AbstractCallback;
 
 class AbstractCallbackTest extends TestCase
 {
