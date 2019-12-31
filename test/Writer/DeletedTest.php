@@ -1,24 +1,22 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Feed
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Feed\Writer;
+namespace LaminasTest\Feed\Writer;
 
 use DateTime;
-use Zend\Feed\Writer;
+use Laminas\Feed\Writer;
 
 /**
-* @category Zend
-* @package Zend_Exception
+* @category Laminas
+* @package Laminas_Exception
 * @subpackage UnitTests
-* @group Zend_Feed
-* @group Zend_Feed_Writer
+* @group Laminas_Feed
+* @group Laminas_Feed_Writer
 */
 class DeletedTest extends \PHPUnit_Framework_TestCase
 {
@@ -63,7 +61,7 @@ class DeletedTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-12070
+     * @group Laminas-12070
      */
     public function testSetWhenUsesGivenUnixTimestampWhenItIsLessThanTenDigits()
     {
@@ -74,7 +72,7 @@ class DeletedTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-11610
+     * @group Laminas-11610
      */
     public function testSetWhenUsesGivenUnixTimestampWhenItIsAVerySmallInteger()
     {
@@ -151,7 +149,7 @@ class DeletedTest extends \PHPUnit_Framework_TestCase
 
     public function testAddByThrowsExceptionOnInvalidUriFromArray()
     {
-        $this->markTestIncomplete('Pending Zend\URI fix for validation');
+        $this->markTestIncomplete('Pending Laminas\URI fix for validation');
         $entry = new Writer\Deleted;
         try {
             $entry->setBy(array('name'=>'Joe','uri'=>'notauri'));
@@ -171,7 +169,7 @@ class DeletedTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Zend\Feed\Writer\Deleted::getBy
+     * @covers Laminas\Feed\Writer\Deleted::getBy
      */
     public function testGetBy()
     {
@@ -189,15 +187,15 @@ class DeletedTest extends \PHPUnit_Framework_TestCase
     {
         $entry = new Writer\Deleted;
 
-        $this->setExpectedException('Zend\Feed\Writer\Exception\InvalidArgumentException',
+        $this->setExpectedException('Laminas\Feed\Writer\Exception\InvalidArgumentException',
             'Invalid parameter: "uri" array value must be a non-empty string and valid URI/IRI');
         $entry->setBy(array('name' => 'joe','email'=>'joe@example.com', 'uri'=> ''));
     }
 
     /**
-     * @covers Zend\Feed\Writer\Deleted::getComment
-     * @covers Zend\Feed\Writer\Deleted::setComment
-     * @covers Zend\Feed\Writer\Deleted::remove
+     * @covers Laminas\Feed\Writer\Deleted::getComment
+     * @covers Laminas\Feed\Writer\Deleted::setComment
+     * @covers Laminas\Feed\Writer\Deleted::remove
      */
     public function testCommentAndRemove()
     {
@@ -214,8 +212,8 @@ class DeletedTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Zend\Feed\Writer\Deleted::getEncoding
-     * @covers Zend\Feed\Writer\Deleted::setEncoding
+     * @covers Laminas\Feed\Writer\Deleted::getEncoding
+     * @covers Laminas\Feed\Writer\Deleted::setEncoding
      */
     public function testEncoding()
     {
@@ -227,14 +225,14 @@ class DeletedTest extends \PHPUnit_Framework_TestCase
         $entry->setEncoding('ISO-8859-1');
         $this->assertEquals('ISO-8859-1', $entry->getEncoding());
 
-        $this->setExpectedException('Zend\Feed\Writer\Exception\InvalidArgumentException',
+        $this->setExpectedException('Laminas\Feed\Writer\Exception\InvalidArgumentException',
             'Invalid parameter: parameter must be a non-empty string');
         $entry->setEncoding(null);
     }
 
     /**
-     * @covers Zend\Feed\Writer\Deleted::getType
-     * @covers Zend\Feed\Writer\Deleted::setType
+     * @covers Laminas\Feed\Writer\Deleted::getType
+     * @covers Laminas\Feed\Writer\Deleted::setType
      */
     public function testType()
     {

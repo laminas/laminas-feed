@@ -1,18 +1,16 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Feed
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Feed\PubSubHubbub;
+namespace Laminas\Feed\PubSubHubbub;
 
 /**
- * @category   Zend
- * @package    Zend_Feed_Pubsubhubbub
+ * @category   Laminas
+ * @package    Laminas_Feed_Pubsubhubbub
  * @subpackage Callback
  */
 interface CallbackInterface
@@ -29,7 +27,7 @@ interface CallbackInterface
 
     /**
      * Send the response, including all headers.
-     * If you wish to handle this via Zend_Controller, use the getter methods
+     * If you wish to handle this via Laminas_Controller, use the getter methods
      * to retrieve any data needed to be set on your HTTP Response object, or
      * simply give this object the HTTP Response instance to work with for you!
      *
@@ -39,19 +37,19 @@ interface CallbackInterface
 
     /**
      * An instance of a class handling Http Responses. This is implemented in
-     * Zend_Feed_Pubsubhubbub_HttpResponse which shares an unenforced interface with
-     * (i.e. not inherited from) Zend_Controller_Response_Http.
+     * Laminas_Feed_Pubsubhubbub_HttpResponse which shares an unenforced interface with
+     * (i.e. not inherited from) Laminas_Controller_Response_Http.
      *
-     * @param HttpResponse|\Zend\Http\PhpEnvironment\Response $httpResponse
+     * @param HttpResponse|\Laminas\Http\PhpEnvironment\Response $httpResponse
      */
     public function setHttpResponse($httpResponse);
 
     /**
      * An instance of a class handling Http Responses. This is implemented in
-     * Zend_Feed_Pubsubhubbub_HttpResponse which shares an unenforced interface with
-     * (i.e. not inherited from) Zend_Controller_Response_Http.
+     * Laminas_Feed_Pubsubhubbub_HttpResponse which shares an unenforced interface with
+     * (i.e. not inherited from) Laminas_Controller_Response_Http.
      *
-     * @return HttpResponse|\Zend\Http\PhpEnvironment\Response
+     * @return HttpResponse|\Laminas\Http\PhpEnvironment\Response
      */
     public function getHttpResponse();
 }
