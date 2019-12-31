@@ -1,54 +1,19 @@
 {
-    "name": "zendframework/zend-feed",
+    "name": "laminas/laminas-feed",
     "description": "provides functionality for consuming RSS and Atom feeds",
     "license": "BSD-3-Clause",
     "keywords": [
-        "zf",
-        "zendframework",
+        "laminas",
         "feed"
     ],
+    "homepage": "https://laminas.dev",
     "support": {
-        "docs": "https://docs.zendframework.com/zend-feed/",
-        "issues": "https://github.com/zendframework/zend-feed/issues",
-        "source": "https://github.com/zendframework/zend-feed",
-        "rss": "https://github.com/zendframework/zend-feed/releases.atom",
-        "slack": "https://zendframework-slack.herokuapp.com",
-        "forum": "https://discourse.zendframework.com/c/questions/components"
-    },
-    "require": {
-        "php": "^5.6 || ^7.0",
-        "ext-dom": "*",
-        "ext-libxml": "*",
-        "zendframework/zend-escaper": "^2.5.2",
-        "zendframework/zend-stdlib": "^3.2.1"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^5.7.23 || ^6.4.3",
-        "psr/http-message": "^1.0.1",
-        "zendframework/zend-cache": "^2.7.2",
-        "zendframework/zend-coding-standard": "~1.0.0",
-        "zendframework/zend-db": "^2.8.2",
-        "zendframework/zend-http": "^2.7",
-        "zendframework/zend-servicemanager": "^2.7.8 || ^3.3",
-        "zendframework/zend-validator": "^2.10.1"
-    },
-    "suggest": {
-        "psr/http-message": "PSR-7 ^1.0.1, if you wish to use Zend\\Feed\\Reader\\Http\\Psr7ResponseDecorator",
-        "zendframework/zend-cache": "Zend\\Cache component, for optionally caching feeds between requests",
-        "zendframework/zend-db": "Zend\\Db component, for use with PubSubHubbub",
-        "zendframework/zend-http": "Zend\\Http for PubSubHubbub, and optionally for use with Zend\\Feed\\Reader",
-        "zendframework/zend-servicemanager": "Zend\\ServiceManager component, for easily extending ExtensionManager implementations",
-        "zendframework/zend-validator": "Zend\\Validator component, for validating email addresses used in Atom feeds and entries when using the Writer subcomponent"
-    },
-    "autoload": {
-        "psr-4": {
-            "Zend\\Feed\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "ZendTest\\Feed\\": "test/"
-        }
+        "docs": "https://docs.laminas.dev/laminas-feed/",
+        "issues": "https://github.com/laminas/laminas-feed/issues",
+        "source": "https://github.com/laminas/laminas-feed",
+        "rss": "https://github.com/laminas/laminas-feed/releases.atom",
+        "chat": "https://laminas.dev/chat",
+        "forum": "https://discourse.laminas.dev"
     },
     "config": {
         "sort-packages": true
@@ -57,6 +22,42 @@
         "branch-alias": {
             "dev-master": "2.11.x-dev",
             "dev-develop": "2.12.x-dev"
+        }
+    },
+    "require": {
+        "php": "^5.6 || ^7.0",
+        "ext-dom": "*",
+        "ext-libxml": "*",
+        "laminas/laminas-escaper": "^2.5.2",
+        "laminas/laminas-stdlib": "^3.2.1",
+        "laminas/laminas-zendframework-bridge": "^1.0"
+    },
+    "require-dev": {
+        "laminas/laminas-cache": "^2.7.2",
+        "laminas/laminas-coding-standard": "~1.0.0",
+        "laminas/laminas-db": "^2.8.2",
+        "laminas/laminas-http": "^2.7",
+        "laminas/laminas-servicemanager": "^2.7.8 || ^3.3",
+        "laminas/laminas-validator": "^2.10.1",
+        "phpunit/phpunit": "^5.7.23 || ^6.4.3",
+        "psr/http-message": "^1.0.1"
+    },
+    "suggest": {
+        "laminas/laminas-cache": "Laminas\\Cache component, for optionally caching feeds between requests",
+        "laminas/laminas-db": "Laminas\\Db component, for use with PubSubHubbub",
+        "laminas/laminas-http": "Laminas\\Http for PubSubHubbub, and optionally for use with Laminas\\Feed\\Reader",
+        "laminas/laminas-servicemanager": "Laminas\\ServiceManager component, for easily extending ExtensionManager implementations",
+        "laminas/laminas-validator": "Laminas\\Validator component, for validating email addresses used in Atom feeds and entries when using the Writer subcomponent",
+        "psr/http-message": "PSR-7 ^1.0.1, if you wish to use Laminas\\Feed\\Reader\\Http\\Psr7ResponseDecorator"
+    },
+    "autoload": {
+        "psr-4": {
+            "Laminas\\Feed\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "LaminasTest\\Feed\\": "test/"
         }
     },
     "scripts": {
@@ -68,5 +69,8 @@
         "cs-fix": "phpcbf",
         "test": "phpunit --colors=always",
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
+    },
+    "replace": {
+        "zendframework/zend-feed": "self.version"
     }
 }

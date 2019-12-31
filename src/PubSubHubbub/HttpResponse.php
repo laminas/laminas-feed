@@ -1,13 +1,12 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Feed\PubSubHubbub;
+namespace Laminas\Feed\PubSubHubbub;
 
 class HttpResponse
 {
@@ -81,7 +80,7 @@ class HttpResponse
      * @param  string $name
      * @param  string $value
      * @param  bool $replace
-     * @return \Zend\Feed\PubSubHubbub\HttpResponse
+     * @return \Laminas\Feed\PubSubHubbub\HttpResponse
      */
     public function setHeader($name, $value, $replace = false)
     {
@@ -178,7 +177,7 @@ class HttpResponse
      * Set body content
      *
      * @param  string $content
-     * @return \Zend\Feed\PubSubHubbub\HttpResponse
+     * @return \Laminas\Feed\PubSubHubbub\HttpResponse
      */
     public function setContent($content)
     {

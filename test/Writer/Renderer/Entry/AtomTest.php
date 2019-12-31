@@ -1,22 +1,23 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-feed for the canonical source repository
- * @copyright Copyright (c) 2005-2018 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   https://github.com/zendframework/zend-feed/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Feed\Writer\Renderer\Entry;
+namespace LaminasTest\Feed\Writer\Renderer\Entry;
 
+use Laminas\Feed\Reader;
+use Laminas\Feed\Writer;
+use Laminas\Feed\Writer\Exception\ExceptionInterface;
+use Laminas\Feed\Writer\Renderer;
+use LaminasTest\Feed\Writer\TestAsset;
 use PHPUnit\Framework\TestCase;
-use Zend\Feed\Reader;
-use Zend\Feed\Writer;
-use Zend\Feed\Writer\Exception\ExceptionInterface;
-use Zend\Feed\Writer\Renderer;
-use ZendTest\Feed\Writer\TestAsset;
 
 /**
- * @group      Zend_Feed
- * @group      Zend_Feed_Writer
+ * @group      Laminas_Feed
+ * @group      Laminas_Feed_Writer
  */
 class AtomTest extends TestCase
 {
@@ -106,7 +107,7 @@ class AtomTest extends TestCase
     }
 
     /**
-     * @group ZFWATOMCONTENT
+     * @group LaminasWATOMCONTENT
      */
     public function testEntryContentHasBeenSetXhtml()
     {
@@ -235,7 +236,7 @@ class AtomTest extends TestCase
     public function testFeedIdThrowsExceptionIfNotUri()
     {
         $this->expectException(ExceptionInterface::class);
-        $this->markTestIncomplete('Pending Zend\URI fix for validation');
+        $this->markTestIncomplete('Pending Laminas\URI fix for validation');
         $atomFeed = new Renderer\Feed\Atom($this->validWriter);
         $this->validEntry->remove('id');
         $this->validEntry->remove('link');
@@ -295,7 +296,7 @@ class AtomTest extends TestCase
                                                 ]);
         $feed  = Reader\Reader::importString($renderer->render()->saveXml());
         $entry = $feed->current();
-        // Skipped over due to ZFR bug (detects Atom in error when RSS requested)
+        // Skipped over due to LaminasR bug (detects Atom in error when RSS requested)
         //$this->assertEquals('http://www.example.com/rss/id/1', $entry->getCommentFeedLink('rss'));
         $this->assertEquals('http://www.example.com/atom/id/1', $entry->getCommentFeedLink('atom'));
     }

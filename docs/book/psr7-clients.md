@@ -6,9 +6,9 @@ In this section, we'll demonstrate doing so in order to use a client that is
 
 ## Responses
 
-zend-feed provides a facility to assist with generating a
-`Zend\Feed\Reader\Response` from a PSR-7 `ResponseInterface` via
-`Zend\Feed\Reader\Http\Psr7ResponseDecorator`. As such, if you have a
+laminas-feed provides a facility to assist with generating a
+`Laminas\Feed\Reader\Response` from a PSR-7 `ResponseInterface` via
+`Laminas\Feed\Reader\Http\Psr7ResponseDecorator`. As such, if you have a
 PSR-7-capable client, you can pass the response to this decorator, and
 immediately return it from your custom client:
 
@@ -34,18 +34,18 @@ We'll use the `GuzzleHttp\Client` to make our requests to feeds.
 
 From here, we'll create our client. To do this, we'll create a class that:
 
-- implements `Zend\Feed\Reader\Http\ClientInterface`
+- implements `Laminas\Feed\Reader\Http\ClientInterface`
 - accepts a `GuzzleHttp\ClientInterface` to its constructor
 - uses the Guzzle client to make the request
-- returns a zend-feed response decorating the actual PSR-7 response
+- returns a laminas-feed response decorating the actual PSR-7 response
 
 The code looks like this:
 
 ```php
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface as GuzzleClientInterface;
-use Zend\Feed\Reader\Http\ClientInterface as FeedReaderHttpClientInterface;
-use Zend\Feed\Reader\Http\Psr7ResponseDecorator;
+use Laminas\Feed\Reader\Http\ClientInterface as FeedReaderHttpClientInterface;
+use Laminas\Feed\Reader\Http\Psr7ResponseDecorator;
 
 class GuzzleClient implements FeedReaderHttpClientInterface
 {
@@ -76,15 +76,15 @@ class GuzzleClient implements FeedReaderHttpClientInterface
 
 ## Using the client
 
-In order to use our new client, we need to tell `Zend\Feed\Reader\Reader` about
+In order to use our new client, we need to tell `Laminas\Feed\Reader\Reader` about
 it:
 
 ```php
-Zend\Feed\Reader\Reader::setHttpClient(new GuzzleClient());
+Laminas\Feed\Reader\Reader::setHttpClient(new GuzzleClient());
 ```
 
 From this point forward, this custom client will be used to retrieve feeds.
 
 ## References
 
-This chapter is based on [a blog post by Stefan Gehrig](https://www.teqneers.de/2016/05/zendfeedreader-guzzle-and-psr-7/).
+This chapter is based on [a blog post by Stefan Gehrig](https://www.teqneers.de/2016/05/laminasfeedreader-guzzle-and-psr-7/).
