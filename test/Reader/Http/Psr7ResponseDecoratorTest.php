@@ -1,23 +1,22 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Feed\Reader\Http;
+namespace LaminasTest\Feed\Reader\Http;
 
+use Laminas\Feed\Reader\Http\HeaderAwareResponseInterface;
+use Laminas\Feed\Reader\Http\Psr7ResponseDecorator;
+use Laminas\Feed\Reader\Http\ResponseInterface;
+use LaminasTest\Feed\Reader\TestAsset\Psr7Stream;
 use PHPUnit_Framework_TestCase as TestCase;
 use Psr\Http\Message\ResponseInterface as Psr7ResponseInterface;
-use Zend\Feed\Reader\Http\Psr7ResponseDecorator;
-use Zend\Feed\Reader\Http\HeaderAwareResponseInterface;
-use Zend\Feed\Reader\Http\ResponseInterface;
-use ZendTest\Feed\Reader\TestAsset\Psr7Stream;
 
 /**
- * @covers \Zend\Feed\Reader\Http\Psr7ResponseDecorator
+ * @covers \Laminas\Feed\Reader\Http\Psr7ResponseDecorator
  */
 class Psr7ResponseDecoratorTest extends TestCase
 {

@@ -1,5 +1,3 @@
-sudo: false
-
 language: php
 
 branches:
@@ -11,16 +9,16 @@ cache:
   directories:
     - $HOME/.composer/cache
     - $HOME/.local
-    - zf-mkdoc-theme
+    - laminas-mkdoc-theme
 
 env:
   global:
-    - TESTS_ZEND_FEED_READER_ONLINE_ENABLED: true
-    - SITE_URL: https://zendframework.github.io/zend-feed
+    - TESTS_LAMINAS_FEED_READER_ONLINE_ENABLED: true
+    - SITE_URL: https://docs.laminas.dev/laminas-feed
     - GH_USER_NAME: "Matthew Weier O'Phinney"
     - GH_USER_EMAIL: matthew@weierophinney.net
-    - GH_REF: github.com/zendframework/zend-feed.git
-    - secure: "AS2iXk+GXAGpIXcLGBt6CRYQGf7hWhfz3XxrELg56kRa5ae8pkht44mxt271AJD09ZP2ZcF078vRj0eQ2PqboXoluwfXwQ9CmJJhNqWb4ZEzXmETwnMqsCZW+CWbPNzKJe3jMgOGfWtmwujlIFQn1Q+pUS3vcLmnnt5jt2K+p2vhFI/AfLPxJjtNhXLQ3z5FuZV6VoQS7Qjlm83Bq4sPp0vDLzfPDLsIiNRGC9tQMuu6irOPLubiFM0ymAcj40/RE0t/9VMkM36fYLY2+FDxGpz79SrtHQImBEFZblV5zswehMWeHZmSqh1Ei3voGsplLENZRoJ62CGPfBLxpux3jLbPZp/PerEhxvrsbVpKvQSvDyvYTpGKp4N/kLV2JOHSG8UNvZ5RF7XSZS3nCmKuAG1Fbv/Y/gaNHitPFwVOR/YqyNGmOC5z6ucctt+i1QrBd01Ms3qUuDoZEY5vl2i3uD3KYCVWH1LxzihaqQ2BR6t0QSfqW4hAXfU5eCuraHAYTYCDYHkjutdcHwKAsG1Jh/nQVZ5TfBJOSuY5yAuDULRmlyyKJRP2UDPRFUWnNW1/3GeKxs5p5zQnoCNmstx/4NGxtj/+m7qEiuvlUy9c1P4AQxJXHvujcOyE+N6TFLkVQK949TSo73oH59yzWK2D5Fqk3BNzFS3cGiJ/p49+bmI="
+    - GH_REF: github.com/laminas/laminas-feed.git
+    - secure: "AS2iXk+GXAGpIXcLGBt6CRYQGf7hWhfz3XxrELg56kRa5ae8pkht44mxt271AJD09ZP2ZcF078vRj0eQ2PqboXoluwfXwQ9CmJJhNqWb4ZEzXmETwnMqsCZW+CWbPNzKJe3jMgOGfWtmwujlIFQn1Q+pUS3vcLmnnt5jt2K+p2vhFI/AfLPxJjtNhXLQ3z5FuZV6VoQS7Qjlm83Bq4sPp0vDLlaminasPDLsIiNRGC9tQMuu6irOPLubiFM0ymAcj40/RE0t/9VMkM36fYLY2+FDxGpz79SrtHQImBEFZblV5zswehMWeHZmSqh1Ei3voGsplLENZRoJ62CGPfBLxpux3jLbPZp/PerEhxvrsbVpKvQSvDyvYTpGKp4N/kLV2JOHSG8UNvZ5RF7XSZS3nCmKuAG1Fbv/Y/gaNHitPFwVOR/YqyNGmOC5z6ucctt+i1QrBd01Ms3qUuDoZEY5vl2i3uD3KYCVWH1LxzihaqQ2BR6t0QSfqW4hAXfU5eCuraHAYTYCDYHkjutdcHwKAsG1Jh/nQVZ5TfBJOSuY5yAuDULRmlyyKJRP2UDPRFUWnNW1/3GeKxs5p5zQnoCNmstx/4NGxtj/+m7qEiuvlUy9c1P4AQxJXHvujcOyE+N6TFLkVQK949TSo73oH59yzWK2D5Fqk3BNzFS3cGiJ/p49+bmI="
 
 matrix:
   fast_finish: true
@@ -51,16 +49,15 @@ matrix:
     - php: hhvm
 
 notifications:
-  irc: "irc.freenode.org#zftalk.dev"
   email: false
 
 before_install:
   - if [[ $EXECUTE_TEST_COVERALLS != 'true' ]]; then phpenv config-rm xdebug.ini || return 0 ; fi
   - composer self-update
   - if [[ $EXECUTE_TEST_COVERALLS == 'true' ]]; then composer require --dev --no-update satooshi/php-coveralls ; fi
-  - if [[ $SERVICE_MANAGER_VERSION != '' ]]; then composer require --dev --no-update "zendframework/zend-servicemanager:$SERVICE_MANAGER_VERSION" ; fi
-  - if [[ $SERVICE_MANAGER_VERSION == '' ]]; then composer require --dev --no-update "zendframework/zend-servicemanager:^3.0.3" ; fi
-  - if [[ $SERVICE_MANAGER_VERSION == '' ]]; then composer remove --dev --no-update zendframework/zend-cache zendframework/zend-db zendframework/zend-validator ; fi
+  - if [[ $SERVICE_MANAGER_VERSION != '' ]]; then composer require --dev --no-update "laminas/laminas-servicemanager:$SERVICE_MANAGER_VERSION" ; fi
+  - if [[ $SERVICE_MANAGER_VERSION == '' ]]; then composer require --dev --no-update "laminas/laminas-servicemanager:^3.0.3" ; fi
+  - if [[ $SERVICE_MANAGER_VERSION == '' ]]; then composer remove --dev --no-update laminas/laminas-cache laminas/laminas-db laminas/laminas-validator ; fi
 
 install:
   - travis_retry composer install --no-interaction --ignore-platform-reqs
@@ -69,10 +66,10 @@ script:
   - if [[ $EXECUTE_TEST_COVERALLS == 'true' ]]; then ./vendor/bin/phpunit --coverage-clover clover.xml ; fi
   - if [[ $EXECUTE_TEST_COVERALLS != 'true' ]]; then ./vendor/bin/phpunit ; fi
   - if [[ $EXECUTE_CS_CHECK == 'true' ]]; then ./vendor/bin/php-cs-fixer fix -v --diff --dry-run ; fi
-  - if [[ $DEPLOY_DOCS == "true" && "$TRAVIS_TEST_RESULT" == "0" ]]; then wget -O theme-installer.sh "https://raw.githubusercontent.com/zendframework/zf-mkdoc-theme/master/theme-installer.sh" ; chmod 755 theme-installer.sh ; ./theme-installer.sh ; fi
+  - if [[ $DEPLOY_DOCS == "true" && "$TRAVIS_TEST_RESULT" == "0" ]]; then wget -O theme-installer.sh "https://raw.githubusercontent.com/laminas/laminas-mkdoc-theme/master/theme-installer.sh" ; chmod 755 theme-installer.sh ; ./theme-installer.sh ; fi
 
 after_success:
-  - if [[ $DEPLOY_DOCS == "true" ]]; then echo "Preparing to build and deploy documentation" ; ./zf-mkdoc-theme/deploy.sh ; echo "Completed deploying documentation" ; fi
+  - if [[ $DEPLOY_DOCS == "true" ]]; then echo "Preparing to build and deploy documentation" ; ./laminas-mkdoc-theme/deploy.sh ; echo "Completed deploying documentation" ; fi
 
 after_script:
   - if [[ $EXECUTE_TEST_COVERALLS == 'true' ]]; then ./vendor/bin/coveralls ; fi

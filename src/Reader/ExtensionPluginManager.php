@@ -1,17 +1,16 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Feed\Reader;
+namespace Laminas\Feed\Reader;
 
-use Zend\ServiceManager\AbstractPluginManager;
-use Zend\ServiceManager\Exception\InvalidServiceException;
-use Zend\ServiceManager\Factory\InvokableFactory;
+use Laminas\ServiceManager\AbstractPluginManager;
+use Laminas\ServiceManager\Exception\InvalidServiceException;
+use Laminas\ServiceManager\Factory\InvokableFactory;
 
 /**
  * Plugin manager implementation for feed reader extensions based on the
@@ -67,6 +66,36 @@ class ExtensionPluginManager extends AbstractPluginManager
         'wellformedwebentry'   => Extension\WellFormedWeb\Entry::class,
         'wellFormedWebEntry'   => Extension\WellFormedWeb\Entry::class,
         'WellFormedWebEntry'   => Extension\WellFormedWeb\Entry::class,
+
+        // Legacy Zend Framework aliases
+        \Zend\Feed\Reader\Extension\Atom\Entry::class => Extension\Atom\Entry::class,
+        \Zend\Feed\Reader\Extension\Atom\Feed::class => Extension\Atom\Feed::class,
+        \Zend\Feed\Reader\Extension\Content\Entry::class => Extension\Content\Entry::class,
+        \Zend\Feed\Reader\Extension\CreativeCommons\Entry::class => Extension\CreativeCommons\Entry::class,
+        \Zend\Feed\Reader\Extension\CreativeCommons\Feed::class => Extension\CreativeCommons\Feed::class,
+        \Zend\Feed\Reader\Extension\DublinCore\Entry::class => Extension\DublinCore\Entry::class,
+        \Zend\Feed\Reader\Extension\DublinCore\Feed::class => Extension\DublinCore\Feed::class,
+        \Zend\Feed\Reader\Extension\Podcast\Entry::class => Extension\Podcast\Entry::class,
+        \Zend\Feed\Reader\Extension\Podcast\Feed::class => Extension\Podcast\Feed::class,
+        \Zend\Feed\Reader\Extension\Slash\Entry::class => Extension\Slash\Entry::class,
+        \Zend\Feed\Reader\Extension\Syndication\Feed::class => Extension\Syndication\Feed::class,
+        \Zend\Feed\Reader\Extension\Thread\Entry::class => Extension\Thread\Entry::class,
+        \Zend\Feed\Reader\Extension\WellFormedWeb\Entry::class => Extension\WellFormedWeb\Entry::class,
+
+        // v2 normalized FQCNs
+        'zendfeedreaderextensionatomentry' => Extension\Atom\Entry::class,
+        'zendfeedreaderextensionatomfeed' => Extension\Atom\Feed::class,
+        'zendfeedreaderextensioncontententry' => Extension\Content\Entry::class,
+        'zendfeedreaderextensioncreativecommonsentry' => Extension\CreativeCommons\Entry::class,
+        'zendfeedreaderextensioncreativecommonsfeed' => Extension\CreativeCommons\Feed::class,
+        'zendfeedreaderextensiondublincoreentry' => Extension\DublinCore\Entry::class,
+        'zendfeedreaderextensiondublincorefeed' => Extension\DublinCore\Feed::class,
+        'zendfeedreaderextensionpodcastentry' => Extension\Podcast\Entry::class,
+        'zendfeedreaderextensionpodcastfeed' => Extension\Podcast\Feed::class,
+        'zendfeedreaderextensionslashentry' => Extension\Slash\Entry::class,
+        'zendfeedreaderextensionsyndicationfeed' => Extension\Syndication\Feed::class,
+        'zendfeedreaderextensionthreadentry' => Extension\Thread\Entry::class,
+        'zendfeedreaderextensionwellformedwebentry' => Extension\WellFormedWeb\Entry::class,
     ];
 
     /**
@@ -91,19 +120,19 @@ class ExtensionPluginManager extends AbstractPluginManager
         // Legacy (v2) due to alias resolution; canonical form of resolved
         // alias is used to look up the factory, while the non-normalized
         // resolved alias is used as the requested name passed to the factory.
-        'zendfeedreaderextensionatomentry'            => InvokableFactory::class,
-        'zendfeedreaderextensionatomfeed'             => InvokableFactory::class,
-        'zendfeedreaderextensioncontententry'         => InvokableFactory::class,
-        'zendfeedreaderextensioncreativecommonsentry' => InvokableFactory::class,
-        'zendfeedreaderextensioncreativecommonsfeed'  => InvokableFactory::class,
-        'zendfeedreaderextensiondublincoreentry'      => InvokableFactory::class,
-        'zendfeedreaderextensiondublincorefeed'       => InvokableFactory::class,
-        'zendfeedreaderextensionpodcastentry'         => InvokableFactory::class,
-        'zendfeedreaderextensionpodcastfeed'          => InvokableFactory::class,
-        'zendfeedreaderextensionslashentry'           => InvokableFactory::class,
-        'zendfeedreaderextensionsyndicationfeed'      => InvokableFactory::class,
-        'zendfeedreaderextensionthreadentry'          => InvokableFactory::class,
-        'zendfeedreaderextensionwellformedwebentry'   => InvokableFactory::class,
+        'laminasfeedreaderextensionatomentry'            => InvokableFactory::class,
+        'laminasfeedreaderextensionatomfeed'             => InvokableFactory::class,
+        'laminasfeedreaderextensioncontententry'         => InvokableFactory::class,
+        'laminasfeedreaderextensioncreativecommonsentry' => InvokableFactory::class,
+        'laminasfeedreaderextensioncreativecommonsfeed'  => InvokableFactory::class,
+        'laminasfeedreaderextensiondublincoreentry'      => InvokableFactory::class,
+        'laminasfeedreaderextensiondublincorefeed'       => InvokableFactory::class,
+        'laminasfeedreaderextensionpodcastentry'         => InvokableFactory::class,
+        'laminasfeedreaderextensionpodcastfeed'          => InvokableFactory::class,
+        'laminasfeedreaderextensionslashentry'           => InvokableFactory::class,
+        'laminasfeedreaderextensionsyndicationfeed'      => InvokableFactory::class,
+        'laminasfeedreaderextensionthreadentry'          => InvokableFactory::class,
+        'laminasfeedreaderextensionwellformedwebentry'   => InvokableFactory::class,
     ];
 
     /**

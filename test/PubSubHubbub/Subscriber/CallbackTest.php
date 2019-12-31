@@ -1,34 +1,33 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Feed\PubSubHubbub\Subscriber;
+namespace LaminasTest\Feed\PubSubHubbub\Subscriber;
 
+use ArrayObject;
 use DateInterval;
 use DateTime;
-use Zend\Feed\PubSubHubbub\HttpResponse;
-use Zend\Feed\PubSubHubbub\Model;
-use Zend\Feed\PubSubHubbub\Subscriber\Callback as CallbackSubscriber;
-use ArrayObject;
+use Laminas\Feed\PubSubHubbub\HttpResponse;
+use Laminas\Feed\PubSubHubbub\Model;
+use Laminas\Feed\PubSubHubbub\Subscriber\Callback as CallbackSubscriber;
 
 /**
- * @group      Zend_Feed
- * @group      Zend_Feed_Subsubhubbub
+ * @group      Laminas_Feed
+ * @group      Laminas_Feed_Subsubhubbub
  */
 class CallbackTest extends \PHPUnit_Framework_TestCase
 {
     /** @var CallbackSubscriber */
     public $_callback;
-    /** @var \Zend\Db\Adapter\Adapter|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var \Laminas\Db\Adapter\Adapter|\PHPUnit_Framework_MockObject_MockObject */
     public $_adapter;
-    /** @var \Zend\Db\TableGateway\TableGateway|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var \Laminas\Db\TableGateway\TableGateway|\PHPUnit_Framework_MockObject_MockObject */
     public $_tableGateway;
-    /** @var \Zend\Db\ResultSet\ResultSet|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var \Laminas\Db\ResultSet\ResultSet|\PHPUnit_Framework_MockObject_MockObject */
     public $_rowset;
     /** @var array */
     public $_get;
@@ -37,23 +36,23 @@ class CallbackTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        if (! class_exists('Zend\Db\Adapter\Adapter')) {
+        if (! class_exists('Laminas\Db\Adapter\Adapter')) {
             $this->markTestSkipped(
-                'Skipping tests against zend-db functionality until that '
-                . 'component is forwards-compatible with zend-servicemanager v3'
+                'Skipping tests against laminas-db functionality until that '
+                . 'component is forwards-compatible with laminas-servicemanager v3'
             );
         }
 
         $this->_callback = new CallbackSubscriber;
 
         $this->_adapter      = $this->_getCleanMock(
-            '\Zend\Db\Adapter\Adapter'
+            '\Laminas\Db\Adapter\Adapter'
         );
         $this->_tableGateway = $this->_getCleanMock(
-            '\Zend\Db\TableGateway\TableGateway'
+            '\Laminas\Db\TableGateway\TableGateway'
         );
         $this->_rowset       = $this->_getCleanMock(
-            '\Zend\Db\ResultSet\ResultSet'
+            '\Laminas\Db\ResultSet\ResultSet'
         );
 
         $this->_tableGateway->expects($this->any())
@@ -81,23 +80,23 @@ class CallbackTest extends \PHPUnit_Framework_TestCase
     public function testCanSetHttpResponseObject()
     {
         $this->_callback->setHttpResponse(new HttpResponse);
-        $this->assertInstanceOf('Zend\Feed\PubSubHubbub\HttpResponse', $this->_callback->getHttpResponse());
+        $this->assertInstanceOf('Laminas\Feed\PubSubHubbub\HttpResponse', $this->_callback->getHttpResponse());
     }
 
     public function testCanUsesDefaultHttpResponseObject()
     {
-        $this->assertInstanceOf('Zend\Feed\PubSubHubbub\HttpResponse', $this->_callback->getHttpResponse());
+        $this->assertInstanceOf('Laminas\Feed\PubSubHubbub\HttpResponse', $this->_callback->getHttpResponse());
     }
 
     public function testThrowsExceptionOnInvalidHttpResponseObjectSet()
     {
-        $this->setExpectedException('\Zend\Feed\PubSubHubbub\Exception\ExceptionInterface');
+        $this->setExpectedException('\Laminas\Feed\PubSubHubbub\Exception\ExceptionInterface');
         $this->_callback->setHttpResponse(new \stdClass);
     }
 
     public function testThrowsExceptionIfNonObjectSetAsHttpResponseObject()
     {
-        $this->setExpectedException('\Zend\Feed\PubSubHubbub\Exception\ExceptionInterface');
+        $this->setExpectedException('\Laminas\Feed\PubSubHubbub\Exception\ExceptionInterface');
         $this->_callback->setHttpResponse('');
     }
 
@@ -114,19 +113,19 @@ class CallbackTest extends \PHPUnit_Framework_TestCase
 
     public function testThrowsExceptionOnSettingZeroAsSubscriberCount()
     {
-        $this->setExpectedException('\Zend\Feed\PubSubHubbub\Exception\ExceptionInterface');
+        $this->setExpectedException('\Laminas\Feed\PubSubHubbub\Exception\ExceptionInterface');
         $this->_callback->setSubscriberCount(0);
     }
 
     public function testThrowsExceptionOnSettingLessThanZeroAsSubscriberCount()
     {
-        $this->setExpectedException('\Zend\Feed\PubSubHubbub\Exception\ExceptionInterface');
+        $this->setExpectedException('\Laminas\Feed\PubSubHubbub\Exception\ExceptionInterface');
         $this->_callback->setSubscriberCount(-1);
     }
 
     public function testThrowsExceptionOnSettingAnyScalarTypeCastToAZeroOrLessIntegerAsSubscriberCount()
     {
-        $this->setExpectedException('\Zend\Feed\PubSubHubbub\Exception\ExceptionInterface');
+        $this->setExpectedException('\Laminas\Feed\PubSubHubbub\Exception\ExceptionInterface');
         $this->_callback->setSubscriberCount('0aa');
     }
 
@@ -139,7 +138,7 @@ class CallbackTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF2_CONFLICT
+     * @group Laminas_CONFLICT
      */
     public function testValidatesValidHttpGetData()
     {

@@ -1,29 +1,28 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Feed\Reader\Http;
+namespace LaminasTest\Feed\Reader\Http;
 
+use Laminas\Feed\Reader\Exception\InvalidArgumentException;
+use Laminas\Feed\Reader\Http\LaminasHttpClientDecorator;
+use Laminas\Feed\Reader\Http\Response as FeedResponse;
+use Laminas\Http\Client;
+use Laminas\Http\Headers;
+use Laminas\Http\Request as HttpRequest;
+use Laminas\Http\Response as HttpResponse;
 use PHPUnit_Framework_TestCase as TestCase;
 use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
-use Zend\Feed\Reader\Exception\InvalidArgumentException;
-use Zend\Feed\Reader\Http\Response as FeedResponse;
-use Zend\Feed\Reader\Http\ZendHttpClientDecorator;
-use Zend\Http\Client;
-use Zend\Http\Headers;
-use Zend\Http\Request as HttpRequest;
-use Zend\Http\Response as HttpResponse;
 
 /**
- * @covers \Zend\Feed\Reader\Http\ZendHttpClientDecorator
+ * @covers \Laminas\Feed\Reader\Http\LaminasHttpClientDecorator
  */
-class ZendHttpClientDecoratorTest extends TestCase
+class LaminasHttpClientDecoratorTest extends TestCase
 {
     public function setUp()
     {
@@ -60,7 +59,7 @@ class ZendHttpClientDecoratorTest extends TestCase
     public function testProvidesAccessToDecoratedClient()
     {
         $client = $this->prophesize(Client::class)->reveal();
-        $decorator = new ZendHttpClientDecorator($client);
+        $decorator = new LaminasHttpClientDecorator($client);
         $this->assertSame($client, $decorator->getDecoratedClient());
     }
 
@@ -70,7 +69,7 @@ class ZendHttpClientDecoratorTest extends TestCase
         $httpResponse = $this->createMockHttpResponse(200, '', $headers->reveal());
         $this->prepareDefaultClientInteractions('http://example.com', $httpResponse);
 
-        $client = new ZendHttpClientDecorator($this->client->reveal());
+        $client = new LaminasHttpClientDecorator($this->client->reveal());
         $response = $client->get('http://example.com');
 
         $this->assertInstanceOf(FeedResponse::class, $response);
@@ -95,7 +94,7 @@ class ZendHttpClientDecoratorTest extends TestCase
         $request->getHeaders()->willReturn($requestHeaders->reveal());
         $this->client->getRequest()->willReturn($request->reveal());
 
-        $client = new ZendHttpClientDecorator($this->client->reveal());
+        $client = new LaminasHttpClientDecorator($this->client->reveal());
         $response = $client->get('http://example.com', ['Accept' => [ 'application/rss+xml' ]]);
 
         $this->assertInstanceOf(FeedResponse::class, $response);
@@ -196,7 +195,7 @@ class ZendHttpClientDecoratorTest extends TestCase
         $request->getHeaders()->willReturn($requestHeaders->reveal());
         $this->client->getRequest()->willReturn($request->reveal());
 
-        $client = new ZendHttpClientDecorator($this->client->reveal());
+        $client = new LaminasHttpClientDecorator($this->client->reveal());
 
         $this->setExpectedException(InvalidArgumentException::class, $contains);
         $client->get('http://example.com', $headers);
