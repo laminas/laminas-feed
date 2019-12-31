@@ -1,24 +1,22 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Feed
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Feed\PubSubHubbub;
+namespace Laminas\Feed\PubSubHubbub;
 
+use Laminas\Http\Request as HttpRequest;
+use Laminas\Stdlib\ArrayUtils;
+use Laminas\Uri;
 use Traversable;
-use Zend\Http\Request as HttpRequest;
-use Zend\Stdlib\ArrayUtils;
-use Zend\Uri;
 use Zend\Version\Version;
 
 /**
- * @category   Zend
- * @package    Zend_Feed_Pubsubhubbub
+ * @category   Laminas
+ * @package    Laminas_Feed_Pubsubhubbub
  */
 class Publisher
 {
@@ -40,7 +38,7 @@ class Publisher
 
     /**
      * An array of any errors including keys for 'response', 'hubUrl'.
-     * The response is the actual Zend_Http_Response object.
+     * The response is the actual Laminas_Http_Response object.
      *
      * @var array
      */
@@ -55,7 +53,7 @@ class Publisher
     protected $parameters = array();
 
     /**
-     * Constructor; accepts an array or Zend_Config instance to preset
+     * Constructor; accepts an array or Laminas_Config instance to preset
      * options for the Publisher without calling all supported setter
      * methods in turn.
      *
@@ -247,7 +245,7 @@ class Publisher
      * If a Hub notification fails, certain data will be retained in an
      * an array retrieved using getErrors(), if a failure occurs for any Hubs
      * the isSuccess() check will return FALSE. This method is designed not
-     * to needlessly fail with an Exception/Error unless from Zend_Http_Client.
+     * to needlessly fail with an Exception/Error unless from Laminas_Http_Client.
      *
      * @return void
      * @throws Exception\RuntimeException
@@ -359,7 +357,7 @@ class Publisher
 
     /**
      * Return an array of errors met from any failures, including keys:
-     * 'response' => the Zend_Http_Response object from the failure
+     * 'response' => the Laminas_Http_Response object from the failure
      * 'hubUrl' => the URL of the Hub Server whose notification failed
      *
      * @return array
@@ -372,7 +370,7 @@ class Publisher
     /**
      * Get a basic prepared HTTP client for use
      *
-     * @return \Zend\Http\Client
+     * @return \Laminas\Http\Client
      * @throws Exception\RuntimeException
      */
     protected function _getHttpClient()
@@ -380,7 +378,7 @@ class Publisher
         $client = PubSubHubbub::getHttpClient();
         $client->setMethod(HttpRequest::METHOD_POST);
         $client->setOptions(array(
-            'useragent' => 'Zend_Feed_Pubsubhubbub_Publisher/' . Version::VERSION,
+            'useragent' => 'Laminas_Feed_Pubsubhubbub_Publisher/' . Version::VERSION,
         ));
         $params   = array();
         $params[] = 'hub.mode=publish';

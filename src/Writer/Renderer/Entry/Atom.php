@@ -1,26 +1,24 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Feed
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Feed\Writer\Renderer\Entry;
+namespace Laminas\Feed\Writer\Renderer\Entry;
 
 use DateTime;
 use DOMDocument;
 use DOMElement;
-use Zend\Feed\Writer;
-use Zend\Feed\Writer\Renderer;
-use Zend\Uri;
-use Zend\Validator;
+use Laminas\Feed\Writer;
+use Laminas\Feed\Writer\Renderer;
+use Laminas\Uri;
+use Laminas\Validator;
 
 /**
- * @category Zend
- * @package Zend_Feed_Writer
+ * @category Laminas
+ * @package Laminas_Feed_Writer
  */
 class Atom extends Renderer\AbstractRenderer implements Renderer\RendererInterface
 {

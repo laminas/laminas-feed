@@ -1,21 +1,19 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Feed
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Feed\Reader\Feed;
+namespace Laminas\Feed\Reader\Feed;
 
 use Countable;
 use Iterator;
 
 /**
-* @category Zend
-* @package Zend_Feed_Reader
+* @category Laminas
+* @package Laminas_Feed_Reader
 */
 interface FeedInterface extends Iterator, Countable
 {
@@ -107,7 +105,7 @@ interface FeedInterface extends Iterator, Countable
     /**
      * Get all categories
      *
-     * @return \Zend\Feed\Reader\Collection\Category
+     * @return \Laminas\Feed\Reader\Collection\Category
      */
     public function getCategories();
 
