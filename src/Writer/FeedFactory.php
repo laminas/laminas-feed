@@ -1,20 +1,18 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Feed
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Feed\Writer;
+namespace Laminas\Feed\Writer;
 
 use Traversable;
 
 /**
- * @category   Zend
- * @package    Zend_Feed
+ * @category   Laminas
+ * @package    Laminas_Feed
  * @subpackage Writer
  */
 abstract class FeedFactory
@@ -105,7 +103,7 @@ abstract class FeedFactory
         foreach ($entries as $data) {
             if (!is_array($data) && !$data instanceof Traversable && !$data instanceof Entry) {
                 throw new Exception\InvalidArgumentException(sprintf(
-                    '%s expects an array, Traversable, or Zend\Feed\Writer\Entry argument; received "%s"',
+                    '%s expects an array, Traversable, or Laminas\Feed\Writer\Entry argument; received "%s"',
                     __METHOD__,
                     (is_object($data) ? get_class($data) : gettype($data))
                 ));

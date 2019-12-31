@@ -1,26 +1,24 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Feed
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Feed\Writer\Renderer\Feed;
+namespace LaminasTest\Feed\Writer\Renderer\Feed;
 
 use DateTime;
-use Zend\Feed\Writer;
-use Zend\Feed\Writer\Renderer;
-use Zend\Feed\Reader;
+use Laminas\Feed\Reader;
+use Laminas\Feed\Writer;
+use Laminas\Feed\Writer\Renderer;
 
 /**
- * @category   Zend
- * @package    Zend_Feed
+ * @category   Laminas
+ * @package    Laminas_Feed
  * @subpackage UnitTests
- * @group      Zend_Feed
- * @group      Zend_Feed_Writer
+ * @group      Laminas_Feed
+ * @group      Laminas_Feed_Writer
  */
 class RssTest extends \PHPUnit_Framework_TestCase
 {
@@ -81,7 +79,7 @@ class RssTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Zend\Feed\Writer\Exception\ExceptionInterface
+     * @expectedException Laminas\Feed\Writer\Exception\ExceptionInterface
      */
     public function testFeedTitleIfMissingThrowsException()
     {
@@ -91,7 +89,7 @@ class RssTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZFWCHARDATA01
+     * @group LaminasWCHARDATA01
      */
     public function testFeedTitleCharDataEncoding()
     {
@@ -111,7 +109,7 @@ class RssTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Zend\Feed\Writer\Exception\ExceptionInterface
+     * @expectedException Laminas\Feed\Writer\Exception\ExceptionInterface
      */
     public function testFeedDescriptionThrowsExceptionIfMissing()
     {
@@ -121,7 +119,7 @@ class RssTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZFWCHARDATA01
+     * @group LaminasWCHARDATA01
      */
     public function testFeedDescriptionCharDataEncoding()
     {
@@ -179,7 +177,7 @@ class RssTest extends \PHPUnit_Framework_TestCase
         $rssFeed->render();
         $feed = Reader\Reader::importString($rssFeed->saveXml());
         $this->assertEquals(
-            'Zend_Feed_Writer ' . \Zend\Version\Version::VERSION . ' (http://framework.zend.com)', $feed->getGenerator());
+            'Laminas_Feed_Writer ' . \Zend\Version\Version::VERSION . ' (https://getlaminas.org)', $feed->getGenerator());
     }
 
     public function testFeedLanguageHasBeenSet()
@@ -215,7 +213,7 @@ class RssTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Zend\Feed\Writer\Exception\ExceptionInterface
+     * @expectedException Laminas\Feed\Writer\Exception\ExceptionInterface
      */
     public function testFeedLinkToHtmlVersionOfFeedIfMissingThrowsException()
     {
@@ -250,7 +248,7 @@ class RssTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZFW003
+     * @group LaminasW003
      */
     public function testFeedHoldsAnyAuthorAdded()
     {
@@ -265,7 +263,7 @@ class RssTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZFWCHARDATA01
+     * @group LaminasWCHARDATA01
      */
     public function testFeedAuthorCharDataEncoding()
     {
@@ -289,7 +287,7 @@ class RssTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZFWCHARDATA01
+     * @group LaminasWCHARDATA01
      */
     public function testCopyrightCharDataEncoding()
     {
@@ -323,7 +321,7 @@ class RssTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZFWCHARDATA01
+     * @group LaminasWCHARDATA01
      */
     public function testCategoriesCharDataEncoding()
     {
@@ -404,7 +402,7 @@ class RssTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Zend\Feed\Writer\Exception\ExceptionInterface
+     * @expectedException Laminas\Feed\Writer\Exception\ExceptionInterface
      */
     public function testImageThrowsExceptionOnMissingLink()
     {
@@ -417,7 +415,7 @@ class RssTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Zend\Feed\Writer\Exception\ExceptionInterface
+     * @expectedException Laminas\Feed\Writer\Exception\ExceptionInterface
      */
     public function testImageThrowsExceptionOnMissingTitle()
     {
@@ -430,7 +428,7 @@ class RssTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Zend\Feed\Writer\Exception\ExceptionInterface
+     * @expectedException Laminas\Feed\Writer\Exception\ExceptionInterface
      */
     public function testImageThrowsExceptionOnMissingUri()
     {
@@ -443,7 +441,7 @@ class RssTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Zend\Feed\Writer\Exception\ExceptionInterface
+     * @expectedException Laminas\Feed\Writer\Exception\ExceptionInterface
      */
     public function testImageThrowsExceptionIfOptionalDescriptionInvalid()
     {
@@ -458,7 +456,7 @@ class RssTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Zend\Feed\Writer\Exception\ExceptionInterface
+     * @expectedException Laminas\Feed\Writer\Exception\ExceptionInterface
      */
     public function testImageThrowsExceptionIfOptionalDescriptionEmpty()
     {
@@ -473,7 +471,7 @@ class RssTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Zend\Feed\Writer\Exception\ExceptionInterface
+     * @expectedException Laminas\Feed\Writer\Exception\ExceptionInterface
      */
     public function testImageThrowsExceptionIfOptionalHeightNotAnInteger()
     {
@@ -489,7 +487,7 @@ class RssTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Zend\Feed\Writer\Exception\ExceptionInterface
+     * @expectedException Laminas\Feed\Writer\Exception\ExceptionInterface
      */
     public function testImageThrowsExceptionIfOptionalHeightEmpty()
     {
@@ -505,7 +503,7 @@ class RssTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Zend\Feed\Writer\Exception\ExceptionInterface
+     * @expectedException Laminas\Feed\Writer\Exception\ExceptionInterface
      */
     public function testImageThrowsExceptionIfOptionalHeightGreaterThan400()
     {
@@ -521,7 +519,7 @@ class RssTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Zend\Feed\Writer\Exception\ExceptionInterface
+     * @expectedException Laminas\Feed\Writer\Exception\ExceptionInterface
      */
     public function testImageThrowsExceptionIfOptionalWidthNotAnInteger()
     {
@@ -537,7 +535,7 @@ class RssTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Zend\Feed\Writer\Exception\ExceptionInterface
+     * @expectedException Laminas\Feed\Writer\Exception\ExceptionInterface
      */
     public function testImageThrowsExceptionIfOptionalWidthEmpty()
     {
@@ -553,7 +551,7 @@ class RssTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Zend\Feed\Writer\Exception\ExceptionInterface
+     * @expectedException Laminas\Feed\Writer\Exception\ExceptionInterface
      */
     public function testImageThrowsExceptionIfOptionalWidthGreaterThan144()
     {
