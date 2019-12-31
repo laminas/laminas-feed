@@ -5,7 +5,7 @@
          backupGlobals="true"
          colors="true">
     <testsuites>
-        <testsuite name="zend-feed Test Suite">
+        <testsuite name="laminas-feed Test Suite">
             <directory>./test</directory>
         </testsuite>
     </testsuites>
@@ -17,7 +17,7 @@
     </filter>
 
     <php>
-        <env name="TESTS_ZEND_FEED_PUBSUBHUBBUB_BASEURI" value="false" />
-        <env name="TESTS_ZEND_FEED_READER_ONLINE_ENABLED" value="false" />
+        <env name="TESTS_LAMINAS_FEED_PUBSUBHUBBUB_BASEURI" value="false" />
+        <env name="TESTS_LAMINAS_FEED_READER_ONLINE_ENABLED" value="false" />
     </php>
 </phpunit>

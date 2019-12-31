@@ -1,22 +1,23 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-feed for the canonical source repository
- * @copyright Copyright (c) 2005-2018 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   https://github.com/zendframework/zend-feed/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Feed\Writer\Renderer\Entry;
+namespace LaminasTest\Feed\Writer\Renderer\Entry;
 
+use Laminas\Feed\Reader;
+use Laminas\Feed\Writer;
+use Laminas\Feed\Writer\Exception\ExceptionInterface;
+use Laminas\Feed\Writer\Renderer;
+use LaminasTest\Feed\Writer\TestAsset;
 use PHPUnit\Framework\TestCase;
-use Zend\Feed\Reader;
-use Zend\Feed\Writer;
-use Zend\Feed\Writer\Exception\ExceptionInterface;
-use Zend\Feed\Writer\Renderer;
-use ZendTest\Feed\Writer\TestAsset;
 
 /**
- * @group      Zend_Feed
- * @group      Zend_Feed_Writer
+ * @group      Laminas_Feed
+ * @group      Laminas_Feed_Writer
  */
 class RssTest extends TestCase
 {
@@ -296,7 +297,7 @@ class RssTest extends TestCase
 
     public function testEntryIdHasBeenSetWithPermaLinkAsFalseWhenNotUri()
     {
-        $this->markTestIncomplete('Untest due to ZFR potential bug');
+        $this->markTestIncomplete('Untest due to LaminasR potential bug');
     }
 
     public function testEntryIdDefaultIsUsedIfNotSetByHand()
@@ -364,7 +365,7 @@ class RssTest extends TestCase
     }
 
     /**
-     * @group ZFWCHARDATA01
+     * @group LaminasWCHARDATA01
      */
     public function testCategoriesCharDataEncoding()
     {
@@ -423,7 +424,7 @@ class RssTest extends TestCase
         // Render
         $renderer = new Renderer\Feed\Rss($this->validWriter);
         $feed     = Reader\Reader::importString($renderer->render()->saveXml());
-        /** @var \Zend\Feed\Reader\Entry\Rss $entry */
+        /** @var \Laminas\Feed\Reader\Entry\Rss $entry */
         $entry    = $feed->current();
 
         // Test
@@ -442,7 +443,7 @@ class RssTest extends TestCase
         // Render
         $renderer = new Renderer\Feed\Rss($this->validWriter);
         $feed     = Reader\Reader::importString($renderer->render()->saveXml());
-        /** @var \Zend\Feed\Reader\Entry\Rss $entry */
+        /** @var \Laminas\Feed\Reader\Entry\Rss $entry */
         $entry    = $feed->current();
 
         // Test
