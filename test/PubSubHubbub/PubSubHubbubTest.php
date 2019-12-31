@@ -1,24 +1,22 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Feed
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Feed\PubSubHubbub;
+namespace LaminasTest\Feed\PubSubHubbub;
 
-use Zend\Feed\PubSubHubbub\PubSubHubbub;
-use Zend\Feed\Reader\Reader as FeedReader;
+use Laminas\Feed\PubSubHubbub\PubSubHubbub;
+use Laminas\Feed\Reader\Reader as FeedReader;
 
 /**
- * @category   Zend
- * @package    Zend_Feed
+ * @category   Laminas
+ * @package    Laminas_Feed
  * @subpackage UnitTests
- * @group      Zend_Feed
- * @group      Zend_Feed_Subsubhubbub
+ * @group      Laminas_Feed
+ * @group      Laminas_Feed_Subsubhubbub
  */
 class PubSubHubbubTest extends \PHPUnit_Framework_TestCase
 {

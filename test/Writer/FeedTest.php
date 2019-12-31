@@ -1,25 +1,23 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Feed
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Feed\Writer;
+namespace LaminasTest\Feed\Writer;
 
 use DateTime;
-use Zend\Feed\Writer;
-use Zend\Feed\Writer\Feed;
+use Laminas\Feed\Writer;
+use Laminas\Feed\Writer\Feed;
 
 /**
- * @category   Zend
- * @package    Zend_Feed
+ * @category   Laminas
+ * @package    Laminas_Feed
  * @subpackage UnitTests
- * @group      Zend_Feed
- * @group      Zend_Feed_Writer
+ * @group      Laminas_Feed
+ * @group      Laminas_Feed_Writer
  */
 class FeedTest extends \PHPUnit_Framework_TestCase
 {
@@ -79,7 +77,7 @@ class FeedTest extends \PHPUnit_Framework_TestCase
 
     public function testAddAuthorThrowsExceptionOnInvalidUriFromArray()
     {
-        $this->markTestIncomplete('Pending Zend\URI fix for validation');
+        $this->markTestIncomplete('Pending Laminas\URI fix for validation');
         $writer = new Writer\Feed;
         try {
             $writer->addAuthor(array('name'=> 'Joe',
@@ -146,7 +144,7 @@ class FeedTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-12023
+     * @group Laminas-12023
      */
     public function testSetDateCreatedUsesGivenUnixTimestampThatIsLessThanTenDigits()
     {
@@ -157,7 +155,7 @@ class FeedTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-11610
+     * @group Laminas-11610
      */
     public function testSetDateCreatedUsesGivenUnixTimestampThatIsAVerySmallInteger()
     {
@@ -192,7 +190,7 @@ class FeedTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-12023
+     * @group Laminas-12023
      */
     public function testSetDateModifiedUsesGivenUnixTimestampThatIsLessThanTenDigits()
     {
@@ -203,7 +201,7 @@ class FeedTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-11610
+     * @group Laminas-11610
      */
     public function testSetDateModifiedUsesGivenUnixTimestampThatIsAVerySmallInteger()
     {
@@ -271,7 +269,7 @@ class FeedTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-12023
+     * @group Laminas-12023
      */
     public function testSetLastBuildDateUsesGivenUnixTimestampThatIsLessThanTenDigits()
     {
@@ -282,7 +280,7 @@ class FeedTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-11610
+     * @group Laminas-11610
      */
     public function testSetLastBuildDateUsesGivenUnixTimestampThatIsAVerySmallInteger()
     {
@@ -505,25 +503,25 @@ class FeedTest extends \PHPUnit_Framework_TestCase
     public function testSetsGeneratorName()
     {
         $writer = new Writer\Feed;
-        $writer->setGenerator(array('name'=> 'ZFW'));
-        $this->assertEquals(array('name'=> 'ZFW'), $writer->getGenerator());
+        $writer->setGenerator(array('name'=> 'LaminasW'));
+        $this->assertEquals(array('name'=> 'LaminasW'), $writer->getGenerator());
     }
 
     public function testSetsGeneratorVersion()
     {
         $writer = new Writer\Feed;
-        $writer->setGenerator(array('name'    => 'ZFW',
+        $writer->setGenerator(array('name'    => 'LaminasW',
                                     'version' => '1.0'));
-        $this->assertEquals(array('name'    => 'ZFW',
+        $this->assertEquals(array('name'    => 'LaminasW',
                                   'version' => '1.0'), $writer->getGenerator());
     }
 
     public function testSetsGeneratorUri()
     {
         $writer = new Writer\Feed;
-        $writer->setGenerator(array('name'=> 'ZFW',
+        $writer->setGenerator(array('name'=> 'LaminasW',
                                     'uri' => 'http://www.example.com'));
-        $this->assertEquals(array('name'=> 'ZFW',
+        $this->assertEquals(array('name'=> 'LaminasW',
                                   'uri' => 'http://www.example.com'), $writer->getGenerator());
     }
 
@@ -541,7 +539,7 @@ class FeedTest extends \PHPUnit_Framework_TestCase
     {
         $writer = new Writer\Feed;
         try {
-            $writer->setGenerator(array('name'   => 'ZFW',
+            $writer->setGenerator(array('name'   => 'LaminasW',
                                         'version'=> ''));
             $this->fail('Should have failed since version is empty');
         } catch (Writer\Exception\ExceptionInterface $e) {
@@ -550,10 +548,10 @@ class FeedTest extends \PHPUnit_Framework_TestCase
 
     public function testSetsGeneratorThrowsExceptionOnInvalidUri()
     {
-        $this->markTestIncomplete('Pending Zend\URI fix for validation');
+        $this->markTestIncomplete('Pending Laminas\URI fix for validation');
         $writer = new Writer\Feed;
         try {
-            $writer->setGenerator(array('name'=> 'ZFW',
+            $writer->setGenerator(array('name'=> 'LaminasW',
                                         'uri' => 'notauri'));
             $this->fail();
         } catch (Writer\Exception\ExceptionInterface $e) {
@@ -566,8 +564,8 @@ class FeedTest extends \PHPUnit_Framework_TestCase
     public function testSetsGeneratorName_Deprecated()
     {
         $writer = new Writer\Feed;
-        $writer->setGenerator('ZFW');
-        $this->assertEquals(array('name'=> 'ZFW'), $writer->getGenerator());
+        $writer->setGenerator('LaminasW');
+        $this->assertEquals(array('name'=> 'LaminasW'), $writer->getGenerator());
     }
 
     /**
@@ -576,8 +574,8 @@ class FeedTest extends \PHPUnit_Framework_TestCase
     public function testSetsGeneratorVersion_Deprecated()
     {
         $writer = new Writer\Feed;
-        $writer->setGenerator('ZFW', '1.0');
-        $this->assertEquals(array('name'    => 'ZFW',
+        $writer->setGenerator('LaminasW', '1.0');
+        $this->assertEquals(array('name'    => 'LaminasW',
                                   'version' => '1.0'), $writer->getGenerator());
     }
 
@@ -587,8 +585,8 @@ class FeedTest extends \PHPUnit_Framework_TestCase
     public function testSetsGeneratorUri_Deprecated()
     {
         $writer = new Writer\Feed;
-        $writer->setGenerator('ZFW', null, 'http://www.example.com');
-        $this->assertEquals(array('name'=> 'ZFW',
+        $writer->setGenerator('LaminasW', null, 'http://www.example.com');
+        $this->assertEquals(array('name'=> 'LaminasW',
                                   'uri' => 'http://www.example.com'), $writer->getGenerator());
     }
 
@@ -612,7 +610,7 @@ class FeedTest extends \PHPUnit_Framework_TestCase
     {
         $writer = new Writer\Feed;
         try {
-            $writer->setGenerator('ZFW', '');
+            $writer->setGenerator('LaminasW', '');
             $this->fail();
         } catch (Writer\Exception\ExceptionInterface $e) {
         }
@@ -623,10 +621,10 @@ class FeedTest extends \PHPUnit_Framework_TestCase
      */
     public function testSetsGeneratorThrowsExceptionOnInvalidUri_Deprecated()
     {
-        $this->markTestIncomplete('Pending Zend\URI fix for validation');
+        $this->markTestIncomplete('Pending Laminas\URI fix for validation');
         $writer = new Writer\Feed;
         try {
-            $writer->setGenerator('ZFW', null, 'notauri');
+            $writer->setGenerator('LaminasW', null, 'notauri');
             $this->fail();
         } catch (Writer\Exception\ExceptionInterface $e) {
         }
@@ -781,7 +779,7 @@ class FeedTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Zend\Feed\Writer\Exception\ExceptionInterface
+     * @expectedException Laminas\Feed\Writer\Exception\ExceptionInterface
      */
     public function testSetsImageUriThrowsExceptionOnEmptyUri()
     {
@@ -792,7 +790,7 @@ class FeedTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Zend\Feed\Writer\Exception\ExceptionInterface
+     * @expectedException Laminas\Feed\Writer\Exception\ExceptionInterface
      */
     public function testSetsImageUriThrowsExceptionOnMissingUri()
     {
@@ -801,7 +799,7 @@ class FeedTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Zend\Feed\Writer\Exception\ExceptionInterface
+     * @expectedException Laminas\Feed\Writer\Exception\ExceptionInterface
      */
     public function testSetsImageUriThrowsExceptionOnInvalidUri()
     {

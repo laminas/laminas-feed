@@ -1,24 +1,22 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Feed
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Feed\Reader\Feed;
+namespace LaminasTest\Feed\Reader\Feed;
 
 use DateTime;
-use Zend\Feed\Reader;
+use Laminas\Feed\Reader;
 
 /**
-* @category Zend
-* @package Zend_Feed
+* @category Laminas
+* @package Laminas_Feed
 * @subpackage UnitTests
-* @group Zend_Feed
-* @group Zend_Feed_Reader
+* @group Laminas_Feed
+* @group Laminas_Feed_Reader
 */
 class AtomSourceTest extends \PHPUnit_Framework_TestCase
 {
@@ -165,7 +163,7 @@ class AtomSourceTest extends \PHPUnit_Framework_TestCase
             file_get_contents($this->_feedSamplePath.'/generator/atom10.xml')
         );
         $source = $feed->current()->getSource();
-        $this->assertEquals('Zend_Feed', $source->getGenerator());
+        $this->assertEquals('Laminas_Feed', $source->getGenerator());
     }
 
     /**

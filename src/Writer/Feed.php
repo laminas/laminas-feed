@@ -1,23 +1,21 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Feed
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Feed\Writer;
+namespace Laminas\Feed\Writer;
 
 use Countable;
 use DateTime;
 use Iterator;
-use Zend\Feed\Writer\Renderer;
+use Laminas\Feed\Writer\Renderer;
 
 /**
-* @category Zend
-* @package Zend_Feed_Writer
+* @category Laminas
+* @package Laminas_Feed_Writer
 */
 class Feed extends AbstractFeed implements Iterator, Countable
 {
@@ -37,11 +35,11 @@ class Feed extends AbstractFeed implements Iterator, Countable
     protected $entriesKey = 0;
 
     /**
-     * Creates a new Zend_Feed_Writer_Entry data container for use. This is NOT
+     * Creates a new Laminas_Feed_Writer_Entry data container for use. This is NOT
      * added to the current feed automatically, but is necessary to create a
      * container with some initial values preset based on the current feed data.
      *
-     * @return \Zend\Feed\Writer\Entry
+     * @return \Laminas\Feed\Writer\Entry
      */
     public function createEntry()
     {
@@ -54,7 +52,7 @@ class Feed extends AbstractFeed implements Iterator, Countable
     }
 
     /**
-     * Appends a Zend\Feed\Writer\Deleted object representing a new entry tombstone
+     * Appends a Laminas\Feed\Writer\Deleted object representing a new entry tombstone
      * to the feed data container's internal group of entries.
      *
      * @param Deleted $deleted
@@ -66,7 +64,7 @@ class Feed extends AbstractFeed implements Iterator, Countable
     }
 
     /**
-     * Creates a new Zend_Feed_Writer_Deleted data container for use. This is NOT
+     * Creates a new Laminas_Feed_Writer_Deleted data container for use. This is NOT
      * added to the current feed automatically, but is necessary to create a
      * container with some initial values preset based on the current feed data.
      *
@@ -83,7 +81,7 @@ class Feed extends AbstractFeed implements Iterator, Countable
     }
 
     /**
-     * Appends a Zend\Feed\Writer\Entry object representing a new entry/item
+     * Appends a Laminas\Feed\Writer\Entry object representing a new entry/item
      * the feed data container's internal group of entries.
      *
      * @param Entry $entry
@@ -228,7 +226,7 @@ class Feed extends AbstractFeed implements Iterator, Countable
             throw new Exception\InvalidArgumentException('Invalid feed type specified: ' . $type . '.'
             . ' Should be one of "rss" or "atom".');
         }
-        $renderClass = 'Zend\\Feed\\Writer\\Renderer\\Feed\\' . $type;
+        $renderClass = 'Laminas\\Feed\\Writer\\Renderer\\Feed\\' . $type;
         $renderer = new $renderClass($this);
         if ($ignoreExceptions) {
             $renderer->ignoreExceptions();

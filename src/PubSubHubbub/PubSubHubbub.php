@@ -1,21 +1,19 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Feed
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Feed\PubSubHubbub;
+namespace Laminas\Feed\PubSubHubbub;
 
-use Zend\Feed\Reader;
-use Zend\Http;
+use Laminas\Feed\Reader;
+use Laminas\Http;
 
 /**
- * @category   Zend
- * @package    Zend_Feed_Pubsubhubbub
+ * @category   Laminas
+ * @package    Laminas_Feed_Pubsubhubbub
  */
 class PubSubHubbub
 {
@@ -35,17 +33,17 @@ class PubSubHubbub
     /**
      * Singleton instance if required of the HTTP client
      *
-     * @var \Zend\Http\Client
+     * @var \Laminas\Http\Client
      */
     protected static $httpClient = null;
 
     /**
      * Simple utility function which imports any feed URL and
      * determines the existence of Hub Server endpoints. This works
-     * best if directly given an instance of Zend_Feed_Reader_Atom|Rss
+     * best if directly given an instance of Laminas_Feed_Reader_Atom|Rss
      * to leverage off.
      *
-     * @param  \Zend\Feed\Reader\Feed\AbstractFeed|string $source
+     * @param  \Laminas\Feed\Reader\Feed\AbstractFeed|string $source
      * @return array
      * @throws Exception\InvalidArgumentException
      */
@@ -58,16 +56,16 @@ class PubSubHubbub
         } else {
             throw new Exception\InvalidArgumentException('The source parameter was'
             . ' invalid, i.e. not a URL string or an instance of type'
-            . ' Zend\Feed\Reader\Feed\AbstractFeed');
+            . ' Laminas\Feed\Reader\Feed\AbstractFeed');
         }
         return $feed->getHubs();
     }
 
     /**
-     * Allows the external environment to make Zend_Oauth use a specific
+     * Allows the external environment to make Laminas_Oauth use a specific
      * Client instance.
      *
-     * @param  \Zend\Http\Client $httpClient
+     * @param  \Laminas\Http\Client $httpClient
      * @return void
      */
     public static function setHttpClient(Http\Client $httpClient)
@@ -80,7 +78,7 @@ class PubSubHubbub
      * the instance is reset and cleared of previous parameters GET/POST.
      * Headers are NOT reset but handled by this component if applicable.
      *
-     * @return \Zend\Http\Client
+     * @return \Laminas\Http\Client
      */
     public static function getHttpClient()
     {

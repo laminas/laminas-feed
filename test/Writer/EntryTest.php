@@ -1,24 +1,22 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Feed
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Feed\Writer;
+namespace LaminasTest\Feed\Writer;
 
 use DateTime;
-use Zend\Feed\Writer;
+use Laminas\Feed\Writer;
 
 /**
- * @category   Zend
- * @package    Zend_Exception
+ * @category   Laminas
+ * @package    Laminas_Exception
  * @subpackage UnitTests
- * @group      Zend_Feed
- * @group      Zend_Feed_Writer
+ * @group      Laminas_Feed
+ * @group      Laminas_Feed_Writer
  */
 class EntryTest extends \PHPUnit_Framework_TestCase
 {
@@ -78,7 +76,7 @@ class EntryTest extends \PHPUnit_Framework_TestCase
 
     public function testAddAuthorThrowsExceptionOnInvalidUriFromArray()
     {
-        $this->markTestIncomplete('Pending Zend\URI fix for validation');
+        $this->markTestIncomplete('Pending Laminas\URI fix for validation');
         $entry = new Writer\Entry;
         try {
             $entry->addAuthor(array('name'=> 'Joe',
@@ -133,11 +131,11 @@ class EntryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Zend\Feed\Writer\Exception\ExceptionInterface
+     * @expectedException Laminas\Feed\Writer\Exception\ExceptionInterface
      */
     public function testAddsEnclosureThrowsExceptionOnMissingUri()
     {
-        $this->markTestIncomplete('Pending Zend\URI fix for validation');
+        $this->markTestIncomplete('Pending Laminas\URI fix for validation');
         $entry = new Writer\Entry;
         $entry->setEnclosure(array(
                                   'type'   => 'audio/mpeg',
@@ -146,11 +144,11 @@ class EntryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Zend\Feed\Writer\Exception\ExceptionInterface
+     * @expectedException Laminas\Feed\Writer\Exception\ExceptionInterface
      */
     public function testAddsEnclosureThrowsExceptionWhenUriIsInvalid()
     {
-        $this->markTestIncomplete('Pending Zend\URI fix for validation');
+        $this->markTestIncomplete('Pending Laminas\URI fix for validation');
         $entry = new Writer\Entry;
         $entry->setEnclosure(array(
                                   'type'   => 'audio/mpeg',
@@ -210,7 +208,7 @@ class EntryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-12070
+     * @group Laminas-12070
      */
     public function testSetDateCreatedUsesGivenUnixTimestampWhenItIsLessThanTenDigits()
     {
@@ -221,7 +219,7 @@ class EntryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-11610
+     * @group Laminas-11610
      */
     public function testSetDateCreatedUsesGivenUnixTimestampWhenItIsAVerySmallInteger()
     {
@@ -256,7 +254,7 @@ class EntryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-12070
+     * @group Laminas-12070
      */
     public function testSetDateModifiedUsesGivenUnixTimestampWhenItIsLessThanTenDigits()
     {
@@ -267,7 +265,7 @@ class EntryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-11610
+     * @group Laminas-11610
      */
     public function testSetDateModifiedUsesGivenUnixTimestampWhenItIsAVerySmallInteger()
     {
@@ -453,7 +451,7 @@ class EntryTest extends \PHPUnit_Framework_TestCase
 
     public function testSetCommentFeedLinkThrowsExceptionOnEmptyString()
     {
-        $this->markTestIncomplete('Pending Zend\URI fix for validation');
+        $this->markTestIncomplete('Pending Laminas\URI fix for validation');
         $entry = new Writer\Entry;
         try {
             $entry->setCommentFeedLink(array('uri' => '',

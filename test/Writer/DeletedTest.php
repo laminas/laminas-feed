@@ -1,24 +1,22 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Feed
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Feed\Writer;
+namespace LaminasTest\Feed\Writer;
 
 use DateTime;
-use Zend\Feed\Writer;
+use Laminas\Feed\Writer;
 
 /**
-* @category Zend
-* @package Zend_Exception
+* @category Laminas
+* @package Laminas_Exception
 * @subpackage UnitTests
-* @group Zend_Feed
-* @group Zend_Feed_Writer
+* @group Laminas_Feed
+* @group Laminas_Feed_Writer
 */
 class DeletedTest extends \PHPUnit_Framework_TestCase
 {
@@ -63,7 +61,7 @@ class DeletedTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-12070
+     * @group Laminas-12070
      */
     public function testSetWhenUsesGivenUnixTimestampWhenItIsLessThanTenDigits()
     {
@@ -74,7 +72,7 @@ class DeletedTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-11610
+     * @group Laminas-11610
      */
     public function testSetWhenUsesGivenUnixTimestampWhenItIsAVerySmallInteger()
     {
@@ -151,7 +149,7 @@ class DeletedTest extends \PHPUnit_Framework_TestCase
 
     public function testAddByThrowsExceptionOnInvalidUriFromArray()
     {
-        $this->markTestIncomplete('Pending Zend\URI fix for validation');
+        $this->markTestIncomplete('Pending Laminas\URI fix for validation');
         $entry = new Writer\Deleted;
         try {
             $entry->setBy(array('name'=>'Joe','uri'=>'notauri'));
