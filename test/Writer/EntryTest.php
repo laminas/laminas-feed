@@ -1,20 +1,19 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Feed\Writer;
+namespace LaminasTest\Feed\Writer;
 
 use DateTime;
-use Zend\Feed\Writer;
+use Laminas\Feed\Writer;
 
 /**
- * @group      Zend_Feed
- * @group      Zend_Feed_Writer
+ * @group      Laminas_Feed
+ * @group      Laminas_Feed_Writer
  */
 class EntryTest extends \PHPUnit_Framework_TestCase
 {
@@ -128,11 +127,11 @@ class EntryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Zend\Feed\Writer\Exception\ExceptionInterface
+     * @expectedException Laminas\Feed\Writer\Exception\ExceptionInterface
      */
     public function testAddsEnclosureThrowsExceptionOnMissingUri()
     {
-        $this->markTestIncomplete('Pending Zend\URI fix for validation');
+        $this->markTestIncomplete('Pending Laminas\URI fix for validation');
         $entry = new Writer\Entry;
         $entry->setEnclosure([
                                   'type'   => 'audio/mpeg',
@@ -141,11 +140,11 @@ class EntryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Zend\Feed\Writer\Exception\ExceptionInterface
+     * @expectedException Laminas\Feed\Writer\Exception\ExceptionInterface
      */
     public function testAddsEnclosureThrowsExceptionWhenUriIsInvalid()
     {
-        $this->markTestIncomplete('Pending Zend\URI fix for validation');
+        $this->markTestIncomplete('Pending Laminas\URI fix for validation');
         $entry = new Writer\Entry;
         $entry->setEnclosure([
                                   'type'   => 'audio/mpeg',
@@ -205,7 +204,7 @@ class EntryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-12070
+     * @group Laminas-12070
      */
     public function testSetDateCreatedUsesGivenUnixTimestampWhenItIsLessThanTenDigits()
     {
@@ -216,7 +215,7 @@ class EntryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-11610
+     * @group Laminas-11610
      */
     public function testSetDateCreatedUsesGivenUnixTimestampWhenItIsAVerySmallInteger()
     {
@@ -251,7 +250,7 @@ class EntryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-12070
+     * @group Laminas-12070
      */
     public function testSetDateModifiedUsesGivenUnixTimestampWhenItIsLessThanTenDigits()
     {
@@ -262,7 +261,7 @@ class EntryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-11610
+     * @group Laminas-11610
      */
     public function testSetDateModifiedUsesGivenUnixTimestampWhenItIsAVerySmallInteger()
     {
@@ -454,7 +453,7 @@ class EntryTest extends \PHPUnit_Framework_TestCase
 
     public function testSetCommentFeedLinkThrowsExceptionOnEmptyString()
     {
-        $this->markTestIncomplete('Pending Zend\URI fix for validation');
+        $this->markTestIncomplete('Pending Laminas\URI fix for validation');
         $entry = new Writer\Entry;
         try {
             $entry->setCommentFeedLink(['uri' => '',
@@ -570,7 +569,7 @@ class EntryTest extends \PHPUnit_Framework_TestCase
     public function testSetsCommentCountDisallowed($count)
     {
         $entry = new Writer\Entry;
-        $this->setExpectedException('Zend\Feed\Writer\Exception\ExceptionInterface');
+        $this->setExpectedException('Laminas\Feed\Writer\Exception\ExceptionInterface');
         $entry->setCommentCount($count);
     }
 
@@ -601,7 +600,7 @@ class EntryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Zend\Feed\Writer\Entry::setEncoding
+     * @covers Laminas\Feed\Writer\Entry::setEncoding
      */
     public function testSetEncodingThrowsExceptionIfNull()
     {
@@ -614,7 +613,7 @@ class EntryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Zend\Feed\Writer\Entry::addCategory
+     * @covers Laminas\Feed\Writer\Entry::addCategory
      */
     public function testAddCategoryThrowsExceptionIfNotSetTerm()
     {
@@ -627,7 +626,7 @@ class EntryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Zend\Feed\Writer\Entry::addCategory
+     * @covers Laminas\Feed\Writer\Entry::addCategory
      */
     public function testAddCategoryThrowsExceptionIfSchemeNull()
     {
@@ -640,7 +639,7 @@ class EntryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Zend\Feed\Writer\Entry::setEnclosure
+     * @covers Laminas\Feed\Writer\Entry::setEnclosure
      */
     public function testSetEnclosureThrowsExceptionIfNotSetUri()
     {
@@ -653,7 +652,7 @@ class EntryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Zend\Feed\Writer\Entry::setEnclosure
+     * @covers Laminas\Feed\Writer\Entry::setEnclosure
      */
     public function testSetEnclosureThrowsExceptionIfNotValidUri()
     {
@@ -666,7 +665,7 @@ class EntryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Zend\Feed\Writer\Entry::getExtension
+     * @covers Laminas\Feed\Writer\Entry::getExtension
      */
     public function testGetExtension()
     {
@@ -674,23 +673,23 @@ class EntryTest extends \PHPUnit_Framework_TestCase
         $foo = $entry->getExtension('foo');
         $this->assertNull($foo);
 
-        $this->assertInstanceOf('Zend\Feed\Writer\Extension\ITunes\Entry', $entry->getExtension('ITunes'));
+        $this->assertInstanceOf('Laminas\Feed\Writer\Extension\ITunes\Entry', $entry->getExtension('ITunes'));
     }
 
     /**
-     * @covers Zend\Feed\Writer\Entry::getExtensions
+     * @covers Laminas\Feed\Writer\Entry::getExtensions
      */
     public function testGetExtensions()
     {
         $entry = new Writer\Entry;
 
         $extensions = $entry->getExtensions();
-        $this->assertInstanceOf('Zend\Feed\Writer\Extension\ITunes\Entry', $extensions['ITunes\Entry']);
+        $this->assertInstanceOf('Laminas\Feed\Writer\Extension\ITunes\Entry', $extensions['ITunes\Entry']);
     }
 
     /**
-     * @covers Zend\Feed\Writer\Entry::getSource
-     * @covers Zend\Feed\Writer\Entry::createSource
+     * @covers Laminas\Feed\Writer\Entry::getSource
+     * @covers Laminas\Feed\Writer\Entry::createSource
      */
     public function testGetSource()
     {
@@ -700,7 +699,7 @@ class EntryTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($source);
 
         $entry->setSource($entry->createSource());
-        $this->assertInstanceOf('Zend\Feed\Writer\Source', $entry->getSource());
+        $this->assertInstanceOf('Laminas\Feed\Writer\Source', $entry->getSource());
     }
 
     public function testFluentInterface()
@@ -726,7 +725,7 @@ class EntryTest extends \PHPUnit_Framework_TestCase
                         ->addCategories([['term' => 'category']])
                         ->setEnclosure(['uri' => 'http://www.example.com'])
                         ->setType('type')
-                        ->setSource(new \Zend\Feed\Writer\Source());
+                        ->setSource(new \Laminas\Feed\Writer\Source());
 
         $this->assertSame($result, $entry);
     }

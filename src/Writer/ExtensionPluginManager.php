@@ -1,15 +1,14 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Feed\Writer;
+namespace Laminas\Feed\Writer;
 
-use Zend\ServiceManager\AbstractPluginManager;
+use Laminas\ServiceManager\AbstractPluginManager;
 
 /**
  * Plugin manager implementation for feed writer extensions
@@ -24,17 +23,17 @@ class ExtensionPluginManager extends AbstractPluginManager
      * @var array
      */
     protected $invokableClasses = [
-        'atomrendererfeed'           => 'Zend\Feed\Writer\Extension\Atom\Renderer\Feed',
-        'contentrendererentry'       => 'Zend\Feed\Writer\Extension\Content\Renderer\Entry',
-        'dublincorerendererentry'    => 'Zend\Feed\Writer\Extension\DublinCore\Renderer\Entry',
-        'dublincorerendererfeed'     => 'Zend\Feed\Writer\Extension\DublinCore\Renderer\Feed',
-        'itunesentry'                => 'Zend\Feed\Writer\Extension\ITunes\Entry',
-        'itunesfeed'                 => 'Zend\Feed\Writer\Extension\ITunes\Feed',
-        'itunesrendererentry'        => 'Zend\Feed\Writer\Extension\ITunes\Renderer\Entry',
-        'itunesrendererfeed'         => 'Zend\Feed\Writer\Extension\ITunes\Renderer\Feed',
-        'slashrendererentry'         => 'Zend\Feed\Writer\Extension\Slash\Renderer\Entry',
-        'threadingrendererentry'     => 'Zend\Feed\Writer\Extension\Threading\Renderer\Entry',
-        'wellformedwebrendererentry' => 'Zend\Feed\Writer\Extension\WellFormedWeb\Renderer\Entry',
+        'atomrendererfeed'           => 'Laminas\Feed\Writer\Extension\Atom\Renderer\Feed',
+        'contentrendererentry'       => 'Laminas\Feed\Writer\Extension\Content\Renderer\Entry',
+        'dublincorerendererentry'    => 'Laminas\Feed\Writer\Extension\DublinCore\Renderer\Entry',
+        'dublincorerendererfeed'     => 'Laminas\Feed\Writer\Extension\DublinCore\Renderer\Feed',
+        'itunesentry'                => 'Laminas\Feed\Writer\Extension\ITunes\Entry',
+        'itunesfeed'                 => 'Laminas\Feed\Writer\Extension\ITunes\Feed',
+        'itunesrendererentry'        => 'Laminas\Feed\Writer\Extension\ITunes\Renderer\Entry',
+        'itunesrendererfeed'         => 'Laminas\Feed\Writer\Extension\ITunes\Renderer\Feed',
+        'slashrendererentry'         => 'Laminas\Feed\Writer\Extension\Slash\Renderer\Entry',
+        'threadingrendererentry'     => 'Laminas\Feed\Writer\Extension\Threading\Renderer\Entry',
+        'wellformedwebrendererentry' => 'Laminas\Feed\Writer\Extension\WellFormedWeb\Renderer\Entry',
     ];
 
     /**
