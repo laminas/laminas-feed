@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Consume and generate Atom and RSS feeds, and interact with Pubsubhubbub.">  
+    <link rel="canonical" href="https://docs.laminas.dev/pubsubhubbub/">
+    <link rel="shortcut icon" href="/img/trademark-laminas-foundation-rgb.svg">
+
+    <title>Pubsubhubbub - laminas-feed - Laminas Docs</title>
+
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body id="page-top" class="components">
+
+    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        
+        <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
+            <img src="../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+        </a>
+        <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
+            Documentation
+        </a>
+
+        
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
+                </li>
+            </ul>
+
+            
+            
+                <div class="d-block d-sm-none">
+                    
+    <div class="subnavigation hidden-print">
+        <h4 class="subnavigation__title">
+            <a href="..">laminas-feed</a>
+        </h4>
+
+        <h5 class="subnavigation__subtitle">Table of Contents</h5>
+
+        <ul class="subnavigation__list">
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../intro/" class="subnavigation__link">Introduction</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Reader</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../reader/" class="subnavigation__link">Basic Usage</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../http-clients/" class="subnavigation__link">HTTP Clients</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../psr7-clients/" class="subnavigation__link">Using PSR-7 Clients</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../importing/" class="subnavigation__link">Importing Feeds</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../find-feeds/" class="subnavigation__link">Feed Discovery</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../consuming-rss/" class="subnavigation__link">Consuming RSS Feeds</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../consuming-atom/" class="subnavigation__link">Consuming Atom Feeds</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../consuming-atom-entry/" class="subnavigation__link">Consuming Atom Entries</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../security/" class="subnavigation__link">Security</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../writer/" class="subnavigation__link">Writer</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item subnavigation__list-item--active">
+                                <a href="./" class="subnavigation__link">Pubsubhubbub</a>
+                            </li>
+                        
+                    
+                
+            
+        </ul>
+    </div>
+
+                </div>
+            
+
+            
+            <div class="d-block d-sm-none">
+                <div class="component-selector">
+    
+    <h5 class="component-selector__subtitle">Find documentation…</h5>
+    <select class="form-control component-selector__control">
+        <option value="/">Overview</option>
+        <optgroup label="Components"></optgroup>
+    </select>
+</div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    
+    <header class="header">
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="col-6 offset-md-2">
+                <h1 class="header__title">
+                    Components
+
+                    
+                        <small class="header__subtitle">laminas-feed</small>
+                    
+                </h1>
+            </div>
+
+            
+            <div class="col-4 text-sm-right">
+                
+                    
+
+                    <a href="#" class="header__link header__link--search" data-toggle="modal" data-target="#mkdocs_search_modal" title="Open search">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                    <a href="https://github.com/laminas/laminas-feed/" class="header__link header__link--github" title="Go to repository of laminas-feed">
+                        <i class="fa fa-github"></i> GitHub
+                    </a>
+                
+            </div>
+        </div>
+    </div>
+</header>
+
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 col-sm-12">
+                
+    
+
+    
+    
+        <div class="toc">
+            <h6 class="toc__headline">On this page</h6>
+            <ul class="toc__list">
+                
+                    <li class="toc__entry">
+                        <a href="#what-is-pubsubhubbub" class="toc__link">What is PubSubHubbub?</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#architecture" class="toc__link">Architecture</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#publisher" class="toc__link">Publisher</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#subscriber" class="toc__link">Subscriber</a>
+                    </li>
+                
+            </ul>
+        </div>
+    
+
+            </div>
+            <div class="col-md-7 col-sm-12 content" role="main" data-spy="scroll" data-target=".toc">
+                
+                    <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        
+            <li class="breadcrumb-item"><a href="">Overview</a></li>
+
+            
+                <li class="breadcrumb-item"><a href="..">laminas-feed</a></li>
+
+                
+
+                <li class="breadcrumb-item active" aria-current="page">Pubsubhubbub</li>
+            
+        
+    </ol>
+</nav>
+
+
+
+
+
+
+    
+    
+
+    <h1 id="pubsubhubbub">PubSubHubbub</h1>
+<p><code>Laminas\Feed\PubSubHubbub</code> is an implementation of the <a href="http://pubsubhubbub.github.io/PubSubHubbub/pubsubhubbub-core-0.3.html">PubSubHubbub Core 0.2/0.3
+Specification (Working Draft)</a>.
+It offers implementations of a Pubsubhubbub Publisher and Subscriber suited to
+PHP applications.</p>
+<h2 id="what-is-pubsubhubbub">What is PubSubHubbub?</h2>
+<p>Pubsubhubbub is an open, simple, web-scale, pubsub protocol. A common use case
+to enable blogs (Publishers) to "push" updates from their RSS or Atom feeds
+(Topics) to end Subscribers. These Subscribers will have subscribed to the
+blog's RSS or Atom feed via a Hub, a central server which is notified of any
+updates by the Publisher, and which then distributes these updates to all
+Subscribers. Any feed may advertise that it supports one or more Hubs using an
+Atom namespaced link element with a rel attribute of "hub" (i.e., <code>rel="hub"</code>).</p>
+<p>Pubsubhubbub has garnered attention because it is a pubsub protocol which is
+easy to implement and which operates over HTTP. Its philosophy is to replace the
+traditional model where blog feeds have been polled at regular intervals to
+detect and retrieve updates. Depending on the frequency of polling, this can
+take a lot of time to propagate updates to interested parties from planet
+aggregators to desktop readers. With a pubsub system in place, updates are not
+simply polled by Subscribers, they are pushed to Subscribers, eliminating any
+delay. For this reason, Pubsubhubbub forms part of what has been dubbed the
+real-time web.</p>
+<p>The protocol does not exist in isolation. Pubsub systems have been around for a
+while, such as the familiar Jabber Publish-Subscribe protocol,
+<a href="http://www.xmpp.org/extensions/xep-0060.html">XEP-0060</a>, or the less well-known
+<a href="http://www.rssboard.org/rsscloud-interface">rssCloud</a> (described in 2001).
+However, these have not achieved widespread adoption due to either their
+complexity, poor timing, or lack of suitability for web applications. rssCloud,
+which was recently revived as a response to the appearance of Pubsubhubbub, has
+also seen its usage increase significantly, though it lacks a formal
+specification and currently does not support Atom 1.0 feeds.</p>
+<p>Perhaps surprisingly given its relative early age, Pubsubhubbub is already in
+use including in Google Reader and Feedburner, and there are plugins available
+for Wordpress blogs.</p>
+<h2 id="architecture">Architecture</h2>
+<p><code>Laminas\Feed\PubSubHubbub</code> implements two sides of the Pubsubhubbub 0.2/0.3
+Specification: a Publisher and a Subscriber. It does not currently implement a
+Hub Server.</p>
+<p>A Publisher is responsible for notifying all supported Hubs (many can be
+supported to add redundancy to the system) of any updates to its feeds, whether
+they be Atom or RSS based. This is achieved by pinging the supported Hub Servers
+with the URL of the updated feed. In Pubsubhubbub terminology, any updatable
+resource capable of being subscribed to is referred to as a Topic. Once a ping
+is received, the Hub will request the updated feed, process it for updated
+items, and forward all updates to all Subscribers subscribed to that feed.</p>
+<p>A Subscriber is any party or application which subscribes to one or more Hubs to
+receive updates from a Topic hosted by a Publisher. The Subscriber never
+directly communicates with the Publisher since the Hub acts as an intermediary,
+accepting subscriptions and sending updates to Subscribers. The Subscriber
+therefore communicates only with the Hub, either to subscribe or unsubscribe to
+Topics, or when it receives updates from the Hub. This communication design
+("Fat Pings") effectively removes the possibility of a "Thundering Herd" issue.
+(Thundering Herds occur in a pubsub system where the Hub merely informs
+Subscribers that an update is available, prompting all Subscribers to
+immediately retrieve the feed from the Publisher, giving rise to a traffic
+spike.) In Pubsubhubbub, the Hub distributes the actual update in a "Fat Ping"
+so the Publisher is not subjected to any traffic spike.</p>
+<p><code>Laminas\Feed\PubSubHubbub</code> implements Pubsubhubbub Publishers and Subscribers with
+the classes <code>Laminas\Feed\PubSubHubbub\Publisher</code> and
+<code>Laminas\Feed\PubSubHubbub\Subscriber</code>. In addition, the Subscriber implementation
+may handle any feed updates forwarded from a Hub by using
+<code>Laminas\Feed\PubSubHubbub\Subscriber\Callback</code>. These classes, their use cases,
+and etheir APIs are covered in subsequent sections.</p>
+<h2 id="publisher">Publisher</h2>
+<p>In Pubsubhubbub, the Publisher is the party publishing a live feed with content
+updates. This may be a blog, an aggregator, or even a web service with a public
+feed based API. In order for these updates to be pushed to Subscribers, the
+Publisher must notify all of its supported Hubs that an update has occurred
+using a simple HTTP POST request containing the URI of the updated Topic (i.e.,
+the updated RSS or Atom feed). The Hub will confirm receipt of the notification,
+fetch the updated feed, and forward any updates to any Subscribers who have
+subscribed to that Hub for updates from the relevant feed.</p>
+<p>By design, this means the Publisher has very little to do except send these Hub
+pings whenever its feeds change. As a result, the Publisher implementation is
+extremely simple to use and requires very little work to setup and use when
+feeds are updated.</p>
+<p><code>Laminas\Feed\PubSubHubbub\Publisher</code> implements a full Pubsubhubbub Publisher. Its
+setup for use primarily requires that it is configured with the URI endpoint for
+all Hubs to be notified of updates, and the URIs of all Topics to be included in
+the notifications.</p>
+<p>The following example shows a Publisher notifying a collection of Hubs about
+updates to a pair of local RSS and Atom feeds. The class retains a collection of
+errors which include the Hub URLs, so that notification can be attempted again
+later and/or logged if any notifications happen to fail.  Each resulting error
+array also includes a "response" key containing the related HTTP response
+object. In the event of any errors, it is strongly recommended to attempt the
+operation for failed Hub Endpoints at least once more at a future time. This may
+require the use of either a scheduled task for this purpose or a job queue,
+though such extra steps are optional.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Feed\PubSubHubbub\Publisher;</span>
+
+<span class=x>$publisher = new Publisher;</span>
+<span class=x>$publisher-&gt;addHubUrls([</span>
+<span class=x>    &#39;http://pubsubhubbub.appspot.com/&#39;,</span>
+<span class=x>    &#39;http://hubbub.example.com&#39;,</span>
+<span class=x>]);</span>
+<span class=x>$publisher-&gt;addUpdatedTopicUrls([</span>
+<span class=x>    &#39;http://www.example.net/rss&#39;,</span>
+<span class=x>    &#39;http://www.example.net/atom&#39;,</span>
+<span class=x>]);</span>
+<span class=x>$publisher-&gt;notifyAll();</span>
+
+<span class=x>if (! $publisher-&gt;isSuccess()) {</span>
+<span class=x>    // check for errors</span>
+<span class=x>    $errors     = $publisher-&gt;getErrors();</span>
+<span class=x>    $failedHubs = [];</span>
+<span class=x>    foreach ($errors as $error) {</span>
+<span class=x>        $failedHubs[] = $error[&#39;hubUrl&#39;];</span>
+<span class=x>    }</span>
+<span class=x>}</span>
+
+<span class=x>// reschedule notifications for the failed Hubs in $failedHubs</span>
+</pre></div></p>
+<p>If you prefer having more concrete control over the Publisher, the methods
+<code>addHubUrls()</code> and <code>addUpdatedTopicUrls()</code> pass each array value to the singular
+<code>addHubUrl()</code> and <code>addUpdatedTopicUrl()</code> public methods. There are also matching
+<code>removeUpdatedTopicUrl()</code> and <code>removeHubUrl()</code> methods.</p>
+<p>You can also skip setting Hub URIs, and notify each in turn using the
+<code>notifyHub()</code> method which accepts the URI of a Hub endpoint as its only
+argument.</p>
+<p>There are no other tasks to cover. The Publisher implementation is very simple
+since most of the feed processing and distribution is handled by the selected
+Hubs. It is, however, important to detect errors and reschedule notifications as
+soon as possible (with a reasonable maximum number of retries) to ensure
+notifications reach all Subscribers. In many cases, as a final alternative, Hubs
+may frequently poll your feeds to offer some additional tolerance for failures
+both in terms of their own temporary downtime or Publisher errors or downtime.</p>
+<h2 id="subscriber">Subscriber</h2>
+<p>In Pubsubhubbub, the Subscriber is the party who wishes to receive updates to
+any Topic (RSS or Atom feed). They achieve this by subscribing to one or more of
+the Hubs advertised by that Topic, usually as a set of one or more Atom 1.0
+links with a rel attribute of "hub" (i.e., <code>rel="hub"</code>). The Hub from that point
+forward will send an Atom or RSS feed containing all updates to that
+Subscriber's callback URL when it receives an update notification from the
+Publisher. In this way, the Subscriber need never actually visit the original
+feed (though it's still recommended at some level to ensure updates are
+retrieved if ever a Hub goes offline). All subscription requests must contain
+the URI of the Topic being subscribed and a callback URL which the Hub will use
+to confirm the subscription and to forward updates.</p>
+<p>The Subscriber therefore has two roles. The first is to <em>create</em> and <em>manage</em>
+subscriptions, including subscribing for new Topics with a Hub, unsubscribing
+(if necessary), and periodically renewing subscriptions, since they may have an
+expiry set by the Hub. This is handled by <code>Laminas\Feed\PubSubHubbub\Subscriber</code>.</p>
+<p>The second role is to <em>accept updates</em> sent by a Hub to the Subscriber's
+callback URL, i.e. the URI the Subscriber has assigned to handle updates. The
+callback URL also handles events where the Hub contacts the Subscriber to
+confirm all subscriptions and unsubscriptions. This is handled by using an
+instance of <code>Laminas\Feed\PubSubHubbub\Subscriber\Callback</code> when the callback URL
+is accessed.</p>
+<blockquote>
+<h3>Query strings in callback URLs</h3>
+<p><code>Laminas\Feed\PubSubHubbub\Subscriber</code> implements the Pubsubhubbub 0.2/0.3
+specification. As this is a new specification version, not all Hubs currently
+implement it. The new specification allows the callback URL to include a query
+string which is used by this class, but not supported by all Hubs. In the
+interests of maximising compatibility, it is therefore recommended that the
+query string component of the Subscriber callback URI be presented as a path
+element, i.e. recognised as a parameter in the route associated with the
+callback URI and used by the application's router.</p>
+</blockquote>
+<h3>Subscribing and Unsubscribing</h3>
+<p><code>Laminas\Feed\PubSubHubbub\Subscriber</code> implements a full Pubsubhubbub Subscriber
+capable of subscribing to, or unsubscribing from, any Topic via any Hub
+advertised by that Topic. It operates in conjunction with
+<code>Laminas\Feed\PubSubHubbub\Subscriber\Callback</code>, which accepts requests from a Hub
+to confirm all subscription or unsubscription attempts (to prevent third-party
+misuse).</p>
+<p>Any subscription (or unsubscription) requires the relevant information before
+proceeding, i.e. the URI of the Topic (Atom or RSS feed) to be subscribed to for
+updates, and the URI of the endpoint for the Hub which will handle the
+subscription and forwarding of the updates. The lifetime of a subscription may
+be determined by the Hub, but most Hubs should support automatic subscription
+refreshes by checking with the Subscriber. This is supported by
+<code>Laminas\Feed\PubSubHubbub\Subscriber\Callback</code> and requires no other work on your
+part. It is still strongly recommended that you use the Hub-sourced subscription
+time-to.live (ttl) to schedule the creation of new subscriptions (the process is
+identical to that for any new subscription) to refresh it with the Hub. While it
+should not be necessary per se, it covers cases where a Hub may not support
+automatic subscription refreshing, and rules out Hub errors for additional
+redundancy.</p>
+<p>With the relevant information to hand, a subscription can be attempted as
+demonstrated below:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Feed\PubSubHubbub\Model\Subscription;</span>
+<span class=x>use Laminas\Feed\PubSubHubbub\Subscriber;</span>
+
+<span class=x>$storage    = new Subscription;</span>
+<span class=x>$subscriber = new Subscriber;</span>
+<span class=x>$subscriber-&gt;setStorage($storage);</span>
+<span class=x>$subscriber-&gt;addHubUrl(&#39;http://hubbub.example.com&#39;);</span>
+<span class=x>$subscriber-&gt;setTopicUrl(&#39;http://www.example.net/rss.xml&#39;);</span>
+<span class=x>$subscriber-&gt;setCallbackUrl(&#39;http://www.mydomain.com/hubbub/callback&#39;);</span>
+<span class=x>$subscriber-&gt;subscribeAll();</span>
+</pre></div></p>
+<p>In order to store subscriptions and offer access to this data for general use,
+the component requires a database (a schema is provided later in this section).
+By default, it is assumed the table name is "subscription", and it utilises
+<code>Laminas\Db\TableGateway\TableGateway</code> in the background, meaning it will use the
+default adapter you have set for your application. You may also pass a specific
+custom <code>Laminas\Db\TableGateway\TableGateway</code> instance into the associated model
+<code>Laminas\Feed\PubSubHubbub\Model\Subscription</code>. This custom adapter may be as
+simple in intent as changing the table name to use or as complex as you deem
+necessary.</p>
+<p>While this model is offered as a default ready-to-roll solution, you may create
+your own model using any other backend or database layer (e.g. Doctrine) so long
+as the resulting class implements the interface
+<code>Laminas\Feed\PubSubHubbub\Model\SubscriptionInterface</code>.</p>
+<p>An example schema (MySQL) for a subscription table accessible by the provided
+model may look similar to:</p>
+<p> <div class=codehilite><pre><span></span><span class=k>CREATE</span> <span class=k>TABLE</span> <span class=k>IF</span> <span class=k>NOT</span> <span class=k>EXISTS</span> <span class=o>`</span><span class=n>subscription</span><span class=o>`</span> <span class=p>(</span>
+  <span class=o>`</span><span class=n>id</span><span class=o>`</span> <span class=nb>varchar</span><span class=p>(</span><span class=mi>32</span><span class=p>)</span> <span class=k>COLLATE</span> <span class=n>utf8_unicode_ci</span> <span class=k>NOT</span> <span class=k>NULL</span> <span class=k>DEFAULT</span> <span class=s1>&#39;&#39;</span><span class=p>,</span>
+  <span class=o>`</span><span class=n>topic_url</span><span class=o>`</span> <span class=nb>varchar</span><span class=p>(</span><span class=mi>255</span><span class=p>)</span> <span class=k>COLLATE</span> <span class=n>utf8_unicode_ci</span> <span class=k>DEFAULT</span> <span class=k>NULL</span><span class=p>,</span>
+  <span class=o>`</span><span class=n>hub_url</span><span class=o>`</span> <span class=nb>varchar</span><span class=p>(</span><span class=mi>255</span><span class=p>)</span> <span class=k>COLLATE</span> <span class=n>utf8_unicode_ci</span> <span class=k>DEFAULT</span> <span class=k>NULL</span><span class=p>,</span>
+  <span class=o>`</span><span class=n>created_time</span><span class=o>`</span> <span class=n>datetime</span> <span class=k>DEFAULT</span> <span class=k>NULL</span><span class=p>,</span>
+  <span class=o>`</span><span class=n>lease_seconds</span><span class=o>`</span> <span class=nb>bigint</span><span class=p>(</span><span class=mi>20</span><span class=p>)</span> <span class=k>DEFAULT</span> <span class=k>NULL</span><span class=p>,</span>
+  <span class=o>`</span><span class=n>verify_token</span><span class=o>`</span> <span class=nb>varchar</span><span class=p>(</span><span class=mi>255</span><span class=p>)</span> <span class=k>COLLATE</span> <span class=n>utf8_unicode_ci</span> <span class=k>DEFAULT</span> <span class=k>NULL</span><span class=p>,</span>
+  <span class=o>`</span><span class=n>secret</span><span class=o>`</span> <span class=nb>varchar</span><span class=p>(</span><span class=mi>255</span><span class=p>)</span> <span class=k>COLLATE</span> <span class=n>utf8_unicode_ci</span> <span class=k>DEFAULT</span> <span class=k>NULL</span><span class=p>,</span>
+  <span class=o>`</span><span class=n>expiration_time</span><span class=o>`</span> <span class=n>datetime</span> <span class=k>DEFAULT</span> <span class=k>NULL</span><span class=p>,</span>
+  <span class=o>`</span><span class=n>subscription_state</span><span class=o>`</span> <span class=nb>varchar</span><span class=p>(</span><span class=mi>12</span><span class=p>)</span> <span class=k>COLLATE</span> <span class=n>utf8_unicode_ci</span> <span class=k>DEFAULT</span> <span class=k>NULL</span><span class=p>,</span>
+  <span class=k>PRIMARY</span> <span class=k>KEY</span> <span class=p>(</span><span class=o>`</span><span class=n>id</span><span class=o>`</span><span class=p>)</span>
+<span class=p>)</span> <span class=n>ENGINE</span><span class=o>=</span><span class=n>InnoDB</span> <span class=k>DEFAULT</span> <span class=n>CHARSET</span><span class=o>=</span><span class=n>utf8</span> <span class=k>COLLATE</span><span class=o>=</span><span class=n>utf8_unicode_ci</span><span class=p>;</span>
+</pre></div></p>
+<p>Behind the scenes, the Subscriber above will send a request to the Hub endpoint
+containing the following parameters (based on the previous example):</p>
+<div class="table-responsive"><table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Value</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>hub.callback</code></td>
+<td><code>http://www.mydomain.com/hubbub/callback?xhub.subscription=5536df06b5dcb966edab3a4c4d56213c16a8184</code></td>
+<td>The URI used by a Hub to contact the Subscriber and either request confirmation of a (un)subscription request, or send updates from subscribed feeds. The appended query string contains a custom parameter (hence the xhub designation). It is a query string parameter preserved by the Hub and re-sent with all Subscriber requests. Its purpose is to allow the Subscriber to identify and look up the subscription associated with any Hub request in a backend storage medium. This is a non-standard parameter used by this component in preference to encoding a subscription key in the URI path, which is difficult to enforce generically. Nevertheless, since not all Hubs support query string parameters, we still strongly recommend adding the subscription key as a path component in the form <code>http://www.mydomain.com/hubbub/callback/5536df06b5dcb966edab3a4c4d56213c16a8184</code>.  This requires defining a route capable of parsing out the final value of the key, retrieving the value, and passing it to the Subscriber callback object. The value should be passed into the method <code>Laminas\PubSubHubbub\Subscriber\Callback::setSubscriptionKey()</code>. A detailed example is offered later.</td>
+</tr>
+<tr>
+<td><code>hub.lease_seconds</code></td>
+<td><code>2592000</code></td>
+<td>The number of seconds for which the Subscriber would like a new subscription to remain valid (i.e. a TTL). Hubs may enforce their own maximum subscription period. All subscriptions should be renewed by re-subscribing before the subscription period ends to ensure continuity of updates. Hubs should additionally attempt to automatically refresh subscriptions before they expire by contacting Subscribers (handled automatically by the <code>Callback</code> class).</td>
+</tr>
+<tr>
+<td><code>hub.mode</code></td>
+<td><code>subscribe</code></td>
+<td>Value indicating this is a subscription request. Unsubscription requests would use the "unsubscribe" value.</td>
+</tr>
+<tr>
+<td><code>hub.topic</code></td>
+<td><code>http://www.example.net/rss.xml</code></td>
+<td>The URI of the Topic (i.e. Atom or RSS feed) which the Subscriber wishes to subscribe to for updates.</td>
+</tr>
+<tr>
+<td><code>hub.verify</code></td>
+<td><code>sync</code> or <code>async</code></td>
+<td>Indicates to the Hub the preferred mode of verifying subscriptions or unsubscriptions. It is repeated twice in order of preference. Technically this component does not distinguish between the two modes and treats both equally.</td>
+</tr>
+<tr>
+<td><code>hub.verify_token</code></td>
+<td><code>3065919804abcaa7212ae89.879827871253878386</code></td>
+<td>A verification token returned to the Subscriber by the Hub when it is confirming a subscription or unsubscription. Offers a measure of reliance that the confirmation request originates from the correct Hub to prevent misuse.</td>
+</tr>
+</tbody>
+</table></div>
+<p>You can modify several of these parameters to indicate a different preference.
+For example, you can set a different lease seconds value using
+<code>Laminas\Feed\PubSubHubbub\Subscriber::setLeaseSeconds(),</code> or show a preference for
+the <code>async</code> verify mode by using <code>setPreferredVerificationMode(Laminas\Feed\PubSubHubbub\PubSubHubbub::VERIFICATION_MODE_ASYNC)</code>.
+However, the Hubs retain the capability to enforce their own preferences, and
+for this reason the component is deliberately designed to work across almost any
+set of options with minimum end-user configuration required. Conventions are
+great when they work!</p>
+<blockquote>
+<h3>Verification modes</h3>
+<p>While Hubs may require the use of a specific verification mode (both are
+supported by <code>Laminas\Feed\PubSubHubbub</code>), you may indicate a specific preference
+using the <code>setPreferredVerificationMode()</code> method. In <code>sync</code> (synchronous)
+mode, the Hub attempts to confirm a subscription as soon as it is received,
+and before responding to the subscription request. In <code>async</code> (asynchronous)
+mode, the Hub will return a response to the subscription request immediately,
+and its verification request may occur at a later time. Since
+<code>Laminas\Feed\PubSubHubbub</code> implements the Subscriber verification role as a
+separate callback class and requires the use of a backend storage medium, it
+actually supports both transparently. In terms of end-user performance,
+asynchronous verification is very much preferred to eliminate the impact of a
+poorly performing Hub tying up end-user server resources and connections for
+too long.</p>
+</blockquote>
+<p>Unsubscribing from a Topic follows the exact same pattern as the previous
+example, with the exception that we should call <code>unsubscribeAll()</code> instead. The
+parameters included are identical to a subscription request with the exception
+that <code>hub.mode</code> is set to "unsubscribe".</p>
+<p>By default, a new instance of <code>Laminas\PubSubHubbub\Subscriber</code> will attempt to use
+a database backed storage medium which defaults to using the default laminas-db
+adapter with a table name of "subscription". It is recommended to set a custom
+storage solution where these defaults are not apt either by passing in a new
+model supporting the required interface or by passing a new instance of
+<code>Laminas\Db\TableGateway\TableGateway</code> to the default model's constructor to change
+the used table name.</p>
+<h3>Handling Subscriber Callbacks</h3>
+<p>Whenever a subscription or unsubscription request is made, the Hub must verify
+the request by forwarding a new verification request to the callback URL set in
+the subscription or unsubscription parameters. To handle these Hub requests,
+which will include all future communications containing Topic (feed) updates,
+the callback URL should trigger the execution of an instance of
+<code>Laminas\Feed\PubSubHubbub\Subscriber\Callback</code> to handle the request.</p>
+<p>The <code>Callback</code> class should be configured to use the same storage medium as the
+<code>Subscriber</code> class. The bulk of the work is handled internal to these classes.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Feed\PubSubHubbub\Model\Subscription;</span>
+<span class=x>use Laminas\Feed\PubSubHubbub\Subscriber\Callback;</span>
+
+<span class=x>$storage = new Subscription();</span>
+<span class=x>$callback = new Callback();</span>
+<span class=x>$callback-&gt;setStorage($storage);</span>
+<span class=x>$callback-&gt;handle();</span>
+<span class=x>$callback-&gt;sendResponse();</span>
+
+<span class=x>/*</span>
+<span class=x> * Check if the callback resulting in the receipt of a feed update.</span>
+<span class=x> * Otherwise it was either a (un)sub verification request or invalid request.</span>
+<span class=x> * Typically we need do nothing other than add feed update handling; the rest</span>
+<span class=x> * is handled internally by the class.</span>
+<span class=x> */</span>
+<span class=x>if ($callback-&gt;hasFeedUpdate()) {</span>
+<span class=x>    $feedString = $callback-&gt;getFeedUpdate();</span>
+<span class=x>    /*</span>
+<span class=x>     * Process the feed update asynchronously to avoid a Hub timeout.</span>
+<span class=x>     */</span>
+<span class=x>}</span>
+</pre></div></p>
+<blockquote>
+<h3>Query and body parameters</h3>
+<p>It should be noted that <code>Laminas\Feed\PubSubHubbub\Subscriber\Callback</code> may
+independently parse any incoming query string and other parameters. This is
+necessary since PHP alters the structure and keys of a query string when it is
+parsed into the <code>$_GET</code> or <code>$_POST</code> superglobals; for example, all duplicate
+keys are ignored and periods are converted to underscores. Pubsubhubbub
+features both of these in the query strings it generates.</p>
+<h3>Always delay feed processing</h3>
+<p>It is essential that developers recognise that Hubs are only concerned with
+sending requests and receiving a response which verifies its receipt. If a
+feed update is received, it should never be processed on the spot since this
+leaves the Hub waiting for a response. Rather, any processing should be
+offloaded to another process or deferred until after a response has been
+returned to the Hub. One symptom of a failure to promptly complete Hub
+requests is that a Hub may continue to attempt delivery of the update or
+verification request leading to duplicated update attempts being processed by
+the Subscriber. This appears problematic, but in reality a Hub may apply a
+timeout of just a few seconds, and if no response is received within that time
+it may disconnect (assuming a delivery failure) and retry later. Note that
+Hubs are expected to distribute vast volumes of updates so their resources are
+stretched; please process feeds asynchronously (e.g. in a separate process or
+a job queue or even a cronjob) as much as possible.</p>
+</blockquote>
+<h3>Setting Up And Using A Callback URL Route</h3>
+<p>As noted earlier, the <code>Laminas\Feed\PubSubHubbub\Subscriber\Callback</code> class
+receives the combined key associated with any subscription from the Hub via one
+of two methods. The technically preferred method is to add this key to the
+callback URL employed by the Hub in all future requests using a query string
+parameter with the key <code>xhub.subscription</code>. However, for historical reasons
+(primarily that this was not supported in Pubsubhubbub 0.1, and a late addition
+to 0.2 ), it is strongly recommended to use the most compatible means of adding
+this key to the callback URL by appending it to the URL's path.</p>
+<p>Thus the URL <code>http://www.example.com/callback?xhub.subscription=key</code> would become
+<code>http://www.example.com/callback/key</code>.</p>
+<p>Since the query string method is the default in anticipation of a greater level
+of future support for the full 0.2/0.3 specification, this requires some
+additional work to implement.</p>
+<p>The first step is to make the <code>Laminas\Feed\PubSubHubbub\Subscriber\Callback</code> class
+aware of the path contained subscription key. It's manually injected; therefore
+it also requires manually defining a route for this purpose. This is achieved by
+called the method <code>Laminas\Feed\PubSubHubbub\Subscriber\Callback::setSubscriptionKey()</code>
+with the parameter being the key value available from the router. The example
+below demonstrates this using a laminas-mvc controller.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Feed\PubSubHubbub\Model\Subscription;</span>
+<span class=x>use Laminas\Feed\PubSubHubbub\Subscriber\Callback;</span>
+<span class=x>use Laminas\Mvc\Controller\AbstractActionController;</span>
+
+<span class=x>class CallbackController extends AbstractActionController</span>
+<span class=x>{</span>
+
+<span class=x>    public function indexAction()</span>
+<span class=x>    {</span>
+<span class=x>        $storage = new Subscription();</span>
+<span class=x>        $callback = new Callback();</span>
+<span class=x>        $callback-&gt;setStorage($storage);</span>
+
+<span class=x>        /*</span>
+<span class=x>         * Inject subscription key parsing from URL path using</span>
+<span class=x>         * a parameter from the router.</span>
+<span class=x>         */</span>
+<span class=x>        $subscriptionKey = $this-&gt;params()-&gt;fromRoute(&#39;subkey&#39;);</span>
+<span class=x>        $callback-&gt;setSubscriptionKey($subscriptionKey);</span>
+<span class=x>        $callback-&gt;handle();</span>
+<span class=x>        $callback-&gt;sendResponse();</span>
+
+<span class=x>        /*</span>
+<span class=x>         * Check if the callback resulting in the receipt of a feed update.</span>
+<span class=x>         * Otherwise it was either a (un)sub verification request or invalid</span>
+<span class=x>         * request. Typically we need do nothing other than add feed update</span>
+<span class=x>         * handling; the rest is handled internally by the class.</span>
+<span class=x>         */</span>
+<span class=x>        if ($callback-&gt;hasFeedUpdate()) {</span>
+<span class=x>            $feedString = $callback-&gt;getFeedUpdate();</span>
+<span class=x>            /*</span>
+<span class=x>             *  Process the feed update asynchronously to avoid a Hub timeout.</span>
+<span class=x>             */</span>
+<span class=x>        }</span>
+<span class=x>    }</span>
+<span class=x>}</span>
+</pre></div></p>
+<p>The example below illustrates adding a route mapping the path segment to a route
+parameter, using laminas-mvc:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Mvc\Router\Http\Segment as SegmentRoute;;</span>
+
+<span class=x>// Route defininition for enabling appending of a PuSH Subscription&#39;s lookup key</span>
+<span class=x>$route = SegmentRoute::factory([</span>
+<span class=x>   &#39;route&#39; =&gt; &#39;/callback/:subkey&#39;,</span>
+<span class=x>   &#39;constraints&#39; =&gt; [</span>
+<span class=x>      &#39;subkey&#39; =&gt; &#39;[a-z0-9]+&#39;,</span>
+<span class=x>   ],</span>
+<span class=x>   &#39;defaults&#39; =&gt; [</span>
+<span class=x>      &#39;controller&#39; =&gt; &#39;application-index&#39;,</span>
+<span class=x>      &#39;action&#39; =&gt; &#39;index&#39;,</span>
+<span class=x>   ]</span>
+<span class=x>]);</span>
+</pre></div></p>
+
+
+
+
+    <nav>
+    <ul class="page-nav hidden-print">
+
+        
+        <li class="page-nav__item">
+            
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../writer/">
+                    <i class="fa fa-chevron-left"></i> Previous
+                </a>
+            
+        </li>
+
+        
+        <li class="page-nav__item">
+            
+        </li>
+    </ul>
+</nav>
+
+
+
+
+    <div class="help-wanted">
+        <p>
+            Found a mistake or want to contribute to the documentation?
+            <a href="https://github.com/laminas/laminas-feed/edit/master/docs/book/pubsubhubbub.md" target="_blank" class="help-wanted__link">
+                Edit this page on GitHub!
+            </a>
+        </p>
+    </div>
+
+                
+            </div>
+            <div class="col-md-3 col-sm-12 sidebar">
+                
+                    <div class="component-selector">
+    
+    <h5 class="component-selector__subtitle">Find documentation…</h5>
+    <select class="form-control component-selector__control">
+        <option value="/">Overview</option>
+        <optgroup label="Components"></optgroup>
+    </select>
+</div>
+                    
+    <div class="subnavigation hidden-print">
+        <h4 class="subnavigation__title">
+            <a href="..">laminas-feed</a>
+        </h4>
+
+        <h5 class="subnavigation__subtitle">Table of Contents</h5>
+
+        <ul class="subnavigation__list">
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../intro/" class="subnavigation__link">Introduction</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Reader</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../reader/" class="subnavigation__link">Basic Usage</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../http-clients/" class="subnavigation__link">HTTP Clients</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../psr7-clients/" class="subnavigation__link">Using PSR-7 Clients</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../importing/" class="subnavigation__link">Importing Feeds</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../find-feeds/" class="subnavigation__link">Feed Discovery</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../consuming-rss/" class="subnavigation__link">Consuming RSS Feeds</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../consuming-atom/" class="subnavigation__link">Consuming Atom Feeds</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../consuming-atom-entry/" class="subnavigation__link">Consuming Atom Entries</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../security/" class="subnavigation__link">Security</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../writer/" class="subnavigation__link">Writer</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item subnavigation__list-item--active">
+                                <a href="./" class="subnavigation__link">Pubsubhubbub</a>
+                            </li>
+                        
+                    
+                
+            
+        </ul>
+    </div>
+
+                
+            </div>
+        </div>
+    </div>
+
+    
+    <footer class="footer">
+    <div class="container">
+
+        
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <a class="footer__button" href="#page-top"><i class="fa fa-chevron-up" aria-hidden="true"></i></a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-7 offset-md-2">
+                <h5>Laminas</h5>
+                <ul>
+                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
+                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+
+            
+            <div class="col-md-4 offset-md-2">
+                <h4 class="footer__headline">Support</h4>
+                <ul class="support__list">
+                    <li class="support__list-item">
+                        <a href="https://discourse.laminas.dev" class="support__link" title="Forum"><i class="fa fa-comments"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://laminas.dev/chat" class="support__link" title="Chat"><i class="fa fa-slack"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://github.com/laminas" class="support__link" title="Github"><i class="fa fa-github"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://twitter.com/getlaminas" class="support__link" title="Twitter"><i class="fa fa-twitter"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://getlaminas.org/blog/feed-rss.xml" class="support__link" title="Blog feed"><i class="fa fa-rss"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://getlaminas.org/security/feed" class="support__link" title="Security feed"><i class="fa fa-rss-square"></i></a>
+                    </li>
+                </ul>
+            </div>
+
+            
+            <div class="col-md-3">
+                <h4 class="footer__headline">License</h4>
+                <p>
+                    Code licensed under <a
+                        href="https://github.com/laminas/laminas-feed//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                </p>
+            </div>
+
+            
+            <div class="col-md-3">
+                <h4 class="footer__headline">Copyright</h4>
+                <p>
+                    <!--Built with love by the Laminas team with the help of our
+                    <a href="https://github.com/laminas/laminas-feed//graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script>
+        let base_url = '..',
+            project  = "components",
+            siteName = 'laminas-feed';
+    </script>
+    <script src="/js/scripts.js"></script>
+        <script src="../search/main.js"></script>
+
+    
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Search</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search in laminas-feed" id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+
+</html>

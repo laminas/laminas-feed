@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Consume and generate Atom and RSS feeds, and interact with Pubsubhubbub.">  
+    <link rel="canonical" href="https://docs.laminas.dev/http-clients/">
+    <link rel="shortcut icon" href="/img/trademark-laminas-foundation-rgb.svg">
+
+    <title>HTTP Clients - laminas-feed - Laminas Docs</title>
+
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body id="page-top" class="components">
+
+    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        
+        <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
+            <img src="../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+        </a>
+        <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
+            Documentation
+        </a>
+
+        
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
+                </li>
+            </ul>
+
+            
+            
+                <div class="d-block d-sm-none">
+                    
+    <div class="subnavigation hidden-print">
+        <h4 class="subnavigation__title">
+            <a href="..">laminas-feed</a>
+        </h4>
+
+        <h5 class="subnavigation__subtitle">Table of Contents</h5>
+
+        <ul class="subnavigation__list">
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../intro/" class="subnavigation__link">Introduction</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Reader</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../reader/" class="subnavigation__link">Basic Usage</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">HTTP Clients</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../psr7-clients/" class="subnavigation__link">Using PSR-7 Clients</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../importing/" class="subnavigation__link">Importing Feeds</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../find-feeds/" class="subnavigation__link">Feed Discovery</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../consuming-rss/" class="subnavigation__link">Consuming RSS Feeds</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../consuming-atom/" class="subnavigation__link">Consuming Atom Feeds</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../consuming-atom-entry/" class="subnavigation__link">Consuming Atom Entries</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../security/" class="subnavigation__link">Security</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../writer/" class="subnavigation__link">Writer</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../pubsubhubbub/" class="subnavigation__link">Pubsubhubbub</a>
+                            </li>
+                        
+                    
+                
+            
+        </ul>
+    </div>
+
+                </div>
+            
+
+            
+            <div class="d-block d-sm-none">
+                <div class="component-selector">
+    
+    <h5 class="component-selector__subtitle">Find documentation…</h5>
+    <select class="form-control component-selector__control">
+        <option value="/">Overview</option>
+        <optgroup label="Components"></optgroup>
+    </select>
+</div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    
+    <header class="header">
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="col-6 offset-md-2">
+                <h1 class="header__title">
+                    Components
+
+                    
+                        <small class="header__subtitle">laminas-feed</small>
+                    
+                </h1>
+            </div>
+
+            
+            <div class="col-4 text-sm-right">
+                
+                    
+
+                    <a href="#" class="header__link header__link--search" data-toggle="modal" data-target="#mkdocs_search_modal" title="Open search">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                    <a href="https://github.com/laminas/laminas-feed/" class="header__link header__link--github" title="Go to repository of laminas-feed">
+                        <i class="fa fa-github"></i> GitHub
+                    </a>
+                
+            </div>
+        </div>
+    </div>
+</header>
+
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 col-sm-12">
+                
+    
+
+    
+    
+        <div class="toc">
+            <h6 class="toc__headline">On this page</h6>
+            <ul class="toc__list">
+                
+                    <li class="toc__entry">
+                        <a href="#clientinterface-and-headerawareclientinterface" class="toc__link">ClientInterface and HeaderAwareClientInterface</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#responseinterface-and-headerawareresponseinterface" class="toc__link">ResponseInterface and HeaderAwareResponseInterface</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#response" class="toc__link">Response</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#psr-7-response" class="toc__link">PSR-7 Response</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#laminas-http" class="toc__link">laminas-http</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#providing-a-client-to-reader" class="toc__link">Providing a client to Reader</a>
+                    </li>
+                
+            </ul>
+        </div>
+    
+
+            </div>
+            <div class="col-md-7 col-sm-12 content" role="main" data-spy="scroll" data-target=".toc">
+                
+                    <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        
+            <li class="breadcrumb-item"><a href="">Overview</a></li>
+
+            
+                <li class="breadcrumb-item"><a href="..">laminas-feed</a></li>
+
+                
+                    
+                        
+                        
+                            <li class="breadcrumb-item">Reader</li>
+                        
+                    
+                
+
+                <li class="breadcrumb-item active" aria-current="page">HTTP Clients</li>
+            
+        
+    </ol>
+</nav>
+
+
+
+
+
+
+    
+    
+        <h2 class="chapter__headline">Reader</h2>
+    
+
+    <h1 id="http-clients">HTTP Clients</h1>
+<p>Several operations in laminas-feed's Reader subcomponent require an HTTP client:</p>
+<ul>
+<li>importing a feed</li>
+<li>finding links in a feed</li>
+</ul>
+<p>In order to allow developers a choice in HTTP clients, the subcomponent defines
+several interfaces and classes. Elsewhere in the documentation, we reference
+where an HTTP client may be used; this document details what constitutes an HTTP
+client and its behavior, and some of the concrete classes available within the
+component for implementing this behavior.</p>
+<h2 id="clientinterface-and-headerawareclientinterface">ClientInterface and HeaderAwareClientInterface</h2>
+<p>First, we define two interfaces for clients,
+<code>Laminas\Feed\Reader\Http\ClientInterface</code> and <code>HeaderAwareClientInterface</code>:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>namespace Laminas\Feed\Reader\Http;</span>
+
+<span class=x>interface ClientInterface</span>
+<span class=x>{</span>
+<span class=x>    /**</span>
+<span class=x>     * Make a GET request to a given URL.</span>
+<span class=x>     *</span>
+<span class=x>     * @param string $url</span>
+<span class=x>     * @return ResponseInterface</span>
+<span class=x>     */</span>
+<span class=x>    public function get($url);</span>
+<span class=x>}</span>
+
+<span class=x>interface HeaderAwareClientInterface extends ClientInterface</span>
+<span class=x>{</span>
+<span class=x>    /**</span>
+<span class=x>     * Make a GET request to a given URL.</span>
+<span class=x>     *</span>
+<span class=x>     * @param string $url</span>
+<span class=x>     * @param array $headers</span>
+<span class=x>     * @return ResponseInterface</span>
+<span class=x>     */</span>
+<span class=x>    public function get($url, array $headers = []);</span>
+<span class=x>}</span>
+</pre></div></p>
+<p>The first is header-agnostic, and assumes that the client will simply perform an
+HTTP GET request. The second allows providing headers to the client; typically,
+these are used for HTTP caching headers. <code>$headers</code> must be in the following
+structure:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$headers = [</span>
+<span class=x>    &#39;X-Header-Name&#39; =&gt; [</span>
+<span class=x>        &#39;header&#39;,</span>
+<span class=x>        &#39;values&#39;,</span>
+<span class=x>    ],</span>
+<span class=x>];</span>
+</pre></div></p>
+<p>i.e., each key is a header name, and each value is an array of values for that
+header. If the header represents only a single value, it should be an array with
+that value:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$headers = [</span>
+<span class=x>    &#39;Accept&#39; =&gt; [ &#39;application/rss+xml&#39; ],</span>
+<span class=x>];</span>
+</pre></div></p>
+<p>A call to <code>get()</code> should yield a <em>response</em>.</p>
+<h2 id="responseinterface-and-headerawareresponseinterface">ResponseInterface and HeaderAwareResponseInterface</h2>
+<p>Responses are modeled using <code>Laminas\Feed\Reader\Http\ResponseInterface</code> and
+<code>HeaderAwareResponseInterface</code>:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>namespace Laminas\Feed\Reader\Http;</span>
+
+<span class=x>class ResponseInterface</span>
+<span class=x>{</span>
+<span class=x>    /**</span>
+<span class=x>     * Retrieve the status code.</span>
+<span class=x>     *</span>
+<span class=x>     * @return int</span>
+<span class=x>     */</span>
+<span class=x>    public function getStatusCode();</span>
+
+<span class=x>    /**</span>
+<span class=x>     * Retrieve the response body contents.</span>
+<span class=x>     *</span>
+<span class=x>     * @return string</span>
+<span class=x>     */</span>
+<span class=x>    public function getBody();</span>
+<span class=x>}</span>
+
+<span class=x>class HeaderAwareResponseInterface extends ResponseInterface</span>
+<span class=x>{</span>
+<span class=x>    /**</span>
+<span class=x>     * Retrieve a named header line.</span>
+<span class=x>     *</span>
+<span class=x>     * Retrieve a header by name; all values MUST be concatenated to a single</span>
+<span class=x>     * line. If no matching header is found, return the $default value.</span>
+<span class=x>     *</span>
+<span class=x>     * @param string $name</span>
+<span class=x>     * @param null|string $default</span>
+<span class=x>     * @return string</span>
+<span class=x>    public function getHeaderLine($name, $default = null);</span>
+<span class=x>}</span>
+</pre></div></p>
+<p>Internally, <code>Reader</code> will typehint against <code>ClientInterface</code> for the bulk of
+operations. In some cases, however, certain capabilities are only possible if
+the response can provide headers (e.g., for caching); in such cases, it will
+check the instance against <code>HeaderAwareResponseInterface</code>, and only call
+<code>getHeaderLine()</code> if it matches.</p>
+<h2 id="response">Response</h2>
+<p>laminas-feed ships with a generic <code>ResponseInterface</code> implementation,
+<code>Laminas\Feed\Http\Response</code>. It implements <code>HeaderAwareResponseInterface</code>, and
+defines the following constructor:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>namespace Laminas\Feed\Reader\Http;</span>
+
+<span class=x>class Response implements HeaderAwareResponseInterface</span>
+<span class=x>{</span>
+<span class=x>    /**</span>
+<span class=x>     * Constructor</span>
+<span class=x>     *</span>
+<span class=x>     * @param int $statusCode Response status code</span>
+<span class=x>     * @param string $body Response body</span>
+<span class=x>     * @param array $headers Response headers, if available</span>
+<span class=x>     */</span>
+<span class=x>    public function __construct($statusCode, $body, array $headers = []);</span>
+<span class=x>}</span>
+</pre></div></p>
+<h2 id="psr-7-response">PSR-7 Response</h2>
+<p><a href="http://www.php-fig.org/psr/psr-7/">PSR-7</a> defines a set of HTTP message
+interfaces, but not a client interface. To facilitate wrapping an HTTP client
+that uses PSR-7 messages, we provide <code>Laminas\Feed\Reader\Psr7ResponseDecorator</code>:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>namespace Laminas\Feed\Reader\Http;</span>
+
+<span class=x>use Psr\Http\Message\ResponseInterface as PsrResponseInterface;</span>
+
+<span class=x>class Psr7ResponseDecorator implements HeaderAwareResponseInterface</span>
+<span class=x>{</span>
+<span class=x>    /**</span>
+<span class=x>     * @param PsrResponseInterface $response</span>
+<span class=x>     */</span>
+<span class=x>    public function __construct(PsrResponseInterface $response);</span>
+
+<span class=x>    /**</span>
+<span class=x>     * @return PsrResponseInterface</span>
+<span class=x>     */</span>
+<span class=x>    public function getDecoratedResponse();</span>
+<span class=x>}</span>
+</pre></div></p>
+<p>Clients can then take the PSR-7 response they receive, pass it to the decorator,
+and return the decorator.</p>
+<p>To use the PSR-7 response, you will need to add the PSR-7 interfaces to your
+application, if they are not already installed by the client of your choice:</p>
+<p> <div class=codehilite><pre><span></span>$ composer require psr/http-message
+</pre></div></p>
+<h2 id="laminas-http">laminas-http</h2>
+<p>We also provide a laminas-http client decorator,
+<code>Laminas\Feed\Reader\Http\LaminasHttpClientDecorator</code>:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>namespace Laminas\Feed\Reader\Http;</span>
+
+<span class=x>use Laminas\Http\Client as HttpClient;</span>
+
+<span class=x>class LaminasHttpClientDecorator implements HeaderAwareClientInterface</span>
+<span class=x>{</span>
+<span class=x>    /**</span>
+<span class=x>     * @param HttpClient $client</span>
+<span class=x>     */</span>
+<span class=x>    public function __construct(HttpClient $client);</span>
+
+<span class=x>    /**</span>
+<span class=x>     * @return HttpClient</span>
+<span class=x>     */</span>
+<span class=x>    public function getDecoratedClient();</span>
+<span class=x>}</span>
+</pre></div></p>
+<p>Its <code>get()</code> implementation returns a <code>Response</code> instance seeded from the
+laminas-http response returned, including status, body, and headers.</p>
+<p>laminas-http is the default implementation assumed by <code>Laminas\Feed\Reader\Reader</code>,
+but <em>is not installed by default</em>. You may install it using composer:</p>
+<p> <div class=codehilite><pre><span></span>$ composer require laminas/laminas-http
+</pre></div></p>
+<h2 id="providing-a-client-to-reader">Providing a client to Reader</h2>
+<p>By default, <code>Laminas\Feed\Reader\Reader</code> will lazy load a laminas-http client. If you
+have not installed laminas-http, however, PHP will raise an error indicating the
+class is not found!</p>
+<p>As such, you have two options:</p>
+<ol>
+<li>Install laminas-http: <code>composer require laminas/laminas-http</code>.</li>
+<li>Inject the <code>Reader</code> with your own HTTP client.</li>
+</ol>
+<p>To accomplish the second, you will need an implementation of
+<code>Laminas\Feed\Reader\Http\ClientInterface</code> or <code>HeaderAwareClientInterface</code>, and an
+instance of that implementation. Once you do, you can use the static method
+<code>setHttpClient()</code> to inject it.</p>
+<p>As an example, let's say you've created a PSR-7-based implementation named
+<code>My\Http\Psr7FeedClient</code>. You could then do the following:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>use My\Http\Psr7FeedClient;</span>
+<span class=x>use Laminas\Feed\Reader\Reader;</span>
+
+<span class=x>Reader::setHttpClient(new Psr7FeedClient());</span>
+</pre></div></p>
+<p>Your client will then be used for all <code>import()</code> and <code>findFeedLinks()</code>
+operations.</p>
+
+
+
+
+    <nav>
+    <ul class="page-nav hidden-print">
+
+        
+        <li class="page-nav__item">
+            
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../reader/">
+                    <i class="fa fa-chevron-left"></i> Previous
+                </a>
+            
+        </li>
+
+        
+        <li class="page-nav__item">
+            
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../psr7-clients/">
+                    Next <i class="fa fa-chevron-right"></i>
+                </a>
+            
+        </li>
+    </ul>
+</nav>
+
+
+
+
+    <div class="help-wanted">
+        <p>
+            Found a mistake or want to contribute to the documentation?
+            <a href="https://github.com/laminas/laminas-feed/edit/master/docs/book/http-clients.md" target="_blank" class="help-wanted__link">
+                Edit this page on GitHub!
+            </a>
+        </p>
+    </div>
+
+                
+            </div>
+            <div class="col-md-3 col-sm-12 sidebar">
+                
+                    <div class="component-selector">
+    
+    <h5 class="component-selector__subtitle">Find documentation…</h5>
+    <select class="form-control component-selector__control">
+        <option value="/">Overview</option>
+        <optgroup label="Components"></optgroup>
+    </select>
+</div>
+                    
+    <div class="subnavigation hidden-print">
+        <h4 class="subnavigation__title">
+            <a href="..">laminas-feed</a>
+        </h4>
+
+        <h5 class="subnavigation__subtitle">Table of Contents</h5>
+
+        <ul class="subnavigation__list">
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../intro/" class="subnavigation__link">Introduction</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Reader</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../reader/" class="subnavigation__link">Basic Usage</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">HTTP Clients</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../psr7-clients/" class="subnavigation__link">Using PSR-7 Clients</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../importing/" class="subnavigation__link">Importing Feeds</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../find-feeds/" class="subnavigation__link">Feed Discovery</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../consuming-rss/" class="subnavigation__link">Consuming RSS Feeds</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../consuming-atom/" class="subnavigation__link">Consuming Atom Feeds</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../consuming-atom-entry/" class="subnavigation__link">Consuming Atom Entries</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../security/" class="subnavigation__link">Security</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../writer/" class="subnavigation__link">Writer</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../pubsubhubbub/" class="subnavigation__link">Pubsubhubbub</a>
+                            </li>
+                        
+                    
+                
+            
+        </ul>
+    </div>
+
+                
+            </div>
+        </div>
+    </div>
+
+    
+    <footer class="footer">
+    <div class="container">
+
+        
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <a class="footer__button" href="#page-top"><i class="fa fa-chevron-up" aria-hidden="true"></i></a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-7 offset-md-2">
+                <h5>Laminas</h5>
+                <ul>
+                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
+                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+
+            
+            <div class="col-md-4 offset-md-2">
+                <h4 class="footer__headline">Support</h4>
+                <ul class="support__list">
+                    <li class="support__list-item">
+                        <a href="https://discourse.laminas.dev" class="support__link" title="Forum"><i class="fa fa-comments"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://laminas.dev/chat" class="support__link" title="Chat"><i class="fa fa-slack"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://github.com/laminas" class="support__link" title="Github"><i class="fa fa-github"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://twitter.com/getlaminas" class="support__link" title="Twitter"><i class="fa fa-twitter"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://getlaminas.org/blog/feed-rss.xml" class="support__link" title="Blog feed"><i class="fa fa-rss"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://getlaminas.org/security/feed" class="support__link" title="Security feed"><i class="fa fa-rss-square"></i></a>
+                    </li>
+                </ul>
+            </div>
+
+            
+            <div class="col-md-3">
+                <h4 class="footer__headline">License</h4>
+                <p>
+                    Code licensed under <a
+                        href="https://github.com/laminas/laminas-feed//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                </p>
+            </div>
+
+            
+            <div class="col-md-3">
+                <h4 class="footer__headline">Copyright</h4>
+                <p>
+                    <!--Built with love by the Laminas team with the help of our
+                    <a href="https://github.com/laminas/laminas-feed//graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script>
+        let base_url = '..',
+            project  = "components",
+            siteName = 'laminas-feed';
+    </script>
+    <script src="/js/scripts.js"></script>
+        <script src="../search/main.js"></script>
+
+    
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Search</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search in laminas-feed" id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+
+</html>

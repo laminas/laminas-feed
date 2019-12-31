@@ -1,0 +1,1551 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Consume and generate Atom and RSS feeds, and interact with Pubsubhubbub.">  
+    <link rel="canonical" href="https://docs.laminas.dev/reader/">
+    <link rel="shortcut icon" href="/img/trademark-laminas-foundation-rgb.svg">
+
+    <title>Basic Usage - laminas-feed - Laminas Docs</title>
+
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body id="page-top" class="components">
+
+    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        
+        <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
+            <img src="../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+        </a>
+        <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
+            Documentation
+        </a>
+
+        
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
+                </li>
+            </ul>
+
+            
+            
+                <div class="d-block d-sm-none">
+                    
+    <div class="subnavigation hidden-print">
+        <h4 class="subnavigation__title">
+            <a href="..">laminas-feed</a>
+        </h4>
+
+        <h5 class="subnavigation__subtitle">Table of Contents</h5>
+
+        <ul class="subnavigation__list">
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../intro/" class="subnavigation__link">Introduction</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Reader</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Basic Usage</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../http-clients/" class="subnavigation__link">HTTP Clients</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../psr7-clients/" class="subnavigation__link">Using PSR-7 Clients</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../importing/" class="subnavigation__link">Importing Feeds</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../find-feeds/" class="subnavigation__link">Feed Discovery</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../consuming-rss/" class="subnavigation__link">Consuming RSS Feeds</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../consuming-atom/" class="subnavigation__link">Consuming Atom Feeds</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../consuming-atom-entry/" class="subnavigation__link">Consuming Atom Entries</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../security/" class="subnavigation__link">Security</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../writer/" class="subnavigation__link">Writer</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../pubsubhubbub/" class="subnavigation__link">Pubsubhubbub</a>
+                            </li>
+                        
+                    
+                
+            
+        </ul>
+    </div>
+
+                </div>
+            
+
+            
+            <div class="d-block d-sm-none">
+                <div class="component-selector">
+    
+    <h5 class="component-selector__subtitle">Find documentation…</h5>
+    <select class="form-control component-selector__control">
+        <option value="/">Overview</option>
+        <optgroup label="Components"></optgroup>
+    </select>
+</div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    
+    <header class="header">
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="col-6 offset-md-2">
+                <h1 class="header__title">
+                    Components
+
+                    
+                        <small class="header__subtitle">laminas-feed</small>
+                    
+                </h1>
+            </div>
+
+            
+            <div class="col-4 text-sm-right">
+                
+                    
+
+                    <a href="#" class="header__link header__link--search" data-toggle="modal" data-target="#mkdocs_search_modal" title="Open search">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                    <a href="https://github.com/laminas/laminas-feed/" class="header__link header__link--github" title="Go to repository of laminas-feed">
+                        <i class="fa fa-github"></i> GitHub
+                    </a>
+                
+            </div>
+        </div>
+    </div>
+</header>
+
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 col-sm-12">
+                
+    
+
+    
+    
+        <div class="toc">
+            <h6 class="toc__headline">On this page</h6>
+            <ul class="toc__list">
+                
+                    <li class="toc__entry">
+                        <a href="#importing-feeds" class="toc__link">Importing Feeds</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#retrieving-underlying-feed-and-entry-sources" class="toc__link">Retrieving Underlying Feed and Entry Sources</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#cache-support-and-intelligent-requests" class="toc__link">Cache Support and Intelligent Requests</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#locating-feed-uris-from-websites" class="toc__link">Locating Feed URIs from Websites</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#attribute-collections" class="toc__link">Attribute Collections</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#retrieving-feed-information" class="toc__link">Retrieving Feed Information</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#retrieving-entryitem-information" class="toc__link">Retrieving Entry/Item Information</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#extending-feed-and-entry-apis" class="toc__link">Extending Feed and Entry APIs</a>
+                    </li>
+                
+            </ul>
+        </div>
+    
+
+            </div>
+            <div class="col-md-7 col-sm-12 content" role="main" data-spy="scroll" data-target=".toc">
+                
+                    <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        
+            <li class="breadcrumb-item"><a href="">Overview</a></li>
+
+            
+                <li class="breadcrumb-item"><a href="..">laminas-feed</a></li>
+
+                
+                    
+                        
+                        
+                            <li class="breadcrumb-item">Reader</li>
+                        
+                    
+                
+
+                <li class="breadcrumb-item active" aria-current="page">Basic Usage</li>
+            
+        
+    </ol>
+</nav>
+
+
+
+
+
+
+    
+    
+        <h2 class="chapter__headline">Reader</h2>
+    
+
+    <h1 id="basic-usage">Basic Usage</h1>
+<p><code>Laminas\Feed\Reader</code> is a component used to consume RSS and Atom feeds of
+any version, including RDF/RSS 1.0, RSS 2.0, Atom 0.3, and Atom 1.0. The API for
+retrieving feed data is deliberately simple since <code>Laminas\Feed\Reader</code> is capable
+of searching any feed of any type for the information requested through the API.
+If the typical elements containing this information are not present, it will
+adapt and fall back on a variety of alternative elements instead. This ability
+to choose from alternatives removes the need for users to create their own
+abstraction layer on top of the component to make it useful or have any in-depth
+knowledge of the underlying standards, current alternatives, and namespaced
+extensions.</p>
+<p>Internally, the <code>Laminas\Feed\Reader\Reader</code> class works almost entirely on the
+basis of making XPath queries against the feed XML's Document Object Model. This
+singular approach to parsing is consistent, and the component offers a plugin
+system to add to the Feed and Entry APIs by writing extensions on a similar
+basis.</p>
+<p>Performance is assisted in three ways. First of all, <code>Laminas\Feed\Reader\Reader</code>
+supports caching using <a href="https://github.com/laminas/laminas-cache">laminas-cache</a>
+to maintain a copy of the original feed XML. This allows you to skip network
+requests for a feed URI if the cache is valid. Second, the Feed and Entry APIs
+are backed by an internal cache (non-persistent) so repeat API calls for the
+same feed will avoid additional DOM or XPath use. Thirdly, importing feeds from
+a URI can take advantage of HTTP Conditional <code>GET</code> requests which allow servers
+to issue an empty 304 response when the requested feed has not changed since the
+last time you requested it. In the final case, an laminas-cache storage instance
+will hold the last received feed along with the ETag and Last-Modified header
+values sent in the HTTP response.</p>
+<p><code>Laminas\Feed\Reader\Reader</code> is not capable of constructing feeds, and delegates
+this responsibility to <code>Laminas\Feed\Writer\Writer</code>.</p>
+<h2 id="importing-feeds">Importing Feeds</h2>
+<p>Feeds can be imported from a string, file or a URI. Importing from a URI can
+additionally utilise an HTTP Conditional <code>GET</code> request. If importing fails, an
+exception will be raised. The end result will be an object of type
+<code>Laminas\Feed\Reader\Feed\AbstractFeed</code>, the core implementations of which are
+<code>Laminas\Feed\Reader\Feed\Rss</code> and <code>Laminas\Feed\Reader\Feed\Atom</code>. Both objects
+support multiple (all existing) versions of these broad feed types.</p>
+<p>In the following example, we import an RDF/RSS 1.0 feed and extract some basic
+information that can be saved to a database or elsewhere.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$feed = Laminas\Feed\Reader\Reader::import(&#39;http://www.planet-php.net/rdf/&#39;);</span>
+<span class=x>$data = [</span>
+<span class=x>    &#39;title&#39;        =&gt; $feed-&gt;getTitle(),</span>
+<span class=x>    &#39;link&#39;         =&gt; $feed-&gt;getLink(),</span>
+<span class=x>    &#39;dateModified&#39; =&gt; $feed-&gt;getDateModified(),</span>
+<span class=x>    &#39;description&#39;  =&gt; $feed-&gt;getDescription(),</span>
+<span class=x>    &#39;language&#39;     =&gt; $feed-&gt;getLanguage(),</span>
+<span class=x>    &#39;entries&#39;      =&gt; [],</span>
+<span class=x>];</span>
+
+<span class=x>foreach ($feed as $entry) {</span>
+<span class=x>    $edata = [</span>
+<span class=x>        &#39;title&#39;        =&gt; $entry-&gt;getTitle(),</span>
+<span class=x>        &#39;description&#39;  =&gt; $entry-&gt;getDescription(),</span>
+<span class=x>        &#39;dateModified&#39; =&gt; $entry-&gt;getDateModified(),</span>
+<span class=x>        &#39;authors&#39;      =&gt; $entry-&gt;getAuthors(),</span>
+<span class=x>        &#39;link&#39;         =&gt; $entry-&gt;getLink(),</span>
+<span class=x>        &#39;content&#39;      =&gt; $entry-&gt;getContent(),</span>
+<span class=x>    ];</span>
+<span class=x>    $data[&#39;entries&#39;][] = $edata;</span>
+<span class=x>}</span>
+</pre></div></p>
+<blockquote>
+<h3>Importing requires an HTTP client</h3>
+<p>To import a feed, you will need to have an <a href="../http-clients/">HTTP client</a>
+available.</p>
+<p>If you are not using laminas-http, you will need to inject <code>Reader</code> with the HTTP
+client. See the <a href="../http-clients/#providing-a-client-to-reader">section on providing a client to Reader</a>.</p>
+</blockquote>
+<p>The example above demonstrates <code>Laminas\Feed\Reader\Reader</code>'s API, and it also
+demonstrates some of its internal operation. In reality, the RDF feed selected
+does not have any native date or author elements; however it does utilise the
+Dublin Core 1.1 module which offers namespaced creator and date elements.
+<code>Laminas\Feed\Reader\Reader</code> falls back on these and similar options if no relevant
+native elements exist. If it absolutely cannot find an alternative it will
+return <code>NULL</code>, indicating the information could not be found in the feed. You
+should note that classes implementing <code>Laminas\Feed\Reader\Feed\AbstractFeed</code> also
+implement the SPL <code>Iterator</code> and <code>Countable</code> interfaces.</p>
+<p>Feeds can also be imported from strings or files.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>// from a URI</span>
+<span class=x>$feed = Laminas\Feed\Reader\Reader::import(&#39;http://www.planet-php.net/rdf/&#39;);</span>
+
+<span class=x>// from a String</span>
+<span class=x>$feed = Laminas\Feed\Reader\Reader::importString($feedXmlString);</span>
+
+<span class=x>// from a file</span>
+<span class=x>$feed = Laminas\Feed\Reader\Reader::importFile(&#39;./feed.xml&#39;);</span>
+</pre></div></p>
+<h2 id="retrieving-underlying-feed-and-entry-sources">Retrieving Underlying Feed and Entry Sources</h2>
+<p><code>Laminas\Feed\Reader\Reader</code> does its best not to stick you in a narrow confine. If
+you need to work on a feed outside of <code>Laminas\Feed\Reader\Reader</code>, you can extract
+the base DOMDocument or DOMElement objects from any class, or even an XML
+string containing these. Also provided are methods to extract the current
+DOMXPath object (with all core and extension namespaces registered) and the
+correct prefix used in all XPath queries for the current feed or entry. The
+basic methods to use (on any object) are <code>saveXml()</code>, <code>getDomDocument()</code>,
+<code>getElement()</code>, <code>getXpath()</code> and <code>getXpathPrefix()</code>. These will let you break
+free of <code>Laminas\Feed\Reader</code> and do whatever else you want.</p>
+<ul>
+<li><code>saveXml()</code> returns an XML string containing only the element representing the
+  current object.</li>
+<li><code>getDomDocument()</code> returns the DOMDocument object representing the entire feed
+  (even if called from an entry object).</li>
+<li><code>getElement()</code> returns the DOMElement of the current object (i.e. the feed or
+  current entry).</li>
+<li><code>getXpath()</code> returns the DOMXPath object for the current feed (even if called
+  from an entry object) with the namespaces of the current feed type and all
+  loaded extensions pre-registered.</li>
+<li><code>getXpathPrefix()</code> returns the query prefix for the current object (i.e. the
+  feed or current entry) which includes the correct XPath query path for that
+  specific feed or entry.</li>
+</ul>
+<p>Let's look at an example where a feed might include an RSS extension not
+supported by <code>Laminas\Feed\Reader\Reader</code> out of the box. Notably, you could write
+and register an extension (covered later) to do this, but that's not always
+warranted for a quick check. You must register any new namespaces on the
+DOMXPath object before use unless they are registered by <code>Laminas\Feed\Reader</code> or
+an extension beforehand.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$feed        = Laminas\Feed\Reader\Reader::import(&#39;http://www.planet-php.net/rdf/&#39;);</span>
+<span class=x>$xpathPrefix = $feed-&gt;getXpathPrefix();</span>
+<span class=x>$xpath       = $feed-&gt;getXpath();</span>
+<span class=x>$xpath-&gt;registerNamespace(&#39;admin&#39;, &#39;http://webns.net/mvcb/&#39;);</span>
+<span class=x>$reportErrorsTo = $xpath-&gt;evaluate(</span>
+<span class=x>    &#39;string(&#39; . $xpathPrefix . &#39;/admin:errorReportsTo)&#39;</span>
+<span class=x>);</span>
+</pre></div></p>
+<blockquote>
+<h3>Do not register duplicate namespaces</h3>
+<p>If you register an already registered namespace with a different prefix name
+to that used internally by <code>Laminas\Feed\Reader\Reader</code>, it will break the
+internal operation of this component.</p>
+</blockquote>
+<h2 id="cache-support-and-intelligent-requests">Cache Support and Intelligent Requests</h2>
+<h3>Adding Cache Support to Laminas\Feed\Reader\Reader</h3>
+<p><code>Laminas\Feed\Reader\Reader</code> supports using a
+<a href="https://github.com/laminas/laminas-cache">laminas-cache</a> storage instance to
+cache feeds (as XML) to avoid unnecessary network requests. To add a cache,
+create and configure your cache instance, and then tell
+<code>Laminas\Feed\Reader\Reader</code> to use it. The cache key used is
+"<code>Laminas\Feed\Reader\\</code>" followed by the MD5 hash of the feed's URI.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$cache = Laminas\Cache\StorageFactory::adapterFactory(&#39;Memory&#39;);</span>
+<span class=x>Laminas\Feed\Reader\Reader::setCache($cache);</span>
+</pre></div></p>
+<h3>HTTP Conditional GET Support</h3>
+<p>The big question often asked when importing a feed frequently is if it has even
+changed. With a cache enabled, you can add HTTP Conditional <code>GET</code> support to
+your arsenal to answer that question.</p>
+<p>Using this method, you can request feeds from URIs and include their last known
+ETag and Last-Modified response header values with the request (using the
+If-None-Match and If-Modified-Since headers). If the feed on the server remains
+unchanged, you should receive a 304 response which tells
+<code>Laminas\Feed\Reader\Reader</code> to use the cached version. If a full feed is sent in a
+response with a status code of 200, this means the feed has changed and
+<code>Laminas\Feed\Reader\Reader</code> will parse the new version and save it to the cache.
+It will also cache the new ETag and Last-Modified header values for future use.</p>
+<blockquote>
+<h3>Conditional GET requires a HeaderAwareClientInterface</h3>
+<p>Conditional GET support only works for <code>Laminas\Feed\Reader\Http\HeaderAwareClientInterface</code>
+client implementations, as it requires the ability to send HTTP headers.</p>
+</blockquote>
+<p>These "conditional" requests are not guaranteed to be supported by the server
+you request a <em>URI</em> of, but can be attempted regardless. Most common feed
+sources like blogs should however have this supported. To enable conditional
+requests, you will need to provide a cache to <code>Laminas\Feed\Reader\Reader</code>.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$cache = Laminas\Cache\StorageFactory::adapterFactory(&#39;Memory&#39;);</span>
+
+<span class=x>Laminas\Feed\Reader\Reader::setCache($cache);</span>
+<span class=x>Laminas\Feed\Reader\Reader::useHttpConditionalGet();</span>
+
+<span class=x>$feed = Laminas\Feed\Reader\Reader::import(&#39;http://www.planet-php.net/rdf/&#39;);</span>
+</pre></div></p>
+<p>In the example above, with HTTP Conditional <code>GET</code> requests enabled, the response
+header values for ETag and Last-Modified will be cached along with the feed. For
+the the cache's lifetime, feeds will only be updated on the cache if a non-304
+response is received containing a valid RSS or Atom XML document.</p>
+<p>If you intend on managing request headers from outside
+<code>Laminas\Feed\Reader\Reader</code>, you can set the relevant If-None-Matches and
+If-Modified-Since request headers via the URI import method.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$lastEtagReceived = &#39;5e6cefe7df5a7e95c8b1ba1a2ccaff3d&#39;;</span>
+<span class=x>$lastModifiedDateReceived = &#39;Wed, 08 Jul 2009 13:37:22 GMT&#39;;</span>
+<span class=x>$feed = Laminas\Feed\Reader\Reader::import(</span>
+<span class=x>    $uri, $lastEtagReceived, $lastModifiedDateReceived</span>
+<span class=x>);</span>
+</pre></div></p>
+<h2 id="locating-feed-uris-from-websites">Locating Feed URIs from Websites</h2>
+<p>These days, many websites are aware that the location of their XML feeds is not
+always obvious. A small RDF, RSS, or Atom graphic helps when the user is reading
+the page, but what about when a machine visits trying to identify where your
+feeds are located? To assist in this, websites may point to their feeds using
+<code>&lt;link&gt;</code> tags in the <code>&lt;head&gt;</code> section of their HTML. To take advantage
+of this, you can use <code>Laminas\Feed\Reader\Reader</code> to locate these feeds using the
+static <code>findFeedLinks()</code> method.</p>
+<p>This method calls any URI and searches for the location of RSS, RDF, and Atom
+feeds assuming, the website's HTML contains the relevant links. It then returns
+a value object where you can check for the existence of a RSS, RDF or Atom feed
+URI.</p>
+<p>The returned object is an <code>ArrayObject</code> subclass called
+<code>Laminas\Feed\Reader\FeedSet</code>, so you can cast it to an array or iterate over it to
+access all the detected links. However, as a simple shortcut, you can just grab
+the first RSS, RDF, or Atom link using its public properties as in the example
+below. Otherwise, each element of the <code>ArrayObject</code> is a simple array with the
+keys <code>type</code> and <code>uri</code> where the type is one of "rdf", "rss", or "atom".</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$links = Laminas\Feed\Reader\Reader::findFeedLinks(&#39;http://www.planet-php.net&#39;);</span>
+
+<span class=x>if (isset($links-&gt;rdf)) {</span>
+<span class=x>    echo $links-&gt;rdf, &quot;\n&quot;; // http://www.planet-php.org/rdf/</span>
+<span class=x>}</span>
+<span class=x>if (isset($links-&gt;rss)) {</span>
+<span class=x>    echo $links-&gt;rss, &quot;\n&quot;; // http://www.planet-php.org/rss/</span>
+<span class=x>}</span>
+<span class=x>if (isset($links-&gt;atom)) {</span>
+<span class=x>    echo $links-&gt;atom, &quot;\n&quot;; // http://www.planet-php.org/atom/</span>
+<span class=x>}</span>
+</pre></div></p>
+<p>Based on these links, you can then import from whichever source you wish in the usual manner.</p>
+<blockquote>
+<h3>Finding feed links requires an HTTP client</h3>
+<p>To find feed links, you will need to have an <a href="../http-clients/">HTTP client</a>
+available.</p>
+<p>If you are not using laminas-http, you will need to inject <code>Reader</code> with the HTTP
+client. See the <a href="../http-clients/#providing-a-client-to-reader">section on providing a client to Reader</a>.</p>
+</blockquote>
+<p>This quick method only gives you one link for each feed type, but websites may
+indicate many links of any type. Perhaps it's a news site with a RSS feed for
+each news category. You can iterate over all links using the ArrayObject's
+iterator.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$links = Laminas\Feed\Reader\Reader::findFeedLinks(&#39;http://www.planet-php.net&#39;);</span>
+
+<span class=x>foreach ($links as $link) {</span>
+<span class=x>    echo $link[&#39;href&#39;], &quot;\n&quot;;</span>
+<span class=x>}</span>
+</pre></div></p>
+<h2 id="attribute-collections">Attribute Collections</h2>
+<p>In an attempt to simplify return types, return types from the various feed and
+entry level methods may include an object of type
+<code>Laminas\Feed\Reader\Collection\AbstractCollection</code>. Despite the special class name
+which I'll explain below, this is just a simple subclass of SPL's <code>ArrayObject</code>.</p>
+<p>The main purpose here is to allow the presentation of as much data as possible
+from the requested elements, while still allowing access to the most relevant
+data as a simple array. This also enforces a standard approach to returning such
+data which previously may have wandered between arrays and objects.</p>
+<p>The new class type acts identically to <code>ArrayObject</code> with the sole addition
+being a new method <code>getValues()</code> which returns a simple flat array containing
+the most relevant information.</p>
+<p>A simple example of this is <code>Laminas\Feed\Reader\Reader\FeedInterface::getCategories()</code>.
+When used with any RSS or Atom feed, this method will return category data as a
+container object called <code>Laminas\Feed\Reader\Collection\Category</code>. The container
+object will contain, per category, three fields of data: term, scheme, and label.
+The "term" is the basic category name, often machine readable (i.e. plays nice
+with URIs). The scheme represents a categorisation scheme (usually a URI
+identifier) also known as a "domain" in RSS 2.0. The "label" is a human readable
+category name which supports HTML entities. In RSS 2.0, there is no label
+attribute so it is always set to the same value as the term for convenience.</p>
+<p>To access category labels by themselves in a simple value array, you might
+commit to something like:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$feed = Laminas\Feed\Reader\Reader::import(&#39;http://www.example.com/atom.xml&#39;);</span>
+<span class=x>$categories = $feed-&gt;getCategories();</span>
+<span class=x>$labels = [];</span>
+<span class=x>foreach ($categories as $cat) {</span>
+<span class=x>    $labels[] = $cat[&#39;label&#39;]</span>
+<span class=x>}</span>
+</pre></div></p>
+<p>It's a contrived example, but the point is that the labels are tied up with
+other information.</p>
+<p>However, the container class allows you to access the "most relevant" data as a
+simple array using the <code>getValues()</code> method. The concept of "most relevant" is
+obviously a judgement call. For categories it means the category labels (not the
+terms or schemes) while for authors it would be the authors' names (not their
+email addresses or URIs). The simple array is flat (just values) and passed
+through <code>array_unique()</code> to remove duplication.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$feed = Laminas\Feed\Reader\Reader::import(&#39;http://www.example.com/atom.xml&#39;);</span>
+<span class=x>$categories = $feed-&gt;getCategories();</span>
+<span class=x>$labels = $categories-&gt;getValues();</span>
+</pre></div></p>
+<p>The above example shows how to extract only labels and nothing else thus giving
+simple access to the category labels without any additional work to extract that
+data by itself.</p>
+<h2 id="retrieving-feed-information">Retrieving Feed Information</h2>
+<p>Retrieving information from a feed (we'll cover entries and items in the next
+section though they follow identical principals) uses a clearly defined API
+which is exactly the same regardless of whether the feed in question is RSS,
+RDF, or Atom. The same goes for sub-versions of these standards and we've tested
+every single RSS and Atom version. While the underlying feed XML can differ
+substantially in terms of the tags and elements they present, they nonetheless
+are all trying to convey similar information and to reflect this all the
+differences and wrangling over alternative tags are handled internally by
+<code>Laminas\Feed\Reader\Reader</code> presenting you with an identical interface for each.
+Ideally, you should not have to care whether a feed is RSS or Atom so long as
+you can extract the information you want.</p>
+<blockquote>
+<h3>RSS feeds vary widely</h3>
+<p>While determining common ground between feed types is itself complex, it
+should be noted that <em>RSS</em> in particular is a constantly disputed
+"specification". This has its roots in the original RSS 2.0 document, which
+contains ambiguities and does not detail the correct treatment of all
+elements. As a result, this component rigorously applies the RSS 2.0.11
+Specification published by the RSS Advisory Board and its accompanying RSS
+Best Practices Profile. No other interpretation of RSS
+2.0 will be supported, though exceptions may be allowed where it does not
+directly prevent the application of the two documents mentioned above.</p>
+</blockquote>
+<p>Of course, we don't live in an ideal world, so there may be times the API just
+does not cover what you're looking for. To assist you, <code>Laminas\Feed\Reader\Reader</code>
+offers a plugin system which allows you to write extensions to expand the core
+API and cover any additional data you are trying to extract from feeds. If
+writing another extension is too much trouble, you can simply grab the
+underlying DOM or XPath objects and do it by hand in your application. Of
+course, we really do encourage writing an extension simply to make it more
+portable and reusable, and useful extensions may be proposed to the component
+for formal addition.</p>
+<p>Below is a summary of the Core API for feeds. You should note it comprises not
+only the basic RSS and Atom standards, but also accounts for a number of
+included extensions bundled with <code>Laminas\Feed\Reader\Reader</code>. The naming of these
+extension sourced methods remain fairly generic; all Extension methods operate
+at the same level as the Core API though we do allow you to retrieve any
+specific extension object separately if required.</p>
+<h3>Feed Level API Methods</h3>
+<div class="table-responsive"><table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>getId()</code></td>
+<td>Returns a unique ID associated with this feed</td>
+</tr>
+<tr>
+<td><code>getTitle()</code></td>
+<td>Returns the title of the feed</td>
+</tr>
+<tr>
+<td><code>getDescription()</code></td>
+<td>Returns the text description of the feed.</td>
+</tr>
+<tr>
+<td><code>getLink()</code></td>
+<td>Returns a URI to the HTML website containing the same or similar information as this feed (i.e. if the feed is from a blog, it should provide the blog's URI where the HTML version of the entries can be read).</td>
+</tr>
+<tr>
+<td><code>getFeedLink()</code></td>
+<td>Returns the URI of this feed, which may be the same as the URI used to import the feed. There are important cases where the feed link may differ because the source URI is being updated and is intended to be removed in the future.</td>
+</tr>
+<tr>
+<td><code>getAuthors()</code></td>
+<td>Returns an object of type <code>Laminas\Feed\Reader\Collection\Author</code> which is an <code>ArrayObject</code> whose elements are each simple arrays containing any combination of the keys "name", "email" and "uri". Where irrelevant to the source data, some of these keys may be omitted.</td>
+</tr>
+<tr>
+<td><code>getAuthor(integer $index = 0)</code></td>
+<td>Returns either the first author known, or with the optional $index parameter any specific index on the array of authors as described above (returning <code>NULL</code> if an invalid index).</td>
+</tr>
+<tr>
+<td><code>getDateCreated()</code></td>
+<td>Returns the date on which this feed was created. Generally only applicable to Atom, where it represents the date the resource described by an Atom 1.0 document was created. The returned date will be a <code>DateTime</code> object.</td>
+</tr>
+<tr>
+<td><code>getDateModified()</code></td>
+<td>Returns the date on which this feed was last modified. The returned date will be a <code>DateTime</code> object.</td>
+</tr>
+<tr>
+<td><code>getLastBuildDate()</code></td>
+<td>Returns the date on which this feed was last built. The returned date will be a <code>DateTime</code> object. This is only supported by RSS; Atom feeds will always return <code>NULL</code>.</td>
+</tr>
+<tr>
+<td><code>getLanguage()</code></td>
+<td>Returns the language of the feed (if defined) or simply the language noted in the XML document.</td>
+</tr>
+<tr>
+<td><code>getGenerator()</code></td>
+<td>Returns the generator of the feed, e.g. the software which generated it. This may differ between RSS and Atom since Atom defines a different notation.</td>
+</tr>
+<tr>
+<td><code>getCopyright()</code></td>
+<td>Returns any copyright notice associated with the feed.</td>
+</tr>
+<tr>
+<td><code>getHubs()</code></td>
+<td>Returns an array of all Hub Server URI endpoints which are advertised by the feed for use with the Pubsubhubbub Protocol, allowing subscriptions to the feed for real-time updates.</td>
+</tr>
+<tr>
+<td><code>getCategories()</code></td>
+<td>Returns a <code>Laminas\Feed\Reader\Collection\Category</code> object containing the details of any categories associated with the overall feed. The supported fields include "term" (the machine readable category name), "scheme" (the categorisation scheme and domain for this category), and "label" (a HTML decoded human readable category name). Where any of the three fields are absent from the field, they are either set to the closest available alternative or, in the case of "scheme", set to <code>NULL</code>.</td>
+</tr>
+<tr>
+<td><code>getImage()</code></td>
+<td>Returns an array containing data relating to any feed image or logo, or <code>NULL</code> if no image found. The resulting array may contain the following keys: uri, link, title, description, height, and width. Atom logos only contain a URI so the remaining metadata is drawn from RSS feeds only.</td>
+</tr>
+</tbody>
+</table></div>
+<p>Given the variety of feeds in the wild, some of these methods will undoubtedly
+return <code>NULL</code> indicating the relevant information couldn't be located. Where
+possible, <code>Laminas\Feed\Reader\Reader</code> will fall back on alternative elements
+during its search. For example, searching an RSS feed for a modification date is
+more complicated than it looks. RSS 2.0 feeds should include a <code>&lt;lastBuildDate&gt;</code>
+tag and/or a <code>&lt;pubDate&gt;</code> element. But what if it doesn't? Maybe this is an RSS
+1.0 feed? Perhaps it instead has an <code>&lt;atom:updated&gt;</code> element with identical
+information (Atom may be used to supplement RSS syntax)? Failing that, we
+could simply look at the entries, pick the most recent, and use its <code>&lt;pubDate&gt;</code>
+element. Assuming it exists, that is. Many feeds also use Dublin Core 1.0 or 1.1
+<code>&lt;dc:date&gt;</code> elements for feeds and entries. Or we could find Atom lurking again.</p>
+<p>The point is, <code>Laminas\Feed\Reader\Reader</code> was designed to know this. When you ask
+for the modification date (or anything else), it will run off and search for all
+these alternatives until it either gives up and returns <code>NULL</code>, or finds an
+alternative that should have the right answer.</p>
+<p>In addition to the above methods, all feed objects implement methods for
+retrieving the DOM and XPath objects for the current feeds as described
+earlier. Feed objects also implement the SPL Iterator and Countable
+interfaces. The extended API is summarised below.</p>
+<h3>Extended Feed API Methods</h3>
+<div class="table-responsive"><table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>getDomDocument()</code></td>
+<td>Returns the parent DOMDocument object for the entire source XML document.</td>
+</tr>
+<tr>
+<td><code>getElement()</code></td>
+<td>Returns the current feed level DOMElement object.</td>
+</tr>
+<tr>
+<td><code>saveXml()</code></td>
+<td>Returns a string containing an XML document of the entire feed element (this is not the original document, but a rebuilt version).</td>
+</tr>
+<tr>
+<td><code>getXpath()</code></td>
+<td>Returns the DOMXPath object used internally to run queries on the DOMDocument object (this includes core and extension namespaces pre-registered).</td>
+</tr>
+<tr>
+<td><code>getXpathPrefix()</code></td>
+<td>Returns the valid DOM path prefix prepended to all XPath queries matching the feed being queried.</td>
+</tr>
+<tr>
+<td><code>getEncoding()</code></td>
+<td>Returns the encoding of the source XML document (note: this cannot account for errors such as the server sending documents in a different encoding). Where not defined, the default UTF-8 encoding of Unicode is applied.</td>
+</tr>
+<tr>
+<td><code>count()</code></td>
+<td>Returns a count of the entries or items this feed contains (implements SPL <code>Countable</code> interface)</td>
+</tr>
+<tr>
+<td><code>current()</code></td>
+<td>Returns either the current entry (using the current index from <code>key()</code>).</td>
+</tr>
+<tr>
+<td><code>key()</code></td>
+<td>Returns the current entry index.</td>
+</tr>
+<tr>
+<td><code>next()</code></td>
+<td>Increments the entry index value by one.</td>
+</tr>
+<tr>
+<td><code>rewind()</code></td>
+<td>Resets the entry index to 0.</td>
+</tr>
+<tr>
+<td><code>valid()</code></td>
+<td>Checks that the current entry index is valid, i.e. it does not fall below 0 and does not exceed the number of entries existing.</td>
+</tr>
+<tr>
+<td><code>getExtensions()</code></td>
+<td>Returns an array of all extension objects loaded for the current feed (note: both feed-level and entry-level extensions exist, and only feed-level extensions are returned here). The array keys are of the form <code>{ExtensionName}_Feed</code>.</td>
+</tr>
+<tr>
+<td><code>getExtension(string $name)</code></td>
+<td>Returns an extension object for the feed registered under the provided name. This allows more fine-grained access to extensions which may otherwise be hidden within the implementation of the standard API methods.</td>
+</tr>
+<tr>
+<td><code>getType()</code></td>
+<td>Returns a static class constant (e.g.  <code>Laminas\Feed\Reader\Reader::TYPE_ATOM_03</code>, i.e. "Atom 0.3"), indicating exactly what kind of feed is being consumed.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="retrieving-entryitem-information">Retrieving Entry/Item Information</h2>
+<p>Retrieving information for specific entries or items (depending on whether you
+speak Atom or RSS) is identical to feed level data. Accessing entries is
+simply a matter of iterating over a feed object or using the SPL <code>Iterator</code>
+interface feed objects implement, and calling the appropriate method on each.</p>
+<h3>Entry API Methods</h3>
+<div class="table-responsive"><table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>getId()</code></td>
+<td>Returns a unique ID for the current entry.</td>
+</tr>
+<tr>
+<td><code>getTitle()</code></td>
+<td>Returns the title of the current entry.</td>
+</tr>
+<tr>
+<td><code>getDescription()</code></td>
+<td>Returns a description of the current entry.</td>
+</tr>
+<tr>
+<td><code>getLink()</code></td>
+<td>Returns a URI to the HTML version of the current entry.</td>
+</tr>
+<tr>
+<td><code>getPermaLink()</code></td>
+<td>Returns the permanent link to the current entry. In most cases, this is the same as using <code>getLink()</code>.</td>
+</tr>
+<tr>
+<td><code>getAuthors()</code></td>
+<td>Returns an object of type <code>Laminas\Feed\Reader\Collection\Author</code>, which is an <code>ArrayObject</code> whose elements are each simple arrays containing any combination of the keys "name", "email" and "uri". Where irrelevant to the source data, some of these keys may be omitted.</td>
+</tr>
+<tr>
+<td><code>getAuthor(integer $index = 0)</code></td>
+<td>Returns either the first author known, or, with the optional <code>$index</code> parameter, any specific index on the array of Authors as described above (returning <code>NULL</code> if an invalid index).</td>
+</tr>
+<tr>
+<td><code>getDateCreated()</code></td>
+<td>Returns the date on which the current entry was created. Generally only applicable to Atom where it represents the date the resource described by an Atom 1.0 document was created.</td>
+</tr>
+<tr>
+<td><code>getDateModified()</code></td>
+<td>Returns the date on which the current entry was last modified.</td>
+</tr>
+<tr>
+<td><code>getContent()</code></td>
+<td>Returns the content of the current entry (this has any entities reversed if possible, assuming the content type is HTML). The description is returned if a separate content element does not exist.</td>
+</tr>
+<tr>
+<td><code>getEnclosure()</code></td>
+<td>Returns class object (stdClass) containing the value of all attributes from a multi-media <code>&lt;enclosure&gt;</code> element including as class attributes: url, length, type. In accordance with the RSS Best Practices Profile of the RSS Advisory Board, no support is offers for multiple enclosures since such support forms no part of the RSS specification.</td>
+</tr>
+<tr>
+<td><code>getCommentCount()</code></td>
+<td>Returns the number of comments made on this entry at the time the feed was last generated.</td>
+</tr>
+<tr>
+<td><code>getCommentLink()</code></td>
+<td>Returns a URI pointing to the HTML page where comments can be made on this entry.</td>
+</tr>
+<tr>
+<td><code>getCommentFeedLink([string $type = ‘atom'|'rss'])</code></td>
+<td>Returns a URI pointing to a feed of the provided type containing all comments for this entry (type defaults to Atom/RSS depending on current feed type).</td>
+</tr>
+<tr>
+<td><code>getCategories()</code></td>
+<td>Returns a <code>Laminas\Feed\Reader\Collection\Category</code> object containing the details of any categories associated with the entry. The supported fields include "term" (the machine readable category name), "scheme" (the categorisation scheme and domain for this category), and "label" (an HTML-decoded human readable category name). Where any of the three fields are absent from the field, they are either set to the closest available alternative or, in the case of "scheme", set to <code>NULL</code>.</td>
+</tr>
+</tbody>
+</table></div>
+<p>The extended API for entries is identical to that for feeds with the exception
+of the <code>Iterator</code> methods, which are not needed here.</p>
+<blockquote>
+<h3>Modified vs Created dates</h3>
+<p>There is often confusion over the concepts of <em>modified</em> and <em>created</em> dates.
+In Atom, these are two clearly defined concepts (so knock yourself out) but in
+RSS they are vague. RSS 2.0 defines a single <code>&lt;pubDate&gt;</code> element which
+typically refers to the date this entry was published, i.e.  a creation date of
+sorts. This is not always the case, and it may change with updates or not. As a
+result, if you really want to check whether an entry has changed, don't rely on
+the results of <code>getDateModified()</code>. Instead, consider tracking the MD5 hash of
+three other elements concatenated, e.g. using <code>getTitle()</code>, <code>getDescription()</code>,
+and <code>getContent()</code>. If the entry was truly updated, this hash computation will
+give a different result than previously saved hashes for the same entry. This
+is obviously content oriented, and will not assist in detecting changes to
+other relevant elements.  Atom feeds should not require such steps.</p>
+<p>Further muddying the waters, dates in feeds may follow different standards.
+Atom and Dublin Core dates should follow ISO 8601, and RSS dates should
+follow RFC 822 or RFC 2822 (which is also common). Date methods will throw an
+exception if <code>DateTime</code> cannot load the date string using one of the above
+standards, or the PHP recognised possibilities for RSS dates.</p>
+<h3>Validation</h3>
+<p>The values returned from these methods are not validated. This means users
+must perform validation on all retrieved data including the filtering of any
+HTML such as from <code>getContent()</code> before it is output from your application.
+Remember that most feeds come from external sources, and therefore the default
+assumption should be that they cannot be trusted.</p>
+</blockquote>
+<h3>Extended Entry Level API Methods</h3>
+<div class="table-responsive"><table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>getDomDocument()</code></td>
+<td>Returns the parent DOMDocument object for the entire feed (not just the current entry).</td>
+</tr>
+<tr>
+<td><code>getElement()</code></td>
+<td>Returns the current entry level DOMElement object.</td>
+</tr>
+<tr>
+<td><code>getXpath()</code></td>
+<td>Returns the DOMXPath object used internally to run queries on the DOMDocument object (this includes core and extension namespaces pre-registered).</td>
+</tr>
+<tr>
+<td><code>getXpathPrefix()</code></td>
+<td>Returns the valid DOM path prefix prepended to all XPath queries matching the entry being queried.</td>
+</tr>
+<tr>
+<td><code>getEncoding()</code></td>
+<td>Returns the encoding of the source XML document (note: this cannot account for errors such as the server sending documents in a different encoding). The default encoding applied in the absence of any other is the UTF-8 encoding of Unicode.</td>
+</tr>
+<tr>
+<td><code>getExtensions()</code></td>
+<td>Returns an array of all extension objects loaded for the current entry (note: both feed-level and entry-level extensions exist, and only entry-level extensions are returned here). The array keys are in the form <code>{ExtensionName}Entry</code>.</td>
+</tr>
+<tr>
+<td><code>getExtension(string $name)</code></td>
+<td>Returns an extension object for the entry registered under the provided name. This allows more fine-grained access to extensions which may otherwise be hidden within the implementation of the standard API methods.</td>
+</tr>
+<tr>
+<td><code>getType()</code></td>
+<td>Returns a static class constant (e.g. <code>Laminas\Feed\Reader\Reader::TYPE_ATOM_03</code>, i.e. "Atom 0.3") indicating exactly what kind of feed is being consumed.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="extending-feed-and-entry-apis">Extending Feed and Entry APIs</h2>
+<p>Extending <code>Laminas\Feed\Reader\Reader</code> allows you to add methods at both the feed
+and entry level which cover the retrieval of information not already supported
+by <code>Laminas\Feed\Reader\Reader</code>. Given the number of RSS and Atom extensions that
+exist, this is a good thing, since <code>Laminas\Feed\Reader\Reader</code> couldn't possibly
+add everything.</p>
+<p>There are two types of extensions possible, those which retrieve information
+from elements which are immediate children of the root element (e.g.
+<code>&lt;channel&gt;</code> for RSS or <code>&lt;feed&gt;</code> for Atom), and those who retrieve information
+from child elements of an entry (e.g. <code>&lt;item&gt;</code> for RSS or <code>&lt;entry&gt;</code> for Atom).
+On the filesystem, these are grouped as classes within a namespace based on the
+extension standard's name. For example, internally we have
+<code>Laminas\Feed\Reader\Extension\DublinCore\Feed</code> and
+<code>Laminas\Feed\Reader\Extension\DublinCore\Entry</code> classes which are two extensions
+implementing Dublin Core 1.0 and 1.1 support.</p>
+<p>Extensions are loaded into <code>Laminas\Feed\Reader\Reader</code> using an "extension
+manager". Extension managers must implement <code>Laminas\Feed\Reader\ExtensionManagerInterface</code>.
+Three implementations exist:</p>
+<ul>
+<li><code>Laminas\Feed\Reader\StandaloneExtensionManager</code> is a hard-coded implementation
+  seeded with all feed and entry implementations. You can add simple extensions
+  from it using <code>add</code> and <code>remove</code> methods. <code>ExtensionPluginManager</code> is
+  recommended for more complex needs.</li>
+<li><code>Laminas\Feed\Reader\ExtensionPluginManager</code> is a <code>Laminas\ServiceManager\AbstractPluginManager</code>
+  implementation, <code>Laminas\Feed\Reader\ExtensionManager</code>; as such, you can extend
+  it to add more extensions, use a <code>Laminas\ServiceManager\ConfigInterface</code> instance
+  to inject it with more extensions, or use its public API for adding services
+  (e.g., <code>setService()</code>, <code>setFactory()</code>, etc.). This implementation <em>does not</em>
+  implement <code>ExtensionManagerInterface</code>, and must be used with <code>ExtensionManager</code>.</li>
+<li><code>Laminas\Feed\Reader\ExtensionManager</code> exists for legacy purposes; prior to 2.3,
+  this was an <code>AbstractPluginManager</code> implementation, and the only provided
+  extension manager. It now implements <code>ExtensionManagerInterface</code>, and acts as
+  a decorator for <code>ExtensionPluginManager</code>.</li>
+</ul>
+<p>By default, <code>Laminas\Feed\Reader\Reader</code> composes a <code>StandaloneExtensionManager</code>. You
+can inject an alternate implementation using <code>Reader::setExtensionManager()</code>:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$extensions = new Laminas\Feed\Reader\ExtensionPluginManager();</span>
+<span class=x>Laminas\Feed\Reader\Reader::setExtensionManager(</span>
+<span class=x>    new ExtensionManager($extensions)</span>
+<span class=x>);</span>
+</pre></div></p>
+<p>The shipped implementations all provide the default extensions (so-called
+"Core Extensions") used internally by <code>Laminas\Feed\Reader\Reader</code>. These
+include:</p>
+<div class="table-responsive"><table>
+<thead>
+<tr>
+<th>Extension</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DublinCore (Feed and Entry)</td>
+<td>Implements support for Dublin Core Metadata Element Set 1.0 and 1.1.</td>
+</tr>
+<tr>
+<td>Content (Entry only)</td>
+<td>Implements support for Content 1.0.</td>
+</tr>
+<tr>
+<td>Atom (Feed and Entry)</td>
+<td>Implements support for Atom 0.3 and Atom 1.0.</td>
+</tr>
+<tr>
+<td>Slash</td>
+<td>Implements support for the Slash RSS 1.0 module.</td>
+</tr>
+<tr>
+<td>WellFormedWeb</td>
+<td>Implements support for the Well Formed Web CommentAPI 1.0.</td>
+</tr>
+<tr>
+<td>Thread</td>
+<td>Implements support for Atom Threading Extensions as described in RFC 4685.</td>
+</tr>
+<tr>
+<td>Podcast</td>
+<td>Implements support for the Podcast 1.0 DTD from Apple.</td>
+</tr>
+<tr>
+<td>GooglePlayPodcast</td>
+<td>Implements support for the Google Play Podcasts 1.0 DTD from Google.</td>
+</tr>
+</tbody>
+</table></div>
+<p>The core extensions are somewhat special since they are extremely common and
+multi-faceted. For example, we have a core extension for Atom. Atom is
+implemented as an extension (not just a base class) because it doubles as a
+valid RSS module; you can insert Atom elements into RSS feeds.  I've even seen
+RDF feeds which use a lot of Atom in place of more common extensions like
+Dublin Core.</p>
+<p>The following is a list of non-Core extensions that are offered, but not registered
+by default. If you want to use them, you'll need to
+tell <code>Laminas\Feed\Reader\Reader</code> to load them in advance of importing a feed.
+Additional non-Core extensions will be included in future iterations of the
+component.</p>
+<div class="table-responsive"><table>
+<thead>
+<tr>
+<th>Extension</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Syndication</td>
+<td>Implements Syndication 1.0 support for RSS feeds.</td>
+</tr>
+<tr>
+<td>CreativeCommons</td>
+<td>An RSS module that adds an element at the <code>&lt;channel&gt;</code> or <code>&lt;item&gt;</code> level that specifies which Creative Commons license applies.</td>
+</tr>
+</tbody>
+</table></div>
+<p><code>Laminas\Feed\Reader\Reader</code> requires you to explicitly register non-Core
+extensions in order to expose their API to feed and entry objects.  Below, we
+register the optional Syndication extension, and discover that it can be
+directly called from the entry API without any effort. (Note that
+extension names are case sensitive and use camelCasing for multiple terms.)</p>
+<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Feed\Reader\Reader;</span>
+
+<span class=x>Reader::registerExtension(&#39;Syndication&#39;);</span>
+<span class=x>$feed = Reader::import(&#39;http://rss.slashdot.org/Slashdot/slashdot&#39;);</span>
+<span class=x>$updatePeriod = $feed-&gt;getUpdatePeriod();</span>
+</pre></div></p>
+<p>In the simple example above, we checked how frequently a feed is being updated
+using the <code>getUpdatePeriod()</code> method. Since it's not part of
+<code>Laminas\Feed\Reader\Reader</code>'s core API, it could only be a method supported by
+the newly registered Syndication extension.</p>
+<p>As you can also notice, methods provided by extensions are accessible from the
+main API using method overloading. As an alternative, you can also directly
+access any extension object for a similar result as seen below.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Feed\Reader\Reader;</span>
+
+<span class=x>Reader::registerExtension(&#39;Syndication&#39;);</span>
+<span class=x>$feed = Reader::import(&#39;http://rss.slashdot.org/Slashdot/slashdot&#39;);</span>
+<span class=x>$syndication = $feed-&gt;getExtension(&#39;Syndication&#39;);</span>
+<span class=x>$updatePeriod = $syndication-&gt;getUpdatePeriod();</span>
+</pre></div></p>
+<h3>Writing Laminas\Feed\Reader Extensions</h3>
+<p>Inevitably, there will be times when the <code>Laminas\Feed\Reader</code> API is just
+not capable of getting something you need from a feed or entry. You can use the
+underlying source objects, like DOMDocument, to get these by hand; however, there
+is a more reusable method available: you can write extensions supporting these new
+queries.</p>
+<p>As an example, let's take the case of a purely fictitious corporation named
+Jungle Books. Jungle Books have been publishing a lot of reviews on books they
+sell (from external sources and customers), which are distributed as an RSS 2.0
+feed. Their marketing department realises that web applications using this feed
+cannot currently figure out exactly what book is being reviewed. To make life
+easier for everyone, they determine that the geek department needs to extend
+RSS 2.0 to include a new element per entry supplying the ISBN-10 or ISBN-13
+number of the publication the entry concerns. They define the new <code>&lt;isbn&gt;</code>
+element quite simply with a standard name and namespace URI:</p>
+<ul>
+<li>Name: JungleBooks 1.0</li>
+<li>Namespace URI: http://example.com/junglebooks/rss/module/1.0/</li>
+</ul>
+<p>A snippet of RSS containing this extension in practice could be something
+similar to:</p>
+<p> <div class=codehilite><pre><span></span><span class=cp>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;</span>
+<span class=nt>&lt;rss</span> <span class=na>version=</span><span class=s>&quot;2.0&quot;</span>
+   <span class=na>xmlns:content=</span><span class=s>&quot;http://purl.org/rss/1.0/modules/content/&quot;</span>
+   <span class=na>xmlns:jungle=</span><span class=s>&quot;http://example.com/junglebooks/rss/module/1.0/&quot;</span><span class=nt>&gt;</span>
+<span class=nt>&lt;channel&gt;</span>
+    <span class=nt>&lt;title&gt;</span>Jungle Books Customer Reviews<span class=nt>&lt;/title&gt;</span>
+    <span class=nt>&lt;link&gt;</span>http://example.com/junglebooks<span class=nt>&lt;/link&gt;</span>
+    <span class=nt>&lt;description&gt;</span>Many book reviews!<span class=nt>&lt;/description&gt;</span>
+    <span class=nt>&lt;pubDate&gt;</span>Fri, 26 Jun 2009 19:15:10 GMT<span class=nt>&lt;/pubDate&gt;</span>
+    <span class=nt>&lt;jungle:dayPopular&gt;</span>
+        http://example.com/junglebooks/book/938
+    <span class=nt>&lt;/jungle:dayPopular&gt;</span>
+    <span class=nt>&lt;item&gt;</span>
+        <span class=nt>&lt;title&gt;</span>Review Of Flatland: A Romance of Many Dimensions<span class=nt>&lt;/title&gt;</span>
+        <span class=nt>&lt;link&gt;</span>http://example.com/junglebooks/review/987<span class=nt>&lt;/link&gt;</span>
+        <span class=nt>&lt;author&gt;</span>Confused Physics Student<span class=nt>&lt;/author&gt;</span>
+        <span class=nt>&lt;content:encoded&gt;</span>
+        A romantic square?!
+        <span class=nt>&lt;/content:encoded&gt;</span>
+        <span class=nt>&lt;pubDate&gt;</span>Thu, 25 Jun 2009 20:03:28 -0700<span class=nt>&lt;/pubDate&gt;</span>
+        <span class=nt>&lt;jungle:isbn&gt;</span>048627263X<span class=nt>&lt;/jungle:isbn&gt;</span>
+    <span class=nt>&lt;/item&gt;</span>
+<span class=nt>&lt;/channel&gt;</span>
+<span class=nt>&lt;/rss&gt;</span>
+</pre></div></p>
+<p>Implementing this new ISBN element as a simple entry level extension would
+require the following class (using your own namespace).</p>
+<p> <div class=codehilite><pre><span></span><span class=x>namespace My\FeedReader\Extension\JungleBooks;</span>
+
+<span class=x>use Laminas\Feed\Reader\Extension\AbstractEntry;</span>
+
+<span class=x>class Entry extends AbstractEntry</span>
+<span class=x>{</span>
+<span class=x>    public function getIsbn()</span>
+<span class=x>    {</span>
+<span class=x>        if (isset($this-&gt;data[&#39;isbn&#39;])) {</span>
+<span class=x>            return $this-&gt;data[&#39;isbn&#39;];</span>
+<span class=x>        }</span>
+
+<span class=x>        $isbn = $this-&gt;xpath-&gt;evaluate(</span>
+<span class=x>            &#39;string(&#39; . $this-&gt;getXpathPrefix() . &#39;/jungle:isbn)&#39;</span>
+<span class=x>        );</span>
+
+<span class=x>        if (! $isbn) {</span>
+<span class=x>            $isbn = null;</span>
+<span class=x>        }</span>
+
+<span class=x>        $this-&gt;data[&#39;isbn&#39;] = $isbn;</span>
+<span class=x>        return $this-&gt;data[&#39;isbn&#39;];</span>
+<span class=x>    }</span>
+
+<span class=x>    protected function registerNamespaces()</span>
+<span class=x>    {</span>
+<span class=x>        $this-&gt;xpath-&gt;registerNamespace(</span>
+<span class=x>            &#39;jungle&#39;,</span>
+<span class=x>            &#39;http://example.com/junglebooks/rss/module/1.0/&#39;</span>
+<span class=x>        );</span>
+<span class=x>    }</span>
+<span class=x>}</span>
+</pre></div></p>
+<p>This extension creates a new method <code>getIsbn()</code>, which runs an XPath query on
+the current entry to extract the ISBN number enclosed by the <code>&lt;jungle:isbn&gt;</code>
+element. It can optionally store this to the internal non-persistent cache (no
+need to keep querying the DOM if it's called again on the same entry). The
+value is returned to the caller. At the end we have a protected method (it's
+abstract, making it required by implementations) which registers the Jungle
+Books namespace for their custom RSS module. While we call this an RSS module,
+there's nothing to prevent the same element being used in Atom feeds; all
+extensions which use the prefix provided by <code>getXpathPrefix()</code> are actually
+neutral and work on RSS or Atom feeds with no extra code.</p>
+<p>Since this extension is stored outside of laminas-feed, you'll need to ensure your
+application can autoload it. Once that's in place, you will also need to ensure
+your extension manager knows about it, and then register the extension with
+<code>Laminas\Feed\Reader\Reader</code>.</p>
+<p>The following example uses <code>Laminas\Feed\Reader\ExtensionPluginManager</code> to manage
+extensions, as it provides the ability to register new extensions without
+requiring extension of the plugin manager itself (note that this example works
+with ServiceManager v2, but not v3). To use it, first install
+laminas-servicemanager:</p>
+<p> <div class=codehilite><pre><span></span>$ composer require laminas/laminas-servicemanager
+</pre></div></p>
+<p>From there:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>use My\FeedReader\Extension\JungleBooks;</span>
+<span class=x>use Laminas\Feed\Reader\ExtensionManager;</span>
+<span class=x>use Laminas\Feed\Reader\ExtensionPluginManager;</span>
+<span class=x>use Laminas\Feed\Reader\Reader;</span>
+
+<span class=x>$extensions = new ExtensionPluginManager();</span>
+<span class=x>$extensions-&gt;setInvokableClass(&#39;JungleBooks\Entry&#39;, JungleBooks\Entry::class);</span>
+<span class=x>Reader::setExtensionManager(new ExtensionManager($extensions));</span>
+<span class=x>Reader::registerExtension(&#39;JungleBooks&#39;);</span>
+
+<span class=x>$feed = Reader::import(&#39;http://example.com/junglebooks/rss&#39;);</span>
+
+<span class=x>// ISBN for whatever book the first entry in the feed was concerned with</span>
+<span class=x>$firstIsbn = $feed-&gt;current()-&gt;getIsbn();</span>
+</pre></div></p>
+<p>Writing a feed extension is not much different. The example feed from earlier
+included an unmentioned <code>&lt;jungle:dayPopular&gt;</code> element which Jungle Books have
+added to their standard to include a link to the day's most popular book (in
+terms of visitor traffic). Here's an extension which adds a
+<code>getDaysPopularBookLink()</code> method to the feel level API.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>namespace My\FeedReader\Extension\JungleBooks;</span>
+
+<span class=x>use Laminas\Feed\Reader\Extension\AbstractFeed;</span>
+
+<span class=x>class Feed extends AbstractFeed</span>
+<span class=x>{</span>
+<span class=x>    public function getDaysPopularBookLink()</span>
+<span class=x>    {</span>
+<span class=x>        if (isset($this-&gt;data[&#39;dayPopular&#39;])) {</span>
+<span class=x>            return $this-&gt;data[&#39;dayPopular&#39;];</span>
+<span class=x>        }</span>
+
+<span class=x>        $dayPopular = $this-&gt;xpath-&gt;evaluate(</span>
+<span class=x>            &#39;string(&#39; . $this-&gt;getXpathPrefix() . &#39;/jungle:dayPopular)&#39;</span>
+<span class=x>        );</span>
+
+<span class=x>        if (!$dayPopular) {</span>
+<span class=x>            $dayPopular = null;</span>
+<span class=x>        }</span>
+
+<span class=x>        $this-&gt;data[&#39;dayPopular&#39;] = $dayPopular;</span>
+<span class=x>        return $this-&gt;data[&#39;dayPopular&#39;];</span>
+<span class=x>    }</span>
+
+<span class=x>    protected function registerNamespaces()</span>
+<span class=x>    {</span>
+<span class=x>        $this-&gt;xpath-&gt;registerNamespace(</span>
+<span class=x>            &#39;jungle&#39;,</span>
+<span class=x>            &#39;http://example.com/junglebooks/rss/module/1.0/&#39;</span>
+<span class=x>        );</span>
+<span class=x>    }</span>
+<span class=x>}</span>
+</pre></div></p>
+<p>Let's add to the previous example; we'll register the new class with the
+extension manager, and then demonstrate using the newly exposed method:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>use My\FeedReader\Extension\JungleBooks;</span>
+<span class=x>use Laminas\Feed\Reader\ExtensionManager;</span>
+<span class=x>use Laminas\Feed\Reader\ExtensionPluginManager;</span>
+<span class=x>use Laminas\Feed\Reader\Reader;</span>
+
+<span class=x>$extensions = new ExtensionPluginManager();</span>
+<span class=x>$extensions-&gt;setInvokableClass(&#39;JungleBooks\Entry&#39;, JungleBooks\Entry::class);</span>
+<span class=x>$extensions-&gt;setInvokableClass(&#39;JungleBooks\Feed&#39;, JungleBooks\Feed::class);</span>
+<span class=x>Reader::setExtensionManager(new ExtensionManager($extensions));</span>
+<span class=x>Reader::registerExtension(&#39;JungleBooks&#39;);</span>
+
+<span class=x>$feed = Reader::import(&#39;http://example.com/junglebooks/rss&#39;);</span>
+
+<span class=x>// URI to the information page of the day&#39;s most popular book with visitors</span>
+<span class=x>$daysPopularBookLink = $feed-&gt;getDaysPopularBookLink();</span>
+</pre></div></p>
+<p>Going through these examples, you'll note that while we need to register the
+feed and entry classes separately with the plugin manager, we don't register
+them separately when registering the extension with the <code>Reader</code>.  Extensions
+within the same standard may or may not include both a feed and entry class, so
+<code>Laminas\Feed\Reader\Reader</code> only requires you to register the overall parent name,
+e.g.  JungleBooks, DublinCore, Slash. Internally, it can check at what level
+extensions exist and load them up if found. In our case, we have a complete
+extension now, spanning the classes <code>JungleBooks\Feed</code> and <code>JungleBooks\Entry</code>.</p>
+
+
+
+
+    <nav>
+    <ul class="page-nav hidden-print">
+
+        
+        <li class="page-nav__item">
+            
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../intro/">
+                    <i class="fa fa-chevron-left"></i> Previous
+                </a>
+            
+        </li>
+
+        
+        <li class="page-nav__item">
+            
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../http-clients/">
+                    Next <i class="fa fa-chevron-right"></i>
+                </a>
+            
+        </li>
+    </ul>
+</nav>
+
+
+
+
+    <div class="help-wanted">
+        <p>
+            Found a mistake or want to contribute to the documentation?
+            <a href="https://github.com/laminas/laminas-feed/edit/master/docs/book/reader.md" target="_blank" class="help-wanted__link">
+                Edit this page on GitHub!
+            </a>
+        </p>
+    </div>
+
+                
+            </div>
+            <div class="col-md-3 col-sm-12 sidebar">
+                
+                    <div class="component-selector">
+    
+    <h5 class="component-selector__subtitle">Find documentation…</h5>
+    <select class="form-control component-selector__control">
+        <option value="/">Overview</option>
+        <optgroup label="Components"></optgroup>
+    </select>
+</div>
+                    
+    <div class="subnavigation hidden-print">
+        <h4 class="subnavigation__title">
+            <a href="..">laminas-feed</a>
+        </h4>
+
+        <h5 class="subnavigation__subtitle">Table of Contents</h5>
+
+        <ul class="subnavigation__list">
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../intro/" class="subnavigation__link">Introduction</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Reader</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Basic Usage</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../http-clients/" class="subnavigation__link">HTTP Clients</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../psr7-clients/" class="subnavigation__link">Using PSR-7 Clients</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../importing/" class="subnavigation__link">Importing Feeds</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../find-feeds/" class="subnavigation__link">Feed Discovery</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../consuming-rss/" class="subnavigation__link">Consuming RSS Feeds</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../consuming-atom/" class="subnavigation__link">Consuming Atom Feeds</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../consuming-atom-entry/" class="subnavigation__link">Consuming Atom Entries</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../security/" class="subnavigation__link">Security</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../writer/" class="subnavigation__link">Writer</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../pubsubhubbub/" class="subnavigation__link">Pubsubhubbub</a>
+                            </li>
+                        
+                    
+                
+            
+        </ul>
+    </div>
+
+                
+            </div>
+        </div>
+    </div>
+
+    
+    <footer class="footer">
+    <div class="container">
+
+        
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <a class="footer__button" href="#page-top"><i class="fa fa-chevron-up" aria-hidden="true"></i></a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-7 offset-md-2">
+                <h5>Laminas</h5>
+                <ul>
+                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
+                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+
+            
+            <div class="col-md-4 offset-md-2">
+                <h4 class="footer__headline">Support</h4>
+                <ul class="support__list">
+                    <li class="support__list-item">
+                        <a href="https://discourse.laminas.dev" class="support__link" title="Forum"><i class="fa fa-comments"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://laminas.dev/chat" class="support__link" title="Chat"><i class="fa fa-slack"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://github.com/laminas" class="support__link" title="Github"><i class="fa fa-github"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://twitter.com/getlaminas" class="support__link" title="Twitter"><i class="fa fa-twitter"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://getlaminas.org/blog/feed-rss.xml" class="support__link" title="Blog feed"><i class="fa fa-rss"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://getlaminas.org/security/feed" class="support__link" title="Security feed"><i class="fa fa-rss-square"></i></a>
+                    </li>
+                </ul>
+            </div>
+
+            
+            <div class="col-md-3">
+                <h4 class="footer__headline">License</h4>
+                <p>
+                    Code licensed under <a
+                        href="https://github.com/laminas/laminas-feed//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                </p>
+            </div>
+
+            
+            <div class="col-md-3">
+                <h4 class="footer__headline">Copyright</h4>
+                <p>
+                    <!--Built with love by the Laminas team with the help of our
+                    <a href="https://github.com/laminas/laminas-feed//graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script>
+        let base_url = '..',
+            project  = "components",
+            siteName = 'laminas-feed';
+    </script>
+    <script src="/js/scripts.js"></script>
+        <script src="../search/main.js"></script>
+
+    
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Search</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search in laminas-feed" id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+
+</html>
