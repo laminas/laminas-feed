@@ -1,32 +1,30 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Feed
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Feed\PubSubHubbub\Model;
+namespace LaminasTest\Feed\PubSubHubbub\Model;
 
 use DateTime;
+use Laminas\Db\Adapter\Adapter as DbAdapter;
+use Laminas\Db\TableGateway\TableGateway;
+use Laminas\Feed\PubSubHubbub\Model\Subscription;
 use PDO;
-use Zend\Db\Adapter\Adapter as DbAdapter;
-use Zend\Db\TableGateway\TableGateway;
-use Zend\Feed\PubSubHubbub\Model\Subscription;
 
 /**
- * @category   Zend
- * @package    Zend_Feed
+ * @category   Laminas
+ * @package    Laminas_Feed
  * @subpackage UnitTests
- * @group      Zend_Feed
- * @group      Zend_Feed_Pubsubhubbub_Model
+ * @group      Laminas_Feed
+ * @group      Laminas_Feed_Pubsubhubbub_Model
  */
 class SubscriptionTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @group ZF-10069
+     * @group Laminas-10069
      */
     public function testAllOperations()
     {
@@ -56,8 +54,8 @@ class SubscriptionTest extends \PHPUnit_Framework_TestCase
 
     public function testImpemetsSubscriptionInterface()
     {
-        $reflection = new \ReflectionClass('Zend\Feed\PubSubHubbub\Model\Subscription');
-        $this->assertTrue($reflection->implementsInterface('Zend\Feed\PubSubHubbub\Model\SubscriptionPersistenceInterface'));
+        $reflection = new \ReflectionClass('Laminas\Feed\PubSubHubbub\Model\Subscription');
+        $this->assertTrue($reflection->implementsInterface('Laminas\Feed\PubSubHubbub\Model\SubscriptionPersistenceInterface'));
         unset($reflection);
     }
 
