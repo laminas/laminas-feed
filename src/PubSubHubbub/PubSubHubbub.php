@@ -1,17 +1,16 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Feed\PubSubHubbub;
+namespace Laminas\Feed\PubSubHubbub;
 
-use Zend\Escaper\Escaper;
-use Zend\Feed\Reader;
-use Zend\Http;
+use Laminas\Escaper\Escaper;
+use Laminas\Feed\Reader;
+use Laminas\Http;
 
 class PubSubHubbub
 {
@@ -43,10 +42,10 @@ class PubSubHubbub
     /**
      * Simple utility function which imports any feed URL and
      * determines the existence of Hub Server endpoints. This works
-     * best if directly given an instance of Zend\Feed\Reader\Atom|Rss
+     * best if directly given an instance of Laminas\Feed\Reader\Atom|Rss
      * to leverage off.
      *
-     * @param  \Zend\Feed\Reader\Feed\AbstractFeed|string $source
+     * @param  \Laminas\Feed\Reader\Feed\AbstractFeed|string $source
      * @return array
      * @throws Exception\InvalidArgumentException
      */
@@ -59,13 +58,13 @@ class PubSubHubbub
         } else {
             throw new Exception\InvalidArgumentException('The source parameter was'
             . ' invalid, i.e. not a URL string or an instance of type'
-            . ' Zend\Feed\Reader\Feed\AbstractFeed');
+            . ' Laminas\Feed\Reader\Feed\AbstractFeed');
         }
         return $feed->getHubs();
     }
 
     /**
-     * Allows the external environment to make ZendOAuth use a specific
+     * Allows the external environment to make laminas-oauth use a specific
      * Client instance.
      *
      * @param  Http\Client $httpClient
