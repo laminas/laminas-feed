@@ -1,15 +1,14 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Feed\Reader;
+namespace Laminas\Feed\Reader;
 
-use Zend\ServiceManager\AbstractPluginManager;
+use Laminas\ServiceManager\AbstractPluginManager;
 
 /**
  * Plugin manager implementation for feed reader extensions
@@ -25,19 +24,19 @@ class ExtensionManager extends AbstractPluginManager
      * @var array
      */
     protected $invokableClasses = array(
-        'atomentry'            => 'Zend\Feed\Reader\Extension\Atom\Entry',
-        'atomfeed'             => 'Zend\Feed\Reader\Extension\Atom\Feed',
-        'contententry'         => 'Zend\Feed\Reader\Extension\Content\Entry',
-        'creativecommonsentry' => 'Zend\Feed\Reader\Extension\CreativeCommons\Entry',
-        'creativecommonsfeed'  => 'Zend\Feed\Reader\Extension\CreativeCommons\Feed',
-        'dublincoreentry'      => 'Zend\Feed\Reader\Extension\DublinCore\Entry',
-        'dublincorefeed'       => 'Zend\Feed\Reader\Extension\DublinCore\Feed',
-        'podcastentry'         => 'Zend\Feed\Reader\Extension\Podcast\Entry',
-        'podcastfeed'          => 'Zend\Feed\Reader\Extension\Podcast\Feed',
-        'slashentry'           => 'Zend\Feed\Reader\Extension\Slash\Entry',
-        'syndicationfeed'      => 'Zend\Feed\Reader\Extension\Syndication\Feed',
-        'threadentry'          => 'Zend\Feed\Reader\Extension\Thread\Entry',
-        'wellformedwebentry'   => 'Zend\Feed\Reader\Extension\WellFormedWeb\Entry',
+        'atomentry'            => 'Laminas\Feed\Reader\Extension\Atom\Entry',
+        'atomfeed'             => 'Laminas\Feed\Reader\Extension\Atom\Feed',
+        'contententry'         => 'Laminas\Feed\Reader\Extension\Content\Entry',
+        'creativecommonsentry' => 'Laminas\Feed\Reader\Extension\CreativeCommons\Entry',
+        'creativecommonsfeed'  => 'Laminas\Feed\Reader\Extension\CreativeCommons\Feed',
+        'dublincoreentry'      => 'Laminas\Feed\Reader\Extension\DublinCore\Entry',
+        'dublincorefeed'       => 'Laminas\Feed\Reader\Extension\DublinCore\Feed',
+        'podcastentry'         => 'Laminas\Feed\Reader\Extension\Podcast\Entry',
+        'podcastfeed'          => 'Laminas\Feed\Reader\Extension\Podcast\Feed',
+        'slashentry'           => 'Laminas\Feed\Reader\Extension\Slash\Entry',
+        'syndicationfeed'      => 'Laminas\Feed\Reader\Extension\Syndication\Feed',
+        'threadentry'          => 'Laminas\Feed\Reader\Extension\Thread\Entry',
+        'wellformedwebentry'   => 'Laminas\Feed\Reader\Extension\WellFormedWeb\Entry',
     );
 
     /**
