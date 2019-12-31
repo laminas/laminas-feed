@@ -1,25 +1,23 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Feed
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Feed\Writer\Renderer\Entry;
+namespace LaminasTest\Feed\Writer\Renderer\Entry;
 
-use Zend\Feed\Writer\Renderer;
-use Zend\Feed\Writer;
-use Zend\Feed\Reader;
+use Laminas\Feed\Reader;
+use Laminas\Feed\Writer;
+use Laminas\Feed\Writer\Renderer;
 
 /**
- * @category   Zend
- * @package    Zend_Feed
+ * @category   Laminas
+ * @package    Laminas_Feed
  * @subpackage UnitTests
- * @group      Zend_Feed
- * @group      Zend_Feed_Writer
+ * @group      Laminas_Feed
+ * @group      Laminas_Feed_Writer
  */
 class RssTest extends \PHPUnit_Framework_TestCase
 {
@@ -81,7 +79,7 @@ class RssTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Zend\Feed\Writer\Exception\ExceptionInterface
+     * @expectedException Laminas\Feed\Writer\Exception\ExceptionInterface
      */
     public function testEntryTitleIfMissingThrowsExceptionIfDescriptionAlsoMissing()
     {
@@ -109,7 +107,7 @@ class RssTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Zend\Feed\Writer\Exception\ExceptionInterface
+     * @expectedException Laminas\Feed\Writer\Exception\ExceptionInterface
      */
     public function testEntryDescriptionIfMissingThrowsExceptionIfAlsoNoTitle()
     {
@@ -213,7 +211,7 @@ class RssTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Zend\Feed\Writer\Exception\ExceptionInterface
+     * @expectedException Laminas\Feed\Writer\Exception\ExceptionInterface
      */
     public function testAddsEnclosureThrowsExceptionOnMissingType()
     {
@@ -226,7 +224,7 @@ class RssTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Zend\Feed\Writer\Exception\ExceptionInterface
+     * @expectedException Laminas\Feed\Writer\Exception\ExceptionInterface
      */
     public function testAddsEnclosureThrowsExceptionOnMissingLength()
     {
@@ -239,7 +237,7 @@ class RssTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Zend\Feed\Writer\Exception\ExceptionInterface
+     * @expectedException Laminas\Feed\Writer\Exception\ExceptionInterface
      */
     public function testAddsEnclosureThrowsExceptionOnNonNumericLength()
     {
@@ -253,7 +251,7 @@ class RssTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Zend\Feed\Writer\Exception\ExceptionInterface
+     * @expectedException Laminas\Feed\Writer\Exception\ExceptionInterface
      */
     public function testAddsEnclosureThrowsExceptionOnNegativeLength()
     {
@@ -277,7 +275,7 @@ class RssTest extends \PHPUnit_Framework_TestCase
 
     public function testEntryIdHasBeenSetWithPermaLinkAsFalseWhenNotUri()
     {
-        $this->markTestIncomplete('Untest due to ZFR potential bug');
+        $this->markTestIncomplete('Untest due to LaminasR potential bug');
     }
 
     public function testEntryIdDefaultIsUsedIfNotSetByHand()
@@ -345,7 +343,7 @@ class RssTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZFWCHARDATA01
+     * @group LaminasWCHARDATA01
      */
     public function testCategoriesCharDataEncoding()
     {
