@@ -1,20 +1,19 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Feed\Reader\Feed;
+namespace LaminasTest\Feed\Reader\Feed;
 
 use DateTime;
-use Zend\Feed\Reader;
+use Laminas\Feed\Reader;
 
 /**
-* @group Zend_Feed
-* @group Zend_Feed_Reader
+* @group Laminas_Feed
+* @group Laminas_Feed_Reader
 */
 class RssTest extends \PHPUnit_Framework_TestCase
 {
@@ -1958,7 +1957,7 @@ class RssTest extends \PHPUnit_Framework_TestCase
         $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath.'/generator/plain/rss20.xml')
         );
-        $this->assertEquals('Zend_Feed_Writer', $feed->getGenerator());
+        $this->assertEquals('Laminas_Feed_Writer', $feed->getGenerator());
     }
 
     public function testGetsGeneratorFromRss094()
@@ -1966,7 +1965,7 @@ class RssTest extends \PHPUnit_Framework_TestCase
         $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath.'/generator/plain/rss094.xml')
         );
-        $this->assertEquals('Zend_Feed_Writer', $feed->getGenerator());
+        $this->assertEquals('Laminas_Feed_Writer', $feed->getGenerator());
     }
 
     public function testGetsGeneratorFromRss093()
@@ -1974,7 +1973,7 @@ class RssTest extends \PHPUnit_Framework_TestCase
         $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath.'/generator/plain/rss093.xml')
         );
-        $this->assertEquals('Zend_Feed_Writer', $feed->getGenerator());
+        $this->assertEquals('Laminas_Feed_Writer', $feed->getGenerator());
     }
 
     public function testGetsGeneratorFromRss092()
@@ -1982,7 +1981,7 @@ class RssTest extends \PHPUnit_Framework_TestCase
         $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath.'/generator/plain/rss092.xml')
         );
-        $this->assertEquals('Zend_Feed_Writer', $feed->getGenerator());
+        $this->assertEquals('Laminas_Feed_Writer', $feed->getGenerator());
     }
 
     public function testGetsGeneratorFromRss091()
@@ -1990,7 +1989,7 @@ class RssTest extends \PHPUnit_Framework_TestCase
         $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath.'/generator/plain/rss091.xml')
         );
-        $this->assertEquals('Zend_Feed_Writer', $feed->getGenerator());
+        $this->assertEquals('Laminas_Feed_Writer', $feed->getGenerator());
     }
 
     public function testGetsGeneratorFromRss10()
@@ -1998,7 +1997,7 @@ class RssTest extends \PHPUnit_Framework_TestCase
         $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath.'/generator/plain/rss10.xml')
         );
-        $this->assertEquals('Zend_Feed_Writer', $feed->getGenerator());
+        $this->assertEquals('Laminas_Feed_Writer', $feed->getGenerator());
     }
 
     public function testGetsGeneratorFromRss090()
@@ -2006,7 +2005,7 @@ class RssTest extends \PHPUnit_Framework_TestCase
         $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath.'/generator/plain/rss090.xml')
         );
-        $this->assertEquals('Zend_Feed_Writer', $feed->getGenerator());
+        $this->assertEquals('Laminas_Feed_Writer', $feed->getGenerator());
     }
 
     // Missing Generator
