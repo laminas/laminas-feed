@@ -1,21 +1,20 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Feed\Writer\Renderer\Feed;
+namespace LaminasTest\Feed\Writer\Renderer\Feed;
 
-use Zend\Feed\Writer;
-use Zend\Feed\Writer\Renderer;
-use Zend\Feed\Reader;
+use Laminas\Feed\Reader;
+use Laminas\Feed\Writer;
+use Laminas\Feed\Writer\Renderer;
 
 /**
- * @group      Zend_Feed
- * @group      Zend_Feed_Writer
+ * @group      Laminas_Feed
+ * @group      Laminas_Feed_Writer
  */
 class AtomTest extends \PHPUnit_Framework_TestCase
 {
@@ -95,7 +94,7 @@ class AtomTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Zend\Feed\Writer\Exception\ExceptionInterface
+     * @expectedException Laminas\Feed\Writer\Exception\ExceptionInterface
      */
     public function testFeedTitleIfMissingThrowsException()
     {
@@ -105,7 +104,7 @@ class AtomTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZFWCHARDATA01
+     * @group LaminasWCHARDATA01
      */
     public function testFeedTitleCharDataEncoding()
     {
@@ -132,7 +131,7 @@ class AtomTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZFWCHARDATA01
+     * @group LaminasWCHARDATA01
      */
     public function testFeedSubtitleCharDataEncoding()
     {
@@ -152,7 +151,7 @@ class AtomTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Zend\Feed\Writer\Exception\ExceptionInterface
+     * @expectedException Laminas\Feed\Writer\Exception\ExceptionInterface
      */
     public function testFeedUpdatedDateIfMissingThrowsException()
     {
@@ -182,11 +181,11 @@ class AtomTest extends \PHPUnit_Framework_TestCase
         $atomFeed = new Renderer\Feed\Atom($this->validWriter);
         $atomFeed->render();
         $feed = Reader\Reader::importString($atomFeed->saveXml());
-        $this->assertEquals('Zend_Feed_Writer', $feed->getGenerator());
+        $this->assertEquals('Laminas_Feed_Writer', $feed->getGenerator());
     }
 
     /**
-     * @group ZFWCHARDATA01
+     * @group LaminasWCHARDATA01
      */
     public function testFeedGeneratorCharDataEncoding()
     {
@@ -238,7 +237,7 @@ class AtomTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Zend\Feed\Writer\Exception\ExceptionInterface
+     * @expectedException Laminas\Feed\Writer\Exception\ExceptionInterface
      */
     public function testFeedLinkToHtmlVersionOfFeedIfMissingThrowsExceptionIfIdMissing()
     {
@@ -256,7 +255,7 @@ class AtomTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Zend\Feed\Writer\Exception\ExceptionInterface
+     * @expectedException Laminas\Feed\Writer\Exception\ExceptionInterface
      */
     public function testFeedLinkToXmlAtomWhereTheFeedWillBeAvailableIfMissingThrowsException()
     {
@@ -278,7 +277,7 @@ class AtomTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZFWCHARDATA01
+     * @group LaminasWCHARDATA01
      */
     public function testFeedAuthorCharDataEncoding()
     {
