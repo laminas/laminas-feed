@@ -1,19 +1,18 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Feed\Reader;
+namespace Laminas\Feed\Reader;
 
 use DOMDocument;
 use DOMXPath;
-use Zend\Cache\Storage\StorageInterface as CacheStorage;
-use Zend\Http;
-use Zend\Stdlib\ErrorHandler;
+use Laminas\Cache\Storage\StorageInterface as CacheStorage;
+use Laminas\Http;
+use Laminas\Stdlib\ErrorHandler;
 
 /**
 */
@@ -57,7 +56,7 @@ class Reader
     /**
      * HTTP client object to use for retrieving feeds
      *
-     * @var \Zend\Http\Client
+     * @var \Laminas\Http\Client
      */
     protected static $httpClient = null;
 
@@ -117,7 +116,7 @@ class Reader
      *
      * Sets the HTTP client object to use for retrieving the feeds.
      *
-     * @param  \Zend\Http\Client $httpClient
+     * @param  \Laminas\Http\Client $httpClient
      * @return void
      */
     public static function setHttpClient(Http\Client $httpClient)
@@ -127,9 +126,9 @@ class Reader
 
 
     /**
-     * Gets the HTTP client object. If none is set, a new \Zend\Http\Client will be used.
+     * Gets the HTTP client object. If none is set, a new \Laminas\Http\Client will be used.
      *
-     * @return \Zend\Http\Client
+     * @return \Laminas\Http\Client
      */
     public static function getHttpClient()
     {
@@ -198,7 +197,7 @@ class Reader
         $headers = new Http\Headers();
         $client->setHeaders($headers);
         $client->setUri($uri);
-        $cacheId = 'Zend_Feed_Reader_' . md5($uri);
+        $cacheId = 'Laminas_Feed_Reader_' . md5($uri);
 
         if (static::$httpConditionalGet && $cache) {
             $data = $cache->getItem($cacheId);
@@ -304,7 +303,7 @@ class Reader
             $reader = new Feed\Atom($dom, $type);
         } else {
             throw new Exception\RuntimeException('The URI used does not point to a '
-            . 'valid Atom, RSS or RDF feed that Zend\Feed\Reader can parse.');
+            . 'valid Atom, RSS or RDF feed that Laminas\Feed\Reader can parse.');
         }
         return $reader;
     }
@@ -409,7 +408,7 @@ class Reader
             }
         } else {
             throw new Exception\InvalidArgumentException('Invalid object/scalar provided: must'
-            . ' be of type Zend\Feed\Reader\Feed, DomDocument or string');
+            . ' be of type Laminas\Feed\Reader\Feed, DomDocument or string');
         }
         $xpath = new DOMXPath($dom);
 
