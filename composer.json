@@ -1,41 +1,22 @@
 {
-    "name": "zendframework/zend-feed",
+    "name": "laminas/laminas-feed",
     "description": "provides functionality for consuming RSS and Atom feeds",
     "license": "BSD-3-Clause",
     "keywords": [
-        "zf2",
+        "laminas",
         "feed"
     ],
-    "homepage": "https://github.com/zendframework/zend-feed",
-    "autoload": {
-        "psr-4": {
-            "Zend\\Feed\\": "src/"
-        }
+    "homepage": "https://laminas.dev",
+    "support": {
+        "docs": "https://docs.laminas.dev/laminas-feed/",
+        "issues": "https://github.com/laminas/laminas-feed/issues",
+        "source": "https://github.com/laminas/laminas-feed",
+        "rss": "https://github.com/laminas/laminas-feed/releases.atom",
+        "chat": "https://laminas.dev/chat",
+        "forum": "https://discourse.laminas.dev"
     },
-    "require": {
-        "php": ">=5.3.3",
-        "zendframework/zend-escaper": "self.version",
-        "zendframework/zend-stdlib": "self.version",
-        "zendframework/zend-servicemanager": "self.version",
-        "zendframework/zend-uri": "self.version",
-        "zendframework/zend-version": "self.version"
-    },
-    "require-dev": {
-        "zendframework/zend-db": "self.version",
-        "zendframework/zend-cache": "self.version",
-        "zendframework/zend-http": "self.version",
-        "zendframework/zend-servicemanager": "self.version",
-        "zendframework/zend-validator": "self.version",
-        "fabpot/php-cs-fixer": "1.7.*",
-        "satooshi/php-coveralls": "dev-master",
-        "phpunit/PHPUnit": "~4.0"
-    },
-    "suggest": {
-        "zendframework/zend-cache": "Zend\\Cache component",
-        "zendframework/zend-db": "Zend\\Db component",
-        "zendframework/zend-http": "Zend\\Http for PubSubHubbub, and optionally for use with Zend\\Feed\\Reader",
-        "zendframework/zend-servicemanager": "Zend\\ServiceManager component, for default/recommended ExtensionManager implementations",
-        "zendframework/zend-validator": "Zend\\Validator component"
+    "config": {
+        "sort-packages": true
     },
     "extra": {
         "branch-alias": {
@@ -43,9 +24,43 @@
             "dev-develop": "2.2-dev"
         }
     },
+    "require": {
+        "php": ">=5.3.3",
+        "laminas/laminas-escaper": "self.version",
+        "laminas/laminas-servicemanager": "self.version",
+        "laminas/laminas-stdlib": "self.version",
+        "laminas/laminas-uri": "self.version",
+        "laminas/laminas-zendframework-bridge": "^1.0",
+        "zendframework/zend-version": "self.version"
+    },
+    "require-dev": {
+        "fabpot/php-cs-fixer": "1.7.*",
+        "laminas/laminas-cache": "self.version",
+        "laminas/laminas-db": "self.version",
+        "laminas/laminas-http": "self.version",
+        "laminas/laminas-servicemanager": "self.version",
+        "laminas/laminas-validator": "self.version",
+        "phpunit/phpunit": "~4.0",
+        "satooshi/php-coveralls": "dev-master"
+    },
+    "suggest": {
+        "laminas/laminas-cache": "Laminas\\Cache component",
+        "laminas/laminas-db": "Laminas\\Db component",
+        "laminas/laminas-http": "Laminas\\Http for PubSubHubbub, and optionally for use with Laminas\\Feed\\Reader",
+        "laminas/laminas-servicemanager": "Laminas\\ServiceManager component, for default/recommended ExtensionManager implementations",
+        "laminas/laminas-validator": "Laminas\\Validator component"
+    },
+    "autoload": {
+        "psr-4": {
+            "Laminas\\Feed\\": "src/"
+        }
+    },
     "autoload-dev": {
         "psr-4": {
-            "ZendTest\\Feed\\": "test/"
+            "LaminasTest\\Feed\\": "test/"
         }
+    },
+    "replace": {
+        "zendframework/zend-feed": "self.version"
     }
 }
