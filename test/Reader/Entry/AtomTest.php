@@ -1,20 +1,19 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Feed\Reader\Entry;
+namespace LaminasTest\Feed\Reader\Entry;
 
 use DateTime;
-use Zend\Feed\Reader;
+use Laminas\Feed\Reader;
 
 /**
-* @group Zend_Feed
-* @group Zend_Feed_Reader
+* @group Laminas_Feed
+* @group Laminas_Feed_Reader
 */
 class AtomTest extends \PHPUnit_Framework_TestCase
 {
@@ -62,7 +61,7 @@ class AtomTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Get Id (Unencoded Text)
-     * @group ZFR003
+     * @group LaminasR003
      */
     public function testGetsIdFromAtom03()
     {
@@ -299,7 +298,7 @@ class AtomTest extends \PHPUnit_Framework_TestCase
 
     /**
      * TEXT
-     * @group ZFRATOMCONTENT
+     * @group LaminasRATOMCONTENT
      */
     public function testGetsContentFromAtom10()
     {
@@ -312,7 +311,7 @@ class AtomTest extends \PHPUnit_Framework_TestCase
 
     /**
      * HTML Escaped
-     * @group ZFRATOMCONTENT
+     * @group LaminasRATOMCONTENT
      */
     public function testGetsContentFromAtom10Html()
     {
@@ -325,7 +324,7 @@ class AtomTest extends \PHPUnit_Framework_TestCase
 
     /**
      * HTML CDATA Escaped
-     * @group ZFRATOMCONTENT
+     * @group LaminasRATOMCONTENT
      */
     public function testGetsContentFromAtom10HtmlCdata()
     {
@@ -338,7 +337,7 @@ class AtomTest extends \PHPUnit_Framework_TestCase
 
     /**
      * XHTML
-     * @group ZFRATOMCONTENT
+     * @group LaminasRATOMCONTENT
      */
     public function testGetsContentFromAtom10XhtmlNamespaced()
     {

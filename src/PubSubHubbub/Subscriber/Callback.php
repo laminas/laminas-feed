@@ -1,17 +1,16 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Feed\PubSubHubbub\Subscriber;
+namespace Laminas\Feed\PubSubHubbub\Subscriber;
 
-use Zend\Feed\PubSubHubbub;
-use Zend\Feed\PubSubHubbub\Exception;
-use Zend\Feed\Uri;
+use Laminas\Feed\PubSubHubbub;
+use Laminas\Feed\PubSubHubbub\Exception;
+use Laminas\Feed\Uri;
 
 class Callback extends PubSubHubbub\AbstractCallback
 {
@@ -26,7 +25,7 @@ class Callback extends PubSubHubbub\AbstractCallback
      * Holds a manually set subscription key (i.e. identifies a unique
      * subscription) which is typical when it is not passed in the query string
      * but is part of the Callback URL path, requiring manual retrieval e.g.
-     * using a route and the \Zend\Mvc\Router\RouteMatch::getParam() method.
+     * using a route and the \Laminas\Mvc\Router\RouteMatch::getParam() method.
      *
      * @var string
      */
@@ -44,7 +43,7 @@ class Callback extends PubSubHubbub\AbstractCallback
      * Required if usePathParameter is enabled for the Subscriber.
      *
      * @param  string $key
-     * @return \Zend\Feed\PubSubHubbub\Subscriber\Callback
+     * @return \Laminas\Feed\PubSubHubbub\Subscriber\Callback
      */
     public function setSubscriptionKey($key)
     {
@@ -180,7 +179,7 @@ class Callback extends PubSubHubbub\AbstractCallback
      * Topic we've subscribed to.
      *
      * @param  string $feed
-     * @return \Zend\Feed\PubSubHubbub\Subscriber\Callback
+     * @return \Laminas\Feed\PubSubHubbub\Subscriber\Callback
      */
     public function setFeedUpdate($feed)
     {
