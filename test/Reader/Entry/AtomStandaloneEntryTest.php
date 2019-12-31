@@ -1,20 +1,19 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Feed\Reader\Entry;
+namespace LaminasTest\Feed\Reader\Entry;
 
 use DateTime;
-use Zend\Feed\Reader;
+use Laminas\Feed\Reader;
 
 /**
-* @group Zend_Feed
-* @group Zend_Feed_Reader
+* @group Laminas_Feed
+* @group Laminas_Feed_Reader
 */
 class AtomStandaloneEntryTest extends \PHPUnit_Framework_TestCase
 {
@@ -71,7 +70,7 @@ class AtomStandaloneEntryTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Get Id (Unencoded Text)
-     * @group ZFR002
+     * @group LaminasR002
      */
     public function testGetsIdFromAtom10()
     {
@@ -83,7 +82,7 @@ class AtomStandaloneEntryTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Get creation date (Unencoded Text)
-     * @group ZFR002
+     * @group LaminasR002
      */
     public function testGetsDateCreatedFromAtom10()
     {
@@ -96,7 +95,7 @@ class AtomStandaloneEntryTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Get modification date (Unencoded Text)
-     * @group ZFR002
+     * @group LaminasR002
      */
     public function testGetsDateModifiedFromAtom10()
     {
@@ -109,7 +108,7 @@ class AtomStandaloneEntryTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Get Title (Unencoded Text)
-     * @group ZFR002
+     * @group LaminasR002
      */
     public function testGetsTitleFromAtom10()
     {
@@ -121,7 +120,7 @@ class AtomStandaloneEntryTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Get Authors (Unencoded Text)
-     * @group ZFR002
+     * @group LaminasR002
      */
     public function testGetsAuthorsFromAtom10()
     {
@@ -143,7 +142,7 @@ class AtomStandaloneEntryTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Get Author (Unencoded Text)
-     * @group ZFR002
+     * @group LaminasR002
      */
     public function testGetsAuthorFromAtom10()
     {
@@ -155,7 +154,7 @@ class AtomStandaloneEntryTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Get Description (Unencoded Text)
-     * @group ZFR002
+     * @group LaminasR002
      */
     public function testGetsDescriptionFromAtom10()
     {
@@ -167,7 +166,7 @@ class AtomStandaloneEntryTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Get enclosure
-     * @group ZFR002
+     * @group LaminasR002
      */
     public function testGetsEnclosureFromAtom10()
     {
@@ -185,7 +184,7 @@ class AtomStandaloneEntryTest extends \PHPUnit_Framework_TestCase
 
     /**
      * TEXT
-     * @group ZFRATOMCONTENT
+     * @group LaminasRATOMCONTENT
      */
     public function testGetsContentFromAtom10()
     {
@@ -197,7 +196,7 @@ class AtomStandaloneEntryTest extends \PHPUnit_Framework_TestCase
 
     /**
      * HTML Escaped
-     * @group ZFRATOMCONTENT
+     * @group LaminasRATOMCONTENT
      */
     public function testGetsContentFromAtom10Html()
     {
@@ -209,7 +208,7 @@ class AtomStandaloneEntryTest extends \PHPUnit_Framework_TestCase
 
     /**
      * HTML CDATA Escaped
-     * @group ZFRATOMCONTENT
+     * @group LaminasRATOMCONTENT
      */
     public function testGetsContentFromAtom10HtmlCdata()
     {
@@ -221,7 +220,7 @@ class AtomStandaloneEntryTest extends \PHPUnit_Framework_TestCase
 
     /**
      * XHTML
-     * @group ZFRATOMCONTENT
+     * @group LaminasRATOMCONTENT
      */
     public function testGetsContentFromAtom10XhtmlNamespaced()
     {
@@ -233,7 +232,7 @@ class AtomStandaloneEntryTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Get Link (Unencoded Text)
-     * @group ZFR002
+     * @group LaminasR002
      */
     public function testGetsLinkFromAtom10()
     {
@@ -245,7 +244,7 @@ class AtomStandaloneEntryTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Get Comment HTML Link
-     * @group ZFR002
+     * @group LaminasR002
      */
     public function testGetsCommentLinkFromAtom10()
     {
@@ -257,7 +256,7 @@ class AtomStandaloneEntryTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Get category data
-     * @group ZFR002
+     * @group LaminasR002
      */
     public function testGetsCategoriesFromAtom10()
     {
