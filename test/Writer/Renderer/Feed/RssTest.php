@@ -1,25 +1,26 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-feed for the canonical source repository
- * @copyright Copyright (c) 2005-2018 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   https://github.com/zendframework/zend-feed/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Feed\Writer\Renderer\Feed;
+namespace LaminasTest\Feed\Writer\Renderer\Feed;
 
 use DateTime;
+use Laminas\Feed\Reader;
+use Laminas\Feed\Writer;
+use Laminas\Feed\Writer\Exception\ExceptionInterface;
+use Laminas\Feed\Writer\Feed;
+use Laminas\Feed\Writer\Renderer;
+use Laminas\Feed\Writer\Version;
+use LaminasTest\Feed\Writer\TestAsset;
 use PHPUnit\Framework\TestCase;
-use Zend\Feed\Reader;
-use Zend\Feed\Writer;
-use Zend\Feed\Writer\Exception\ExceptionInterface;
-use Zend\Feed\Writer\Feed;
-use Zend\Feed\Writer\Renderer;
-use Zend\Feed\Writer\Version;
-use ZendTest\Feed\Writer\TestAsset;
 
 /**
- * @group      Zend_Feed
- * @group      Zend_Feed_Writer
+ * @group      Laminas_Feed
+ * @group      Laminas_Feed_Writer
  */
 class RssTest extends TestCase
 {
@@ -89,7 +90,7 @@ class RssTest extends TestCase
     }
 
     /**
-     * @group ZFWCHARDATA01
+     * @group LaminasWCHARDATA01
      */
     public function testFeedTitleCharDataEncoding()
     {
@@ -117,7 +118,7 @@ class RssTest extends TestCase
     }
 
     /**
-     * @group ZFWCHARDATA01
+     * @group LaminasWCHARDATA01
      */
     public function testFeedDescriptionCharDataEncoding()
     {
@@ -175,7 +176,7 @@ class RssTest extends TestCase
         $rssFeed->render();
         $feed = Reader\Reader::importString($rssFeed->saveXml());
         $this->assertEquals(
-            'Zend_Feed_Writer ' . Version::VERSION . ' (http://framework.zend.com)',
+            'Laminas_Feed_Writer ' . Version::VERSION . ' (https://getlaminas.org)',
             $feed->getGenerator()
         );
     }
@@ -261,7 +262,7 @@ class RssTest extends TestCase
     }
 
     /**
-     * @group ZFW003
+     * @group LaminasW003
      */
     public function testFeedHoldsAnyAuthorAdded()
     {
@@ -276,7 +277,7 @@ class RssTest extends TestCase
     }
 
     /**
-     * @group ZFWCHARDATA01
+     * @group LaminasWCHARDATA01
      */
     public function testFeedAuthorCharDataEncoding()
     {
@@ -300,7 +301,7 @@ class RssTest extends TestCase
     }
 
     /**
-     * @group ZFWCHARDATA01
+     * @group LaminasWCHARDATA01
      */
     public function testCopyrightCharDataEncoding()
     {
@@ -334,7 +335,7 @@ class RssTest extends TestCase
     }
 
     /**
-     * @group ZFWCHARDATA01
+     * @group LaminasWCHARDATA01
      */
     public function testCategoriesCharDataEncoding()
     {

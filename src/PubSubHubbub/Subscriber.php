@@ -1,20 +1,19 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Feed\PubSubHubbub;
+namespace Laminas\Feed\PubSubHubbub;
 
 use DateInterval;
 use DateTime;
+use Laminas\Feed\Uri;
+use Laminas\Http\Request as HttpRequest;
+use Laminas\Stdlib\ArrayUtils;
 use Traversable;
-use Zend\Feed\Uri;
-use Zend\Http\Request as HttpRequest;
-use Zend\Stdlib\ArrayUtils;
 
 class Subscriber
 {
@@ -63,7 +62,7 @@ class Subscriber
      * Subscriber prefers synchronous verification, but is considered
      * desirable to support asynchronous verification if possible.
      *
-     * Zend\Feed\Pubsubhubbub\Subscriber will always send both modes, whose
+     * Laminas\Feed\Pubsubhubbub\Subscriber will always send both modes, whose
      * order of occurrence in the parameter list determines this preference.
      *
      * @var string
@@ -72,7 +71,7 @@ class Subscriber
 
     /**
      * An array of any errors including keys for 'response', 'hubUrl'.
-     * The response is the actual Zend\Http\Response object.
+     * The response is the actual Laminas\Http\Response object.
      *
      * @var array
      */
@@ -87,10 +86,10 @@ class Subscriber
     protected $asyncHubs = [];
 
     /**
-     * An instance of Zend\Feed\Pubsubhubbub\Model\SubscriptionPersistence used to background
+     * An instance of Laminas\Feed\Pubsubhubbub\Model\SubscriptionPersistence used to background
      * save any verification tokens associated with a subscription or other.
      *
-     * @var \Zend\Feed\PubSubHubbub\Model\SubscriptionPersistenceInterface
+     * @var \Laminas\Feed\PubSubHubbub\Model\SubscriptionPersistenceInterface
      */
     protected $storage = null;
 
@@ -111,9 +110,9 @@ class Subscriber
      *
      * This is required for all Hubs using the Pubsubhubbub 0.1 Specification.
      * It should be manually intercepted and passed to the Callback class using
-     * Zend\Feed\Pubsubhubbub\Subscriber\Callback::setSubscriptionKey(). Will
+     * Laminas\Feed\Pubsubhubbub\Subscriber\Callback::setSubscriptionKey(). Will
      * require a route in the form "callback/:subkey" to allow the parameter be
-     * retrieved from an action using the Zend\Controller\Action::\getParam()
+     * retrieved from an action using the Laminas\Controller\Action::\getParam()
      * method.
      *
      * @var string
@@ -286,7 +285,7 @@ class Subscriber
      * Subscriber prefers synchronous verification, but does support
      * asynchronous if that's the Hub Server's utilised mode.
      *
-     * Zend\Feed\Pubsubhubbub\Subscriber will always send both modes, whose
+     * Laminas\Feed\Pubsubhubbub\Subscriber will always send both modes, whose
      * order of occurrence in the parameter list determines this preference.
      *
      * @param  string $mode Should be 'sync' or 'async'
@@ -300,8 +299,8 @@ class Subscriber
         ) {
             throw new Exception\InvalidArgumentException('Invalid preferred'
                 . ' mode specified: "' . $mode . '" but should be one of'
-                . ' Zend\Feed\Pubsubhubbub::VERIFICATION_MODE_SYNC or'
-                . ' Zend\Feed\Pubsubhubbub::VERIFICATION_MODE_ASYNC');
+                . ' Laminas\Feed\Pubsubhubbub::VERIFICATION_MODE_SYNC or'
+                . ' Laminas\Feed\Pubsubhubbub::VERIFICATION_MODE_ASYNC');
         }
         $this->preferredVerificationMode = $mode;
         return $this;
@@ -505,7 +504,7 @@ class Subscriber
     }
 
     /**
-     * Sets an instance of Zend\Feed\Pubsubhubbub\Model\SubscriptionPersistence used to background
+     * Sets an instance of Laminas\Feed\Pubsubhubbub\Model\SubscriptionPersistence used to background
      * save any verification tokens associated with a subscription or other.
      *
      * @param  Model\SubscriptionPersistenceInterface $storage
@@ -518,7 +517,7 @@ class Subscriber
     }
 
     /**
-     * Gets an instance of Zend\Feed\Pubsubhubbub\Storage\StoragePersistence used
+     * Gets an instance of Laminas\Feed\Pubsubhubbub\Storage\StoragePersistence used
      * to background save any verification tokens associated with a subscription
      * or other.
      *
@@ -569,7 +568,7 @@ class Subscriber
 
     /**
      * Return an array of errors met from any failures, including keys:
-     * 'response' => the Zend\Http\Response object from the failure
+     * 'response' => the Laminas\Http\Response object from the failure
      * 'hubUrl' => the URL of the Hub Server whose notification failed
      *
      * @return array
@@ -645,7 +644,7 @@ class Subscriber
     /**
      * Get a basic prepared HTTP client for use
      *
-     * @return \Zend\Http\Client
+     * @return \Laminas\Http\Client
      */
     // @codingStandardsIgnoreStart
     protected function _getHttpClient()
@@ -653,7 +652,7 @@ class Subscriber
         // @codingStandardsIgnoreEnd
         $client = PubSubHubbub::getHttpClient();
         $client->setMethod(HttpRequest::METHOD_POST);
-        $client->setOptions(['useragent' => 'Zend_Feed_Pubsubhubbub_Subscriber/'
+        $client->setOptions(['useragent' => 'Laminas_Feed_Pubsubhubbub_Subscriber/'
             . Version::VERSION]);
         return $client;
     }

@@ -1,15 +1,16 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-feed for the canonical source repository
- * @copyright Copyright (c) 2018 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   https://github.com/zendframework/zend-feed/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Feed\Writer\TestAsset;
+namespace LaminasTest\Feed\Writer\TestAsset;
 
-use Zend\Feed\Writer\Exception\InvalidArgumentException;
-use Zend\Feed\Writer\Extension;
-use Zend\Feed\Writer\ExtensionManagerInterface;
+use Laminas\Feed\Writer\Exception\InvalidArgumentException;
+use Laminas\Feed\Writer\Extension;
+use Laminas\Feed\Writer\ExtensionManagerInterface;
 
 class CustomExtensionManager implements ExtensionManagerInterface
 {

@@ -1,23 +1,22 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Feed\Writer;
+namespace LaminasTest\Feed\Writer;
 
 use DateTime;
 use DateTimeImmutable;
+use Laminas\Feed\Writer;
+use Laminas\Feed\Writer\Exception\InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Zend\Feed\Writer;
-use Zend\Feed\Writer\Exception\InvalidArgumentException;
 
 /**
-* @group Zend_Feed
-* @group Zend_Feed_Writer
+* @group Laminas_Feed
+* @group Laminas_Feed_Writer
 */
 class DeletedTest extends TestCase
 {
@@ -61,7 +60,7 @@ class DeletedTest extends TestCase
     }
 
     /**
-     * @group ZF-12070
+     * @group Laminas-12070
      */
     public function testSetWhenUsesGivenUnixTimestampWhenItIsLessThanTenDigits()
     {
@@ -72,7 +71,7 @@ class DeletedTest extends TestCase
     }
 
     /**
-     * @group ZF-11610
+     * @group Laminas-11610
      */
     public function testSetWhenUsesGivenUnixTimestampWhenItIsAVerySmallInteger()
     {
@@ -157,7 +156,7 @@ class DeletedTest extends TestCase
 
     public function testAddByThrowsExceptionOnInvalidUriFromArray()
     {
-        $this->markTestIncomplete('Pending Zend\URI fix for validation');
+        $this->markTestIncomplete('Pending Laminas\URI fix for validation');
         $entry = new Writer\Deleted;
         try {
             $entry->setBy(['name' => 'Joe', 'uri' => 'notauri']);
@@ -177,7 +176,7 @@ class DeletedTest extends TestCase
     }
 
     /**
-     * @covers \Zend\Feed\Writer\Deleted::getBy
+     * @covers \Laminas\Feed\Writer\Deleted::getBy
      */
     public function testGetBy()
     {
@@ -203,9 +202,9 @@ class DeletedTest extends TestCase
     }
 
     /**
-     * @covers \Zend\Feed\Writer\Deleted::getComment
-     * @covers \Zend\Feed\Writer\Deleted::setComment
-     * @covers \Zend\Feed\Writer\Deleted::remove
+     * @covers \Laminas\Feed\Writer\Deleted::getComment
+     * @covers \Laminas\Feed\Writer\Deleted::setComment
+     * @covers \Laminas\Feed\Writer\Deleted::remove
      */
     public function testCommentAndRemove()
     {
@@ -222,8 +221,8 @@ class DeletedTest extends TestCase
     }
 
     /**
-     * @covers \Zend\Feed\Writer\Deleted::getEncoding
-     * @covers \Zend\Feed\Writer\Deleted::setEncoding
+     * @covers \Laminas\Feed\Writer\Deleted::getEncoding
+     * @covers \Laminas\Feed\Writer\Deleted::setEncoding
      */
     public function testEncoding()
     {
@@ -241,8 +240,8 @@ class DeletedTest extends TestCase
     }
 
     /**
-     * @covers \Zend\Feed\Writer\Deleted::getType
-     * @covers \Zend\Feed\Writer\Deleted::setType
+     * @covers \Laminas\Feed\Writer\Deleted::getType
+     * @covers \Laminas\Feed\Writer\Deleted::setType
      */
     public function testType()
     {
