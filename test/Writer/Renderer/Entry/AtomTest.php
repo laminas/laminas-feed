@@ -1,21 +1,20 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Feed\Writer\Renderer\Entry;
+namespace LaminasTest\Feed\Writer\Renderer\Entry;
 
-use Zend\Feed\Writer\Renderer;
-use Zend\Feed\Writer;
-use Zend\Feed\Reader;
+use Laminas\Feed\Reader;
+use Laminas\Feed\Writer;
+use Laminas\Feed\Writer\Renderer;
 
 /**
- * @group      Zend_Feed
- * @group      Zend_Feed_Writer
+ * @group      Laminas_Feed
+ * @group      Laminas_Feed_Writer
  */
 class AtomTest extends \PHPUnit_Framework_TestCase
 {
@@ -88,7 +87,7 @@ class AtomTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Zend\Feed\Writer\Exception\ExceptionInterface
+     * @expectedException Laminas\Feed\Writer\Exception\ExceptionInterface
      */
     public function testFeedTitleIfMissingThrowsException()
     {
@@ -106,7 +105,7 @@ class AtomTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZFWATOMCONTENT
+     * @group LaminasWATOMCONTENT
      */
     public function testEntryContentHasBeenSet_Xhtml()
     {
@@ -117,7 +116,7 @@ class AtomTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Zend\Feed\Writer\Exception\ExceptionInterface
+     * @expectedException Laminas\Feed\Writer\Exception\ExceptionInterface
      */
     public function testFeedContentIfMissingThrowsExceptionIfThereIsNoLink()
     {
@@ -136,7 +135,7 @@ class AtomTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Zend\Feed\Writer\Exception\ExceptionInterface
+     * @expectedException Laminas\Feed\Writer\Exception\ExceptionInterface
      */
     public function testFeedUpdatedDateIfMissingThrowsException()
     {
@@ -226,7 +225,7 @@ class AtomTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Zend\Feed\Writer\Exception\ExceptionInterface
+     * @expectedException Laminas\Feed\Writer\Exception\ExceptionInterface
      */
     public function testFeedIdIfMissingThrowsException()
     {
@@ -237,11 +236,11 @@ class AtomTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Zend\Feed\Writer\Exception\ExceptionInterface
+     * @expectedException Laminas\Feed\Writer\Exception\ExceptionInterface
      */
     public function testFeedIdThrowsExceptionIfNotUri()
     {
-        $this->markTestIncomplete('Pending Zend\URI fix for validation');
+        $this->markTestIncomplete('Pending Laminas\URI fix for validation');
         $atomFeed = new Renderer\Feed\Atom($this->validWriter);
         $this->validEntry->remove('id');
         $this->validEntry->remove('link');
@@ -301,7 +300,7 @@ class AtomTest extends \PHPUnit_Framework_TestCase
                                                 ));
         $feed  = Reader\Reader::importString($renderer->render()->saveXml());
         $entry = $feed->current();
-        // Skipped over due to ZFR bug (detects Atom in error when RSS requested)
+        // Skipped over due to LaminasR bug (detects Atom in error when RSS requested)
         //$this->assertEquals('http://www.example.com/rss/id/1', $entry->getCommentFeedLink('rss'));
         $this->assertEquals('http://www.example.com/atom/id/1', $entry->getCommentFeedLink('atom'));
     }
