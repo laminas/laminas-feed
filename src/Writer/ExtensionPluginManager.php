@@ -1,17 +1,16 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Feed\Writer;
+namespace Laminas\Feed\Writer;
 
-use Zend\ServiceManager\AbstractPluginManager;
-use Zend\ServiceManager\Exception\InvalidServiceException;
-use Zend\ServiceManager\Factory\InvokableFactory;
+use Laminas\ServiceManager\AbstractPluginManager;
+use Laminas\ServiceManager\Exception\InvalidServiceException;
+use Laminas\ServiceManager\Factory\InvokableFactory;
 
 /**
  * Plugin manager implementation for feed writer extensions
@@ -74,6 +73,32 @@ class ExtensionPluginManager extends AbstractPluginManager implements ExtensionM
         'wellFormedWebRendererEntry' => Extension\WellFormedWeb\Renderer\Entry::class,
         'WellFormedWebRendererEntry' => Extension\WellFormedWeb\Renderer\Entry::class,
         'WellFormedWebRenderer\Entry' => Extension\WellFormedWeb\Renderer\Entry::class,
+
+        // Legacy Zend Framework aliases
+        \Zend\Feed\Writer\Extension\Atom\Renderer\Feed::class => Extension\Atom\Renderer\Feed::class,
+        \Zend\Feed\Writer\Extension\Content\Renderer\Entry::class => Extension\Content\Renderer\Entry::class,
+        \Zend\Feed\Writer\Extension\DublinCore\Renderer\Entry::class => Extension\DublinCore\Renderer\Entry::class,
+        \Zend\Feed\Writer\Extension\DublinCore\Renderer\Feed::class => Extension\DublinCore\Renderer\Feed::class,
+        \Zend\Feed\Writer\Extension\ITunes\Entry::class => Extension\ITunes\Entry::class,
+        \Zend\Feed\Writer\Extension\ITunes\Feed::class => Extension\ITunes\Feed::class,
+        \Zend\Feed\Writer\Extension\ITunes\Renderer\Entry::class => Extension\ITunes\Renderer\Entry::class,
+        \Zend\Feed\Writer\Extension\ITunes\Renderer\Feed::class => Extension\ITunes\Renderer\Feed::class,
+        \Zend\Feed\Writer\Extension\Slash\Renderer\Entry::class => Extension\Slash\Renderer\Entry::class,
+        \Zend\Feed\Writer\Extension\Threading\Renderer\Entry::class => Extension\Threading\Renderer\Entry::class,
+        \Zend\Feed\Writer\Extension\WellFormedWeb\Renderer\Entry::class => Extension\WellFormedWeb\Renderer\Entry::class,
+
+        // v2 normalized FQCNs
+        'zendfeedwriterextensionatomrendererfeed' => Extension\Atom\Renderer\Feed::class,
+        'zendfeedwriterextensioncontentrendererentry' => Extension\Content\Renderer\Entry::class,
+        'zendfeedwriterextensiondublincorerendererentry' => Extension\DublinCore\Renderer\Entry::class,
+        'zendfeedwriterextensiondublincorerendererfeed' => Extension\DublinCore\Renderer\Feed::class,
+        'zendfeedwriterextensionitunesentry' => Extension\ITunes\Entry::class,
+        'zendfeedwriterextensionitunesfeed' => Extension\ITunes\Feed::class,
+        'zendfeedwriterextensionitunesrendererentry' => Extension\ITunes\Renderer\Entry::class,
+        'zendfeedwriterextensionitunesrendererfeed' => Extension\ITunes\Renderer\Feed::class,
+        'zendfeedwriterextensionslashrendererentry' => Extension\Slash\Renderer\Entry::class,
+        'zendfeedwriterextensionthreadingrendererentry' => Extension\Threading\Renderer\Entry::class,
+        'zendfeedwriterextensionwellformedwebrendererentry' => Extension\WellFormedWeb\Renderer\Entry::class,
     ];
 
     /**
@@ -96,17 +121,17 @@ class ExtensionPluginManager extends AbstractPluginManager implements ExtensionM
         // Legacy (v2) due to alias resolution; canonical form of resolved
         // alias is used to look up the factory, while the non-normalized
         // resolved alias is used as the requested name passed to the factory.
-        'zendfeedwriterextensionatomrendererfeed'           => InvokableFactory::class,
-        'zendfeedwriterextensioncontentrendererentry'       => InvokableFactory::class,
-        'zendfeedwriterextensiondublincorerendererentry'    => InvokableFactory::class,
-        'zendfeedwriterextensiondublincorerendererfeed'     => InvokableFactory::class,
-        'zendfeedwriterextensionitunesentry'                => InvokableFactory::class,
-        'zendfeedwriterextensionitunesfeed'                 => InvokableFactory::class,
-        'zendfeedwriterextensionitunesrendererentry'        => InvokableFactory::class,
-        'zendfeedwriterextensionitunesrendererfeed'         => InvokableFactory::class,
-        'zendfeedwriterextensionslashrendererentry'         => InvokableFactory::class,
-        'zendfeedwriterextensionthreadingrendererentry'     => InvokableFactory::class,
-        'zendfeedwriterextensionwellformedwebrendererentry' => InvokableFactory::class,
+        'laminasfeedwriterextensionatomrendererfeed'           => InvokableFactory::class,
+        'laminasfeedwriterextensioncontentrendererentry'       => InvokableFactory::class,
+        'laminasfeedwriterextensiondublincorerendererentry'    => InvokableFactory::class,
+        'laminasfeedwriterextensiondublincorerendererfeed'     => InvokableFactory::class,
+        'laminasfeedwriterextensionitunesentry'                => InvokableFactory::class,
+        'laminasfeedwriterextensionitunesfeed'                 => InvokableFactory::class,
+        'laminasfeedwriterextensionitunesrendererentry'        => InvokableFactory::class,
+        'laminasfeedwriterextensionitunesrendererfeed'         => InvokableFactory::class,
+        'laminasfeedwriterextensionslashrendererentry'         => InvokableFactory::class,
+        'laminasfeedwriterextensionthreadingrendererentry'     => InvokableFactory::class,
+        'laminasfeedwriterextensionwellformedwebrendererentry' => InvokableFactory::class,
     ];
 
     /**

@@ -1,20 +1,19 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Feed\PubSubHubbub;
+namespace LaminasTest\Feed\PubSubHubbub;
 
+use Laminas\Feed\PubSubHubbub\Model\Subscription;
+use Laminas\Feed\PubSubHubbub\PubSubHubbub;
+use Laminas\Feed\PubSubHubbub\Subscriber;
+use Laminas\Http\Client\Adapter\Socket;
+use Laminas\Http\Client as HttpClient;
 use PHPUnit\Framework\TestCase;
-use Zend\Feed\PubSubHubbub\PubSubHubbub;
-use Zend\Feed\PubSubHubbub\Subscriber;
-use Zend\Http\Client as HttpClient;
-use Zend\Feed\PubSubHubbub\Model\Subscription;
-use Zend\Http\Client\Adapter\Socket;
 
 /**
  * Note that $this->_baseuri must point to a directory on a web server
@@ -25,8 +24,8 @@ use Zend\Http\Client\Adapter\Socket;
  * You can also set the proper constant in your test configuration file to
  * point to the right place.
  *
- * @group      Zend_Feed
- * @group      Zend_Feed_Subsubhubbub
+ * @group      Laminas_Feed
+ * @group      Laminas_Feed_Subsubhubbub
  */
 class SubscriberHttpTest extends TestCase
 {
@@ -43,7 +42,7 @@ class SubscriberHttpTest extends TestCase
 
     public function setUp()
     {
-        $this->baseuri = getenv('TESTS_ZEND_FEED_PUBSUBHUBBUB_BASEURI');
+        $this->baseuri = getenv('TESTS_LAMINAS_FEED_PUBSUBHUBBUB_BASEURI');
         if ($this->baseuri) {
             if (substr($this->baseuri, -1) != '/') {
                 $this->baseuri .= '/';
@@ -62,7 +61,7 @@ class SubscriberHttpTest extends TestCase
             $this->subscriber->setStorage($this->storage);
         } else {
             // Skip tests
-            $this->markTestSkipped('Zend\Feed\PubSubHubbub\Subscriber dynamic tests are not enabled in phpunit.xml');
+            $this->markTestSkipped('Laminas\Feed\PubSubHubbub\Subscriber dynamic tests are not enabled in phpunit.xml');
         }
     }
 

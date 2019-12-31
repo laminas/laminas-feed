@@ -1,13 +1,13 @@
-# Zend\\Feed\\Reader and Security
+# Laminas\\Feed\\Reader and Security
 
 As with any data coming from a source that is beyond the developer's control,
 special attention needs to be given to securing, validating and filtering that
 data. Similar to data input to our application by users, data coming from RSS
 and Atom feeds should also be considered unsafe and potentially dangerous, as it
 allows the delivery of HTML and [xHTML](http://tools.ietf.org/html/rfc4287#section-8.1).
-Because data validation and filtration is out of `Zend\Feed`'s scope, this task
+Because data validation and filtration is out of `Laminas\Feed`'s scope, this task
 is left for implementation by the developer, by using libraries such as
-zend-escaper for escaping and [HTMLPurifier](http://www.htmlpurifier.org/) for
+laminas-escaper for escaping and [HTMLPurifier](http://www.htmlpurifier.org/) for
 validating and filtering feed data.
 
 Escaping and filtering of potentially insecure data is highly recommended before
@@ -63,8 +63,8 @@ $purifier = new HTMLPurifier($config);
 
 // Fetch the RSS
 try {
-   $rss = Zend\Feed\Reader\Reader::import('http://www.planet-php.net/rss/');
-} catch (Zend\Feed\Exception\Reader\RuntimeException $e) {
+   $rss = Laminas\Feed\Reader\Reader::import('http://www.planet-php.net/rss/');
+} catch (Laminas\Feed\Exception\Reader\RuntimeException $e) {
    // feed import failed
    echo "Exception caught importing feed: {$e->getMessage()}\n";
    exit;
@@ -102,9 +102,9 @@ foreach ($rss as $item) {
 > recommended to configure caching and use its standalone include file as it can
 > improve the performance of HTMLPurifier substantially.
 
-## Escaping data using zend-escaper
+## Escaping data using laminas-escaper
 
-To help prevent XSS attacks, Zend Framework provides the [zend-escaper component](https://github.com/zendframework/zend-escaper),
+To help prevent XSS attacks, Laminas provides the [laminas-escaper component](https://github.com/laminas/laminas-escaper),
 which complies to the current [OWASP recommendations](https://www.owasp.org/index.php/XSS_Prevention_Cheat_Sheet),
 and as such, is the recommended tool for escaping HTML tags and attributes,
 Javascript, CSS and URLs before outputing any potentially insecure data to the
@@ -112,22 +112,22 @@ users.
 
 ```php
 try {
-    $rss = Zend\Feed\Reader\Reader::import('http://www.planet-php.net/rss/');
-} catch (Zend\Feed\Exception\Reader\RuntimeException $e) {
+    $rss = Laminas\Feed\Reader\Reader::import('http://www.planet-php.net/rss/');
+} catch (Laminas\Feed\Exception\Reader\RuntimeException $e) {
     // feed import failed
     echo "Exception caught importing feed: {$e->getMessage()}\n";
     exit;
 }
 
 // Validate all URIs
-$linkValidator = new Zend\Validator\Uri;
+$linkValidator = new Laminas\Validator\Uri;
 $link = null;
 if ($linkValidator->isValid($rss->getLink())) {
     $link = $rss->getLink();
 }
 
 // Escaper used for escaping data
-$escaper = new Zend\Escaper\Escaper('utf-8');
+$escaper = new Laminas\Escaper\Escaper('utf-8');
 
 // Initialize the channel data array
 $channel = [

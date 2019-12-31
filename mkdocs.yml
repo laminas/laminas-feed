@@ -1,10 +1,10 @@
 docs_dir: doc/book
 site_dir: doc/html
-pages:
+nav:
     - index.md
     - Introduction: intro.md
     - Reader:
-        - "Zend\\Feed\\Reader": reader.md
+        - "Laminas\\Feed\\Reader": reader.md
         - 'HTTP Clients': http-clients.md
         - 'Using PSR-7 Clients': psr7-clients.md
         - 'Importing Feeds': importing.md
@@ -15,7 +15,6 @@ pages:
         - Security: security.md
     - Writer: writer.md
     - Pubsubhubbub: pubsubhubbub.md
-site_name: zend-feed
-site_description: Zend\Feed
-repo_url: 'https://github.com/zendframework/zend-feed'
-copyright: 'Copyright (c) 2016 <a href="http://www.zend.com/">Zend Technologies USA Inc.</a>'
+site_name: laminas-feed
+site_description: Laminas\Feed
+repo_url: 'https://github.com/laminas/laminas-feed'

@@ -1,39 +1,22 @@
 {
-    "name": "zendframework/zend-feed",
+    "name": "laminas/laminas-feed",
     "description": "provides functionality for consuming RSS and Atom feeds",
     "license": "BSD-3-Clause",
     "keywords": [
-        "zf2",
+        "laminas",
         "feed"
     ],
-    "homepage": "https://github.com/zendframework/zend-feed",
-    "autoload": {
-        "psr-4": {
-            "Zend\\Feed\\": "src/"
-        }
+    "homepage": "https://laminas.dev",
+    "support": {
+        "docs": "https://docs.laminas.dev/laminas-feed/",
+        "issues": "https://github.com/laminas/laminas-feed/issues",
+        "source": "https://github.com/laminas/laminas-feed",
+        "rss": "https://github.com/laminas/laminas-feed/releases.atom",
+        "chat": "https://laminas.dev/chat",
+        "forum": "https://discourse.laminas.dev"
     },
-    "require": {
-        "php": "^5.6 || ^7.0",
-        "zendframework/zend-escaper": "^2.5",
-        "zendframework/zend-stdlib": "^2.7 || ^3.1"
-    },
-    "require-dev": {
-        "zendframework/zend-db": "^2.7",
-        "zendframework/zend-cache": "^2.6",
-        "zendframework/zend-http": "^2.5.4",
-        "zendframework/zend-servicemanager": "^2.7.5 || ^3.0.3",
-        "zendframework/zend-validator": "^2.6",
-        "phpunit/PHPUnit": "^6.0.8 || ^5.7.15",
-        "psr/http-message": "^1.0",
-        "zendframework/zend-coding-standard": "~1.0.0"
-    },
-    "suggest": {
-        "psr/http-message": "PSR-7 ^1.0, if you wish to use Zend\\Feed\\Reader\\Http\\Psr7ResponseDecorator",
-        "zendframework/zend-cache": "Zend\\Cache component, for optionally caching feeds between requests",
-        "zendframework/zend-db": "Zend\\Db component, for use with PubSubHubbub",
-        "zendframework/zend-http": "Zend\\Http for PubSubHubbub, and optionally for use with Zend\\Feed\\Reader",
-        "zendframework/zend-servicemanager": "Zend\\ServiceManager component, for easily extending ExtensionManager implementations",
-        "zendframework/zend-validator": "Zend\\Validator component, for validating email addresses used in Atom feeds and entries ehen using the Writer subcomponent"
+    "config": {
+        "sort-packages": true
     },
     "extra": {
         "branch-alias": {
@@ -41,9 +24,38 @@
             "dev-develop": "2.9-dev"
         }
     },
+    "require": {
+        "php": "^5.6 || ^7.0",
+        "laminas/laminas-escaper": "^2.5",
+        "laminas/laminas-stdlib": "^2.7 || ^3.1",
+        "laminas/laminas-zendframework-bridge": "^1.0"
+    },
+    "require-dev": {
+        "laminas/laminas-cache": "^2.6",
+        "laminas/laminas-coding-standard": "~1.0.0",
+        "laminas/laminas-db": "^2.7",
+        "laminas/laminas-http": "^2.5.4",
+        "laminas/laminas-servicemanager": "^2.7.5 || ^3.0.3",
+        "laminas/laminas-validator": "^2.6",
+        "phpunit/phpunit": "^6.0.8 || ^5.7.15",
+        "psr/http-message": "^1.0"
+    },
+    "suggest": {
+        "laminas/laminas-cache": "Laminas\\Cache component, for optionally caching feeds between requests",
+        "laminas/laminas-db": "Laminas\\Db component, for use with PubSubHubbub",
+        "laminas/laminas-http": "Laminas\\Http for PubSubHubbub, and optionally for use with Laminas\\Feed\\Reader",
+        "laminas/laminas-servicemanager": "Laminas\\ServiceManager component, for easily extending ExtensionManager implementations",
+        "laminas/laminas-validator": "Laminas\\Validator component, for validating email addresses used in Atom feeds and entries ehen using the Writer subcomponent",
+        "psr/http-message": "PSR-7 ^1.0, if you wish to use Laminas\\Feed\\Reader\\Http\\Psr7ResponseDecorator"
+    },
+    "autoload": {
+        "psr-4": {
+            "Laminas\\Feed\\": "src/"
+        }
+    },
     "autoload-dev": {
         "psr-4": {
-            "ZendTest\\Feed\\": "test/"
+            "LaminasTest\\Feed\\": "test/"
         }
     },
     "scripts": {
@@ -56,5 +68,8 @@
         "test": "phpunit --colors=always",
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml",
         "upload-coverage": "coveralls -v"
+    },
+    "replace": {
+        "zendframework/zend-feed": "self.version"
     }
 }

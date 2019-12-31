@@ -1,33 +1,32 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Feed\Reader;
+namespace LaminasTest\Feed\Reader;
 
+use Interop\Container\ContainerInterface;
+use Laminas\Feed\Reader;
+use Laminas\Feed\Reader\Exception\InvalidArgumentException;
+use Laminas\Feed\Reader\Feed\FeedInterface;
+use Laminas\Feed\Reader\Feed\Rss;
+use Laminas\Feed\Reader\FeedSet;
+use Laminas\Feed\Reader\Http\ClientInterface;
+use Laminas\Feed\Reader\Http\ResponseInterface;
+use Laminas\Http\Client\Adapter\Test as TestAdapter;
+use Laminas\Http\Client as HttpClient;
+use Laminas\Http\Response as HttpResponse;
+use My\Extension\JungleBooks\Entry;
+use My\Extension\JungleBooks\Feed;
 use PHPUnit\Framework\TestCase;
 use stdClass;
-use Zend\Http\Client as HttpClient;
-use Zend\Http\Client\Adapter\Test as TestAdapter;
-use Zend\Http\Response as HttpResponse;
-use Zend\Feed\Reader;
-use Zend\Feed\Reader\Http\ClientInterface;
-use Zend\Feed\Reader\Exception\InvalidArgumentException;
-use Zend\Feed\Reader\Feed\FeedInterface;
-use Zend\Feed\Reader\Http\ResponseInterface;
-use My\Extension\JungleBooks\Feed;
-use My\Extension\JungleBooks\Entry;
-use Interop\Container\ContainerInterface;
-use Zend\Feed\Reader\Feed\Rss;
-use Zend\Feed\Reader\FeedSet;
 
 /**
-* @group Zend_Feed
-* @group Zend_Feed_Reader
+* @group Laminas_Feed
+* @group Laminas_Feed_Reader
 */
 class ReaderTest extends TestCase
 {
@@ -132,7 +131,7 @@ class ReaderTest extends TestCase
     }
 
     /**
-     * @group ZF-9723
+     * @group Laminas-9723
      */
     // @codingStandardsIgnoreStart
     public function testDetectsTypeFromStringOrToRemindPaddyAboutForgettingATestWhichLetsAStupidTypoSurviveUnnoticedForMonths()
@@ -163,7 +162,7 @@ class ReaderTest extends TestCase
 
     public function testImportsUri()
     {
-        if (! getenv('TESTS_ZEND_FEED_READER_ONLINE_ENABLED')) {
+        if (! getenv('TESTS_LAMINAS_FEED_READER_ONLINE_ENABLED')) {
             $this->markTestSkipped('testImportsUri() requires a network connection');
         }
 
@@ -171,12 +170,12 @@ class ReaderTest extends TestCase
     }
 
     /**
-     * @group ZF-8328
+     * @group Laminas-8328
      */
     public function testImportsUriAndThrowsExceptionIfNotAFeed()
     {
         $this->expectException(Reader\Exception\RuntimeException::class);
-        if (! getenv('TESTS_ZEND_FEED_READER_ONLINE_ENABLED')) {
+        if (! getenv('TESTS_LAMINAS_FEED_READER_ONLINE_ENABLED')) {
             $this->markTestSkipped('testImportsUri() requires a network connection');
         }
 
@@ -185,7 +184,7 @@ class ReaderTest extends TestCase
 
     public function testGetsFeedLinksAsValueObject()
     {
-        if (! getenv('TESTS_ZEND_FEED_READER_ONLINE_ENABLED')) {
+        if (! getenv('TESTS_LAMINAS_FEED_READER_ONLINE_ENABLED')) {
             $this->markTestSkipped('testGetsFeedLinksAsValueObject() requires a network connection');
         }
 
@@ -196,7 +195,7 @@ class ReaderTest extends TestCase
 
     public function testCompilesLinksAsArrayObject()
     {
-        if (! getenv('TESTS_ZEND_FEED_READER_ONLINE_ENABLED')) {
+        if (! getenv('TESTS_LAMINAS_FEED_READER_ONLINE_ENABLED')) {
             $this->markTestSkipped('testGetsFeedLinksAsValueObject() requires a network connection');
         }
         $links = Reader\Reader::findFeedLinks('http://www.planet-php.net');
@@ -208,7 +207,7 @@ class ReaderTest extends TestCase
 
     public function testFeedSetLoadsFeedObjectWhenFeedArrayKeyAccessed()
     {
-        if (! getenv('TESTS_ZEND_FEED_READER_ONLINE_ENABLED')) {
+        if (! getenv('TESTS_LAMINAS_FEED_READER_ONLINE_ENABLED')) {
             $this->markTestSkipped('testGetsFeedLinksAsValueObject() requires a network connection');
         }
         $links = Reader\Reader::findFeedLinks('http://www.planet-php.net');
@@ -218,7 +217,7 @@ class ReaderTest extends TestCase
 
     public function testZeroCountFeedSetReturnedFromEmptyList()
     {
-        if (! getenv('TESTS_ZEND_FEED_READER_ONLINE_ENABLED')) {
+        if (! getenv('TESTS_LAMINAS_FEED_READER_ONLINE_ENABLED')) {
             $this->markTestSkipped('testGetsFeedLinksAsValueObject() requires a network connection');
         }
         $links = Reader\Reader::findFeedLinks('http://www.example.com');
@@ -226,11 +225,11 @@ class ReaderTest extends TestCase
     }
 
     /**
-     * @group ZF-8327
+     * @group Laminas-8327
      */
     public function testGetsFeedLinksAndTrimsNewlines()
     {
-        if (! getenv('TESTS_ZEND_FEED_READER_ONLINE_ENABLED')) {
+        if (! getenv('TESTS_LAMINAS_FEED_READER_ONLINE_ENABLED')) {
             $this->markTestSkipped('testGetsFeedLinksAsValueObject() requires a network connection');
         }
 
@@ -239,7 +238,7 @@ class ReaderTest extends TestCase
     }
 
     /**
-     * @group ZF-8330
+     * @group Laminas-8330
      */
     public function testGetsFeedLinksAndNormalisesRelativeUrlsOnUriWithPath()
     {
@@ -279,8 +278,8 @@ class ReaderTest extends TestCase
 
     /**
      * This test is failing on windows:
-     * Failed asserting that exception of type "Zend\Feed\Reader\Exception\RuntimeException" matches expected exception
-     * "Zend\Feed\Reader\Exception\InvalidArgumentException". Message was: "DOMDocument cannot parse XML: Entity
+     * Failed asserting that exception of type "Laminas\Feed\Reader\Exception\RuntimeException" matches expected exception
+     * "Laminas\Feed\Reader\Exception\InvalidArgumentException". Message was: "DOMDocument cannot parse XML: Entity
      * 'discloseInfo' failed to parse".
      * @todo why is the assertEquals commented out?
      */
@@ -335,7 +334,7 @@ class ReaderTest extends TestCase
         $this->assertEquals($client, Reader\Reader::getHttpClient());
     }
 
-    public function testSetHttpClientWillDecorateAZendHttpClientInstance()
+    public function testSetHttpClientWillDecorateALaminasHttpClientInstance()
     {
         $client = new HttpClient();
         Reader\Reader::setHttpClient($client);

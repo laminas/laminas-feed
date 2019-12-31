@@ -1,5 +1,3 @@
-sudo: false
-
 language: php
 
 branches:
@@ -11,58 +9,50 @@ cache:
   directories:
     - $HOME/.composer/cache
     - $HOME/.local
-    - zf-mkdoc-theme
+    - laminas-mkdoc-theme
 
 env:
   global:
     - COMPOSER_ARGS="--no-interaction"
     - COVERAGE_DEPS="satooshi/php-coveralls"
     - LEGACY_DEPS="phpunit/phpunit"
-    - TESTS_ZEND_FEED_READER_ONLINE_ENABLED: true
-    - SITE_URL: https://zendframework.github.io/zend-feed
+    - TESTS_LAMINAS_FEED_READER_ONLINE_ENABLED: true
+    - SITE_URL: https://docs.laminas.dev/laminas-feed
     - GH_USER_NAME: "Matthew Weier O'Phinney"
     - GH_USER_EMAIL: matthew@weierophinney.net
-    - GH_REF: github.com/zendframework/zend-feed.git
-    - secure: "AS2iXk+GXAGpIXcLGBt6CRYQGf7hWhfz3XxrELg56kRa5ae8pkht44mxt271AJD09ZP2ZcF078vRj0eQ2PqboXoluwfXwQ9CmJJhNqWb4ZEzXmETwnMqsCZW+CWbPNzKJe3jMgOGfWtmwujlIFQn1Q+pUS3vcLmnnt5jt2K+p2vhFI/AfLPxJjtNhXLQ3z5FuZV6VoQS7Qjlm83Bq4sPp0vDLzfPDLsIiNRGC9tQMuu6irOPLubiFM0ymAcj40/RE0t/9VMkM36fYLY2+FDxGpz79SrtHQImBEFZblV5zswehMWeHZmSqh1Ei3voGsplLENZRoJ62CGPfBLxpux3jLbPZp/PerEhxvrsbVpKvQSvDyvYTpGKp4N/kLV2JOHSG8UNvZ5RF7XSZS3nCmKuAG1Fbv/Y/gaNHitPFwVOR/YqyNGmOC5z6ucctt+i1QrBd01Ms3qUuDoZEY5vl2i3uD3KYCVWH1LxzihaqQ2BR6t0QSfqW4hAXfU5eCuraHAYTYCDYHkjutdcHwKAsG1Jh/nQVZ5TfBJOSuY5yAuDULRmlyyKJRP2UDPRFUWnNW1/3GeKxs5p5zQnoCNmstx/4NGxtj/+m7qEiuvlUy9c1P4AQxJXHvujcOyE+N6TFLkVQK949TSo73oH59yzWK2D5Fqk3BNzFS3cGiJ/p49+bmI="
+    - GH_REF: github.com/laminas/laminas-feed.git
+    - secure: "AS2iXk+GXAGpIXcLGBt6CRYQGf7hWhfz3XxrELg56kRa5ae8pkht44mxt271AJD09ZP2ZcF078vRj0eQ2PqboXoluwfXwQ9CmJJhNqWb4ZEzXmETwnMqsCZW+CWbPNzKJe3jMgOGfWtmwujlIFQn1Q+pUS3vcLmnnt5jt2K+p2vhFI/AfLPxJjtNhXLQ3z5FuZV6VoQS7Qjlm83Bq4sPp0vDLlaminasPDLsIiNRGC9tQMuu6irOPLubiFM0ymAcj40/RE0t/9VMkM36fYLY2+FDxGpz79SrtHQImBEFZblV5zswehMWeHZmSqh1Ei3voGsplLENZRoJ62CGPfBLxpux3jLbPZp/PerEhxvrsbVpKvQSvDyvYTpGKp4N/kLV2JOHSG8UNvZ5RF7XSZS3nCmKuAG1Fbv/Y/gaNHitPFwVOR/YqyNGmOC5z6ucctt+i1QrBd01Ms3qUuDoZEY5vl2i3uD3KYCVWH1LxzihaqQ2BR6t0QSfqW4hAXfU5eCuraHAYTYCDYHkjutdcHwKAsG1Jh/nQVZ5TfBJOSuY5yAuDULRmlyyKJRP2UDPRFUWnNW1/3GeKxs5p5zQnoCNmstx/4NGxtj/+m7qEiuvlUy9c1P4AQxJXHvujcOyE+N6TFLkVQK949TSo73oH59yzWK2D5Fqk3BNzFS3cGiJ/p49+bmI="
 
 matrix:
+  fast_finish: true
   include:
     - php: 5.6
       env:
         - DEPS=lowest
     - php: 5.6
       env:
-        - DEPS=locked
+        - DEPS=latest
         - TEST_COVERAGE=true
         - DEPLOY_DOCS="$(if [[ $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST == 'false' ]]; then echo -n 'true' ; else echo -n 'false' ; fi)"
         - PATH="$HOME/.local/bin:$PATH"
     - php: 5.6
       env:
-        - DEPS=locked
-        - SERVICE_MANAGER_VERSION="^2.7.5"
-    - php: 5.6
-      env:
         - DEPS=latest
+        - SERVICE_MANAGER_VERSION="^2.7.5"
     - php: 7
       env:
         - DEPS=lowest
     - php: 7
       env:
-        - DEPS=locked
+        - DEPS=latest
         - CS_CHECK=true
     - php: 7
       env:
-        - DEPS=locked
-        - SERVICE_MANAGER_VERSION="^2.7.5"
-    - php: 7
-      env:
         - DEPS=latest
+        - SERVICE_MANAGER_VERSION="^2.7.5"
     - php: 7.1
       env:
         - DEPS=lowest
-    - php: 7.1
-      env:
-        - DEPS=locked
     - php: 7.1
       env:
         - DEPS=latest
@@ -82,8 +72,8 @@ install:
   - if [[ $TRAVIS_PHP_VERSION =~ ^5.6 ]]; then travis_retry composer update $COMPOSER_ARGS --with-dependencies $LEGACY_DEPS ; fi
   - if [[ $DEPS == 'latest' ]]; then travis_retry composer update $COMPOSER_ARGS ; fi
   - if [[ $DEPS == 'lowest' ]]; then travis_retry composer update --prefer-lowest --prefer-stable $COMPOSER_ARGS ; fi
-  - if [[ $SERVICE_MANAGER_VERSION != '' ]]; then travis_retry composer require --dev --no-update $COMPOSER_ARGS "zendframework/zend-servicemanager:$SERVICE_MANAGER_VERSION" ; fi
-  - if [[ $SERVICE_MANAGER_VERSION == '' ]]; then travis_retry composer require --dev --no-update $COMPOSER_ARGS "zendframework/zend-servicemanager:^3.0.3" ; fi
+  - if [[ $SERVICE_MANAGER_VERSION != '' ]]; then travis_retry composer require --dev --no-update $COMPOSER_ARGS "laminas/laminas-servicemanager:$SERVICE_MANAGER_VERSION" ; fi
+  - if [[ $SERVICE_MANAGER_VERSION == '' ]]; then travis_retry composer require --dev --no-update $COMPOSER_ARGS "laminas/laminas-servicemanager:^3.0.3" ; fi
   - if [[ $TEST_COVERAGE == 'true' ]]; then travis_retry composer require --dev $COMPOSER_ARGS $COVERAGE_DEPS ; fi
   - stty cols 120
   - COLUMNS=120 composer show
@@ -91,19 +81,18 @@ install:
 script:
   - if [[ $TEST_COVERAGE == 'true' ]]; then composer test-coverage ; else composer test ; fi
   - if [[ $CS_CHECK == 'true' ]]; then composer cs-check ; fi
-  - if [[ $DEPLOY_DOCS == "true" && "$TRAVIS_TEST_RESULT" == "0" ]]; then wget -O theme-installer.sh "https://raw.githubusercontent.com/zendframework/zf-mkdoc-theme/master/theme-installer.sh" ; chmod 755 theme-installer.sh ; ./theme-installer.sh ; fi
+  - if [[ $DEPLOY_DOCS == "true" && "$TRAVIS_TEST_RESULT" == "0" ]]; then wget -O theme-installer.sh "https://raw.githubusercontent.com/laminas/laminas-mkdoc-theme/master/theme-installer.sh" ; chmod 755 theme-installer.sh ; ./theme-installer.sh ; fi
 
 after_script:
   - if [[ $TEST_COVERAGE == 'true' ]]; then composer upload-coverage ; fi
 
 after_success:
-  - if [[ $DEPLOY_DOCS == "true" ]]; then echo "Preparing to build and deploy documentation" ; ./zf-mkdoc-theme/deploy.sh ; echo "Completed deploying documentation" ; fi
+  - if [[ $DEPLOY_DOCS == "true" ]]; then echo "Preparing to build and deploy documentation" ; ./laminas-mkdoc-theme/deploy.sh ; echo "Completed deploying documentation" ; fi
 
 notifications:
   email: false
-  irc:
     channels:
-      - "irc.freenode.org#zftalk.dev"
+      - "irc.freenode.org#laminastalk.dev"
     on_success: change
     on_failure: always
   slack:

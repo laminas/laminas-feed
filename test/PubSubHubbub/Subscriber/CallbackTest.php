@@ -1,40 +1,39 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Feed\PubSubHubbub\Subscriber;
+namespace LaminasTest\Feed\PubSubHubbub\Subscriber;
 
+use ArrayObject;
 use DateInterval;
 use DateTime;
+use Laminas\Db\Adapter\Adapter;
+use Laminas\Db\ResultSet\ResultSet;
+use Laminas\Db\TableGateway\TableGateway;
+use Laminas\Feed\PubSubHubbub\Exception\ExceptionInterface;
+use Laminas\Feed\PubSubHubbub\HttpResponse;
+use Laminas\Feed\PubSubHubbub\Model;
+use Laminas\Feed\PubSubHubbub\Subscriber\Callback as CallbackSubscriber;
 use PHPUnit\Framework\TestCase;
-use Zend\Feed\PubSubHubbub\HttpResponse;
-use Zend\Feed\PubSubHubbub\Model;
-use Zend\Feed\PubSubHubbub\Subscriber\Callback as CallbackSubscriber;
-use ArrayObject;
-use Zend\Feed\PubSubHubbub\Exception\ExceptionInterface;
-use Zend\Db\ResultSet\ResultSet;
-use Zend\Db\TableGateway\TableGateway;
-use Zend\Db\Adapter\Adapter;
 
 /**
- * @group      Zend_Feed
- * @group      Zend_Feed_Subsubhubbub
+ * @group      Laminas_Feed
+ * @group      Laminas_Feed_Subsubhubbub
  */
 class CallbackTest extends TestCase
 {
     // @codingStandardsIgnoreStart
     /** @var CallbackSubscriber */
     public $_callback;
-    /** @var \Zend\Db\Adapter\Adapter|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var \Laminas\Db\Adapter\Adapter|\PHPUnit_Framework_MockObject_MockObject */
     public $_adapter;
-    /** @var \Zend\Db\TableGateway\TableGateway|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var \Laminas\Db\TableGateway\TableGateway|\PHPUnit_Framework_MockObject_MockObject */
     public $_tableGateway;
-    /** @var \Zend\Db\ResultSet\ResultSet|\PHPUnit_Framework_MockObject_MockObject */
+    /** @var \Laminas\Db\ResultSet\ResultSet|\PHPUnit_Framework_MockObject_MockObject */
     public $_rowset;
     /** @var array */
     public $_get;
@@ -139,7 +138,7 @@ class CallbackTest extends TestCase
     }
 
     /**
-     * @group ZF2_CONFLICT
+     * @group Laminas_CONFLICT
      */
     public function testValidatesValidHttpGetData()
     {
