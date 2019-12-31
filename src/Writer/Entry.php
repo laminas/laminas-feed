@@ -1,16 +1,15 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Feed\Writer;
+namespace Laminas\Feed\Writer;
 
 use DateTime;
-use Zend\Feed\Uri;
+use Laminas\Feed\Uri;
 
 /**
 */
@@ -722,7 +721,7 @@ class Entry
     }
 
     /**
-     * Creates a new Zend\Feed\Writer\Source data container for use. This is NOT
+     * Creates a new Laminas\Feed\Writer\Source data container for use. This is NOT
      * added to the current feed automatically, but is necessary to create a
      * container with some initial values preset based on the current feed data.
      *
@@ -739,7 +738,7 @@ class Entry
     }
 
     /**
-     * Appends a Zend\Feed\Writer\Entry object representing a new entry/item
+     * Appends a Laminas\Feed\Writer\Entry object representing a new entry/item
      * the feed data container's internal group of entries.
      *
      * @param Source $source
@@ -763,7 +762,7 @@ class Entry
     }
 
     /**
-     * Load extensions from Zend\Feed\Writer\Writer
+     * Load extensions from Laminas\Feed\Writer\Writer
      *
      * @return void
      */
