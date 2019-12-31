@@ -2,6 +2,6 @@
 <rss version="0.93"
 xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <atom:generator>Zend_Feed_Writer</atom:generator>
+        <atom:generator>Laminas_Feed_Writer</atom:generator>
     </channel>
 </rss>
