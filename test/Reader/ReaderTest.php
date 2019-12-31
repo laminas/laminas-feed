@@ -1,26 +1,24 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Feed
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Feed\Reader;
+namespace LaminasTest\Feed\Reader;
 
-use Zend\Http\Client as HttpClient;
-use Zend\Http\Client\Adapter\Test as TestAdapter;
-use Zend\Http\Response as HttpResponse;
-use Zend\Feed\Reader;
+use Laminas\Feed\Reader;
+use Laminas\Http\Client\Adapter\Test as TestAdapter;
+use Laminas\Http\Client as HttpClient;
+use Laminas\Http\Response as HttpResponse;
 
 /**
-* @category Zend
-* @package Zend_Feed
+* @category Laminas
+* @package Laminas_Feed
 * @subpackage UnitTests
-* @group Zend_Feed
-* @group Zend_Feed_Reader
+* @group Laminas_Feed
+* @group Laminas_Feed_Reader
 */
 class ReaderTest extends \PHPUnit_Framework_TestCase
 {
@@ -117,7 +115,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-9723
+     * @group Laminas-9723
      */
     public function testDetectsTypeFromStringOrToRemindPaddyAboutForgettingATestWhichLetsAStupidTypoSurviveUnnoticedForMonths()
     {
@@ -141,12 +139,12 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
         $feed = Reader\Reader::importFile(
             dirname(__FILE__) . '/Entry/_files/Atom/title/plain/atom10.xml'
         );
-        $this->assertInstanceOf('Zend\Feed\Reader\Feed\FeedInterface', $feed);
+        $this->assertInstanceOf('Laminas\Feed\Reader\Feed\FeedInterface', $feed);
     }
 
     public function testImportsUri()
     {
-        if (!constant('TESTS_ZEND_FEED_READER_ONLINE_ENABLED')) {
+        if (!constant('TESTS_LAMINAS_FEED_READER_ONLINE_ENABLED')) {
             $this->markTestSkipped('testImportsUri() requires a network connection');
         }
 
@@ -154,12 +152,12 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-8328
-     * @expectedException Zend\Feed\Reader\Exception\RuntimeException
+     * @group Laminas-8328
+     * @expectedException Laminas\Feed\Reader\Exception\RuntimeException
      */
     public function testImportsUriAndThrowsExceptionIfNotAFeed()
     {
-        if (!constant('TESTS_ZEND_FEED_READER_ONLINE_ENABLED')) {
+        if (!constant('TESTS_LAMINAS_FEED_READER_ONLINE_ENABLED')) {
             $this->markTestSkipped('testImportsUri() requires a network connection');
         }
 
@@ -168,7 +166,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
 
     public function testGetsFeedLinksAsValueObject()
     {
-        if (!constant('TESTS_ZEND_FEED_READER_ONLINE_ENABLED')) {
+        if (!constant('TESTS_LAMINAS_FEED_READER_ONLINE_ENABLED')) {
             $this->markTestSkipped('testGetsFeedLinksAsValueObject() requires a network connection');
         }
 
@@ -179,7 +177,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
 
     public function testCompilesLinksAsArrayObject()
     {
-        if (!constant('TESTS_ZEND_FEED_READER_ONLINE_ENABLED')) {
+        if (!constant('TESTS_LAMINAS_FEED_READER_ONLINE_ENABLED')) {
             $this->markTestSkipped('testGetsFeedLinksAsValueObject() requires a network connection');
         }
         $links = Reader\Reader::findFeedLinks('http://www.planet-php.net');
@@ -191,7 +189,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
 
     public function testFeedSetLoadsFeedObjectWhenFeedArrayKeyAccessed()
     {
-        if (!constant('TESTS_ZEND_FEED_READER_ONLINE_ENABLED')) {
+        if (!constant('TESTS_LAMINAS_FEED_READER_ONLINE_ENABLED')) {
             $this->markTestSkipped('testGetsFeedLinksAsValueObject() requires a network connection');
         }
         $links = Reader\Reader::findFeedLinks('http://www.planet-php.net');
@@ -201,7 +199,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
 
     public function testZeroCountFeedSetReturnedFromEmptyList()
     {
-        if (!constant('TESTS_ZEND_FEED_READER_ONLINE_ENABLED')) {
+        if (!constant('TESTS_LAMINAS_FEED_READER_ONLINE_ENABLED')) {
             $this->markTestSkipped('testGetsFeedLinksAsValueObject() requires a network connection');
         }
         $links = Reader\Reader::findFeedLinks('http://www.example.com');
@@ -209,11 +207,11 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-8327
+     * @group Laminas-8327
      */
     public function testGetsFeedLinksAndTrimsNewlines()
     {
-        if (!constant('TESTS_ZEND_FEED_READER_ONLINE_ENABLED')) {
+        if (!constant('TESTS_LAMINAS_FEED_READER_ONLINE_ENABLED')) {
             $this->markTestSkipped('testGetsFeedLinksAsValueObject() requires a network connection');
         }
 
@@ -222,11 +220,11 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-8330
+     * @group Laminas-8330
      */
     public function testGetsFeedLinksAndNormalisesRelativeUrls()
     {
-        if (!constant('TESTS_ZEND_FEED_READER_ONLINE_ENABLED')) {
+        if (!constant('TESTS_LAMINAS_FEED_READER_ONLINE_ENABLED')) {
             $this->markTestSkipped('testGetsFeedLinksAsValueObject() requires a network connection');
         }
 
@@ -235,7 +233,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-8330
+     * @group Laminas-8330
      */
     public function testGetsFeedLinksAndNormalisesRelativeUrlsOnUriWithPath()
     {
@@ -270,7 +268,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
 
     public function testXxePreventionOnFeedParsing()
     {
-        $this->setExpectedException('Zend\Feed\Reader\Exception\InvalidArgumentException');
+        $this->setExpectedException('Laminas\Feed\Reader\Exception\InvalidArgumentException');
         $string = file_get_contents($this->feedSamplePath.'/Reader/xxe-atom10.xml');
         $string = str_replace('XXE_URI', $this->feedSamplePath.'/Reader/xxe-info.txt', $string);
         $feed = Reader\Reader::importString($string);
