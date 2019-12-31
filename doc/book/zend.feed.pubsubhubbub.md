@@ -1,7 +1,7 @@
-# Zend\\Feed\\PubSubHubbub
+# Laminas\\Feed\\PubSubHubbub
 
-`Zend\Feed\PubSubHubbub` is an implementation of the PubSubHubbub Core 0.2 Specification (Working
-Draft). It offers implementations of a Pubsubhubbub Publisher and Subscriber suited to Zend
+`Laminas\Feed\PubSubHubbub` is an implementation of the PubSubHubbub Core 0.2 Specification (Working
+Draft). It offers implementations of a Pubsubhubbub Publisher and Subscriber suited to Laminas
 Framework and other *PHP* applications.
 
 ## What is PubSubHubbub?
@@ -33,9 +33,9 @@ Google Reader, Feedburner, and there are plugins available for Wordpress blogs.
 
 ## Architecture
 
-`Zend\Feed\PubSubHubbub` implements two sides of the Pubsubhubbub 0.2 Specification: a Publisher and
+`Laminas\Feed\PubSubHubbub` implements two sides of the Pubsubhubbub 0.2 Specification: a Publisher and
 a Subscriber. It does not currently implement a Hub Server though this is in progress for a future
-Zend Framework release.
+Laminas release.
 
 A Publisher is responsible for notifying all supported Hubs (many can be supported to add redundancy
 to the system) of any updates to its feeds, whether they be Atom or *RSS* based. This is achieved by
@@ -55,13 +55,13 @@ Subscribers to immediately retrieve the feed from the Publisher giving rise to a
 Pubsubhubbub, the Hub distributes the actual update in a "Fat Ping" so the Publisher is not
 subjected to any traffic spike.
 
-`Zend\Feed\PubSubHubbub` implements Pubsubhubbub Publishers and Subscribers with the classes
-`Zend\Feed\PubSubHubbub\Publisher` and `Zend\Feed\PubSubHubbub\Subscriber`. In addition, the
+`Laminas\Feed\PubSubHubbub` implements Pubsubhubbub Publishers and Subscribers with the classes
+`Laminas\Feed\PubSubHubbub\Publisher` and `Laminas\Feed\PubSubHubbub\Subscriber`. In addition, the
 Subscriber implementation may handle any feed updates forwarded from a Hub by using
-`Zend\Feed\PubSubHubbub\Subscriber\Callback`. These classes, their use cases, and *API*s are covered
+`Laminas\Feed\PubSubHubbub\Subscriber\Callback`. These classes, their use cases, and *API*s are covered
 in subsequent sections.
 
-## Zend\\Feed\\PubSubHubbub\\Publisher
+## Laminas\\Feed\\PubSubHubbub\\Publisher
 
 In Pubsubhubbub, the Publisher is the party who publishes a live feed and frequently updates it with
 new content. This may be a blog, an aggregator, or even a web service with a public feed based
@@ -75,7 +75,7 @@ By design, this means the Publisher has very little to do except send these Hub 
 feeds change. As a result, the Publisher implementation is extremely simple to use and requires very
 little work to setup and use when feeds are updated.
 
-`Zend\Feed\PubSubHubbub\Publisher` implements a full Pubsubhubbub Publisher. Its setup for use is
+`Laminas\Feed\PubSubHubbub\Publisher` implements a full Pubsubhubbub Publisher. Its setup for use is
 also simple, requiring mainly that it is configured with the *URI* endpoint for all Hubs to be
 notified of updates, and the *URI*s of all Topics to be included in the notifications.
 
@@ -88,7 +88,7 @@ Hub Endpoints at least once more at a future time. This may require the use of e
 task for this purpose or a job queue though such extra steps are optional.
 
 ```php
-$publisher = new Zend\Feed\PubSubHubbub\Publisher;
+$publisher = new Laminas\Feed\PubSubHubbub\Publisher;
 $publisher->addHubUrls(array(
     'http://pubsubhubbub.appspot.com/',
     'http://hubbub.example.com',
@@ -126,7 +126,7 @@ retries) to ensure notifications reach all Subscribers. In many cases as a final
 may frequently poll your feeds to offer some additional tolerance for failures both in terms of
 their own temporary downtime or Publisher errors or downtime.
 
-## Zend\\Feed\\PubSubHubbub\\Subscriber
+## Laminas\\Feed\\PubSubHubbub\\Subscriber
 
 In Pubsubhubbub, the Subscriber is the party who wishes to receive updates to any Topic (*RSS* or
 Atom feed). They achieve this by subscribing to one or more of the Hubs advertised by that Topic,
@@ -141,16 +141,16 @@ subscription and to forward updates.
 The Subscriber therefore has two roles. To create and manage subscriptions, including subscribing
 for new Topics with a Hub, unsubscribing (if necessary), and periodically renewing subscriptions
 since they may have a limited validity as set by the Hub. This is handled by
-`Zend\Feed\PubSubHubbub\Subscriber`.
+`Laminas\Feed\PubSubHubbub\Subscriber`.
 
 The second role is to accept updates sent by a Hub to the Subscriber's Callback *URL*, i.e. the
 *URI* the Subscriber has assigned to handle updates. The Callback *URL* also handles events where
 the Hub contacts the Subscriber to confirm all subscriptions and unsubscriptions. This is handled by
-using an instance of `Zend\Feed\PubSubHubbub\Subscriber\Callback` when the Callback *URL* is
+using an instance of `Laminas\Feed\PubSubHubbub\Subscriber\Callback` when the Callback *URL* is
 accessed.
 
 > ## Important
-`Zend\Feed\PubSubHubbub\Subscriber` implements the Pubsubhubbub 0.2 Specification. As this is a new
+`Laminas\Feed\PubSubHubbub\Subscriber` implements the Pubsubhubbub 0.2 Specification. As this is a new
 specification version not all Hubs currently implement it. The new specification allows the Callback
 *URL* to include a query string which is used by this class, but not supported by all Hubs. In the
 interests of maximising compatibility it is therefore recommended that the query string component of
@@ -159,9 +159,9 @@ route associated with the Callback *URI* and used by the application's Router.
 
 ### Subscribing and Unsubscribing
 
-`Zend\Feed\PubSubHubbub\Subscriber` implements a full Pubsubhubbub Subscriber capable of subscribing
+`Laminas\Feed\PubSubHubbub\Subscriber` implements a full Pubsubhubbub Subscriber capable of subscribing
 to, or unsubscribing from, any Topic via any Hub advertised by that Topic. It operates in
-conjunction with `Zend\Feed\PubSubHubbub\Subscriber\Callback` which accepts requests from a Hub to
+conjunction with `Laminas\Feed\PubSubHubbub\Subscriber\Callback` which accepts requests from a Hub to
 confirm all subscription or unsubscription attempts (to prevent third-party misuse).
 
 Any subscription (or unsubscription) requires the relevant information before proceeding, i.e. the
@@ -169,7 +169,7 @@ Any subscription (or unsubscription) requires the relevant information before pr
 endpoint for the Hub which will handle the subscription and forwarding of the updates. The lifetime
 of a subscription may be determined by the Hub but most Hubs should support automatic subscription
 refreshes by checking with the Subscriber. This is supported by
-`Zend\Feed\PubSubHubbub\Subscriber\Callback` and requires no other work on your part. It is still
+`Laminas\Feed\PubSubHubbub\Subscriber\Callback` and requires no other work on your part. It is still
 strongly recommended that you use the Hub sourced subscription time to live (ttl) to schedule the
 creation of new subscriptions (the process is identical to that for any new subscription) to refresh
 it with the Hub. While it should not be necessary per se, it covers cases where a Hub may not
@@ -178,9 +178,9 @@ support automatic subscription refreshing and rules out Hub errors for additiona
 With the relevant information to hand, a subscription can be attempted as demonstrated below:
 
 ```php
-$storage = new Zend\Feed\PubSubHubbub\Model\Subscription;
+$storage = new Laminas\Feed\PubSubHubbub\Model\Subscription;
 
-$subscriber = new Zend\Feed\PubSubHubbub\Subscriber;
+$subscriber = new Laminas\Feed\PubSubHubbub\Subscriber;
 $subscriber->setStorage($storage);
 $subscriber->addHubUrl('http://hubbub.example.com');
 $subscriber->setTopicUrl('http://www.example.net/rss.xml');
@@ -190,15 +190,15 @@ $subscriber->subscribeAll();
 
 In order to store subscriptions and offer access to this data for general use, the component
 requires a database (a schema is provided later in this section). By default, it is assumed the
-table name is "subscription" and it utilises `Zend\Db\Table\Abstract` in the background meaning it
+table name is "subscription" and it utilises `Laminas\Db\Table\Abstract` in the background meaning it
 will use the default adapter you have set for your application. You may also pass a specific custom
-`Zend\Db\Table\Abstract` instance into the associated model
-`Zend\Feed\PubSubHubbub\Model\Subscription`. This custom adapter may be as simple in intent as
+`Laminas\Db\Table\Abstract` instance into the associated model
+`Laminas\Feed\PubSubHubbub\Model\Subscription`. This custom adapter may be as simple in intent as
 changing the table name to use or as complex as you deem necessary.
 
 While this Model is offered as a default ready-to-roll solution, you may create your own Model using
 any other backend or database layer (e.g. Doctrine) so long as the resulting class implements the
-interface `Zend\Feed\PubSubHubbub\Model\SubscriptionInterface`.
+interface `Laminas\Feed\PubSubHubbub\Model\SubscriptionInterface`.
 
 An example schema (MySQL) for a subscription table accessible by the provided model may look similar
 to:
@@ -222,20 +222,20 @@ Behind the scenes, the Subscriber above will send a request to the Hub endpoint 
 following parameters (based on the previous example):
 
 You can modify several of these parameters to indicate a different preference. For example, you can
-set a different lease seconds value using `Zend\Feed\PubSubHubbub\Subscriber::setLeaseSeconds()` or
+set a different lease seconds value using `Laminas\Feed\PubSubHubbub\Subscriber::setLeaseSeconds()` or
 show a preference for the async verify mode by using
-`setPreferredVerificationMode(Zend\Feed\PubSubHubbub\PubSubHubbub::VERIFICATION_MODE_ASYNC)`.
+`setPreferredVerificationMode(Laminas\Feed\PubSubHubbub\PubSubHubbub::VERIFICATION_MODE_ASYNC)`.
 However the Hubs retain the capability to enforce their own preferences and for this reason the
 component is deliberately designed to work across almost any set of options with minimum end-user
 configuration required. Conventions are great when they work!
 
 > ## Note
 While Hubs may require the use of a specific verification mode (both are supported by
-`Zend\Feed\PubSubHubbub`), you may indicate a specific preference using the
+`Laminas\Feed\PubSubHubbub`), you may indicate a specific preference using the
 `setPreferredVerificationMode()` method. In "sync" (synchronous) mode, the Hub attempts to confirm a
 subscription as soon as it is received, and before responding to the subscription request. In
 "async" (asynchronous) mode, the Hub will return a response to the subscription request immediately,
-and its verification request may occur at a later time. Since `Zend\Feed\PubSubHubbub` implements
+and its verification request may occur at a later time. Since `Laminas\Feed\PubSubHubbub` implements
 the Subscriber verification role as a separate callback class and requires the use of a backend
 storage medium, it actually supports both transparently though in terms of end-user performance,
 asynchronous verification is very much preferred to eliminate the impact of a poorly performing Hub
@@ -245,11 +245,11 @@ Unsubscribing from a Topic follows the exact same pattern as the previous exampl
 exception that we should call `unsubscribeAll()` instead. The parameters included are identical to a
 subscription request with the exception that "`hub.mode`" is set to "unsubscribe".
 
-By default, a new instance of `Zend\PubSubHubbub\Subscriber` will attempt to use a database backed
-storage medium which defaults to using the default `Zend\Db` adapter with a table name of
+By default, a new instance of `Laminas\PubSubHubbub\Subscriber` will attempt to use a database backed
+storage medium which defaults to using the default `Laminas\Db` adapter with a table name of
 "subscription". It is recommended to set a custom storage solution where these defaults are not apt
 either by passing in a new Model supporting the required interface or by passing a new instance of
-`Zend\Db\Table\Abstract` to the default Model's constructor to change the used table name.
+`Laminas\Db\Table\Abstract` to the default Model's constructor to change the used table name.
 
 ### Handling Subscriber Callbacks
 
@@ -257,14 +257,14 @@ Whenever a subscription or unsubscription request is made, the Hub must verify t
 forwarding a new verification request to the Callback *URL* set in the subscription or
 unsubscription parameters. To handle these Hub requests, which will include all future
 communications containing Topic (feed) updates, the Callback *URL* should trigger the execution of
-an instance of `Zend\Feed\PubSubHubbub\Subscriber\Callback` to handle the request.
+an instance of `Laminas\Feed\PubSubHubbub\Subscriber\Callback` to handle the request.
 
 The Callback class should be configured to use the same storage medium as the Subscriber class.
 Using it is quite simple since most of its work is performed internally.
 
 ```php
-$storage = new Zend\Feed\PubSubHubbub\Model\Subscription;
-$callback = new Zend\Feed\PubSubHubbub\Subscriber\Callback;
+$storage = new Laminas\Feed\PubSubHubbub\Model\Subscription;
+$callback = new Laminas\Feed\PubSubHubbub\Subscriber\Callback;
 $callback->setStorage($storage);
 $callback->handle();
 $callback->sendResponse();
@@ -284,7 +284,7 @@ if ($callback->hasFeedUpdate()) {
 ```
 
 > ## Note
-It should be noted that `Zend\Feed\PubSubHubbub\Subscriber\Callback` may independently parse any
+It should be noted that `Laminas\Feed\PubSubHubbub\Subscriber\Callback` may independently parse any
 incoming query string and other parameters. This is necessary since *PHP* alters the structure and
 keys of a query string when it is parsed into the `$_GET` or `$_POST` superglobals. For example, all
 duplicate keys are ignored and periods are converted to underscores. Pubsubhubbub features both of
@@ -305,7 +305,7 @@ process or a job queue or even a cron scheduled task) as much as possible.
 
 ### Setting Up And Using A Callback URL Route
 
-As noted earlier, the `Zend\Feed\PubSubHubbub\Subscriber\Callback` class receives the combined key
+As noted earlier, the `Laminas\Feed\PubSubHubbub\Subscriber\Callback` class receives the combined key
 associated with any subscription from the Hub via one of two methods. The technically preferred
 method is to add this key to the Callback *URL* employed by the Hub in all future requests using a
 query string parameter with the key "xhub.subscription". However, for historical reasons, primarily
@@ -319,23 +319,23 @@ Thus the *URL* `http://www.example.com/callback?xhub.subscription=key` would bec
 Since the query string method is the default in anticipation of a greater level of future support
 for the full 0.2 specification, this requires some additional work to implement.
 
-The first step to make the `Zend\Feed\PubSubHubbub\Subscriber\Callback` class aware of the path
+The first step to make the `Laminas\Feed\PubSubHubbub\Subscriber\Callback` class aware of the path
 contained subscription key. It's manually injected therefore since it also requires manually
 defining a route for this purpose. This is achieved simply by called the method
-`Zend\Feed\PubSubHubbub\Subscriber\Callback::setSubscriptionKey()` with the parameter being the key
-value available from the Router. The example below demonstrates this using a Zend Framework
+`Laminas\Feed\PubSubHubbub\Subscriber\Callback::setSubscriptionKey()` with the parameter being the key
+value available from the Router. The example below demonstrates this using a Laminas
 controller.
 
 ```php
-use Zend\Mvc\Controller\AbstractActionController;
+use Laminas\Mvc\Controller\AbstractActionController;
 
 class CallbackController extends AbstractActionController
 {
 
     public function indexAction()
     {
-        $storage = new Zend\Feed\PubSubHubbub\Model\Subscription;
-        $callback = new Zend\Feed\PubSubHubbub\Subscriber\Callback;
+        $storage = new Laminas\Feed\PubSubHubbub\Model\Subscription;
+        $callback = new Laminas\Feed\PubSubHubbub\Subscriber\Callback;
         $callback->setStorage($storage);
         /**
          * Inject subscription key parsing from URL path using
@@ -368,7 +368,7 @@ controller can be accomplished using a Route like in the example below.
 
 ```php
 // Callback Route to enable appending a PuSH Subscription's lookup key
-$route = Zend\Mvc\Router\Http\Segment::factory(array(
+$route = Laminas\Mvc\Router\Http\Segment::factory(array(
    'route' => '/callback/:subkey',
    'constraints' => array(
       'subkey' => '[a-z0-9]+'

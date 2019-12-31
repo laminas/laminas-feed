@@ -1,5 +1,3 @@
-sudo: false
-
 language: php
 
 branches:
@@ -13,7 +11,7 @@ cache:
 
 env:
   global:
-    - TESTS_ZEND_FEED_READER_ONLINE_ENABLED=true
+    - TESTS_LAMINAS_FEED_READER_ONLINE_ENABLED=true
 
 matrix:
   fast_finish: true
@@ -31,7 +29,6 @@ matrix:
     - php: hhvm
 
 notifications:
-  irc: "irc.freenode.org#zftalk.dev"
   email: false
 
 before_install:

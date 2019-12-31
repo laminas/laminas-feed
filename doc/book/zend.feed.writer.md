@@ -1,20 +1,20 @@
-# Zend\\Feed\\Writer\\Writer
+# Laminas\\Feed\\Writer\\Writer
 
 ## Introduction
 
-`Zend\Feed\Writer\Writer` is the sibling component to `Zend\Feed\Reader\Reader` responsible for
+`Laminas\Feed\Writer\Writer` is the sibling component to `Laminas\Feed\Reader\Reader` responsible for
 generating feeds for output. It supports the Atom 1.0 specification (*RFC* 4287) and *RSS* 2.0 as
 specified by the *RSS* Advisory Board (*RSS* 2.0.11). It does not deviate from these standards. It
 does, however, offer a simple Extension system which allows for any extension and module for either
 of these two specifications to be implemented if they are not provided out of the box.
 
-In many ways, `Zend\Feed\Writer\Writer` is the inverse of `Zend\Feed\Reader\Reader`. Where
-`Zend\Feed\Reader\Reader` focuses on providing an easy to use architecture fronted by getter
-methods, `Zend\Feed\Writer\Writer` is fronted by similarly named setters or mutators. This ensures
-the *API* won't pose a learning curve to anyone familiar with `Zend\Feed\Reader\Reader`.
+In many ways, `Laminas\Feed\Writer\Writer` is the inverse of `Laminas\Feed\Reader\Reader`. Where
+`Laminas\Feed\Reader\Reader` focuses on providing an easy to use architecture fronted by getter
+methods, `Laminas\Feed\Writer\Writer` is fronted by similarly named setters or mutators. This ensures
+the *API* won't pose a learning curve to anyone familiar with `Laminas\Feed\Reader\Reader`.
 
 As a result of this design, the rest may even be obvious. Behind the scenes, data set on any
-`Zend\Feed\Writer\Writer` Data Container object is translated at render time onto a DOMDocument
+`Laminas\Feed\Writer\Writer` Data Container object is translated at render time onto a DOMDocument
 object using the necessary feed elements. For each supported feed type there is both an Atom 1.0 and
 *RSS* 2.0 renderer. Using a DOMDocument class rather than a templating solution has numerous
 advantages, the most obvious being the ability to export the DOMDocument for additional processing
@@ -22,10 +22,10 @@ and relying on *PHP* *DOM* for correct and valid rendering.
 
 ## Architecture
 
-The architecture of `Zend\Feed\Writer\Writer` is very simple. It has two core sets of classes: data
+The architecture of `Laminas\Feed\Writer\Writer` is very simple. It has two core sets of classes: data
 containers and renderers.
 
-The containers include the `Zend\Feed\Writer\Feed` and `Zend\Feed\Writer\Entry` classes. The Entry
+The containers include the `Laminas\Feed\Writer\Feed` and `Laminas\Feed\Writer\Entry` classes. The Entry
 classes can be attached to any Feed class. The sole purpose of these containers is to collect data
 about the feed to generate using a simple interface of setter methods. These methods perform some
 data validity testing. For example, it will validate any passed *URI*s, dates, etc. These checks are
@@ -33,7 +33,7 @@ not tied to any of the feed standards definitions. The container objects also co
 allow for fast rendering and export of the final feed, and these can be reused at will.
 
 In addition to the main data container classes, there are two additional Atom 2.0 specific classes.
-`Zend\Feed\Writer\Source` and `Zend\Feed\Writer\Deleted`. The former implements Atom 2.0 source
+`Laminas\Feed\Writer\Source` and `Laminas\Feed\Writer\Deleted`. The former implements Atom 2.0 source
 elements which carry source feed metadata for a specific entry within an aggregate feed (i.e. the
 current feed is not the entry's original source). The latter implements the Atom Tombstones *RFC*
 allowing feeds to carry references to entries which have been deleted.
@@ -61,7 +61,7 @@ more detail at the end of this section.
 
 ## Getting Started
 
-Using `Zend\Feed\Writer\Writer` is as simple as setting data and triggering the renderer. Here is an
+Using `Laminas\Feed\Writer\Writer` is as simple as setting data and triggering the renderer. Here is an
 example to generate a minimal Atom 1.0 feed. As this demonstrates, each feed or entry uses a
 separate data container.
 
@@ -69,7 +69,7 @@ separate data container.
 /**
  * Create the parent feed
  */
-$feed = new Zend\Feed\Writer\Feed;
+$feed = new Laminas\Feed\Writer\Feed;
 $feed->setTitle('Paddy\'s Blog');
 $feed->setLink('http://www.example.com');
 $feed->setFeedLink('http://www.example.com/atom', 'atom');
@@ -116,8 +116,8 @@ The output rendered should be as follows:
     <title type="text">Paddy's Blog</title>
     <subtitle type="text">Writing about PC Games since 176 BC.</subtitle>
     <updated>2009-12-14T20:28:18+00:00</updated>
-    <generator uri="http://framework.zend.com" version="1.10.0alpha">
-        Zend\Feed\Writer
+    <generator uri="https://getlaminas.org" version="1.10.0alpha">
+        Laminas\Feed\Writer
     </generator>
     <link rel="alternate" type="text/html" href="http://www.example.com"/>
     <link rel="self" type="application/atom+xml"
@@ -158,7 +158,7 @@ This is a perfectly valid Atom 1.0 example. It should be noted that omitting an 
 data, such as a title, will trigger an `Exception` when rendering as Atom 1.0. This will differ for
 *RSS* 2.0 since a title may be omitted so long as a description is present. This gives rise to
 Exceptions that differ between the two standards depending on the renderer in use. By design,
-`Zend\Feed\Writer\Writer` will not render an invalid feed for either standard unless the end-user
+`Laminas\Feed\Writer\Writer` will not render an invalid feed for either standard unless the end-user
 deliberately elects to ignore all Exceptions. This built in safeguard was added to ensure users
 without in-depth knowledge of the relevant specifications have a bit less to worry about.
 
@@ -166,15 +166,15 @@ without in-depth knowledge of the relevant specifications have a bit less to wor
 
 Before you can render a feed, you must first setup the data necessary for the feed being rendered.
 This utilises a simple setter style *API* which doubles as an initial method for validating the data
-being set. By design, the *API* closely matches that for `Zend\Feed\Reader\Reader` to avoid undue
+being set. By design, the *API* closely matches that for `Laminas\Feed\Reader\Reader` to avoid undue
 confusion and uncertainty.
 
 > ## Note
 Users have commented that the lack of a simple array based notation for input data gives rise to
 lengthy tracts of code. This will be addressed in a future release.
 
-`Zend\Feed\Writer\Writer` offers this *API* via its data container classes `Zend\Feed\Writer\Feed`
-and `Zend\Feed\Writer\Entry` (not to mention the Atom 2.0 specific and Extension classes). These
+`Laminas\Feed\Writer\Writer` offers this *API* via its data container classes `Laminas\Feed\Writer\Feed`
+and `Laminas\Feed\Writer\Entry` (not to mention the Atom 2.0 specific and Extension classes). These
 classes merely store all feed data in a type-agnostic manner, meaning you may reuse any data
 container with any renderer without requiring additional work. Both classes are also amenable to
 Extensions, meaning that an Extension may define its own container classes which are registered to
@@ -183,11 +183,11 @@ container's `__call()` method.
 
 Here's a summary of the Core *API* for Feeds. You should note it comprises not only the basic *RSS*
 and Atom standards, but also accounts for a number of included Extensions bundled with
-`Zend\Feed\Writer\Writer`. The naming of these Extension sourced methods remain fairly generic - all
+`Laminas\Feed\Writer\Writer`. The naming of these Extension sourced methods remain fairly generic - all
 Extension methods operate at the same level as the Core *API* though we do allow you to retrieve any
 specific Extension object separately if required.
 
-The Feed Level *API* for data is contained in `Zend\Feed\Writer\Feed`. In addition to the *API*
+The Feed Level *API* for data is contained in `Laminas\Feed\Writer\Feed`. In addition to the *API*
 detailed below, the class also implements the `Countable` and `Iterator` interfaces.
 
 > ## Note
@@ -198,11 +198,11 @@ container. For example, `setImage()` is matched with a `getImage()` method.
 
 Here's a summary of the Core *API* for Entries and Items. You should note it comprises not only the
 basic *RSS* and Atom standards, but also accounts for a number of included Extensions bundled with
-`Zend\Feed\Writer\Writer`. The naming of these Extension sourced methods remain fairly generic - all
+`Laminas\Feed\Writer\Writer`. The naming of these Extension sourced methods remain fairly generic - all
 Extension methods operate at the same level as the Core *API* though we do allow you to retrieve any
 specific Extension object separately if required.
 
-The Entry Level *API* for data is contained in `Zend\Feed\Writer\Entry`.
+The Entry Level *API* for data is contained in `Laminas\Feed\Writer\Entry`.
 
 > ## Note
 In addition to these setters, there are also matching getters to retrieve data from the Entry data

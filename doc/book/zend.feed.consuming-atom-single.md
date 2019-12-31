@@ -5,19 +5,19 @@ feed's *URL* followed by `/<entryId>`, such as `http://atom.example.com/feed/1`,
 *URL* we used above. This pattern may exist for some web services which use *Atom* as a container
 syntax.
 
-If you read a single entry, you will have a `Zend\Feed\Reader\Entry\Atom` object.
+If you read a single entry, you will have a `Laminas\Feed\Reader\Entry\Atom` object.
 
 ## Reading a Single-Entry Atom Feed
 
 ```php
-$entry = Zend\Feed\Reader\Reader::import('http://atom.example.com/feed/1');
+$entry = Laminas\Feed\Reader\Reader::import('http://atom.example.com/feed/1');
 echo 'Entry title: ' . $entry->getTitle();
 ```
 
 > ## Importing requires an HTTP client
 >
-> To import a feed, you will need to have an [HTTP client](zend.feed.http-clients)
+> To import a feed, you will need to have an [HTTP client](laminas.feed.http-clients)
 > available. 
 >
-> If you are not using zend-http, you will need to inject `Reader` with the HTTP
-> client. See the [section on providing a client to Reader](zend.feed.http-clients#providing-a-client-to-reader).
+> If you are not using laminas-http, you will need to inject `Reader` with the HTTP
+> client. See the [section on providing a client to Reader](laminas.feed.http-clients#providing-a-client-to-reader).

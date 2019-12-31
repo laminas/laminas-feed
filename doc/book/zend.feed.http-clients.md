@@ -1,6 +1,6 @@
-# HTTP Clients and zend-feed
+# HTTP Clients and laminas-feed
 
-Several operations in zend-feed's Reader subcomponent require an HTTP client:
+Several operations in laminas-feed's Reader subcomponent require an HTTP client:
 
 - importing a feed
 - finding links in a feed
@@ -14,10 +14,10 @@ component for implementing this behavior.
 ## ClientInterface and HeaderAwareClientInterface
 
 First, we define two interfaces for clients,
-`Zend\Feed\Reader\Http\ClientInterface` and `HeaderAwareClientInterface`:
+`Laminas\Feed\Reader\Http\ClientInterface` and `HeaderAwareClientInterface`:
 
 ```php
-namespace Zend\Feed\Reader\Http;
+namespace Laminas\Feed\Reader\Http;
 
 interface ClientInterface
 {
@@ -71,11 +71,11 @@ A call to `get()` should yield a *response*.
 
 ## ResponseInterface and HeaderAwareResponseInterface
 
-Responses are modeled using `Zend\Feed\Reader\Http\ResponseInterface` and
+Responses are modeled using `Laminas\Feed\Reader\Http\ResponseInterface` and
 `HeaderAwareResponseInterface`:
 
 ```php
-namespace Zend\Feed\Reader\Http;
+namespace Laminas\Feed\Reader\Http;
 
 class ResponseInterface
 {
@@ -117,12 +117,12 @@ check the instance against `HeaderAwareResponseInterface`, and only call
 
 ## Response
 
-zend-feed ships with a generic `ResponseInterface` implementation,
-`Zend\Feed\Http\Response`. It implements `HeaderAwareResponseInterface`, and
+laminas-feed ships with a generic `ResponseInterface` implementation,
+`Laminas\Feed\Http\Response`. It implements `HeaderAwareResponseInterface`, and
 defines the following constructor:
 
 ```php
-namespace Zend\Feed\Reader\Http;
+namespace Laminas\Feed\Reader\Http;
 
 class Response implements HeaderAwareResponseInterface
 {
@@ -141,10 +141,10 @@ class Response implements HeaderAwareResponseInterface
 
 [PSR-7](http://www.php-fig.org/psr/psr-7/) defines a set of HTTP message
 interfaces, but not a client interface. To facilitate wrapping an HTTP client
-that uses PSR-7 messages, we provide `Zend\Feed\Reader\Psr7ResponseDecorator`:
+that uses PSR-7 messages, we provide `Laminas\Feed\Reader\Psr7ResponseDecorator`:
 
 ```php
-namespace Zend\Feed\Reader\Http;
+namespace Laminas\Feed\Reader\Http;
 
 use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
 
@@ -172,17 +172,17 @@ application, if they are not already installed by the client of your choice:
 $ composer require psr/http-message
 ```
 
-## zend-http
+## laminas-http
 
-We also provide a zend-http client decorator,
-`Zend\Feed\Reader\Http\ZendHttpClientDecorator`:
+We also provide a laminas-http client decorator,
+`Laminas\Feed\Reader\Http\LaminasHttpClientDecorator`:
 
 ```php
-namespace Zend\Feed\Reader\Http;
+namespace Laminas\Feed\Reader\Http;
 
-use Zend\Http\Client as HttpClient;
+use Laminas\Http\Client as HttpClient;
 
-class ZendHttpClientDecorator implements HeaderAwareClientInterface
+class LaminasHttpClientDecorator implements HeaderAwareClientInterface
 {
     /**
      * @param HttpClient $client
@@ -197,28 +197,28 @@ class ZendHttpClientDecorator implements HeaderAwareClientInterface
 ```
 
 Its `get()` implementation returns a `Response` instance seeded from the
-zend-http response returned, including status, body, and headers.
+laminas-http response returned, including status, body, and headers.
 
-zend-http is the default implementation assumed by `Zend\Feed\Reader\Reader`,
+laminas-http is the default implementation assumed by `Laminas\Feed\Reader\Reader`,
 but *is not installed by default*. You may install it using composer:
 
 ```bash
-$ composer require zendframework/zend-http
+$ composer require laminas/laminas-http
 ```
 
 ## Providing a client to Reader
 
-By default, `Zend\Feed\Reader\Reader` will lazy load a zend-http client. If you
-have not installed zend-http, however, PHP will raise an error indicating the
+By default, `Laminas\Feed\Reader\Reader` will lazy load a laminas-http client. If you
+have not installed laminas-http, however, PHP will raise an error indicating the
 class is not found!
 
 As such, you have two options:
 
-1. Install zend-http: `composer require zendframework/zend-http`.
+1. Install laminas-http: `composer require laminas/laminas-http`.
 2. Inject the `Reader` with your own HTTP client.
 
 To accomplish the second, you will need an implementation of
-`Zend\Feed\Reader\Http\ClientInterface` or `HeaderAwareClientInterface`, and an
+`Laminas\Feed\Reader\Http\ClientInterface` or `HeaderAwareClientInterface`, and an
 instance of that implementation. Once you do, you can use the static method
 `setHttpClient()` to inject it.
 
@@ -227,7 +227,7 @@ As an example, let's say you've created a PSR-7-based implementation named
 
 ```php
 use My\Http\Psr7FeedClient;
-use Zend\Feed\Reader\Reader;
+use Laminas\Feed\Reader\Reader;
 
 Reader::setHttpClient(new Psr7FeedClient());
 ```

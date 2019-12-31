@@ -2,22 +2,22 @@
 
 ## Reading a feed
 
-Reading an *RSS* feed is as simple as passing the *URL* of the feed to `Zend\Feed\Reader\Reader`'s
+Reading an *RSS* feed is as simple as passing the *URL* of the feed to `Laminas\Feed\Reader\Reader`'s
 `import` method.
 
 ```php
-$channel = Zend\Feed\Reader\Reader::import('http://rss.example.com/channelName');
+$channel = Laminas\Feed\Reader\Reader::import('http://rss.example.com/channelName');
 ```
 
 > ## Importing requires an HTTP client
 >
-> To import a feed, you will need to have an [HTTP client](zend.feed.http-clients)
+> To import a feed, you will need to have an [HTTP client](laminas.feed.http-clients)
 > available. 
 >
-> If you are not using zend-http, you will need to inject `Reader` with the HTTP
-> client. See the [section on providing a client to Reader](zend.feed.http-clients#providing-a-client-to-reader).
+> If you are not using laminas-http, you will need to inject `Reader` with the HTTP
+> client. See the [section on providing a client to Reader](laminas.feed.http-clients#providing-a-client-to-reader).
 
-If any errors occur fetching the feed, a `Zend\Feed\Reader\Exception\RuntimeException` will be
+If any errors occur fetching the feed, a `Laminas\Feed\Reader\Exception\RuntimeException` will be
 thrown.
 
 ## Get properties
@@ -40,7 +40,7 @@ echo $author['name'];
 ```
 
 Most commonly you'll want to loop through the feed and do something with its entries.
-`Zend\Feed\Reader\Feed\Rss` internally converts all entries to a `Zend\Feed\Reader\Entry\Rss`. Entry
+`Laminas\Feed\Reader\Feed\Rss` internally converts all entries to a `Laminas\Feed\Reader\Entry\Rss`. Entry
 properties, similarly to channel properties, can be accessed via getter methods, such as `getTitle`,
 `getDescription` ...
 
@@ -88,7 +88,7 @@ if ($item->getPropname()) {
 }
 ```
 
-Where relevant, `Zend\Feed` supports a number of common RSS extensions including Dublin Core, Atom
+Where relevant, `Laminas\Feed` supports a number of common RSS extensions including Dublin Core, Atom
 (inside RSS) and the Content, Slash, Syndication, Syndication/Thread and several other extensions or
 modules.
 

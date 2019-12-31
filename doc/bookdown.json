@@ -1,17 +1,17 @@
 {
-    "title": "Zend\\Feed",
+    "title": "Laminas\\Feed",
     "target": "html/",
     "content": [
-        "book/zend.feed.introduction.md",
-        "book/zend.feed.http-clients.md",
-        "book/zend.feed.importing.md",
-        "book/zend.feed.find-feeds.md",
-        "book/zend.feed.consuming-rss.md",
-        "book/zend.feed.consuming-atom.md",
-        "book/zend.feed.consuming-atom-single.md",
-        "book/zend.feed.security.md",
-        "book/zend.feed.reader.md",
-        "book/zend.feed.writer.md",
-        "book/zend.feed.pubsubhubbub.md"
+        "book/laminas.feed.introduction.md",
+        "book/laminas.feed.http-clients.md",
+        "book/laminas.feed.importing.md",
+        "book/laminas.feed.find-feeds.md",
+        "book/laminas.feed.consuming-rss.md",
+        "book/laminas.feed.consuming-atom.md",
+        "book/laminas.feed.consuming-atom-single.md",
+        "book/laminas.feed.security.md",
+        "book/laminas.feed.reader.md",
+        "book/laminas.feed.writer.md",
+        "book/laminas.feed.pubsubhubbub.md"
     ]
 }
