@@ -1,19 +1,18 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Feed\Reader\Feed;
+namespace Laminas\Feed\Reader\Feed;
 
 use DOMDocument;
 use DOMElement;
 use DOMXPath;
-use Zend\Feed\Reader;
-use Zend\Feed\Reader\Exception;
+use Laminas\Feed\Reader;
+use Laminas\Feed\Reader\Exception;
 
 /**
 */
@@ -126,7 +125,7 @@ abstract class AbstractFeed implements FeedInterface
     /**
      * Return the current entry
      *
-     * @return \Zend\Feed\Reader\Entry\EntryInterface
+     * @return \Laminas\Feed\Reader\Entry\EntryInterface
      */
     public function current()
     {
@@ -263,7 +262,7 @@ abstract class AbstractFeed implements FeedInterface
      * Return an Extension object with the matching name (postfixed with _Feed)
      *
      * @param string $name
-     * @return \Zend\Feed\Reader\Extension\AbstractFeed
+     * @return \Laminas\Feed\Reader\Extension\AbstractFeed
      */
     public function getExtension($name)
     {

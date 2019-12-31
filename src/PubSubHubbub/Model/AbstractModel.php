@@ -1,21 +1,20 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Feed\PubSubHubbub\Model;
+namespace Laminas\Feed\PubSubHubbub\Model;
 
-use Zend\Db\TableGateway\TableGateway;
-use Zend\Db\TableGateway\TableGatewayInterface;
+use Laminas\Db\TableGateway\TableGateway;
+use Laminas\Db\TableGateway\TableGatewayInterface;
 
 class AbstractModel
 {
     /**
-     * Zend\Db\TableGateway\TableGatewayInterface instance to host database methods
+     * Laminas\Db\TableGateway\TableGatewayInterface instance to host database methods
      *
      * @var TableGatewayInterface
      */
