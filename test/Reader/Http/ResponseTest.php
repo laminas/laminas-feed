@@ -1,21 +1,20 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Feed\Reader\Http;
+namespace LaminasTest\Feed\Reader\Http;
 
+use Laminas\Feed\Reader\Exception\InvalidArgumentException;
+use Laminas\Feed\Reader\Http\Response;
+use LaminasTest\Feed\Reader\TestAsset\Psr7Stream;
 use PHPUnit\Framework\TestCase;
-use Zend\Feed\Reader\Exception\InvalidArgumentException;
-use Zend\Feed\Reader\Http\Response;
-use ZendTest\Feed\Reader\TestAsset\Psr7Stream;
 
 /**
- * @covers \Zend\Feed\Reader\Http\Response
+ * @covers \Laminas\Feed\Reader\Http\Response
  */
 class ResponseTest extends TestCase
 {

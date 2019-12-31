@@ -1,7 +1,7 @@
 # Consuming Atom Feeds
 
-`Zend\Feed\Reader\Feed\Atom` is used in much the same way as
-`Zend\Feed\Reader\Feed\Rss`. It provides the same access to feed-level
+`Laminas\Feed\Reader\Feed\Atom` is used in much the same way as
+`Laminas\Feed\Reader\Feed\Rss`. It provides the same access to feed-level
 properties and iteration over entries in the feed. The main difference is in the
 structure of the Atom protocol itself. Atom is a successor to RSS; it is a
 more generalized protocol and it is designed to deal more easily with feeds that
@@ -13,7 +13,7 @@ into two elements, `summary` and `content`, for that purpose.
 Read an Atom feed and print the `title` and `summary` of each entry:
 
 ```php
-$feed = Zend\Feed\Reader\Reader::import('http://atom.example.com/feed/');
+$feed = Laminas\Feed\Reader\Reader::import('http://atom.example.com/feed/');
 echo 'The feed contains ' . $feed->count() . ' entries.' . "\n\n";
 foreach ($feed as $entry) {
     echo 'Title: ' . $entry->getTitle() . "\n";
@@ -24,10 +24,10 @@ foreach ($feed as $entry) {
 
 > ## Importing requires an HTTP client
 >
-> To import a feed, you will need to have an [HTTP client](zend.feed.http-clients)
+> To import a feed, you will need to have an [HTTP client](laminas.feed.http-clients)
 > available.
 >
-> If you are not using zend-http, you will need to inject `Reader` with the HTTP
+> If you are not using laminas-http, you will need to inject `Reader` with the HTTP
 > client. See the [section on providing a client to Reader](http-clients.md#providing-a-client-to-reader).
 
 In an Atom feed, you can expect to find the following feed properties:
@@ -54,7 +54,7 @@ Atom entries commonly have the following properties:
 - `published`: the date the entry was published, in RFC 3339 format.
 - `updated`: the date the entry was last updated, in RFC 3339 format.
 
-Where relevant, `Zend\Feed` supports a number of common RSS extensions including
+Where relevant, `Laminas\Feed` supports a number of common RSS extensions including
 Dublin Core; Content, Slash, Syndication, and Syndication/Thread; and several
 others in common use on blogs.
 
