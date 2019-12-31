@@ -1,25 +1,24 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Feed\Writer;
+namespace LaminasTest\Feed\Writer;
 
 use DateTime;
+use Laminas\Feed\Writer;
+use Laminas\Feed\Writer\Deleted;
+use Laminas\Feed\Writer\Entry;
+use Laminas\Feed\Writer\Exception\ExceptionInterface;
+use Laminas\Feed\Writer\Version;
 use PHPUnit\Framework\TestCase;
-use Zend\Feed\Writer;
-use Zend\Feed\Writer\Deleted;
-use Zend\Feed\Writer\Entry;
-use Zend\Feed\Writer\Exception\ExceptionInterface;
-use Zend\Feed\Writer\Version;
 
 /**
- * @group      Zend_Feed
- * @group      Zend_Feed_Writer
+ * @group      Laminas_Feed
+ * @group      Laminas_Feed_Writer
  */
 class FeedTest extends TestCase
 {
@@ -78,7 +77,7 @@ class FeedTest extends TestCase
 
     public function testAddAuthorThrowsExceptionOnInvalidUriFromArray()
     {
-        $this->markTestIncomplete('Pending Zend\URI fix for validation');
+        $this->markTestIncomplete('Pending Laminas\URI fix for validation');
         $writer = new Writer\Feed;
         try {
             $writer->addAuthor(['name' => 'Joe',
@@ -145,7 +144,7 @@ class FeedTest extends TestCase
     }
 
     /**
-     * @group ZF-12023
+     * @group Laminas-12023
      */
     public function testSetDateCreatedUsesGivenUnixTimestampThatIsLessThanTenDigits()
     {
@@ -156,7 +155,7 @@ class FeedTest extends TestCase
     }
 
     /**
-     * @group ZF-11610
+     * @group Laminas-11610
      */
     public function testSetDateCreatedUsesGivenUnixTimestampThatIsAVerySmallInteger()
     {
@@ -191,7 +190,7 @@ class FeedTest extends TestCase
     }
 
     /**
-     * @group ZF-12023
+     * @group Laminas-12023
      */
     public function testSetDateModifiedUsesGivenUnixTimestampThatIsLessThanTenDigits()
     {
@@ -202,7 +201,7 @@ class FeedTest extends TestCase
     }
 
     /**
-     * @group ZF-11610
+     * @group Laminas-11610
      */
     public function testSetDateModifiedUsesGivenUnixTimestampThatIsAVerySmallInteger()
     {
@@ -269,7 +268,7 @@ class FeedTest extends TestCase
     }
 
     /**
-     * @group ZF-12023
+     * @group Laminas-12023
      */
     public function testSetLastBuildDateUsesGivenUnixTimestampThatIsLessThanTenDigits()
     {
@@ -280,7 +279,7 @@ class FeedTest extends TestCase
     }
 
     /**
-     * @group ZF-11610
+     * @group Laminas-11610
      */
     public function testSetLastBuildDateUsesGivenUnixTimestampThatIsAVerySmallInteger()
     {
@@ -505,25 +504,25 @@ class FeedTest extends TestCase
     public function testSetsGeneratorName()
     {
         $writer = new Writer\Feed;
-        $writer->setGenerator(['name' => 'ZFW']);
-        $this->assertEquals(['name' => 'ZFW'], $writer->getGenerator());
+        $writer->setGenerator(['name' => 'LaminasW']);
+        $this->assertEquals(['name' => 'LaminasW'], $writer->getGenerator());
     }
 
     public function testSetsGeneratorVersion()
     {
         $writer = new Writer\Feed;
-        $writer->setGenerator(['name'    => 'ZFW',
+        $writer->setGenerator(['name'    => 'LaminasW',
                                     'version' => '1.0']);
-        $this->assertEquals(['name'    => 'ZFW',
+        $this->assertEquals(['name'    => 'LaminasW',
                                   'version' => '1.0'], $writer->getGenerator());
     }
 
     public function testSetsGeneratorUri()
     {
         $writer = new Writer\Feed;
-        $writer->setGenerator(['name' => 'ZFW',
+        $writer->setGenerator(['name' => 'LaminasW',
                                     'uri' => 'http://www.example.com']);
-        $this->assertEquals(['name' => 'ZFW',
+        $this->assertEquals(['name' => 'LaminasW',
                                   'uri' => 'http://www.example.com'], $writer->getGenerator());
     }
 
@@ -541,7 +540,7 @@ class FeedTest extends TestCase
     {
         $writer = new Writer\Feed;
         try {
-            $writer->setGenerator(['name'   => 'ZFW',
+            $writer->setGenerator(['name'   => 'LaminasW',
                                         'version' => '']);
             $this->fail('Should have failed since version is empty');
         } catch (ExceptionInterface $e) {
@@ -550,10 +549,10 @@ class FeedTest extends TestCase
 
     public function testSetsGeneratorThrowsExceptionOnInvalidUri()
     {
-        $this->markTestIncomplete('Pending Zend\URI fix for validation');
+        $this->markTestIncomplete('Pending Laminas\URI fix for validation');
         $writer = new Writer\Feed;
         try {
-            $writer->setGenerator(['name' => 'ZFW',
+            $writer->setGenerator(['name' => 'LaminasW',
                                         'uri' => 'notauri']);
             $this->fail();
         } catch (ExceptionInterface $e) {
@@ -566,8 +565,8 @@ class FeedTest extends TestCase
     public function testSetsGeneratorNameDeprecated()
     {
         $writer = new Writer\Feed;
-        $writer->setGenerator('ZFW');
-        $this->assertEquals(['name' => 'ZFW'], $writer->getGenerator());
+        $writer->setGenerator('LaminasW');
+        $this->assertEquals(['name' => 'LaminasW'], $writer->getGenerator());
     }
 
     /**
@@ -576,8 +575,8 @@ class FeedTest extends TestCase
     public function testSetsGeneratorVersionDeprecated()
     {
         $writer = new Writer\Feed;
-        $writer->setGenerator('ZFW', '1.0');
-        $this->assertEquals(['name'    => 'ZFW',
+        $writer->setGenerator('LaminasW', '1.0');
+        $this->assertEquals(['name'    => 'LaminasW',
                                   'version' => '1.0'], $writer->getGenerator());
     }
 
@@ -587,8 +586,8 @@ class FeedTest extends TestCase
     public function testSetsGeneratorUriDeprecated()
     {
         $writer = new Writer\Feed;
-        $writer->setGenerator('ZFW', null, 'http://www.example.com');
-        $this->assertEquals(['name' => 'ZFW',
+        $writer->setGenerator('LaminasW', null, 'http://www.example.com');
+        $this->assertEquals(['name' => 'LaminasW',
                                   'uri' => 'http://www.example.com'], $writer->getGenerator());
     }
 
@@ -612,7 +611,7 @@ class FeedTest extends TestCase
     {
         $writer = new Writer\Feed;
         try {
-            $writer->setGenerator('ZFW', '');
+            $writer->setGenerator('LaminasW', '');
             $this->fail();
         } catch (ExceptionInterface $e) {
         }
@@ -623,10 +622,10 @@ class FeedTest extends TestCase
      */
     public function testSetsGeneratorThrowsExceptionOnInvalidUriDeprecated()
     {
-        $this->markTestIncomplete('Pending Zend\URI fix for validation');
+        $this->markTestIncomplete('Pending Laminas\URI fix for validation');
         $writer = new Writer\Feed;
         try {
-            $writer->setGenerator('ZFW', null, 'notauri');
+            $writer->setGenerator('LaminasW', null, 'notauri');
             $this->fail();
         } catch (ExceptionInterface $e) {
         }
@@ -890,7 +889,7 @@ class FeedTest extends TestCase
     }
 
     /**
-     * @covers \Zend\Feed\Writer\Feed::orderByDate
+     * @covers \Laminas\Feed\Writer\Feed::orderByDate
      */
     public function testAddsAndOrdersEntriesByModifiedDate()
     {
@@ -906,7 +905,7 @@ class FeedTest extends TestCase
     }
 
     /**
-     * @covers \Zend\Feed\Writer\Feed::getEntry
+     * @covers \Laminas\Feed\Writer\Feed::getEntry
      */
     public function testGetEntry()
     {
@@ -918,7 +917,7 @@ class FeedTest extends TestCase
     }
 
     /**
-     * @covers \Zend\Feed\Writer\Feed::removeEntry
+     * @covers \Laminas\Feed\Writer\Feed::removeEntry
      */
     public function testGetEntryException()
     {
@@ -931,7 +930,7 @@ class FeedTest extends TestCase
     }
 
     /**
-     * @covers \Zend\Feed\Writer\Feed::removeEntry
+     * @covers \Laminas\Feed\Writer\Feed::removeEntry
      */
     public function testRemoveEntry()
     {
@@ -955,7 +954,7 @@ class FeedTest extends TestCase
     }
 
     /**
-     * @covers \Zend\Feed\Writer\Feed::removeEntry
+     * @covers \Laminas\Feed\Writer\Feed::removeEntry
      */
     public function testRemoveEntryException()
     {
@@ -968,7 +967,7 @@ class FeedTest extends TestCase
     }
 
     /**
-     * @covers \Zend\Feed\Writer\Feed::createTombstone
+     * @covers \Laminas\Feed\Writer\Feed::createTombstone
      */
     public function testCreateTombstone()
     {
@@ -981,7 +980,7 @@ class FeedTest extends TestCase
     }
 
     /**
-     * @covers \Zend\Feed\Writer\Feed::addTombstone
+     * @covers \Laminas\Feed\Writer\Feed::addTombstone
      */
     public function testAddTombstone()
     {
@@ -993,7 +992,7 @@ class FeedTest extends TestCase
     }
 
     /**
-     * @covers \Zend\Feed\Writer\Feed::export
+     * @covers \Laminas\Feed\Writer\Feed::export
      */
     public function testExportRss()
     {
@@ -1010,7 +1009,7 @@ class FeedTest extends TestCase
   <channel>
     <title>foo</title>
     <description>bar</description>
-    <generator>Zend_Feed_Writer %version% (http://framework.zend.com)</generator>
+    <generator>Laminas_Feed_Writer %version% (https://getlaminas.org)</generator>
     <link>http://www.example.org</link>
   </channel>
 </rss>
@@ -1022,7 +1021,7 @@ EOT;
     }
 
     /**
-     * @covers \Zend\Feed\Writer\Feed::export
+     * @covers \Laminas\Feed\Writer\Feed::export
      */
     public function testExportRssIgnoreExceptions()
     {
@@ -1033,7 +1032,7 @@ EOT;
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
   <channel>
-    <generator>Zend_Feed_Writer %version% (http://framework.zend.com)</generator>
+    <generator>Laminas_Feed_Writer %version% (https://getlaminas.org)</generator>
   </channel>
 </rss>
 
@@ -1044,7 +1043,7 @@ EOT;
     }
 
     /**
-     * @covers \Zend\Feed\Writer\Feed::export
+     * @covers \Laminas\Feed\Writer\Feed::export
      */
     public function testExportWrongTypeException()
     {
