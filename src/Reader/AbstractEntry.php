@@ -1,20 +1,19 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Feed\Reader;
+namespace Laminas\Feed\Reader;
 
 use DOMDocument;
 use DOMElement;
 use DOMXPath;
 
 /**
- * @deprecated This (abstract) class is deprecated. Use Zend\Feed\Reader\Entry\AbstractEntry instead.
+ * @deprecated This (abstract) class is deprecated. Use Laminas\Feed\Reader\Entry\AbstractEntry instead.
  */
 abstract class AbstractEntry
 {
@@ -154,7 +153,7 @@ abstract class AbstractEntry
      * Set the XPath query
      *
      * @param  DOMXPath $xpath
-     * @return \Zend\Feed\Reader\AbstractEntry
+     * @return \Laminas\Feed\Reader\AbstractEntry
      */
     public function setXpath(DOMXPath $xpath)
     {
@@ -176,7 +175,7 @@ abstract class AbstractEntry
      * Return an Extension object with the matching name (postfixed with _Entry)
      *
      * @param string $name
-     * @return \Zend\Feed\Reader\Extension\AbstractEntry
+     * @return \Laminas\Feed\Reader\Extension\AbstractEntry
      */
     public function getExtension($name)
     {
@@ -206,7 +205,7 @@ abstract class AbstractEntry
     }
 
     /**
-     * Load extensions from Zend\Feed\Reader\Reader
+     * Load extensions from Laminas\Feed\Reader\Reader
      *
      * @return void
      */

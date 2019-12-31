@@ -1,17 +1,18 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-feed for the canonical source repository
- * @copyright Copyright (c) 2019 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   https://github.com/zendframework/zend-feed/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Feed\Writer;
+namespace LaminasTest\Feed\Writer;
 
 use DateTime;
-use Zend\Feed\Writer\Entry;
-use Zend\Feed\Writer\Exception\InvalidArgumentException;
-use Zend\Feed\Writer\Feed;
-use Zend\Feed\Writer\FeedFactory;
+use Laminas\Feed\Writer\Entry;
+use Laminas\Feed\Writer\Exception\InvalidArgumentException;
+use Laminas\Feed\Writer\Feed;
+use Laminas\Feed\Writer\FeedFactory;
 use PHPUnit\Framework\TestCase;
 
 class FeedFactoryTest extends TestCase

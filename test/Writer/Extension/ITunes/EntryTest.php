@@ -1,21 +1,20 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Feed\Writer\Extension\ITunes;
+namespace LaminasTest\Feed\Writer\Extension\ITunes;
 
+use Laminas\Feed\Writer;
+use Laminas\Feed\Writer\Exception\ExceptionInterface;
 use PHPUnit\Framework\TestCase;
-use Zend\Feed\Writer;
-use Zend\Feed\Writer\Exception\ExceptionInterface;
 
 /**
-* @group Zend_Feed
-* @group Zend_Feed_Writer
+* @group Laminas_Feed
+* @group Laminas_Feed_Writer
 */
 class EntryTest extends TestCase
 {
