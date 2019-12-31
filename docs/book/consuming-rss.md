@@ -2,22 +2,22 @@
 
 ## Reading a feed
 
-To read an RSS feed, pass its URL to `Zend\Feed\Reader\Reader::import()`:
+To read an RSS feed, pass its URL to `Laminas\Feed\Reader\Reader::import()`:
 
 ```php
-$channel = Zend\Feed\Reader\Reader::import('http://rss.example.com/channelName');
+$channel = Laminas\Feed\Reader\Reader::import('http://rss.example.com/channelName');
 ```
 
 > ## Importing requires an HTTP client
 >
-> To import a feed, you will need to have an [HTTP client](zend.feed.http-clients)
+> To import a feed, you will need to have an [HTTP client](laminas.feed.http-clients)
 > available.
 >
-> If you are not using zend-http, you will need to inject `Reader` with the HTTP
+> If you are not using laminas-http, you will need to inject `Reader` with the HTTP
 > client. See the [section on providing a client to Reader](http-clients.md#providing-a-client-to-reader).
 
 If any errors occur fetching the feed, a
-`Zend\Feed\Reader\Exception\RuntimeException` will be thrown.
+`Laminas\Feed\Reader\Exception\RuntimeException` will be thrown.
 
 ## Get properties
 
@@ -39,8 +39,8 @@ echo $author['name'];
 ```
 
 Most commonly, you'll want to loop through the feed and do something with its
-entries.  `Zend\Feed\Reader\Feed\Rss` internally converts all entries to a
-`Zend\Feed\Reader\Entry\Rss` instance. Entry properties, similarly to channel
+entries.  `Laminas\Feed\Reader\Feed\Rss` internally converts all entries to a
+`Laminas\Feed\Reader\Entry\Rss` instance. Entry properties, similarly to channel
 properties, can be accessed via getter methods, such as `getTitle`,
 `getDescription`, etc.
 
@@ -91,7 +91,7 @@ if ($item->getPropname()) {
 }
 ```
 
-Where relevant, `Zend\Feed` supports a number of common RSS extensions including
+Where relevant, `Laminas\Feed` supports a number of common RSS extensions including
 Dublin Core, Atom (inside RSS); the Content, Slash, Syndication,
 Syndication/Thread extensions; as well as several others.
 
