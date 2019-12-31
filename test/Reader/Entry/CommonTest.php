@@ -1,19 +1,18 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-feed for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Feed\Reader\Entry;
+namespace LaminasTest\Feed\Reader\Entry;
 
-use Zend\Feed\Reader;
+use Laminas\Feed\Reader;
 
 /**
-* @group Zend_Feed
-* @group Zend_Feed_Reader
+* @group Laminas_Feed
+* @group Laminas_Feed_Reader
 */
 class CommonTest extends \PHPUnit_Framework_TestCase
 {
@@ -81,7 +80,7 @@ class CommonTest extends \PHPUnit_Framework_TestCase
             file_get_contents($this->feedSamplePath.'/atom.xml')
         );
         $entry = $feed->current();
-        $this->assertInstanceOf('Zend\Feed\Reader\Extension\Atom\Entry', $entry->getExtension('Atom'));
+        $this->assertInstanceOf('Laminas\Feed\Reader\Extension\Atom\Entry', $entry->getExtension('Atom'));
     }
 
     public function testReturnsNullIfExtensionDoesNotExist()
@@ -94,7 +93,7 @@ class CommonTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-8213
+     * @group Laminas-8213
      */
     public function testReturnsEncodingOfFeed()
     {
@@ -106,7 +105,7 @@ class CommonTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-8213
+     * @group Laminas-8213
      */
     public function testReturnsEncodingOfFeedAsUtf8IfUndefined()
     {
@@ -127,7 +126,7 @@ class CommonTest extends \PHPUnit_Framework_TestCase
         );
         $entry = $feed->current();
         $stub = $this->getMockForAbstractClass(
-            'Zend\Feed\Reader\Entry\AbstractEntry',
+            'Laminas\Feed\Reader\Entry\AbstractEntry',
             array($entry->getElement(), $entry->getId())
         );
         $this->assertEquals($entry->getType(), $stub->getType());
@@ -144,7 +143,7 @@ class CommonTest extends \PHPUnit_Framework_TestCase
         $entry = $feed->current();
         $domElement = new \DOMElement($entry->getElement()->tagName);
         $stub = $this->getMockForAbstractClass(
-            'Zend\Feed\Reader\Entry\AbstractEntry',
+            'Laminas\Feed\Reader\Entry\AbstractEntry',
             array($domElement, $entry->getId())
         );
         $this->assertEquals($stub->getType(), Reader\Reader::TYPE_ANY);
