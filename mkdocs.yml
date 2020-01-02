@@ -1,11 +1,20 @@
 docs_dir: docs/book
 site_dir: docs/html
 nav:
-    - { Home: index.md }
-    - { Introduction: intro.md }
-    - { Reader: [{ 'Basic Usage': reader.md }, { 'HTTP Clients': http-clients.md }, { 'Using PSR-7 Clients': psr7-clients.md }, { 'Importing Feeds': importing.md }, { 'Feed Discovery': find-feeds.md }, { 'Consuming RSS Feeds': consuming-rss.md }, { 'Consuming Atom Feeds': consuming-atom.md }, { 'Consuming Atom Entries': consuming-atom-entry.md }, { Security: security.md }] }
-    - { Writer: writer.md }
-    - { Pubsubhubbub: pubsubhubbub.md }
+    - Home: index.md
+    - Introduction: intro.md
+    - Reader:
+        - 'Basic Usage': reader.md
+        - 'HTTP Clients': http-clients.md
+        - 'Using PSR-7 Clients': psr7-clients.md
+        - 'Importing Feeds': importing.md
+        - 'Feed Discovery': find-feeds.md
+        - 'Consuming RSS Feeds': consuming-rss.md
+        - 'Consuming Atom Feeds': consuming-atom.md
+        - 'Consuming Atom Entries': consuming-atom-entry.md
+        - Security: security.md
+    - Writer: writer.md
+    - Pubsubhubbub: pubsubhubbub.md
 site_name: laminas-feed
 site_description: 'Consume and generate Atom and RSS feeds, and interact with Pubsubhubbub.'
 repo_url: 'https://github.com/laminas/laminas-feed'
