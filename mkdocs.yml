@@ -18,3 +18,6 @@ nav:
 site_name: laminas-feed
 site_description: 'Consume and generate Atom and RSS feeds, and interact with Pubsubhubbub.'
 repo_url: 'https://github.com/laminas/laminas-feed'
+extra:
+    project: Components
+    project_url: 'https://docs.laminas.dev'
