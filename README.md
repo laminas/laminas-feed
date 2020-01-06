@@ -1,6 +1,6 @@
 # laminas-feed
 
-[![Build Status](https://travis-ci.org/laminas/laminas-feed.svg?branch=master)](https://travis-ci.org/laminas/laminas-feed)
+[![Build Status](https://travis-ci.com/laminas/laminas-feed.svg?branch=master)](https://travis-ci.com/laminas/laminas-feed)
 [![Coverage Status](https://coveralls.io/repos/github/laminas/laminas-feed/badge.svg?branch=master)](https://coveralls.io/github/laminas/laminas-feed?branch=master)
 
 `Laminas\Feed` provides functionality for consuming RSS and Atom feeds. It provides
