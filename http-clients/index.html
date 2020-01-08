@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -320,86 +324,82 @@ component for implementing this behavior.</p>
 <h2 id="clientinterface-and-headerawareclientinterface">ClientInterface and HeaderAwareClientInterface</h2>
 <p>First, we define two interfaces for clients,
 <code>Laminas\Feed\Reader\Http\ClientInterface</code> and <code>HeaderAwareClientInterface</code>:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>namespace Laminas\Feed\Reader\Http;</span>
+<pre class=codehilite><code class=language-php>namespace Laminas\Feed\Reader\Http;
 
-<span class=x>interface ClientInterface</span>
-<span class=x>{</span>
-<span class=x>    /**</span>
-<span class=x>     * Make a GET request to a given URL.</span>
-<span class=x>     *</span>
-<span class=x>     * @param string $url</span>
-<span class=x>     * @return ResponseInterface</span>
-<span class=x>     */</span>
-<span class=x>    public function get($url);</span>
-<span class=x>}</span>
+interface ClientInterface
+{
+    /**
+     * Make a GET request to a given URL.
+     *
+     * @param string $url
+     * @return ResponseInterface
+     */
+    public function get($url);
+}
 
-<span class=x>interface HeaderAwareClientInterface extends ClientInterface</span>
-<span class=x>{</span>
-<span class=x>    /**</span>
-<span class=x>     * Make a GET request to a given URL.</span>
-<span class=x>     *</span>
-<span class=x>     * @param string $url</span>
-<span class=x>     * @param array $headers</span>
-<span class=x>     * @return ResponseInterface</span>
-<span class=x>     */</span>
-<span class=x>    public function get($url, array $headers = []);</span>
-<span class=x>}</span>
-</pre></div></p>
+interface HeaderAwareClientInterface extends ClientInterface
+{
+    /**
+     * Make a GET request to a given URL.
+     *
+     * @param string $url
+     * @param array $headers
+     * @return ResponseInterface
+     */
+    public function get($url, array $headers = []);
+}</code></pre>
 <p>The first is header-agnostic, and assumes that the client will simply perform an
 HTTP GET request. The second allows providing headers to the client; typically,
 these are used for HTTP caching headers. <code>$headers</code> must be in the following
 structure:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$headers = [</span>
-<span class=x>    &#39;X-Header-Name&#39; =&gt; [</span>
-<span class=x>        &#39;header&#39;,</span>
-<span class=x>        &#39;values&#39;,</span>
-<span class=x>    ],</span>
-<span class=x>];</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$headers = [
+    'X-Header-Name' =&gt; [
+        'header',
+        'values',
+    ],
+];</code></pre>
 <p>i.e., each key is a header name, and each value is an array of values for that
 header. If the header represents only a single value, it should be an array with
 that value:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$headers = [</span>
-<span class=x>    &#39;Accept&#39; =&gt; [ &#39;application/rss+xml&#39; ],</span>
-<span class=x>];</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$headers = [
+    'Accept' =&gt; [ 'application/rss+xml' ],
+];</code></pre>
 <p>A call to <code>get()</code> should yield a <em>response</em>.</p>
 <h2 id="responseinterface-and-headerawareresponseinterface">ResponseInterface and HeaderAwareResponseInterface</h2>
 <p>Responses are modeled using <code>Laminas\Feed\Reader\Http\ResponseInterface</code> and
 <code>HeaderAwareResponseInterface</code>:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>namespace Laminas\Feed\Reader\Http;</span>
+<pre class=codehilite><code class=language-php>namespace Laminas\Feed\Reader\Http;
 
-<span class=x>class ResponseInterface</span>
-<span class=x>{</span>
-<span class=x>    /**</span>
-<span class=x>     * Retrieve the status code.</span>
-<span class=x>     *</span>
-<span class=x>     * @return int</span>
-<span class=x>     */</span>
-<span class=x>    public function getStatusCode();</span>
+class ResponseInterface
+{
+    /**
+     * Retrieve the status code.
+     *
+     * @return int
+     */
+    public function getStatusCode();
 
-<span class=x>    /**</span>
-<span class=x>     * Retrieve the response body contents.</span>
-<span class=x>     *</span>
-<span class=x>     * @return string</span>
-<span class=x>     */</span>
-<span class=x>    public function getBody();</span>
-<span class=x>}</span>
+    /**
+     * Retrieve the response body contents.
+     *
+     * @return string
+     */
+    public function getBody();
+}
 
-<span class=x>class HeaderAwareResponseInterface extends ResponseInterface</span>
-<span class=x>{</span>
-<span class=x>    /**</span>
-<span class=x>     * Retrieve a named header line.</span>
-<span class=x>     *</span>
-<span class=x>     * Retrieve a header by name; all values MUST be concatenated to a single</span>
-<span class=x>     * line. If no matching header is found, return the $default value.</span>
-<span class=x>     *</span>
-<span class=x>     * @param string $name</span>
-<span class=x>     * @param null|string $default</span>
-<span class=x>     * @return string</span>
-<span class=x>    public function getHeaderLine($name, $default = null);</span>
-<span class=x>}</span>
-</pre></div></p>
+class HeaderAwareResponseInterface extends ResponseInterface
+{
+    /**
+     * Retrieve a named header line.
+     *
+     * Retrieve a header by name; all values MUST be concatenated to a single
+     * line. If no matching header is found, return the $default value.
+     *
+     * @param string $name
+     * @param null|string $default
+     * @return string
+    public function getHeaderLine($name, $default = null);
+}</code></pre>
 <p>Internally, <code>Reader</code> will typehint against <code>ClientInterface</code> for the bulk of
 operations. In some cases, however, certain capabilities are only possible if
 the response can provide headers (e.g., for caching); in such cases, it will
@@ -409,73 +409,68 @@ check the instance against <code>HeaderAwareResponseInterface</code>, and only c
 <p>laminas-feed ships with a generic <code>ResponseInterface</code> implementation,
 <code>Laminas\Feed\Http\Response</code>. It implements <code>HeaderAwareResponseInterface</code>, and
 defines the following constructor:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>namespace Laminas\Feed\Reader\Http;</span>
+<pre class=codehilite><code class=language-php>namespace Laminas\Feed\Reader\Http;
 
-<span class=x>class Response implements HeaderAwareResponseInterface</span>
-<span class=x>{</span>
-<span class=x>    /**</span>
-<span class=x>     * Constructor</span>
-<span class=x>     *</span>
-<span class=x>     * @param int $statusCode Response status code</span>
-<span class=x>     * @param string $body Response body</span>
-<span class=x>     * @param array $headers Response headers, if available</span>
-<span class=x>     */</span>
-<span class=x>    public function __construct($statusCode, $body, array $headers = []);</span>
-<span class=x>}</span>
-</pre></div></p>
+class Response implements HeaderAwareResponseInterface
+{
+    /**
+     * Constructor
+     *
+     * @param int $statusCode Response status code
+     * @param string $body Response body
+     * @param array $headers Response headers, if available
+     */
+    public function __construct($statusCode, $body, array $headers = []);
+}</code></pre>
 <h2 id="psr-7-response">PSR-7 Response</h2>
 <p><a href="http://www.php-fig.org/psr/psr-7/">PSR-7</a> defines a set of HTTP message
 interfaces, but not a client interface. To facilitate wrapping an HTTP client
 that uses PSR-7 messages, we provide <code>Laminas\Feed\Reader\Psr7ResponseDecorator</code>:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>namespace Laminas\Feed\Reader\Http;</span>
+<pre class=codehilite><code class=language-php>namespace Laminas\Feed\Reader\Http;
 
-<span class=x>use Psr\Http\Message\ResponseInterface as PsrResponseInterface;</span>
+use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
 
-<span class=x>class Psr7ResponseDecorator implements HeaderAwareResponseInterface</span>
-<span class=x>{</span>
-<span class=x>    /**</span>
-<span class=x>     * @param PsrResponseInterface $response</span>
-<span class=x>     */</span>
-<span class=x>    public function __construct(PsrResponseInterface $response);</span>
+class Psr7ResponseDecorator implements HeaderAwareResponseInterface
+{
+    /**
+     * @param PsrResponseInterface $response
+     */
+    public function __construct(PsrResponseInterface $response);
 
-<span class=x>    /**</span>
-<span class=x>     * @return PsrResponseInterface</span>
-<span class=x>     */</span>
-<span class=x>    public function getDecoratedResponse();</span>
-<span class=x>}</span>
-</pre></div></p>
+    /**
+     * @return PsrResponseInterface
+     */
+    public function getDecoratedResponse();
+}</code></pre>
 <p>Clients can then take the PSR-7 response they receive, pass it to the decorator,
 and return the decorator.</p>
 <p>To use the PSR-7 response, you will need to add the PSR-7 interfaces to your
 application, if they are not already installed by the client of your choice:</p>
-<p> <div class=codehilite><pre><span></span>$ composer require psr/http-message
-</pre></div></p>
+<pre class=codehilite><code class=language-bash>$ composer require psr/http-message</code></pre>
 <h2 id="laminas-http">laminas-http</h2>
 <p>We also provide a laminas-http client decorator,
 <code>Laminas\Feed\Reader\Http\LaminasHttpClientDecorator</code>:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>namespace Laminas\Feed\Reader\Http;</span>
+<pre class=codehilite><code class=language-php>namespace Laminas\Feed\Reader\Http;
 
-<span class=x>use Laminas\Http\Client as HttpClient;</span>
+use Laminas\Http\Client as HttpClient;
 
-<span class=x>class LaminasHttpClientDecorator implements HeaderAwareClientInterface</span>
-<span class=x>{</span>
-<span class=x>    /**</span>
-<span class=x>     * @param HttpClient $client</span>
-<span class=x>     */</span>
-<span class=x>    public function __construct(HttpClient $client);</span>
+class LaminasHttpClientDecorator implements HeaderAwareClientInterface
+{
+    /**
+     * @param HttpClient $client
+     */
+    public function __construct(HttpClient $client);
 
-<span class=x>    /**</span>
-<span class=x>     * @return HttpClient</span>
-<span class=x>     */</span>
-<span class=x>    public function getDecoratedClient();</span>
-<span class=x>}</span>
-</pre></div></p>
+    /**
+     * @return HttpClient
+     */
+    public function getDecoratedClient();
+}</code></pre>
 <p>Its <code>get()</code> implementation returns a <code>Response</code> instance seeded from the
 laminas-http response returned, including status, body, and headers.</p>
 <p>laminas-http is the default implementation assumed by <code>Laminas\Feed\Reader\Reader</code>,
 but <em>is not installed by default</em>. You may install it using composer:</p>
-<p> <div class=codehilite><pre><span></span>$ composer require laminas/laminas-http
-</pre></div></p>
+<pre class=codehilite><code class=language-bash>$ composer require laminas/laminas-http</code></pre>
 <h2 id="providing-a-client-to-reader">Providing a client to Reader</h2>
 <p>By default, <code>Laminas\Feed\Reader\Reader</code> will lazy load a laminas-http client. If you
 have not installed laminas-http, however, PHP will raise an error indicating the
@@ -491,11 +486,10 @@ instance of that implementation. Once you do, you can use the static method
 <code>setHttpClient()</code> to inject it.</p>
 <p>As an example, let's say you've created a PSR-7-based implementation named
 <code>My\Http\Psr7FeedClient</code>. You could then do the following:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use My\Http\Psr7FeedClient;</span>
-<span class=x>use Laminas\Feed\Reader\Reader;</span>
+<pre class=codehilite><code class=language-php>use My\Http\Psr7FeedClient;
+use Laminas\Feed\Reader\Reader;
 
-<span class=x>Reader::setHttpClient(new Psr7FeedClient());</span>
-</pre></div></p>
+Reader::setHttpClient(new Psr7FeedClient());</code></pre>
 <p>Your client will then be used for all <code>import()</code> and <code>findFeedLinks()</code>
 operations.</p>
 
@@ -695,9 +689,10 @@ operations.</p>
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -734,7 +729,7 @@ operations.</p>
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-feed//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-feed/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -743,8 +738,8 @@ operations.</p>
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-feed//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-feed/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

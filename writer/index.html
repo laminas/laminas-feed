@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -356,92 +360,90 @@ cover extensions in more detail at the end of this chapter.</p>
 <p>To use <code>Laminas\Feed\Writer\Writer</code>, you will provide it with data, and then
 trigger the renderer. What follows is an example demonstrating generation of a
 minimal Atom 1.0 feed. Each feed or entry uses a separate data container.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Feed\Writer\Feed;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Feed\Writer\Feed;
 
-<span class=x>/**</span>
-<span class=x> * Create the parent feed</span>
-<span class=x> */</span>
-<span class=x>$feed = new Feed;</span>
-<span class=x>$feed-&gt;setTitle(&quot;Paddy&#39;s Blog&quot;);</span>
-<span class=x>$feed-&gt;setLink(&#39;http://www.example.com&#39;);</span>
-<span class=x>$feed-&gt;setFeedLink(&#39;http://www.example.com/atom&#39;, &#39;atom&#39;);</span>
-<span class=x>$feed-&gt;addAuthor([</span>
-<span class=x>    &#39;name&#39;  =&gt; &#39;Paddy&#39;,</span>
-<span class=x>    &#39;email&#39; =&gt; &#39;paddy@example.com&#39;,</span>
-<span class=x>    &#39;uri&#39;   =&gt; &#39;http://www.example.com&#39;,</span>
-<span class=x>]);</span>
-<span class=x>$feed-&gt;setDateModified(time());</span>
-<span class=x>$feed-&gt;addHub(&#39;http://pubsubhubbub.appspot.com/&#39;);</span>
+/**
+ * Create the parent feed
+ */
+$feed = new Feed;
+$feed-&gt;setTitle(&quot;Paddy's Blog&quot;);
+$feed-&gt;setLink('http://www.example.com');
+$feed-&gt;setFeedLink('http://www.example.com/atom', 'atom');
+$feed-&gt;addAuthor([
+    'name'  =&gt; 'Paddy',
+    'email' =&gt; 'paddy@example.com',
+    'uri'   =&gt; 'http://www.example.com',
+]);
+$feed-&gt;setDateModified(time());
+$feed-&gt;addHub('http://pubsubhubbub.appspot.com/');
 
-<span class=x>/**</span>
-<span class=x> * Add one or more entries. Note that entries must</span>
-<span class=x> * be manually added once created.</span>
-<span class=x> */</span>
-<span class=x>$entry = $feed-&gt;createEntry();</span>
-<span class=x>$entry-&gt;setTitle(&#39;All Your Base Are Belong To Us&#39;);</span>
-<span class=x>$entry-&gt;setLink(&#39;http://www.example.com/all-your-base-are-belong-to-us&#39;);</span>
-<span class=x>$entry-&gt;addAuthor([</span>
-<span class=x>    &#39;name&#39;  =&gt; &#39;Paddy&#39;,</span>
-<span class=x>    &#39;email&#39; =&gt; &#39;paddy@example.com&#39;,</span>
-<span class=x>    &#39;uri&#39;   =&gt; &#39;http://www.example.com&#39;,</span>
-<span class=x>]);</span>
-<span class=x>$entry-&gt;setDateModified(time());</span>
-<span class=x>$entry-&gt;setDateCreated(time());</span>
-<span class=x>$entry-&gt;setDescription(&#39;Exposing the difficulty of porting games to English.&#39;);</span>
-<span class=x>$entry-&gt;setContent(</span>
-<span class=x>    &#39;I am not writing the article. The example is long enough as is ;).&#39;</span>
-<span class=x>);</span>
-<span class=x>$feed-&gt;addEntry($entry);</span>
+/**
+ * Add one or more entries. Note that entries must
+ * be manually added once created.
+ */
+$entry = $feed-&gt;createEntry();
+$entry-&gt;setTitle('All Your Base Are Belong To Us');
+$entry-&gt;setLink('http://www.example.com/all-your-base-are-belong-to-us');
+$entry-&gt;addAuthor([
+    'name'  =&gt; 'Paddy',
+    'email' =&gt; 'paddy@example.com',
+    'uri'   =&gt; 'http://www.example.com',
+]);
+$entry-&gt;setDateModified(time());
+$entry-&gt;setDateCreated(time());
+$entry-&gt;setDescription('Exposing the difficulty of porting games to English.');
+$entry-&gt;setContent(
+    'I am not writing the article. The example is long enough as is ;).'
+);
+$feed-&gt;addEntry($entry);
 
-<span class=x>/**</span>
-<span class=x> * Render the resulting feed to Atom 1.0 and assign to $out.</span>
-<span class=x> * You can substitute &quot;atom&quot; with &quot;rss&quot; to generate an RSS 2.0 feed.</span>
-<span class=x> */</span>
-<span class=x>$out = $feed-&gt;export(&#39;atom&#39;);</span>
-</pre></div></p>
+/**
+ * Render the resulting feed to Atom 1.0 and assign to $out.
+ * You can substitute &quot;atom&quot; with &quot;rss&quot; to generate an RSS 2.0 feed.
+ */
+$out = $feed-&gt;export('atom');</code></pre>
 <p>The output rendered should be as follows:</p>
-<p> <div class=codehilite><pre><span></span><span class=cp>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
-<span class=nt>&lt;feed</span> <span class=na>xmlns=</span><span class=s>&quot;http://www.w3.org/2005/Atom&quot;</span><span class=nt>&gt;</span>
-    <span class=nt>&lt;title</span> <span class=na>type=</span><span class=s>&quot;text&quot;</span><span class=nt>&gt;</span>Paddy&#39;s Blog<span class=nt>&lt;/title&gt;</span>
-    <span class=nt>&lt;subtitle</span> <span class=na>type=</span><span class=s>&quot;text&quot;</span><span class=nt>&gt;</span>Writing about PC Games since 176 BC.<span class=nt>&lt;/subtitle&gt;</span>
-    <span class=nt>&lt;updated&gt;</span>2009-12-14T20:28:18+00:00<span class=nt>&lt;/updated&gt;</span>
-    <span class=nt>&lt;generator</span> <span class=na>uri=</span><span class=s>&quot;https://getlaminas.org&quot;</span> <span class=na>version=</span><span class=s>&quot;1.10.0alpha&quot;</span><span class=nt>&gt;</span>
+<pre class=codehilite><code class=language-xml>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;feed xmlns=&quot;http://www.w3.org/2005/Atom&quot;&gt;
+    &lt;title type=&quot;text&quot;&gt;Paddy's Blog&lt;/title&gt;
+    &lt;subtitle type=&quot;text&quot;&gt;Writing about PC Games since 176 BC.&lt;/subtitle&gt;
+    &lt;updated&gt;2009-12-14T20:28:18+00:00&lt;/updated&gt;
+    &lt;generator uri=&quot;https://getlaminas.org&quot; version=&quot;1.10.0alpha&quot;&gt;
         Laminas\Feed\Writer
-    <span class=nt>&lt;/generator&gt;</span>
-    <span class=nt>&lt;link</span> <span class=na>rel=</span><span class=s>&quot;alternate&quot;</span> <span class=na>type=</span><span class=s>&quot;text/html&quot;</span> <span class=na>href=</span><span class=s>&quot;http://www.example.com&quot;</span><span class=nt>/&gt;</span>
-    <span class=nt>&lt;link</span> <span class=na>rel=</span><span class=s>&quot;self&quot;</span> <span class=na>type=</span><span class=s>&quot;application/atom+xml&quot;</span>
-        <span class=na>href=</span><span class=s>&quot;http://www.example.com/atom&quot;</span><span class=nt>/&gt;</span>
-    <span class=nt>&lt;id&gt;</span>http://www.example.com<span class=nt>&lt;/id&gt;</span>
-    <span class=nt>&lt;author&gt;</span>
-        <span class=nt>&lt;name&gt;</span>Paddy<span class=nt>&lt;/name&gt;</span>
-        <span class=nt>&lt;email&gt;</span>paddy@example.com<span class=nt>&lt;/email&gt;</span>
-        <span class=nt>&lt;uri&gt;</span>http://www.example.com<span class=nt>&lt;/uri&gt;</span>
-    <span class=nt>&lt;/author&gt;</span>
-    <span class=nt>&lt;link</span> <span class=na>rel=</span><span class=s>&quot;hub&quot;</span> <span class=na>href=</span><span class=s>&quot;http://pubsubhubbub.appspot.com/&quot;</span><span class=nt>/&gt;</span>
-    <span class=nt>&lt;entry&gt;</span>
-        <span class=nt>&lt;title</span> <span class=na>type=</span><span class=s>&quot;html&quot;</span><span class=nt>&gt;</span><span class=cp>&lt;![CDATA[All Your Base Are Belong To</span>
-<span class=cp>            Us]]&gt;</span><span class=nt>&lt;/title&gt;</span>
-        <span class=nt>&lt;summary</span> <span class=na>type=</span><span class=s>&quot;html&quot;</span><span class=nt>&gt;</span>
-            <span class=cp>&lt;![CDATA[Exposing the difficultly of porting games to</span>
-<span class=cp>                English.]]&gt;</span>
-        <span class=nt>&lt;/summary&gt;</span>
-        <span class=nt>&lt;published&gt;</span>2009-12-14T20:28:18+00:00<span class=nt>&lt;/published&gt;</span>
-        <span class=nt>&lt;updated&gt;</span>2009-12-14T20:28:18+00:00<span class=nt>&lt;/updated&gt;</span>
-        <span class=nt>&lt;link</span> <span class=na>rel=</span><span class=s>&quot;alternate&quot;</span> <span class=na>type=</span><span class=s>&quot;text/html&quot;</span>
-             <span class=na>href=</span><span class=s>&quot;http://www.example.com/all-your-base-are-belong-to-us&quot;</span><span class=nt>/&gt;</span>
-        <span class=nt>&lt;id&gt;</span>http://www.example.com/all-your-base-are-belong-to-us<span class=nt>&lt;/id&gt;</span>
-        <span class=nt>&lt;author&gt;</span>
-            <span class=nt>&lt;name&gt;</span>Paddy<span class=nt>&lt;/name&gt;</span>
-            <span class=nt>&lt;email&gt;</span>paddy@example.com<span class=nt>&lt;/email&gt;</span>
-            <span class=nt>&lt;uri&gt;</span>http://www.example.com<span class=nt>&lt;/uri&gt;</span>
-        <span class=nt>&lt;/author&gt;</span>
-        <span class=nt>&lt;content</span> <span class=na>type=</span><span class=s>&quot;html&quot;</span><span class=nt>&gt;</span>
-            <span class=cp>&lt;![CDATA[I am not writing the article.</span>
-<span class=cp>                     The example is long enough as is ;).]]&gt;</span>
-        <span class=nt>&lt;/content&gt;</span>
-    <span class=nt>&lt;/entry&gt;</span>
-<span class=nt>&lt;/feed&gt;</span>
-</pre></div></p>
+    &lt;/generator&gt;
+    &lt;link rel=&quot;alternate&quot; type=&quot;text/html&quot; href=&quot;http://www.example.com&quot;/&gt;
+    &lt;link rel=&quot;self&quot; type=&quot;application/atom+xml&quot;
+        href=&quot;http://www.example.com/atom&quot;/&gt;
+    &lt;id&gt;http://www.example.com&lt;/id&gt;
+    &lt;author&gt;
+        &lt;name&gt;Paddy&lt;/name&gt;
+        &lt;email&gt;paddy@example.com&lt;/email&gt;
+        &lt;uri&gt;http://www.example.com&lt;/uri&gt;
+    &lt;/author&gt;
+    &lt;link rel=&quot;hub&quot; href=&quot;http://pubsubhubbub.appspot.com/&quot;/&gt;
+    &lt;entry&gt;
+        &lt;title type=&quot;html&quot;&gt;&lt;![CDATA[All Your Base Are Belong To
+            Us]]&gt;&lt;/title&gt;
+        &lt;summary type=&quot;html&quot;&gt;
+            &lt;![CDATA[Exposing the difficultly of porting games to
+                English.]]&gt;
+        &lt;/summary&gt;
+        &lt;published&gt;2009-12-14T20:28:18+00:00&lt;/published&gt;
+        &lt;updated&gt;2009-12-14T20:28:18+00:00&lt;/updated&gt;
+        &lt;link rel=&quot;alternate&quot; type=&quot;text/html&quot;
+             href=&quot;http://www.example.com/all-your-base-are-belong-to-us&quot;/&gt;
+        &lt;id&gt;http://www.example.com/all-your-base-are-belong-to-us&lt;/id&gt;
+        &lt;author&gt;
+            &lt;name&gt;Paddy&lt;/name&gt;
+            &lt;email&gt;paddy@example.com&lt;/email&gt;
+            &lt;uri&gt;http://www.example.com&lt;/uri&gt;
+        &lt;/author&gt;
+        &lt;content type=&quot;html&quot;&gt;
+            &lt;![CDATA[I am not writing the article.
+                     The example is long enough as is ;).]]&gt;
+        &lt;/content&gt;
+    &lt;/entry&gt;
+&lt;/feed&gt;</code></pre>
 <p>This is a perfectly valid Atom 1.0 example. It should be noted that omitting an
 obligatory point of data, such as a title, will trigger an exception when
 rendering as Atom 1.0. This will differ for RSS 2.0, since a title may be
@@ -872,9 +874,10 @@ example, <code>setContent()</code> is matched with a <code>getContent()</code> m
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -911,7 +914,7 @@ example, <code>setContent()</code> is matched with a <code>getContent()</code> m
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-feed//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-feed/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -920,8 +923,8 @@ example, <code>setContent()</code> is matched with a <code>getContent()</code> m
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-feed//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-feed/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -301,33 +305,32 @@ when writing code to work with <em>RSS</em> data. <code>Laminas\Feed</code> supp
 properties of the core <em>RSS</em> and <em>Atom</em> specifications.</p>
 </blockquote>
 <h2 id="reading-rss-feed-data">Reading RSS Feed Data</h2>
-<p> <div class=codehilite><pre><span></span><span class=x>// Fetch the latest Slashdot headlines</span>
-<span class=x>try {</span>
-<span class=x>    $slashdotRss =</span>
-<span class=x>        Laminas\Feed\Reader\Reader::import(&#39;http://rss.slashdot.org/Slashdot/slashdot&#39;);</span>
-<span class=x>} catch (Laminas\Feed\Reader\Exception\RuntimeException $e) {</span>
-<span class=x>    // feed import failed</span>
-<span class=x>    echo &quot;Exception caught importing feed: {$e-&gt;getMessage()}\n&quot;;</span>
-<span class=x>    exit;</span>
-<span class=x>}</span>
+<pre class=codehilite><code class=language-php>// Fetch the latest Slashdot headlines
+try {
+    $slashdotRss =
+        Laminas\Feed\Reader\Reader::import('http://rss.slashdot.org/Slashdot/slashdot');
+} catch (Laminas\Feed\Reader\Exception\RuntimeException $e) {
+    // feed import failed
+    echo &quot;Exception caught importing feed: {$e-&gt;getMessage()}\n&quot;;
+    exit;
+}
 
-<span class=x>// Initialize the channel/feed data array</span>
-<span class=x>$channel = [</span>
-<span class=x>    &#39;title&#39;       =&gt; $slashdotRss-&gt;getTitle(),</span>
-<span class=x>    &#39;link&#39;        =&gt; $slashdotRss-&gt;getLink(),</span>
-<span class=x>    &#39;description&#39; =&gt; $slashdotRss-&gt;getDescription(),</span>
-<span class=x>    &#39;items&#39;       =&gt; [],</span>
-<span class=x>];</span>
+// Initialize the channel/feed data array
+$channel = [
+    'title'       =&gt; $slashdotRss-&gt;getTitle(),
+    'link'        =&gt; $slashdotRss-&gt;getLink(),
+    'description' =&gt; $slashdotRss-&gt;getDescription(),
+    'items'       =&gt; [],
+];
 
-<span class=x>// Loop over each channel item/entry and store relevant data for each</span>
-<span class=x>foreach ($slashdotRss as $item) {</span>
-<span class=x>    $channel[&#39;items&#39;][] = [</span>
-<span class=x>        &#39;title&#39;       =&gt; $item-&gt;getTitle(),</span>
-<span class=x>        &#39;link&#39;        =&gt; $item-&gt;getLink(),</span>
-<span class=x>        &#39;description&#39; =&gt; $item-&gt;getDescription(),</span>
-<span class=x>    ];</span>
-<span class=x>}</span>
-</pre></div></p>
+// Loop over each channel item/entry and store relevant data for each
+foreach ($slashdotRss as $item) {
+    $channel['items'][] = [
+        'title'       =&gt; $item-&gt;getTitle(),
+        'link'        =&gt; $item-&gt;getLink(),
+        'description' =&gt; $item-&gt;getDescription(),
+    ];
+}</code></pre>
 <p>Your <code>$channel</code> array now contains the basic meta-information for the RSS
 channel and all items that it contained. The process is identical for Atom
 feeds since <code>Laminas\Feed</code> provides a common feed API; i.e. all getters and
@@ -529,9 +532,10 @@ setters are the same regardless of feed format.</p>
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -568,7 +572,7 @@ setters are the same regardless of feed format.</p>
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-feed//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-feed/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -577,8 +581,8 @@ setters are the same regardless of feed format.</p>
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-feed//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-feed/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

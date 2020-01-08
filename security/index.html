@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -312,68 +316,67 @@ whitelist, and by checking and fixing nesting of tags, ensuring
 standards-compliant output.</p>
 <p>The following examples will show a basic usage of HTMLPurifier, but developers
 are urged to go through and read <a href="http://www.htmlpurifier.org/docs">HTMLPurifier's documentation</a>.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>// Setting HTMLPurifier&#39;s options</span>
-<span class=x>$options = [</span>
-<span class=x>    // Allow only paragraph tags</span>
-<span class=x>    // and anchor tags wit the href attribute</span>
-<span class=x>    [</span>
-<span class=x>        &#39;HTML.Allowed&#39;,</span>
-<span class=x>        &#39;p,a[href]&#39;</span>
-<span class=x>    ],</span>
-<span class=x>    // Format end output with Tidy</span>
-<span class=x>    [</span>
-<span class=x>        &#39;Output.TidyFormat&#39;,</span>
-<span class=x>        true</span>
-<span class=x>    ],</span>
-<span class=x>    // Assume XHTML 1.0 Strict Doctype</span>
-<span class=x>    [</span>
-<span class=x>        &#39;HTML.Doctype&#39;,</span>
-<span class=x>        &#39;XHTML 1.0 Strict&#39;</span>
-<span class=x>    ],</span>
-<span class=x>    // Disable cache, but see note after the example</span>
-<span class=x>    [</span>
-<span class=x>        &#39;Cache.DefinitionImpl&#39;,</span>
-<span class=x>        null</span>
-<span class=x>    ]</span>
-<span class=x>];</span>
+<pre class=codehilite><code class=language-php>// Setting HTMLPurifier's options
+$options = [
+    // Allow only paragraph tags
+    // and anchor tags wit the href attribute
+    [
+        'HTML.Allowed',
+        'p,a[href]'
+    ],
+    // Format end output with Tidy
+    [
+        'Output.TidyFormat',
+        true
+    ],
+    // Assume XHTML 1.0 Strict Doctype
+    [
+        'HTML.Doctype',
+        'XHTML 1.0 Strict'
+    ],
+    // Disable cache, but see note after the example
+    [
+        'Cache.DefinitionImpl',
+        null
+    ]
+];
 
-<span class=x>// Configuring HTMLPurifier</span>
-<span class=x>$config = HTMLPurifier_Config::createDefault();</span>
-<span class=x>foreach ($options as $option) {</span>
-<span class=x>    $config-&gt;set($option[0], $option[1]);</span>
-<span class=x>}</span>
+// Configuring HTMLPurifier
+$config = HTMLPurifier_Config::createDefault();
+foreach ($options as $option) {
+    $config-&gt;set($option[0], $option[1]);
+}
 
-<span class=x>// Creating a HTMLPurifier with it&#39;s config</span>
-<span class=x>$purifier = new HTMLPurifier($config);</span>
+// Creating a HTMLPurifier with it's config
+$purifier = new HTMLPurifier($config);
 
-<span class=x>// Fetch the RSS</span>
-<span class=x>try {</span>
-<span class=x>   $rss = Laminas\Feed\Reader\Reader::import(&#39;http://www.planet-php.net/rss/&#39;);</span>
-<span class=x>} catch (Laminas\Feed\Exception\Reader\RuntimeException $e) {</span>
-<span class=x>   // feed import failed</span>
-<span class=x>   echo &quot;Exception caught importing feed: {$e-&gt;getMessage()}\n&quot;;</span>
-<span class=x>   exit;</span>
-<span class=x>}</span>
+// Fetch the RSS
+try {
+   $rss = Laminas\Feed\Reader\Reader::import('http://www.planet-php.net/rss/');
+} catch (Laminas\Feed\Exception\Reader\RuntimeException $e) {
+   // feed import failed
+   echo &quot;Exception caught importing feed: {$e-&gt;getMessage()}\n&quot;;
+   exit;
+}
 
-<span class=x>// Initialize the channel data array</span>
-<span class=x>// See that we&#39;re cleaning the description with HTMLPurifier</span>
-<span class=x>$channel = [</span>
-<span class=x>   &#39;title&#39;       =&gt; $rss-&gt;getTitle(),</span>
-<span class=x>   &#39;link&#39;        =&gt; $rss-&gt;getLink(),</span>
-<span class=x>   &#39;description&#39; =&gt; $purifier-&gt;purify($rss-&gt;getDescription()),</span>
-<span class=x>   &#39;items&#39;       =&gt; [],</span>
-<span class=x>];</span>
+// Initialize the channel data array
+// See that we're cleaning the description with HTMLPurifier
+$channel = [
+   'title'       =&gt; $rss-&gt;getTitle(),
+   'link'        =&gt; $rss-&gt;getLink(),
+   'description' =&gt; $purifier-&gt;purify($rss-&gt;getDescription()),
+   'items'       =&gt; [],
+];
 
-<span class=x>// Loop over each channel item and store relevant data</span>
-<span class=x>// See that we&#39;re cleaning the descriptions with HTMLPurifier</span>
-<span class=x>foreach ($rss as $item) {</span>
-<span class=x>   $channel[&#39;items&#39;][] = [</span>
-<span class=x>       &#39;title&#39;       =&gt; $item-&gt;getTitle(),</span>
-<span class=x>       &#39;link&#39;        =&gt; $item-&gt;getLink(),</span>
-<span class=x>       &#39;description&#39; =&gt; $purifier-&gt;purify($item-&gt;getDescription()),</span>
-<span class=x>   ];</span>
-<span class=x>}</span>
-</pre></div></p>
+// Loop over each channel item and store relevant data
+// See that we're cleaning the descriptions with HTMLPurifier
+foreach ($rss as $item) {
+   $channel['items'][] = [
+       'title'       =&gt; $item-&gt;getTitle(),
+       'link'        =&gt; $item-&gt;getLink(),
+       'description' =&gt; $purifier-&gt;purify($item-&gt;getDescription()),
+   ];
+}</code></pre>
 <blockquote>
 <h3>Tidy is required</h3>
 <p>HTMLPurifier is using the PHP <a href="http://php.net/tidy">Tidy extension</a> to clean
@@ -390,45 +393,44 @@ which complies to the current <a href="https://www.owasp.org/index.php/XSS_Preve
 and as such, is the recommended tool for escaping HTML tags and attributes,
 Javascript, CSS and URLs before outputting any potentially insecure data to the
 users.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>try {</span>
-<span class=x>    $rss = Laminas\Feed\Reader\Reader::import(&#39;http://www.planet-php.net/rss/&#39;);</span>
-<span class=x>} catch (Laminas\Feed\Exception\Reader\RuntimeException $e) {</span>
-<span class=x>    // feed import failed</span>
-<span class=x>    echo &quot;Exception caught importing feed: {$e-&gt;getMessage()}\n&quot;;</span>
-<span class=x>    exit;</span>
-<span class=x>}</span>
+<pre class=codehilite><code class=language-php>try {
+    $rss = Laminas\Feed\Reader\Reader::import('http://www.planet-php.net/rss/');
+} catch (Laminas\Feed\Exception\Reader\RuntimeException $e) {
+    // feed import failed
+    echo &quot;Exception caught importing feed: {$e-&gt;getMessage()}\n&quot;;
+    exit;
+}
 
-<span class=x>// Validate all URIs</span>
-<span class=x>$linkValidator = new Laminas\Validator\Uri;</span>
-<span class=x>$link = null;</span>
-<span class=x>if ($linkValidator-&gt;isValid($rss-&gt;getLink())) {</span>
-<span class=x>    $link = $rss-&gt;getLink();</span>
-<span class=x>}</span>
+// Validate all URIs
+$linkValidator = new Laminas\Validator\Uri;
+$link = null;
+if ($linkValidator-&gt;isValid($rss-&gt;getLink())) {
+    $link = $rss-&gt;getLink();
+}
 
-<span class=x>// Escaper used for escaping data</span>
-<span class=x>$escaper = new Laminas\Escaper\Escaper(&#39;utf-8&#39;);</span>
+// Escaper used for escaping data
+$escaper = new Laminas\Escaper\Escaper('utf-8');
 
-<span class=x>// Initialize the channel data array</span>
-<span class=x>$channel = [</span>
-<span class=x>    &#39;title&#39;       =&gt; $escaper-&gt;escapeHtml($rss-&gt;getTitle()),</span>
-<span class=x>    &#39;link&#39;        =&gt; $escaper-&gt;escapeUrl($link),</span>
-<span class=x>    &#39;description&#39; =&gt; $escaper-&gt;escapeHtml($rss-&gt;getDescription()),</span>
-<span class=x>    &#39;items&#39;       =&gt; [],</span>
-<span class=x>];</span>
+// Initialize the channel data array
+$channel = [
+    'title'       =&gt; $escaper-&gt;escapeHtml($rss-&gt;getTitle()),
+    'link'        =&gt; $escaper-&gt;escapeUrl($link),
+    'description' =&gt; $escaper-&gt;escapeHtml($rss-&gt;getDescription()),
+    'items'       =&gt; [],
+];
 
-<span class=x>// Loop over each channel item and store relevant data</span>
-<span class=x>foreach ($rss as $item) {</span>
-<span class=x>    $link = null;</span>
-<span class=x>    if ($linkValidator-&gt;isValid($rss-&gt;getLink())) {</span>
-<span class=x>        $link = $item-&gt;getLink();</span>
-<span class=x>    }</span>
-<span class=x>    $channel[&#39;items&#39;][] = [</span>
-<span class=x>        &#39;title&#39;       =&gt; $escaper-&gt;escapeHtml($item-&gt;getTitle()),</span>
-<span class=x>        &#39;link&#39;        =&gt; $escaper-&gt;escapeUrl($link),</span>
-<span class=x>        &#39;description&#39; =&gt; $escaper-&gt;escapeHtml($item-&gt;getDescription()),</span>
-<span class=x>    ];</span>
-<span class=x>}</span>
-</pre></div></p>
+// Loop over each channel item and store relevant data
+foreach ($rss as $item) {
+    $link = null;
+    if ($linkValidator-&gt;isValid($rss-&gt;getLink())) {
+        $link = $item-&gt;getLink();
+    }
+    $channel['items'][] = [
+        'title'       =&gt; $escaper-&gt;escapeHtml($item-&gt;getTitle()),
+        'link'        =&gt; $escaper-&gt;escapeUrl($link),
+        'description' =&gt; $escaper-&gt;escapeHtml($item-&gt;getDescription()),
+    ];
+}</code></pre>
 <p>The feed data is now safe for output to HTML templates. You can, of course, skip
 escaping when simply storing the data persistently, but remember to escape it on
 output later!</p>
@@ -633,9 +635,10 @@ when and how to use them to secure your web applications.</p>
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -672,7 +675,7 @@ when and how to use them to secure your web applications.</p>
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-feed//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-feed/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -681,8 +684,8 @@ when and how to use them to secure your web applications.</p>
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-feed//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-feed/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

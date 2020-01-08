@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -312,15 +316,13 @@ In this section, we'll demonstrate doing so in order to use a client that is
 <code>Laminas\Feed\Reader\Http\Psr7ResponseDecorator</code>. As such, if you have a
 PSR-7-capable client, you can pass the response to this decorator, and
 immediately return it from your custom client:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>return new Psr7ResponseDecorator($psr7Response);</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>return new Psr7ResponseDecorator($psr7Response);</code></pre>
 <p>We'll do this with our PSR-7 client.</p>
 <h2 id="guzzle">Guzzle</h2>
 <p><a href="http://docs.guzzlephp.org/en/latest/">Guzzle</a> is arguably the most popular HTTP
 client library for PHP, and fully supports PSR-7 since version 5. Let's install
 it:</p>
-<p> <div class=codehilite><pre><span></span>$ composer require guzzlehttp/guzzle
-</pre></div></p>
+<pre class=codehilite><code class=language-bash>$ composer require guzzlehttp/guzzle</code></pre>
 <p>We'll use the <code>GuzzleHttp\Client</code> to make our requests to feeds.</p>
 <h2 id="creating-a-client">Creating a client</h2>
 <p>From here, we'll create our client. To do this, we'll create a class that:</p>
@@ -331,42 +333,40 @@ it:</p>
 <li>returns a laminas-feed response decorating the actual PSR-7 response</li>
 </ul>
 <p>The code looks like this:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use GuzzleHttp\Client;</span>
-<span class=x>use GuzzleHttp\ClientInterface as GuzzleClientInterface;</span>
-<span class=x>use Laminas\Feed\Reader\Http\ClientInterface as FeedReaderHttpClientInterface;</span>
-<span class=x>use Laminas\Feed\Reader\Http\Psr7ResponseDecorator;</span>
+<pre class=codehilite><code class=language-php>use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface as GuzzleClientInterface;
+use Laminas\Feed\Reader\Http\ClientInterface as FeedReaderHttpClientInterface;
+use Laminas\Feed\Reader\Http\Psr7ResponseDecorator;
 
-<span class=x>class GuzzleClient implements FeedReaderHttpClientInterface</span>
-<span class=x>{</span>
-<span class=x>    /**</span>
-<span class=x>     * @var GuzzleClientInterface</span>
-<span class=x>     */</span>
-<span class=x>    private $client;</span>
+class GuzzleClient implements FeedReaderHttpClientInterface
+{
+    /**
+     * @var GuzzleClientInterface
+     */
+    private $client;
 
-<span class=x>    /**</span>
-<span class=x>     * @param GuzzleClientInterface|null $client</span>
-<span class=x>     */</span>
-<span class=x>    public function __construct(GuzzleClientInterface $client = null)</span>
-<span class=x>    {</span>
-<span class=x>        $this-&gt;client = $client ?: new Client();</span>
-<span class=x>    }</span>
+    /**
+     * @param GuzzleClientInterface|null $client
+     */
+    public function __construct(GuzzleClientInterface $client = null)
+    {
+        $this-&gt;client = $client ?: new Client();
+    }
 
-<span class=x>    /**</span>
-<span class=x>     * {@inheritdoc}</span>
-<span class=x>     */</span>
-<span class=x>    public function get($uri)</span>
-<span class=x>    {</span>
-<span class=x>        return new Psr7ResponseDecorator(</span>
-<span class=x>            $this-&gt;client-&gt;request(&#39;GET&#39;, $uri)</span>
-<span class=x>        );</span>
-<span class=x>    }</span>
-<span class=x>}</span>
-</pre></div></p>
+    /**
+     * {@inheritdoc}
+     */
+    public function get($uri)
+    {
+        return new Psr7ResponseDecorator(
+            $this-&gt;client-&gt;request('GET', $uri)
+        );
+    }
+}</code></pre>
 <h2 id="using-the-client">Using the client</h2>
 <p>In order to use our new client, we need to tell <code>Laminas\Feed\Reader\Reader</code> about
 it:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>Laminas\Feed\Reader\Reader::setHttpClient(new GuzzleClient());</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>Laminas\Feed\Reader\Reader::setHttpClient(new GuzzleClient());</code></pre>
 <p>From this point forward, this custom client will be used to retrieve feeds.</p>
 <h2 id="references">References</h2>
 <p>This chapter is based on <a href="https://www.teqneers.de/2016/05/laminasfeedreader-guzzle-and-psr-7/">a blog post by Stefan Gehrig</a>.</p>
@@ -567,9 +567,10 @@ it:</p>
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -606,7 +607,7 @@ it:</p>
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-feed//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-feed/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -615,8 +616,8 @@ it:</p>
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-feed//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-feed/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

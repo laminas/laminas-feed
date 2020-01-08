@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -352,28 +356,27 @@ exception will be raised. The end result will be an object of type
 support multiple (all existing) versions of these broad feed types.</p>
 <p>In the following example, we import an RDF/RSS 1.0 feed and extract some basic
 information that can be saved to a database or elsewhere.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$feed = Laminas\Feed\Reader\Reader::import(&#39;http://www.planet-php.net/rdf/&#39;);</span>
-<span class=x>$data = [</span>
-<span class=x>    &#39;title&#39;        =&gt; $feed-&gt;getTitle(),</span>
-<span class=x>    &#39;link&#39;         =&gt; $feed-&gt;getLink(),</span>
-<span class=x>    &#39;dateModified&#39; =&gt; $feed-&gt;getDateModified(),</span>
-<span class=x>    &#39;description&#39;  =&gt; $feed-&gt;getDescription(),</span>
-<span class=x>    &#39;language&#39;     =&gt; $feed-&gt;getLanguage(),</span>
-<span class=x>    &#39;entries&#39;      =&gt; [],</span>
-<span class=x>];</span>
+<pre class=codehilite><code class=language-php>$feed = Laminas\Feed\Reader\Reader::import('http://www.planet-php.net/rdf/');
+$data = [
+    'title'        =&gt; $feed-&gt;getTitle(),
+    'link'         =&gt; $feed-&gt;getLink(),
+    'dateModified' =&gt; $feed-&gt;getDateModified(),
+    'description'  =&gt; $feed-&gt;getDescription(),
+    'language'     =&gt; $feed-&gt;getLanguage(),
+    'entries'      =&gt; [],
+];
 
-<span class=x>foreach ($feed as $entry) {</span>
-<span class=x>    $edata = [</span>
-<span class=x>        &#39;title&#39;        =&gt; $entry-&gt;getTitle(),</span>
-<span class=x>        &#39;description&#39;  =&gt; $entry-&gt;getDescription(),</span>
-<span class=x>        &#39;dateModified&#39; =&gt; $entry-&gt;getDateModified(),</span>
-<span class=x>        &#39;authors&#39;      =&gt; $entry-&gt;getAuthors(),</span>
-<span class=x>        &#39;link&#39;         =&gt; $entry-&gt;getLink(),</span>
-<span class=x>        &#39;content&#39;      =&gt; $entry-&gt;getContent(),</span>
-<span class=x>    ];</span>
-<span class=x>    $data[&#39;entries&#39;][] = $edata;</span>
-<span class=x>}</span>
-</pre></div></p>
+foreach ($feed as $entry) {
+    $edata = [
+        'title'        =&gt; $entry-&gt;getTitle(),
+        'description'  =&gt; $entry-&gt;getDescription(),
+        'dateModified' =&gt; $entry-&gt;getDateModified(),
+        'authors'      =&gt; $entry-&gt;getAuthors(),
+        'link'         =&gt; $entry-&gt;getLink(),
+        'content'      =&gt; $entry-&gt;getContent(),
+    ];
+    $data['entries'][] = $edata;
+}</code></pre>
 <blockquote>
 <h3>Importing requires an HTTP client</h3>
 <p>To import a feed, you will need to have an <a href="../http-clients/">HTTP client</a>
@@ -391,15 +394,14 @@ return <code>NULL</code>, indicating the information could not be found in the f
 should note that classes implementing <code>Laminas\Feed\Reader\Feed\AbstractFeed</code> also
 implement the SPL <code>Iterator</code> and <code>Countable</code> interfaces.</p>
 <p>Feeds can also be imported from strings or files.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>// from a URI</span>
-<span class=x>$feed = Laminas\Feed\Reader\Reader::import(&#39;http://www.planet-php.net/rdf/&#39;);</span>
+<pre class=codehilite><code class=language-php>// from a URI
+$feed = Laminas\Feed\Reader\Reader::import('http://www.planet-php.net/rdf/');
 
-<span class=x>// from a String</span>
-<span class=x>$feed = Laminas\Feed\Reader\Reader::importString($feedXmlString);</span>
+// from a String
+$feed = Laminas\Feed\Reader\Reader::importString($feedXmlString);
 
-<span class=x>// from a file</span>
-<span class=x>$feed = Laminas\Feed\Reader\Reader::importFile(&#39;./feed.xml&#39;);</span>
-</pre></div></p>
+// from a file
+$feed = Laminas\Feed\Reader\Reader::importFile('./feed.xml');</code></pre>
 <h2 id="retrieving-underlying-feed-and-entry-sources">Retrieving Underlying Feed and Entry Sources</h2>
 <p><code>Laminas\Feed\Reader\Reader</code> does its best not to stick you in a narrow confine. If
 you need to work on a feed outside of <code>Laminas\Feed\Reader\Reader</code>, you can extract
@@ -430,14 +432,13 @@ and register an extension (covered later) to do this, but that's not always
 warranted for a quick check. You must register any new namespaces on the
 DOMXPath object before use unless they are registered by <code>Laminas\Feed\Reader</code> or
 an extension beforehand.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$feed        = Laminas\Feed\Reader\Reader::import(&#39;http://www.planet-php.net/rdf/&#39;);</span>
-<span class=x>$xpathPrefix = $feed-&gt;getXpathPrefix();</span>
-<span class=x>$xpath       = $feed-&gt;getXpath();</span>
-<span class=x>$xpath-&gt;registerNamespace(&#39;admin&#39;, &#39;http://webns.net/mvcb/&#39;);</span>
-<span class=x>$reportErrorsTo = $xpath-&gt;evaluate(</span>
-<span class=x>    &#39;string(&#39; . $xpathPrefix . &#39;/admin:errorReportsTo)&#39;</span>
-<span class=x>);</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$feed        = Laminas\Feed\Reader\Reader::import('http://www.planet-php.net/rdf/');
+$xpathPrefix = $feed-&gt;getXpathPrefix();
+$xpath       = $feed-&gt;getXpath();
+$xpath-&gt;registerNamespace('admin', 'http://webns.net/mvcb/');
+$reportErrorsTo = $xpath-&gt;evaluate(
+    'string(' . $xpathPrefix . '/admin:errorReportsTo)'
+);</code></pre>
 <blockquote>
 <h3>Do not register duplicate namespaces</h3>
 <p>If you register an already registered namespace with a different prefix name
@@ -452,9 +453,8 @@ cache feeds (as XML) to avoid unnecessary network requests. To add a cache,
 create and configure your cache instance, and then tell
 <code>Laminas\Feed\Reader\Reader</code> to use it. The cache key used is
 "<code>Laminas\Feed\Reader\\</code>" followed by the MD5 hash of the feed's URI.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$cache = Laminas\Cache\StorageFactory::adapterFactory(&#39;Memory&#39;);</span>
-<span class=x>Laminas\Feed\Reader\Reader::setCache($cache);</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$cache = Laminas\Cache\StorageFactory::adapterFactory('Memory');
+Laminas\Feed\Reader\Reader::setCache($cache);</code></pre>
 <h3>HTTP Conditional GET Support</h3>
 <p>The big question often asked when importing a feed frequently is if it has even
 changed. With a cache enabled, you can add HTTP Conditional <code>GET</code> support to
@@ -476,13 +476,12 @@ client implementations, as it requires the ability to send HTTP headers.</p>
 you request a <em>URI</em> of, but can be attempted regardless. Most common feed
 sources like blogs should however have this supported. To enable conditional
 requests, you will need to provide a cache to <code>Laminas\Feed\Reader\Reader</code>.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$cache = Laminas\Cache\StorageFactory::adapterFactory(&#39;Memory&#39;);</span>
+<pre class=codehilite><code class=language-php>$cache = Laminas\Cache\StorageFactory::adapterFactory('Memory');
 
-<span class=x>Laminas\Feed\Reader\Reader::setCache($cache);</span>
-<span class=x>Laminas\Feed\Reader\Reader::useHttpConditionalGet();</span>
+Laminas\Feed\Reader\Reader::setCache($cache);
+Laminas\Feed\Reader\Reader::useHttpConditionalGet();
 
-<span class=x>$feed = Laminas\Feed\Reader\Reader::import(&#39;http://www.planet-php.net/rdf/&#39;);</span>
-</pre></div></p>
+$feed = Laminas\Feed\Reader\Reader::import('http://www.planet-php.net/rdf/');</code></pre>
 <p>In the example above, with HTTP Conditional <code>GET</code> requests enabled, the response
 header values for ETag and Last-Modified will be cached along with the feed. For
 the the cache's lifetime, feeds will only be updated on the cache if a non-304
@@ -490,12 +489,11 @@ response is received containing a valid RSS or Atom XML document.</p>
 <p>If you intend on managing request headers from outside
 <code>Laminas\Feed\Reader\Reader</code>, you can set the relevant If-None-Matches and
 If-Modified-Since request headers via the URI import method.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$lastEtagReceived = &#39;5e6cefe7df5a7e95c8b1ba1a2ccaff3d&#39;;</span>
-<span class=x>$lastModifiedDateReceived = &#39;Wed, 08 Jul 2009 13:37:22 GMT&#39;;</span>
-<span class=x>$feed = Laminas\Feed\Reader\Reader::import(</span>
-<span class=x>    $uri, $lastEtagReceived, $lastModifiedDateReceived</span>
-<span class=x>);</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$lastEtagReceived = '5e6cefe7df5a7e95c8b1ba1a2ccaff3d';
+$lastModifiedDateReceived = 'Wed, 08 Jul 2009 13:37:22 GMT';
+$feed = Laminas\Feed\Reader\Reader::import(
+    $uri, $lastEtagReceived, $lastModifiedDateReceived
+);</code></pre>
 <h2 id="locating-feed-uris-from-websites">Locating Feed URIs from Websites</h2>
 <p>These days, many websites are aware that the location of their XML feeds is not
 always obvious. A small RDF, RSS, or Atom graphic helps when the user is reading
@@ -514,18 +512,17 @@ access all the detected links. However, as a simple shortcut, you can just grab
 the first RSS, RDF, or Atom link using its public properties as in the example
 below. Otherwise, each element of the <code>ArrayObject</code> is a simple array with the
 keys <code>type</code> and <code>uri</code> where the type is one of "rdf", "rss", or "atom".</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$links = Laminas\Feed\Reader\Reader::findFeedLinks(&#39;http://www.planet-php.net&#39;);</span>
+<pre class=codehilite><code class=language-php>$links = Laminas\Feed\Reader\Reader::findFeedLinks('http://www.planet-php.net');
 
-<span class=x>if (isset($links-&gt;rdf)) {</span>
-<span class=x>    echo $links-&gt;rdf, &quot;\n&quot;; // http://www.planet-php.org/rdf/</span>
-<span class=x>}</span>
-<span class=x>if (isset($links-&gt;rss)) {</span>
-<span class=x>    echo $links-&gt;rss, &quot;\n&quot;; // http://www.planet-php.org/rss/</span>
-<span class=x>}</span>
-<span class=x>if (isset($links-&gt;atom)) {</span>
-<span class=x>    echo $links-&gt;atom, &quot;\n&quot;; // http://www.planet-php.org/atom/</span>
-<span class=x>}</span>
-</pre></div></p>
+if (isset($links-&gt;rdf)) {
+    echo $links-&gt;rdf, &quot;\n&quot;; // http://www.planet-php.org/rdf/
+}
+if (isset($links-&gt;rss)) {
+    echo $links-&gt;rss, &quot;\n&quot;; // http://www.planet-php.org/rss/
+}
+if (isset($links-&gt;atom)) {
+    echo $links-&gt;atom, &quot;\n&quot;; // http://www.planet-php.org/atom/
+}</code></pre>
 <p>Based on these links, you can then import from whichever source you wish in the usual manner.</p>
 <blockquote>
 <h3>Finding feed links requires an HTTP client</h3>
@@ -538,12 +535,11 @@ client. See the <a href="../http-clients/#providing-a-client-to-reader">section 
 indicate many links of any type. Perhaps it's a news site with a RSS feed for
 each news category. You can iterate over all links using the ArrayObject's
 iterator.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$links = Laminas\Feed\Reader\Reader::findFeedLinks(&#39;http://www.planet-php.net&#39;);</span>
+<pre class=codehilite><code class=language-php>$links = Laminas\Feed\Reader\Reader::findFeedLinks('http://www.planet-php.net');
 
-<span class=x>foreach ($links as $link) {</span>
-<span class=x>    echo $link[&#39;href&#39;], &quot;\n&quot;;</span>
-<span class=x>}</span>
-</pre></div></p>
+foreach ($links as $link) {
+    echo $link['href'], &quot;\n&quot;;
+}</code></pre>
 <h2 id="attribute-collections">Attribute Collections</h2>
 <p>In an attempt to simplify return types, return types from the various feed and
 entry level methods may include an object of type
@@ -567,13 +563,12 @@ category name which supports HTML entities. In RSS 2.0, there is no label
 attribute so it is always set to the same value as the term for convenience.</p>
 <p>To access category labels by themselves in a simple value array, you might
 commit to something like:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$feed = Laminas\Feed\Reader\Reader::import(&#39;http://www.example.com/atom.xml&#39;);</span>
-<span class=x>$categories = $feed-&gt;getCategories();</span>
-<span class=x>$labels = [];</span>
-<span class=x>foreach ($categories as $cat) {</span>
-<span class=x>    $labels[] = $cat[&#39;label&#39;]</span>
-<span class=x>}</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$feed = Laminas\Feed\Reader\Reader::import('http://www.example.com/atom.xml');
+$categories = $feed-&gt;getCategories();
+$labels = [];
+foreach ($categories as $cat) {
+    $labels[] = $cat['label']
+}</code></pre>
 <p>It's a contrived example, but the point is that the labels are tied up with
 other information.</p>
 <p>However, the container class allows you to access the "most relevant" data as a
@@ -582,10 +577,9 @@ obviously a judgement call. For categories it means the category labels (not the
 terms or schemes) while for authors it would be the authors' names (not their
 email addresses or URIs). The simple array is flat (just values) and passed
 through <code>array_unique()</code> to remove duplication.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$feed = Laminas\Feed\Reader\Reader::import(&#39;http://www.example.com/atom.xml&#39;);</span>
-<span class=x>$categories = $feed-&gt;getCategories();</span>
-<span class=x>$labels = $categories-&gt;getValues();</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$feed = Laminas\Feed\Reader\Reader::import('http://www.example.com/atom.xml');
+$categories = $feed-&gt;getCategories();
+$labels = $categories-&gt;getValues();</code></pre>
 <p>The above example shows how to extract only labels and nothing else thus giving
 simple access to the category labels without any additional work to extract that
 data by itself.</p>
@@ -976,11 +970,10 @@ Three implementations exist:</p>
 </ul>
 <p>By default, <code>Laminas\Feed\Reader\Reader</code> composes a <code>StandaloneExtensionManager</code>. You
 can inject an alternate implementation using <code>Reader::setExtensionManager()</code>:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$extensions = new Laminas\Feed\Reader\ExtensionPluginManager();</span>
-<span class=x>Laminas\Feed\Reader\Reader::setExtensionManager(</span>
-<span class=x>    new ExtensionManager($extensions)</span>
-<span class=x>);</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$extensions = new Laminas\Feed\Reader\ExtensionPluginManager();
+Laminas\Feed\Reader\Reader::setExtensionManager(
+    new ExtensionManager($extensions)
+);</code></pre>
 <p>The shipped implementations all provide the default extensions (so-called
 "Core Extensions") used internally by <code>Laminas\Feed\Reader\Reader</code>. These
 include:</p>
@@ -1060,12 +1053,11 @@ extensions in order to expose their API to feed and entry objects.  Below, we
 register the optional Syndication extension, and discover that it can be
 directly called from the entry API without any effort. (Note that
 extension names are case sensitive and use camelCasing for multiple terms.)</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Feed\Reader\Reader;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Feed\Reader\Reader;
 
-<span class=x>Reader::registerExtension(&#39;Syndication&#39;);</span>
-<span class=x>$feed = Reader::import(&#39;http://rss.slashdot.org/Slashdot/slashdot&#39;);</span>
-<span class=x>$updatePeriod = $feed-&gt;getUpdatePeriod();</span>
-</pre></div></p>
+Reader::registerExtension('Syndication');
+$feed = Reader::import('http://rss.slashdot.org/Slashdot/slashdot');
+$updatePeriod = $feed-&gt;getUpdatePeriod();</code></pre>
 <p>In the simple example above, we checked how frequently a feed is being updated
 using the <code>getUpdatePeriod()</code> method. Since it's not part of
 <code>Laminas\Feed\Reader\Reader</code>'s core API, it could only be a method supported by
@@ -1073,13 +1065,12 @@ the newly registered Syndication extension.</p>
 <p>As you can also notice, methods provided by extensions are accessible from the
 main API using method overloading. As an alternative, you can also directly
 access any extension object for a similar result as seen below.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Feed\Reader\Reader;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Feed\Reader\Reader;
 
-<span class=x>Reader::registerExtension(&#39;Syndication&#39;);</span>
-<span class=x>$feed = Reader::import(&#39;http://rss.slashdot.org/Slashdot/slashdot&#39;);</span>
-<span class=x>$syndication = $feed-&gt;getExtension(&#39;Syndication&#39;);</span>
-<span class=x>$updatePeriod = $syndication-&gt;getUpdatePeriod();</span>
-</pre></div></p>
+Reader::registerExtension('Syndication');
+$feed = Reader::import('http://rss.slashdot.org/Slashdot/slashdot');
+$syndication = $feed-&gt;getExtension('Syndication');
+$updatePeriod = $syndication-&gt;getUpdatePeriod();</code></pre>
 <h3>Writing Laminas\Feed\Reader Extensions</h3>
 <p>Inevitably, there will be times when the <code>Laminas\Feed\Reader</code> API is just
 not capable of getting something you need from a feed or entry. You can use the
@@ -1101,66 +1092,64 @@ element quite simply with a standard name and namespace URI:</p>
 </ul>
 <p>A snippet of RSS containing this extension in practice could be something
 similar to:</p>
-<p> <div class=codehilite><pre><span></span><span class=cp>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;</span>
-<span class=nt>&lt;rss</span> <span class=na>version=</span><span class=s>&quot;2.0&quot;</span>
-   <span class=na>xmlns:content=</span><span class=s>&quot;http://purl.org/rss/1.0/modules/content/&quot;</span>
-   <span class=na>xmlns:jungle=</span><span class=s>&quot;http://example.com/junglebooks/rss/module/1.0/&quot;</span><span class=nt>&gt;</span>
-<span class=nt>&lt;channel&gt;</span>
-    <span class=nt>&lt;title&gt;</span>Jungle Books Customer Reviews<span class=nt>&lt;/title&gt;</span>
-    <span class=nt>&lt;link&gt;</span>http://example.com/junglebooks<span class=nt>&lt;/link&gt;</span>
-    <span class=nt>&lt;description&gt;</span>Many book reviews!<span class=nt>&lt;/description&gt;</span>
-    <span class=nt>&lt;pubDate&gt;</span>Fri, 26 Jun 2009 19:15:10 GMT<span class=nt>&lt;/pubDate&gt;</span>
-    <span class=nt>&lt;jungle:dayPopular&gt;</span>
+<pre class=codehilite><code class=language-xml>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+&lt;rss version=&quot;2.0&quot;
+   xmlns:content=&quot;http://purl.org/rss/1.0/modules/content/&quot;
+   xmlns:jungle=&quot;http://example.com/junglebooks/rss/module/1.0/&quot;&gt;
+&lt;channel&gt;
+    &lt;title&gt;Jungle Books Customer Reviews&lt;/title&gt;
+    &lt;link&gt;http://example.com/junglebooks&lt;/link&gt;
+    &lt;description&gt;Many book reviews!&lt;/description&gt;
+    &lt;pubDate&gt;Fri, 26 Jun 2009 19:15:10 GMT&lt;/pubDate&gt;
+    &lt;jungle:dayPopular&gt;
         http://example.com/junglebooks/book/938
-    <span class=nt>&lt;/jungle:dayPopular&gt;</span>
-    <span class=nt>&lt;item&gt;</span>
-        <span class=nt>&lt;title&gt;</span>Review Of Flatland: A Romance of Many Dimensions<span class=nt>&lt;/title&gt;</span>
-        <span class=nt>&lt;link&gt;</span>http://example.com/junglebooks/review/987<span class=nt>&lt;/link&gt;</span>
-        <span class=nt>&lt;author&gt;</span>Confused Physics Student<span class=nt>&lt;/author&gt;</span>
-        <span class=nt>&lt;content:encoded&gt;</span>
+    &lt;/jungle:dayPopular&gt;
+    &lt;item&gt;
+        &lt;title&gt;Review Of Flatland: A Romance of Many Dimensions&lt;/title&gt;
+        &lt;link&gt;http://example.com/junglebooks/review/987&lt;/link&gt;
+        &lt;author&gt;Confused Physics Student&lt;/author&gt;
+        &lt;content:encoded&gt;
         A romantic square?!
-        <span class=nt>&lt;/content:encoded&gt;</span>
-        <span class=nt>&lt;pubDate&gt;</span>Thu, 25 Jun 2009 20:03:28 -0700<span class=nt>&lt;/pubDate&gt;</span>
-        <span class=nt>&lt;jungle:isbn&gt;</span>048627263X<span class=nt>&lt;/jungle:isbn&gt;</span>
-    <span class=nt>&lt;/item&gt;</span>
-<span class=nt>&lt;/channel&gt;</span>
-<span class=nt>&lt;/rss&gt;</span>
-</pre></div></p>
+        &lt;/content:encoded&gt;
+        &lt;pubDate&gt;Thu, 25 Jun 2009 20:03:28 -0700&lt;/pubDate&gt;
+        &lt;jungle:isbn&gt;048627263X&lt;/jungle:isbn&gt;
+    &lt;/item&gt;
+&lt;/channel&gt;
+&lt;/rss&gt;</code></pre>
 <p>Implementing this new ISBN element as a simple entry level extension would
 require the following class (using your own namespace).</p>
-<p> <div class=codehilite><pre><span></span><span class=x>namespace My\FeedReader\Extension\JungleBooks;</span>
+<pre class=codehilite><code class=language-php>namespace My\FeedReader\Extension\JungleBooks;
 
-<span class=x>use Laminas\Feed\Reader\Extension\AbstractEntry;</span>
+use Laminas\Feed\Reader\Extension\AbstractEntry;
 
-<span class=x>class Entry extends AbstractEntry</span>
-<span class=x>{</span>
-<span class=x>    public function getIsbn()</span>
-<span class=x>    {</span>
-<span class=x>        if (isset($this-&gt;data[&#39;isbn&#39;])) {</span>
-<span class=x>            return $this-&gt;data[&#39;isbn&#39;];</span>
-<span class=x>        }</span>
+class Entry extends AbstractEntry
+{
+    public function getIsbn()
+    {
+        if (isset($this-&gt;data['isbn'])) {
+            return $this-&gt;data['isbn'];
+        }
 
-<span class=x>        $isbn = $this-&gt;xpath-&gt;evaluate(</span>
-<span class=x>            &#39;string(&#39; . $this-&gt;getXpathPrefix() . &#39;/jungle:isbn)&#39;</span>
-<span class=x>        );</span>
+        $isbn = $this-&gt;xpath-&gt;evaluate(
+            'string(' . $this-&gt;getXpathPrefix() . '/jungle:isbn)'
+        );
 
-<span class=x>        if (! $isbn) {</span>
-<span class=x>            $isbn = null;</span>
-<span class=x>        }</span>
+        if (! $isbn) {
+            $isbn = null;
+        }
 
-<span class=x>        $this-&gt;data[&#39;isbn&#39;] = $isbn;</span>
-<span class=x>        return $this-&gt;data[&#39;isbn&#39;];</span>
-<span class=x>    }</span>
+        $this-&gt;data['isbn'] = $isbn;
+        return $this-&gt;data['isbn'];
+    }
 
-<span class=x>    protected function registerNamespaces()</span>
-<span class=x>    {</span>
-<span class=x>        $this-&gt;xpath-&gt;registerNamespace(</span>
-<span class=x>            &#39;jungle&#39;,</span>
-<span class=x>            &#39;http://example.com/junglebooks/rss/module/1.0/&#39;</span>
-<span class=x>        );</span>
-<span class=x>    }</span>
-<span class=x>}</span>
-</pre></div></p>
+    protected function registerNamespaces()
+    {
+        $this-&gt;xpath-&gt;registerNamespace(
+            'jungle',
+            'http://example.com/junglebooks/rss/module/1.0/'
+        );
+    }
+}</code></pre>
 <p>This extension creates a new method <code>getIsbn()</code>, which runs an XPath query on
 the current entry to extract the ISBN number enclosed by the <code>&lt;jungle:isbn&gt;</code>
 element. It can optionally store this to the internal non-persistent cache (no
@@ -1180,80 +1169,76 @@ extensions, as it provides the ability to register new extensions without
 requiring extension of the plugin manager itself (note that this example works
 with ServiceManager v2, but not v3). To use it, first install
 laminas-servicemanager:</p>
-<p> <div class=codehilite><pre><span></span>$ composer require laminas/laminas-servicemanager
-</pre></div></p>
+<pre class=codehilite><code class=language-bash>$ composer require laminas/laminas-servicemanager</code></pre>
 <p>From there:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use My\FeedReader\Extension\JungleBooks;</span>
-<span class=x>use Laminas\Feed\Reader\ExtensionManager;</span>
-<span class=x>use Laminas\Feed\Reader\ExtensionPluginManager;</span>
-<span class=x>use Laminas\Feed\Reader\Reader;</span>
+<pre class=codehilite><code class=language-php>use My\FeedReader\Extension\JungleBooks;
+use Laminas\Feed\Reader\ExtensionManager;
+use Laminas\Feed\Reader\ExtensionPluginManager;
+use Laminas\Feed\Reader\Reader;
 
-<span class=x>$extensions = new ExtensionPluginManager();</span>
-<span class=x>$extensions-&gt;setInvokableClass(&#39;JungleBooks\Entry&#39;, JungleBooks\Entry::class);</span>
-<span class=x>Reader::setExtensionManager(new ExtensionManager($extensions));</span>
-<span class=x>Reader::registerExtension(&#39;JungleBooks&#39;);</span>
+$extensions = new ExtensionPluginManager();
+$extensions-&gt;setInvokableClass('JungleBooks\Entry', JungleBooks\Entry::class);
+Reader::setExtensionManager(new ExtensionManager($extensions));
+Reader::registerExtension('JungleBooks');
 
-<span class=x>$feed = Reader::import(&#39;http://example.com/junglebooks/rss&#39;);</span>
+$feed = Reader::import('http://example.com/junglebooks/rss');
 
-<span class=x>// ISBN for whatever book the first entry in the feed was concerned with</span>
-<span class=x>$firstIsbn = $feed-&gt;current()-&gt;getIsbn();</span>
-</pre></div></p>
+// ISBN for whatever book the first entry in the feed was concerned with
+$firstIsbn = $feed-&gt;current()-&gt;getIsbn();</code></pre>
 <p>Writing a feed extension is not much different. The example feed from earlier
 included an unmentioned <code>&lt;jungle:dayPopular&gt;</code> element which Jungle Books have
 added to their standard to include a link to the day's most popular book (in
 terms of visitor traffic). Here's an extension which adds a
 <code>getDaysPopularBookLink()</code> method to the feel level API.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>namespace My\FeedReader\Extension\JungleBooks;</span>
+<pre class=codehilite><code class=language-php>namespace My\FeedReader\Extension\JungleBooks;
 
-<span class=x>use Laminas\Feed\Reader\Extension\AbstractFeed;</span>
+use Laminas\Feed\Reader\Extension\AbstractFeed;
 
-<span class=x>class Feed extends AbstractFeed</span>
-<span class=x>{</span>
-<span class=x>    public function getDaysPopularBookLink()</span>
-<span class=x>    {</span>
-<span class=x>        if (isset($this-&gt;data[&#39;dayPopular&#39;])) {</span>
-<span class=x>            return $this-&gt;data[&#39;dayPopular&#39;];</span>
-<span class=x>        }</span>
+class Feed extends AbstractFeed
+{
+    public function getDaysPopularBookLink()
+    {
+        if (isset($this-&gt;data['dayPopular'])) {
+            return $this-&gt;data['dayPopular'];
+        }
 
-<span class=x>        $dayPopular = $this-&gt;xpath-&gt;evaluate(</span>
-<span class=x>            &#39;string(&#39; . $this-&gt;getXpathPrefix() . &#39;/jungle:dayPopular)&#39;</span>
-<span class=x>        );</span>
+        $dayPopular = $this-&gt;xpath-&gt;evaluate(
+            'string(' . $this-&gt;getXpathPrefix() . '/jungle:dayPopular)'
+        );
 
-<span class=x>        if (!$dayPopular) {</span>
-<span class=x>            $dayPopular = null;</span>
-<span class=x>        }</span>
+        if (!$dayPopular) {
+            $dayPopular = null;
+        }
 
-<span class=x>        $this-&gt;data[&#39;dayPopular&#39;] = $dayPopular;</span>
-<span class=x>        return $this-&gt;data[&#39;dayPopular&#39;];</span>
-<span class=x>    }</span>
+        $this-&gt;data['dayPopular'] = $dayPopular;
+        return $this-&gt;data['dayPopular'];
+    }
 
-<span class=x>    protected function registerNamespaces()</span>
-<span class=x>    {</span>
-<span class=x>        $this-&gt;xpath-&gt;registerNamespace(</span>
-<span class=x>            &#39;jungle&#39;,</span>
-<span class=x>            &#39;http://example.com/junglebooks/rss/module/1.0/&#39;</span>
-<span class=x>        );</span>
-<span class=x>    }</span>
-<span class=x>}</span>
-</pre></div></p>
+    protected function registerNamespaces()
+    {
+        $this-&gt;xpath-&gt;registerNamespace(
+            'jungle',
+            'http://example.com/junglebooks/rss/module/1.0/'
+        );
+    }
+}</code></pre>
 <p>Let's add to the previous example; we'll register the new class with the
 extension manager, and then demonstrate using the newly exposed method:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use My\FeedReader\Extension\JungleBooks;</span>
-<span class=x>use Laminas\Feed\Reader\ExtensionManager;</span>
-<span class=x>use Laminas\Feed\Reader\ExtensionPluginManager;</span>
-<span class=x>use Laminas\Feed\Reader\Reader;</span>
+<pre class=codehilite><code class=language-php>use My\FeedReader\Extension\JungleBooks;
+use Laminas\Feed\Reader\ExtensionManager;
+use Laminas\Feed\Reader\ExtensionPluginManager;
+use Laminas\Feed\Reader\Reader;
 
-<span class=x>$extensions = new ExtensionPluginManager();</span>
-<span class=x>$extensions-&gt;setInvokableClass(&#39;JungleBooks\Entry&#39;, JungleBooks\Entry::class);</span>
-<span class=x>$extensions-&gt;setInvokableClass(&#39;JungleBooks\Feed&#39;, JungleBooks\Feed::class);</span>
-<span class=x>Reader::setExtensionManager(new ExtensionManager($extensions));</span>
-<span class=x>Reader::registerExtension(&#39;JungleBooks&#39;);</span>
+$extensions = new ExtensionPluginManager();
+$extensions-&gt;setInvokableClass('JungleBooks\Entry', JungleBooks\Entry::class);
+$extensions-&gt;setInvokableClass('JungleBooks\Feed', JungleBooks\Feed::class);
+Reader::setExtensionManager(new ExtensionManager($extensions));
+Reader::registerExtension('JungleBooks');
 
-<span class=x>$feed = Reader::import(&#39;http://example.com/junglebooks/rss&#39;);</span>
+$feed = Reader::import('http://example.com/junglebooks/rss');
 
-<span class=x>// URI to the information page of the day&#39;s most popular book with visitors</span>
-<span class=x>$daysPopularBookLink = $feed-&gt;getDaysPopularBookLink();</span>
-</pre></div></p>
+// URI to the information page of the day's most popular book with visitors
+$daysPopularBookLink = $feed-&gt;getDaysPopularBookLink();</code></pre>
 <p>Going through these examples, you'll note that while we need to register the
 feed and entry classes separately with the plugin manager, we don't register
 them separately when registering the extension with the <code>Reader</code>.  Extensions
@@ -1459,9 +1444,10 @@ extension now, spanning the classes <code>JungleBooks\Feed</code> and <code>Jung
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -1498,7 +1484,7 @@ extension now, spanning the classes <code>JungleBooks\Feed</code> and <code>Jung
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-feed//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-feed/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -1507,8 +1493,8 @@ extension now, spanning the classes <code>JungleBooks\Feed</code> and <code>Jung
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-feed//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-feed/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

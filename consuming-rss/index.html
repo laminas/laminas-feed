@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -293,8 +297,7 @@
     <h1 id="consuming-rss-feeds">Consuming RSS Feeds</h1>
 <h2 id="reading-a-feed">Reading a feed</h2>
 <p>To read an RSS feed, pass its URL to <code>Laminas\Feed\Reader\Reader::import()</code>:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$channel = Laminas\Feed\Reader\Reader::import(&#39;http://rss.example.com/channelName&#39;);</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$channel = Laminas\Feed\Reader\Reader::import('http://rss.example.com/channelName');</code></pre>
 <blockquote>
 <h3>Importing requires an HTTP client</h3>
 <p>To import a feed, you will need to have an <a href="../http-clients/">HTTP client</a>
@@ -307,25 +310,22 @@ client. See the <a href="../http-clients/#providing-a-client-to-reader">section 
 <h2 id="get-properties">Get properties</h2>
 <p>Once you have a feed object, you can access any of the standard RSS channel
 properties via the various instance getter methods:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>echo $channel-&gt;getTitle();</span>
-<span class=x>echo $channel-&gt;getAuthor();</span>
-<span class=x>// etc.</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>echo $channel-&gt;getTitle();
+echo $channel-&gt;getAuthor();
+// etc.</code></pre>
 <p>If channel properties have attributes, the getter method will return a key/value
 pair, where the key is the attribute name, and the value is the attribute value.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$author = $channel-&gt;getAuthor();</span>
-<span class=x>echo $author[&#39;name&#39;];</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$author = $channel-&gt;getAuthor();
+echo $author['name'];</code></pre>
 <p>Most commonly, you'll want to loop through the feed and do something with its
 entries.  <code>Laminas\Feed\Reader\Feed\Rss</code> internally converts all entries to a
 <code>Laminas\Feed\Reader\Entry\Rss</code> instance. Entry properties, similarly to channel
 properties, can be accessed via getter methods, such as <code>getTitle</code>,
 <code>getDescription</code>, etc.</p>
 <p>An example of printing all titles of articles in a channel is:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>foreach ($channel as $item) {</span>
-<span class=x>    echo $item-&gt;getTitle() . &quot;\n&quot;;</span>
-<span class=x>}</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>foreach ($channel as $item) {
+    echo $item-&gt;getTitle() . &quot;\n&quot;;
+}</code></pre>
 <p>If you are not familiar with RSS, here are the standard elements you can expect
 to be available in an RSS channel and in individual RSS items (entries).</p>
 <p>Required channel elements:</p>
@@ -356,10 +356,9 @@ either <code>title</code> or <code>description</code> must be present.</p>
 </ul>
 <p>In your code you can always test to see if an element is non-empty by calling
 the getter:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>if ($item-&gt;getPropname()) {</span>
-<span class=x>    // ... proceed.</span>
-<span class=x>}</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>if ($item-&gt;getPropname()) {
+    // ... proceed.
+}</code></pre>
 <p>Where relevant, <code>Laminas\Feed</code> supports a number of common RSS extensions including
 Dublin Core, Atom (inside RSS); the Content, Slash, Syndication,
 Syndication/Thread extensions; as well as several others.</p>
@@ -562,9 +561,10 @@ for further information.</p>
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -601,7 +601,7 @@ for further information.</p>
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-feed//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-feed/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -610,8 +610,8 @@ for further information.</p>
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-feed//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-feed/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

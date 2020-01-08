@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -279,8 +283,7 @@
 <p>Web pages often contain <code>&lt;link&gt;</code> tags that refer to feeds with content relevant
 to the particular page. <code>Laminas\Feed\Reader\Reader</code> enables you to retrieve all
 feeds referenced by a web page with one method call:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$feedLinks = Laminas\Feed\Reader\Reader::findFeedLinks(&#39;http://www.example.com/news.html&#39;);</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$feedLinks = Laminas\Feed\Reader\Reader::findFeedLinks('http://www.example.com/news.html');</code></pre>
 <blockquote>
 <h3>Finding feed links requires an HTTP client</h3>
 <p>To find feed links, you will need to have an <a href="../http-clients/">HTTP client</a>
@@ -295,23 +298,21 @@ referenced by <code>&lt;link&gt;</code> tags on the <code>news.html</code> web p
 <code>Laminas\Feed\Reader\Exception\RuntimeException</code> upon failure, such as an HTTP
 404 response code or a malformed feed.</p>
 <p>You can examine all feed links located by iterating across the collection:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$rssFeed = null;</span>
-<span class=x>$feedLinks = Laminas\Feed\Reader\Reader::findFeedLinks(&#39;http://www.example.com/news.html&#39;);</span>
-<span class=x>foreach ($feedLinks as $link) {</span>
-<span class=x>    if (stripos($link[&#39;type&#39;], &#39;application/rss+xml&#39;) !== false) {</span>
-<span class=x>        $rssFeed = $link[&#39;href&#39;];</span>
-<span class=x>        break;</span>
-<span class=x>}</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$rssFeed = null;
+$feedLinks = Laminas\Feed\Reader\Reader::findFeedLinks('http://www.example.com/news.html');
+foreach ($feedLinks as $link) {
+    if (stripos($link['type'], 'application/rss+xml') !== false) {
+        $rssFeed = $link['href'];
+        break;
+}</code></pre>
 <p>Each <code>Laminas\Feed\Reader\FeedSet</code> object will expose the <code>rel</code>, <code>href</code>, <code>type</code>,
 and <code>title</code> properties of detected links for all RSS, Atom, or RDF feeds. You
 can always select the first encountered link of each type by using a shortcut:
 the first encountered link of a given type is assigned to a property named after
 the feed type.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$rssFeed = null;</span>
-<span class=x>$feedLinks = Laminas\Feed\Reader\Reader::findFeedLinks(&#39;http://www.example.com/news.html&#39;);</span>
-<span class=x>$firstAtomFeed = $feedLinks-&gt;atom;</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$rssFeed = null;
+$feedLinks = Laminas\Feed\Reader\Reader::findFeedLinks('http://www.example.com/news.html');
+$firstAtomFeed = $feedLinks-&gt;atom;</code></pre>
 
 
 
@@ -509,9 +510,10 @@ the feed type.</p>
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -548,7 +550,7 @@ the feed type.</p>
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-feed//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-feed/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -557,8 +559,8 @@ the feed type.</p>
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-feed//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-feed/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

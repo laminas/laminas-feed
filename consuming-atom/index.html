@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -296,14 +300,13 @@ provide their full content inside the feed, splitting RSS' <code>description</co
 into two elements, <code>summary</code> and <code>content</code>, for that purpose.</p>
 <h2 id="basic-use-of-an-atom-feed">Basic Use of an Atom Feed</h2>
 <p>Read an Atom feed and print the <code>title</code> and <code>summary</code> of each entry:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$feed = Laminas\Feed\Reader\Reader::import(&#39;http://atom.example.com/feed/&#39;);</span>
-<span class=x>echo &#39;The feed contains &#39; . $feed-&gt;count() . &#39; entries.&#39; . &quot;\n\n&quot;;</span>
-<span class=x>foreach ($feed as $entry) {</span>
-<span class=x>    echo &#39;Title: &#39; . $entry-&gt;getTitle() . &quot;\n&quot;;</span>
-<span class=x>    echo &#39;Description: &#39; . $entry-&gt;getDescription() . &quot;\n&quot;;</span>
-<span class=x>    echo &#39;URL: &#39; . $entry-&gt;getLink() . &quot;\n\n&quot;;</span>
-<span class=x>}</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$feed = Laminas\Feed\Reader\Reader::import('http://atom.example.com/feed/');
+echo 'The feed contains ' . $feed-&gt;count() . ' entries.' . &quot;\n\n&quot;;
+foreach ($feed as $entry) {
+    echo 'Title: ' . $entry-&gt;getTitle() . &quot;\n&quot;;
+    echo 'Description: ' . $entry-&gt;getDescription() . &quot;\n&quot;;
+    echo 'URL: ' . $entry-&gt;getLink() . &quot;\n\n&quot;;
+}</code></pre>
 <blockquote>
 <h3>Importing requires an HTTP client</h3>
 <p>To import a feed, you will need to have an <a href="../http-clients/">HTTP client</a>
@@ -537,9 +540,10 @@ others in common use on blogs.</p>
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -576,7 +580,7 @@ others in common use on blogs.</p>
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-feed//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-feed/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -585,8 +589,8 @@ others in common use on blogs.</p>
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-feed//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-feed/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>
