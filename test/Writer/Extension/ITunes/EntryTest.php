@@ -158,8 +158,8 @@ class EntryTest extends TestCase
         }, \E_USER_DEPRECATED);
         try {
             $entry->setItunesKeywords($words);
-            $this->fail('Expected exception when setting more keywords than allowed');
         } catch (ExceptionInterface $e) {
+            $this->assertInstanceOf(ExceptionInterface::class, $e);
         } finally {
             restore_error_handler();
         }
@@ -177,8 +177,8 @@ class EntryTest extends TestCase
         }, \E_USER_DEPRECATED);
         try {
             $entry->setItunesKeywords($words);
-            $this->fail('Expected exception when setting keywords exceeding character length');
         } catch (ExceptionInterface $e) {
+            $this->assertInstanceOf(ExceptionInterface::class, $e);
         } finally {
             restore_error_handler();
         }
