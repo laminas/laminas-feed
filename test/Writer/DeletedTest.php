@@ -29,12 +29,10 @@ class DeletedTest extends TestCase
 
     public function testSetReferenceThrowsExceptionOnInvalidParameter()
     {
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
+
         $entry = new Writer\Deleted;
-        try {
-            $entry->setReference('');
-            $this->fail();
-        } catch (Writer\Exception\ExceptionInterface $e) {
-        }
+        $entry->setReference('');
     }
 
     public function testGetReferenceReturnsNullIfNotSet()
@@ -99,12 +97,10 @@ class DeletedTest extends TestCase
 
     public function testSetWhenThrowsExceptionOnInvalidParameter()
     {
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
+
         $entry = new Writer\Deleted;
-        try {
-            $entry->setWhen('abc');
-            $this->fail();
-        } catch (Writer\Exception\ExceptionInterface $e) {
-        }
+        $entry->setWhen('abc');
     }
 
     public function testGetWhenReturnsNullIfDateNotSet()
@@ -136,43 +132,36 @@ class DeletedTest extends TestCase
 
     public function testAddByThrowsExceptionOnInvalidNameFromArray()
     {
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
+
         $entry = new Writer\Deleted;
-        try {
-            $entry->setBy(['name' => '']);
-            $this->fail();
-        } catch (Writer\Exception\ExceptionInterface $e) {
-        }
+        $entry->setBy(['name' => '']);
     }
 
     public function testAddByThrowsExceptionOnInvalidEmailFromArray()
     {
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
+
         $entry = new Writer\Deleted;
-        try {
-            $entry->setBy(['name' => 'Joe', 'email' => '']);
-            $this->fail();
-        } catch (Writer\Exception\ExceptionInterface $e) {
-        }
+        $entry->setBy(['name' => 'Joe', 'email' => '']);
     }
 
     public function testAddByThrowsExceptionOnInvalidUriFromArray()
     {
         $this->markTestIncomplete('Pending Laminas\URI fix for validation');
+
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
+
         $entry = new Writer\Deleted;
-        try {
-            $entry->setBy(['name' => 'Joe', 'uri' => 'notauri']);
-            $this->fail();
-        } catch (Writer\Exception\ExceptionInterface $e) {
-        }
+        $entry->setBy(['name' => 'Joe', 'uri' => 'notauri']);
     }
 
     public function testAddByThrowsExceptionIfNameOmittedFromArray()
     {
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
+
         $entry = new Writer\Deleted;
-        try {
-            $entry->setBy(['uri' => 'notauri']);
-            $this->fail();
-        } catch (Writer\Exception\ExceptionInterface $e) {
-        }
+        $entry->setBy(['uri' => 'notauri']);
     }
 
     /**

@@ -62,45 +62,48 @@ class EntryTest extends TestCase
 
     public function testAddAuthorThrowsExceptionOnInvalidNameFromArray()
     {
+        $this->expectException(
+            Writer\Exception\InvalidArgumentException::class
+        );
+
         $entry = new Writer\Entry;
-        try {
-            $entry->addAuthor(['name' => '']);
-            $this->fail();
-        } catch (Writer\Exception\InvalidArgumentException $e) {
-        }
+        $entry->addAuthor(['name' => '']);
     }
 
     public function testAddAuthorThrowsExceptionOnInvalidEmailFromArray()
     {
+        $this->expectException(
+            Writer\Exception\InvalidArgumentException::class
+        );
+
         $entry = new Writer\Entry;
-        try {
-            $entry->addAuthor(['name' => 'Joe',
-                                    'email' => '']);
-            $this->fail();
-        } catch (Writer\Exception\InvalidArgumentException $e) {
-        }
+        $entry->addAuthor(['name' => 'Joe', 'email' => '']);
     }
 
     public function testAddAuthorThrowsExceptionOnInvalidUriFromArray()
     {
+        $this->expectException(
+            Writer\Exception\InvalidArgumentException::class
+        );
+
         $entry = new Writer\Entry;
-        try {
-            $entry->addAuthor(['name' => 'Joe',
-                                    'email' => 'joe@example.org',
-                                    'uri' => '']);
-            $this->fail();
-        } catch (Writer\Exception\InvalidArgumentException $e) {
-        }
+        $entry->addAuthor(
+            [
+                'name'  => 'Joe',
+                'email' => 'joe@example.org',
+                'uri'   => '',
+            ]
+        );
     }
 
     public function testAddAuthorThrowsExceptionIfNameOmittedFromArray()
     {
+        $this->expectException(
+            Writer\Exception\InvalidArgumentException::class
+        );
+
         $entry = new Writer\Entry;
-        try {
-            $entry->addAuthor(['uri' => 'notauri']);
-            $this->fail();
-        } catch (Writer\Exception\InvalidArgumentException $e) {
-        }
+        $entry->addAuthor(['uri' => 'notauri']);
     }
 
     public function testAddsAuthorsFromArrayOfAuthors()
@@ -169,12 +172,10 @@ class EntryTest extends TestCase
 
     public function testSetCopyrightThrowsExceptionOnInvalidParam()
     {
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
+
         $entry = new Writer\Entry;
-        try {
-            $entry->setCopyright('');
-            $this->fail();
-        } catch (Writer\Exception\ExceptionInterface $e) {
-        }
+        $entry->setCopyright('');
     }
 
     public function testSetsContent()
@@ -186,12 +187,10 @@ class EntryTest extends TestCase
 
     public function testSetContentThrowsExceptionOnInvalidParam()
     {
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
+
         $entry = new Writer\Entry;
-        try {
-            $entry->setContent('');
-            $this->fail();
-        } catch (Writer\Exception\ExceptionInterface $e) {
-        }
+        $entry->setContent('');
     }
 
     public function testSetDateCreatedDefaultsToCurrentTime()
@@ -304,22 +303,18 @@ class EntryTest extends TestCase
 
     public function testSetDateCreatedThrowsExceptionOnInvalidParameter()
     {
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
+
         $entry = new Writer\Entry;
-        try {
-            $entry->setDateCreated('abc');
-            $this->fail();
-        } catch (Writer\Exception\ExceptionInterface $e) {
-        }
+        $entry->setDateCreated('abc');
     }
 
     public function testSetDateModifiedThrowsExceptionOnInvalidParameter()
     {
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
+
         $entry = new Writer\Entry;
-        try {
-            $entry->setDateModified('abc');
-            $this->fail();
-        } catch (Writer\Exception\ExceptionInterface $e) {
-        }
+        $entry->setDateModified('abc');
     }
 
     public function testGetDateCreatedReturnsNullIfDateNotSet()
@@ -355,12 +350,10 @@ class EntryTest extends TestCase
 
     public function testSetDescriptionThrowsExceptionOnInvalidParameter()
     {
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
+
         $entry = new Writer\Entry;
-        try {
-            $entry->setDescription('');
-            $this->fail();
-        } catch (Writer\Exception\ExceptionInterface $e) {
-        }
+        $entry->setDescription('');
     }
 
     public function testGetDescriptionReturnsNullIfDateNotSet()
@@ -378,12 +371,10 @@ class EntryTest extends TestCase
 
     public function testSetIdThrowsExceptionOnInvalidParameter()
     {
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
+
         $entry = new Writer\Entry;
-        try {
-            $entry->setId('');
-            $this->fail();
-        } catch (Writer\Exception\ExceptionInterface $e) {
-        }
+        $entry->setId('');
     }
 
     public function testGetIdReturnsNullIfNotSet()
@@ -401,22 +392,18 @@ class EntryTest extends TestCase
 
     public function testSetLinkThrowsExceptionOnEmptyString()
     {
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
+
         $entry = new Writer\Entry;
-        try {
-            $entry->setLink('');
-            $this->fail();
-        } catch (Writer\Exception\ExceptionInterface $e) {
-        }
+        $entry->setLink('');
     }
 
     public function testSetLinkThrowsExceptionOnInvalidUri()
     {
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
+
         $entry = new Writer\Entry;
-        try {
-            $entry->setLink('http://');
-            $this->fail();
-        } catch (Writer\Exception\ExceptionInterface $e) {
-        }
+        $entry->setLink('http://');
     }
 
     public function testGetLinkReturnsNullIfNotSet()
@@ -440,22 +427,18 @@ class EntryTest extends TestCase
 
     public function testSetCommentLinkThrowsExceptionOnEmptyString()
     {
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
+
         $entry = new Writer\Entry;
-        try {
-            $entry->setCommentLink('');
-            $this->fail();
-        } catch (Writer\Exception\ExceptionInterface $e) {
-        }
+        $entry->setCommentLink('');
     }
 
     public function testSetCommentLinkThrowsExceptionOnInvalidUri()
     {
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
+
         $entry = new Writer\Entry;
-        try {
-            $entry->setCommentLink('http://');
-            $this->fail();
-        } catch (Writer\Exception\ExceptionInterface $e) {
-        }
+        $entry->setCommentLink('http://');
     }
 
     public function testGetCommentLinkReturnsNullIfDateNotSet()
@@ -477,35 +460,42 @@ class EntryTest extends TestCase
     public function testSetCommentFeedLinkThrowsExceptionOnEmptyString()
     {
         $this->markTestIncomplete('Pending Laminas\URI fix for validation');
+
+        $this->expectException(ExceptionInterface::class);
+
         $entry = new Writer\Entry;
-        try {
-            $entry->setCommentFeedLink(['uri' => '',
-                                             'type' => 'rdf']);
-            $this->fail();
-        } catch (Writer\Exception\ExceptionInterface $e) {
-        }
+        $entry->setCommentFeedLink(
+            [
+                'uri'  => '',
+                'type' => 'rdf',
+            ]
+        );
     }
 
     public function testSetCommentFeedLinkThrowsExceptionOnInvalidUri()
     {
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
+
         $entry = new Writer\Entry;
-        try {
-            $entry->setCommentFeedLink(['uri' => 'http://',
-                                             'type' => 'rdf']);
-            $this->fail();
-        } catch (Writer\Exception\ExceptionInterface $e) {
-        }
+        $entry->setCommentFeedLink(
+            [
+                'uri'  => 'http://',
+                'type' => 'rdf',
+            ]
+        );
     }
 
     public function testSetCommentFeedLinkThrowsExceptionOnInvalidType()
     {
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
+
         $entry = new Writer\Entry;
-        try {
-            $entry->setCommentFeedLink(['uri' => 'http://www.example.com/id/comments',
-                                             'type' => 'foo']);
-            $this->fail();
-        } catch (Writer\Exception\ExceptionInterface $e) {
-        }
+        $entry->setCommentFeedLink(
+            [
+                'uri'  => 'http://www.example.com/id/comments',
+                'type' => 'foo',
+            ]
+        );
     }
 
     public function testGetCommentFeedLinkReturnsNullIfNoneSet()
@@ -523,12 +513,10 @@ class EntryTest extends TestCase
 
     public function testSetTitleThrowsExceptionOnInvalidParameter()
     {
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
+
         $entry = new Writer\Entry;
-        try {
-            $entry->setTitle('');
-            $this->fail();
-        } catch (Writer\Exception\ExceptionInterface $e) {
-        }
+        $entry->setTitle('');
     }
 
     public function testGetTitleReturnsNullIfDateNotSet()
@@ -598,22 +586,18 @@ class EntryTest extends TestCase
 
     public function testSetCommentCountThrowsExceptionOnInvalidEmptyParameter()
     {
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
+
         $entry = new Writer\Entry;
-        try {
-            $entry->setCommentCount('');
-            $this->fail();
-        } catch (Writer\Exception\ExceptionInterface $e) {
-        }
+        $entry->setCommentCount('');
     }
 
     public function testSetCommentCountThrowsExceptionOnInvalidNonIntegerParameter()
     {
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
+
         $entry = new Writer\Entry;
-        try {
-            $entry->setCommentCount('a');
-            $this->fail();
-        } catch (Writer\Exception\ExceptionInterface $e) {
-        }
+        $entry->setCommentCount('a');
     }
 
     public function testGetCommentCountReturnsNullIfDateNotSet()
@@ -627,12 +611,12 @@ class EntryTest extends TestCase
      */
     public function testSetEncodingThrowsExceptionIfNull()
     {
+        $this->expectException(
+            Writer\Exception\InvalidArgumentException::class
+        );
+
         $entry = new Writer\Entry;
-        try {
-            $entry->setEncoding(null);
-            $this->fail();
-        } catch (Writer\Exception\InvalidArgumentException $e) {
-        }
+        $entry->setEncoding(null);
     }
 
     /**
@@ -640,12 +624,12 @@ class EntryTest extends TestCase
      */
     public function testAddCategoryThrowsExceptionIfNotSetTerm()
     {
+        $this->expectException(
+            Writer\Exception\InvalidArgumentException::class
+        );
+
         $entry = new Writer\Entry;
-        try {
-            $entry->addCategory(['scheme' => 'http://www.example.com/schema1']);
-            $this->fail();
-        } catch (Writer\Exception\InvalidArgumentException $e) {
-        }
+        $entry->addCategory(['scheme' => 'http://www.example.com/schema1']);
     }
 
     /**
@@ -653,12 +637,12 @@ class EntryTest extends TestCase
      */
     public function testAddCategoryThrowsExceptionIfSchemeNull()
     {
+        $this->expectException(
+            Writer\Exception\InvalidArgumentException::class
+        );
+
         $entry = new Writer\Entry;
-        try {
-            $entry->addCategory(['term' => 'cat_dog', 'scheme' => '']);
-            $this->fail();
-        } catch (Writer\Exception\InvalidArgumentException $e) {
-        }
+        $entry->addCategory(['term' => 'cat_dog', 'scheme' => '']);
     }
 
     /**
@@ -666,12 +650,12 @@ class EntryTest extends TestCase
      */
     public function testSetEnclosureThrowsExceptionIfNotSetUri()
     {
+        $this->expectException(
+            Writer\Exception\InvalidArgumentException::class
+        );
+
         $entry = new Writer\Entry;
-        try {
-            $entry->setEnclosure(['length' => '2']);
-            $this->fail();
-        } catch (Writer\Exception\InvalidArgumentException $e) {
-        }
+        $entry->setEnclosure(['length' => '2']);
     }
 
     /**
@@ -679,12 +663,12 @@ class EntryTest extends TestCase
      */
     public function testSetEnclosureThrowsExceptionIfNotValidUri()
     {
+        $this->expectException(
+            Writer\Exception\InvalidArgumentException::class
+        );
+
         $entry = new Writer\Entry;
-        try {
-            $entry->setEnclosure(['uri' => '']);
-            $this->fail();
-        } catch (Writer\Exception\InvalidArgumentException $e) {
-        }
+        $entry->setEnclosure(['uri' => '']);
     }
 
     /**
