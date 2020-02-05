@@ -53,7 +53,8 @@ class RssTest extends TestCase
     public function testBuildMethodRunsMinimalWriterContainerProperlyBeforeICheckRssCompliance()
     {
         $feed = new Renderer\Feed\Rss($this->validWriter);
-        $feed->render();
+
+        $this->assertInstanceOf(Renderer\Feed\Rss::class, $feed->render());
     }
 
     public function testFeedEncodingHasBeenSet()
@@ -142,7 +143,8 @@ class RssTest extends TestCase
     {
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $this->validWriter->remove('dateModified');
-        $rssFeed->render();
+
+        $this->assertInstanceOf(Renderer\Feed\Rss::class, $rssFeed->render());
     }
 
     public function testFeedLastBuildDateHasBeenSet()
@@ -167,7 +169,8 @@ class RssTest extends TestCase
     {
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $this->validWriter->remove('generator');
-        $rssFeed->render();
+
+        $this->assertInstanceOf(Renderer\Feed\Rss::class, $rssFeed->render());
     }
 
     public function testFeedGeneratorDefaultIsUsedIfGeneratorNotSetByHand()
@@ -194,7 +197,8 @@ class RssTest extends TestCase
     {
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $this->validWriter->remove('language');
-        $rssFeed->render();
+
+        $this->assertInstanceOf(Renderer\Feed\Rss::class, $rssFeed->render());
     }
 
     public function testFeedLanguageDefaultIsUsedIfGeneratorNotSetByHand()
@@ -249,7 +253,8 @@ class RssTest extends TestCase
     {
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $this->validWriter->remove('feedLinks');
-        $rssFeed->render();
+
+        $this->assertInstanceOf(Renderer\Feed\Rss::class, $rssFeed->render());
     }
 
     public function testBaseUrlCanBeSet()

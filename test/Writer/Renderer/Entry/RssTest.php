@@ -51,7 +51,7 @@ class RssTest extends TestCase
     public function testRenderMethodRunsMinimalWriterContainerProperlyBeforeICheckAtomCompliance()
     {
         $renderer = new Renderer\Feed\Rss($this->validWriter);
-        $renderer->render();
+        $this->assertInstanceOf(Renderer\Feed\Rss::class, $renderer->render());
     }
 
     public function testEntryEncodingHasBeenSet()
@@ -256,34 +256,43 @@ class RssTest extends TestCase
     public function testEnclosureWorksWithZeroLength()
     {
         $renderer = new Renderer\Feed\Rss($this->validWriter);
-        $this->validEntry->setEnclosure([
-                                              'type'   => 'audio/mpeg',
-                                              'uri'    => 'http://example.com/audio.mp3',
-                                              'length' => 0
-                                         ]);
-        $renderer->render();
+        $this->validEntry->setEnclosure(
+            [
+                'type'   => 'audio/mpeg',
+                'uri'    => 'http://example.com/audio.mp3',
+                'length' => 0,
+            ]
+        );
+
+        $this->assertInstanceOf(Renderer\Feed\Rss::class, $renderer->render());
     }
 
     public function testEnclosureWorksWithPositiveLength()
     {
         $renderer = new Renderer\Feed\Rss($this->validWriter);
-        $this->validEntry->setEnclosure([
-                                              'type'   => 'audio/mpeg',
-                                              'uri'    => 'http://example.com/audio.mp3',
-                                              'length' => 23
-                                         ]);
-        $renderer->render();
+        $this->validEntry->setEnclosure(
+            [
+                'type'   => 'audio/mpeg',
+                'uri'    => 'http://example.com/audio.mp3',
+                'length' => 23,
+            ]
+        );
+
+        $this->assertInstanceOf(Renderer\Feed\Rss::class, $renderer->render());
     }
 
     public function testEnclosureWorksWithPositiveLengthString()
     {
         $renderer = new Renderer\Feed\Rss($this->validWriter);
-        $this->validEntry->setEnclosure([
-                                              'type'   => 'audio/mpeg',
-                                              'uri'    => 'http://example.com/audio.mp3',
-                                              'length' => '23'
-                                         ]);
-        $renderer->render();
+        $this->validEntry->setEnclosure(
+            [
+                'type'   => 'audio/mpeg',
+                'uri'    => 'http://example.com/audio.mp3',
+                'length' => '23',
+            ]
+        );
+
+        $this->assertInstanceOf(Renderer\Feed\Rss::class, $renderer->render());
     }
 
     public function testEntryIdHasBeenSet()

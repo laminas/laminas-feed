@@ -47,6 +47,7 @@ class ReaderTest extends TestCase
         $feed = Reader\Reader::importString(
             '   ' . file_get_contents($this->feedSamplePath.'/Reader/rss20.xml')
         );
+        $this->assertInstanceOf(FeedInterface::class, $feed);
     }
 
     public function testDetectsFeedIsRss20()
