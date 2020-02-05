@@ -294,9 +294,10 @@ class ReaderTest extends TestCase
 
     /**
      * This test is failing on windows:
-     * Failed asserting that exception of type "Laminas\Feed\Reader\Exception\RuntimeException" matches expected exception
-     * "Laminas\Feed\Reader\Exception\InvalidArgumentException". Message was: "DOMDocument cannot parse XML: Entity
-     * 'discloseInfo' failed to parse".
+     * Failed asserting that exception of type "Laminas\Feed\Reader\Exception\RuntimeException"
+     * matches expected exception "Laminas\Feed\Reader\Exception\InvalidArgumentException".
+     * Message was: "DOMDocument cannot parse XML: Entity 'discloseInfo' failed to parse".
+     *
      * @todo why is the assertEquals commented out?
      */
     public function testXxePreventionOnFeedParsing()
