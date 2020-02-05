@@ -166,7 +166,8 @@ class ReaderTest extends TestCase
             $this->markTestSkipped('testImportsUri() requires a network connection');
         }
 
-        Reader\Reader::import('http://www.planet-php.net/rdf/');
+        $feed = Reader\Reader::import('https://github.com/laminas/laminas-feed/releases.atom');
+        $this->assertInstanceOf(Reader\Feed\Atom::class, $feed);
     }
 
     /**
@@ -185,12 +186,19 @@ class ReaderTest extends TestCase
     public function testGetsFeedLinksAsValueObject()
     {
         if (! getenv('TESTS_LAMINAS_FEED_READER_ONLINE_ENABLED')) {
-            $this->markTestSkipped('testGetsFeedLinksAsValueObject() requires a network connection');
+            $this->markTestSkipped(
+                'testGetsFeedLinksAsValueObject() requires a network connection'
+            );
         }
 
-        $links = Reader\Reader::findFeedLinks('http://www.planet-php.net');
+        $links = Reader\Reader::findFeedLinks(
+            'https://github.com/laminas/laminas-feed/releases'
+        );
 
-        $this->assertEquals('http://www.planet-php.org/rss/', $links->rss);
+        $this->assertEquals(
+            'https://github.com/laminas/laminas-feed/releases.atom',
+            $links->atom
+        );
     }
 
     public function testCompilesLinksAsArrayObject()
@@ -198,13 +206,15 @@ class ReaderTest extends TestCase
         if (! getenv('TESTS_LAMINAS_FEED_READER_ONLINE_ENABLED')) {
             $this->markTestSkipped('testGetsFeedLinksAsValueObject() requires a network connection');
         }
-        $links = Reader\Reader::findFeedLinks('http://www.planet-php.net');
+        $links = Reader\Reader::findFeedLinks(
+            'https://github.com/laminas/laminas-feed/releases'
+        );
         $this->assertInstanceOf(FeedSet::class, $links);
         $this->assertEquals([
             'rel' => 'alternate',
-            'type' => 'application/rss+xml',
-            'href' => 'http://www.planet-php.org/rss/',
-            'title' => 'RSS'
+            'type' => 'application/atom+xml',
+            'href' => 'https://github.com/laminas/laminas-feed/releases.atom',
+            'title' => 'laminas-feed Release Notes'
         ], (array) $links->getIterator()->current());
     }
 
@@ -213,9 +223,11 @@ class ReaderTest extends TestCase
         if (! getenv('TESTS_LAMINAS_FEED_READER_ONLINE_ENABLED')) {
             $this->markTestSkipped('testGetsFeedLinksAsValueObject() requires a network connection');
         }
-        $links = Reader\Reader::findFeedLinks('http://www.planet-php.net');
+        $links = Reader\Reader::findFeedLinks(
+            'https://github.com/laminas/laminas-feed/releases'
+        );
         $link = $links->getIterator()->current();
-        $this->assertInstanceOf(Rss::class, $link['feed']);
+        $this->assertInstanceOf(Reader\Feed\Atom::class, $link['feed']);
     }
 
     public function testZeroCountFeedSetReturnedFromEmptyList()
