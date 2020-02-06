@@ -148,6 +148,8 @@ class EntryTest extends TestCase
 
     public function testSetKeywordsThrowsExceptionIfMaxKeywordsExceeded()
     {
+        $this->expectException(ExceptionInterface::class);
+
         $entry = new Writer\Entry;
         $words = [
             'a1', 'a2', 'a3', 'a4', 'a5', 'a6', 'a7', 'a8', 'a9', 'a10', 'a11', 'a12', 'a13'
@@ -158,8 +160,7 @@ class EntryTest extends TestCase
         }, \E_USER_DEPRECATED);
         try {
             $entry->setItunesKeywords($words);
-        } catch (ExceptionInterface $e) {
-            $this->assertInstanceOf(ExceptionInterface::class, $e);
+            $this->fail();
         } finally {
             restore_error_handler();
         }
@@ -167,6 +168,8 @@ class EntryTest extends TestCase
 
     public function testSetKeywordsThrowsExceptionIfFormattedKeywordsExceeds255CharLength()
     {
+        $this->expectException(ExceptionInterface::class);
+
         $entry = new Writer\Entry;
         $words = [
             str_repeat('a', 253), str_repeat('b', 2)
@@ -177,8 +180,7 @@ class EntryTest extends TestCase
         }, \E_USER_DEPRECATED);
         try {
             $entry->setItunesKeywords($words);
-        } catch (ExceptionInterface $e) {
-            $this->assertInstanceOf(ExceptionInterface::class, $e);
+            $this->fail();
         } finally {
             restore_error_handler();
         }
