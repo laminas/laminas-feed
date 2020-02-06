@@ -7,6 +7,8 @@
  */
 namespace LaminasTest\Feed\Reader;
 
+use Laminas\Feed\Reader\Extension\AbstractEntry;
+use Laminas\Feed\Reader\Extension\AbstractFeed;
 use Laminas\Feed\Reader\Extension\Syndication\Feed;
 use Laminas\Feed\Reader\Extension\WellFormedWeb\Entry;
 use Laminas\Feed\Reader\ExtensionManagerInterface;
@@ -87,10 +89,10 @@ class StandaloneExtensionManagerTest extends TestCase
 
     public function testAddAcceptsValidExtensionClasses()
     {
-        $ext = $this->createMock(\Laminas\Feed\Reader\Extension\AbstractEntry::class);
+        $ext = $this->prophesize(AbstractEntry::class)->reveal();
         $this->extensions->add('Test/Entry', get_class($ext));
         $this->assertTrue($this->extensions->has('Test/Entry'));
-        $ext = $this->createMock(\Laminas\Feed\Reader\Extension\AbstractFeed::class);
+        $ext = $this->prophesize(AbstractFeed::class)->reveal();
         $this->extensions->add('Test/Feed', get_class($ext));
         $this->assertTrue($this->extensions->has('Test/Feed'));
     }
@@ -103,7 +105,7 @@ class StandaloneExtensionManagerTest extends TestCase
 
     public function testExtensionRemoval()
     {
-        $ext = $this->createMock(\Laminas\Feed\Reader\Extension\AbstractEntry::class);
+        $ext = $this->prophesize(AbstractEntry::class)->reveal();
         $this->extensions->add('Test/Entry', get_class($ext));
         $this->assertTrue($this->extensions->has('Test/Entry'));
         $this->extensions->remove('Test/Entry');
