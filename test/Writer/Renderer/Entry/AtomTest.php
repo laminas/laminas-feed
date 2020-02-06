@@ -59,11 +59,13 @@ class AtomTest extends TestCase
         $this->validEntry  = null;
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testRenderMethodRunsMinimalWriterContainerProperlyBeforeICheckAtomCompliance()
     {
         $renderer = new Renderer\Feed\Atom($this->validWriter);
-
-        $this->assertInstanceOf(Renderer\Feed\Atom::class, $renderer->render());
+        $renderer->render();
     }
 
     public function testEntryEncodingHasBeenSet()

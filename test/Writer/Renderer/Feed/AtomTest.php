@@ -53,11 +53,13 @@ class AtomTest extends TestCase
         $this->assertInstanceOf(Feed::class, $feed->getDataContainer());
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testBuildMethodRunsMinimalWriterContainerProperlyBeforeICheckAtomCompliance()
     {
         $feed = new Renderer\Feed\Atom($this->validWriter);
-
-        $this->assertInstanceOf(Renderer\Feed\Atom::class, $feed->render());
+        $feed->render();
     }
 
     public function testFeedEncodingHasBeenSet()
@@ -131,12 +133,14 @@ class AtomTest extends TestCase
         $this->assertEquals('This is a test description.', $feed->getDescription());
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testFeedSubtitleThrowsNoExceptionIfMissing()
     {
         $atomFeed = new Renderer\Feed\Atom($this->validWriter);
         $this->validWriter->remove('description');
-
-        $this->assertInstanceOf(Renderer\Feed\Atom::class, $atomFeed->render());
+        $atomFeed->render();
     }
 
     /**
@@ -176,12 +180,14 @@ class AtomTest extends TestCase
         $this->assertEquals('FooFeedBuilder', $feed->getGenerator());
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testFeedGeneratorIfMissingThrowsNoException()
     {
         $atomFeed = new Renderer\Feed\Atom($this->validWriter);
         $this->validWriter->remove('generator');
-
-        $this->assertInstanceOf(Renderer\Feed\Atom::class, $atomFeed->render());
+        $atomFeed->render();
     }
 
     public function testFeedGeneratorDefaultIsUsedIfGeneratorNotSetByHand()
@@ -213,12 +219,14 @@ class AtomTest extends TestCase
         $this->assertEquals('fr', $feed->getLanguage());
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testFeedLanguageIfMissingThrowsNoException()
     {
         $atomFeed = new Renderer\Feed\Atom($this->validWriter);
         $this->validWriter->remove('language');
-
-        $this->assertInstanceOf(Renderer\Feed\Atom::class, $atomFeed->render());
+        $atomFeed->render();
     }
 
     public function testFeedLanguageDefaultIsUsedIfGeneratorNotSetByHand()
@@ -237,13 +245,15 @@ class AtomTest extends TestCase
         $this->assertEquals('http://www.example.com', $feed->getLink());
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testFeedLinkToHtmlVersionOfFeedIfMissingThrowsNoExceptionIfIdSet()
     {
         $atomFeed = new Renderer\Feed\Atom($this->validWriter);
         $this->validWriter->setId('http://www.example.com');
         $this->validWriter->remove('link');
-
-        $this->assertInstanceOf(Renderer\Feed\Atom::class, $atomFeed->render());
+        $atomFeed->render();
     }
 
     public function testFeedLinkToHtmlVersionOfFeedIfMissingThrowsExceptionIfIdMissing()

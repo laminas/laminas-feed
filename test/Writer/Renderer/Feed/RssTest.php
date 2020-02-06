@@ -50,11 +50,13 @@ class RssTest extends TestCase
         $this->assertInstanceOf(Feed::class, $feed->getDataContainer());
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testBuildMethodRunsMinimalWriterContainerProperlyBeforeICheckRssCompliance()
     {
         $feed = new Renderer\Feed\Rss($this->validWriter);
-
-        $this->assertInstanceOf(Renderer\Feed\Rss::class, $feed->render());
+        $feed->render();
     }
 
     public function testFeedEncodingHasBeenSet()
@@ -139,12 +141,14 @@ class RssTest extends TestCase
         $this->assertEquals(1234567890, $feed->getDateModified()->getTimestamp());
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testFeedUpdatedDateIfMissingThrowsNoException()
     {
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $this->validWriter->remove('dateModified');
-
-        $this->assertInstanceOf(Renderer\Feed\Rss::class, $rssFeed->render());
+        $rssFeed->render();
     }
 
     public function testFeedLastBuildDateHasBeenSet()
@@ -165,12 +169,14 @@ class RssTest extends TestCase
         $this->assertEquals('FooFeedBuilder 1.00 (http://www.example.com)', $feed->getGenerator());
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testFeedGeneratorIfMissingThrowsNoException()
     {
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $this->validWriter->remove('generator');
-
-        $this->assertInstanceOf(Renderer\Feed\Rss::class, $rssFeed->render());
+        $rssFeed->render();
     }
 
     public function testFeedGeneratorDefaultIsUsedIfGeneratorNotSetByHand()
@@ -193,12 +199,14 @@ class RssTest extends TestCase
         $this->assertEquals('fr', $feed->getLanguage());
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testFeedLanguageIfMissingThrowsNoException()
     {
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $this->validWriter->remove('language');
-
-        $this->assertInstanceOf(Renderer\Feed\Rss::class, $rssFeed->render());
+        $rssFeed->render();
     }
 
     public function testFeedLanguageDefaultIsUsedIfGeneratorNotSetByHand()
@@ -249,12 +257,14 @@ class RssTest extends TestCase
         $this->assertEquals('http://www.example.com/rss', $feed->getFeedLink());
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testFeedLinkToXmlRssWhereTheFeedWillBeAvailableIfMissingThrowsNoException()
     {
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $this->validWriter->remove('feedLinks');
-
-        $this->assertInstanceOf(Renderer\Feed\Rss::class, $rssFeed->render());
+        $rssFeed->render();
     }
 
     public function testBaseUrlCanBeSet()

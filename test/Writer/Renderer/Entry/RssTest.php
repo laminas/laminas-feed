@@ -48,10 +48,13 @@ class RssTest extends TestCase
         $this->validEntry  = null;
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testRenderMethodRunsMinimalWriterContainerProperlyBeforeICheckAtomCompliance()
     {
         $renderer = new Renderer\Feed\Rss($this->validWriter);
-        $this->assertInstanceOf(Renderer\Feed\Rss::class, $renderer->render());
+        $renderer->render();
     }
 
     public function testEntryEncodingHasBeenSet()
@@ -253,6 +256,9 @@ class RssTest extends TestCase
         $renderer->render();
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testEnclosureWorksWithZeroLength()
     {
         $renderer = new Renderer\Feed\Rss($this->validWriter);
@@ -263,10 +269,12 @@ class RssTest extends TestCase
                 'length' => 0,
             ]
         );
-
-        $this->assertInstanceOf(Renderer\Feed\Rss::class, $renderer->render());
+        $renderer->render();
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testEnclosureWorksWithPositiveLength()
     {
         $renderer = new Renderer\Feed\Rss($this->validWriter);
@@ -277,10 +285,12 @@ class RssTest extends TestCase
                 'length' => 23,
             ]
         );
-
-        $this->assertInstanceOf(Renderer\Feed\Rss::class, $renderer->render());
+        $renderer->render();
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testEnclosureWorksWithPositiveLengthString()
     {
         $renderer = new Renderer\Feed\Rss($this->validWriter);
@@ -291,8 +301,7 @@ class RssTest extends TestCase
                 'length' => '23',
             ]
         );
-
-        $this->assertInstanceOf(Renderer\Feed\Rss::class, $renderer->render());
+        $renderer->render();
     }
 
     public function testEntryIdHasBeenSet()
