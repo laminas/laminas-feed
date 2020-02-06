@@ -63,9 +63,7 @@ class FeedTest extends TestCase
 
     public function testAddAuthorThrowsExceptionOnInvalidNameFromArray()
     {
-        $this->expectException(
-            Writer\Exception\InvalidArgumentException::class
-        );
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
 
         $writer = new Writer\Feed;
         $writer->addAuthor(['name' => '']);
@@ -73,41 +71,31 @@ class FeedTest extends TestCase
 
     public function testAddAuthorThrowsExceptionOnInvalidEmailFromArray()
     {
-        $this->expectException(
-            Writer\Exception\InvalidArgumentException::class
-        );
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
 
         $writer = new Writer\Feed;
-        $writer->addAuthor(
-            [
-                'name'  => 'Joe',
-                'email' => '',
-            ]
-        );
+        $writer->addAuthor([
+            'name'  => 'Joe',
+            'email' => '',
+        ]);
     }
 
     public function testAddAuthorThrowsExceptionOnInvalidUriFromArray()
     {
         $this->markTestIncomplete('Pending Laminas\URI fix for validation');
 
-        $this->expectException(
-            Writer\Exception\InvalidArgumentException::class
-        );
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
 
         $writer = new Writer\Feed;
-        $writer->addAuthor(
-            [
-                'name' => 'Joe',
-                'uri'  => 'notauri',
-            ]
-        );
+        $writer->addAuthor([
+            'name' => 'Joe',
+            'uri'  => 'notauri',
+        ]);
     }
 
     public function testAddAuthorThrowsExceptionIfNameOmittedFromArray()
     {
-        $this->expectException(
-            Writer\Exception\InvalidArgumentException::class
-        );
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
 
         $writer = new Writer\Feed;
         $writer->addAuthor(['uri' => 'notauri']);
