@@ -7,6 +7,7 @@
  */
 namespace LaminasTest\Feed\Writer;
 
+use Laminas\Feed\Writer\Extension\AbstractRenderer;
 use Laminas\Feed\Writer\ExtensionManagerInterface;
 use Laminas\Feed\Writer\StandaloneExtensionManager;
 use PHPUnit\Framework\TestCase;
@@ -101,7 +102,7 @@ class StandaloneExtensionManagerTest extends TestCase
         $this->extensions->add('Test/Entry', 'MyTestExtension_Entry');
         $this->assertTrue($this->extensions->has('Test/Entry'));
 
-        $ext = $this->createMock(\Laminas\Feed\Writer\Extension\AbstractRenderer::class);
+        $ext = $this->prophesize(AbstractRenderer::class)->reveal();
         $this->extensions->add('Test/Thing', get_class($ext));
         $this->assertTrue($this->extensions->has('Test/Thing'));
     }
