@@ -462,12 +462,10 @@ class EntryTest extends TestCase
         $this->expectException(ExceptionInterface::class);
 
         $entry = new Writer\Entry;
-        $entry->setCommentFeedLink(
-            [
-                'uri'  => '',
-                'type' => 'rdf',
-            ]
-        );
+        $entry->setCommentFeedLink([
+            'uri'  => '',
+            'type' => 'rdf',
+        ]);
     }
 
     public function testSetCommentFeedLinkThrowsExceptionOnInvalidUri()
@@ -475,12 +473,10 @@ class EntryTest extends TestCase
         $this->expectException(Writer\Exception\ExceptionInterface::class);
 
         $entry = new Writer\Entry;
-        $entry->setCommentFeedLink(
-            [
-                'uri'  => 'http://',
-                'type' => 'rdf',
-            ]
-        );
+        $entry->setCommentFeedLink([
+            'uri'  => 'http://',
+            'type' => 'rdf',
+        ]);
     }
 
     public function testSetCommentFeedLinkThrowsExceptionOnInvalidType()
@@ -488,12 +484,10 @@ class EntryTest extends TestCase
         $this->expectException(Writer\Exception\ExceptionInterface::class);
 
         $entry = new Writer\Entry;
-        $entry->setCommentFeedLink(
-            [
-                'uri'  => 'http://www.example.com/id/comments',
-                'type' => 'foo',
-            ]
-        );
+        $entry->setCommentFeedLink([
+            'uri'  => 'http://www.example.com/id/comments',
+            'type' => 'foo',
+        ]);
     }
 
     public function testGetCommentFeedLinkReturnsNullIfNoneSet()
