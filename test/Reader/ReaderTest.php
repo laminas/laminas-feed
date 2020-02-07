@@ -187,9 +187,7 @@ class ReaderTest extends TestCase
     public function testGetsFeedLinksAsValueObject()
     {
         if (! getenv('TESTS_LAMINAS_FEED_READER_ONLINE_ENABLED')) {
-            $this->markTestSkipped(
-                'testGetsFeedLinksAsValueObject() requires a network connection'
-            );
+            $this->markTestSkipped('testGetsFeedLinksAsValueObject() requires a network connection');
         }
 
         $links = Reader\Reader::findFeedLinks(
