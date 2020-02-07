@@ -190,14 +190,8 @@ class ReaderTest extends TestCase
             $this->markTestSkipped('testGetsFeedLinksAsValueObject() requires a network connection');
         }
 
-        $links = Reader\Reader::findFeedLinks(
-            'https://github.com/laminas/laminas-feed/releases'
-        );
-
-        $this->assertEquals(
-            'https://github.com/laminas/laminas-feed/releases.atom',
-            $links->atom
-        );
+        $links = Reader\Reader::findFeedLinks('https://github.com/laminas/laminas-feed/releases');
+        $this->assertEquals('https://github.com/laminas/laminas-feed/releases.atom', $links->atom);
     }
 
     public function testCompilesLinksAsArrayObject()
@@ -205,9 +199,7 @@ class ReaderTest extends TestCase
         if (! getenv('TESTS_LAMINAS_FEED_READER_ONLINE_ENABLED')) {
             $this->markTestSkipped('testGetsFeedLinksAsValueObject() requires a network connection');
         }
-        $links = Reader\Reader::findFeedLinks(
-            'https://github.com/laminas/laminas-feed/releases'
-        );
+        $links = Reader\Reader::findFeedLinks('https://github.com/laminas/laminas-feed/releases');
         $this->assertInstanceOf(FeedSet::class, $links);
         $this->assertEquals([
             'rel' => 'alternate',
@@ -222,9 +214,8 @@ class ReaderTest extends TestCase
         if (! getenv('TESTS_LAMINAS_FEED_READER_ONLINE_ENABLED')) {
             $this->markTestSkipped('testGetsFeedLinksAsValueObject() requires a network connection');
         }
-        $links = Reader\Reader::findFeedLinks(
-            'https://github.com/laminas/laminas-feed/releases'
-        );
+
+        $links = Reader\Reader::findFeedLinks('https://github.com/laminas/laminas-feed/releases');
         $link = $links->getIterator()->current();
         $this->assertInstanceOf(Reader\Feed\Atom::class, $link['feed']);
     }
@@ -234,6 +225,7 @@ class ReaderTest extends TestCase
         if (! getenv('TESTS_LAMINAS_FEED_READER_ONLINE_ENABLED')) {
             $this->markTestSkipped('testGetsFeedLinksAsValueObject() requires a network connection');
         }
+
         $links = Reader\Reader::findFeedLinks('http://www.example.com');
         $this->assertCount(0, $links);
     }
