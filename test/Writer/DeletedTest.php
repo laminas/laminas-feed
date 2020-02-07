@@ -29,9 +29,9 @@ class DeletedTest extends TestCase
 
     public function testSetReferenceThrowsExceptionOnInvalidParameter()
     {
-        $this->expectException(Writer\Exception\ExceptionInterface::class);
-
         $entry = new Writer\Deleted;
+
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
         $entry->setReference('');
     }
 
@@ -97,9 +97,9 @@ class DeletedTest extends TestCase
 
     public function testSetWhenThrowsExceptionOnInvalidParameter()
     {
-        $this->expectException(Writer\Exception\ExceptionInterface::class);
-
         $entry = new Writer\Deleted;
+
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
         $entry->setWhen('abc');
     }
 
@@ -132,17 +132,17 @@ class DeletedTest extends TestCase
 
     public function testAddByThrowsExceptionOnInvalidNameFromArray()
     {
-        $this->expectException(Writer\Exception\ExceptionInterface::class);
-
         $entry = new Writer\Deleted;
+
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
         $entry->setBy(['name' => '']);
     }
 
     public function testAddByThrowsExceptionOnInvalidEmailFromArray()
     {
-        $this->expectException(Writer\Exception\ExceptionInterface::class);
-
         $entry = new Writer\Deleted;
+
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
         $entry->setBy(['name' => 'Joe', 'email' => '']);
     }
 
@@ -150,17 +150,17 @@ class DeletedTest extends TestCase
     {
         $this->markTestIncomplete('Pending Laminas\URI fix for validation');
 
-        $this->expectException(Writer\Exception\ExceptionInterface::class);
-
         $entry = new Writer\Deleted;
+
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
         $entry->setBy(['name' => 'Joe', 'uri' => 'notauri']);
     }
 
     public function testAddByThrowsExceptionIfNameOmittedFromArray()
     {
-        $this->expectException(Writer\Exception\ExceptionInterface::class);
-
         $entry = new Writer\Deleted;
+
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
         $entry->setBy(['uri' => 'notauri']);
     }
 

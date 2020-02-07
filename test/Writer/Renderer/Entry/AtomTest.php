@@ -95,9 +95,10 @@ class AtomTest extends TestCase
 
     public function testFeedTitleIfMissingThrowsException()
     {
-        $this->expectException(ExceptionInterface::class);
         $atomFeed = new Renderer\Feed\Atom($this->validWriter);
         $this->validEntry->remove('title');
+
+        $this->expectException(ExceptionInterface::class);
         $atomFeed->render();
     }
 
@@ -122,10 +123,11 @@ class AtomTest extends TestCase
 
     public function testFeedContentIfMissingThrowsExceptionIfThereIsNoLink()
     {
-        $this->expectException(ExceptionInterface::class);
         $atomFeed = new Renderer\Feed\Atom($this->validWriter);
         $this->validEntry->remove('content');
         $this->validEntry->remove('link');
+
+        $this->expectException(ExceptionInterface::class);
         $atomFeed->render();
     }
 
@@ -139,9 +141,10 @@ class AtomTest extends TestCase
 
     public function testFeedUpdatedDateIfMissingThrowsException()
     {
-        $this->expectException(ExceptionInterface::class);
         $atomFeed = new Renderer\Feed\Atom($this->validWriter);
         $this->validEntry->remove('dateModified');
+
+        $this->expectException(ExceptionInterface::class);
         $atomFeed->render();
     }
 
@@ -229,21 +232,24 @@ class AtomTest extends TestCase
 
     public function testFeedIdIfMissingThrowsException()
     {
-        $this->expectException(ExceptionInterface::class);
         $atomFeed = new Renderer\Feed\Atom($this->validWriter);
         $this->validEntry->remove('id');
         $this->validEntry->remove('link');
+
+        $this->expectException(ExceptionInterface::class);
         $atomFeed->render();
     }
 
     public function testFeedIdThrowsExceptionIfNotUri()
     {
-        $this->expectException(ExceptionInterface::class);
         $this->markTestIncomplete('Pending Laminas\URI fix for validation');
+
         $atomFeed = new Renderer\Feed\Atom($this->validWriter);
         $this->validEntry->remove('id');
         $this->validEntry->remove('link');
         $this->validEntry->setId('not-a-uri');
+
+        $this->expectException(ExceptionInterface::class);
         $atomFeed->render();
     }
 

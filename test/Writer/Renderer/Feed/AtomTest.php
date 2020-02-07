@@ -107,9 +107,10 @@ class AtomTest extends TestCase
 
     public function testFeedTitleIfMissingThrowsException()
     {
-        $this->expectException(ExceptionInterface::class);
         $atomFeed = new Renderer\Feed\Atom($this->validWriter);
         $this->validWriter->remove('title');
+
+        $this->expectException(ExceptionInterface::class);
         $atomFeed->render();
     }
 
@@ -165,9 +166,10 @@ class AtomTest extends TestCase
 
     public function testFeedUpdatedDateIfMissingThrowsException()
     {
-        $this->expectException(ExceptionInterface::class);
         $atomFeed = new Renderer\Feed\Atom($this->validWriter);
         $this->validWriter->remove('dateModified');
+
+        $this->expectException(ExceptionInterface::class);
         $atomFeed->render();
     }
 
@@ -258,9 +260,10 @@ class AtomTest extends TestCase
 
     public function testFeedLinkToHtmlVersionOfFeedIfMissingThrowsExceptionIfIdMissing()
     {
-        $this->expectException(ExceptionInterface::class);
         $atomFeed = new Renderer\Feed\Atom($this->validWriter);
         $this->validWriter->remove('link');
+
+        $this->expectException(ExceptionInterface::class);
         $atomFeed->render();
     }
 
@@ -274,9 +277,10 @@ class AtomTest extends TestCase
 
     public function testFeedLinkToXmlAtomWhereTheFeedWillBeAvailableIfMissingThrowsException()
     {
-        $this->expectException(ExceptionInterface::class);
         $atomFeed = new Renderer\Feed\Atom($this->validWriter);
         $this->validWriter->remove('feedLinks');
+
+        $this->expectException(ExceptionInterface::class);
         $atomFeed->render();
     }
 

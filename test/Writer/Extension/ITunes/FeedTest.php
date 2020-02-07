@@ -27,15 +27,17 @@ class FeedTest extends TestCase
 
     public function testSetBlockThrowsExceptionOnNonAlphaValue()
     {
-        $this->expectException(ExceptionInterface::class);
         $feed = new Writer\Feed;
+
+        $this->expectException(ExceptionInterface::class);
         $feed->setItunesBlock('123');
     }
 
     public function testSetBlockThrowsExceptionIfValueGreaterThan255CharsLength()
     {
-        $this->expectException(ExceptionInterface::class);
         $feed = new Writer\Feed;
+
+        $this->expectException(ExceptionInterface::class);
         $feed->setItunesBlock(str_repeat('a', 256));
     }
 
@@ -55,8 +57,9 @@ class FeedTest extends TestCase
 
     public function testAddAuthorThrowsExceptionIfValueGreaterThan255CharsLength()
     {
-        $this->expectException(ExceptionInterface::class);
         $feed = new Writer\Feed;
+
+        $this->expectException(ExceptionInterface::class);
         $feed->addItunesAuthor(str_repeat('a', 256));
     }
 
@@ -73,14 +76,15 @@ class FeedTest extends TestCase
 
     public function testSetCategoriesThrowsExceptionIfAnyCatNameGreaterThan255CharsLength()
     {
-        $this->expectException(ExceptionInterface::class);
         $feed = new Writer\Feed;
         $cats = [
             'cat1',
             'cat2' => ['cat2-1', str_repeat('a', 256)]
         ];
         $feed->setItunesCategories($cats);
-        $this->assertEquals($cats, $feed->getItunesAuthors());
+
+        $this->expectException(ExceptionInterface::class);
+        $feed->getItunesAuthors();
     }
 
     public function testSetImageAsPngFile()
@@ -99,15 +103,17 @@ class FeedTest extends TestCase
 
     public function testSetImageThrowsExceptionOnInvalidUri()
     {
-        $this->expectException(ExceptionInterface::class);
         $feed = new Writer\Feed;
+
+        $this->expectException(ExceptionInterface::class);
         $feed->setItunesImage('http://');
     }
 
     public function testSetImageThrowsExceptionOnInvalidImageExtension()
     {
-        $this->expectException(ExceptionInterface::class);
         $feed = new Writer\Feed;
+
+        $this->expectException(ExceptionInterface::class);
         $feed->setItunesImage('http://www.example.com/image.gif');
     }
 
@@ -134,22 +140,25 @@ class FeedTest extends TestCase
 
     public function testSetDurationThrowsExceptionOnUnknownFormat()
     {
-        $this->expectException(ExceptionInterface::class);
         $feed = new Writer\Feed;
+
+        $this->expectException(ExceptionInterface::class);
         $feed->setItunesDuration('abc');
     }
 
     public function testSetDurationThrowsExceptionOnInvalidSeconds()
     {
-        $this->expectException(ExceptionInterface::class);
         $feed = new Writer\Feed;
+
+        $this->expectException(ExceptionInterface::class);
         $feed->setItunesDuration('23:456');
     }
 
     public function testSetDurationThrowsExceptionOnInvalidMinutes()
     {
-        $this->expectException(ExceptionInterface::class);
         $feed = new Writer\Feed;
+
+        $this->expectException(ExceptionInterface::class);
         $feed->setItunesDuration('23:234:45');
     }
 
@@ -176,8 +185,9 @@ class FeedTest extends TestCase
 
     public function testSetExplicitThrowsExceptionOnUnknownTerm()
     {
-        $this->expectException(ExceptionInterface::class);
         $feed = new Writer\Feed;
+
+        $this->expectException(ExceptionInterface::class);
         $feed->setItunesExplicit('abc');
     }
 
@@ -199,8 +209,6 @@ class FeedTest extends TestCase
 
     public function testSetKeywordsThrowsExceptionIfMaxKeywordsExceeded()
     {
-        $this->expectException(ExceptionInterface::class);
-
         $feed = new Writer\Feed;
         $words = [
             'a1', 'a2', 'a3', 'a4', 'a5', 'a6', 'a7', 'a8', 'a9', 'a10', 'a11', 'a12', 'a13'
@@ -209,7 +217,9 @@ class FeedTest extends TestCase
         set_error_handler(function ($errno, $errstr) {
             return (bool) preg_match('/itunes:keywords/', $errstr);
         }, \E_USER_DEPRECATED);
+
         try {
+            $this->expectException(ExceptionInterface::class);
             $feed->setItunesKeywords($words);
         } finally {
             restore_error_handler();
@@ -218,8 +228,6 @@ class FeedTest extends TestCase
 
     public function testSetKeywordsThrowsExceptionIfFormattedKeywordsExceeds255CharLength()
     {
-        $this->expectException(ExceptionInterface::class);
-
         $feed = new Writer\Feed;
         $words = [
             str_repeat('a', 253), str_repeat('b', 2)
@@ -228,7 +236,9 @@ class FeedTest extends TestCase
         set_error_handler(function ($errno, $errstr) {
             return (bool) preg_match('/itunes:keywords/', $errstr);
         }, \E_USER_DEPRECATED);
+
         try {
+            $this->expectException(ExceptionInterface::class);
             $feed->setItunesKeywords($words);
         } finally {
             restore_error_handler();
@@ -244,8 +254,9 @@ class FeedTest extends TestCase
 
     public function testSetNewFeedUrlThrowsExceptionOnInvalidUri()
     {
-        $this->expectException(ExceptionInterface::class);
         $feed = new Writer\Feed;
+
+        $this->expectException(ExceptionInterface::class);
         $feed->setItunesNewFeedUrl('http://');
     }
 
@@ -272,8 +283,9 @@ class FeedTest extends TestCase
 
     public function testSetSubtitleThrowsExceptionWhenValueExceeds255Chars()
     {
-        $this->expectException(ExceptionInterface::class);
         $feed = new Writer\Feed;
+
+        $this->expectException(ExceptionInterface::class);
         $feed->setItunesSubtitle(str_repeat('a', 256));
     }
 
@@ -286,8 +298,9 @@ class FeedTest extends TestCase
 
     public function testSetSummaryThrowsExceptionWhenValueExceeds4000Chars()
     {
-        $this->expectException(ExceptionInterface::class);
         $feed = new Writer\Feed;
+
+        $this->expectException(ExceptionInterface::class);
         $feed->setItunesSummary(str_repeat('a', 4001));
     }
 
@@ -317,6 +330,7 @@ class FeedTest extends TestCase
     public function testSetItunesImageRaisesExceptionForInvalidUrl($url, $expectedMessage = 'valid URI')
     {
         $feed = new Writer\Feed();
+
         $this->expectException(ExceptionInterface::class);
         $this->expectExceptionMessage($expectedMessage);
         $feed->setItunesImage($url);
@@ -364,6 +378,7 @@ class FeedTest extends TestCase
     public function testSetItunesTypeWithInvalidTypeRaisesException($type)
     {
         $feed = new Writer\Feed();
+
         $this->expectException(ExceptionInterface::class);
         $this->expectExceptionMessage('MUST be one of');
         $feed->setItunesType($type);
@@ -409,6 +424,7 @@ class FeedTest extends TestCase
     public function testSetItunesCompleteRaisesExceptionForInvalidStatus($status)
     {
         $feed = new Writer\Feed();
+
         $this->expectException(ExceptionInterface::class);
         $this->expectExceptionMessage('MUST be boolean');
         $feed->setItunesComplete($status);

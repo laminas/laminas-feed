@@ -176,11 +176,11 @@ class ReaderTest extends TestCase
      */
     public function testImportsUriAndThrowsExceptionIfNotAFeed()
     {
-        $this->expectException(Reader\Exception\RuntimeException::class);
         if (! getenv('TESTS_LAMINAS_FEED_READER_ONLINE_ENABLED')) {
             $this->markTestSkipped('testImportsUri() requires a network connection');
         }
 
+        $this->expectException(Reader\Exception\RuntimeException::class);
         Reader\Reader::import('http://example.com');
     }
 
@@ -292,9 +292,10 @@ class ReaderTest extends TestCase
      */
     public function testXxePreventionOnFeedParsing()
     {
-        $this->expectException(InvalidArgumentException::class);
         $string = file_get_contents($this->feedSamplePath.'/Reader/xxe-atom10.xml');
         $string = str_replace('XXE_URI', $this->feedSamplePath.'/Reader/xxe-info.txt', $string);
+
+        $this->expectException(InvalidArgumentException::class);
         $feed = Reader\Reader::importString($string);
         //$this->assertEquals('info:', $feed->getTitle());
     }
@@ -329,9 +330,10 @@ class ReaderTest extends TestCase
 
     public function testImportStringMethodThrowProperExceptionOnEmptyString()
     {
-        $this->expectException(InvalidArgumentException::class);
         $string = ' ';
-        $feed = Reader\Reader::importString($string);
+
+        $this->expectException(InvalidArgumentException::class);
+        Reader\Reader::importString($string);
     }
 
     public function testSetHttpFeedClient()

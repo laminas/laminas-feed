@@ -63,17 +63,17 @@ class FeedTest extends TestCase
 
     public function testAddAuthorThrowsExceptionOnInvalidNameFromArray()
     {
-        $this->expectException(Writer\Exception\InvalidArgumentException::class);
-
         $writer = new Writer\Feed;
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $writer->addAuthor(['name' => '']);
     }
 
     public function testAddAuthorThrowsExceptionOnInvalidEmailFromArray()
     {
-        $this->expectException(Writer\Exception\InvalidArgumentException::class);
-
         $writer = new Writer\Feed;
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $writer->addAuthor([
             'name'  => 'Joe',
             'email' => '',
@@ -84,9 +84,9 @@ class FeedTest extends TestCase
     {
         $this->markTestIncomplete('Pending Laminas\URI fix for validation');
 
-        $this->expectException(Writer\Exception\InvalidArgumentException::class);
-
         $writer = new Writer\Feed;
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $writer->addAuthor([
             'name' => 'Joe',
             'uri'  => 'notauri',
@@ -95,9 +95,9 @@ class FeedTest extends TestCase
 
     public function testAddAuthorThrowsExceptionIfNameOmittedFromArray()
     {
-        $this->expectException(Writer\Exception\InvalidArgumentException::class);
-
         $writer = new Writer\Feed;
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $writer->addAuthor(['uri' => 'notauri']);
     }
 
@@ -123,9 +123,9 @@ class FeedTest extends TestCase
 
     public function testSetCopyrightThrowsExceptionOnInvalidParam()
     {
-        $this->expectException(Writer\Exception\ExceptionInterface::class);
-
         $writer = new Writer\Feed;
+
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
         $writer->setCopyright('');
     }
 
@@ -239,17 +239,17 @@ class FeedTest extends TestCase
 
     public function testSetDateCreatedThrowsExceptionOnInvalidParameter()
     {
-        $this->expectException(Writer\Exception\ExceptionInterface::class);
-
         $writer = new Writer\Feed;
+
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
         $writer->setDateCreated('abc');
     }
 
     public function testSetDateModifiedThrowsExceptionOnInvalidParameter()
     {
-        $this->expectException(Writer\Exception\ExceptionInterface::class);
-
         $writer = new Writer\Feed;
+
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
         $writer->setDateModified('abc');
     }
 
@@ -321,9 +321,9 @@ class FeedTest extends TestCase
 
     public function testSetLastBuildDateThrowsExceptionOnInvalidParameter()
     {
-        $this->expectException(Writer\Exception\ExceptionInterface::class);
-
         $writer = new Writer\Feed;
+
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
         $writer->setLastBuildDate('abc');
     }
 
@@ -348,9 +348,9 @@ class FeedTest extends TestCase
 
     public function testSetDescriptionThrowsExceptionOnInvalidParameter()
     {
-        $this->expectException(Writer\Exception\ExceptionInterface::class);
-
         $writer = new Writer\Feed;
+
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
         $writer->setDescription('');
     }
 
@@ -393,17 +393,17 @@ class FeedTest extends TestCase
 
     public function testSetIdThrowsExceptionOnInvalidParameter()
     {
-        $this->expectException(Writer\Exception\ExceptionInterface::class);
-
         $writer = new Writer\Feed;
+
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
         $writer->setId('');
     }
 
     public function testSetIdThrowsExceptionOnInvalidUri()
     {
-        $this->expectException(Writer\Exception\ExceptionInterface::class);
-
         $writer = new Writer\Feed;
+
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
         $writer->setId('http://');
     }
 
@@ -422,9 +422,9 @@ class FeedTest extends TestCase
 
     public function testSetLanguageThrowsExceptionOnInvalidParameter()
     {
-        $this->expectException(Writer\Exception\ExceptionInterface::class);
-
         $writer = new Writer\Feed;
+
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
         $writer->setLanguage('');
     }
 
@@ -443,17 +443,17 @@ class FeedTest extends TestCase
 
     public function testSetLinkThrowsExceptionOnEmptyString()
     {
-        $this->expectException(Writer\Exception\ExceptionInterface::class);
-
         $writer = new Writer\Feed;
+
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
         $writer->setLink('');
     }
 
     public function testSetLinkThrowsExceptionOnInvalidUri()
     {
-        $this->expectException(Writer\Exception\ExceptionInterface::class);
-
         $writer = new Writer\Feed;
+
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
         $writer->setLink('http://');
     }
 
@@ -472,9 +472,9 @@ class FeedTest extends TestCase
 
     public function testSetEncodingThrowsExceptionOnInvalidParameter()
     {
-        $this->expectException(Writer\Exception\ExceptionInterface::class);
-
         $writer = new Writer\Feed;
+
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
         $writer->setEncoding('');
     }
 
@@ -493,9 +493,9 @@ class FeedTest extends TestCase
 
     public function testSetTitleThrowsExceptionOnInvalidParameter()
     {
-        $this->expectException(Writer\Exception\ExceptionInterface::class);
-
         $writer = new Writer\Feed;
+
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
         $writer->setTitle('');
     }
 
@@ -532,17 +532,17 @@ class FeedTest extends TestCase
 
     public function testSetsGeneratorThrowsExceptionOnInvalidName()
     {
-        $this->expectException(Writer\Exception\ExceptionInterface::class);
-
         $writer = new Writer\Feed;
+
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
         $writer->setGenerator([]);
     }
 
     public function testSetsGeneratorThrowsExceptionOnInvalidVersion()
     {
-        $this->expectException(Writer\Exception\ExceptionInterface::class);
-
         $writer = new Writer\Feed;
+
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
         $writer->setGenerator([
             'name'    => 'LaminasW',
             'version' => '',
@@ -553,9 +553,9 @@ class FeedTest extends TestCase
     {
         $this->markTestIncomplete('Pending Laminas\URI fix for validation');
 
-        $this->expectException(ExceptionInterface::class);
-
         $writer = new Writer\Feed;
+
+        $this->expectException(ExceptionInterface::class);
         $writer->setGenerator([
             'name' => 'LaminasW',
             'uri'  => 'notauri',
@@ -599,9 +599,9 @@ class FeedTest extends TestCase
      */
     public function testSetsGeneratorThrowsExceptionOnInvalidNameDeprecated()
     {
-        $this->expectException(Writer\Exception\ExceptionInterface::class);
-
         $writer = new Writer\Feed;
+
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
         $writer->setGenerator('');
     }
 
@@ -610,9 +610,9 @@ class FeedTest extends TestCase
      */
     public function testSetsGeneratorThrowsExceptionOnInvalidVersionDeprecated()
     {
-        $this->expectException(Writer\Exception\ExceptionInterface::class);
-
         $writer = new Writer\Feed;
+
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
         $writer->setGenerator('LaminasW', '');
     }
 
@@ -623,9 +623,9 @@ class FeedTest extends TestCase
     {
         $this->markTestIncomplete('Pending Laminas\URI fix for validation');
 
-        $this->expectException(ExceptionInterface::class);
-
         $writer = new Writer\Feed;
+
+        $this->expectException(ExceptionInterface::class);
         $writer->setGenerator('LaminasW', null, 'notauri');
     }
 
@@ -644,17 +644,17 @@ class FeedTest extends TestCase
 
     public function testSetsFeedLinkThrowsExceptionOnInvalidType()
     {
-        $this->expectException(Writer\Exception\ExceptionInterface::class);
-
         $writer = new Writer\Feed;
+
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
         $writer->setFeedLink('http://www.example.com/rss', 'abc');
     }
 
     public function testSetsFeedLinkThrowsExceptionOnInvalidUri()
     {
-        $this->expectException(Writer\Exception\ExceptionInterface::class);
-
         $writer = new Writer\Feed;
+
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
         $writer->setFeedLink('http://', 'rss');
     }
 
@@ -673,9 +673,9 @@ class FeedTest extends TestCase
 
     public function testSetsBaseUrlThrowsExceptionOnInvalidUri()
     {
-        $this->expectException(Writer\Exception\ExceptionInterface::class);
-
         $writer = new Writer\Feed;
+
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
         $writer->setBaseUrl('http://');
     }
 
@@ -701,9 +701,9 @@ class FeedTest extends TestCase
 
     public function testAddingHubUrlThrowsExceptionOnInvalidUri()
     {
-        $this->expectException(Writer\Exception\ExceptionInterface::class);
-
         $writer = new Writer\Feed;
+
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
         $writer->addHub('http://');
     }
 
@@ -736,9 +736,9 @@ class FeedTest extends TestCase
 
     public function testAddingCategoryWithoutTermThrowsException()
     {
-        $this->expectException(Writer\Exception\ExceptionInterface::class);
-
         $writer = new Writer\Feed;
+
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
         $writer->addCategory([
             'label'  => 'Cats & Dogs',
             'scheme' => 'http://www.example.com/schema1',
@@ -747,9 +747,9 @@ class FeedTest extends TestCase
 
     public function testAddingCategoryWithInvalidUriAsSchemeThrowsException()
     {
-        $this->expectException(Writer\Exception\ExceptionInterface::class);
-
         $writer = new Writer\Feed;
+
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
         $writer->addCategory([
             'term'   => 'cat_dog',
             'scheme' => 'http://',
@@ -771,8 +771,9 @@ class FeedTest extends TestCase
 
     public function testSetsImageUriThrowsExceptionOnEmptyUri()
     {
-        $this->expectException(ExceptionInterface::class);
         $writer = new Writer\Feed;
+
+        $this->expectException(ExceptionInterface::class);
         $writer->setImage([
                                'uri' => ''
                           ]);
@@ -780,15 +781,17 @@ class FeedTest extends TestCase
 
     public function testSetsImageUriThrowsExceptionOnMissingUri()
     {
-        $this->expectException(ExceptionInterface::class);
         $writer = new Writer\Feed;
+
+        $this->expectException(ExceptionInterface::class);
         $writer->setImage([]);
     }
 
     public function testSetsImageUriThrowsExceptionOnInvalidUri()
     {
-        $this->expectException(ExceptionInterface::class);
         $writer = new Writer\Feed;
+
+        $this->expectException(ExceptionInterface::class);
         $writer->setImage([
                                'uri' => 'http://'
                           ]);
@@ -911,11 +914,9 @@ class FeedTest extends TestCase
      */
     public function testGetEntryException()
     {
-        $this->expectException(
-            Writer\Exception\InvalidArgumentException::class
-        );
-
         $writer = new Writer\Feed;
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $writer->getEntry(1);
     }
 
@@ -948,11 +949,9 @@ class FeedTest extends TestCase
      */
     public function testRemoveEntryException()
     {
-        $this->expectException(
-            Writer\Exception\InvalidArgumentException::class
-        );
-
         $writer = new Writer\Feed;
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $writer->removeEntry(1);
     }
 
@@ -1037,11 +1036,9 @@ EOT;
      */
     public function testExportWrongTypeException()
     {
-        $this->expectException(
-            Writer\Exception\InvalidArgumentException::class
-        );
-
         $writer = new Writer\Feed;
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $writer->export('foo');
     }
 

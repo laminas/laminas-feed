@@ -23,15 +23,17 @@ class FeedTest extends TestCase
 
     public function testSetBlockThrowsExceptionOnNonAlphaValue()
     {
-        $this->expectException(ExceptionInterface::class);
         $feed = new Writer\Feed;
+
+        $this->expectException(ExceptionInterface::class);
         $feed->setPlayPodcastBlock('123');
     }
 
     public function testSetBlockThrowsExceptionIfValueGreaterThan255CharsLength()
     {
-        $this->expectException(ExceptionInterface::class);
         $feed = new Writer\Feed;
+
+        $this->expectException(ExceptionInterface::class);
         $feed->setPlayPodcastBlock(str_repeat('a', 256));
     }
 
@@ -51,8 +53,9 @@ class FeedTest extends TestCase
 
     public function testAddAuthorThrowsExceptionIfValueGreaterThan255CharsLength()
     {
-        $this->expectException(ExceptionInterface::class);
         $feed = new Writer\Feed;
+
+        $this->expectException(ExceptionInterface::class);
         $feed->addPlayPodcastAuthor(str_repeat('a', 256));
     }
 
@@ -69,14 +72,15 @@ class FeedTest extends TestCase
 
     public function testSetCategoriesThrowsExceptionIfAnyCatNameGreaterThan255CharsLength()
     {
-        $this->expectException(ExceptionInterface::class);
         $feed = new Writer\Feed;
         $cats = [
             'cat1',
             'cat2' => ['cat2-1', str_repeat('a', 256)]
         ];
         $feed->setPlayPodcastCategories($cats);
-        $this->assertEquals($cats, $feed->getPlayPodcastCategories());
+
+        $this->expectException(ExceptionInterface::class);
+        $feed->getPlayPodcastCategories();
     }
 
     public function testSetImageAsPngFile()
@@ -95,8 +99,9 @@ class FeedTest extends TestCase
 
     public function testSetImageThrowsExceptionOnInvalidUri()
     {
-        $this->expectException(ExceptionInterface::class);
         $feed = new Writer\Feed;
+
+        $this->expectException(ExceptionInterface::class);
         $feed->setPlayPodcastImage('http://');
     }
 
@@ -123,8 +128,9 @@ class FeedTest extends TestCase
 
     public function testSetExplicitThrowsExceptionOnUnknownTerm()
     {
-        $this->expectException(ExceptionInterface::class);
         $feed = new Writer\Feed;
+
+        $this->expectException(ExceptionInterface::class);
         $feed->setPlayPodcastExplicit('abc');
     }
 
@@ -137,8 +143,9 @@ class FeedTest extends TestCase
 
     public function testSetDescriptionThrowsExceptionWhenValueExceeds4000Chars()
     {
-        $this->expectException(ExceptionInterface::class);
         $feed = new Writer\Feed;
+
+        $this->expectException(ExceptionInterface::class);
         $feed->setPlayPodcastDescription(str_repeat('a', 4001));
     }
 
@@ -165,6 +172,7 @@ class FeedTest extends TestCase
     public function testSetPlayPodcastImageRaisesExceptionForInvalidUrl($url)
     {
         $feed = new Writer\Feed();
+
         $this->expectException(ExceptionInterface::class);
         $feed->setPlayPodcastImage($url);
     }

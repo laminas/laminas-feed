@@ -84,10 +84,11 @@ class RssTest extends TestCase
 
     public function testEntryTitleIfMissingThrowsExceptionIfDescriptionAlsoMissing()
     {
-        $this->expectException(ExceptionInterface::class);
         $atomFeed = new Renderer\Feed\Rss($this->validWriter);
         $this->validEntry->remove('title');
         $this->validEntry->remove('description');
+
+        $this->expectException(ExceptionInterface::class);
         $atomFeed->render();
     }
 
@@ -110,10 +111,11 @@ class RssTest extends TestCase
 
     public function testEntryDescriptionIfMissingThrowsExceptionIfAlsoNoTitle()
     {
-        $this->expectException(ExceptionInterface::class);
         $atomFeed = new Renderer\Feed\Rss($this->validWriter);
         $this->validEntry->remove('description');
         $this->validEntry->remove('title');
+
+        $this->expectException(ExceptionInterface::class);
         $atomFeed->render();
     }
 
@@ -212,47 +214,51 @@ class RssTest extends TestCase
 
     public function testAddsEnclosureThrowsExceptionOnMissingType()
     {
-        $this->expectException(ExceptionInterface::class);
         $renderer = new Renderer\Feed\Rss($this->validWriter);
         $this->validEntry->setEnclosure([
                                               'uri'    => 'http://example.com/audio.mp3',
                                               'length' => '1337'
                                          ]);
+
+        $this->expectException(ExceptionInterface::class);
         $renderer->render();
     }
 
     public function testAddsEnclosureThrowsExceptionOnMissingLength()
     {
-        $this->expectException(ExceptionInterface::class);
         $renderer = new Renderer\Feed\Rss($this->validWriter);
         $this->validEntry->setEnclosure([
                                               'type' => 'audio/mpeg',
                                               'uri'  => 'http://example.com/audio.mp3'
                                          ]);
+
+        $this->expectException(ExceptionInterface::class);
         $renderer->render();
     }
 
     public function testAddsEnclosureThrowsExceptionOnNonNumericLength()
     {
-        $this->expectException(ExceptionInterface::class);
         $renderer = new Renderer\Feed\Rss($this->validWriter);
         $this->validEntry->setEnclosure([
                                               'type'   => 'audio/mpeg',
                                               'uri'    => 'http://example.com/audio.mp3',
                                               'length' => 'abc'
                                          ]);
+
+        $this->expectException(ExceptionInterface::class);
         $renderer->render();
     }
 
     public function testAddsEnclosureThrowsExceptionOnNegativeLength()
     {
-        $this->expectException(ExceptionInterface::class);
         $renderer = new Renderer\Feed\Rss($this->validWriter);
         $this->validEntry->setEnclosure([
                                               'type'   => 'audio/mpeg',
                                               'uri'    => 'http://example.com/audio.mp3',
                                               'length' => -23
                                          ]);
+
+        $this->expectException(ExceptionInterface::class);
         $renderer->render();
     }
 

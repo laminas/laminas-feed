@@ -86,9 +86,10 @@ class RssTest extends TestCase
 
     public function testFeedTitleIfMissingThrowsException()
     {
-        $this->expectException(ExceptionInterface::class);
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $this->validWriter->remove('title');
+
+        $this->expectException(ExceptionInterface::class);
         $rssFeed->render();
     }
 
@@ -114,9 +115,10 @@ class RssTest extends TestCase
 
     public function testFeedDescriptionThrowsExceptionIfMissing()
     {
-        $this->expectException(ExceptionInterface::class);
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $this->validWriter->remove('description');
+
+        $this->expectException(ExceptionInterface::class);
         $rssFeed->render();
     }
 
@@ -227,9 +229,10 @@ class RssTest extends TestCase
 
     public function testFeedLinkToHtmlVersionOfFeedIfMissingThrowsException()
     {
-        $this->expectException(ExceptionInterface::class);
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $this->validWriter->remove('link');
+
+        $this->expectException(ExceptionInterface::class);
         $rssFeed->render();
     }
 
@@ -432,40 +435,42 @@ class RssTest extends TestCase
 
     public function testImageThrowsExceptionOnMissingLink()
     {
-        $this->expectException(ExceptionInterface::class);
         $this->validWriter->setImage([
                                            'uri'   => 'http://www.example.com/logo.gif',
                                            'title' => 'Image ALT'
                                       ]);
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+
+        $this->expectException(ExceptionInterface::class);
         $rssFeed->render();
     }
 
     public function testImageThrowsExceptionOnMissingTitle()
     {
-        $this->expectException(ExceptionInterface::class);
         $this->validWriter->setImage([
                                            'uri'  => 'http://www.example.com/logo.gif',
                                            'link' => 'http://www.example.com'
                                       ]);
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+
+        $this->expectException(ExceptionInterface::class);
         $rssFeed->render();
     }
 
     public function testImageThrowsExceptionOnMissingUri()
     {
-        $this->expectException(ExceptionInterface::class);
         $this->validWriter->setImage([
                                            'link'  => 'http://www.example.com',
                                            'title' => 'Image ALT'
                                       ]);
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+
+        $this->expectException(ExceptionInterface::class);
         $rssFeed->render();
     }
 
     public function testImageThrowsExceptionIfOptionalDescriptionInvalid()
     {
-        $this->expectException(ExceptionInterface::class);
         $this->validWriter->setImage([
                                            'uri'         => 'http://www.example.com/logo.gif',
                                            'link'        => 'http://www.example.com',
@@ -473,12 +478,13 @@ class RssTest extends TestCase
                                            'description' => 2
                                       ]);
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+
+        $this->expectException(ExceptionInterface::class);
         $rssFeed->render();
     }
 
     public function testImageThrowsExceptionIfOptionalDescriptionEmpty()
     {
-        $this->expectException(ExceptionInterface::class);
         $this->validWriter->setImage([
                                            'uri'         => 'http://www.example.com/logo.gif',
                                            'link'        => 'http://www.example.com',
@@ -486,12 +492,13 @@ class RssTest extends TestCase
                                            'description' => ''
                                       ]);
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+
+        $this->expectException(ExceptionInterface::class);
         $rssFeed->render();
     }
 
     public function testImageThrowsExceptionIfOptionalHeightNotAnInteger()
     {
-        $this->expectException(ExceptionInterface::class);
         $this->validWriter->setImage([
                                            'uri'    => 'http://www.example.com/logo.gif',
                                            'link'   => 'http://www.example.com',
@@ -500,12 +507,13 @@ class RssTest extends TestCase
                                            'width'  => 144
                                       ]);
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+
+        $this->expectException(ExceptionInterface::class);
         $rssFeed->render();
     }
 
     public function testImageThrowsExceptionIfOptionalHeightEmpty()
     {
-        $this->expectException(ExceptionInterface::class);
         $this->validWriter->setImage([
                                            'uri'    => 'http://www.example.com/logo.gif',
                                            'link'   => 'http://www.example.com',
@@ -514,12 +522,13 @@ class RssTest extends TestCase
                                            'width'  => 144
                                       ]);
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+
+        $this->expectException(ExceptionInterface::class);
         $rssFeed->render();
     }
 
     public function testImageThrowsExceptionIfOptionalHeightGreaterThan400()
     {
-        $this->expectException(ExceptionInterface::class);
         $this->validWriter->setImage([
                                            'uri'    => 'http://www.example.com/logo.gif',
                                            'link'   => 'http://www.example.com',
@@ -528,12 +537,13 @@ class RssTest extends TestCase
                                            'width'  => 144
                                       ]);
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+
+        $this->expectException(ExceptionInterface::class);
         $rssFeed->render();
     }
 
     public function testImageThrowsExceptionIfOptionalWidthNotAnInteger()
     {
-        $this->expectException(ExceptionInterface::class);
         $this->validWriter->setImage([
                                            'uri'    => 'http://www.example.com/logo.gif',
                                            'link'   => 'http://www.example.com',
@@ -542,12 +552,13 @@ class RssTest extends TestCase
                                            'width'  => 'a'
                                       ]);
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+
+        $this->expectException(ExceptionInterface::class);
         $rssFeed->render();
     }
 
     public function testImageThrowsExceptionIfOptionalWidthEmpty()
     {
-        $this->expectException(ExceptionInterface::class);
         $this->validWriter->setImage([
                                            'uri'    => 'http://www.example.com/logo.gif',
                                            'link'   => 'http://www.example.com',
@@ -556,12 +567,13 @@ class RssTest extends TestCase
                                            'width'  => ''
                                       ]);
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+
+        $this->expectException(ExceptionInterface::class);
         $rssFeed->render();
     }
 
     public function testImageThrowsExceptionIfOptionalWidthGreaterThan144()
     {
-        $this->expectException(ExceptionInterface::class);
         $this->validWriter->setImage([
                                            'uri'    => 'http://www.example.com/logo.gif',
                                            'link'   => 'http://www.example.com',
@@ -570,6 +582,8 @@ class RssTest extends TestCase
                                            'width'  => '145'
                                       ]);
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+
+        $this->expectException(ExceptionInterface::class);
         $rssFeed->render();
     }
 

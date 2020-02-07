@@ -23,15 +23,17 @@ class EntryTest extends TestCase
 
     public function testSetBlockThrowsExceptionOnNonAlphaValue()
     {
-        $this->expectException(ExceptionInterface::class);
         $entry = new Writer\Entry;
+
+        $this->expectException(ExceptionInterface::class);
         $entry->setPlayPodcastBlock('123');
     }
 
     public function testSetBlockThrowsExceptionIfValueGreaterThan255CharsLength()
     {
-        $this->expectException(ExceptionInterface::class);
         $entry = new Writer\Entry;
+
+        $this->expectException(ExceptionInterface::class);
         $entry->setPlayPodcastBlock(str_repeat('a', 256));
     }
 
@@ -58,8 +60,9 @@ class EntryTest extends TestCase
 
     public function testSetExplicitThrowsExceptionOnUnknownTerm()
     {
-        $this->expectException(ExceptionInterface::class);
         $entry = new Writer\Entry;
+
+        $this->expectException(ExceptionInterface::class);
         $entry->setPlayPodcastExplicit('abc');
     }
 
@@ -72,8 +75,9 @@ class EntryTest extends TestCase
 
     public function testSetDescriptionThrowsExceptionWhenValueExceeds255Chars()
     {
-        $this->expectException(ExceptionInterface::class);
         $entry = new Writer\Entry;
+
+        $this->expectException(ExceptionInterface::class);
         $entry->setPlayPodcastDescription(str_repeat('a', 4001));
     }
 }
