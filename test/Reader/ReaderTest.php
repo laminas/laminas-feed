@@ -249,8 +249,8 @@ class ReaderTest extends TestCase
             $this->markTestSkipped('testGetsFeedLinksAsValueObject() requires a network connection');
         }
 
-        $links = Reader\Reader::findFeedLinks('http://www.infopod.com.br');
-        $this->assertEquals('http://www.infopod.com.br/feed/', $links->rss);
+        $links = Reader\Reader::findFeedLinks('https://github.com/laminas/laminas-feed/releases');
+        $this->assertEquals('https://github.com/laminas/laminas-feed/releases.atom', $links->atom);
     }
 
     /**
