@@ -47,9 +47,6 @@ matrix:
         - DEPS=latest
     - php: 7.4
       env:
-        - DEPS=lowest
-    - php: 7.4
-      env:
         - DEPS=latest
 
 before_install:
