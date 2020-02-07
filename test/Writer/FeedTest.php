@@ -543,12 +543,10 @@ class FeedTest extends TestCase
         $this->expectException(Writer\Exception\ExceptionInterface::class);
 
         $writer = new Writer\Feed;
-        $writer->setGenerator(
-            [
-                'name'    => 'LaminasW',
-                'version' => '',
-            ]
-        );
+        $writer->setGenerator([
+            'name'    => 'LaminasW',
+            'version' => '',
+        ]);
     }
 
     public function testSetsGeneratorThrowsExceptionOnInvalidUri()
@@ -558,12 +556,10 @@ class FeedTest extends TestCase
         $this->expectException(ExceptionInterface::class);
 
         $writer = new Writer\Feed;
-        $writer->setGenerator(
-            [
-                'name' => 'LaminasW',
-                'uri'  => 'notauri',
-            ]
-        );
+        $writer->setGenerator([
+            'name' => 'LaminasW',
+            'uri'  => 'notauri',
+        ]);
     }
 
     /**
@@ -743,12 +739,10 @@ class FeedTest extends TestCase
         $this->expectException(Writer\Exception\ExceptionInterface::class);
 
         $writer = new Writer\Feed;
-        $writer->addCategory(
-            [
-                'label'  => 'Cats & Dogs',
-                'scheme' => 'http://www.example.com/schema1',
-            ]
-        );
+        $writer->addCategory([
+            'label'  => 'Cats & Dogs',
+            'scheme' => 'http://www.example.com/schema1',
+        ]);
     }
 
     public function testAddingCategoryWithInvalidUriAsSchemeThrowsException()
@@ -756,12 +750,10 @@ class FeedTest extends TestCase
         $this->expectException(Writer\Exception\ExceptionInterface::class);
 
         $writer = new Writer\Feed;
-        $writer->addCategory(
-            [
-                'term'   => 'cat_dog',
-                'scheme' => 'http://',
-            ]
-        );
+        $writer->addCategory([
+            'term'   => 'cat_dog',
+            'scheme' => 'http://',
+        ]);
     }
 
     // Image Tests

@@ -87,13 +87,11 @@ class EntryTest extends TestCase
         );
 
         $entry = new Writer\Entry;
-        $entry->addAuthor(
-            [
-                'name'  => 'Joe',
-                'email' => 'joe@example.org',
-                'uri'   => '',
-            ]
-        );
+        $entry->addAuthor([
+            'name'  => 'Joe',
+            'email' => 'joe@example.org',
+            'uri'   => '',
+        ]);
     }
 
     public function testAddAuthorThrowsExceptionIfNameOmittedFromArray()

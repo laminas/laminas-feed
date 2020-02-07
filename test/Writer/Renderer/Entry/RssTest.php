@@ -262,13 +262,11 @@ class RssTest extends TestCase
     public function testEnclosureWorksWithZeroLength()
     {
         $renderer = new Renderer\Feed\Rss($this->validWriter);
-        $this->validEntry->setEnclosure(
-            [
-                'type'   => 'audio/mpeg',
-                'uri'    => 'http://example.com/audio.mp3',
-                'length' => 0,
-            ]
-        );
+        $this->validEntry->setEnclosure([
+            'type'   => 'audio/mpeg',
+            'uri'    => 'http://example.com/audio.mp3',
+            'length' => 0,
+        ]);
         $renderer->render();
     }
 
@@ -278,13 +276,11 @@ class RssTest extends TestCase
     public function testEnclosureWorksWithPositiveLength()
     {
         $renderer = new Renderer\Feed\Rss($this->validWriter);
-        $this->validEntry->setEnclosure(
-            [
-                'type'   => 'audio/mpeg',
-                'uri'    => 'http://example.com/audio.mp3',
-                'length' => 23,
-            ]
-        );
+        $this->validEntry->setEnclosure([
+            'type'   => 'audio/mpeg',
+            'uri'    => 'http://example.com/audio.mp3',
+            'length' => 23,
+        ]);
         $renderer->render();
     }
 
@@ -294,13 +290,11 @@ class RssTest extends TestCase
     public function testEnclosureWorksWithPositiveLengthString()
     {
         $renderer = new Renderer\Feed\Rss($this->validWriter);
-        $this->validEntry->setEnclosure(
-            [
-                'type'   => 'audio/mpeg',
-                'uri'    => 'http://example.com/audio.mp3',
-                'length' => '23',
-            ]
-        );
+        $this->validEntry->setEnclosure([
+            'type'   => 'audio/mpeg',
+            'uri'    => 'http://example.com/audio.mp3',
+            'length' => '23',
+        ]);
         $renderer->render();
     }
 
