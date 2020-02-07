@@ -160,7 +160,6 @@ class EntryTest extends TestCase
         }, \E_USER_DEPRECATED);
         try {
             $entry->setItunesKeywords($words);
-            $this->fail();
         } finally {
             restore_error_handler();
         }
@@ -180,7 +179,6 @@ class EntryTest extends TestCase
         }, \E_USER_DEPRECATED);
         try {
             $entry->setItunesKeywords($words);
-            $this->fail();
         } finally {
             restore_error_handler();
         }

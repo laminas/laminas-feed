@@ -211,7 +211,6 @@ class FeedTest extends TestCase
         }, \E_USER_DEPRECATED);
         try {
             $feed->setItunesKeywords($words);
-            $this->fail();
         } finally {
             restore_error_handler();
         }
@@ -231,7 +230,6 @@ class FeedTest extends TestCase
         }, \E_USER_DEPRECATED);
         try {
             $feed->setItunesKeywords($words);
-            $this->fail();
         } finally {
             restore_error_handler();
         }
