@@ -15,8 +15,8 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get the entry license
      *
-     * @param int $index
-     * @return string|null
+     * @param  int $index
+     * @return null|string
      */
     public function getLicense($index = 0)
     {
@@ -42,7 +42,7 @@ class Feed extends Extension\AbstractFeed
         }
 
         $licenses = [];
-        $list = $this->xpath->evaluate('channel/cc:license');
+        $list     = $this->xpath->evaluate('channel/cc:license');
 
         if ($list->length) {
             foreach ($list as $license) {

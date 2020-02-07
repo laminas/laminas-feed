@@ -11,8 +11,6 @@ namespace Laminas\Feed\Writer\Extension;
 use DOMDocument;
 use DOMElement;
 
-/**
-*/
 interface RendererInterface
 {
     /**
@@ -33,8 +31,6 @@ interface RendererInterface
     /**
      * Set DOMDocument and DOMElement on which to operate
      *
-     * @param  DOMDocument $dom
-     * @param  DOMElement $base
      * @return void
      */
     public function setDomDocument(DOMDocument $dom, DOMElement $base);

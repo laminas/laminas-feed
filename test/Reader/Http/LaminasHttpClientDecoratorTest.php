@@ -58,18 +58,18 @@ class LaminasHttpClientDecoratorTest extends TestCase
 
     public function testProvidesAccessToDecoratedClient()
     {
-        $client = $this->prophesize(Client::class)->reveal();
+        $client    = $this->prophesize(Client::class)->reveal();
         $decorator = new LaminasHttpClientDecorator($client);
         $this->assertSame($client, $decorator->getDecoratedClient());
     }
 
     public function testDecoratorReturnsFeedResponse()
     {
-        $headers = $this->createMockHttpHeaders(['Content-Type' => 'application/rss+xml']);
+        $headers      = $this->createMockHttpHeaders(['Content-Type' => 'application/rss+xml']);
         $httpResponse = $this->createMockHttpResponse(200, '', $headers->reveal());
         $this->prepareDefaultClientInteractions('http://example.com', $httpResponse);
 
-        $client = new LaminasHttpClientDecorator($this->client->reveal());
+        $client   = new LaminasHttpClientDecorator($this->client->reveal());
         $response = $client->get('http://example.com');
 
         $this->assertInstanceOf(FeedResponse::class, $response);
@@ -81,11 +81,11 @@ class LaminasHttpClientDecoratorTest extends TestCase
     public function testDecoratorInjectsProvidedHeadersIntoClientWhenSending()
     {
         $responseHeaders = $this->createMockHttpHeaders([
-            'Content-Type' => 'application/rss+xml',
-            'Content-Length' => 1234,
+            'Content-Type'     => 'application/rss+xml',
+            'Content-Length'   => 1234,
             'X-Content-Length' => 1234.56,
         ]);
-        $httpResponse = $this->createMockHttpResponse(200, '', $responseHeaders->reveal());
+        $httpResponse    = $this->createMockHttpResponse(200, '', $responseHeaders->reveal());
         $this->prepareDefaultClientInteractions('http://example.com', $httpResponse);
 
         $requestHeaders = $this->prophesize(Headers::class);
@@ -94,8 +94,8 @@ class LaminasHttpClientDecoratorTest extends TestCase
         $request->getHeaders()->willReturn($requestHeaders->reveal());
         $this->client->getRequest()->willReturn($request->reveal());
 
-        $client = new LaminasHttpClientDecorator($this->client->reveal());
-        $response = $client->get('http://example.com', ['Accept' => [ 'application/rss+xml' ]]);
+        $client   = new LaminasHttpClientDecorator($this->client->reveal());
+        $response = $client->get('http://example.com', ['Accept' => ['application/rss+xml']]);
 
         $this->assertInstanceOf(FeedResponse::class, $response);
         $this->assertEquals(200, $response->getStatusCode());
@@ -108,39 +108,39 @@ class LaminasHttpClientDecoratorTest extends TestCase
     public function invalidHeaders()
     {
         $basicTests = [
-            'zero-name' => [
-                [[ 'value' ]],
+            'zero-name'        => [
+                [['value']],
                 'Header names',
             ],
-            'int-name' => [
-                [1 => [ 'value' ]],
+            'int-name'         => [
+                [1 => ['value']],
                 'Header names',
             ],
-            'numeric-name' => [
-                ['1.1' => [ 'value' ]],
+            'numeric-name'     => [
+                ['1.1' => ['value']],
                 'Header names',
             ],
-            'empty-name' => [
-                ['' => [ 'value' ]],
+            'empty-name'       => [
+                ['' => ['value']],
                 'Header names',
             ],
-            'null-value' => [
+            'null-value'       => [
                 ['X-Test' => null],
                 'Header values',
             ],
-            'true-value' => [
+            'true-value'       => [
                 ['X-Test' => true],
                 'Header values',
             ],
-            'false-value' => [
+            'false-value'      => [
                 ['X-Test' => false],
                 'Header values',
             ],
-            'zero-value' => [
+            'zero-value'       => [
                 ['X-Test' => 0],
                 'Header values',
             ],
-            'int-value' => [
+            'int-value'        => [
                 ['X-Test' => 1],
                 'Header values',
             ],
@@ -148,16 +148,16 @@ class LaminasHttpClientDecoratorTest extends TestCase
                 ['X-Test' => 0.0],
                 'Header values',
             ],
-            'float-value' => [
+            'float-value'      => [
                 ['X-Test' => 1.1],
                 'Header values',
             ],
-            'string-value' => [
+            'string-value'     => [
                 ['X-Test' => 'value'],
                 'Header values',
             ],
-            'object-value' => [
-                ['X-Test' => (object) [ 'value' ]],
+            'object-value'     => [
+                ['X-Test' => (object) ['value']],
                 'Header values',
             ],
         ];
@@ -175,7 +175,7 @@ class LaminasHttpClientDecoratorTest extends TestCase
         ];
 
         foreach ($invalidIndividualValues as $key => $value) {
-            yield $key => [['X-Test' => [ $value ]], 'strings or numbers'];
+            yield $key => [['X-Test' => [$value]], 'strings or numbers'];
         }
     }
 
@@ -191,7 +191,7 @@ class LaminasHttpClientDecoratorTest extends TestCase
         $this->client->setUri('http://example.com')->shouldBeCalled();
 
         $requestHeaders = $this->prophesize(Headers::class);
-        $request = $this->prophesize(HttpRequest::class);
+        $request        = $this->prophesize(HttpRequest::class);
         $request->getHeaders()->willReturn($requestHeaders->reveal());
         $this->client->getRequest()->willReturn($request->reveal());
 

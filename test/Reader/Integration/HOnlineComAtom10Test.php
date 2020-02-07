@@ -12,12 +12,12 @@ use Laminas\Feed\Reader;
 use PHPUnit\Framework\TestCase;
 
 /**
-* @group Laminas_Feed
-* @group Laminas_Feed_Reader
-*/
+ * @group Laminas_Feed
+ * @group Laminas_Feed_Reader
+ */
 class HOnlineComAtom10Test extends TestCase
 {
-    protected $feedSamplePath = null;
+    protected $feedSamplePath;
 
     public function setup()
     {
@@ -100,10 +100,9 @@ class HOnlineComAtom10Test extends TestCase
     /**
      * Entry level testing
      */
-
     public function testGetsEntryId()
     {
-        $feed = Reader\Reader::importString(
+        $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
         $entry = $feed->current();
@@ -115,7 +114,7 @@ class HOnlineComAtom10Test extends TestCase
 
     public function testGetsEntryTitle()
     {
-        $feed = Reader\Reader::importString(
+        $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
         $entry = $feed->current();
@@ -124,7 +123,7 @@ class HOnlineComAtom10Test extends TestCase
 
     public function testGetsEntryAuthors()
     {
-        $feed = Reader\Reader::importString(
+        $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
         $entry = $feed->current();
@@ -133,7 +132,7 @@ class HOnlineComAtom10Test extends TestCase
 
     public function testGetsEntrySingleAuthor()
     {
-        $feed = Reader\Reader::importString(
+        $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
         $entry = $feed->current();
@@ -142,10 +141,11 @@ class HOnlineComAtom10Test extends TestCase
 
     public function testGetsEntryDescription()
     {
-        $feed = Reader\Reader::importString(
+        $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
         $entry = $feed->current();
+
         /**
          * Note: "’" is not the same as "'" - don't replace in error
          */
@@ -157,7 +157,7 @@ class HOnlineComAtom10Test extends TestCase
 
     public function testGetsEntryContent()
     {
-        $feed = Reader\Reader::importString(
+        $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
         $entry = $feed->current();
@@ -169,7 +169,7 @@ class HOnlineComAtom10Test extends TestCase
 
     public function testGetsEntryLinks()
     {
-        $feed = Reader\Reader::importString(
+        $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
         $entry = $feed->current();
@@ -181,7 +181,7 @@ class HOnlineComAtom10Test extends TestCase
 
     public function testGetsEntryLink()
     {
-        $feed = Reader\Reader::importString(
+        $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
         $entry = $feed->current();
@@ -193,7 +193,7 @@ class HOnlineComAtom10Test extends TestCase
 
     public function testGetsEntryPermaLink()
     {
-        $feed = Reader\Reader::importString(
+        $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
         $entry = $feed->current();
@@ -205,7 +205,7 @@ class HOnlineComAtom10Test extends TestCase
 
     public function testGetsEntryEncoding()
     {
-        $feed = Reader\Reader::importString(
+        $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
         $entry = $feed->current();

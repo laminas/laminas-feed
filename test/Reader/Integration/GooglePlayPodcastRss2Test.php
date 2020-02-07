@@ -10,10 +10,11 @@ namespace LaminasTest\Feed\Reader\Integration;
 
 use Laminas\Feed\Reader;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 class GoolePlayPodcastRss2Test extends TestCase
 {
-    protected $feedSamplePath = null;
+    protected $feedSamplePath;
 
     public function setup()
     {
@@ -24,7 +25,6 @@ class GoolePlayPodcastRss2Test extends TestCase
     /**
      * Feed level testing
      */
-
     public function testGetsNewFeedUrl()
     {
         $feed = Reader\Reader::importString(
@@ -48,9 +48,9 @@ class GoolePlayPodcastRss2Test extends TestCase
         );
         $this->assertEquals([
             'Technology' => [
-                'Gadgets' => null
+                'Gadgets' => null,
             ],
-            'TV & Film' => null
+            'TV & Film'  => null,
         ], $feed->getPlayPodcastCategories());
     }
 
@@ -88,7 +88,7 @@ class GoolePlayPodcastRss2Test extends TestCase
 
     public function testGetsDescription()
     {
-        $feed = Reader\Reader::importString(
+        $feed     = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
         $expected = 'All About Everything is a show about everything.
@@ -101,7 +101,7 @@ class GoolePlayPodcastRss2Test extends TestCase
 
     public function testGetsPodcastDescription()
     {
-        $feed = Reader\Reader::importString(
+        $feed     = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
         $expected = 'All About Everything is a show about everything.
@@ -166,10 +166,9 @@ class GoolePlayPodcastRss2Test extends TestCase
     /**
      * Entry level testing
      */
-
     public function testGetsEntryBlock()
     {
-        $feed = Reader\Reader::importString(
+        $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
         $entry = $feed->current();
@@ -178,7 +177,7 @@ class GoolePlayPodcastRss2Test extends TestCase
 
     public function testGetsEntryId()
     {
-        $feed = Reader\Reader::importString(
+        $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
         $entry = $feed->current();
@@ -187,7 +186,7 @@ class GoolePlayPodcastRss2Test extends TestCase
 
     public function testGetsEntryTitle()
     {
-        $feed = Reader\Reader::importString(
+        $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
         $entry = $feed->current();
@@ -196,7 +195,7 @@ class GoolePlayPodcastRss2Test extends TestCase
 
     public function testGetsEntryCastAuthor()
     {
-        $feed = Reader\Reader::importString(
+        $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
         $entry = $feed->current();
@@ -205,7 +204,7 @@ class GoolePlayPodcastRss2Test extends TestCase
 
     public function testGetsEntryExplicit()
     {
-        $feed = Reader\Reader::importString(
+        $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
         $entry = $feed->current();
@@ -214,10 +213,10 @@ class GoolePlayPodcastRss2Test extends TestCase
 
     public function testGetsSubtitle()
     {
-        $feed = Reader\Reader::importString(
+        $feed     = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
-        $entry = $feed->current();
+        $entry    = $feed->current();
         $expected = 'A short primer on table spices
             ';
         $expected = str_replace("\r\n", "\n", $expected);
@@ -226,10 +225,10 @@ class GoolePlayPodcastRss2Test extends TestCase
 
     public function testGetsEpisodeDescription()
     {
-        $feed = Reader\Reader::importString(
+        $feed     = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
-        $entry = $feed->current();
+        $entry    = $feed->current();
         $expected = 'This week we talk about salt and pepper
                 shakers, comparing and contrasting pour rates,
                 construction materials, and overall aesthetics. Come and
@@ -240,7 +239,7 @@ class GoolePlayPodcastRss2Test extends TestCase
 
     public function testGetsDuration()
     {
-        $feed = Reader\Reader::importString(
+        $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
         $entry = $feed->current();
@@ -249,7 +248,7 @@ class GoolePlayPodcastRss2Test extends TestCase
 
     public function testGetsEntryEncoding()
     {
-        $feed = Reader\Reader::importString(
+        $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
         $entry = $feed->current();
@@ -258,12 +257,12 @@ class GoolePlayPodcastRss2Test extends TestCase
 
     public function testGetsEnclosure()
     {
-        $feed = Reader\Reader::importString(
+        $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
         $entry = $feed->current();
 
-        $expected = new \stdClass();
+        $expected         = new stdClass();
         $expected->url    = 'http://example.com/podcasts/everything/AllAboutEverythingEpisode3.m4a';
         $expected->length = '8727310';
         $expected->type   = 'audio/x-m4a';
@@ -273,7 +272,7 @@ class GoolePlayPodcastRss2Test extends TestCase
 
     public function testCanRetrieveEntryImage()
     {
-        $feed = Reader\Reader::importString(
+        $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
         $entry = $feed->current();
@@ -295,7 +294,7 @@ class GoolePlayPodcastRss2Test extends TestCase
     public function testPodcastTypeIsEpisodicWhenNoTagPresent()
     {
         $feedSamplePath = dirname(__FILE__) . '/_files/google-podcast-no-type.xml';
-        $feed = Reader\Reader::importString(
+        $feed           = Reader\Reader::importString(
             file_get_contents($feedSamplePath)
         );
         $this->assertEquals('episodic', $feed->getPodcastType());
@@ -312,7 +311,7 @@ class GoolePlayPodcastRss2Test extends TestCase
     public function testIsCompleteReturnsTrueWhenTagValueIsYes()
     {
         $feedSamplePath = dirname(__FILE__) . '/_files/google-podcast-complete.xml';
-        $feed = Reader\Reader::importString(
+        $feed           = Reader\Reader::importString(
             file_get_contents($feedSamplePath)
         );
         $this->assertTrue($feed->isComplete());
@@ -321,7 +320,7 @@ class GoolePlayPodcastRss2Test extends TestCase
     public function testIsCompleteReturnsFalseWhenTagValueIsSomethingOtherThanYes()
     {
         $feedSamplePath = dirname(__FILE__) . '/_files/google-podcast-incomplete.xml';
-        $feed = Reader\Reader::importString(
+        $feed           = Reader\Reader::importString(
             file_get_contents($feedSamplePath)
         );
         $this->assertFalse($feed->isComplete());
@@ -329,7 +328,7 @@ class GoolePlayPodcastRss2Test extends TestCase
 
     public function testGetEpisodeReturnsNullIfNoTagPresent()
     {
-        $feed = Reader\Reader::importString(
+        $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
         $entry = $feed->current();
@@ -338,7 +337,7 @@ class GoolePlayPodcastRss2Test extends TestCase
 
     public function testGetEpisodeTypeReturnsFullIfNoTagPresent()
     {
-        $feed = Reader\Reader::importString(
+        $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
         $entry = $feed->current();
@@ -349,26 +348,26 @@ class GoolePlayPodcastRss2Test extends TestCase
     public function testGetEpisodeReturnsValueWhenTagPresent()
     {
         $feedSamplePath = dirname(__FILE__) . '/_files/google-podcast-episode.xml';
-        $feed = Reader\Reader::importString(
+        $feed           = Reader\Reader::importString(
             file_get_contents($feedSamplePath)
         );
-        $entry = $feed->current();
+        $entry          = $feed->current();
         $this->assertEquals(10, $entry->getEpisode());
     }
 
     public function testGetEpisodeTypeReturnsValueWhenTagPresent()
     {
         $feedSamplePath = dirname(__FILE__) . '/_files/google-podcast-episode.xml';
-        $feed = Reader\Reader::importString(
+        $feed           = Reader\Reader::importString(
             file_get_contents($feedSamplePath)
         );
-        $entry = $feed->current();
+        $entry          = $feed->current();
         $this->assertEquals('bonus', $entry->getEpisodeType());
     }
 
     public function testIsClosedCaptionedReturnsTrueWhenEpisodeDefinesItWithValueYes()
     {
-        $feed = Reader\Reader::importString(
+        $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
         $entry = $feed->current();
@@ -398,7 +397,7 @@ class GoolePlayPodcastRss2Test extends TestCase
 
     public function testGetSeasonReturnsNullIfNoTagPresent()
     {
-        $feed = Reader\Reader::importString(
+        $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
         $entry = $feed->current();

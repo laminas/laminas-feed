@@ -21,7 +21,7 @@ class Feed extends Extension\AbstractFeed
      * Get a single author
      *
      * @param  int $index
-     * @return string|null
+     * @return null|string
      */
     public function getAuthor($index = 0)
     {
@@ -58,7 +58,7 @@ class Feed extends Extension\AbstractFeed
             }
         }
 
-        if (count($authors) == 0) {
+        if (count($authors) === 0) {
             $authors = new Collection\Author();
         } else {
             $authors = new Collection\Author(
@@ -74,7 +74,7 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get the copyright entry
      *
-     * @return string|null
+     * @return null|string
      */
     public function getCopyright()
     {
@@ -102,7 +102,7 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get the feed creation date
      *
-     * @return DateTime|null
+     * @return null|DateTime
      */
     public function getDateCreated()
     {
@@ -130,7 +130,7 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get the feed modification date
      *
-     * @return DateTime|null
+     * @return null|DateTime
      */
     public function getDateModified()
     {
@@ -158,7 +158,7 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get the feed description
      *
-     * @return string|null
+     * @return null|string
      */
     public function getDescription()
     {
@@ -186,7 +186,7 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get the feed generator entry
      *
-     * @return string|null
+     * @return null|string
      */
     public function getGenerator()
     {
@@ -208,7 +208,7 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get the feed ID
      *
-     * @return string|null
+     * @return null|string
      */
     public function getId()
     {
@@ -236,7 +236,7 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get the feed language
      *
-     * @return string|null
+     * @return null|string
      */
     public function getLanguage()
     {
@@ -262,7 +262,7 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get the feed image
      *
-     * @return array|null
+     * @return null|array
      */
     public function getImage()
     {
@@ -286,7 +286,7 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get the base URI of the feed (if set).
      *
-     * @return string|null
+     * @return null|string
      */
     public function getBaseUrl()
     {
@@ -307,7 +307,7 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get a link to the source website
      *
-     * @return string|null
+     * @return null|string
      */
     public function getLink()
     {
@@ -318,8 +318,8 @@ class Feed extends Extension\AbstractFeed
         $link = null;
 
         $list = $this->xpath->query(
-            $this->getXpathPrefix() . '/atom:link[@rel="alternate"]/@href' . '|' .
-            $this->getXpathPrefix() . '/atom:link[not(@rel)]/@href'
+            $this->getXpathPrefix() . '/atom:link[@rel="alternate"]/@href' . '|'
+            . $this->getXpathPrefix() . '/atom:link[not(@rel)]/@href'
         );
 
         if ($list->length) {
@@ -335,7 +335,7 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get a link to the feed's XML Url
      *
-     * @return string|null
+     * @return null|string
      */
     public function getFeedLink()
     {
@@ -355,7 +355,7 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get an array of any supported Pusubhubbub endpoints
      *
-     * @return array|null
+     * @return null|array
      */
     public function getHubs()
     {
@@ -364,8 +364,7 @@ class Feed extends Extension\AbstractFeed
         }
         $hubs = [];
 
-        $list = $this->xpath->query($this->getXpathPrefix()
-            . '//atom:link[@rel="hub"]/@href');
+        $list = $this->xpath->query($this->getXpathPrefix() . '//atom:link[@rel="hub"]/@href');
 
         if ($list->length) {
             foreach ($list as $uri) {
@@ -383,7 +382,7 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get the feed title
      *
-     * @return string|null
+     * @return null|string
      */
     public function getTitle()
     {
@@ -413,7 +412,7 @@ class Feed extends Extension\AbstractFeed
             return $this->data['categories'];
         }
 
-        if ($this->getType() == Reader\Reader::TYPE_ATOM_10) {
+        if ($this->getType() === Reader\Reader::TYPE_ATOM_10) {
             $list = $this->xpath->query($this->getXpathPrefix() . '/atom:category');
         } else {
             /**
@@ -426,16 +425,16 @@ class Feed extends Extension\AbstractFeed
         }
 
         if ($list->length) {
-            $categoryCollection = new Collection\Category;
+            $categoryCollection = new Collection\Category();
             foreach ($list as $category) {
                 $categoryCollection[] = [
-                    'term' => $category->getAttribute('term'),
+                    'term'   => $category->getAttribute('term'),
                     'scheme' => $category->getAttribute('scheme'),
-                    'label' => $category->getAttribute('label')
+                    'label'  => $category->getAttribute('label'),
                 ];
             }
         } else {
-            return new Collection\Category;
+            return new Collection\Category();
         }
 
         $this->data['categories'] = $categoryCollection;
@@ -446,7 +445,6 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get an author entry in RSS format
      *
-     * @param  DOMElement $element
      * @return string
      */
     protected function getAuthorFromElement(DOMElement $element)
@@ -476,11 +474,11 @@ class Feed extends Extension\AbstractFeed
     }
 
     /**
-     *  Attempt to absolutise the URI, i.e. if a relative URI apply the
+     * Attempt to absolutise the URI, i.e. if a relative URI apply the
      *  xml:base value as a prefix to turn into an absolute URI.
      *
-     * @param string $link
-     * @return string|null
+     * @param  string $link
+     * @return null|string
      */
     protected function absolutiseUri($link)
     {
@@ -500,8 +498,8 @@ class Feed extends Extension\AbstractFeed
      */
     protected function registerNamespaces()
     {
-        if ($this->getType() == Reader\Reader::TYPE_ATOM_10
-            || $this->getType() == Reader\Reader::TYPE_ATOM_03
+        if ($this->getType() === Reader\Reader::TYPE_ATOM_10
+            || $this->getType() === Reader\Reader::TYPE_ATOM_03
         ) {
             return; // pre-registered at Feed level
         }
@@ -521,7 +519,7 @@ class Feed extends Extension\AbstractFeed
      */
     protected function getAtomType()
     {
-        $dom = $this->getDomDocument();
+        $dom          = $this->getDomDocument();
         $prefixAtom03 = $dom->lookupPrefix(Reader\Reader::NAMESPACE_ATOM_03);
         $prefixAtom10 = $dom->lookupPrefix(Reader\Reader::NAMESPACE_ATOM_10);
         if ($dom->isDefaultNamespace(Reader\Reader::NAMESPACE_ATOM_10)

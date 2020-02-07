@@ -12,14 +12,15 @@ use DateTime;
 use Laminas\Feed\Reader;
 use Laminas\Feed\Reader\Entry\Atom;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 /**
-* @group Laminas_Feed
-* @group Laminas_Feed_Reader
-*/
+ * @group Laminas_Feed
+ * @group Laminas_Feed_Reader
+ */
 class AtomStandaloneEntryTest extends TestCase
 {
-    protected $feedSamplePath = null;
+    protected $feedSamplePath;
 
     protected $expectedCats = [];
 
@@ -30,34 +31,34 @@ class AtomStandaloneEntryTest extends TestCase
         Reader\Reader::reset();
         $this->feedSamplePath = dirname(__FILE__) . '/_files/AtomStandaloneEntry';
 
-        $this->expectedCats = [
+        $this->expectedCats   = [
             [
-                'term' => 'topic1',
+                'term'   => 'topic1',
                 'scheme' => 'http://example.com/schema1',
-                'label' => 'topic1'
+                'label'  => 'topic1',
             ],
             [
-                'term' => 'topic1',
+                'term'   => 'topic1',
                 'scheme' => 'http://example.com/schema2',
-                'label' => 'topic1'
+                'label'  => 'topic1',
             ],
             [
-                'term' => 'cat_dog',
+                'term'   => 'cat_dog',
                 'scheme' => 'http://example.com/schema1',
-                'label' => 'Cat & Dog'
-            ]
+                'label'  => 'Cat & Dog',
+            ],
         ];
         $this->expectedCatsDc = [
             [
-                'term' => 'topic1',
+                'term'   => 'topic1',
                 'scheme' => null,
-                'label' => 'topic1'
+                'label'  => 'topic1',
             ],
             [
-                'term' => 'topic2',
+                'term'   => 'topic2',
                 'scheme' => null,
-                'label' => 'topic2'
-            ]
+                'label'  => 'topic2',
+            ],
         ];
     }
 
@@ -71,6 +72,7 @@ class AtomStandaloneEntryTest extends TestCase
 
     /**
      * Get Id (Unencoded Text)
+     *
      * @group LaminasR002
      */
     public function testGetsIdFromAtom10()
@@ -83,6 +85,7 @@ class AtomStandaloneEntryTest extends TestCase
 
     /**
      * Get creation date (Unencoded Text)
+     *
      * @group LaminasR002
      */
     public function testGetsDateCreatedFromAtom10()
@@ -96,6 +99,7 @@ class AtomStandaloneEntryTest extends TestCase
 
     /**
      * Get modification date (Unencoded Text)
+     *
      * @group LaminasR002
      */
     public function testGetsDateModifiedFromAtom10()
@@ -109,6 +113,7 @@ class AtomStandaloneEntryTest extends TestCase
 
     /**
      * Get Title (Unencoded Text)
+     *
      * @group LaminasR002
      */
     public function testGetsTitleFromAtom10()
@@ -121,6 +126,7 @@ class AtomStandaloneEntryTest extends TestCase
 
     /**
      * Get Authors (Unencoded Text)
+     *
      * @group LaminasR002
      */
     public function testGetsAuthorsFromAtom10()
@@ -130,12 +136,12 @@ class AtomStandaloneEntryTest extends TestCase
         );
 
         $authors = [
-            ['email' => 'joe@example.com','name' => 'Joe Bloggs','uri' => 'http://www.example.com'],
-            ['name' => 'Joe Bloggs','uri' => 'http://www.example.com'],
+            ['email' => 'joe@example.com', 'name' => 'Joe Bloggs', 'uri' => 'http://www.example.com'],
+            ['name' => 'Joe Bloggs', 'uri' => 'http://www.example.com'],
             ['name' => 'Joe Bloggs'],
-            ['email' => 'joe@example.com','uri' => 'http://www.example.com'],
+            ['email' => 'joe@example.com', 'uri' => 'http://www.example.com'],
             ['uri' => 'http://www.example.com'],
-            ['email' => 'joe@example.com']
+            ['email' => 'joe@example.com'],
         ];
 
         $this->assertEquals($authors, (array) $entry->getAuthors());
@@ -143,6 +149,7 @@ class AtomStandaloneEntryTest extends TestCase
 
     /**
      * Get Author (Unencoded Text)
+     *
      * @group LaminasR002
      */
     public function testGetsAuthorFromAtom10()
@@ -158,6 +165,7 @@ class AtomStandaloneEntryTest extends TestCase
 
     /**
      * Get Description (Unencoded Text)
+     *
      * @group LaminasR002
      */
     public function testGetsDescriptionFromAtom10()
@@ -170,15 +178,16 @@ class AtomStandaloneEntryTest extends TestCase
 
     /**
      * Get enclosure
+     *
      * @group LaminasR002
      */
     public function testGetsEnclosureFromAtom10()
     {
         $entry = Reader\Reader::importString(
-            file_get_contents($this->feedSamplePath.'/enclosure/atom10.xml')
+            file_get_contents($this->feedSamplePath . '/enclosure/atom10.xml')
         );
 
-        $expected = new \stdClass();
+        $expected         = new stdClass();
         $expected->url    = 'http://www.example.org/myaudiofile.mp3';
         $expected->length = '1234';
         $expected->type   = 'audio/mpeg';
@@ -188,6 +197,7 @@ class AtomStandaloneEntryTest extends TestCase
 
     /**
      * TEXT
+     *
      * @group LaminasRATOMCONTENT
      */
     public function testGetsContentFromAtom10()
@@ -200,6 +210,7 @@ class AtomStandaloneEntryTest extends TestCase
 
     /**
      * HTML Escaped
+     *
      * @group LaminasRATOMCONTENT
      */
     public function testGetsContentFromAtom10Html()
@@ -212,6 +223,7 @@ class AtomStandaloneEntryTest extends TestCase
 
     /**
      * HTML CDATA Escaped
+     *
      * @group LaminasRATOMCONTENT
      */
     public function testGetsContentFromAtom10HtmlCdata()
@@ -224,6 +236,7 @@ class AtomStandaloneEntryTest extends TestCase
 
     /**
      * XHTML
+     *
      * @group LaminasRATOMCONTENT
      */
     public function testGetsContentFromAtom10XhtmlNamespaced()
@@ -236,6 +249,7 @@ class AtomStandaloneEntryTest extends TestCase
 
     /**
      * Get Link (Unencoded Text)
+     *
      * @group LaminasR002
      */
     public function testGetsLinkFromAtom10()
@@ -248,6 +262,7 @@ class AtomStandaloneEntryTest extends TestCase
 
     /**
      * Get Comment HTML Link
+     *
      * @group LaminasR002
      */
     public function testGetsCommentLinkFromAtom10()
@@ -260,12 +275,13 @@ class AtomStandaloneEntryTest extends TestCase
 
     /**
      * Get category data
+     *
      * @group LaminasR002
      */
     public function testGetsCategoriesFromAtom10()
     {
         $entry = Reader\Reader::importString(
-            file_get_contents($this->feedSamplePath.'/category/atom10.xml')
+            file_get_contents($this->feedSamplePath . '/category/atom10.xml')
         );
         $this->assertEquals($this->expectedCats, (array) $entry->getCategories());
         $this->assertEquals(['topic1', 'Cat & Dog'], array_values($entry->getCategories()->getValues()));

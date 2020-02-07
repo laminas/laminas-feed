@@ -11,39 +11,37 @@ namespace Laminas\Feed\Writer\Extension;
 use DOMDocument;
 use DOMElement;
 
-/**
-*/
 abstract class AbstractRenderer implements RendererInterface
 {
     /**
      * @var DOMDocument
      */
-    protected $dom = null;
+    protected $dom;
 
     /**
      * @var mixed
      */
-    protected $entry = null;
+    protected $entry;
 
     /**
      * @var DOMElement
      */
-    protected $base = null;
+    protected $base;
 
     /**
      * @var mixed
      */
-    protected $container = null;
+    protected $container;
 
     /**
      * @var string
      */
-    protected $type = null;
+    protected $type;
 
     /**
      * @var DOMElement
      */
-    protected $rootElement = null;
+    protected $rootElement;
 
     /**
      * Encoding of all text values
@@ -56,7 +54,7 @@ abstract class AbstractRenderer implements RendererInterface
      * Set the data container
      *
      * @param  mixed $container
-     * @return AbstractRenderer
+     * @return $this
      */
     public function setDataContainer($container)
     {
@@ -68,7 +66,7 @@ abstract class AbstractRenderer implements RendererInterface
      * Set feed encoding
      *
      * @param  string $enc
-     * @return AbstractRenderer
+     * @return $this
      */
     public function setEncoding($enc)
     {
@@ -89,9 +87,7 @@ abstract class AbstractRenderer implements RendererInterface
     /**
      * Set DOMDocument and DOMElement on which to operate
      *
-     * @param  DOMDocument $dom
-     * @param  DOMElement $base
-     * @return AbstractRenderer
+     * @return $this
      */
     public function setDomDocument(DOMDocument $dom, DOMElement $base)
     {
@@ -114,7 +110,7 @@ abstract class AbstractRenderer implements RendererInterface
      * Set feed type
      *
      * @param  string $type
-     * @return AbstractRenderer
+     * @return $this
      */
     public function setType($type)
     {
@@ -135,8 +131,7 @@ abstract class AbstractRenderer implements RendererInterface
     /**
      * Set root element of document
      *
-     * @param  DOMElement $root
-     * @return AbstractRenderer
+     * @return $this
      */
     public function setRootElement(DOMElement $root)
     {

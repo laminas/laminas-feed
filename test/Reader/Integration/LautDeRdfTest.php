@@ -12,12 +12,12 @@ use Laminas\Feed\Reader;
 use PHPUnit\Framework\TestCase;
 
 /**
-* @group Laminas_Feed
-* @group Laminas_Feed_Reader
-*/
+ * @group Laminas_Feed
+ * @group Laminas_Feed_Reader
+ */
 class LautDeRdfTest extends TestCase
 {
-    protected $feedSamplePath = null;
+    protected $feedSamplePath;
 
     public function setup()
     {
@@ -28,7 +28,6 @@ class LautDeRdfTest extends TestCase
     /**
      * Feed level testing
      */
-
     public function testGetsTitle()
     {
         $feed = Reader\Reader::importString(
@@ -93,15 +92,12 @@ class LautDeRdfTest extends TestCase
         $this->assertEquals('ISO-8859-1', $feed->getEncoding());
     }
 
-
-
     /**
      * Entry level testing
      */
-
     public function testGetsEntryId()
     {
-        $feed = Reader\Reader::importString(
+        $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
         $entry = $feed->current();
@@ -110,7 +106,7 @@ class LautDeRdfTest extends TestCase
 
     public function testGetsEntryTitle()
     {
-        $feed = Reader\Reader::importString(
+        $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
         $entry = $feed->current();
@@ -119,7 +115,7 @@ class LautDeRdfTest extends TestCase
 
     public function testGetsEntryAuthors()
     {
-        $feed = Reader\Reader::importString(
+        $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
         $entry = $feed->current();
@@ -128,7 +124,7 @@ class LautDeRdfTest extends TestCase
 
     public function testGetsEntrySingleAuthor()
     {
-        $feed = Reader\Reader::importString(
+        $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
         $entry = $feed->current();
@@ -142,7 +138,7 @@ class LautDeRdfTest extends TestCase
 
     public function testGetsEntryDescription()
     {
-        $feed = Reader\Reader::importString(
+        $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
         $entry = $feed->current();
@@ -155,7 +151,7 @@ class LautDeRdfTest extends TestCase
 
     public function testGetsEntryContent()
     {
-        $feed = Reader\Reader::importString(
+        $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
         $entry = $feed->current();
@@ -168,7 +164,7 @@ class LautDeRdfTest extends TestCase
 
     public function testGetsEntryLinks()
     {
-        $feed = Reader\Reader::importString(
+        $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
         $entry = $feed->current();
@@ -177,7 +173,7 @@ class LautDeRdfTest extends TestCase
 
     public function testGetsEntryLink()
     {
-        $feed = Reader\Reader::importString(
+        $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
         $entry = $feed->current();
@@ -186,7 +182,7 @@ class LautDeRdfTest extends TestCase
 
     public function testGetsEntryPermaLink()
     {
-        $feed = Reader\Reader::importString(
+        $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
         $entry = $feed->current();
@@ -198,7 +194,7 @@ class LautDeRdfTest extends TestCase
 
     public function testGetsEntryEncoding()
     {
-        $feed = Reader\Reader::importString(
+        $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
         $entry = $feed->current();

@@ -16,18 +16,18 @@ use LaminasTest\Feed\Writer\TestAsset;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @group      Laminas_Feed
- * @group      Laminas_Feed_Writer
+ * @group Laminas_Feed
+ * @group Laminas_Feed_Writer
  */
 class AtomTest extends TestCase
 {
-    protected $validWriter = null;
-    protected $validEntry = null;
+    protected $validWriter;
+    protected $validEntry;
 
     public function setUp()
     {
         Writer\Writer::reset();
-        $this->validWriter = new Writer\Feed;
+        $this->validWriter = new Writer\Feed();
 
         $this->validWriter->setType('atom');
 
@@ -36,18 +36,22 @@ class AtomTest extends TestCase
         $this->validWriter->setDateModified(1234567890);
         $this->validWriter->setLink('http://www.example.com');
         $this->validWriter->setFeedLink('http://www.example.com/atom', 'atom');
-        $this->validWriter->addAuthor(['name' => 'Joe',
-                                             'email' => 'joe@example.com',
-                                             'uri'  => 'http://www.example.com/joe']);
+        $this->validWriter->addAuthor([
+            'name'  => 'Joe',
+            'email' => 'joe@example.com',
+            'uri'   => 'http://www.example.com/joe',
+        ]);
         $this->validEntry = $this->validWriter->createEntry();
         $this->validEntry->setTitle('This is a test entry.');
         $this->validEntry->setDescription('This is a test entry description.');
         $this->validEntry->setDateModified(1234567890);
         $this->validEntry->setDateCreated(1234567000);
         $this->validEntry->setLink('http://www.example.com/1');
-        $this->validEntry->addAuthor(['name' => 'Jane',
-                                            'email' => 'jane@example.com',
-                                            'uri'  => 'http://www.example.com/jane']);
+        $this->validEntry->addAuthor([
+            'name'  => 'Jane',
+            'email' => 'jane@example.com',
+            'uri'   => 'http://www.example.com/jane',
+        ]);
         $this->validEntry->setContent('<p class="xhtml:">This is test content for <em>xhtml:</em></p>');
         $this->validWriter->addEntry($this->validEntry);
     }
@@ -171,19 +175,20 @@ class AtomTest extends TestCase
         $entry    = $feed->current();
         $author   = $entry->getAuthor();
         $this->assertEquals([
-                                 'name' => 'Jane',
-                                 'email' => 'jane@example.com',
-                                 'uri'  => 'http://www.example.com/jane'], $entry->getAuthor());
+            'name'  => 'Jane',
+            'email' => 'jane@example.com',
+            'uri'   => 'http://www.example.com/jane',
+        ], $entry->getAuthor());
     }
 
     public function testEntryHoldsAnyEnclosureAdded()
     {
         $renderer = new Renderer\Feed\Atom($this->validWriter);
         $this->validEntry->setEnclosure([
-                                              'type'   => 'audio/mpeg',
-                                              'length' => '1337',
-                                              'uri'    => 'http://example.com/audio.mp3'
-                                         ]);
+            'type'   => 'audio/mpeg',
+            'length' => '1337',
+            'uri'    => 'http://example.com/audio.mp3',
+        ]);
         $feed  = Reader\Reader::importString($renderer->render()->saveXml());
         $entry = $feed->current();
         $enc   = $entry->getEnclosure();
@@ -274,22 +279,28 @@ class AtomTest extends TestCase
     public function testCategoriesCanBeSet()
     {
         $this->validEntry->addCategories([
-                                               ['term'   => 'cat_dog',
-                                                     'label'  => 'Cats & Dogs',
-                                                     'scheme' => 'http://example.com/schema1'],
-                                               ['term' => 'cat_dog2']
-                                          ]);
+            [
+                'term'   => 'cat_dog',
+                'label'  => 'Cats & Dogs',
+                'scheme' => 'http://example.com/schema1',
+            ],
+            ['term' => 'cat_dog2'],
+        ]);
         $atomFeed = new Renderer\Feed\Atom($this->validWriter);
         $atomFeed->render();
         $feed     = Reader\Reader::importString($atomFeed->saveXml());
         $entry    = $feed->current();
         $expected = [
-            ['term'   => 'cat_dog',
-                  'label'  => 'Cats & Dogs',
-                  'scheme' => 'http://example.com/schema1'],
-            ['term'   => 'cat_dog2',
-                  'label'  => 'cat_dog2',
-                  'scheme' => null]
+            [
+                'term'   => 'cat_dog',
+                'label'  => 'Cats & Dogs',
+                'scheme' => 'http://example.com/schema1',
+            ],
+            [
+                'term'   => 'cat_dog2',
+                'label'  => 'cat_dog2',
+                'scheme' => null,
+            ],
         ];
         $this->assertEquals($expected, (array) $entry->getCategories());
     }
@@ -298,11 +309,15 @@ class AtomTest extends TestCase
     {
         $renderer = new Renderer\Feed\Atom($this->validWriter);
         $this->validEntry->setCommentFeedLinks([
-                                                     ['uri' => 'http://www.example.com/atom/id/1',
-                                                           'type' => 'atom'],
-                                                     ['uri' => 'http://www.example.com/rss/id/1',
-                                                           'type' => 'rss'],
-                                                ]);
+            [
+                'uri'  => 'http://www.example.com/atom/id/1',
+                'type' => 'atom',
+            ],
+            [
+                'uri'  => 'http://www.example.com/rss/id/1',
+                'type' => 'rss',
+            ],
+        ]);
         $feed  = Reader\Reader::importString($renderer->render()->saveXml());
         $entry = $feed->current();
         // Skipped over due to LaminasR bug (detects Atom in error when RSS requested)
@@ -321,13 +336,13 @@ class AtomTest extends TestCase
             'messages' => [],
         ];
 
-        set_error_handler(function ($errno, $errstr) use ($notices) {
+        set_error_handler(static function ($errno, $errstr) use ($notices) {
             $notices->messages[] = $errstr;
         }, \E_USER_NOTICE);
         $renderer = new Renderer\Entry\Atom($this->validEntry);
         restore_error_handler();
 
-        $message = array_reduce($notices->messages, function ($toReturn, $message) {
+        $message = array_reduce($notices->messages, static function ($toReturn, $message) {
             if ('' !== $toReturn) {
                 return $toReturn;
             }

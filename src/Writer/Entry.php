@@ -12,8 +12,6 @@ use DateTime;
 use DateTimeInterface;
 use Laminas\Feed\Uri;
 
-/**
-*/
 class Entry
 {
     /**
@@ -36,12 +34,11 @@ class Entry
      *
      * @var string
      */
-    protected $type = null;
+    protected $type;
 
     /**
      * Constructor: Primarily triggers the registration of core extensions and
      * loads those appropriate to this data container.
-     *
      */
     public function __construct()
     {
@@ -57,9 +54,8 @@ class Entry
      * 'email' => (string) An optional email
      * 'uri'   => (string) An optional and valid URI
      *
-     * @param array $author
+     * @return $this
      * @throws Exception\InvalidArgumentException If any value of $author not follow the format.
-     * @return Entry
      */
     public function addAuthor(array $author)
     {
@@ -81,8 +77,8 @@ class Entry
             }
         }
         if (isset($author['uri'])) {
-            if (empty($author['uri']) || ! is_string($author['uri']) ||
-                ! Uri::factory($author['uri'])->isValid()
+            if (empty($author['uri']) || ! is_string($author['uri'])
+                || ! Uri::factory($author['uri'])->isValid()
             ) {
                 throw new Exception\InvalidArgumentException(
                     'Invalid parameter: "uri" array value must be a non-empty string and valid URI/IRI'
@@ -99,8 +95,7 @@ class Entry
      * Set an array with feed authors
      *
      * @see addAuthor
-     * @param array $authors
-     * @return Entry
+     * @return $this
      */
     public function addAuthors(array $authors)
     {
@@ -114,9 +109,9 @@ class Entry
     /**
      * Set the feed character encoding
      *
-     * @param string $encoding
+     * @param  string $encoding
+     * @return $this
      * @throws Exception\InvalidArgumentException
-     * @return Entry
      */
     public function setEncoding($encoding)
     {
@@ -131,7 +126,7 @@ class Entry
     /**
      * Get the feed character encoding
      *
-     * @return string|null
+     * @return null|string
      */
     public function getEncoding()
     {
@@ -144,9 +139,9 @@ class Entry
     /**
      * Set the copyright entry
      *
-     * @param string $copyright
+     * @param  string $copyright
+     * @return $this
      * @throws Exception\InvalidArgumentException
-     * @return Entry
      */
     public function setCopyright($copyright)
     {
@@ -161,9 +156,9 @@ class Entry
     /**
      * Set the entry's content
      *
-     * @param string $content
+     * @param  string $content
+     * @return $this
      * @throws Exception\InvalidArgumentException
-     * @return Entry
      */
     public function setContent($content)
     {
@@ -178,9 +173,9 @@ class Entry
     /**
      * Set the feed creation date
      *
-     * @param null|int|DateTimeInterface $date
+     * @param  null|int|DateTimeInterface $date
+     * @return $this
      * @throws Exception\InvalidArgumentException
-     * @return Entry
      */
     public function setDateCreated($date = null)
     {
@@ -203,9 +198,9 @@ class Entry
     /**
      * Set the feed modification date
      *
-     * @param null|int|DateTimeInterface $date
+     * @param  null|int|DateTimeInterface $date
+     * @return $this
      * @throws Exception\InvalidArgumentException
-     * @return Entry
      */
     public function setDateModified($date = null)
     {
@@ -228,9 +223,9 @@ class Entry
     /**
      * Set the feed description
      *
-     * @param string $description
+     * @param  string $description
+     * @return $this
      * @throws Exception\InvalidArgumentException
-     * @return Entry
      */
     public function setDescription($description)
     {
@@ -245,9 +240,9 @@ class Entry
     /**
      * Set the feed ID
      *
-     * @param string $id
+     * @param  string $id
+     * @return $this
      * @throws Exception\InvalidArgumentException
-     * @return Entry
      */
     public function setId($id)
     {
@@ -262,9 +257,9 @@ class Entry
     /**
      * Set a link to the HTML source of this entry
      *
-     * @param string $link
+     * @param  string $link
+     * @return $this
      * @throws Exception\InvalidArgumentException
-     * @return Entry
      */
     public function setLink($link)
     {
@@ -281,9 +276,9 @@ class Entry
     /**
      * Set the number of comments associated with this entry
      *
-     * @param int $count
+     * @param  int $count
+     * @return $this
      * @throws Exception\InvalidArgumentException
-     * @return Entry
      */
     public function setCommentCount($count)
     {
@@ -300,9 +295,9 @@ class Entry
     /**
      * Set a link to a HTML page containing comments associated with this entry
      *
-     * @param string $link
+     * @param  string $link
+     * @return $this
      * @throws Exception\InvalidArgumentException
-     * @return Entry
      */
     public function setCommentLink($link)
     {
@@ -319,9 +314,8 @@ class Entry
     /**
      * Set a link to an XML feed for any comments associated with this entry
      *
-     * @param array $link
+     * @return $this
      * @throws Exception\InvalidArgumentException
-     * @return Entry
      */
     public function setCommentFeedLink(array $link)
     {
@@ -331,8 +325,9 @@ class Entry
             );
         }
         if (! isset($link['type']) || ! in_array($link['type'], ['atom', 'rss', 'rdf'])) {
-            throw new Exception\InvalidArgumentException('Invalid parameter: "type" must be one'
-            . ' of "atom", "rss" or "rdf"');
+            throw new Exception\InvalidArgumentException(
+                'Invalid parameter: "type" must be one of "atom", "rss" or "rdf"'
+            );
         }
         if (! isset($this->data['commentFeedLinks'])) {
             $this->data['commentFeedLinks'] = [];
@@ -347,8 +342,7 @@ class Entry
      * Each link is an array with keys "uri" and "type", where type is one of:
      * "atom", "rss" or "rdf".
      *
-     * @param array $links
-     * @return Entry
+     * @return $this
      */
     public function setCommentFeedLinks(array $links)
     {
@@ -362,9 +356,9 @@ class Entry
     /**
      * Set the feed title
      *
-     * @param string $title
+     * @param  string $title
+     * @return $this
      * @throws Exception\InvalidArgumentException
-     * @return Entry
      */
     public function setTitle($title)
     {
@@ -470,7 +464,7 @@ class Entry
     /**
      * Get a link to the HTML source
      *
-     * @return string|null
+     * @return null|string
      */
     public function getLink()
     {
@@ -550,24 +544,25 @@ class Entry
     /**
      * Add an entry category
      *
-     * @param array $category
+     * @return $this
      * @throws Exception\InvalidArgumentException
-     * @return Entry
      */
     public function addCategory(array $category)
     {
         if (! isset($category['term'])) {
-            throw new Exception\InvalidArgumentException('Each category must be an array and '
-            . 'contain at least a "term" element containing the machine '
-            . ' readable category name');
+            throw new Exception\InvalidArgumentException(
+                'Each category must be an array and contain at least a "term" element'
+                . ' containing the machine readable category name'
+            );
         }
         if (isset($category['scheme'])) {
             if (empty($category['scheme'])
                 || ! is_string($category['scheme'])
                 || ! Uri::factory($category['scheme'])->isValid()
             ) {
-                throw new Exception\InvalidArgumentException('The Atom scheme or RSS domain of'
-                . ' a category must be a valid URI');
+                throw new Exception\InvalidArgumentException(
+                    'The Atom scheme or RSS domain of a category must be a valid URI'
+                );
             }
         }
         if (! isset($this->data['categories'])) {
@@ -581,8 +576,7 @@ class Entry
     /**
      * Set an array of entry categories
      *
-     * @param array $categories
-     * @return Entry
+     * @return $this
      */
     public function addCategories(array $categories)
     {
@@ -596,7 +590,7 @@ class Entry
     /**
      * Get the entry categories
      *
-     * @return string|null
+     * @return null|string
      */
     public function getCategories()
     {
@@ -612,9 +606,8 @@ class Entry
      * others must also be provided or RSS rendering (where they are required)
      * will throw an Exception.
      *
-     * @param array $enclosure
+     * @return $this
      * @throws Exception\InvalidArgumentException
-     * @return Entry
      */
     public function setEnclosure(array $enclosure)
     {
@@ -645,8 +638,8 @@ class Entry
     /**
      * Unset a specific data point
      *
-     * @param string $name
-     * @return Entry
+     * @param  string $name
+     * @return $this
      */
     public function remove($name)
     {
@@ -670,7 +663,7 @@ class Entry
     /**
      * Return an Extension object with the matching name (postfixed with _Entry)
      *
-     * @param string $name
+     * @param  string $name
      * @return object
      */
     public function getExtension($name)
@@ -686,8 +679,8 @@ class Entry
      * other objects to gracefully choose whether to execute or not, depending
      * on their appropriateness for the current type, e.g. renderers.
      *
-     * @param string $type
-     * @return Entry
+     * @param  string $type
+     * @return $this
      */
     public function setType($type)
     {
@@ -721,8 +714,9 @@ class Entry
             } catch (\BadMethodCallException $e) {
             }
         }
-        throw new Exception\BadMethodCallException('Method: ' . $method
-            . ' does not exist and could not be located on a registered Extension');
+        throw new Exception\BadMethodCallException(
+            'Method: ' . $method . ' does not exist and could not be located on a registered Extension'
+        );
     }
 
     /**
@@ -734,7 +728,7 @@ class Entry
      */
     public function createSource()
     {
-        $source = new Source;
+        $source = new Source();
         if ($this->getEncoding()) {
             $source->setEncoding($this->getEncoding());
         }
@@ -746,8 +740,7 @@ class Entry
      * Appends a Laminas\Feed\Writer\Entry object representing a new entry/item
      * the feed data container's internal group of entries.
      *
-     * @param Source $source
-     * @return Entry
+     * @return $this
      */
     public function setSource(Source $source)
     {

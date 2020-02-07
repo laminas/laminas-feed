@@ -72,7 +72,7 @@ class Feed extends Extension\AbstractRenderer
             return;
         }
         foreach ($authors as $author) {
-            $el = $dom->createElement('googleplay:author');
+            $el   = $dom->createElement('googleplay:author');
             $text = $dom->createTextNode($author);
             $el->appendChild($text);
             $root->appendChild($el);
@@ -95,7 +95,7 @@ class Feed extends Extension\AbstractRenderer
         if ($block === null) {
             return;
         }
-        $el = $dom->createElement('googleplay:block');
+        $el   = $dom->createElement('googleplay:block');
         $text = $dom->createTextNode($block);
         $el->appendChild($text);
         $root->appendChild($el);
@@ -172,7 +172,7 @@ class Feed extends Extension\AbstractRenderer
         if ($explicit === null) {
             return;
         }
-        $el = $dom->createElement('googleplay:explicit');
+        $el   = $dom->createElement('googleplay:explicit');
         $text = $dom->createTextNode($explicit);
         $el->appendChild($text);
         $root->appendChild($el);
@@ -194,7 +194,7 @@ class Feed extends Extension\AbstractRenderer
         if (! $description) {
             return;
         }
-        $el = $dom->createElement('googleplay:description');
+        $el   = $dom->createElement('googleplay:description');
         $text = $dom->createTextNode($description);
         $el->appendChild($text);
         $root->appendChild($el);

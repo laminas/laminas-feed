@@ -8,18 +8,21 @@
 
 namespace LaminasTest\Feed\Reader\Entry;
 
+use DOMDocument;
+use DOMElement;
+use DOMXPath;
 use Laminas\Feed\Reader;
 use Laminas\Feed\Reader\Entry\AbstractEntry;
 use Laminas\Feed\Reader\Extension\Atom\Entry;
 use PHPUnit\Framework\TestCase;
 
 /**
-* @group Laminas_Feed
-* @group Laminas_Feed_Reader
-*/
+ * @group Laminas_Feed
+ * @group Laminas_Feed_Reader
+ */
 class CommonTest extends TestCase
 {
-    protected $feedSamplePath = null;
+    protected $feedSamplePath;
 
     public function setup()
     {
@@ -32,26 +35,26 @@ class CommonTest extends TestCase
      */
     public function testGetsDomDocumentObject()
     {
-        $feed = Reader\Reader::importString(
-            file_get_contents($this->feedSamplePath.'/atom.xml')
+        $feed  = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath . '/atom.xml')
         );
         $entry = $feed->current();
-        $this->assertInstanceOf(\DOMDocument::class, $entry->getDomDocument());
+        $this->assertInstanceOf(DOMDocument::class, $entry->getDomDocument());
     }
 
     public function testGetsDomXpathObject()
     {
-        $feed = Reader\Reader::importString(
-            file_get_contents($this->feedSamplePath.'/atom.xml')
+        $feed  = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath . '/atom.xml')
         );
         $entry = $feed->current();
-        $this->assertInstanceOf(\DOMXPath::class, $entry->getXpath());
+        $this->assertInstanceOf(DOMXPath::class, $entry->getXpath());
     }
 
     public function testGetsXpathPrefixString()
     {
-        $feed = Reader\Reader::importString(
-            file_get_contents($this->feedSamplePath.'/atom.xml')
+        $feed  = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath . '/atom.xml')
         );
         $entry = $feed->current();
         $this->assertEquals('//atom:entry[1]', $entry->getXpathPrefix());
@@ -59,28 +62,28 @@ class CommonTest extends TestCase
 
     public function testGetsDomElementObject()
     {
-        $feed = Reader\Reader::importString(
-            file_get_contents($this->feedSamplePath.'/atom.xml')
+        $feed  = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath . '/atom.xml')
         );
         $entry = $feed->current();
-        $this->assertInstanceOf(\DOMElement::class, $entry->getElement());
+        $this->assertInstanceOf(DOMElement::class, $entry->getElement());
     }
 
     public function testSaveXmlOutputsXmlStringForEntry()
     {
-        $feed = Reader\Reader::importString(
-            file_get_contents($this->feedSamplePath.'/atom.xml')
+        $feed     = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath . '/atom.xml')
         );
-        $entry = $feed->current();
-        $expected = file_get_contents($this->feedSamplePath.'/atom_rewrittenbydom.xml');
+        $entry    = $feed->current();
+        $expected = file_get_contents($this->feedSamplePath . '/atom_rewrittenbydom.xml');
         $expected = str_replace("\r\n", "\n", $expected);
         $this->assertEquals($expected, $entry->saveXml());
     }
 
     public function testGetsNamedExtension()
     {
-        $feed = Reader\Reader::importString(
-            file_get_contents($this->feedSamplePath.'/atom.xml')
+        $feed  = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath . '/atom.xml')
         );
         $entry = $feed->current();
         $this->assertInstanceOf(Entry::class, $entry->getExtension('Atom'));
@@ -88,8 +91,8 @@ class CommonTest extends TestCase
 
     public function testReturnsNullIfExtensionDoesNotExist()
     {
-        $feed = Reader\Reader::importString(
-            file_get_contents($this->feedSamplePath.'/atom.xml')
+        $feed  = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath . '/atom.xml')
         );
         $entry = $feed->current();
         $this->assertEquals(null, $entry->getExtension('Foo'));
@@ -100,8 +103,8 @@ class CommonTest extends TestCase
      */
     public function testReturnsEncodingOfFeed()
     {
-        $feed = Reader\Reader::importString(
-            file_get_contents($this->feedSamplePath.'/atom.xml')
+        $feed  = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath . '/atom.xml')
         );
         $entry = $feed->current();
         $this->assertEquals('UTF-8', $entry->getEncoding());
@@ -112,23 +115,23 @@ class CommonTest extends TestCase
      */
     public function testReturnsEncodingOfFeedAsUtf8IfUndefined()
     {
-        $feed = Reader\Reader::importString(
-            file_get_contents($this->feedSamplePath.'/atom_noencodingdefined.xml')
+        $feed  = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath . '/atom_noencodingdefined.xml')
         );
         $entry = $feed->current();
         $this->assertEquals('UTF-8', $entry->getEncoding());
     }
 
     /**
-    * When not passing the optional argument type
-    */
+     * When not passing the optional argument type
+     */
     public function testFeedEntryCanDetectFeedType()
     {
-        $feed = Reader\Reader::importString(
-            file_get_contents($this->feedSamplePath.'/atom.xml')
+        $feed  = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath . '/atom.xml')
         );
         $entry = $feed->current();
-        $stub = $this->getMockForAbstractClass(
+        $stub  = $this->getMockForAbstractClass(
             AbstractEntry::class,
             [$entry->getElement(), $entry->getId()]
         );
@@ -136,16 +139,16 @@ class CommonTest extends TestCase
     }
 
     /**
-    * When passing a newly created DOMElement without any DOMDocument assigned
-    */
+     * When passing a newly created DOMElement without any DOMDocument assigned
+     */
     public function testFeedEntryCanSetAnyType()
     {
-        $feed = Reader\Reader::importString(
-            file_get_contents($this->feedSamplePath.'/atom.xml')
+        $feed       = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath . '/atom.xml')
         );
-        $entry = $feed->current();
-        $domElement = new \DOMElement($entry->getElement()->tagName);
-        $stub = $this->getMockForAbstractClass(
+        $entry      = $feed->current();
+        $domElement = new DOMElement($entry->getElement()->tagName);
+        $stub       = $this->getMockForAbstractClass(
             AbstractEntry::class,
             [$domElement, $entry->getId()]
         );

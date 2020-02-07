@@ -8,7 +8,9 @@
 
 namespace Laminas\Feed\Reader\Entry;
 
+use DateTime;
 use Laminas\Feed\Reader\Collection\Category;
+use stdClass;
 
 interface EntryInterface
 {
@@ -37,14 +39,14 @@ interface EntryInterface
     /**
      * Get the entry creation date
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getDateCreated();
 
     /**
      * Get the entry modification date
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getDateModified();
 
@@ -58,7 +60,7 @@ interface EntryInterface
     /**
      * Get the entry enclosure
      *
-     * @return \stdClass
+     * @return stdClass
      */
     public function getEnclosure();
 

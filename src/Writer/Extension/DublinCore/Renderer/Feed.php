@@ -12,8 +12,6 @@ use DOMDocument;
 use DOMElement;
 use Laminas\Feed\Writer\Extension;
 
-/**
-*/
 class Feed extends Extension\AbstractRenderer
 {
     /**
@@ -32,7 +30,7 @@ class Feed extends Extension\AbstractRenderer
      */
     public function render()
     {
-        if (strtolower($this->getType()) == 'atom') {
+        if (strtolower($this->getType()) === 'atom') {
             return;
         }
         $this->_setAuthors($this->dom, $this->base);

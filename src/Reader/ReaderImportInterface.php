@@ -14,8 +14,8 @@ interface ReaderImportInterface
      * Import a feed by providing a URI
      *
      * @param  string $uri The URI to the feed
-     * @param  string $etag OPTIONAL Last received ETag for this resource
-     * @param  string $lastModified OPTIONAL Last-Modified value for this resource
+     * @param  null|string $etag OPTIONAL Last received ETag for this resource
+     * @param  null|string $lastModified OPTIONAL Last-Modified value for this resource
      * @return Feed\FeedInterface
      * @throws Exception\RuntimeException
      */
@@ -31,12 +31,10 @@ interface ReaderImportInterface
      * HTTP client implementations.
      *
      * @param  string $uri
-     * @param  Http\ClientInterface $client
      * @return self
      * @throws Exception\RuntimeException if response is not an Http\ResponseInterface
      */
     public static function importRemoteFeed($uri, Http\ClientInterface $client);
-
 
     /**
      * Import a feed from a string
@@ -48,13 +46,12 @@ interface ReaderImportInterface
      */
     public static function importString($string);
 
-
     /**
      * Imports a feed from a file located at $filename.
      *
      * @param  string $filename
-     * @throws Exception\RuntimeException
      * @return Feed\FeedInterface
+     * @throws Exception\RuntimeException
      */
     public static function importFile($filename);
 }

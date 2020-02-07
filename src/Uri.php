@@ -65,7 +65,7 @@ class Uri
     ];
 
     /**
-     * @param  string $uri
+     * @param string $uri
      */
     public function __construct($uri)
     {
@@ -178,6 +178,6 @@ class Uri
      */
     public function isAbsolute()
     {
-        return ($this->scheme !== null);
+        return $this->scheme !== null;
     }
 }

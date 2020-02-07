@@ -12,12 +12,11 @@ use DOMDocument;
 use DOMElement;
 use Laminas\Feed\Writer;
 
-/**
-*/
 class AbstractRenderer
 {
     /**
      * Extensions
+     *
      * @var array
      */
     protected $extensions = [];
@@ -25,12 +24,12 @@ class AbstractRenderer
     /**
      * @var Writer\AbstractFeed
      */
-    protected $container = null;
+    protected $container;
 
     /**
      * @var DOMDocument
      */
-    protected $dom = null;
+    protected $dom;
 
     /**
      * @var bool
@@ -55,16 +54,14 @@ class AbstractRenderer
      *
      * @var string
      */
-    protected $type = null;
+    protected $type;
 
     /**
      * @var DOMElement
      */
-    protected $rootElement = null;
+    protected $rootElement;
 
     /**
-     * Constructor
-     *
      * @param Writer\AbstractFeed $container
      */
     public function __construct($container)
@@ -118,7 +115,7 @@ class AbstractRenderer
      * Set feed encoding
      *
      * @param  string $enc
-     * @return AbstractRenderer
+     * @return $this
      */
     public function setEncoding($enc)
     {
@@ -140,7 +137,7 @@ class AbstractRenderer
      * Indicate whether or not to ignore exceptions
      *
      * @param  bool $bool
-     * @return AbstractRenderer
+     * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
     public function ignoreExceptions($bool = true)
@@ -191,8 +188,6 @@ class AbstractRenderer
      * helps simplify the appending of namespace declarations, but also ensures
      * namespaces are added to the root element - not scattered across the entire
      * XML file - may assist namespace unsafe parsers and looks pretty ;).
-     *
-     * @param DOMElement $root
      */
     public function setRootElement(DOMElement $root)
     {
@@ -220,8 +215,8 @@ class AbstractRenderer
         // @codingStandardsIgnoreEnd
         Writer\Writer::registerCoreExtensions();
         $manager = Writer\Writer::getExtensionManager();
-        $all = Writer\Writer::getExtensions();
-        $exts = stripos(get_class($this), 'entry')
+        $all     = Writer\Writer::getExtensions();
+        $exts    = stripos(get_class($this), 'entry')
             ? $all['entryRenderer']
             : $all['feedRenderer'];
         foreach ($exts as $extension) {

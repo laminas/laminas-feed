@@ -216,12 +216,12 @@ class ExtensionPluginManager extends AbstractPluginManager implements ExtensionM
             return;
         }
 
-        if ('Feed' == substr(get_class($plugin), -4)) {
+        if ('Feed' === substr(get_class($plugin), -4)) {
             // we're okay
             return;
         }
 
-        if ('Entry' == substr(get_class($plugin), -5)) {
+        if ('Entry' === substr(get_class($plugin), -5)) {
             // we're okay
             return;
         }
@@ -229,7 +229,7 @@ class ExtensionPluginManager extends AbstractPluginManager implements ExtensionM
         throw new InvalidServiceException(sprintf(
             'Plugin of type %s is invalid; must implement %s\Extension\RendererInterface '
             . 'or the classname must end in "Feed" or "Entry"',
-            (is_object($plugin) ? get_class($plugin) : gettype($plugin)),
+            is_object($plugin) ? get_class($plugin) : gettype($plugin),
             __NAMESPACE__
         ));
     }
@@ -237,7 +237,7 @@ class ExtensionPluginManager extends AbstractPluginManager implements ExtensionM
     /**
      * Validate plugin (v2)
      *
-     * @param mixed $plugin
+     * @param  mixed $plugin
      * @return void
      * @throws Exception\InvalidArgumentException when invalid
      */
@@ -249,7 +249,7 @@ class ExtensionPluginManager extends AbstractPluginManager implements ExtensionM
             throw new Exception\InvalidArgumentException(sprintf(
                 'Plugin of type %s is invalid; must implement %s\Extension\RendererInterface '
                 . 'or the classname must end in "Feed" or "Entry"',
-                (is_object($plugin) ? get_class($plugin) : gettype($plugin)),
+                is_object($plugin) ? get_class($plugin) : gettype($plugin),
                 __NAMESPACE__
             ));
         }

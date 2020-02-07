@@ -38,14 +38,14 @@ class FeedSetTest extends TestCase
     public function linkAndUriProvider()
     {
         return [
-            'fully-qualified' => ['feed', 'http://example.com', 'http://example.com/feed'],
-            'default-scheme' => ['feed', '//example.com', 'http://example.com/feed'],
-            'relative-path' => ['./feed', 'http://example.com/page', 'http://example.com/page/feed'],
-            'relative-path-parent' => ['../feed', 'http://example.com/page', 'http://example.com/feed'],
-            'scheme-relative' => ['//example.com/feed', 'https://example.org', 'https://example.com/feed'],
+            'fully-qualified'         => ['feed', 'http://example.com', 'http://example.com/feed'],
+            'default-scheme'          => ['feed', '//example.com', 'http://example.com/feed'],
+            'relative-path'           => ['./feed', 'http://example.com/page', 'http://example.com/page/feed'],
+            'relative-path-parent'    => ['../feed', 'http://example.com/page', 'http://example.com/feed'],
+            'scheme-relative'         => ['//example.com/feed', 'https://example.org', 'https://example.com/feed'],
             'scheme-relative-default' => ['//example.com/feed', '//example.org', 'http://example.com/feed'],
-            'invalid-absolute' => ['ftp://feed', 'http://example.com', null],
-            'invalid' => ['', null, null],
+            'invalid-absolute'        => ['ftp://feed', 'http://example.com', null],
+            'invalid'                 => ['', null, null],
         ];
     }
 }

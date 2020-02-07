@@ -12,12 +12,12 @@ use Laminas\Feed\Reader;
 use PHPUnit\Framework\TestCase;
 
 /**
-* @group Laminas_Feed
-* @group Laminas_Feed_Reader
-*/
+ * @group Laminas_Feed
+ * @group Laminas_Feed_Reader
+ */
 class WordpressAtom10Test extends TestCase
 {
-    protected $feedSamplePath = null;
+    protected $feedSamplePath;
 
     public function setup()
     {
@@ -39,7 +39,7 @@ class WordpressAtom10Test extends TestCase
             file_get_contents($this->feedSamplePath)
         );
         $this->assertEquals([
-            ['name' => 'norm2782', 'uri' => 'http://www.norm2782.com']
+            ['name' => 'norm2782', 'uri' => 'http://www.norm2782.com'],
         ], (array) $feed->getAuthors());
     }
 
@@ -102,10 +102,9 @@ class WordpressAtom10Test extends TestCase
     /**
      * Entry level testing
      */
-
     public function testGetsEntryId()
     {
-        $feed = Reader\Reader::importString(
+        $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
         $entry = $feed->current();
@@ -114,10 +113,11 @@ class WordpressAtom10Test extends TestCase
 
     public function testGetsEntryTitle()
     {
-        $feed = Reader\Reader::importString(
+        $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
         $entry = $feed->current();
+
         /**
          * Note: The three dots below is actually a single Unicode character
          * called the "three dot leader". Don't replace in error!
@@ -127,7 +127,7 @@ class WordpressAtom10Test extends TestCase
 
     public function testGetsEntryAuthors()
     {
-        $feed = Reader\Reader::importString(
+        $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
         $entry = $feed->current();
@@ -136,7 +136,7 @@ class WordpressAtom10Test extends TestCase
 
     public function testGetsEntrySingleAuthor()
     {
-        $feed = Reader\Reader::importString(
+        $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
         $entry = $feed->current();
@@ -145,10 +145,11 @@ class WordpressAtom10Test extends TestCase
 
     public function testGetsEntryDescription()
     {
-        $feed = Reader\Reader::importString(
+        $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
         $entry = $feed->current();
+
         /**
          * Note: "’" is not the same as "'" - don't replace in error
          */
@@ -159,7 +160,7 @@ class WordpressAtom10Test extends TestCase
 
     public function testGetsEntryContent()
     {
-        $feed = Reader\Reader::importString(
+        $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
         $entry = $feed->current();
@@ -170,7 +171,7 @@ class WordpressAtom10Test extends TestCase
 
     public function testGetsEntryLinks()
     {
-        $feed = Reader\Reader::importString(
+        $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
         $entry = $feed->current();
@@ -179,7 +180,7 @@ class WordpressAtom10Test extends TestCase
 
     public function testGetsEntryLink()
     {
-        $feed = Reader\Reader::importString(
+        $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
         $entry = $feed->current();
@@ -188,7 +189,7 @@ class WordpressAtom10Test extends TestCase
 
     public function testGetsEntryPermaLink()
     {
-        $feed = Reader\Reader::importString(
+        $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
         $entry = $feed->current();
@@ -200,7 +201,7 @@ class WordpressAtom10Test extends TestCase
 
     public function testGetsEntryEncoding()
     {
-        $feed = Reader\Reader::importString(
+        $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
         $entry = $feed->current();

@@ -12,7 +12,6 @@ use Interop\Container\ContainerInterface;
 use Laminas\Feed\Reader;
 use Laminas\Feed\Reader\Exception\InvalidArgumentException;
 use Laminas\Feed\Reader\Feed\FeedInterface;
-use Laminas\Feed\Reader\Feed\Rss;
 use Laminas\Feed\Reader\FeedSet;
 use Laminas\Feed\Reader\Http\ClientInterface;
 use Laminas\Feed\Reader\Http\ResponseInterface;
@@ -25,12 +24,12 @@ use PHPUnit\Framework\TestCase;
 use stdClass;
 
 /**
-* @group Laminas_Feed
-* @group Laminas_Feed_Reader
-*/
+ * @group Laminas_Feed
+ * @group Laminas_Feed_Reader
+ */
 class ReaderTest extends TestCase
 {
-    protected $feedSamplePath = null;
+    protected $feedSamplePath;
 
     public function setup()
     {
@@ -45,7 +44,7 @@ class ReaderTest extends TestCase
     public function testStringImportTrimsContentToAllowSlightlyInvalidXml()
     {
         $feed = Reader\Reader::importString(
-            '   ' . file_get_contents($this->feedSamplePath.'/Reader/rss20.xml')
+            '   ' . file_get_contents($this->feedSamplePath . '/Reader/rss20.xml')
         );
         $this->assertInstanceOf(FeedInterface::class, $feed);
     }
@@ -53,7 +52,7 @@ class ReaderTest extends TestCase
     public function testDetectsFeedIsRss20()
     {
         $feed = Reader\Reader::importString(
-            file_get_contents($this->feedSamplePath.'/Reader/rss20.xml')
+            file_get_contents($this->feedSamplePath . '/Reader/rss20.xml')
         );
         $type = Reader\Reader::detectType($feed);
         $this->assertEquals(Reader\Reader::TYPE_RSS_20, $type);
@@ -62,7 +61,7 @@ class ReaderTest extends TestCase
     public function testDetectsFeedIsRss094()
     {
         $feed = Reader\Reader::importString(
-            file_get_contents($this->feedSamplePath.'/Reader/rss094.xml')
+            file_get_contents($this->feedSamplePath . '/Reader/rss094.xml')
         );
         $type = Reader\Reader::detectType($feed);
         $this->assertEquals(Reader\Reader::TYPE_RSS_094, $type);
@@ -71,7 +70,7 @@ class ReaderTest extends TestCase
     public function testDetectsFeedIsRss093()
     {
         $feed = Reader\Reader::importString(
-            file_get_contents($this->feedSamplePath.'/Reader/rss093.xml')
+            file_get_contents($this->feedSamplePath . '/Reader/rss093.xml')
         );
         $type = Reader\Reader::detectType($feed);
         $this->assertEquals(Reader\Reader::TYPE_RSS_093, $type);
@@ -80,7 +79,7 @@ class ReaderTest extends TestCase
     public function testDetectsFeedIsRss092()
     {
         $feed = Reader\Reader::importString(
-            file_get_contents($this->feedSamplePath.'/Reader/rss092.xml')
+            file_get_contents($this->feedSamplePath . '/Reader/rss092.xml')
         );
         $type = Reader\Reader::detectType($feed);
         $this->assertEquals(Reader\Reader::TYPE_RSS_092, $type);
@@ -89,7 +88,7 @@ class ReaderTest extends TestCase
     public function testDetectsFeedIsRss091()
     {
         $feed = Reader\Reader::importString(
-            file_get_contents($this->feedSamplePath.'/Reader/rss091.xml')
+            file_get_contents($this->feedSamplePath . '/Reader/rss091.xml')
         );
         $type = Reader\Reader::detectType($feed);
         $this->assertEquals(Reader\Reader::TYPE_RSS_091, $type);
@@ -98,7 +97,7 @@ class ReaderTest extends TestCase
     public function testDetectsFeedIsRss10()
     {
         $feed = Reader\Reader::importString(
-            file_get_contents($this->feedSamplePath.'/Reader/rss10.xml')
+            file_get_contents($this->feedSamplePath . '/Reader/rss10.xml')
         );
         $type = Reader\Reader::detectType($feed);
         $this->assertEquals(Reader\Reader::TYPE_RSS_10, $type);
@@ -107,7 +106,7 @@ class ReaderTest extends TestCase
     public function testDetectsFeedIsRss090()
     {
         $feed = Reader\Reader::importString(
-            file_get_contents($this->feedSamplePath.'/Reader/rss090.xml')
+            file_get_contents($this->feedSamplePath . '/Reader/rss090.xml')
         );
         $type = Reader\Reader::detectType($feed);
         $this->assertEquals(Reader\Reader::TYPE_RSS_090, $type);
@@ -116,7 +115,7 @@ class ReaderTest extends TestCase
     public function testDetectsFeedIsAtom10()
     {
         $feed = Reader\Reader::importString(
-            file_get_contents($this->feedSamplePath.'/Reader/atom10.xml')
+            file_get_contents($this->feedSamplePath . '/Reader/atom10.xml')
         );
         $type = Reader\Reader::detectType($feed);
         $this->assertEquals(Reader\Reader::TYPE_ATOM_10, $type);
@@ -125,7 +124,7 @@ class ReaderTest extends TestCase
     public function testDetectsFeedIsAtom03()
     {
         $feed = Reader\Reader::importString(
-            file_get_contents($this->feedSamplePath.'/Reader/atom03.xml')
+            file_get_contents($this->feedSamplePath . '/Reader/atom03.xml')
         );
         $type = Reader\Reader::detectType($feed);
         $this->assertEquals(Reader\Reader::TYPE_ATOM_03, $type);
@@ -202,10 +201,10 @@ class ReaderTest extends TestCase
         $links = Reader\Reader::findFeedLinks('https://github.com/laminas/laminas-feed/releases');
         $this->assertInstanceOf(FeedSet::class, $links);
         $this->assertEquals([
-            'rel' => 'alternate',
-            'type' => 'application/atom+xml',
-            'href' => 'https://github.com/laminas/laminas-feed/releases.atom',
-            'title' => 'laminas-feed Release Notes'
+            'rel'   => 'alternate',
+            'type'  => 'application/atom+xml',
+            'href'  => 'https://github.com/laminas/laminas-feed/releases.atom',
+            'title' => 'laminas-feed Release Notes',
         ], (array) $links->getIterator()->current());
     }
 
@@ -216,7 +215,7 @@ class ReaderTest extends TestCase
         }
 
         $links = Reader\Reader::findFeedLinks('https://github.com/laminas/laminas-feed/releases');
-        $link = $links->getIterator()->current();
+        $link  = $links->getIterator()->current();
         $this->assertInstanceOf(Reader\Feed\Atom::class, $link['feed']);
     }
 
@@ -251,11 +250,13 @@ class ReaderTest extends TestCase
         $currClient = Reader\Reader::getHttpClient();
 
         $testAdapter = new TestAdapter();
-        $response = new HttpResponse();
+        $response    = new HttpResponse();
         $response->setStatusCode(200);
-        $response->setContent('<!DOCTYPE html><html><head><link rel="alternate" type="application/rss+xml" '
+        $response->setContent(
+            '<!DOCTYPE html><html><head><link rel="alternate" type="application/rss+xml" '
             . 'href="../test.rss"><link rel="alternate" type="application/atom+xml" href="/test.atom"></head>'
-            .'<body></body></html>');
+            . '<body></body></html>'
+        );
         $testAdapter->setResponse($response);
         Reader\Reader::setHttpClient(new HttpClient(null, ['adapter' => $testAdapter]));
 
@@ -292,8 +293,8 @@ class ReaderTest extends TestCase
      */
     public function testXxePreventionOnFeedParsing()
     {
-        $string = file_get_contents($this->feedSamplePath.'/Reader/xxe-atom10.xml');
-        $string = str_replace('XXE_URI', $this->feedSamplePath.'/Reader/xxe-info.txt', $string);
+        $string = file_get_contents($this->feedSamplePath . '/Reader/xxe-atom10.xml');
+        $string = str_replace('XXE_URI', $this->feedSamplePath . '/Reader/xxe-info.txt', $string);
 
         $this->expectException(InvalidArgumentException::class);
         $feed = Reader\Reader::importString($string);
@@ -302,9 +303,9 @@ class ReaderTest extends TestCase
 
     public function testImportRemoteFeedMethodPerformsAsExpected()
     {
-        $uri = 'http://example.com/feeds/reader.xml';
+        $uri          = 'http://example.com/feeds/reader.xml';
         $feedContents = file_get_contents($this->feedSamplePath . '/Reader/rss20.xml');
-        $response = $this->getMockBuilder(ResponseInterface::class)
+        $response     = $this->getMockBuilder(ResponseInterface::class)
             ->setMethods(['getStatusCode', 'getBody'])
             ->getMock();
         $response->expects($this->once())
@@ -355,7 +356,7 @@ class ReaderTest extends TestCase
     public function testSetHttpClientThrowsException()
     {
         $this->expectException(Reader\Exception\InvalidHttpClientException::class);
-        Reader\Reader::setHttpClient(new stdClass);
+        Reader\Reader::setHttpClient(new stdClass());
     }
 
     public function testReaderEmitsNoticeDuringFeedImportWhenGooglePlayPodcastExtensionUnavailable()
@@ -366,7 +367,7 @@ class ReaderTest extends TestCase
             'messages' => [],
         ];
 
-        set_error_handler(function ($errno, $errstr) use ($notices) {
+        set_error_handler(static function ($errno, $errstr) use ($notices) {
             $notices->messages[] = $errstr;
         }, \E_USER_NOTICE);
         $feed = Reader\Reader::importFile(
@@ -374,7 +375,7 @@ class ReaderTest extends TestCase
         );
         restore_error_handler();
 
-        $message = array_reduce($notices->messages, function ($toReturn, $message) {
+        $message = array_reduce($notices->messages, static function ($toReturn, $message) {
             if ('' !== $toReturn) {
                 return $toReturn;
             }

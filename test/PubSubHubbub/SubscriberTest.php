@@ -16,26 +16,27 @@ use Laminas\Feed\PubSubHubbub\PubSubHubbub;
 use Laminas\Feed\PubSubHubbub\Subscriber;
 use Laminas\Http\Client as HttpClient;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 /**
- * @group      Laminas_Feed
- * @group      Laminas_Feed_Subsubhubbub
+ * @group Laminas_Feed
+ * @group Laminas_Feed_Subsubhubbub
  */
 class SubscriberTest extends TestCase
 {
     /** @var Subscriber */
-    protected $subscriber = null;
+    protected $subscriber;
 
-    protected $adapter = null;
+    protected $adapter;
 
-    protected $tableGateway = null;
+    protected $tableGateway;
 
     public function setUp()
     {
-        $client = new HttpClient;
+        $client = new HttpClient();
         PubSubHubbub::setHttpClient($client);
-        $this->subscriber = new Subscriber;
-        $this->adapter = $this->_getCleanMock(
+        $this->subscriber   = new Subscriber();
+        $this->adapter      = $this->_getCleanMock(
             Adapter::class
         );
         $this->tableGateway = $this->_getCleanMock(
@@ -44,7 +45,6 @@ class SubscriberTest extends TestCase
         $this->tableGateway->expects($this->any())->method('getAdapter')
             ->will($this->returnValue($this->adapter));
     }
-
 
     public function testAddsHubServerUrl()
     {
@@ -55,42 +55,51 @@ class SubscriberTest extends TestCase
     public function testAddsHubServerUrlsFromArray()
     {
         $this->subscriber->addHubUrls([
-            'http://www.example.com/hub', 'http://www.example.com/hub2'
+            'http://www.example.com/hub',
+            'http://www.example.com/hub2',
         ]);
         $this->assertEquals([
-            'http://www.example.com/hub', 'http://www.example.com/hub2'
+            'http://www.example.com/hub',
+            'http://www.example.com/hub2',
         ], $this->subscriber->getHubUrls());
     }
 
     public function testAddsHubServerUrlsFromArrayUsingSetOptions()
     {
-        $this->subscriber->setOptions(['hubUrls' => [
-            'http://www.example.com/hub', 'http://www.example.com/hub2'
-        ]]);
+        $this->subscriber->setOptions([
+            'hubUrls' => [
+                'http://www.example.com/hub',
+                'http://www.example.com/hub2',
+            ],
+        ]);
         $this->assertEquals([
-            'http://www.example.com/hub', 'http://www.example.com/hub2'
+            'http://www.example.com/hub',
+            'http://www.example.com/hub2',
         ], $this->subscriber->getHubUrls());
     }
 
     public function testRemovesHubServerUrl()
     {
         $this->subscriber->addHubUrls([
-            'http://www.example.com/hub', 'http://www.example.com/hub2'
+            'http://www.example.com/hub',
+            'http://www.example.com/hub2',
         ]);
         $this->subscriber->removeHubUrl('http://www.example.com/hub');
         $this->assertEquals([
-            1 => 'http://www.example.com/hub2'
+            1 => 'http://www.example.com/hub2',
         ], $this->subscriber->getHubUrls());
     }
 
     public function testRetrievesUniqueHubServerUrlsOnly()
     {
         $this->subscriber->addHubUrls([
-            'http://www.example.com/hub', 'http://www.example.com/hub2',
-            'http://www.example.com/hub'
+            'http://www.example.com/hub',
+            'http://www.example.com/hub2',
+            'http://www.example.com/hub',
         ]);
         $this->assertEquals([
-            'http://www.example.com/hub', 'http://www.example.com/hub2'
+            'http://www.example.com/hub',
+            'http://www.example.com/hub2',
         ], $this->subscriber->getHubUrls());
     }
 
@@ -121,52 +130,62 @@ class SubscriberTest extends TestCase
     public function testAddsParametersFromArray()
     {
         $this->subscriber->setParameters([
-            'foo' => 'bar', 'boo' => 'baz'
+            'foo' => 'bar',
+            'boo' => 'baz',
         ]);
         $this->assertEquals([
-            'foo' => 'bar', 'boo' => 'baz'
+            'foo' => 'bar',
+            'boo' => 'baz',
         ], $this->subscriber->getParameters());
     }
 
     public function testAddsParametersFromArrayInSingleMethod()
     {
         $this->subscriber->setParameter([
-            'foo' => 'bar', 'boo' => 'baz'
+            'foo' => 'bar',
+            'boo' => 'baz',
         ]);
         $this->assertEquals([
-            'foo' => 'bar', 'boo' => 'baz'
+            'foo' => 'bar',
+            'boo' => 'baz',
         ], $this->subscriber->getParameters());
     }
 
     public function testAddsParametersFromArrayUsingSetOptions()
     {
-        $this->subscriber->setOptions(['parameters' => [
-            'foo' => 'bar', 'boo' => 'baz'
-        ]]);
+        $this->subscriber->setOptions([
+            'parameters' => [
+                'foo' => 'bar',
+                'boo' => 'baz',
+            ],
+        ]);
         $this->assertEquals([
-            'foo' => 'bar', 'boo' => 'baz'
+            'foo' => 'bar',
+            'boo' => 'baz',
         ], $this->subscriber->getParameters());
     }
 
     public function testRemovesParameter()
     {
         $this->subscriber->setParameters([
-            'foo' => 'bar', 'boo' => 'baz'
+            'foo' => 'bar',
+            'boo' => 'baz',
         ]);
         $this->subscriber->removeParameter('boo');
         $this->assertEquals([
-            'foo' => 'bar'
+            'foo' => 'bar',
         ], $this->subscriber->getParameters());
     }
 
     public function testRemovesParameterIfSetToNull()
     {
         $this->subscriber->setParameters([
-            'foo' => 'bar', 'boo' => 'baz'
+            'foo' => 'bar',
+            'boo' => 'baz',
         ]);
         $this->subscriber->setParameter('boo', null);
         $this->assertEquals([
-            'foo' => 'bar'
+            'foo' => 'bar',
         ], $this->subscriber->getParameters());
     }
 
@@ -182,13 +201,11 @@ class SubscriberTest extends TestCase
         $this->subscriber->setTopicUrl('');
     }
 
-
     public function testThrowsExceptionOnSettingNonStringTopicUrl()
     {
         $this->expectException(ExceptionInterface::class);
         $this->subscriber->setTopicUrl(123);
     }
-
 
     public function testThrowsExceptionOnSettingInvalidTopicUrl()
     {
@@ -214,13 +231,11 @@ class SubscriberTest extends TestCase
         $this->subscriber->setCallbackUrl('');
     }
 
-
     public function testThrowsExceptionOnSettingNonStringCallbackUrl()
     {
         $this->expectException(ExceptionInterface::class);
         $this->subscriber->setCallbackUrl(123);
     }
-
 
     public function testThrowsExceptionOnSettingInvalidCallbackUrl()
     {
@@ -282,7 +297,6 @@ class SubscriberTest extends TestCase
         $this->assertThat($this->subscriber->getStorage(), $this->identicalTo($storage));
     }
 
-
     public function testGetStorageThrowsExceptionIfNoneSet()
     {
         $this->expectException(ExceptionInterface::class);
@@ -293,12 +307,13 @@ class SubscriberTest extends TestCase
     protected function _getCleanMock($className)
     {
         // @codingStandardsIgnoreEnd
-        $class = new \ReflectionClass($className);
-        $methods = $class->getMethods();
+        $class       = new ReflectionClass($className);
+        $methods     = $class->getMethods();
         $stubMethods = [];
         foreach ($methods as $method) {
-            if ($method->isPublic() || ($method->isProtected()
-                && $method->isAbstract())) {
+            if ($method->isPublic()
+                || ($method->isProtected() && $method->isAbstract())
+            ) {
                 $stubMethods[] = $method->getName();
             }
         }
@@ -306,7 +321,7 @@ class SubscriberTest extends TestCase
         $mocked = $this->getMockBuilder($className)
             ->setMethods($stubMethods)
             ->setConstructorArgs([])
-            ->setMockClassName(str_replace('\\', '_', ($className . '_PubsubSubscriberMock_' . uniqid())))
+            ->setMockClassName(str_replace('\\', '_', $className . '_PubsubSubscriberMock_' . uniqid()))
             ->disableOriginalConstructor()
             ->getMock();
         return $mocked;

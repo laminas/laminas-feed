@@ -16,19 +16,19 @@ use Laminas\Http\Response as HttpResponse;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @group      Laminas_Feed
- * @group      Laminas_Feed_Subsubhubbub
+ * @group Laminas_Feed
+ * @group Laminas_Feed_Subsubhubbub
  */
 class PublisherTest extends TestCase
 {
     /** @var Publisher */
-    protected $publisher = null;
+    protected $publisher;
 
     public function setUp()
     {
-        $client = new HttpClient;
+        $client = new HttpClient();
         PubSubHubbub::setHttpClient($client);
-        $this->publisher = new Publisher;
+        $this->publisher = new Publisher();
     }
 
     public function getClientSuccess()
@@ -62,42 +62,51 @@ class PublisherTest extends TestCase
     public function testAddsHubServerUrlsFromArray()
     {
         $this->publisher->addHubUrls([
-            'http://www.example.com/hub', 'http://www.example.com/hub2'
+            'http://www.example.com/hub',
+            'http://www.example.com/hub2',
         ]);
         $this->assertEquals([
-            'http://www.example.com/hub', 'http://www.example.com/hub2'
+            'http://www.example.com/hub',
+            'http://www.example.com/hub2',
         ], $this->publisher->getHubUrls());
     }
 
     public function testAddsHubServerUrlsFromArrayUsingSetConfig()
     {
-        $this->publisher->setOptions(['hubUrls' => [
-            'http://www.example.com/hub', 'http://www.example.com/hub2'
-        ]]);
+        $this->publisher->setOptions([
+            'hubUrls' => [
+                'http://www.example.com/hub',
+                'http://www.example.com/hub2',
+            ],
+        ]);
         $this->assertEquals([
-            'http://www.example.com/hub', 'http://www.example.com/hub2'
+            'http://www.example.com/hub',
+            'http://www.example.com/hub2',
         ], $this->publisher->getHubUrls());
     }
 
     public function testRemovesHubServerUrl()
     {
         $this->publisher->addHubUrls([
-            'http://www.example.com/hub', 'http://www.example.com/hub2'
+            'http://www.example.com/hub',
+            'http://www.example.com/hub2',
         ]);
         $this->publisher->removeHubUrl('http://www.example.com/hub');
         $this->assertEquals([
-            1 => 'http://www.example.com/hub2'
+            1 => 'http://www.example.com/hub2',
         ], $this->publisher->getHubUrls());
     }
 
     public function testRetrievesUniqueHubServerUrlsOnly()
     {
         $this->publisher->addHubUrls([
-            'http://www.example.com/hub', 'http://www.example.com/hub2',
-            'http://www.example.com/hub'
+            'http://www.example.com/hub',
+            'http://www.example.com/hub2',
+            'http://www.example.com/hub',
         ]);
         $this->assertEquals([
-            'http://www.example.com/hub', 'http://www.example.com/hub2'
+            'http://www.example.com/hub',
+            'http://www.example.com/hub2',
         ], $this->publisher->getHubUrls());
     }
 
@@ -107,13 +116,11 @@ class PublisherTest extends TestCase
         $this->publisher->addHubUrl('');
     }
 
-
     public function testThrowsExceptionOnSettingNonStringHubServerUrl()
     {
         $this->expectException(ExceptionInterface::class);
         $this->publisher->addHubUrl(123);
     }
-
 
     public function testThrowsExceptionOnSettingInvalidHubServerUrl()
     {
@@ -130,42 +137,51 @@ class PublisherTest extends TestCase
     public function testAddsUpdatedTopicUrlsFromArray()
     {
         $this->publisher->addUpdatedTopicUrls([
-            'http://www.example.com/topic', 'http://www.example.com/topic2'
+            'http://www.example.com/topic',
+            'http://www.example.com/topic2',
         ]);
         $this->assertEquals([
-            'http://www.example.com/topic', 'http://www.example.com/topic2'
+            'http://www.example.com/topic',
+            'http://www.example.com/topic2',
         ], $this->publisher->getUpdatedTopicUrls());
     }
 
     public function testAddsUpdatedTopicUrlsFromArrayUsingSetConfig()
     {
-        $this->publisher->setOptions(['updatedTopicUrls' => [
-            'http://www.example.com/topic', 'http://www.example.com/topic2'
-        ]]);
+        $this->publisher->setOptions([
+            'updatedTopicUrls' => [
+                'http://www.example.com/topic',
+                'http://www.example.com/topic2',
+            ],
+        ]);
         $this->assertEquals([
-            'http://www.example.com/topic', 'http://www.example.com/topic2'
+            'http://www.example.com/topic',
+            'http://www.example.com/topic2',
         ], $this->publisher->getUpdatedTopicUrls());
     }
 
     public function testRemovesUpdatedTopicUrl()
     {
         $this->publisher->addUpdatedTopicUrls([
-            'http://www.example.com/topic', 'http://www.example.com/topic2'
+            'http://www.example.com/topic',
+            'http://www.example.com/topic2',
         ]);
         $this->publisher->removeUpdatedTopicUrl('http://www.example.com/topic');
         $this->assertEquals([
-            1 => 'http://www.example.com/topic2'
+            1 => 'http://www.example.com/topic2',
         ], $this->publisher->getUpdatedTopicUrls());
     }
 
     public function testRetrievesUniqueUpdatedTopicUrlsOnly()
     {
         $this->publisher->addUpdatedTopicUrls([
-            'http://www.example.com/topic', 'http://www.example.com/topic2',
-            'http://www.example.com/topic'
+            'http://www.example.com/topic',
+            'http://www.example.com/topic2',
+            'http://www.example.com/topic',
         ]);
         $this->assertEquals([
-            'http://www.example.com/topic', 'http://www.example.com/topic2'
+            'http://www.example.com/topic',
+            'http://www.example.com/topic2',
         ], $this->publisher->getUpdatedTopicUrls());
     }
 
@@ -175,13 +191,11 @@ class PublisherTest extends TestCase
         $this->publisher->addUpdatedTopicUrl('');
     }
 
-
     public function testThrowsExceptionOnSettingNonStringUpdatedTopicUrl()
     {
         $this->expectException(ExceptionInterface::class);
         $this->publisher->addUpdatedTopicUrl(123);
     }
-
 
     public function testThrowsExceptionOnSettingInvalidUpdatedTopicUrl()
     {
@@ -198,52 +212,62 @@ class PublisherTest extends TestCase
     public function testAddsParametersFromArray()
     {
         $this->publisher->setParameters([
-            'foo' => 'bar', 'boo' => 'baz'
+            'foo' => 'bar',
+            'boo' => 'baz',
         ]);
         $this->assertEquals([
-            'foo' => 'bar', 'boo' => 'baz'
+            'foo' => 'bar',
+            'boo' => 'baz',
         ], $this->publisher->getParameters());
     }
 
     public function testAddsParametersFromArrayInSingleMethod()
     {
         $this->publisher->setParameter([
-            'foo' => 'bar', 'boo' => 'baz'
+            'foo' => 'bar',
+            'boo' => 'baz',
         ]);
         $this->assertEquals([
-            'foo' => 'bar', 'boo' => 'baz'
+            'foo' => 'bar',
+            'boo' => 'baz',
         ], $this->publisher->getParameters());
     }
 
     public function testAddsParametersFromArrayUsingSetConfig()
     {
-        $this->publisher->setOptions(['parameters' => [
-            'foo' => 'bar', 'boo' => 'baz'
-        ]]);
+        $this->publisher->setOptions([
+            'parameters' => [
+                'foo' => 'bar',
+                'boo' => 'baz',
+            ],
+        ]);
         $this->assertEquals([
-            'foo' => 'bar', 'boo' => 'baz'
+            'foo' => 'bar',
+            'boo' => 'baz',
         ], $this->publisher->getParameters());
     }
 
     public function testRemovesParameter()
     {
         $this->publisher->setParameters([
-            'foo' => 'bar', 'boo' => 'baz'
+            'foo' => 'bar',
+            'boo' => 'baz',
         ]);
         $this->publisher->removeParameter('boo');
         $this->assertEquals([
-            'foo' => 'bar'
+            'foo' => 'bar',
         ], $this->publisher->getParameters());
     }
 
     public function testRemovesParameterIfSetToNull()
     {
         $this->publisher->setParameters([
-            'foo' => 'bar', 'boo' => 'baz'
+            'foo' => 'bar',
+            'boo' => 'baz',
         ]);
         $this->publisher->setParameter('boo', null);
         $this->assertEquals([
-            'foo' => 'bar'
+            'foo' => 'bar',
         ], $this->publisher->getParameters());
     }
 
