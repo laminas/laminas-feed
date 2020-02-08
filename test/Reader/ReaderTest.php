@@ -31,12 +31,12 @@ class ReaderTest extends TestCase
 {
     protected $feedSamplePath;
 
-    public function setup()
+    protected function setUp()
     {
         $this->feedSamplePath = dirname(__FILE__) . '/_files';
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         Reader\Reader::reset();
     }

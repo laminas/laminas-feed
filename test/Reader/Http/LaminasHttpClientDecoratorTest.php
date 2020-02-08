@@ -24,7 +24,7 @@ use Prophecy\Prophecy\ObjectProphecy;
  */
 class LaminasHttpClientDecoratorTest extends TestCase
 {
-    public function setUp()
+    protected function setUp()
     {
         $this->client = $this->prophesize(Client::class);
     }

@@ -24,7 +24,7 @@ class PublisherTest extends TestCase
     /** @var Publisher */
     protected $publisher;
 
-    public function setUp()
+    protected function setUp()
     {
         $client = new HttpClient();
         PubSubHubbub::setHttpClient($client);

@@ -19,7 +19,7 @@ class WordpressAtom10Test extends TestCase
 {
     protected $feedSamplePath;
 
-    public function setup()
+    protected function setUp()
     {
         Reader\Reader::reset();
         $this->feedSamplePath = dirname(__FILE__) . '/_files/wordpress-atom10.xml';

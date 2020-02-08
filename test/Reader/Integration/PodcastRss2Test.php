@@ -20,7 +20,7 @@ class PodcastRss2Test extends TestCase
 {
     protected $feedSamplePath;
 
-    public function setup()
+    protected function setUp()
     {
         Reader\Reader::reset();
         $this->feedSamplePath = dirname(__FILE__) . '/_files/podcast.xml';

@@ -25,13 +25,13 @@ class EntryTest extends TestCase
 {
     protected $feedSamplePath;
 
-    public function setup()
+    protected function setUp()
     {
         $this->feedSamplePath = dirname(__FILE__) . '/_files';
         Writer\Writer::reset();
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         Writer\Writer::reset();
     }

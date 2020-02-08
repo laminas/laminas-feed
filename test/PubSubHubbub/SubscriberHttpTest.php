@@ -41,7 +41,7 @@ class SubscriberHttpTest extends TestCase
 
     protected $storage;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->baseuri = getenv('TESTS_LAMINAS_FEED_PUBSUBHUBBUB_BASEURI');
         if ($this->baseuri) {
