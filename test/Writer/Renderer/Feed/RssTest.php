@@ -9,6 +9,7 @@
 namespace LaminasTest\Feed\Writer\Renderer\Feed;
 
 use DateTime;
+use DOMXPath;
 use Laminas\Feed\Reader;
 use Laminas\Feed\Writer;
 use Laminas\Feed\Writer\Exception\ExceptionInterface;
@@ -19,17 +20,17 @@ use LaminasTest\Feed\Writer\TestAsset;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @group      Laminas_Feed
- * @group      Laminas_Feed_Writer
+ * @group Laminas_Feed
+ * @group Laminas_Feed_Writer
  */
 class RssTest extends TestCase
 {
-    protected $validWriter = null;
+    protected $validWriter;
 
-    public function setUp()
+    protected function setUp()
     {
         Writer\Writer::reset();
-        $this->validWriter = new Writer\Feed;
+        $this->validWriter = new Writer\Feed();
         $this->validWriter->setTitle('This is a test feed.');
         $this->validWriter->setDescription('This is a test description.');
         $this->validWriter->setLink('http://www.example.com');
@@ -37,7 +38,7 @@ class RssTest extends TestCase
         $this->validWriter->setType('rss');
     }
 
-    public function tearDown()
+    protected function tearDown()
     {
         Writer\Writer::reset();
         $this->validWriter = null;
@@ -45,11 +46,14 @@ class RssTest extends TestCase
 
     public function testSetsWriterInConstructor()
     {
-        $writer = new Writer\Feed;
+        $writer = new Writer\Feed();
         $feed   = new Renderer\Feed\Rss($writer);
         $this->assertInstanceOf(Feed::class, $feed->getDataContainer());
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testBuildMethodRunsMinimalWriterContainerProperlyBeforeICheckRssCompliance()
     {
         $feed = new Renderer\Feed\Rss($this->validWriter);
@@ -83,9 +87,10 @@ class RssTest extends TestCase
 
     public function testFeedTitleIfMissingThrowsException()
     {
-        $this->expectException(ExceptionInterface::class);
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $this->validWriter->remove('title');
+
+        $this->expectException(ExceptionInterface::class);
         $rssFeed->render();
     }
 
@@ -111,9 +116,10 @@ class RssTest extends TestCase
 
     public function testFeedDescriptionThrowsExceptionIfMissing()
     {
-        $this->expectException(ExceptionInterface::class);
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $this->validWriter->remove('description');
+
+        $this->expectException(ExceptionInterface::class);
         $rssFeed->render();
     }
 
@@ -138,6 +144,9 @@ class RssTest extends TestCase
         $this->assertEquals(1234567890, $feed->getDateModified()->getTimestamp());
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testFeedUpdatedDateIfMissingThrowsNoException()
     {
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
@@ -163,6 +172,9 @@ class RssTest extends TestCase
         $this->assertEquals('FooFeedBuilder 1.00 (http://www.example.com)', $feed->getGenerator());
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testFeedGeneratorIfMissingThrowsNoException()
     {
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
@@ -190,6 +202,9 @@ class RssTest extends TestCase
         $this->assertEquals('fr', $feed->getLanguage());
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testFeedLanguageIfMissingThrowsNoException()
     {
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
@@ -215,9 +230,10 @@ class RssTest extends TestCase
 
     public function testFeedLinkToHtmlVersionOfFeedIfMissingThrowsException()
     {
-        $this->expectException(ExceptionInterface::class);
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $this->validWriter->remove('link');
+
+        $this->expectException(ExceptionInterface::class);
         $rssFeed->render();
     }
 
@@ -232,7 +248,7 @@ class RssTest extends TestCase
         $rssFeed->render();
         $feed = Reader\Reader::importString($rssFeed->saveXml());
         $this->assertEquals('http://www.example.com/rss', $feed->getFeedLink());
-        $xpath = new \DOMXPath($feed->getDomDocument());
+        $xpath = new DOMXPath($feed->getDomDocument());
         $this->assertEquals(1, $xpath->evaluate('/rss/channel/atom:link[@rel="self"]')->length);
     }
 
@@ -245,6 +261,9 @@ class RssTest extends TestCase
         $this->assertEquals('http://www.example.com/rss', $feed->getFeedLink());
     }
 
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testFeedLinkToXmlRssWhereTheFeedWillBeAvailableIfMissingThrowsNoException()
     {
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
@@ -266,9 +285,11 @@ class RssTest extends TestCase
      */
     public function testFeedHoldsAnyAuthorAdded()
     {
-        $this->validWriter->addAuthor(['name' => 'Joe',
-                                             'email' => 'joe@example.com',
-                                             'uri'  => 'http://www.example.com/joe']);
+        $this->validWriter->addAuthor([
+            'name'  => 'Joe',
+            'email' => 'joe@example.com',
+            'uri'   => 'http://www.example.com/joe',
+        ]);
         $atomFeed = new Renderer\Feed\Rss($this->validWriter);
         $atomFeed->render();
         $feed   = Reader\Reader::importString($atomFeed->saveXml());
@@ -281,9 +302,11 @@ class RssTest extends TestCase
      */
     public function testFeedAuthorCharDataEncoding()
     {
-        $this->validWriter->addAuthor(['name' => '<>&\'"áéíóú',
-                                            'email' => 'joe@example.com',
-                                            'uri'  => 'http://www.example.com/joe']);
+        $this->validWriter->addAuthor([
+            'name'  => '<>&\'"áéíóú',
+            'email' => 'joe@example.com',
+            'uri'   => 'http://www.example.com/joe',
+        ]);
         $atomFeed = new Renderer\Feed\Rss($this->validWriter);
         $atomFeed->render();
         $feed   = Reader\Reader::importString($atomFeed->saveXml());
@@ -315,21 +338,27 @@ class RssTest extends TestCase
     public function testCategoriesCanBeSet()
     {
         $this->validWriter->addCategories([
-                                                ['term'   => 'cat_dog',
-                                                      'label'  => 'Cats & Dogs',
-                                                      'scheme' => 'http://example.com/schema1'],
-                                                ['term' => 'cat_dog2']
-                                           ]);
+            [
+                'term'   => 'cat_dog',
+                'label'  => 'Cats & Dogs',
+                'scheme' => 'http://example.com/schema1',
+            ],
+            ['term' => 'cat_dog2'],
+        ]);
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $rssFeed->render();
         $feed     = Reader\Reader::importString($rssFeed->saveXml());
         $expected = [
-            ['term'   => 'cat_dog',
-                  'label'  => 'cat_dog',
-                  'scheme' => 'http://example.com/schema1'],
-            ['term'   => 'cat_dog2',
-                  'label'  => 'cat_dog2',
-                  'scheme' => null]
+            [
+                'term'   => 'cat_dog',
+                'label'  => 'cat_dog',
+                'scheme' => 'http://example.com/schema1',
+            ],
+            [
+                'term'   => 'cat_dog2',
+                'label'  => 'cat_dog2',
+                'scheme' => null,
+            ],
         ];
         $this->assertEquals($expected, (array) $feed->getCategories());
     }
@@ -340,21 +369,27 @@ class RssTest extends TestCase
     public function testCategoriesCharDataEncoding()
     {
         $this->validWriter->addCategories([
-                                                ['term'   => '<>&\'"áéíóú',
-                                                      'label'  => 'Cats & Dogs',
-                                                      'scheme' => 'http://example.com/schema1'],
-                                                ['term' => 'cat_dog2']
-                                           ]);
+            [
+                'term'   => '<>&\'"áéíóú',
+                'label'  => 'Cats & Dogs',
+                'scheme' => 'http://example.com/schema1',
+            ],
+            ['term' => 'cat_dog2'],
+        ]);
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $rssFeed->render();
         $feed     = Reader\Reader::importString($rssFeed->saveXml());
         $expected = [
-            ['term'   => '<>&\'"áéíóú',
-                  'label'  => '<>&\'"áéíóú',
-                  'scheme' => 'http://example.com/schema1'],
-            ['term'   => 'cat_dog2',
-                  'label'  => 'cat_dog2',
-                  'scheme' => null]
+            [
+                'term'   => '<>&\'"áéíóú',
+                'label'  => '<>&\'"áéíóú',
+                'scheme' => 'http://example.com/schema1',
+            ],
+            [
+                'term'   => 'cat_dog2',
+                'label'  => 'cat_dog2',
+                'scheme' => null,
+            ],
         ];
         $this->assertEquals($expected, (array) $feed->getCategories());
     }
@@ -368,7 +403,8 @@ class RssTest extends TestCase
         $rssFeed->render();
         $feed     = Reader\Reader::importString($rssFeed->saveXml());
         $expected = [
-            'http://www.example.com/hub', 'http://www.example.com/hub2'
+            'http://www.example.com/hub',
+            'http://www.example.com/hub2',
         ];
         $this->assertEquals($expected, (array) $feed->getHubs());
     }
@@ -376,13 +412,13 @@ class RssTest extends TestCase
     public function testImageCanBeSet()
     {
         $this->validWriter->setImage([
-                                           'uri'         => 'http://www.example.com/logo.gif',
-                                           'link'        => 'http://www.example.com',
-                                           'title'       => 'Image ALT',
-                                           'height'      => '400',
-                                           'width'       => '144',
-                                           'description' => 'Image TITLE'
-                                      ]);
+            'uri'         => 'http://www.example.com/logo.gif',
+            'link'        => 'http://www.example.com',
+            'title'       => 'Image ALT',
+            'height'      => '400',
+            'width'       => '144',
+            'description' => 'Image TITLE',
+        ]);
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $rssFeed->render();
         $feed     = Reader\Reader::importString($rssFeed->saveXml());
@@ -392,7 +428,7 @@ class RssTest extends TestCase
             'title'       => 'Image ALT',
             'height'      => '400',
             'width'       => '144',
-            'description' => 'Image TITLE'
+            'description' => 'Image TITLE',
         ];
         $this->assertEquals($expected, $feed->getImage());
     }
@@ -400,40 +436,42 @@ class RssTest extends TestCase
     public function testImageCanBeSetWithOnlyRequiredElements()
     {
         $this->validWriter->setImage([
-                                           'uri'   => 'http://www.example.com/logo.gif',
-                                           'link'  => 'http://www.example.com',
-                                           'title' => 'Image ALT'
-                                      ]);
+            'uri'   => 'http://www.example.com/logo.gif',
+            'link'  => 'http://www.example.com',
+            'title' => 'Image ALT',
+        ]);
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $rssFeed->render();
         $feed     = Reader\Reader::importString($rssFeed->saveXml());
         $expected = [
             'uri'   => 'http://www.example.com/logo.gif',
             'link'  => 'http://www.example.com',
-            'title' => 'Image ALT'
+            'title' => 'Image ALT',
         ];
         $this->assertEquals($expected, $feed->getImage());
     }
 
     public function testImageThrowsExceptionOnMissingLink()
     {
-        $this->expectException(ExceptionInterface::class);
         $this->validWriter->setImage([
-                                           'uri'   => 'http://www.example.com/logo.gif',
-                                           'title' => 'Image ALT'
-                                      ]);
+            'uri'   => 'http://www.example.com/logo.gif',
+            'title' => 'Image ALT',
+        ]);
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+
+        $this->expectException(ExceptionInterface::class);
         $rssFeed->render();
     }
 
     public function testImageThrowsExceptionOnMissingTitle()
     {
-        $this->expectException(ExceptionInterface::class);
         $this->validWriter->setImage([
-                                           'uri'  => 'http://www.example.com/logo.gif',
-                                           'link' => 'http://www.example.com'
-                                      ]);
+            'uri'  => 'http://www.example.com/logo.gif',
+            'link' => 'http://www.example.com',
+        ]);
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+
+        $this->expectException(ExceptionInterface::class);
         $rssFeed->render();
     }
 
@@ -441,120 +479,126 @@ class RssTest extends TestCase
     {
         $this->expectException(ExceptionInterface::class);
         $this->validWriter->setImage([
-                                           'link'  => 'http://www.example.com',
-                                           'title' => 'Image ALT'
-                                      ]);
-        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
-        $rssFeed->render();
+            'link'  => 'http://www.example.com',
+            'title' => 'Image ALT',
+        ]);
     }
 
     public function testImageThrowsExceptionIfOptionalDescriptionInvalid()
     {
-        $this->expectException(ExceptionInterface::class);
         $this->validWriter->setImage([
-                                           'uri'         => 'http://www.example.com/logo.gif',
-                                           'link'        => 'http://www.example.com',
-                                           'title'       => 'Image ALT',
-                                           'description' => 2
-                                      ]);
+            'uri'         => 'http://www.example.com/logo.gif',
+            'link'        => 'http://www.example.com',
+            'title'       => 'Image ALT',
+            'description' => 2,
+        ]);
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+
+        $this->expectException(ExceptionInterface::class);
         $rssFeed->render();
     }
 
     public function testImageThrowsExceptionIfOptionalDescriptionEmpty()
     {
-        $this->expectException(ExceptionInterface::class);
         $this->validWriter->setImage([
-                                           'uri'         => 'http://www.example.com/logo.gif',
-                                           'link'        => 'http://www.example.com',
-                                           'title'       => 'Image ALT',
-                                           'description' => ''
-                                      ]);
+            'uri'         => 'http://www.example.com/logo.gif',
+            'link'        => 'http://www.example.com',
+            'title'       => 'Image ALT',
+            'description' => '',
+        ]);
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+
+        $this->expectException(ExceptionInterface::class);
         $rssFeed->render();
     }
 
     public function testImageThrowsExceptionIfOptionalHeightNotAnInteger()
     {
-        $this->expectException(ExceptionInterface::class);
         $this->validWriter->setImage([
-                                           'uri'    => 'http://www.example.com/logo.gif',
-                                           'link'   => 'http://www.example.com',
-                                           'title'  => 'Image ALT',
-                                           'height' => 'a',
-                                           'width'  => 144
-                                      ]);
+            'uri'    => 'http://www.example.com/logo.gif',
+            'link'   => 'http://www.example.com',
+            'title'  => 'Image ALT',
+            'height' => 'a',
+            'width'  => 144,
+        ]);
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+
+        $this->expectException(ExceptionInterface::class);
         $rssFeed->render();
     }
 
     public function testImageThrowsExceptionIfOptionalHeightEmpty()
     {
-        $this->expectException(ExceptionInterface::class);
         $this->validWriter->setImage([
-                                           'uri'    => 'http://www.example.com/logo.gif',
-                                           'link'   => 'http://www.example.com',
-                                           'title'  => 'Image ALT',
-                                           'height' => '',
-                                           'width'  => 144
-                                      ]);
+            'uri'    => 'http://www.example.com/logo.gif',
+            'link'   => 'http://www.example.com',
+            'title'  => 'Image ALT',
+            'height' => '',
+            'width'  => 144,
+        ]);
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+
+        $this->expectException(ExceptionInterface::class);
         $rssFeed->render();
     }
 
     public function testImageThrowsExceptionIfOptionalHeightGreaterThan400()
     {
-        $this->expectException(ExceptionInterface::class);
         $this->validWriter->setImage([
-                                           'uri'    => 'http://www.example.com/logo.gif',
-                                           'link'   => 'http://www.example.com',
-                                           'title'  => 'Image ALT',
-                                           'height' => '401',
-                                           'width'  => 144
-                                      ]);
+            'uri'    => 'http://www.example.com/logo.gif',
+            'link'   => 'http://www.example.com',
+            'title'  => 'Image ALT',
+            'height' => '401',
+            'width'  => 144,
+        ]);
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+
+        $this->expectException(ExceptionInterface::class);
         $rssFeed->render();
     }
 
     public function testImageThrowsExceptionIfOptionalWidthNotAnInteger()
     {
-        $this->expectException(ExceptionInterface::class);
         $this->validWriter->setImage([
-                                           'uri'    => 'http://www.example.com/logo.gif',
-                                           'link'   => 'http://www.example.com',
-                                           'title'  => 'Image ALT',
-                                           'height' => '400',
-                                           'width'  => 'a'
-                                      ]);
+            'uri'    => 'http://www.example.com/logo.gif',
+            'link'   => 'http://www.example.com',
+            'title'  => 'Image ALT',
+            'height' => '400',
+            'width'  => 'a',
+        ]);
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+
+        $this->expectException(ExceptionInterface::class);
         $rssFeed->render();
     }
 
     public function testImageThrowsExceptionIfOptionalWidthEmpty()
     {
-        $this->expectException(ExceptionInterface::class);
         $this->validWriter->setImage([
-                                           'uri'    => 'http://www.example.com/logo.gif',
-                                           'link'   => 'http://www.example.com',
-                                           'title'  => 'Image ALT',
-                                           'height' => '400',
-                                           'width'  => ''
-                                      ]);
+            'uri'    => 'http://www.example.com/logo.gif',
+            'link'   => 'http://www.example.com',
+            'title'  => 'Image ALT',
+            'height' => '400',
+            'width'  => '',
+        ]);
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+
+        $this->expectException(ExceptionInterface::class);
         $rssFeed->render();
     }
 
     public function testImageThrowsExceptionIfOptionalWidthGreaterThan144()
     {
-        $this->expectException(ExceptionInterface::class);
         $this->validWriter->setImage([
-                                           'uri'    => 'http://www.example.com/logo.gif',
-                                           'link'   => 'http://www.example.com',
-                                           'title'  => 'Image ALT',
-                                           'height' => '400',
-                                           'width'  => '145'
-                                      ]);
+            'uri'    => 'http://www.example.com/logo.gif',
+            'link'   => 'http://www.example.com',
+            'title'  => 'Image ALT',
+            'height' => '400',
+            'width'  => '145',
+        ]);
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+
+        $this->expectException(ExceptionInterface::class);
         $rssFeed->render();
     }
 
@@ -563,7 +607,7 @@ class RssTest extends TestCase
         $this->validWriter->setDateCreated(1234567890);
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $rssFeed->render();
-        $feed = Reader\Reader::importString($rssFeed->saveXml());
+        $feed   = Reader\Reader::importString($rssFeed->saveXml());
         $myDate = new DateTime('@' . 1234567890);
         $this->assertEquals($myDate, $feed->getDateCreated());
     }
@@ -579,13 +623,13 @@ class RssTest extends TestCase
             'messages' => [],
         ];
 
-        set_error_handler(function ($errno, $errstr) use ($notices) {
+        set_error_handler(static function ($errno, $errstr) use ($notices) {
             $notices->messages[] = $errstr;
         }, \E_USER_NOTICE);
         $renderer = new Renderer\Feed\Rss($this->validWriter);
         restore_error_handler();
 
-        $message = array_reduce($notices->messages, function ($toReturn, $message) {
+        $message = array_reduce($notices->messages, static function ($toReturn, $message) {
             if ('' !== $toReturn) {
                 return $toReturn;
             }

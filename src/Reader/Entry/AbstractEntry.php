@@ -28,14 +28,14 @@ abstract class AbstractEntry
      *
      * @var DOMDocument
      */
-    protected $domDocument = null;
+    protected $domDocument;
 
     /**
      * Entry instance
      *
      * @var DOMElement
      */
-    protected $entry = null;
+    protected $entry;
 
     /**
      * Pointer to the current entry
@@ -49,7 +49,7 @@ abstract class AbstractEntry
      *
      * @var DOMXPath
      */
-    protected $xpath = null;
+    protected $xpath;
 
     /**
      * Registered extensions
@@ -59,11 +59,8 @@ abstract class AbstractEntry
     protected $extensions = [];
 
     /**
-     * Constructor
-     *
-     * @param  DOMElement $entry
-     * @param  int $entryKey
-     * @param  string $type
+     * @param int $entryKey
+     * @param null|string $type
      */
     public function __construct(DOMElement $entry, $entryKey, $type = null)
     {
@@ -154,8 +151,7 @@ abstract class AbstractEntry
     /**
      * Set the XPath query
      *
-     * @param  DOMXPath $xpath
-     * @return AbstractEntry
+     * @return $this
      */
     public function setXpath(DOMXPath $xpath)
     {
@@ -176,7 +172,7 @@ abstract class AbstractEntry
     /**
      * Return an Extension object with the matching name (postfixed with _Entry)
      *
-     * @param string $name
+     * @param  string $name
      * @return Reader\Extension\AbstractEntry
      */
     public function getExtension($name)

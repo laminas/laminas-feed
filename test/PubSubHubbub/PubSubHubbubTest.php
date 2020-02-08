@@ -13,8 +13,8 @@ use Laminas\Feed\Reader\Reader as FeedReader;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @group      Laminas_Feed
- * @group      Laminas_Feed_Subsubhubbub
+ * @group Laminas_Feed
+ * @group Laminas_Feed_Subsubhubbub
  */
 class PubSubHubbubTest extends TestCase
 {
@@ -22,7 +22,8 @@ class PubSubHubbubTest extends TestCase
     {
         $feed = FeedReader::importFile(__DIR__ . '/_files/rss20.xml');
         $this->assertEquals([
-            'http://www.example.com/hub', 'http://www.example.com/hub2'
+            'http://www.example.com/hub',
+            'http://www.example.com/hub2',
         ], PubSubHubbub::detectHubs($feed));
     }
 }

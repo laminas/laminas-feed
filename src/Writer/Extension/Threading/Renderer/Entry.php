@@ -12,8 +12,6 @@ use DOMDocument;
 use DOMElement;
 use Laminas\Feed\Writer\Extension;
 
-/**
-*/
 class Entry extends Extension\AbstractRenderer
 {
     /**
@@ -32,7 +30,7 @@ class Entry extends Extension\AbstractRenderer
      */
     public function render()
     {
-        if (strtolower($this->getType()) == 'rss') {
+        if (strtolower($this->getType()) === 'rss') {
             return; // Atom 1.0 only
         }
         $this->_setCommentLink($this->dom, $this->base);
@@ -129,7 +127,7 @@ class Entry extends Extension\AbstractRenderer
         if ($count === null) {
             return;
         }
-        $tcount = $this->dom->createElement('thr:total');
+        $tcount            = $this->dom->createElement('thr:total');
         $tcount->nodeValue = $count;
         $root->appendChild($tcount);
         $this->called = true;

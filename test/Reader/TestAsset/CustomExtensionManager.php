@@ -8,7 +8,6 @@
 
 namespace LaminasTest\Feed\Reader\TestAsset;
 
-use Laminas\Feed\Reader\Exception\InvalidArgumentException;
 use Laminas\Feed\Reader\Extension;
 use Laminas\Feed\Reader\ExtensionManagerInterface;
 

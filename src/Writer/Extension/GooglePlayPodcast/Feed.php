@@ -36,9 +36,6 @@ class Feed
      */
     protected $stringWrapper;
 
-    /**
-     * Constructor
-     */
     public function __construct()
     {
         $this->stringWrapper = StringUtils::getWrapper($this->encoding);
@@ -48,7 +45,7 @@ class Feed
      * Set feed encoding
      *
      * @param  string $enc
-     * @return Feed
+     * @return $this
      */
     public function setEncoding($enc)
     {
@@ -71,7 +68,7 @@ class Feed
      * Set a block value of "yes" or "no". You may also set an empty string.
      *
      * @param  string
-     * @return Feed
+     * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
     public function setPlayPodcastBlock($value)
@@ -93,8 +90,7 @@ class Feed
     /**
      * Add feed authors
      *
-     * @param  array $values
-     * @return Feed
+     * @return $this
      */
     public function addPlayPodcastAuthors(array $values)
     {
@@ -108,7 +104,7 @@ class Feed
      * Add feed author
      *
      * @param  string $value
-     * @return Feed
+     * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
     public function addPlayPodcastAuthor($value)
@@ -128,8 +124,7 @@ class Feed
     /**
      * Set feed categories
      *
-     * @param  array $values
-     * @return Feed
+     * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
     public function setPlayPodcastCategories(array $values)
@@ -169,7 +164,7 @@ class Feed
      * Set feed image (icon)
      *
      * @param  string $value
-     * @return Feed
+     * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
     public function setPlayPodcastImage($value)
@@ -187,7 +182,7 @@ class Feed
      * Set "explicit" flag
      *
      * @param  bool $value
-     * @return Feed
+     * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
     public function setPlayPodcastExplicit($value)
@@ -205,7 +200,7 @@ class Feed
      * Set podcast description
      *
      * @param  string $value
-     * @return Feed
+     * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
     public function setPlayPodcastDescription($value)
@@ -223,7 +218,6 @@ class Feed
      * Overloading: proxy to internal setters
      *
      * @param  string $method
-     * @param  array $params
      * @return mixed
      * @throws Writer\Exception\BadMethodCallException
      */

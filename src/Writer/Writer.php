@@ -8,18 +8,16 @@
 
 namespace Laminas\Feed\Writer;
 
-/**
-*/
 class Writer
 {
     /**
      * Namespace constants
      */
-    const NAMESPACE_ATOM_03  = 'http://purl.org/atom/ns#';
-    const NAMESPACE_ATOM_10  = 'http://www.w3.org/2005/Atom';
-    const NAMESPACE_RDF      = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#';
-    const NAMESPACE_RSS_090  = 'http://my.netscape.com/rdf/simple/0.9/';
-    const NAMESPACE_RSS_10   = 'http://purl.org/rss/1.0/';
+    const NAMESPACE_ATOM_03 = 'http://purl.org/atom/ns#';
+    const NAMESPACE_ATOM_10 = 'http://www.w3.org/2005/Atom';
+    const NAMESPACE_RDF     = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#';
+    const NAMESPACE_RSS_090 = 'http://my.netscape.com/rdf/simple/0.9/';
+    const NAMESPACE_RSS_10  = 'http://purl.org/rss/1.0/';
 
     /**
      * Feed type constants
@@ -42,7 +40,7 @@ class Writer
     /**
      * @var ExtensionManagerInterface
      */
-    protected static $extensionManager = null;
+    protected static $extensionManager;
 
     /**
      * Array of registered extensions by class postfix (after the base class
@@ -165,7 +163,7 @@ class Writer
     public static function reset()
     {
         static::$extensionManager = null;
-        static::$extensions   = [
+        static::$extensions       = [
             'entry'         => [],
             'feed'          => [],
             'entryRenderer' => [],
@@ -207,7 +205,8 @@ class Writer
     /**
      * @deprecated This method is deprecated and will be removed with version 3.0
      *     Use PHP's lcfirst function instead. @see https://php.net/manual/function.lcfirst.php
-     * @param string $str
+     *
+     * @param  string $str
      * @return string
      */
     public static function lcfirst($str)
@@ -227,12 +226,12 @@ class Writer
      * implementations may not yet have an entry for the extension, which would
      * then otherwise cause registerExtension() to fail.
      *
-     * @param string $name
+     * @param  string $name
      * @return bool
      */
     protected static function hasExtension($name)
     {
-        $manager   = static::getExtensionManager();
+        $manager = static::getExtensionManager();
 
         $feedName          = $name . '\Feed';
         $entryName         = $name . '\Entry';

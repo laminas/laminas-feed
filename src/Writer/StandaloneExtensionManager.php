@@ -13,21 +13,21 @@ use Laminas\Feed\Writer\Exception\InvalidArgumentException;
 class StandaloneExtensionManager implements ExtensionManagerInterface
 {
     private $extensions = [
-        'Atom\Renderer\Feed'           => Extension\Atom\Renderer\Feed::class,
-        'Content\Renderer\Entry'       => Extension\Content\Renderer\Entry::class,
-        'DublinCore\Renderer\Entry'    => Extension\DublinCore\Renderer\Entry::class,
-        'DublinCore\Renderer\Feed'     => Extension\DublinCore\Renderer\Feed::class,
+        'Atom\Renderer\Feed'               => Extension\Atom\Renderer\Feed::class,
+        'Content\Renderer\Entry'           => Extension\Content\Renderer\Entry::class,
+        'DublinCore\Renderer\Entry'        => Extension\DublinCore\Renderer\Entry::class,
+        'DublinCore\Renderer\Feed'         => Extension\DublinCore\Renderer\Feed::class,
         'GooglePlayPodcast\Entry'          => Extension\GooglePlayPodcast\Entry::class,
         'GooglePlayPodcast\Feed'           => Extension\GooglePlayPodcast\Feed::class,
         'GooglePlayPodcast\Renderer\Entry' => Extension\GooglePlayPodcast\Renderer\Entry::class,
         'GooglePlayPodcast\Renderer\Feed'  => Extension\GooglePlayPodcast\Renderer\Feed::class,
-        'ITunes\Entry'                 => Extension\ITunes\Entry::class,
-        'ITunes\Feed'                  => Extension\ITunes\Feed::class,
-        'ITunes\Renderer\Entry'        => Extension\ITunes\Renderer\Entry::class,
-        'ITunes\Renderer\Feed'         => Extension\ITunes\Renderer\Feed::class,
-        'Slash\Renderer\Entry'         => Extension\Slash\Renderer\Entry::class,
-        'Threading\Renderer\Entry'     => Extension\Threading\Renderer\Entry::class,
-        'WellFormedWeb\Renderer\Entry' => Extension\WellFormedWeb\Renderer\Entry::class,
+        'ITunes\Entry'                     => Extension\ITunes\Entry::class,
+        'ITunes\Feed'                      => Extension\ITunes\Feed::class,
+        'ITunes\Renderer\Entry'            => Extension\ITunes\Renderer\Entry::class,
+        'ITunes\Renderer\Feed'             => Extension\ITunes\Renderer\Feed::class,
+        'Slash\Renderer\Entry'             => Extension\Slash\Renderer\Entry::class,
+        'Threading\Renderer\Entry'         => Extension\Threading\Renderer\Entry::class,
+        'WellFormedWeb\Renderer\Entry'     => Extension\WellFormedWeb\Renderer\Entry::class,
     ];
 
     /**
@@ -62,11 +62,9 @@ class StandaloneExtensionManager implements ExtensionManagerInterface
     public function add($name, $class)
     {
         if (is_string($class)
-            && ((
-                is_a($class, Extension\AbstractRenderer::class, true)
+            && (is_a($class, Extension\AbstractRenderer::class, true)
                 || 'Feed' === substr($class, -4)
-                || 'Entry' === substr($class, -5)
-            ))
+                || 'Entry' === substr($class, -5))
         ) {
             $this->extensions[$name] = $class;
 

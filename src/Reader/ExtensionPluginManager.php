@@ -199,7 +199,7 @@ class ExtensionPluginManager extends AbstractPluginManager implements ExtensionM
         throw new InvalidServiceException(sprintf(
             'Plugin of type %s is invalid; must implement %s\Extension\AbstractFeed '
             . 'or %s\Extension\AbstractEntry',
-            (is_object($plugin) ? get_class($plugin) : gettype($plugin)),
+            is_object($plugin) ? get_class($plugin) : gettype($plugin),
             __NAMESPACE__,
             __NAMESPACE__
         ));
@@ -220,7 +220,7 @@ class ExtensionPluginManager extends AbstractPluginManager implements ExtensionM
             throw new Exception\InvalidArgumentException(sprintf(
                 'Plugin of type %s is invalid; must implement %s\Extension\AbstractFeed '
                 . 'or %s\Extension\AbstractEntry',
-                (is_object($plugin) ? get_class($plugin) : gettype($plugin)),
+                is_object($plugin) ? get_class($plugin) : gettype($plugin),
                 __NAMESPACE__,
                 __NAMESPACE__
             ));

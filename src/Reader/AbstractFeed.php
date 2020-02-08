@@ -29,7 +29,7 @@ abstract class AbstractFeed implements Feed\FeedInterface
      *
      * @var DOMDocument
      */
-    protected $domDocument = null;
+    protected $domDocument;
 
     /**
      * An array of parsed feed entries
@@ -50,7 +50,7 @@ abstract class AbstractFeed implements Feed\FeedInterface
      *
      * @var DOMXPath
      */
-    protected $xpath = null;
+    protected $xpath;
 
     /**
      * Array of loaded extensions
@@ -64,18 +64,16 @@ abstract class AbstractFeed implements Feed\FeedInterface
      *
      * @var string
      */
-    protected $originalSourceUri = null;
+    protected $originalSourceUri;
 
     /**
-     * Constructor
-     *
-     * @param DomDocument $domDocument The DOM object for the feed's XML
-     * @param string $type Feed type
+     * @param DOMDocument $domDocument The DOM object for the feed's XML
+     * @param null|string $type Feed type
      */
     public function __construct(DOMDocument $domDocument, $type = null)
     {
         $this->domDocument = $domDocument;
-        $this->xpath = new DOMXPath($this->domDocument);
+        $this->xpath       = new DOMXPath($this->domDocument);
 
         if ($type !== null) {
             $this->data['type'] = $type;
@@ -103,7 +101,7 @@ abstract class AbstractFeed implements Feed\FeedInterface
      * Get an original source URI for the feed being parsed. Returns null if
      * unset or the feed was not imported from a URI.
      *
-     * @return string|null
+     * @return null|string
      */
     public function getOriginalSourceUri()
     {
@@ -124,12 +122,12 @@ abstract class AbstractFeed implements Feed\FeedInterface
     /**
      * Return the current entry
      *
-     * @return \Laminas\Feed\Reader\Entry\AbstractEntry
+     * @return Entry\AbstractEntry
      */
     public function current()
     {
         if (0 === strpos($this->getType(), 'rss')) {
-            $reader = new Entry\RSS($this->entries[$this->key()], $this->key(), $this->getType());
+            $reader = new Entry\Rss($this->entries[$this->key()], $this->key(), $this->getType());
         } else {
             $reader = new Entry\Atom($this->entries[$this->key()], $this->key(), $this->getType());
         }
@@ -215,7 +213,6 @@ abstract class AbstractFeed implements Feed\FeedInterface
 
     /**
      * Move the feed pointer forward
-     *
      */
     public function next()
     {
@@ -224,7 +221,6 @@ abstract class AbstractFeed implements Feed\FeedInterface
 
     /**
      * Reset the pointer in the feed object
-     *
      */
     public function rewind()
     {
@@ -253,15 +249,16 @@ abstract class AbstractFeed implements Feed\FeedInterface
                 return call_user_func_array([$extension, $method], $args);
             }
         }
-        throw new Exception\BadMethodCallException('Method: ' . $method
-        . 'does not exist and could not be located on a registered Extension');
+        throw new Exception\BadMethodCallException(
+            'Method: ' . $method . ' does not exist and could not be located on a registered Extension'
+        );
     }
 
     /**
      * Return an Extension object with the matching name (postfixed with _Feed)
      *
-     * @param string $name
-     * @return \Laminas\Feed\Reader\Extension\AbstractFeed
+     * @param  string $name
+     * @return Extension\AbstractFeed
      */
     public function getExtension($name)
     {
@@ -290,13 +287,11 @@ abstract class AbstractFeed implements Feed\FeedInterface
 
     /**
      * Read all entries to the internal entries array
-     *
      */
     abstract protected function indexEntries();
 
     /**
      * Register the default namespaces for the current feed format
-     *
      */
     abstract protected function registerNamespaces();
 }

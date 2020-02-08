@@ -127,8 +127,6 @@ namespace Laminas\Feed\Reader\Http;
 class Response implements HeaderAwareResponseInterface
 {
     /**
-     * Constructor
-     *
      * @param int $statusCode Response status code
      * @param string $body Response body
      * @param array $headers Response headers, if available

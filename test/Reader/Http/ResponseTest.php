@@ -119,40 +119,40 @@ class ResponseTest extends TestCase
     public function invalidHeaders()
     {
         return [
-            'empty-name' => [
-                [ '' => 'value' ],
+            'empty-name'   => [
+                ['' => 'value'],
                 'non-empty, non-numeric',
             ],
-            'zero-name' => [
-                [ 'value' ],
+            'zero-name'    => [
+                ['value'],
                 'non-empty, non-numeric',
             ],
-            'int-name' => [
-                [ 1 => 'value' ],
+            'int-name'     => [
+                [1 => 'value'],
                 'non-empty, non-numeric',
             ],
             'numeric-name' => [
-                [ '1.1' => 'value' ],
+                ['1.1' => 'value'],
                 'non-empty, non-numeric',
             ],
-            'null-value' => [
-                [ 'X-Test' => null ],
+            'null-value'   => [
+                ['X-Test' => null],
                 'must be a string or numeric',
             ],
-            'true-value' => [
-                [ 'X-Test' => true ],
+            'true-value'   => [
+                ['X-Test' => true],
                 'must be a string or numeric',
             ],
-            'false-value' => [
-                [ 'X-Test' => false ],
+            'false-value'  => [
+                ['X-Test' => false],
                 'must be a string or numeric',
             ],
-            'array-value' => [
-                [ 'X-Test' => ['BODY'] ],
+            'array-value'  => [
+                ['X-Test' => ['BODY']],
                 'must be a string or numeric',
             ],
             'object-value' => [
-                [ 'X-Test' => (object) ['body' => 'BODY'] ],
+                ['X-Test' => (object) ['body' => 'BODY']],
                 'must be a string or numeric',
             ],
         ];

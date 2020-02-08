@@ -24,7 +24,6 @@ class Subscription extends AbstractModel implements SubscriptionPersistenceInter
     /**
      * Save subscription to RDMBS
      *
-     * @param array $data
      * @return bool
      * @throws PubSubHubbub\Exception\InvalidArgumentException
      */
@@ -38,7 +37,7 @@ class Subscription extends AbstractModel implements SubscriptionPersistenceInter
         $result = $this->db->select(['id' => $data['id']]);
         if ($result && (0 < count($result))) {
             $data['created_time'] = $result->current()->created_time;
-            $now = $this->getNow();
+            $now                  = $this->getNow();
             if (array_key_exists('lease_seconds', $data)
                 && $data['lease_seconds']
             ) {
@@ -66,8 +65,9 @@ class Subscription extends AbstractModel implements SubscriptionPersistenceInter
     public function getSubscription($key)
     {
         if (empty($key) || ! is_string($key)) {
-            throw new PubSubHubbub\Exception\InvalidArgumentException('Invalid parameter "key"'
-                .' of "' . $key . '" must be a non-empty string');
+            throw new PubSubHubbub\Exception\InvalidArgumentException(
+                'Invalid parameter "key" of "' . $key . '" must be a non-empty string'
+            );
         }
         $result = $this->db->select(['id' => $key]);
         if ($result && count($result)) {
@@ -86,8 +86,9 @@ class Subscription extends AbstractModel implements SubscriptionPersistenceInter
     public function hasSubscription($key)
     {
         if (empty($key) || ! is_string($key)) {
-            throw new PubSubHubbub\Exception\InvalidArgumentException('Invalid parameter "key"'
-                .' of "' . $key . '" must be a non-empty string');
+            throw new PubSubHubbub\Exception\InvalidArgumentException(
+                'Invalid parameter "key" of "' . $key . '" must be a non-empty string'
+            );
         }
         $result = $this->db->select(['id' => $key]);
         if ($result && count($result)) {
@@ -99,7 +100,7 @@ class Subscription extends AbstractModel implements SubscriptionPersistenceInter
     /**
      * Delete a subscription
      *
-     * @param string $key
+     * @param  string $key
      * @return bool
      */
     public function deleteSubscription($key)
@@ -130,8 +131,7 @@ class Subscription extends AbstractModel implements SubscriptionPersistenceInter
     /**
      * Set a DateTime instance for assisting with unit testing
      *
-     * @param DateTime $now
-     * @return Subscription
+     * @return $this
      */
     public function setNow(DateTime $now)
     {

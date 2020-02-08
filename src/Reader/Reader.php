@@ -15,18 +15,16 @@ use Laminas\Feed\Reader\Exception\InvalidHttpClientException;
 use Laminas\Http as LaminasHttp;
 use Laminas\Stdlib\ErrorHandler;
 
-/**
-*/
 class Reader implements ReaderImportInterface
 {
     /**
      * Namespace constants
      */
-    const NAMESPACE_ATOM_03  = 'http://purl.org/atom/ns#';
-    const NAMESPACE_ATOM_10  = 'http://www.w3.org/2005/Atom';
-    const NAMESPACE_RDF      = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#';
-    const NAMESPACE_RSS_090  = 'http://my.netscape.com/rdf/simple/0.9/';
-    const NAMESPACE_RSS_10   = 'http://purl.org/rss/1.0/';
+    const NAMESPACE_ATOM_03 = 'http://purl.org/atom/ns#';
+    const NAMESPACE_ATOM_10 = 'http://www.w3.org/2005/Atom';
+    const NAMESPACE_RDF     = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#';
+    const NAMESPACE_RSS_090 = 'http://my.netscape.com/rdf/simple/0.9/';
+    const NAMESPACE_RSS_10  = 'http://purl.org/rss/1.0/';
 
     /**
      * Feed type constants
@@ -52,14 +50,14 @@ class Reader implements ReaderImportInterface
      *
      * @var CacheStorage
      */
-    protected static $cache = null;
+    protected static $cache;
 
     /**
      * HTTP client object to use for retrieving feeds
      *
      * @var Http\ClientInterface
      */
-    protected static $httpClient = null;
+    protected static $httpClient;
 
     /**
      * Override HTTP PUT and DELETE request methods?
@@ -70,25 +68,25 @@ class Reader implements ReaderImportInterface
 
     protected static $httpConditionalGet = false;
 
-    protected static $extensionManager = null;
+    protected static $extensionManager;
 
     protected static $extensions = [
-        'feed' => [
+        'feed'  => [
             'DublinCore\Feed',
-            'Atom\Feed'
+            'Atom\Feed',
         ],
         'entry' => [
             'Content\Entry',
             'DublinCore\Entry',
-            'Atom\Entry'
+            'Atom\Entry',
         ],
-        'core' => [
+        'core'  => [
             'DublinCore\Feed',
             'Atom\Feed',
             'Content\Entry',
             'DublinCore\Entry',
-            'Atom\Entry'
-        ]
+            'Atom\Entry',
+        ],
     ];
 
     /**
@@ -104,7 +102,6 @@ class Reader implements ReaderImportInterface
     /**
      * Set the feed cache
      *
-     * @param  CacheStorage $cache
      * @return void
      */
     public static function setCache(CacheStorage $cache)
@@ -117,7 +114,7 @@ class Reader implements ReaderImportInterface
      *
      * Sets the HTTP client object to use for retrieving the feeds.
      *
-     * @param  LaminasHttp\Client | Http\ClientInterface $httpClient
+     * @param Http\ClientInterface|LaminasHttp\Client $httpClient
      * @return void
      */
     public static function setHttpClient($httpClient)
@@ -189,8 +186,8 @@ class Reader implements ReaderImportInterface
      * Import a feed by providing a URI
      *
      * @param  string $uri The URI to the feed
-     * @param  string $etag OPTIONAL Last received ETag for this resource
-     * @param  string $lastModified OPTIONAL Last-Modified value for this resource
+     * @param  null|string $etag OPTIONAL Last received ETag for this resource
+     * @param  null|string $lastModified OPTIONAL Last-Modified value for this resource
      * @return Feed\FeedInterface
      * @throws Exception\RuntimeException
      */
@@ -278,7 +275,6 @@ class Reader implements ReaderImportInterface
      * HTTP client implementations.
      *
      * @param  string $uri
-     * @param  Http\ClientInterface $client
      * @return Feed\FeedInterface
      * @throws Exception\RuntimeException if response is not an Http\ResponseInterface
      */
@@ -289,7 +285,7 @@ class Reader implements ReaderImportInterface
             throw new Exception\RuntimeException(sprintf(
                 'Did not receive a %s\Http\ResponseInterface from the provided HTTP client; received "%s"',
                 __NAMESPACE__,
-                (is_object($response) ? get_class($response) : gettype($response))
+                is_object($response) ? get_class($response) : gettype($response)
             ));
         }
 
@@ -319,9 +315,9 @@ class Reader implements ReaderImportInterface
         }
 
         $libxmlErrflag = libxml_use_internal_errors(true);
-        $oldValue = libxml_disable_entity_loader(true);
-        $dom = new DOMDocument;
-        $status = $dom->loadXML(trim($string));
+        $oldValue      = libxml_disable_entity_loader(true);
+        $dom           = new DOMDocument();
+        $status        = $dom->loadXML(trim($string));
         foreach ($dom->childNodes as $child) {
             if ($child->nodeType === XML_DOCUMENT_TYPE_NODE) {
                 throw new Exception\InvalidArgumentException(
@@ -337,7 +333,7 @@ class Reader implements ReaderImportInterface
             $error = libxml_get_last_error();
             if ($error && $error->message) {
                 $error->message = trim($error->message);
-                $errormsg = "DOMDocument cannot parse XML: {$error->message}";
+                $errormsg       = "DOMDocument cannot parse XML: {$error->message}";
             } else {
                 $errormsg = "DOMDocument cannot parse XML: Please check the XML document's validity";
             }
@@ -355,8 +351,10 @@ class Reader implements ReaderImportInterface
         } elseif (0 === strpos($type, 'atom')) {
             $reader = new Feed\Atom($dom, $type);
         } else {
-            throw new Exception\RuntimeException('The URI used does not point to a '
-            . 'valid Atom, RSS or RDF feed that Laminas\Feed\Reader can parse.');
+            throw new Exception\RuntimeException(
+                'The URI used does not point to a '
+                . 'valid Atom, RSS or RDF feed that Laminas\Feed\Reader can parse.'
+            );
         }
         return $reader;
     }
@@ -365,8 +363,8 @@ class Reader implements ReaderImportInterface
      * Imports a feed from a file located at $filename.
      *
      * @param  string $filename
-     * @throws Exception\RuntimeException
      * @return Feed\FeedInterface
+     * @throws Exception\RuntimeException
      */
     public static function importFile($filename)
     {
@@ -382,7 +380,7 @@ class Reader implements ReaderImportInterface
     /**
      * Find feed links
      *
-     * @param $uri
+     * @param  string $uri
      * @return FeedSet
      * @throws Exception\RuntimeException
      */
@@ -395,11 +393,11 @@ class Reader implements ReaderImportInterface
                 "Failed to access $uri, got response code " . $response->getStatusCode()
             );
         }
-        $responseHtml = $response->getBody();
+        $responseHtml  = $response->getBody();
         $libxmlErrflag = libxml_use_internal_errors(true);
-        $oldValue = libxml_disable_entity_loader(true);
-        $dom = new DOMDocument;
-        $status = $dom->loadHTML(trim($responseHtml));
+        $oldValue      = libxml_disable_entity_loader(true);
+        $dom           = new DOMDocument();
+        $status        = $dom->loadHTML(trim($responseHtml));
         libxml_disable_entity_loader($oldValue);
         libxml_use_internal_errors($libxmlErrflag);
         if (! $status) {
@@ -407,14 +405,14 @@ class Reader implements ReaderImportInterface
             $error = libxml_get_last_error();
             if ($error && $error->message) {
                 $error->message = trim($error->message);
-                $errormsg = "DOMDocument cannot parse HTML: {$error->message}";
+                $errormsg       = "DOMDocument cannot parse HTML: {$error->message}";
             } else {
                 $errormsg = "DOMDocument cannot parse HTML: Please check the XML document's validity";
             }
             throw new Exception\RuntimeException($errormsg);
         }
-        $feedSet = new FeedSet;
-        $links = $dom->getElementsByTagName('link');
+        $feedSet = new FeedSet();
+        $links   = $dom->getElementsByTagName('link');
         $feedSet->addLinks($links, $uri);
         return $feedSet;
     }
@@ -422,7 +420,7 @@ class Reader implements ReaderImportInterface
     /**
      * Detect the feed type of the provided feed
      *
-     * @param  Feed\AbstractFeed|DOMDocument|string $feed
+     * @param  string|DOMDocument|Feed\AbstractFeed $feed
      * @param  bool $specOnly
      * @return string
      * @throws Exception\InvalidArgumentException
@@ -438,8 +436,8 @@ class Reader implements ReaderImportInterface
             ErrorHandler::start(E_NOTICE | E_WARNING);
             ini_set('track_errors', 1);
             $oldValue = libxml_disable_entity_loader(true);
-            $dom = new DOMDocument;
-            $status = $dom->loadXML($feed);
+            $dom      = new DOMDocument();
+            $status   = $dom->loadXML($feed);
             foreach ($dom->childNodes as $child) {
                 if ($child->nodeType === XML_DOCUMENT_TYPE_NODE) {
                     throw new Exception\InvalidArgumentException(
@@ -461,13 +459,15 @@ class Reader implements ReaderImportInterface
                 throw new Exception\RuntimeException("DOMDocument cannot parse XML: $phpErrormsg");
             }
         } else {
-            throw new Exception\InvalidArgumentException('Invalid object/scalar provided: must'
-            . ' be of type Laminas\Feed\Reader\Feed, DomDocument or string');
+            throw new Exception\InvalidArgumentException(
+                'Invalid object/scalar provided: must'
+                . ' be of type Laminas\Feed\Reader\Feed, DomDocument or string'
+            );
         }
         $xpath = new DOMXPath($dom);
 
         if ($xpath->query('/rss')->length) {
-            $type = self::TYPE_RSS_ANY;
+            $type    = self::TYPE_RSS_ANY;
             $version = $xpath->evaluate('string(/rss/@version)');
 
             if (strlen($version) > 0) {
@@ -546,8 +546,6 @@ class Reader implements ReaderImportInterface
 
     /**
      * Set plugin manager for use with Extensions
-     *
-     * @param ExtensionManagerInterface $extensionManager
      */
     public static function setExtensionManager(ExtensionManagerInterface $extensionManager)
     {
@@ -589,7 +587,7 @@ class Reader implements ReaderImportInterface
             return;
         }
 
-        $manager   = static::getExtensionManager();
+        $manager = static::getExtensionManager();
 
         $feedName = $name . '\Feed';
         if ($manager->has($feedName)) {
@@ -643,22 +641,22 @@ class Reader implements ReaderImportInterface
         static::$httpConditionalGet = false;
         static::$extensionManager   = null;
         static::$extensions         = [
-            'feed' => [
+            'feed'  => [
                 'DublinCore\Feed',
-                'Atom\Feed'
+                'Atom\Feed',
             ],
             'entry' => [
                 'Content\Entry',
                 'DublinCore\Entry',
-                'Atom\Entry'
+                'Atom\Entry',
             ],
-            'core' => [
+            'core'  => [
                 'DublinCore\Feed',
                 'Atom\Feed',
                 'Content\Entry',
                 'DublinCore\Entry',
-                'Atom\Entry'
-            ]
+                'Atom\Entry',
+            ],
         ];
     }
 
@@ -694,7 +692,7 @@ class Reader implements ReaderImportInterface
      * Utility method to apply array_unique operation to a multidimensional
      * array.
      *
-     * @param array
+     * @param  array
      * @return array
      */
     public static function arrayUnique(array $array)
@@ -721,7 +719,7 @@ class Reader implements ReaderImportInterface
      * implementations may not yet have an entry for the extension, which would
      * then otherwise cause registerExtension() to fail.
      *
-     * @param string $name
+     * @param  string $name
      * @return bool
      */
     protected static function hasExtension($name)

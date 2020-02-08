@@ -13,8 +13,6 @@ use DOMXPath;
 use Laminas\Feed\Reader;
 use Laminas\Feed\Reader\Feed;
 
-/**
-*/
 class Source extends Feed\Atom
 {
     /**
@@ -22,19 +20,18 @@ class Source extends Feed\Atom
      * Laminas\Feed\Reader\AbstractFeed object only designed to retrieve feed level
      * metadata from an Atom entry's source element.
      *
-     * @param DOMElement $source
      * @param string $xpathPrefix Passed from parent Entry object
      * @param string $type Nearly always Atom 1.0
      */
     public function __construct(DOMElement $source, $xpathPrefix, $type = Reader\Reader::TYPE_ATOM_10)
     {
-        $this->domDocument = $source->ownerDocument;
-        $this->xpath = new DOMXPath($this->domDocument);
+        $this->domDocument  = $source->ownerDocument;
+        $this->xpath        = new DOMXPath($this->domDocument);
         $this->data['type'] = $type;
         $this->registerNamespaces();
         $this->loadExtensions();
 
-        $manager = Reader\Reader::getExtensionManager();
+        $manager    = Reader\Reader::getExtensionManager();
         $extensions = ['Atom\Feed', 'DublinCore\Feed'];
 
         foreach ($extensions as $name) {

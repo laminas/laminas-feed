@@ -10,14 +10,12 @@ namespace Laminas\Feed\Reader\Extension\Slash;
 
 use Laminas\Feed\Reader\Extension;
 
-/**
-*/
 class Entry extends Extension\AbstractEntry
 {
     /**
      * Get the entry section
      *
-     * @return string|null
+     * @return null|string
      */
     public function getSection()
     {
@@ -27,7 +25,7 @@ class Entry extends Extension\AbstractEntry
     /**
      * Get the entry department
      *
-     * @return string|null
+     * @return null|string
      */
     public function getDepartment()
     {
@@ -87,10 +85,10 @@ class Entry extends Extension\AbstractEntry
 
     /**
      * Get the entry data specified by name
-     * @param string $name
-     * @param string $type
      *
-     * @return mixed|null
+     * @param  string $name
+     * @param  string $type
+     * @return null|mixed
      */
     protected function getData($name, $type = 'string')
     {
