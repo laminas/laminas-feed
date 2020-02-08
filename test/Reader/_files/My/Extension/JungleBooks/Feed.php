@@ -12,7 +12,6 @@ use Laminas\Feed\Reader\Extension;
 
 class Feed extends Extension\AbstractFeed
 {
-
     public function getDaysPopularBookLink()
     {
         if (isset($this->data['dayPopular'])) {

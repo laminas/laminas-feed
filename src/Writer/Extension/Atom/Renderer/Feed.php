@@ -12,8 +12,6 @@ use DOMDocument;
 use DOMElement;
 use Laminas\Feed\Writer\Extension;
 
-/**
-*/
 class Feed extends Extension\AbstractRenderer
 {
     /**
@@ -36,7 +34,7 @@ class Feed extends Extension\AbstractRenderer
          * RSS 2.0 only. Used mainly to include Atom links and
          * Pubsubhubbub Hub endpoint URIs under the Atom namespace
          */
-        if (strtolower($this->getType()) == 'atom') {
+        if (strtolower($this->getType()) === 'atom') {
             return;
         }
         $this->_setFeedLinks($this->dom, $this->base);

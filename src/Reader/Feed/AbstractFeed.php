@@ -14,8 +14,6 @@ use DOMXPath;
 use Laminas\Feed\Reader;
 use Laminas\Feed\Reader\Exception;
 
-/**
-*/
 abstract class AbstractFeed implements FeedInterface
 {
     /**
@@ -30,7 +28,7 @@ abstract class AbstractFeed implements FeedInterface
      *
      * @var DOMDocument
      */
-    protected $domDocument = null;
+    protected $domDocument;
 
     /**
      * An array of parsed feed entries
@@ -51,7 +49,7 @@ abstract class AbstractFeed implements FeedInterface
      *
      * @var DOMXPath
      */
-    protected $xpath = null;
+    protected $xpath;
 
     /**
      * Array of loaded extensions
@@ -65,18 +63,16 @@ abstract class AbstractFeed implements FeedInterface
      *
      * @var string
      */
-    protected $originalSourceUri = null;
+    protected $originalSourceUri;
 
     /**
-     * Constructor
-     *
      * @param DOMDocument $domDocument The DOM object for the feed's XML
-     * @param string $type Feed type
+     * @param null|string $type Feed type
      */
     public function __construct(DOMDocument $domDocument, $type = null)
     {
         $this->domDocument = $domDocument;
-        $this->xpath = new DOMXPath($this->domDocument);
+        $this->xpath       = new DOMXPath($this->domDocument);
 
         if ($type !== null) {
             $this->data['type'] = $type;
@@ -104,7 +100,7 @@ abstract class AbstractFeed implements FeedInterface
      * Get an original source URI for the feed being parsed. Returns null if
      * unset or the feed was not imported from a URI.
      *
-     * @return string|null
+     * @return null|string
      */
     public function getOriginalSourceUri()
     {
@@ -125,7 +121,7 @@ abstract class AbstractFeed implements FeedInterface
     /**
      * Return the current entry
      *
-     * @return \Laminas\Feed\Reader\Entry\EntryInterface
+     * @return Reader\Entry\EntryInterface
      */
     public function current()
     {
@@ -216,7 +212,6 @@ abstract class AbstractFeed implements FeedInterface
 
     /**
      * Move the feed pointer forward
-     *
      */
     public function next()
     {
@@ -225,7 +220,6 @@ abstract class AbstractFeed implements FeedInterface
 
     /**
      * Reset the pointer in the feed object
-     *
      */
     public function rewind()
     {
@@ -254,22 +248,24 @@ abstract class AbstractFeed implements FeedInterface
                 return call_user_func_array([$extension, $method], $args);
             }
         }
-        throw new Exception\BadMethodCallException('Method: ' . $method
-        . 'does not exist and could not be located on a registered Extension');
+        throw new Exception\BadMethodCallException(
+            'Method: ' . $method . ' does not exist and could not be located on a registered Extension'
+        );
     }
 
     /**
      * Return an Extension object with the matching name (postfixed with _Feed)
      *
-     * @param string $name
-     * @return \Laminas\Feed\Reader\Extension\AbstractFeed|null
+     * @param  string $name
+     * @return null|Reader\Extension\AbstractFeed
      */
     public function getExtension($name)
     {
         if (array_key_exists($name . '\\Feed', $this->extensions)) {
             return $this->extensions[$name . '\\Feed'];
         }
-        return;
+
+        return null;
     }
 
     protected function loadExtensions()
@@ -296,13 +292,11 @@ abstract class AbstractFeed implements FeedInterface
 
     /**
      * Read all entries to the internal entries array
-     *
      */
     abstract protected function indexEntries();
 
     /**
      * Register the default namespaces for the current feed format
-     *
      */
     abstract protected function registerNamespaces();
 }

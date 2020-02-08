@@ -8,6 +8,7 @@
 
 namespace Laminas\Feed\Reader\Entry;
 
+use DateTime;
 use DOMElement;
 use DOMXPath;
 use Laminas\Feed\Reader;
@@ -22,11 +23,8 @@ class Atom extends AbstractEntry implements EntryInterface
     protected $xpathQuery = '';
 
     /**
-     * Constructor
-     *
-     * @param  DOMElement $entry
-     * @param  int $entryKey
-     * @param  string $type
+     * @param int $entryKey
+     * @param null|string $type
      */
     public function __construct(DOMElement $entry, $entryKey, $type = null)
     {
@@ -100,7 +98,7 @@ class Atom extends AbstractEntry implements EntryInterface
     /**
      * Get the entry creation date
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getDateCreated()
     {
@@ -118,7 +116,7 @@ class Atom extends AbstractEntry implements EntryInterface
     /**
      * Get the entry modification date
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getDateModified()
     {
@@ -323,7 +321,7 @@ class Atom extends AbstractEntry implements EntryInterface
 
         $categoryCollection = $this->getExtension('Atom')->getCategories();
 
-        if (count($categoryCollection) == 0) {
+        if (count($categoryCollection) === 0) {
             $categoryCollection = $this->getExtension('DublinCore')->getCategories();
         }
 
@@ -335,7 +333,7 @@ class Atom extends AbstractEntry implements EntryInterface
     /**
      * Get source feed metadata from the entry
      *
-     * @return Reader\Feed\Atom\Source|null
+     * @return null|Reader\Feed\Atom\Source
      */
     public function getSource()
     {
@@ -353,7 +351,6 @@ class Atom extends AbstractEntry implements EntryInterface
     /**
      * Set the XPath query (incl. on all Extensions)
      *
-     * @param DOMXPath $xpath
      * @return void
      */
     public function setXpath(DOMXPath $xpath)

@@ -18,11 +18,6 @@ use Laminas\Validator;
 
 class Atom extends Renderer\AbstractRenderer implements Renderer\RendererInterface
 {
-    /**
-     * Constructor
-     *
-     * @param  Writer\Entry $container
-     */
     public function __construct(Writer\Entry $container)
     {
         parent::__construct($container);
@@ -31,13 +26,13 @@ class Atom extends Renderer\AbstractRenderer implements Renderer\RendererInterfa
     /**
      * Render atom entry
      *
-     * @return Atom
+     * @return $this
      */
     public function render()
     {
-        $this->dom = new DOMDocument('1.0', $this->container->getEncoding());
+        $this->dom               = new DOMDocument('1.0', $this->container->getEncoding());
         $this->dom->formatOutput = true;
-        $entry = $this->dom->createElementNS(Writer\Writer::NAMESPACE_ATOM_10, 'entry');
+        $entry                   = $this->dom->createElementNS(Writer\Writer::NAMESPACE_ATOM_10, 'entry');
         $this->dom->appendChild($entry);
 
         $this->_setSource($this->dom, $entry);
@@ -75,8 +70,8 @@ class Atom extends Renderer\AbstractRenderer implements Renderer\RendererInterfa
     {
         // @codingStandardsIgnoreEnd
         if (! $this->getDataContainer()->getTitle()) {
-            $message = 'Atom 1.0 entry elements MUST contain exactly one'
-            . ' atom:title element but a title has not been set';
+            $message   = 'Atom 1.0 entry elements MUST contain exactly one'
+                . ' atom:title element but a title has not been set';
             $exception = new Writer\Exception\InvalidArgumentException($message);
             if (! $this->ignoreExceptions) {
                 throw $exception;
@@ -128,8 +123,8 @@ class Atom extends Renderer\AbstractRenderer implements Renderer\RendererInterfa
     {
         // @codingStandardsIgnoreEnd
         if (! $this->getDataContainer()->getDateModified()) {
-            $message = 'Atom 1.0 entry elements MUST contain exactly one'
-            . ' atom:updated element but a modification date has not been set';
+            $message   = 'Atom 1.0 entry elements MUST contain exactly one'
+                . ' atom:updated element but a modification date has not been set';
             $exception = new Writer\Exception\InvalidArgumentException($message);
             if (! $this->ignoreExceptions) {
                 throw $exception;
@@ -181,7 +176,7 @@ class Atom extends Renderer\AbstractRenderer implements Renderer\RendererInterfa
     {
         // @codingStandardsIgnoreEnd
         $authors = $this->container->getAuthors();
-        if ((! $authors || empty($authors))) {
+        if (! $authors || empty($authors)) {
             /**
              * This will actually trigger an Exception at the feed level if
              * a feed level author is not set.
@@ -190,7 +185,7 @@ class Atom extends Renderer\AbstractRenderer implements Renderer\RendererInterfa
         }
         foreach ($authors as $data) {
             $author = $this->dom->createElement('author');
-            $name = $this->dom->createElement('name');
+            $name   = $this->dom->createElement('name');
             $author->appendChild($name);
             $root->appendChild($author);
             $text = $dom->createTextNode($data['name']);
@@ -222,7 +217,7 @@ class Atom extends Renderer\AbstractRenderer implements Renderer\RendererInterfa
     {
         // @codingStandardsIgnoreEnd
         $data = $this->container->getEnclosure();
-        if ((! $data || empty($data))) {
+        if (! $data || empty($data)) {
             return;
         }
         $enclosure = $this->dom->createElement('link');
@@ -264,11 +259,12 @@ class Atom extends Renderer\AbstractRenderer implements Renderer\RendererInterfa
     {
         // @codingStandardsIgnoreEnd
         if (! $this->getDataContainer()->getId()
-        && ! $this->getDataContainer()->getLink()) {
-            $message = 'Atom 1.0 entry elements MUST contain exactly one '
-            . 'atom:id element, or as an alternative, we can use the same '
-            . 'value as atom:link however neither a suitable link nor an '
-            . 'id have been set';
+            && ! $this->getDataContainer()->getLink()
+        ) {
+            $message   = 'Atom 1.0 entry elements MUST contain exactly one '
+                . 'atom:id element, or as an alternative, we can use the same '
+                . 'value as atom:link however neither a suitable link nor an '
+                . 'id have been set';
             $exception = new Writer\Exception\InvalidArgumentException($message);
             if (! $this->ignoreExceptions) {
                 throw $exception;
@@ -301,7 +297,7 @@ class Atom extends Renderer\AbstractRenderer implements Renderer\RendererInterfa
     /**
      * Validate a URI using the tag scheme (RFC 4151)
      *
-     * @param string $id
+     * @param  string $id
      * @return bool
      */
     // @codingStandardsIgnoreStart
@@ -314,16 +310,16 @@ class Atom extends Renderer\AbstractRenderer implements Renderer\RendererInterfa
             $matches
         )) {
             $dvalid = false;
-            $date = $matches['date'];
-            $d6 = strtotime($date);
-            if ((strlen($date) == 4) && $date <= date('Y')) {
+            $date   = $matches['date'];
+            $d6     = strtotime($date);
+            if ((strlen($date) === 4) && $date <= date('Y')) {
                 $dvalid = true;
-            } elseif ((strlen($date) == 7) && ($d6 < strtotime("now"))) {
+            } elseif ((strlen($date) === 7) && ($d6 < strtotime('now'))) {
                 $dvalid = true;
-            } elseif ((strlen($date) == 10) && ($d6 < strtotime("now"))) {
+            } elseif ((strlen($date) === 10) && ($d6 < strtotime('now'))) {
                 $dvalid = true;
             }
-            $validator = new Validator\EmailAddress;
+            $validator = new Validator\EmailAddress();
             if ($validator->isValid($matches['name'])) {
                 $nvalid = true;
             } else {
@@ -348,10 +344,10 @@ class Atom extends Renderer\AbstractRenderer implements Renderer\RendererInterfa
         // @codingStandardsIgnoreEnd
         $content = $this->getDataContainer()->getContent();
         if (! $content && ! $this->getDataContainer()->getLink()) {
-            $message = 'Atom 1.0 entry elements MUST contain exactly one '
-            . 'atom:content element, or as an alternative, at least one link '
-            . 'with a rel attribute of "alternate" to indicate an alternate '
-            . 'method to consume the content.';
+            $message   = 'Atom 1.0 entry elements MUST contain exactly one '
+                . 'atom:content element, or as an alternative, at least one link '
+                . 'with a rel attribute of "alternate" to indicate an alternate '
+                . 'method to consume the content.';
             $exception = new Writer\Exception\InvalidArgumentException($message);
             if (! $this->ignoreExceptions) {
                 throw $exception;
@@ -366,8 +362,8 @@ class Atom extends Renderer\AbstractRenderer implements Renderer\RendererInterfa
         $element = $dom->createElement('content');
         $element->setAttribute('type', 'xhtml');
         $xhtmlElement = $this->_loadXhtml($content);
-        $deep = version_compare(PHP_VERSION, '7', 'ge') ? 1 : true;
-        $xhtml = $dom->importNode($xhtmlElement, $deep);
+        $deep         = version_compare(PHP_VERSION, '7', 'ge') ? 1 : true;
+        $xhtml        = $dom->importNode($xhtmlElement, $deep);
         $element->appendChild($xhtml);
         $root->appendChild($element);
     }
@@ -384,10 +380,10 @@ class Atom extends Renderer\AbstractRenderer implements Renderer\RendererInterfa
         // @codingStandardsIgnoreEnd
         if (class_exists('tidy', false)) {
             $tidy = new \tidy;
-            $config = [
-                'output-xhtml' => true,
+            $config   = [
+                'output-xhtml'   => true,
                 'show-body-only' => true,
-                'quote-nbsp' => false
+                'quote-nbsp'     => false,
             ];
             $encoding = str_replace('-', '', $this->getEncoding());
             $tidy->parseString($content, $config, $encoding);
@@ -397,9 +393,9 @@ class Atom extends Renderer\AbstractRenderer implements Renderer\RendererInterfa
             $xhtml = $content;
         }
         $xhtml = preg_replace([
-            "/(<[\/]?)([a-zA-Z]+)/"
+            '/(<[\/]?)([a-zA-Z]+)/',
         ], '$1xhtml:$2', $xhtml);
-        $dom = new DOMDocument('1.0', $this->getEncoding());
+        $dom   = new DOMDocument('1.0', $this->getEncoding());
         $dom->loadXML(
             '<xhtml:div xmlns:xhtml="http://www.w3.org/1999/xhtml">'
             . $xhtml
@@ -455,7 +451,7 @@ class Atom extends Renderer\AbstractRenderer implements Renderer\RendererInterfa
         }
         $renderer = new Renderer\Feed\AtomSource($source);
         $renderer->setType($this->getType());
-        $element = $renderer->render()->getElement();
+        $element  = $renderer->render()->getElement();
         $imported = $dom->importNode($element, true);
         $root->appendChild($imported);
     }

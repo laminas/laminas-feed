@@ -12,8 +12,6 @@ use DateTime;
 use DateTimeInterface;
 use Laminas\Feed\Uri;
 
-/**
-*/
 class Deleted
 {
     /**
@@ -29,15 +27,15 @@ class Deleted
      *
      * @var string
      */
-    protected $type = null;
+    protected $type;
 
     /**
      * Set the feed character encoding
      *
-     * @param  $encoding
-     * @throws Exception\InvalidArgumentException
-     * @return string|null
+     * @param  string $encoding
+     * @return null|string
      * @return Deleted
+     * @throws Exception\InvalidArgumentException
      */
     public function setEncoding($encoding)
     {
@@ -52,7 +50,7 @@ class Deleted
     /**
      * Get the feed character encoding
      *
-     * @return string|null
+     * @return null|string
      */
     public function getEncoding()
     {
@@ -65,8 +63,8 @@ class Deleted
     /**
      * Unset a specific data point
      *
-     * @param string $name
-     * @return Deleted
+     * @param  string $name
+     * @return $this
      */
     public function remove($name)
     {
@@ -82,8 +80,8 @@ class Deleted
      * other objects to gracefully choose whether to execute or not, depending
      * on their appropriateness for the current type, e.g. renderers.
      *
-     * @param string $type
-     * @return Deleted
+     * @param  string $type
+     * @return $this
      */
     public function setType($type)
     {
@@ -104,9 +102,9 @@ class Deleted
     /**
      * Set reference
      *
-     * @param $reference
+     * @param  string $reference
+     * @return $this
      * @throws Exception\InvalidArgumentException
-     * @return Deleted
      */
     public function setReference($reference)
     {
@@ -132,9 +130,9 @@ class Deleted
     /**
      * Set when
      *
-     * @param null|int|DateTimeInterface $date
+     * @param  null|int|DateTimeInterface $date
+     * @return $this
      * @throws Exception\InvalidArgumentException
-     * @return Deleted
      */
     public function setWhen($date = null)
     {
@@ -145,8 +143,9 @@ class Deleted
             $date = new DateTime('@' . $date);
         }
         if (! $date instanceof DateTimeInterface) {
-            throw new Exception\InvalidArgumentException('Invalid DateTime object or UNIX Timestamp'
-            . ' passed as parameter');
+            throw new Exception\InvalidArgumentException(
+                'Invalid DateTime object or UNIX Timestamp passed as parameter'
+            );
         }
         $this->data['when'] = $date;
 
@@ -167,9 +166,8 @@ class Deleted
     /**
      * Set by
      *
-     * @param array $by
+     * @return $this
      * @throws Exception\InvalidArgumentException
-     * @return Deleted
      */
     public function setBy(array $by)
     {
@@ -178,14 +176,16 @@ class Deleted
             || empty($by['name'])
             || ! is_string($by['name'])
         ) {
-            throw new Exception\InvalidArgumentException('Invalid parameter: author array must include a'
-            . ' "name" key with a non-empty string value');
+            throw new Exception\InvalidArgumentException(
+                'Invalid parameter: author array must include a "name" key with a non-empty string value'
+            );
         }
         $author['name'] = $by['name'];
         if (isset($by['email'])) {
             if (empty($by['email']) || ! is_string($by['email'])) {
-                throw new Exception\InvalidArgumentException('Invalid parameter: "email" array'
-                . ' value must be a non-empty string');
+                throw new Exception\InvalidArgumentException(
+                    'Invalid parameter: "email" array value must be a non-empty string'
+                );
             }
             $author['email'] = $by['email'];
         }
@@ -194,8 +194,9 @@ class Deleted
                 || ! is_string($by['uri'])
                 || ! Uri::factory($by['uri'])->isValid()
             ) {
-                throw new Exception\InvalidArgumentException('Invalid parameter: "uri" array value must'
-                 . ' be a non-empty string and valid URI/IRI');
+                throw new Exception\InvalidArgumentException(
+                    'Invalid parameter: "uri" array value must be a non-empty string and valid URI/IRI'
+                );
             }
             $author['uri'] = $by['uri'];
         }
@@ -205,19 +206,20 @@ class Deleted
     }
 
     /**
-     * @return string
+     * @return null|string
      */
     public function getBy()
     {
         if (! array_key_exists('by', $this->data)) {
-            return;
+            return null;
         }
+
         return $this->data['by'];
     }
 
     /**
-     * @param string $comment
-     * @return Deleted
+     * @param  string $comment
+     * @return $this
      */
     public function setComment($comment)
     {
@@ -226,13 +228,14 @@ class Deleted
     }
 
     /**
-     * @return string
+     * @return null|string
      */
     public function getComment()
     {
         if (! array_key_exists('comment', $this->data)) {
-            return;
+            return null;
         }
+
         return $this->data['comment'];
     }
 }

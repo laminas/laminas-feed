@@ -20,11 +20,13 @@ use Laminas\Feed\PubSubHubbub\HttpResponse;
 use Laminas\Feed\PubSubHubbub\Model;
 use Laminas\Feed\PubSubHubbub\Subscriber\Callback as CallbackSubscriber;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 use ReflectionProperty;
+use stdClass;
 
 /**
- * @group      Laminas_Feed
- * @group      Laminas_Feed_Subsubhubbub
+ * @group Laminas_Feed
+ * @group Laminas_Feed_Subsubhubbub
  */
 class CallbackTest extends TestCase
 {
@@ -40,12 +42,13 @@ class CallbackTest extends TestCase
     /** @var array */
     public $_get;
     // @codingStandardsIgnoreEnd
+
     /** @var DateTime */
     public $now;
 
-    public function setUp()
+    protected function setUp()
     {
-        $this->_callback = new CallbackSubscriber;
+        $this->_callback = new CallbackSubscriber();
 
         $this->_adapter      = $this->_getCleanMock(
             Adapter::class
@@ -72,7 +75,7 @@ class CallbackTest extends TestCase
             'hub_topic'         => 'http://www.example.com/topic',
             'hub_challenge'     => 'abc',
             'hub_verify_token'  => 'cba',
-            'hub_lease_seconds' => '1234567'
+            'hub_lease_seconds' => '1234567',
         ];
 
         $_SERVER['REQUEST_METHOD'] = 'get';
@@ -85,7 +88,6 @@ class CallbackTest extends TestCase
      * Creates a php://temp stream based on $contents, that is then injected as
      * the $inputStream property of the callback via reflection.
      *
-     * @param AbstractCallback $callback
      * @param string $contents
      * @return void
      */
@@ -102,7 +104,7 @@ class CallbackTest extends TestCase
 
     public function testCanSetHttpResponseObject()
     {
-        $this->_callback->setHttpResponse(new HttpResponse);
+        $this->_callback->setHttpResponse(new HttpResponse());
         $this->assertInstanceOf(HttpResponse::class, $this->_callback->getHttpResponse());
     }
 
@@ -114,7 +116,7 @@ class CallbackTest extends TestCase
     public function testThrowsExceptionOnInvalidHttpResponseObjectSet()
     {
         $this->expectException(ExceptionInterface::class);
-        $this->_callback->setHttpResponse(new \stdClass);
+        $this->_callback->setHttpResponse(new stdClass());
     }
 
     public function testThrowsExceptionIfNonObjectSetAsHttpResponseObject()
@@ -152,7 +154,6 @@ class CallbackTest extends TestCase
         $this->_callback->setSubscriberCount('0aa');
     }
 
-
     public function testCanSetStorageImplementation()
     {
         $storage = new Model\Subscription($this->_tableGateway);
@@ -169,7 +170,7 @@ class CallbackTest extends TestCase
         $mockReturnValue->expects($this->any())
             ->method('getArrayCopy')
             ->will($this->returnValue([
-                'verify_token' => hash('sha256', 'cba')
+                'verify_token' => hash('sha256', 'cba'),
             ]));
 
         $this->_tableGateway->expects($this->any())
@@ -222,7 +223,7 @@ class CallbackTest extends TestCase
         $mockReturnValue->expects($this->any())
             ->method('getArrayCopy')
             ->will($this->returnValue([
-                'verify_token' => hash('sha256', 'cba')
+                'verify_token' => hash('sha256', 'cba'),
             ]));
 
         $this->_get['hub_mode'] = 'unsubscribe';
@@ -284,12 +285,12 @@ class CallbackTest extends TestCase
             ->with($this->equalTo(['id' => 'verifytokenkey']))
             ->will($this->returnValue($this->_rowset));
 
-        $t = clone $this->now;
+        $t       = clone $this->now;
         $rowdata = [
             'id'            => 'verifytokenkey',
             'verify_token'  => hash('sha256', 'cba'),
             'created_time'  => $t->getTimestamp(),
-            'lease_seconds' => 10000
+            'lease_seconds' => 10000,
         ];
 
         $row = new ArrayObject($rowdata, ArrayObject::ARRAY_AS_PROPS);
@@ -318,12 +319,12 @@ class CallbackTest extends TestCase
             ->with($this->equalTo(['id' => 'verifytokenkey']))
             ->will($this->returnValue($this->_rowset));
 
-        $t = clone $this->now;
+        $t       = clone $this->now;
         $rowdata = [
             'id'            => 'verifytokenkey',
             'verify_token'  => hash('sha256', 'cba'),
             'created_time'  => $t->getTimestamp(),
-            'lease_seconds' => 10000
+            'lease_seconds' => 10000,
         ];
 
         $row = new ArrayObject($rowdata, ArrayObject::ARRAY_AS_PROPS);
@@ -340,12 +341,12 @@ class CallbackTest extends TestCase
             ->method('update')
             ->with(
                 $this->equalTo([
-                    'id'                => 'verifytokenkey',
-                    'verify_token'      => hash('sha256', 'cba'),
-                    'created_time'      => $t->getTimestamp(),
-                    'lease_seconds'     => 1234567,
+                    'id'                 => 'verifytokenkey',
+                    'verify_token'       => hash('sha256', 'cba'),
+                    'created_time'       => $t->getTimestamp(),
+                    'lease_seconds'      => 1234567,
                     'subscription_state' => 'verified',
-                    'expiration_time'   => $t->add(new DateInterval('PT1234567S'))->format('Y-m-d H:i:s')
+                    'expiration_time'    => $t->add(new DateInterval('PT1234567S'))->format('Y-m-d H:i:s'),
                 ]),
                 $this->equalTo(['id' => 'verifytokenkey'])
             );
@@ -356,10 +357,10 @@ class CallbackTest extends TestCase
 
     public function testRespondsToValidFeedUpdateRequestWith200Response()
     {
-        $_SERVER['REQUEST_METHOD']     = 'POST';
-        $_SERVER['REQUEST_URI']        = '/some/path/callback/verifytokenkey';
-        $_SERVER['CONTENT_TYPE']       = 'application/atom+xml';
-        $feedXml                       = file_get_contents(__DIR__ . '/_files/atom10.xml');
+        $_SERVER['REQUEST_METHOD'] = 'POST';
+        $_SERVER['REQUEST_URI']    = '/some/path/callback/verifytokenkey';
+        $_SERVER['CONTENT_TYPE']   = 'application/atom+xml';
+        $feedXml                   = file_get_contents(__DIR__ . '/_files/atom10.xml');
 
         $this->mockInputStream($this->_callback, $feedXml);
 
@@ -371,7 +372,7 @@ class CallbackTest extends TestCase
         $rowdata = [
             'id'           => 'verifytokenkey',
             'verify_token' => hash('sha256', 'cba'),
-            'created_time' => time()
+            'created_time' => time(),
         ];
 
         $row = new ArrayObject($rowdata, ArrayObject::ARRAY_AS_PROPS);
@@ -391,10 +392,10 @@ class CallbackTest extends TestCase
     public function testRespondsToInvalidFeedUpdateNotPostWith404Response()
     {
         // yes, this example makes no sense for GET - I know!!!
-        $_SERVER['REQUEST_METHOD']     = 'GET';
-        $_SERVER['REQUEST_URI']        = '/some/path/callback/verifytokenkey';
-        $_SERVER['CONTENT_TYPE']       = 'application/atom+xml';
-        $feedXml                       = file_get_contents(__DIR__ . '/_files/atom10.xml');
+        $_SERVER['REQUEST_METHOD'] = 'GET';
+        $_SERVER['REQUEST_URI']    = '/some/path/callback/verifytokenkey';
+        $_SERVER['CONTENT_TYPE']   = 'application/atom+xml';
+        $feedXml                   = file_get_contents(__DIR__ . '/_files/atom10.xml');
 
         $this->mockInputStream($this->_callback, $feedXml);
 
@@ -404,10 +405,10 @@ class CallbackTest extends TestCase
 
     public function testRespondsToInvalidFeedUpdateWrongMimeWith404Response()
     {
-        $_SERVER['REQUEST_METHOD']     = 'POST';
-        $_SERVER['REQUEST_URI']        = '/some/path/callback/verifytokenkey';
-        $_SERVER['CONTENT_TYPE']       = 'application/kml+xml';
-        $feedXml                       = file_get_contents(__DIR__ . '/_files/atom10.xml');
+        $_SERVER['REQUEST_METHOD'] = 'POST';
+        $_SERVER['REQUEST_URI']    = '/some/path/callback/verifytokenkey';
+        $_SERVER['CONTENT_TYPE']   = 'application/kml+xml';
+        $feedXml                   = file_get_contents(__DIR__ . '/_files/atom10.xml');
 
         $this->mockInputStream($this->_callback, $feedXml);
 
@@ -423,10 +424,10 @@ class CallbackTest extends TestCase
      */
     public function testRespondsToInvalidFeedUpdateWrongFeedTypeForMimeWith200Response()
     {
-        $_SERVER['REQUEST_METHOD']     = 'POST';
-        $_SERVER['REQUEST_URI']        = '/some/path/callback/verifytokenkey';
-        $_SERVER['CONTENT_TYPE']       = 'application/rss+xml';
-        $feedXml                       = file_get_contents(__DIR__ . '/_files/atom10.xml');
+        $_SERVER['REQUEST_METHOD'] = 'POST';
+        $_SERVER['REQUEST_URI']    = '/some/path/callback/verifytokenkey';
+        $_SERVER['CONTENT_TYPE']   = 'application/rss+xml';
+        $feedXml                   = file_get_contents(__DIR__ . '/_files/atom10.xml');
 
         $this->mockInputStream($this->_callback, $feedXml);
 
@@ -439,11 +440,10 @@ class CallbackTest extends TestCase
             'id'            => 'verifytokenkey',
             'verify_token'  => hash('sha256', 'cba'),
             'created_time'  => time(),
-            'lease_seconds' => 10000
+            'lease_seconds' => 10000,
         ];
 
         $row = new ArrayObject($rowdata, ArrayObject::ARRAY_AS_PROPS);
-
 
         $this->_rowset->expects($this->any())
             ->method('current')
@@ -459,10 +459,10 @@ class CallbackTest extends TestCase
 
     public function testRespondsToValidFeedUpdateWithXHubOnBehalfOfHeader()
     {
-        $_SERVER['REQUEST_METHOD']     = 'POST';
-        $_SERVER['REQUEST_URI']        = '/some/path/callback/verifytokenkey';
-        $_SERVER['CONTENT_TYPE']       = 'application/atom+xml';
-        $feedXml                       = file_get_contents(__DIR__ . '/_files/atom10.xml');
+        $_SERVER['REQUEST_METHOD'] = 'POST';
+        $_SERVER['REQUEST_URI']    = '/some/path/callback/verifytokenkey';
+        $_SERVER['CONTENT_TYPE']   = 'application/atom+xml';
+        $feedXml                   = file_get_contents(__DIR__ . '/_files/atom10.xml');
 
         $this->mockInputStream($this->_callback, $feedXml);
 
@@ -475,11 +475,10 @@ class CallbackTest extends TestCase
             'id'            => 'verifytokenkey',
             'verify_token'  => hash('sha256', 'cba'),
             'created_time'  => time(),
-            'lease_seconds' => 10000
+            'lease_seconds' => 10000,
         ];
 
         $row = new ArrayObject($rowdata, ArrayObject::ARRAY_AS_PROPS);
-
 
         $this->_rowset->expects($this->any())
             ->method('current')
@@ -497,12 +496,12 @@ class CallbackTest extends TestCase
     protected function _getCleanMock($className)
     {
         // @codingStandardsIgnoreEnd
-        $class       = new \ReflectionClass($className);
+        $class       = new ReflectionClass($className);
         $methods     = $class->getMethods();
         $stubMethods = [];
         foreach ($methods as $method) {
-            if ($method->isPublic() || ($method->isProtected()
-                                        && $method->isAbstract())
+            if ($method->isPublic()
+                || ($method->isProtected() && $method->isAbstract())
             ) {
                 $stubMethods[] = $method->getName();
             }
@@ -510,7 +509,7 @@ class CallbackTest extends TestCase
         $mocked = $this->getMockBuilder($className)
             ->setMethods($stubMethods)
             ->setConstructorArgs([])
-            ->setMockClassName(str_replace('\\', '_', ($className . '_PubsubSubscriberMock_' . uniqid())))
+            ->setMockClassName(str_replace('\\', '_', $className . '_PubsubSubscriberMock_' . uniqid()))
             ->disableOriginalConstructor()
             ->getMock();
         return $mocked;

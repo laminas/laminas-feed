@@ -19,8 +19,8 @@ interface HeaderAwareResponseInterface extends ResponseInterface
      * in nature, this method is expected to return a string, and not
      * an array of values.
      *
-     * @param string $name Header name to retrieve.
-     * @param mixed $default Default value to use if header is not present.
+     * @param  string $name Header name to retrieve.
+     * @param  null|mixed $default Default value to use if header is not present.
      * @return string
      */
     public function getHeaderLine($name, $default = null);

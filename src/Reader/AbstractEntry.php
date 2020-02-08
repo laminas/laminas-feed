@@ -29,14 +29,14 @@ abstract class AbstractEntry
      *
      * @var DOMDocument
      */
-    protected $domDocument = null;
+    protected $domDocument;
 
     /**
      * Entry instance
      *
      * @var DOMElement
      */
-    protected $entry = null;
+    protected $entry;
 
     /**
      * Pointer to the current entry
@@ -50,7 +50,7 @@ abstract class AbstractEntry
      *
      * @var DOMXPath
      */
-    protected $xpath = null;
+    protected $xpath;
 
     /**
      * Registered extensions
@@ -60,11 +60,8 @@ abstract class AbstractEntry
     protected $extensions = [];
 
     /**
-     * Constructor
-     *
-     * @param  DOMElement $entry
-     * @param  int $entryKey
-     * @param  null|string $type
+     * @param int $entryKey
+     * @param null|string $type
      */
     public function __construct(DOMElement $entry, $entryKey, $type = null)
     {
@@ -120,7 +117,7 @@ abstract class AbstractEntry
      */
     public function saveXml()
     {
-        $dom = new DOMDocument('1.0', $this->getEncoding());
+        $dom   = new DOMDocument('1.0', $this->getEncoding());
         $entry = $dom->importNode($this->getElement(), true);
         $dom->appendChild($entry);
         return $dom->saveXML();
@@ -152,8 +149,7 @@ abstract class AbstractEntry
     /**
      * Set the XPath query
      *
-     * @param  DOMXPath $xpath
-     * @return \Laminas\Feed\Reader\AbstractEntry
+     * @return $this
      */
     public function setXpath(DOMXPath $xpath)
     {
@@ -174,15 +170,16 @@ abstract class AbstractEntry
     /**
      * Return an Extension object with the matching name (postfixed with _Entry)
      *
-     * @param string $name
-     * @return \Laminas\Feed\Reader\Extension\AbstractEntry
+     * @param  string $name
+     * @return null|Extension\AbstractEntry
      */
     public function getExtension($name)
     {
         if (array_key_exists($name . '\Entry', $this->extensions)) {
             return $this->extensions[$name . '\Entry'];
         }
-        return;
+
+        return null;
     }
 
     /**
@@ -200,8 +197,9 @@ abstract class AbstractEntry
                 return call_user_func_array([$extension, $method], $args);
             }
         }
-        throw new Exception\BadMethodCallException('Method: ' . $method
-            . 'does not exist and could not be located on a registered Extension');
+        throw new Exception\BadMethodCallException(
+            'Method: ' . $method . ' does not exist and could not be located on a registered Extension'
+        );
     }
 
     /**
@@ -213,15 +211,17 @@ abstract class AbstractEntry
     protected function _loadExtensions()
     {
         // @codingStandardsIgnoreEnd
-        $all = Reader::getExtensions();
+        $all  = Reader::getExtensions();
         $feed = $all['entry'];
         foreach ($feed as $extension) {
             if (in_array($extension, $all['core'])) {
                 continue;
             }
-            $className = Reader::getPluginLoader()->getClassName($extension);
+            $className                    = Reader::getPluginLoader()->getClassName($extension);
             $this->extensions[$extension] = new $className(
-                $this->getElement(), $this->entryKey, $this->data['type']
+                $this->getElement(),
+                $this->entryKey,
+                $this->data['type']
             );
         }
     }

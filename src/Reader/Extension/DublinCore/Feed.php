@@ -19,7 +19,7 @@ class Feed extends Extension\AbstractFeed
      * Get a single author
      *
      * @param  int $index
-     * @return string|null
+     * @return null|string
      */
     public function getAuthor($index = 0)
     {
@@ -60,7 +60,7 @@ class Feed extends Extension\AbstractFeed
         if ($list->length) {
             foreach ($list as $author) {
                 $authors[] = [
-                    'name' => $author->nodeValue
+                    'name' => $author->nodeValue,
                 ];
             }
             $authors = new Collection\Author(
@@ -78,7 +78,7 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get the copyright entry
      *
-     * @return string|null
+     * @return null|string
      */
     public function getCopyright()
     {
@@ -104,7 +104,7 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get the feed description
      *
-     * @return string|null
+     * @return null|string
      */
     public function getDescription()
     {
@@ -130,7 +130,7 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get the feed ID
      *
-     * @return string|null
+     * @return null|string
      */
     public function getId()
     {
@@ -152,7 +152,7 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get the feed language
      *
-     * @return string|null
+     * @return null|string
      */
     public function getLanguage()
     {
@@ -178,7 +178,7 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get the feed title
      *
-     * @return string|null
+     * @return null|string
      */
     public function getTitle()
     {
@@ -202,9 +202,7 @@ class Feed extends Extension\AbstractFeed
     }
 
     /**
-     *
-     *
-     * @return DateTime|null
+     * @return null|DateTime
      */
     public function getDate()
     {
@@ -212,7 +210,7 @@ class Feed extends Extension\AbstractFeed
             return $this->data['date'];
         }
 
-        $d = null;
+        $d    = null;
         $date = $this->getXpath()->evaluate('string(' . $this->getXpathPrefix() . '/dc11:date)');
 
         if (! $date) {
@@ -246,16 +244,16 @@ class Feed extends Extension\AbstractFeed
         }
 
         if ($list->length) {
-            $categoryCollection = new Collection\Category;
+            $categoryCollection = new Collection\Category();
             foreach ($list as $category) {
                 $categoryCollection[] = [
-                    'term' => $category->nodeValue,
+                    'term'   => $category->nodeValue,
                     'scheme' => null,
-                    'label' => $category->nodeValue,
+                    'label'  => $category->nodeValue,
                 ];
             }
         } else {
-            $categoryCollection = new Collection\Category;
+            $categoryCollection = new Collection\Category();
         }
 
         $this->data['categories'] = $categoryCollection;

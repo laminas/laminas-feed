@@ -15,15 +15,8 @@ use Laminas\Feed\Uri;
 use Laminas\Feed\Writer;
 use Laminas\Feed\Writer\Renderer;
 
-/**
-*/
 class Rss extends Renderer\AbstractRenderer implements Renderer\RendererInterface
 {
-    /**
-     * Constructor
-     *
-     * @param  Writer\Entry $container
-     */
     public function __construct(Writer\Entry $container)
     {
         parent::__construct($container);
@@ -32,14 +25,14 @@ class Rss extends Renderer\AbstractRenderer implements Renderer\RendererInterfac
     /**
      * Render RSS entry
      *
-     * @return Rss
+     * @return $this
      */
     public function render()
     {
-        $this->dom = new DOMDocument('1.0', $this->container->getEncoding());
-        $this->dom->formatOutput = true;
+        $this->dom                     = new DOMDocument('1.0', $this->container->getEncoding());
+        $this->dom->formatOutput       = true;
         $this->dom->substituteEntities = false;
-        $entry = $this->dom->createElement('item');
+        $entry                         = $this->dom->createElement('item');
         $this->dom->appendChild($entry);
 
         $this->_setTitle($this->dom, $entry);
@@ -75,10 +68,11 @@ class Rss extends Renderer\AbstractRenderer implements Renderer\RendererInterfac
     {
         // @codingStandardsIgnoreEnd
         if (! $this->getDataContainer()->getDescription()
-        && ! $this->getDataContainer()->getTitle()) {
-            $message = 'RSS 2.0 entry elements SHOULD contain exactly one'
-            . ' title element but a title has not been set. In addition, there'
-            . ' is no description as required in the absence of a title.';
+            && ! $this->getDataContainer()->getTitle()
+        ) {
+            $message   = 'RSS 2.0 entry elements SHOULD contain exactly one'
+                . ' title element but a title has not been set. In addition, there'
+                . ' is no description as required in the absence of a title.';
             $exception = new Writer\Exception\InvalidArgumentException($message);
             if (! $this->ignoreExceptions) {
                 throw $exception;
@@ -106,11 +100,12 @@ class Rss extends Renderer\AbstractRenderer implements Renderer\RendererInterfac
     {
         // @codingStandardsIgnoreEnd
         if (! $this->getDataContainer()->getDescription()
-        && ! $this->getDataContainer()->getTitle()) {
-            $message = 'RSS 2.0 entry elements SHOULD contain exactly one'
-            . ' description element but a description has not been set. In'
-            . ' addition, there is no title element as required in the absence'
-            . ' of a description.';
+            && ! $this->getDataContainer()->getTitle()
+        ) {
+            $message   = 'RSS 2.0 entry elements SHOULD contain exactly one'
+                . ' description element but a description has not been set. In'
+                . ' addition, there is no title element as required in the absence'
+                . ' of a description.';
             $exception = new Writer\Exception\InvalidArgumentException($message);
             if (! $this->ignoreExceptions) {
                 throw $exception;
@@ -184,12 +179,12 @@ class Rss extends Renderer\AbstractRenderer implements Renderer\RendererInterfac
     {
         // @codingStandardsIgnoreEnd
         $authors = $this->container->getAuthors();
-        if ((! $authors || empty($authors))) {
+        if (! $authors || empty($authors)) {
             return;
         }
         foreach ($authors as $data) {
             $author = $this->dom->createElement('author');
-            $name = $data['name'];
+            $name   = $data['name'];
             if (array_key_exists('email', $data)) {
                 $name = $data['email'] . ' (' . $data['name'] . ')';
             }
@@ -212,7 +207,7 @@ class Rss extends Renderer\AbstractRenderer implements Renderer\RendererInterfac
     {
         // @codingStandardsIgnoreEnd
         $data = $this->container->getEnclosure();
-        if ((! $data || empty($data))) {
+        if (! $data || empty($data)) {
             return;
         }
         if (! isset($data['type'])) {
@@ -234,14 +229,15 @@ class Rss extends Renderer\AbstractRenderer implements Renderer\RendererInterfac
             }
         }
         if ((int) $data['length'] < 0 || ! ctype_digit((string) $data['length'])) {
-            $exception = new Writer\Exception\InvalidArgumentException('Enclosure "length" must be an integer'
-            . ' indicating the content\'s length in bytes');
+            $exception = new Writer\Exception\InvalidArgumentException(
+                'Enclosure "length" must be an integer indicating the content\'s length in bytes'
+            );
             if (! $this->ignoreExceptions) {
                 throw $exception;
-            } else {
-                $this->exceptions[] = $exception;
-                return;
             }
+
+            $this->exceptions[] = $exception;
+            return;
         }
         $enclosure = $this->dom->createElement('enclosure');
         $enclosure->setAttribute('type', $data['type']);
@@ -282,7 +278,8 @@ class Rss extends Renderer\AbstractRenderer implements Renderer\RendererInterfac
     {
         // @codingStandardsIgnoreEnd
         if (! $this->getDataContainer()->getId()
-        && ! $this->getDataContainer()->getLink()) {
+            && ! $this->getDataContainer()->getLink()
+        ) {
             return;
         }
 
@@ -319,7 +316,7 @@ class Rss extends Renderer\AbstractRenderer implements Renderer\RendererInterfac
             return;
         }
         $clink = $this->dom->createElement('comments');
-        $text = $dom->createTextNode($link);
+        $text  = $dom->createTextNode($link);
         $clink->appendChild($text);
         $root->appendChild($clink);
     }

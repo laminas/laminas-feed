@@ -60,7 +60,7 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get the entry category
      *
-     * @return array|null
+     * @return null|array
      */
     public function getPlayPodcastCategories()
     {
@@ -80,7 +80,7 @@ class Feed extends Extension\AbstractFeed
                     $children = [];
 
                     foreach ($node->childNodes as $childNode) {
-                        if (! ($childNode instanceof DOMText)) {
+                        if (! $childNode instanceof DOMText) {
                             $children[$childNode->getAttribute('text')] = null;
                         }
                     }
@@ -167,7 +167,6 @@ class Feed extends Extension\AbstractFeed
 
     /**
      * Register googleplay namespace
-     *
      */
     protected function registerNamespaces()
     {

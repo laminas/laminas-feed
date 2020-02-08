@@ -15,7 +15,7 @@ interface CallbackInterface
      * unsubscription request. This should be the Hub Server confirming the
      * the request prior to taking action on it.
      *
-     * @param array $httpData GET/POST data if available and not in $_GET/POST
+     * @param null|array $httpData GET/POST data if available and not in $_GET/POST
      * @param bool $sendResponseNow Whether to send response now or when asked
      */
     public function handle(array $httpData = null, $sendResponseNow = false);

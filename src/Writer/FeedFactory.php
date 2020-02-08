@@ -16,8 +16,8 @@ abstract class FeedFactory
      * Create and return a Feed based on data provided.
      *
      * @param  array|Traversable $data
-     * @throws Exception\InvalidArgumentException
      * @return Feed
+     * @throws Exception\InvalidArgumentException
      */
     public static function factory($data)
     {
@@ -25,7 +25,7 @@ abstract class FeedFactory
             throw new Exception\InvalidArgumentException(sprintf(
                 '%s expects an array or Traversable argument; received "%s"',
                 __METHOD__,
-                (is_object($data) ? get_class($data) : gettype($data))
+                is_object($data) ? get_class($data) : gettype($data)
             ));
         }
 
@@ -56,7 +56,7 @@ abstract class FeedFactory
             }
 
             // Entries
-            if ('entries' == $key) {
+            if ('entries' === $key) {
                 static::createEntries($value, $feed);
                 continue;
             }
@@ -81,9 +81,8 @@ abstract class FeedFactory
      * Create and attach entries to a feed
      *
      * @param  array|Traversable $entries
-     * @param  Feed $feed
-     * @throws Exception\InvalidArgumentException
      * @return void
+     * @throws Exception\InvalidArgumentException
      */
     protected static function createEntries($entries, Feed $feed)
     {
@@ -91,7 +90,7 @@ abstract class FeedFactory
             throw new Exception\InvalidArgumentException(sprintf(
                 '%s::factory expects the "entries" value to be an array or Traversable; received "%s"',
                 get_called_class(),
-                (is_object($entries) ? get_class($entries) : gettype($entries))
+                is_object($entries) ? get_class($entries) : gettype($entries)
             ));
         }
 
@@ -100,7 +99,7 @@ abstract class FeedFactory
                 throw new Exception\InvalidArgumentException(sprintf(
                     '%s expects an array, Traversable, or Laminas\Feed\Writer\Entry argument; received "%s"',
                     __METHOD__,
-                    (is_object($data) ? get_class($data) : gettype($data))
+                    is_object($data) ? get_class($data) : gettype($data)
                 ));
             }
 

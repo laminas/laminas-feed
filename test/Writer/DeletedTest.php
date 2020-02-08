@@ -15,37 +15,35 @@ use Laminas\Feed\Writer\Exception\InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 /**
-* @group Laminas_Feed
-* @group Laminas_Feed_Writer
-*/
+ * @group Laminas_Feed
+ * @group Laminas_Feed_Writer
+ */
 class DeletedTest extends TestCase
 {
     public function testSetsReference()
     {
-        $entry = new Writer\Deleted;
+        $entry = new Writer\Deleted();
         $entry->setReference('http://www.example.com/id');
         $this->assertEquals('http://www.example.com/id', $entry->getReference());
     }
 
     public function testSetReferenceThrowsExceptionOnInvalidParameter()
     {
-        $entry = new Writer\Deleted;
-        try {
-            $entry->setReference('');
-            $this->fail();
-        } catch (Writer\Exception\ExceptionInterface $e) {
-        }
+        $entry = new Writer\Deleted();
+
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
+        $entry->setReference('');
     }
 
     public function testGetReferenceReturnsNullIfNotSet()
     {
-        $entry = new Writer\Deleted;
+        $entry = new Writer\Deleted();
         $this->assertNull($entry->getReference());
     }
 
     public function testSetWhenDefaultsToCurrentTime()
     {
-        $entry = new Writer\Deleted;
+        $entry = new Writer\Deleted();
         $entry->setWhen();
         $dateNow = new DateTime();
         $this->assertLessThanOrEqual($dateNow, $entry->getWhen());
@@ -53,7 +51,7 @@ class DeletedTest extends TestCase
 
     public function testSetWhenUsesGivenUnixTimestamp()
     {
-        $entry = new Writer\Deleted;
+        $entry = new Writer\Deleted();
         $entry->setWhen(1234567890);
         $myDate = new DateTime('@' . 1234567890);
         $this->assertEquals($myDate, $entry->getWhen());
@@ -64,7 +62,7 @@ class DeletedTest extends TestCase
      */
     public function testSetWhenUsesGivenUnixTimestampWhenItIsLessThanTenDigits()
     {
-        $entry = new Writer\Deleted;
+        $entry = new Writer\Deleted();
         $entry->setWhen(123456789);
         $myDate = new DateTime('@' . 123456789);
         $this->assertEquals($myDate, $entry->getWhen());
@@ -75,7 +73,7 @@ class DeletedTest extends TestCase
      */
     public function testSetWhenUsesGivenUnixTimestampWhenItIsAVerySmallInteger()
     {
-        $entry = new Writer\Deleted;
+        $entry = new Writer\Deleted();
         $entry->setWhen(123);
         $myDate = new DateTime('@' . 123);
         $this->assertEquals($myDate, $entry->getWhen());
@@ -84,7 +82,7 @@ class DeletedTest extends TestCase
     public function testSetWhenUsesDateTimeObject()
     {
         $myDate = new DateTime('@' . 1234567890);
-        $entry = new Writer\Deleted;
+        $entry  = new Writer\Deleted();
         $entry->setWhen($myDate);
         $this->assertEquals($myDate, $entry->getWhen());
     }
@@ -92,87 +90,78 @@ class DeletedTest extends TestCase
     public function testSetWhenUsesDateTimeImmutableObject()
     {
         $myDate = new DateTimeImmutable('@' . 1234567890);
-        $entry = new Writer\Deleted;
+        $entry  = new Writer\Deleted();
         $entry->setWhen($myDate);
         $this->assertEquals($myDate, $entry->getWhen());
     }
 
     public function testSetWhenThrowsExceptionOnInvalidParameter()
     {
-        $entry = new Writer\Deleted;
-        try {
-            $entry->setWhen('abc');
-            $this->fail();
-        } catch (Writer\Exception\ExceptionInterface $e) {
-        }
+        $entry = new Writer\Deleted();
+
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
+        $entry->setWhen('abc');
     }
 
     public function testGetWhenReturnsNullIfDateNotSet()
     {
-        $entry = new Writer\Deleted;
+        $entry = new Writer\Deleted();
         $this->assertNull($entry->getWhen());
     }
 
     public function testAddsByNameFromArray()
     {
-        $entry = new Writer\Deleted;
+        $entry = new Writer\Deleted();
         $entry->setBy(['name' => 'Joe']);
         $this->assertEquals(['name' => 'Joe'], $entry->getBy());
     }
 
     public function testAddsByEmailFromArray()
     {
-        $entry = new Writer\Deleted;
+        $entry = new Writer\Deleted();
         $entry->setBy(['name' => 'Joe', 'email' => 'joe@example.com']);
         $this->assertEquals(['name' => 'Joe', 'email' => 'joe@example.com'], $entry->getBy());
     }
 
     public function testAddsByUriFromArray()
     {
-        $entry = new Writer\Deleted;
+        $entry = new Writer\Deleted();
         $entry->setBy(['name' => 'Joe', 'uri' => 'http://www.example.com']);
         $this->assertEquals(['name' => 'Joe', 'uri' => 'http://www.example.com'], $entry->getBy());
     }
 
     public function testAddByThrowsExceptionOnInvalidNameFromArray()
     {
-        $entry = new Writer\Deleted;
-        try {
-            $entry->setBy(['name' => '']);
-            $this->fail();
-        } catch (Writer\Exception\ExceptionInterface $e) {
-        }
+        $entry = new Writer\Deleted();
+
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
+        $entry->setBy(['name' => '']);
     }
 
     public function testAddByThrowsExceptionOnInvalidEmailFromArray()
     {
-        $entry = new Writer\Deleted;
-        try {
-            $entry->setBy(['name' => 'Joe', 'email' => '']);
-            $this->fail();
-        } catch (Writer\Exception\ExceptionInterface $e) {
-        }
+        $entry = new Writer\Deleted();
+
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
+        $entry->setBy(['name' => 'Joe', 'email' => '']);
     }
 
     public function testAddByThrowsExceptionOnInvalidUriFromArray()
     {
         $this->markTestIncomplete('Pending Laminas\URI fix for validation');
-        $entry = new Writer\Deleted;
-        try {
-            $entry->setBy(['name' => 'Joe', 'uri' => 'notauri']);
-            $this->fail();
-        } catch (Writer\Exception\ExceptionInterface $e) {
-        }
+
+        $entry = new Writer\Deleted();
+
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
+        $entry->setBy(['name' => 'Joe', 'uri' => 'notauri']);
     }
 
     public function testAddByThrowsExceptionIfNameOmittedFromArray()
     {
-        $entry = new Writer\Deleted;
-        try {
-            $entry->setBy(['uri' => 'notauri']);
-            $this->fail();
-        } catch (Writer\Exception\ExceptionInterface $e) {
-        }
+        $entry = new Writer\Deleted();
+
+        $this->expectException(Writer\Exception\ExceptionInterface::class);
+        $entry->setBy(['uri' => 'notauri']);
     }
 
     /**
@@ -180,7 +169,7 @@ class DeletedTest extends TestCase
      */
     public function testGetBy()
     {
-        $entry = new Writer\Deleted;
+        $entry = new Writer\Deleted();
 
         $by = $entry->getBy();
         $this->assertNull($by);
@@ -189,10 +178,9 @@ class DeletedTest extends TestCase
         $this->assertEquals(['name' => 'Joe', 'email' => 'joe@example.com'], $entry->getBy());
     }
 
-
     public function testSetByException()
     {
-        $entry = new Writer\Deleted;
+        $entry = new Writer\Deleted();
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(
@@ -208,7 +196,7 @@ class DeletedTest extends TestCase
      */
     public function testCommentAndRemove()
     {
-        $entry = new Writer\Deleted;
+        $entry = new Writer\Deleted();
 
         $comment = $entry->getComment();
         $this->assertNull($comment);
@@ -226,7 +214,7 @@ class DeletedTest extends TestCase
      */
     public function testEncoding()
     {
-        $entry = new Writer\Deleted;
+        $entry = new Writer\Deleted();
 
         $encoding = $entry->getEncoding();
         $this->assertEquals('UTF-8', $encoding);
@@ -245,7 +233,7 @@ class DeletedTest extends TestCase
      */
     public function testType()
     {
-        $entry = new Writer\Deleted;
+        $entry = new Writer\Deleted();
 
         $type = $entry->getType();
         $this->assertNull($type);
@@ -256,14 +244,14 @@ class DeletedTest extends TestCase
 
     public function testFluentInterface()
     {
-        $entry = new Writer\Deleted;
+        $entry = new Writer\Deleted();
 
         $result = $entry->setType('type')
-                        ->setBy(['name' => 'foo'])
-                        ->setComment('comment')
-                        ->setEncoding('utf-8')
-                        ->setReference('foo')
-                        ->setWhen(null);
+            ->setBy(['name' => 'foo'])
+            ->setComment('comment')
+            ->setEncoding('utf-8')
+            ->setReference('foo')
+            ->setWhen(null);
 
         $this->assertSame($result, $entry);
     }

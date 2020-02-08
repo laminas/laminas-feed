@@ -28,9 +28,8 @@ class Response implements HeaderAwareResponseInterface
     private $statusCode;
 
     /**
-     * @param int $statusCode
-     * @param string|object $body
-     * @param array $headers
+     * @param  int $statusCode
+     * @param  object|string $body
      * @throws Exception\InvalidArgumentException
      */
     public function __construct($statusCode, $body = '', array $headers = [])
@@ -74,7 +73,7 @@ class Response implements HeaderAwareResponseInterface
     /**
      * Validate that we have a status code argument that will work for our context.
      *
-     * @param int $statusCode
+     * @param  int $statusCode
      * @throws Exception\InvalidArgumentException for arguments not castable
      *     to integer HTTP status codes.
      */
@@ -84,7 +83,7 @@ class Response implements HeaderAwareResponseInterface
             throw new Exception\InvalidArgumentException(sprintf(
                 '%s expects a numeric status code; received %s',
                 __CLASS__,
-                (is_object($statusCode) ? get_class($statusCode) : gettype($statusCode))
+                is_object($statusCode) ? get_class($statusCode) : gettype($statusCode)
             ));
         }
 
@@ -108,7 +107,7 @@ class Response implements HeaderAwareResponseInterface
     /**
      * Validate that we have a body argument that will work for our context.
      *
-     * @param mixed $body
+     * @param  mixed $body
      * @throws Exception\InvalidArgumentException for arguments not castable
      *     to strings.
      */
@@ -125,14 +124,13 @@ class Response implements HeaderAwareResponseInterface
         throw new Exception\InvalidArgumentException(sprintf(
             '%s expects a string body, or an object that can cast to string; received %s',
             __CLASS__,
-            (is_object($body) ? get_class($body) : gettype($body))
+            is_object($body) ? get_class($body) : gettype($body)
         ));
     }
 
     /**
      * Validate header values.
      *
-     * @param array $headers
      * @throws Exception\InvalidArgumentException
      */
     private function validateHeaders(array $headers)
@@ -150,7 +148,7 @@ class Response implements HeaderAwareResponseInterface
                 throw new Exception\InvalidArgumentException(sprintf(
                     'Individual header values provided to %s must be a string or numeric; received %s for header %s',
                     __CLASS__,
-                    (is_object($value) ? get_class($value) : gettype($value)),
+                    is_object($value) ? get_class($value) : gettype($value),
                     $name
                 ));
             }
@@ -160,7 +158,6 @@ class Response implements HeaderAwareResponseInterface
     /**
      * Normalize header names to lowercase.
      *
-     * @param array $headers
      * @return array
      */
     private function normalizeHeaders(array $headers)

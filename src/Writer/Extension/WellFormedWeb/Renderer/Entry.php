@@ -12,8 +12,6 @@ use DOMDocument;
 use DOMElement;
 use Laminas\Feed\Writer\Extension;
 
-/**
-*/
 class Entry extends Extension\AbstractRenderer
 {
     /**
@@ -32,7 +30,7 @@ class Entry extends Extension\AbstractRenderer
      */
     public function render()
     {
-        if (strtolower($this->getType()) == 'atom') {
+        if (strtolower($this->getType()) === 'atom') {
             return; // RSS 2.0 only
         }
         $this->_setCommentFeedLinks($this->dom, $this->base);
@@ -72,9 +70,9 @@ class Entry extends Extension\AbstractRenderer
             return;
         }
         foreach ($links as $link) {
-            if ($link['type'] == 'rss') {
+            if ($link['type'] === 'rss') {
                 $flink = $this->dom->createElement('wfw:commentRss');
-                $text = $dom->createTextNode($link['uri']);
+                $text  = $dom->createTextNode($link['uri']);
                 $flink->appendChild($text);
                 $root->appendChild($flink);
             }

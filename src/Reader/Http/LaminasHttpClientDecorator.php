@@ -19,9 +19,6 @@ class LaminasHttpClientDecorator implements HeaderAwareClientInterface
      */
     private $client;
 
-    /**
-     * @param LaminasHttpClient $client
-     */
     public function __construct(LaminasHttpClient $client)
     {
         $this->client = $client;
@@ -58,8 +55,6 @@ class LaminasHttpClientDecorator implements HeaderAwareClientInterface
 
     /**
      * Inject header values into the client.
-     *
-     * @param array $headerValues
      */
     private function injectHeaders(array $headerValues)
     {
@@ -77,7 +72,7 @@ class LaminasHttpClientDecorator implements HeaderAwareClientInterface
                 throw new Exception\InvalidArgumentException(sprintf(
                     'Header values provided to %s::get must be arrays of values; received %s',
                     __CLASS__,
-                    (is_object($values) ? get_class($values) : gettype($values))
+                    is_object($values) ? get_class($values) : gettype($values)
                 ));
             }
 
@@ -87,7 +82,7 @@ class LaminasHttpClientDecorator implements HeaderAwareClientInterface
                         'Individual header values provided to %s::get must be strings or numbers; '
                         . 'received %s for header %s',
                         __CLASS__,
-                        (is_object($value) ? get_class($value) : gettype($value)),
+                        is_object($value) ? get_class($value) : gettype($value),
                         $name
                     ));
                 }
@@ -103,7 +98,6 @@ class LaminasHttpClientDecorator implements HeaderAwareClientInterface
      * Ensures multi-value headers are represented as a single string, via
      * comma concatenation.
      *
-     * @param Headers $headers
      * @return array
      */
     private function prepareResponseHeaders(Headers $headers)

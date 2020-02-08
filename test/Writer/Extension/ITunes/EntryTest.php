@@ -13,131 +13,136 @@ use Laminas\Feed\Writer\Exception\ExceptionInterface;
 use PHPUnit\Framework\TestCase;
 
 /**
-* @group Laminas_Feed
-* @group Laminas_Feed_Writer
-*/
+ * @group Laminas_Feed
+ * @group Laminas_Feed_Writer
+ */
 class EntryTest extends TestCase
 {
     public function testSetBlock()
     {
-        $entry = new Writer\Entry;
+        $entry = new Writer\Entry();
         $entry->setItunesBlock('yes');
         $this->assertEquals('yes', $entry->getItunesBlock());
     }
 
     public function testSetBlockThrowsExceptionOnNonAlphaValue()
     {
+        $entry = new Writer\Entry();
+
         $this->expectException(ExceptionInterface::class);
-        $entry = new Writer\Entry;
         $entry->setItunesBlock('123');
     }
 
     public function testSetBlockThrowsExceptionIfValueGreaterThan255CharsLength()
     {
+        $entry = new Writer\Entry();
+
         $this->expectException(ExceptionInterface::class);
-        $entry = new Writer\Entry;
         $entry->setItunesBlock(str_repeat('a', 256));
     }
 
     public function testAddAuthors()
     {
-        $entry = new Writer\Entry;
+        $entry = new Writer\Entry();
         $entry->addItunesAuthors(['joe', 'jane']);
         $this->assertEquals(['joe', 'jane'], $entry->getItunesAuthors());
     }
 
     public function testAddAuthor()
     {
-        $entry = new Writer\Entry;
+        $entry = new Writer\Entry();
         $entry->addItunesAuthor('joe');
         $this->assertEquals(['joe'], $entry->getItunesAuthors());
     }
 
     public function testAddAuthorThrowsExceptionIfValueGreaterThan255CharsLength()
     {
+        $entry = new Writer\Entry();
+
         $this->expectException(ExceptionInterface::class);
-        $entry = new Writer\Entry;
         $entry->addItunesAuthor(str_repeat('a', 256));
     }
 
     public function testSetDurationAsSeconds()
     {
-        $entry = new Writer\Entry;
+        $entry = new Writer\Entry();
         $entry->setItunesDuration(23);
         $this->assertEquals(23, $entry->getItunesDuration());
     }
 
     public function testSetDurationAsMinutesAndSeconds()
     {
-        $entry = new Writer\Entry;
+        $entry = new Writer\Entry();
         $entry->setItunesDuration('23:23');
         $this->assertEquals('23:23', $entry->getItunesDuration());
     }
 
     public function testSetDurationAsHoursMinutesAndSeconds()
     {
-        $entry = new Writer\Entry;
+        $entry = new Writer\Entry();
         $entry->setItunesDuration('23:23:23');
         $this->assertEquals('23:23:23', $entry->getItunesDuration());
     }
 
     public function testSetDurationThrowsExceptionOnUnknownFormat()
     {
+        $entry = new Writer\Entry();
+
         $this->expectException(ExceptionInterface::class);
-        $entry = new Writer\Entry;
         $entry->setItunesDuration('abc');
     }
 
     public function testSetDurationThrowsExceptionOnInvalidSeconds()
     {
+        $entry = new Writer\Entry();
+
         $this->expectException(ExceptionInterface::class);
-        $entry = new Writer\Entry;
         $entry->setItunesDuration('23:456');
     }
 
     public function testSetDurationThrowsExceptionOnInvalidMinutes()
     {
+        $entry = new Writer\Entry();
+
         $this->expectException(ExceptionInterface::class);
-        $entry = new Writer\Entry;
         $entry->setItunesDuration('23:234:45');
     }
 
     public function testSetExplicitToYes()
     {
-        $entry = new Writer\Entry;
+        $entry = new Writer\Entry();
         $entry->setItunesExplicit('yes');
         $this->assertEquals('yes', $entry->getItunesExplicit());
     }
 
     public function testSetExplicitToNo()
     {
-        $entry = new Writer\Entry;
+        $entry = new Writer\Entry();
         $entry->setItunesExplicit('no');
         $this->assertEquals('no', $entry->getItunesExplicit());
     }
 
     public function testSetExplicitToClean()
     {
-        $entry = new Writer\Entry;
+        $entry = new Writer\Entry();
         $entry->setItunesExplicit('clean');
         $this->assertEquals('clean', $entry->getItunesExplicit());
     }
 
     public function testSetExplicitThrowsExceptionOnUnknownTerm()
     {
+        $entry = new Writer\Entry();
+
         $this->expectException(ExceptionInterface::class);
-        $entry = new Writer\Entry;
         $entry->setItunesExplicit('abc');
     }
 
     public function testSetKeywords()
     {
-        $entry = new Writer\Entry;
-        $words = [
-            'a1', 'a2', 'a3', 'a4', 'a5', 'a6', 'a7', 'a8', 'a9', 'a10', 'a11', 'a12'
-        ];
+        $entry = new Writer\Entry();
+        $words = ['a1', 'a2', 'a3', 'a4', 'a5', 'a6', 'a7', 'a8', 'a9', 'a10', 'a11', 'a12'];
 
-        set_error_handler(function ($errno, $errstr) {
+        set_error_handler(static function ($errno, $errstr) {
             return (bool) preg_match('/itunes:keywords/', $errstr);
         }, \E_USER_DEPRECATED);
         $entry->setItunesKeywords($words);
@@ -148,18 +153,16 @@ class EntryTest extends TestCase
 
     public function testSetKeywordsThrowsExceptionIfMaxKeywordsExceeded()
     {
-        $entry = new Writer\Entry;
-        $words = [
-            'a1', 'a2', 'a3', 'a4', 'a5', 'a6', 'a7', 'a8', 'a9', 'a10', 'a11', 'a12', 'a13'
-        ];
+        $entry = new Writer\Entry();
+        $words = ['a1', 'a2', 'a3', 'a4', 'a5', 'a6', 'a7', 'a8', 'a9', 'a10', 'a11', 'a12', 'a13'];
 
-        set_error_handler(function ($errno, $errstr) {
+        set_error_handler(static function ($errno, $errstr) {
             return (bool) preg_match('/itunes:keywords/', $errstr);
         }, \E_USER_DEPRECATED);
+
         try {
+            $this->expectException(ExceptionInterface::class);
             $entry->setItunesKeywords($words);
-            $this->fail('Expected exception when setting more keywords than allowed');
-        } catch (ExceptionInterface $e) {
         } finally {
             restore_error_handler();
         }
@@ -167,18 +170,19 @@ class EntryTest extends TestCase
 
     public function testSetKeywordsThrowsExceptionIfFormattedKeywordsExceeds255CharLength()
     {
-        $entry = new Writer\Entry;
+        $entry = new Writer\Entry();
         $words = [
-            str_repeat('a', 253), str_repeat('b', 2)
+            str_repeat('a', 253),
+            str_repeat('b', 2),
         ];
 
-        set_error_handler(function ($errno, $errstr) {
+        set_error_handler(static function ($errno, $errstr) {
             return (bool) preg_match('/itunes:keywords/', $errstr);
         }, \E_USER_DEPRECATED);
+
         try {
+            $this->expectException(ExceptionInterface::class);
             $entry->setItunesKeywords($words);
-            $this->fail('Expected exception when setting keywords exceeding character length');
-        } catch (ExceptionInterface $e) {
         } finally {
             restore_error_handler();
         }
@@ -186,43 +190,46 @@ class EntryTest extends TestCase
 
     public function testSetTitle()
     {
-        $entry = new Writer\Entry;
+        $entry = new Writer\Entry();
         $entry->setItunesTitle('abc');
         $this->assertEquals('abc', $entry->getItunesTitle());
     }
 
     public function testSetTitleThrowsExceptionWhenValueExceeds255Chars()
     {
+        $entry = new Writer\Entry();
+
         $this->expectException(ExceptionInterface::class);
-        $entry = new Writer\Entry;
         $entry->setItunesTitle(str_repeat('a', 256));
     }
 
     public function testSetSubtitle()
     {
-        $entry = new Writer\Entry;
+        $entry = new Writer\Entry();
         $entry->setItunesSubtitle('abc');
         $this->assertEquals('abc', $entry->getItunesSubtitle());
     }
 
     public function testSetSubtitleThrowsExceptionWhenValueExceeds255Chars()
     {
+        $entry = new Writer\Entry();
+
         $this->expectException(ExceptionInterface::class);
-        $entry = new Writer\Entry;
         $entry->setItunesSubtitle(str_repeat('a', 256));
     }
 
     public function testSetSummary()
     {
-        $entry = new Writer\Entry;
+        $entry = new Writer\Entry();
         $entry->setItunesSummary('abc');
         $this->assertEquals('abc', $entry->getItunesSummary());
     }
 
     public function testSetSummaryThrowsExceptionWhenValueExceeds255Chars()
     {
+        $entry = new Writer\Entry();
+
         $this->expectException(ExceptionInterface::class);
-        $entry = new Writer\Entry;
         $entry->setItunesSummary(str_repeat('a', 4001));
     }
 
@@ -246,12 +253,14 @@ class EntryTest extends TestCase
 
     /**
      * @dataProvider invalidImageUrls
+     *
      * @param mixed $url
      * @param string $expectedMessage
      */
     public function testSetItunesImageRaisesExceptionForInvalidUrl($url, $expectedMessage = 'valid URI')
     {
         $entry = new Writer\Entry();
+
         $this->expectException(ExceptionInterface::class);
         $this->expectExceptionMessage($expectedMessage);
         $entry->setItunesImage($url);
@@ -267,6 +276,7 @@ class EntryTest extends TestCase
 
     /**
      * @dataProvider validImageUrls
+     *
      * @param string $url
      */
     public function testSetItunesImageSetsInternalDataWithValidUrl($url)
@@ -292,11 +302,13 @@ class EntryTest extends TestCase
 
     /**
      * @dataProvider nonNumericEpisodeNumbers
+     *
      * @param mixed $number
      */
     public function testSetEpisodeRaisesExceptionForNonNumericEpisodeNumbers($number)
     {
         $entry = new Writer\Entry();
+
         $this->expectException(ExceptionInterface::class);
         $this->expectExceptionMessage('may only be an integer');
         $entry->setItunesEpisode($number);
@@ -327,11 +339,13 @@ class EntryTest extends TestCase
 
     /**
      * @dataProvider invalidEpisodeTypes
+     *
      * @param mixed $type
      */
     public function testSetEpisodeTypeRaisesExceptionForInvalidTypes($type)
     {
         $entry = new Writer\Entry();
+
         $this->expectException(ExceptionInterface::class);
         $this->expectExceptionMessage('MUST be one of');
         $entry->setItunesEpisodeType($type);
@@ -348,6 +362,7 @@ class EntryTest extends TestCase
 
     /**
      * @dataProvider validEpisodeTypes
+     *
      * @param string $type
      */
     public function testEpisodeTypeMaybeMutatedWithAcceptedValues($type)
@@ -373,11 +388,13 @@ class EntryTest extends TestCase
 
     /**
      * @dataProvider invalidClosedCaptioningFlags
+     *
      * @param mixed $status
      */
     public function testSettingClosedCaptioningToNonBooleanRaisesException($status)
     {
         $entry = new Writer\Entry();
+
         $this->expectException(ExceptionInterface::class);
         $this->expectExceptionMessage('MUST be a boolean');
         $entry->setItunesIsClosedCaptioned($status);
@@ -399,11 +416,13 @@ class EntryTest extends TestCase
 
     /**
      * @dataProvider nonNumericEpisodeNumbers
+     *
      * @param mixed $number
      */
     public function testSetSeasonRaisesExceptionForNonNumericSeasonNumbers($number)
     {
         $entry = new Writer\Entry();
+
         $this->expectException(ExceptionInterface::class);
         $this->expectExceptionMessage('may only be an integer');
         $entry->setItunesSeason($number);
