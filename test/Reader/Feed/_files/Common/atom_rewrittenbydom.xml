@@ -517,8 +517,6 @@ class Wp_Amf_Gateway
     private $_prefix = null;
 
     /**
-     * Constructor
-     *
      * @param array $dbConfig
      * @param string $prefix
      */

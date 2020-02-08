@@ -12,15 +12,8 @@ use DOMDocument;
 use Laminas\Feed\Writer;
 use Laminas\Feed\Writer\Renderer;
 
-/**
-*/
 class Atom extends AbstractAtom implements Renderer\RendererInterface
 {
-    /**
-     * Constructor
-     *
-     * @param  Writer\Feed $container
-     */
     public function __construct(Writer\Feed $container)
     {
         parent::__construct($container);
@@ -29,16 +22,16 @@ class Atom extends AbstractAtom implements Renderer\RendererInterface
     /**
      * Render Atom feed
      *
-     * @return Atom
+     * @return $this
      */
     public function render()
     {
         if (! $this->container->getEncoding()) {
             $this->container->setEncoding('UTF-8');
         }
-        $this->dom = new DOMDocument('1.0', $this->container->getEncoding());
+        $this->dom               = new DOMDocument('1.0', $this->container->getEncoding());
         $this->dom->formatOutput = true;
-        $root = $this->dom->createElementNS(
+        $root                    = $this->dom->createElementNS(
             Writer\Writer::NAMESPACE_ATOM_10,
             'feed'
         );
@@ -88,8 +81,8 @@ class Atom extends AbstractAtom implements Renderer\RendererInterface
             $renderer->setType($this->getType());
             $renderer->setRootElement($this->dom->documentElement);
             $renderer->render();
-            $element = $renderer->getElement();
-            $deep = version_compare(PHP_VERSION, '7', 'ge') ? 1 : true;
+            $element  = $renderer->getElement();
+            $deep     = version_compare(PHP_VERSION, '7', 'ge') ? 1 : true;
             $imported = $this->dom->importNode($element, $deep);
             $root->appendChild($imported);
         }

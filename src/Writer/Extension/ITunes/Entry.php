@@ -13,8 +13,6 @@ use Laminas\Feed\Writer;
 use Laminas\Stdlib\StringUtils;
 use Laminas\Stdlib\StringWrapper\StringWrapperInterface;
 
-/**
-*/
 class Entry
 {
     /**
@@ -47,7 +45,7 @@ class Entry
      * Set feed encoding
      *
      * @param  string $enc
-     * @return Entry
+     * @return $this
      */
     public function setEncoding($enc)
     {
@@ -75,13 +73,15 @@ class Entry
     public function setItunesBlock($value)
     {
         if (! ctype_alpha($value) && strlen($value) > 0) {
-            throw new Writer\Exception\InvalidArgumentException('invalid parameter: "block" may only'
-            . ' contain alphabetic characters');
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "block" may only contain alphabetic characters'
+            );
         }
 
         if ($this->stringWrapper->strlen($value) > 255) {
-            throw new Writer\Exception\InvalidArgumentException('invalid parameter: "block" may only'
-            . ' contain a maximum of 255 characters');
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "block" may only contain a maximum of 255 characters'
+            );
         }
         $this->data['block'] = $value;
     }
@@ -89,8 +89,7 @@ class Entry
     /**
      * Add authors to itunes entry
      *
-     * @param  array $values
-     * @return Entry
+     * @return $this
      */
     public function addItunesAuthors(array $values)
     {
@@ -104,14 +103,15 @@ class Entry
      * Add author to itunes entry
      *
      * @param  string $value
-     * @return Entry
+     * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
     public function addItunesAuthor($value)
     {
         if ($this->stringWrapper->strlen($value) > 255) {
-            throw new Writer\Exception\InvalidArgumentException('invalid parameter: any "author" may only'
-            . ' contain a maximum of 255 characters each');
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: any "author" may only contain a maximum of 255 characters each'
+            );
         }
         if (! isset($this->data['authors'])) {
             $this->data['authors'] = [];
@@ -124,18 +124,19 @@ class Entry
      * Set duration
      *
      * @param  int $value
-     * @return Entry
+     * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
     public function setItunesDuration($value)
     {
         $value = (string) $value;
         if (! ctype_digit($value)
-            && ! preg_match("/^\d+:[0-5]{1}[0-9]{1}$/", $value)
-            && ! preg_match("/^\d+:[0-5]{1}[0-9]{1}:[0-5]{1}[0-9]{1}$/", $value)
+            && ! preg_match('/^\d+:[0-5]{1}[0-9]{1}$/', $value)
+            && ! preg_match('/^\d+:[0-5]{1}[0-9]{1}:[0-5]{1}[0-9]{1}$/', $value)
         ) {
-            throw new Writer\Exception\InvalidArgumentException('invalid parameter: "duration" may only'
-            . ' be of a specified [[HH:]MM:]SS format');
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "duration" may only be of a specified [[HH:]MM:]SS format'
+            );
         }
         $this->data['duration'] = $value;
         return $this;
@@ -145,14 +146,15 @@ class Entry
      * Set "explicit" flag
      *
      * @param  bool $value
-     * @return Entry
+     * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
     public function setItunesExplicit($value)
     {
         if (! in_array($value, ['yes', 'no', 'clean'])) {
-            throw new Writer\Exception\InvalidArgumentException('invalid parameter: "explicit" may only'
-            . ' be one of "yes", "no" or "clean"');
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "explicit" may only be one of "yes", "no" or "clean"'
+            );
         }
         $this->data['explicit'] = $value;
         return $this;
@@ -163,8 +165,7 @@ class Entry
      *
      * @deprecated since 2.10.0; itunes:keywords is no longer part of the
      *     iTunes podcast RSS specification.
-     * @param  array $value
-     * @return Entry
+     * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
     public function setItunesKeywords(array $value)
@@ -176,15 +177,17 @@ class Entry
         );
 
         if (count($value) > 12) {
-            throw new Writer\Exception\InvalidArgumentException('invalid parameter: "keywords" may only'
-            . ' contain a maximum of 12 terms');
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "keywords" may only contain a maximum of 12 terms'
+            );
         }
 
         $concat = implode(',', $value);
         if ($this->stringWrapper->strlen($concat) > 255) {
-            throw new Writer\Exception\InvalidArgumentException('invalid parameter: "keywords" may only'
-            . ' have a concatenated length of 255 chars where terms are delimited'
-            . ' by a comma');
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "keywords" may only have a concatenated length'
+                . ' of 255 chars where terms are delimited by a comma'
+            );
         }
         $this->data['keywords'] = $value;
         return $this;
@@ -194,14 +197,15 @@ class Entry
      * Set title
      *
      * @param  string $value
-     * @return Entry
+     * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
     public function setItunesTitle($value)
     {
         if ($this->stringWrapper->strlen($value) > 255) {
-            throw new Writer\Exception\InvalidArgumentException('invalid parameter: "title" may only'
-            . ' contain a maximum of 255 characters');
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "title" may only contain a maximum of 255 characters'
+            );
         }
         $this->data['title'] = $value;
         return $this;
@@ -211,14 +215,15 @@ class Entry
      * Set subtitle
      *
      * @param  string $value
-     * @return Entry
+     * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
     public function setItunesSubtitle($value)
     {
         if ($this->stringWrapper->strlen($value) > 255) {
-            throw new Writer\Exception\InvalidArgumentException('invalid parameter: "subtitle" may only'
-            . ' contain a maximum of 255 characters');
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "subtitle" may only contain a maximum of 255 characters'
+            );
         }
         $this->data['subtitle'] = $value;
         return $this;
@@ -228,14 +233,15 @@ class Entry
      * Set summary
      *
      * @param  string $value
-     * @return Entry
+     * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
     public function setItunesSummary($value)
     {
         if ($this->stringWrapper->strlen($value) > 4000) {
-            throw new Writer\Exception\InvalidArgumentException('invalid parameter: "summary" may only'
-            . ' contain a maximum of 4000 characters');
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "summary" may only contain a maximum of 4000 characters'
+            );
         }
         $this->data['summary'] = $value;
         return $this;
@@ -245,7 +251,7 @@ class Entry
      * Set entry image (icon)
      *
      * @param  string $value
-     * @return Entry
+     * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
     public function setItunesImage($value)
@@ -271,8 +277,8 @@ class Entry
     /**
      * Set the episode number
      *
-     * @param int $number
-     * @return self
+     * @param  int $number
+     * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
     public function setItunesEpisode($number)
@@ -292,8 +298,8 @@ class Entry
     /**
      * Set the episode type
      *
-     * @param string $type One of "full", "trailer", or "bonus".
-     * @return self
+     * @param  string $type One of "full", "trailer", or "bonus".
+     * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
     public function setItunesEpisodeType($type)
@@ -315,8 +321,8 @@ class Entry
     /**
      * Set the status of closed captioning
      *
-     * @param bool $status
-     * @return self
+     * @param  bool $status
+     * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
     public function setItunesIsClosedCaptioned($status)
@@ -340,8 +346,8 @@ class Entry
     /**
      * Set the season number to which the episode belongs
      *
-     * @param int $number
-     * @return self
+     * @param  int $number
+     * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
     public function setItunesSeason($number)
@@ -362,9 +368,8 @@ class Entry
      * Overloading to itunes specific setters
      *
      * @param  string $method
-     * @param  array $params
-     * @throws Writer\Exception\BadMethodCallException
      * @return mixed
+     * @throws Writer\Exception\BadMethodCallException
      */
     public function __call($method, array $params)
     {

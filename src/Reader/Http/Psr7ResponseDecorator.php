@@ -20,9 +20,6 @@ class Psr7ResponseDecorator implements HeaderAwareResponseInterface
      */
     private $decoratedResponse;
 
-    /**
-     * @param Psr7ResponseInterface $response
-     */
     public function __construct(Psr7ResponseInterface $response)
     {
         $this->decoratedResponse = $response;

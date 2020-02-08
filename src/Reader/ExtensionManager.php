@@ -18,12 +18,8 @@ class ExtensionManager implements ExtensionManagerInterface
     protected $pluginManager;
 
     /**
-     * Constructor
-     *
      * Seeds the extension manager with a plugin manager; if none provided,
      * creates an instance.
-     *
-     * @param  null|ExtensionPluginManager $pluginManager
      */
     public function __construct(ExtensionPluginManager $pluginManager = null)
     {

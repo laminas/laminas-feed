@@ -8,7 +8,6 @@
 
 namespace LaminasTest\Feed\PubSubHubbub;
 
-use Laminas\Feed\PubSubHubbub\AbstractCallback;
 use PHPUnit\Framework\TestCase;
 use ReflectionMethod;
 
@@ -18,9 +17,9 @@ class AbstractCallbackTest extends TestCase
     {
         $_SERVER = array_merge($_SERVER, [
             'HTTP_X_ORIGINAL_URL' => '/hijack-attempt',
-            'HTTPS' => 'on',
-            'HTTP_HOST' => 'example.com',
-            'REQUEST_URI' => '/requested/path',
+            'HTTPS'               => 'on',
+            'HTTP_HOST'           => 'example.com',
+            'REQUEST_URI'         => '/requested/path',
         ]);
 
         $callback = new TestAsset\Callback();
@@ -35,7 +34,7 @@ class AbstractCallbackTest extends TestCase
     {
         $_SERVER = array_merge($_SERVER, [
             'IIS_WasUrlRewritten' => '1',
-            'UNENCODED_URL' => '/requested/path',
+            'UNENCODED_URL'       => '/requested/path',
         ]);
 
         $callback = new TestAsset\Callback();
@@ -49,7 +48,7 @@ class AbstractCallbackTest extends TestCase
     public function testDetectCallbackUrlUsesRequestUriWhenNoOtherRewriteHeadersAreFound()
     {
         $_SERVER = array_merge($_SERVER, [
-            'REQUEST_URI' => '/expected/path'
+            'REQUEST_URI' => '/expected/path',
         ]);
 
         $callback = new TestAsset\Callback();

@@ -14,11 +14,11 @@ use Laminas\Feed\Uri;
 
 class FeedSet extends ArrayObject
 {
-    public $rss = null;
+    public $rss;
 
-    public $rdf = null;
+    public $rdf;
 
-    public $atom = null;
+    public $atom;
 
     /**
      * Import a DOMNodeList from any document containing a set of links
@@ -32,7 +32,6 @@ class FeedSet extends ArrayObject
      * Note that feeds are not loaded at this point, but will be lazy
      * loaded automatically when each links 'feed' array key is accessed.
      *
-     * @param DOMNodeList $links
      * @param string $uri
      * @return void
      */
@@ -40,31 +39,32 @@ class FeedSet extends ArrayObject
     {
         foreach ($links as $link) {
             if (strtolower($link->getAttribute('rel')) !== 'alternate'
-                || ! $link->getAttribute('type') || ! $link->getAttribute('href')) {
+                || ! $link->getAttribute('type') || ! $link->getAttribute('href')
+            ) {
                 continue;
             }
-            if (! isset($this->rss) && $link->getAttribute('type') == 'application/rss+xml') {
+            if (! isset($this->rss) && $link->getAttribute('type') === 'application/rss+xml') {
                 $this->rss = $this->absolutiseUri(trim($link->getAttribute('href')), $uri);
-            } elseif (! isset($this->atom) && $link->getAttribute('type') == 'application/atom+xml') {
+            } elseif (! isset($this->atom) && $link->getAttribute('type') === 'application/atom+xml') {
                 $this->atom = $this->absolutiseUri(trim($link->getAttribute('href')), $uri);
-            } elseif (! isset($this->rdf) && $link->getAttribute('type') == 'application/rdf+xml') {
+            } elseif (! isset($this->rdf) && $link->getAttribute('type') === 'application/rdf+xml') {
                 $this->rdf = $this->absolutiseUri(trim($link->getAttribute('href')), $uri);
             }
             $this[] = new static([
-                'rel' => 'alternate',
-                'type' => $link->getAttribute('type'),
-                'href' => $this->absolutiseUri(trim($link->getAttribute('href')), $uri),
+                'rel'   => 'alternate',
+                'type'  => $link->getAttribute('type'),
+                'href'  => $this->absolutiseUri(trim($link->getAttribute('href')), $uri),
                 'title' => $link->getAttribute('title'),
             ]);
         }
     }
 
     /**
-     *  Attempt to turn a relative URI into an absolute URI
+     * Attempt to turn a relative URI into an absolute URI
      *
-     *  @param string $link
-     *  @param string $uri OPTIONAL
-     *  @return string|null absolutised link or null if invalid
+     * @param  string $link
+     * @param  null|string $uri OPTIONAL
+     * @return null|string absolutised link or null if invalid
      */
     protected function absolutiseUri($link, $uri = null)
     {
@@ -76,7 +76,7 @@ class FeedSet extends ArrayObject
 
         $scheme = 'http';
         if ($uri !== null) {
-            $uri = Uri::factory($uri);
+            $uri    = Uri::factory($uri);
             $scheme = $uri->getScheme() ?: $scheme;
         }
 
@@ -96,8 +96,8 @@ class FeedSet extends ArrayObject
     /**
      * Resolves scheme relative link to absolute
      *
-     * @param string $link
-     * @param string $scheme
+     * @param  string $link
+     * @param  string $scheme
      * @return string
      */
     private function resolveSchemeRelativeUri($link, $scheme)
@@ -107,13 +107,13 @@ class FeedSet extends ArrayObject
     }
 
     /**
-     *  Resolves relative link to absolute
+     * Resolves relative link to absolute
      *
-     *  @param string $link
-     *  @param string $scheme
-     *  @param string $host
-     *  @param string $uriPath
-     *  @return string
+     * @param  string $link
+     * @param  string $scheme
+     * @param  string $host
+     * @param  string $uriPath
+     * @return string
      */
     private function resolveRelativeUri($link, $scheme, $host, $uriPath)
     {
@@ -129,20 +129,20 @@ class FeedSet extends ArrayObject
     }
 
     /**
-     *  Canonicalize relative path
+     * Canonicalize relative path
      *
-     * @param string $path
+     * @param  string $path
      * @return string
      */
     protected function canonicalizePath($path)
     {
-        $parts = array_filter(explode('/', $path));
+        $parts     = array_filter(explode('/', $path));
         $absolutes = [];
         foreach ($parts as $part) {
-            if ('.' == $part) {
+            if ('.' === $part) {
                 continue;
             }
-            if ('..' == $part) {
+            if ('..' === $part) {
                 array_pop($absolutes);
             } else {
                 $absolutes[] = $part;
@@ -155,12 +155,12 @@ class FeedSet extends ArrayObject
      * Supports lazy loading of feeds using Reader::import() but
      * delegates any other operations to the parent class.
      *
-     * @param string $offset
+     * @param  string $offset
      * @return mixed
      */
     public function offsetGet($offset)
     {
-        if ($offset == 'feed' && ! $this->offsetExists('feed')) {
+        if ($offset === 'feed' && ! $this->offsetExists('feed')) {
             if (! $this->offsetExists('href')) {
                 return;
             }

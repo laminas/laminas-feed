@@ -15,8 +15,8 @@ class Entry extends Extension\AbstractEntry
     /**
      * Get the entry license
      *
-     * @param int $index
-     * @return string|null
+     * @param  int $index
+     * @return null|string
      */
     public function getLicense($index = 0)
     {
@@ -42,7 +42,7 @@ class Entry extends Extension\AbstractEntry
         }
 
         $licenses = [];
-        $list = $this->xpath->evaluate($this->getXpathPrefix() . '//cc:license');
+        $list     = $this->xpath->evaluate($this->getXpathPrefix() . '//cc:license');
 
         if ($list->length) {
             foreach ($list as $license) {
@@ -51,7 +51,7 @@ class Entry extends Extension\AbstractEntry
 
             $licenses = array_unique($licenses);
         } else {
-            $cc = new Feed();
+            $cc       = new Feed();
             $licenses = $cc->getLicenses();
         }
 
@@ -62,7 +62,6 @@ class Entry extends Extension\AbstractEntry
 
     /**
      * Register Creative Commons namespaces
-     *
      */
     protected function registerNamespaces()
     {

@@ -11,8 +11,6 @@ namespace Laminas\Feed\Writer\Renderer;
 use DOMDocument;
 use DOMElement;
 
-/**
-*/
 interface RendererInterface
 {
     /**
@@ -85,8 +83,6 @@ interface RendererInterface
      * helps simplify the appending of namespace declarations, but also ensures
      * namespaces are added to the root element - not scattered across the entire
      * XML file - may assist namespace unsafe parsers and looks pretty ;).
-     *
-     * @param DOMElement $root
      */
     public function setRootElement(DOMElement $root);
 

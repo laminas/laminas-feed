@@ -8,19 +8,22 @@
 
 namespace LaminasTest\Feed\Reader\Feed;
 
+use DOMDocument;
+use DOMElement;
+use DOMXPath;
 use Laminas\Feed\Reader;
 use Laminas\Feed\Reader\Extension\Atom\Feed;
 use PHPUnit\Framework\TestCase;
 
 /**
-* @group Laminas_Feed
-* @group Reader\Reader
-*/
+ * @group Laminas_Feed
+ * @group Reader\Reader
+ */
 class CommonTest extends TestCase
 {
-    protected $feedSamplePath = null;
+    protected $feedSamplePath;
 
-    public function setup()
+    protected function setUp()
     {
         Reader\Reader::reset();
         $this->feedSamplePath = dirname(__FILE__) . '/_files/Common';
@@ -32,23 +35,23 @@ class CommonTest extends TestCase
     public function testGetsDomDocumentObject()
     {
         $feed = Reader\Reader::importString(
-            file_get_contents($this->feedSamplePath.'/atom.xml')
+            file_get_contents($this->feedSamplePath . '/atom.xml')
         );
-        $this->assertInstanceOf(\DOMDocument::class, $feed->getDomDocument());
+        $this->assertInstanceOf(DOMDocument::class, $feed->getDomDocument());
     }
 
     public function testGetsDomXpathObject()
     {
         $feed = Reader\Reader::importString(
-            file_get_contents($this->feedSamplePath.'/atom.xml')
+            file_get_contents($this->feedSamplePath . '/atom.xml')
         );
-        $this->assertInstanceOf(\DOMXPath::class, $feed->getXpath());
+        $this->assertInstanceOf(DOMXPath::class, $feed->getXpath());
     }
 
     public function testGetsXpathPrefixString()
     {
         $feed = Reader\Reader::importString(
-            file_get_contents($this->feedSamplePath.'/atom.xml')
+            file_get_contents($this->feedSamplePath . '/atom.xml')
         );
         $this->assertEquals('/atom:feed', $feed->getXpathPrefix());
     }
@@ -56,17 +59,17 @@ class CommonTest extends TestCase
     public function testGetsDomElementObject()
     {
         $feed = Reader\Reader::importString(
-            file_get_contents($this->feedSamplePath.'/atom.xml')
+            file_get_contents($this->feedSamplePath . '/atom.xml')
         );
-        $this->assertInstanceOf(\DOMElement::class, $feed->getElement());
+        $this->assertInstanceOf(DOMElement::class, $feed->getElement());
     }
 
     public function testSaveXmlOutputsXmlStringForFeed()
     {
-        $feed = Reader\Reader::importString(
-            file_get_contents($this->feedSamplePath.'/atom.xml')
+        $feed     = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath . '/atom.xml')
         );
-        $expected = file_get_contents($this->feedSamplePath.'/atom_rewrittenbydom.xml');
+        $expected = file_get_contents($this->feedSamplePath . '/atom_rewrittenbydom.xml');
         $expected = str_replace("\r\n", "\n", $expected);
         $this->assertEquals($expected, $feed->saveXml());
     }
@@ -74,7 +77,7 @@ class CommonTest extends TestCase
     public function testGetsNamedExtension()
     {
         $feed = Reader\Reader::importString(
-            file_get_contents($this->feedSamplePath.'/atom.xml')
+            file_get_contents($this->feedSamplePath . '/atom.xml')
         );
         $this->assertInstanceOf(Feed::class, $feed->getExtension('Atom'));
     }
@@ -82,7 +85,7 @@ class CommonTest extends TestCase
     public function testReturnsNullIfExtensionDoesNotExist()
     {
         $feed = Reader\Reader::importString(
-            file_get_contents($this->feedSamplePath.'/atom.xml')
+            file_get_contents($this->feedSamplePath . '/atom.xml')
         );
         $this->assertEquals(null, $feed->getExtension('Foo'));
     }
@@ -93,7 +96,7 @@ class CommonTest extends TestCase
     public function testReturnsEncodingOfFeed()
     {
         $feed = Reader\Reader::importString(
-            file_get_contents($this->feedSamplePath.'/atom.xml')
+            file_get_contents($this->feedSamplePath . '/atom.xml')
         );
         $this->assertEquals('UTF-8', $feed->getEncoding());
     }
@@ -104,7 +107,7 @@ class CommonTest extends TestCase
     public function testReturnsEncodingOfFeedAsUtf8IfUndefined()
     {
         $feed = Reader\Reader::importString(
-            file_get_contents($this->feedSamplePath.'/atom_noencodingdefined.xml')
+            file_get_contents($this->feedSamplePath . '/atom_noencodingdefined.xml')
         );
         $this->assertEquals('UTF-8', $feed->getEncoding());
     }

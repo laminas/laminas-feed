@@ -44,7 +44,7 @@ class Entry
      * Set feed encoding
      *
      * @param  string $enc
-     * @return Entry
+     * @return $this
      */
     public function setEncoding($enc)
     {
@@ -89,7 +89,7 @@ class Entry
      * Set "explicit" flag
      *
      * @param  bool $value
-     * @return Entry
+     * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
     public function setPlayPodcastExplicit($value)
@@ -107,7 +107,7 @@ class Entry
      * Set episode description
      *
      * @param  string $value
-     * @return Entry
+     * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
     public function setPlayPodcastDescription($value)
@@ -125,9 +125,8 @@ class Entry
      * Overloading to itunes specific setters
      *
      * @param  string $method
-     * @param  array $params
-     * @throws Writer\Exception\BadMethodCallException
      * @return mixed
+     * @throws Writer\Exception\BadMethodCallException
      */
     public function __call($method, array $params)
     {

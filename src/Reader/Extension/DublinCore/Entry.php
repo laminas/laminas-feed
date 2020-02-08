@@ -18,7 +18,7 @@ class Entry extends Extension\AbstractEntry
     /**
      * Get an author entry
      *
-     * @param int $index
+     * @param  int $index
      * @return string
      */
     public function getAuthor($index = 0)
@@ -44,7 +44,7 @@ class Entry extends Extension\AbstractEntry
         }
 
         $authors = [];
-        $list = $this->getXpath()->evaluate($this->getXpathPrefix() . '//dc11:creator');
+        $list    = $this->getXpath()->evaluate($this->getXpathPrefix() . '//dc11:creator');
 
         if (! $list->length) {
             $list = $this->getXpath()->evaluate($this->getXpathPrefix() . '//dc10:creator');
@@ -60,7 +60,7 @@ class Entry extends Extension\AbstractEntry
         if ($list->length) {
             foreach ($list as $author) {
                 $authors[] = [
-                    'name' => $author->nodeValue
+                    'name' => $author->nodeValue,
                 ];
             }
             $authors = new Collection\Author(
@@ -93,16 +93,16 @@ class Entry extends Extension\AbstractEntry
         }
 
         if ($list->length) {
-            $categoryCollection = new Collection\Category;
+            $categoryCollection = new Collection\Category();
             foreach ($list as $category) {
                 $categoryCollection[] = [
-                    'term' => $category->nodeValue,
+                    'term'   => $category->nodeValue,
                     'scheme' => null,
-                    'label' => $category->nodeValue,
+                    'label'  => $category->nodeValue,
                 ];
             }
         } else {
-            $categoryCollection = new Collection\Category;
+            $categoryCollection = new Collection\Category();
         }
 
         $this->data['categories'] = $categoryCollection;
@@ -194,9 +194,7 @@ class Entry extends Extension\AbstractEntry
     }
 
     /**
-     *
-     *
-     * @return DateTime|null
+     * @return null|DateTime
      */
     public function getDate()
     {

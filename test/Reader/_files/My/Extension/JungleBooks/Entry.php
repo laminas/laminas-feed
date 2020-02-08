@@ -12,7 +12,6 @@ use Laminas\Feed\Reader\Extension;
 
 class Entry extends Extension\AbstractEntry
 {
-
     public function getIsbn()
     {
         if (isset($this->data['isbn'])) {

@@ -14,6 +14,7 @@ use Laminas\Feed\PubSubHubbub\Subscriber;
 use Laminas\Http\Client\Adapter\Socket;
 use Laminas\Http\Client as HttpClient;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 /**
  * Note that $this->_baseuri must point to a directory on a web server
@@ -24,38 +25,38 @@ use PHPUnit\Framework\TestCase;
  * You can also set the proper constant in your test configuration file to
  * point to the right place.
  *
- * @group      Laminas_Feed
- * @group      Laminas_Feed_Subsubhubbub
+ * @group Laminas_Feed
+ * @group Laminas_Feed_Subsubhubbub
  */
 class SubscriberHttpTest extends TestCase
 {
     /** @var Subscriber */
-    protected $subscriber = null;
+    protected $subscriber;
 
     /** @var string */
     protected $baseuri;
 
     /** @var HttpClient */
-    protected $client = null;
+    protected $client;
 
     protected $storage;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->baseuri = getenv('TESTS_LAMINAS_FEED_PUBSUBHUBBUB_BASEURI');
         if ($this->baseuri) {
-            if (substr($this->baseuri, -1) != '/') {
+            if (substr($this->baseuri, -1) !== '/') {
                 $this->baseuri .= '/';
             }
             $name = $this->getName();
             if (($pos = strpos($name, ' ')) !== false) {
                 $name = substr($name, 0, $pos);
             }
-            $uri = $this->baseuri . $name . '.php';
+            $uri          = $this->baseuri . $name . '.php';
             $this->client = new HttpClient($uri);
             $this->client->setAdapter(Socket::class);
             PubSubHubbub::setHttpClient($this->client);
-            $this->subscriber = new Subscriber;
+            $this->subscriber = new Subscriber();
 
             $this->storage = $this->_getCleanMock(Subscription::class);
             $this->subscriber->setStorage($this->storage);
@@ -74,9 +75,9 @@ class SubscriberHttpTest extends TestCase
         $this->subscriber->subscribeAll();
         $this->assertEquals(
             'hub.callback=http%3A%2F%2Fwww.example.com%2Fcallback%3Fxhub.subscription%3D5536df06b5d'
-            .'cb966edab3a4c4d56213c16a8184b&hub.lease_seconds=2592000&hub.mode='
-            .'subscribe&hub.topic=http%3A%2F%2Fwww.example.com%2Ftopic&hub.veri'
-            .'fy=sync&hub.verify=async&hub.verify_token=abc',
+            . 'cb966edab3a4c4d56213c16a8184b&hub.lease_seconds=2592000&hub.mode='
+            . 'subscribe&hub.topic=http%3A%2F%2Fwww.example.com%2Ftopic&hub.veri'
+            . 'fy=sync&hub.verify=async&hub.verify_token=abc',
             $this->client->getResponse()->getBody()
         );
     }
@@ -90,9 +91,9 @@ class SubscriberHttpTest extends TestCase
         $this->subscriber->unsubscribeAll();
         $this->assertEquals(
             'hub.callback=http%3A%2F%2Fwww.example.com%2Fcallback%3Fxhub.subscription%3D5536df06b5d'
-            .'cb966edab3a4c4d56213c16a8184b&hub.mode=unsubscribe&hub.topic=http'
-            .'%3A%2F%2Fwww.example.com%2Ftopic&hub.verify=sync&hub.verify=async'
-            .'&hub.verify_token=abc',
+            . 'cb966edab3a4c4d56213c16a8184b&hub.mode=unsubscribe&hub.topic=http'
+            . '%3A%2F%2Fwww.example.com%2Ftopic&hub.verify=sync&hub.verify=async'
+            . '&hub.verify_token=abc',
             $this->client->getResponse()->getBody()
         );
 
@@ -104,12 +105,13 @@ class SubscriberHttpTest extends TestCase
     protected function _getCleanMock($className)
     {
         // @codingStandardsIgnoreEnd
-        $class = new \ReflectionClass($className);
-        $methods = $class->getMethods();
+        $class       = new ReflectionClass($className);
+        $methods     = $class->getMethods();
         $stubMethods = [];
         foreach ($methods as $method) {
-            if ($method->isPublic() || ($method->isProtected()
-            && $method->isAbstract())) {
+            if ($method->isPublic()
+                || ($method->isProtected() && $method->isAbstract())
+            ) {
                 $stubMethods[] = $method->getName();
             }
         }

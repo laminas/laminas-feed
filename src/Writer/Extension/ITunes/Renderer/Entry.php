@@ -12,8 +12,6 @@ use DOMDocument;
 use DOMElement;
 use Laminas\Feed\Writer\Extension;
 
-/**
-*/
 class Entry extends Extension\AbstractRenderer
 {
     /**
@@ -81,7 +79,7 @@ class Entry extends Extension\AbstractRenderer
             return;
         }
         foreach ($authors as $author) {
-            $el = $dom->createElement('itunes:author');
+            $el   = $dom->createElement('itunes:author');
             $text = $dom->createTextNode($author);
             $el->appendChild($text);
             $root->appendChild($el);
@@ -104,7 +102,7 @@ class Entry extends Extension\AbstractRenderer
         if ($block === null) {
             return;
         }
-        $el = $dom->createElement('itunes:block');
+        $el   = $dom->createElement('itunes:block');
         $text = $dom->createTextNode($block);
         $el->appendChild($text);
         $root->appendChild($el);
@@ -126,7 +124,7 @@ class Entry extends Extension\AbstractRenderer
         if (! $duration) {
             return;
         }
-        $el = $dom->createElement('itunes:duration');
+        $el   = $dom->createElement('itunes:duration');
         $text = $dom->createTextNode($duration);
         $el->appendChild($text);
         $root->appendChild($el);
@@ -169,7 +167,7 @@ class Entry extends Extension\AbstractRenderer
         if ($explicit === null) {
             return;
         }
-        $el = $dom->createElement('itunes:explicit');
+        $el   = $dom->createElement('itunes:explicit');
         $text = $dom->createTextNode($explicit);
         $el->appendChild($text);
         $root->appendChild($el);
@@ -191,7 +189,7 @@ class Entry extends Extension\AbstractRenderer
         if (! $keywords || empty($keywords)) {
             return;
         }
-        $el = $dom->createElement('itunes:keywords');
+        $el   = $dom->createElement('itunes:keywords');
         $text = $dom->createTextNode(implode(',', $keywords));
         $el->appendChild($text);
         $root->appendChild($el);
@@ -213,7 +211,7 @@ class Entry extends Extension\AbstractRenderer
         if (! $title) {
             return;
         }
-        $el = $dom->createElement('itunes:title');
+        $el   = $dom->createElement('itunes:title');
         $text = $dom->createTextNode($title);
         $el->appendChild($text);
         $root->appendChild($el);
@@ -235,7 +233,7 @@ class Entry extends Extension\AbstractRenderer
         if (! $subtitle) {
             return;
         }
-        $el = $dom->createElement('itunes:subtitle');
+        $el   = $dom->createElement('itunes:subtitle');
         $text = $dom->createTextNode($subtitle);
         $el->appendChild($text);
         $root->appendChild($el);
@@ -257,7 +255,7 @@ class Entry extends Extension\AbstractRenderer
         if (! $summary) {
             return;
         }
-        $el = $dom->createElement('itunes:summary');
+        $el   = $dom->createElement('itunes:summary');
         $text = $dom->createTextNode($summary);
         $el->appendChild($text);
         $root->appendChild($el);
@@ -279,7 +277,7 @@ class Entry extends Extension\AbstractRenderer
         if (! $episode) {
             return;
         }
-        $el = $dom->createElement('itunes:episode');
+        $el   = $dom->createElement('itunes:episode');
         $text = $dom->createTextNode($episode);
         $el->appendChild($text);
         $root->appendChild($el);
@@ -301,7 +299,7 @@ class Entry extends Extension\AbstractRenderer
         if (! $type) {
             return;
         }
-        $el = $dom->createElement('itunes:episodeType');
+        $el   = $dom->createElement('itunes:episodeType');
         $text = $dom->createTextNode($type);
         $el->appendChild($text);
         $root->appendChild($el);
@@ -323,7 +321,7 @@ class Entry extends Extension\AbstractRenderer
         if (! $status) {
             return;
         }
-        $el = $dom->createElement('itunes:isClosedCaptioned');
+        $el   = $dom->createElement('itunes:isClosedCaptioned');
         $text = $dom->createTextNode('Yes');
         $el->appendChild($text);
         $root->appendChild($el);
@@ -345,7 +343,7 @@ class Entry extends Extension\AbstractRenderer
         if (! $season) {
             return;
         }
-        $el = $dom->createElement('itunes:season');
+        $el   = $dom->createElement('itunes:season');
         $text = $dom->createTextNode($season);
         $el->appendChild($text);
         $root->appendChild($el);

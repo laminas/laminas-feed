@@ -23,7 +23,7 @@ class Entry extends Extension\AbstractEntry
      * Get the specified author
      *
      * @param  int $index
-     * @return string|null
+     * @return null|string
      */
     public function getAuthor($index = 0)
     {
@@ -48,7 +48,7 @@ class Entry extends Extension\AbstractEntry
         }
 
         $authors = [];
-        $list = $this->getXpath()->query($this->getXpathPrefix() . '//atom:author');
+        $list    = $this->getXpath()->query($this->getXpathPrefix() . '//atom:author');
 
         if (! $list->length) {
             /**
@@ -66,7 +66,7 @@ class Entry extends Extension\AbstractEntry
             }
         }
 
-        if (count($authors) == 0) {
+        if (count($authors) === 0) {
             $authors = new Collection\Author();
         } else {
             $authors = new Collection\Author(
@@ -93,7 +93,7 @@ class Entry extends Extension\AbstractEntry
 
         $el = $this->getXpath()->query($this->getXpathPrefix() . '/atom:content');
         if ($el->length > 0) {
-            $el = $el->item(0);
+            $el   = $el->item(0);
             $type = $el->getAttribute('type');
             switch ($type) {
                 case '':
@@ -105,11 +105,11 @@ class Entry extends Extension\AbstractEntry
                     break;
                 case 'xhtml':
                     $this->getXpath()->registerNamespace('xhtml', 'http://www.w3.org/1999/xhtml');
-                    $xhtml = $this->getXpath()->query(
-                        $this->getXpathPrefix() . '/atom:content/xhtml:div'
-                    )->item(0);
-                    $d = new DOMDocument('1.0', $this->getEncoding());
-                    $deep = version_compare(PHP_VERSION, '7', 'ge') ? 1 : true;
+                    $xhtml  = $this->getXpath()
+                        ->query($this->getXpathPrefix() . '/atom:content/xhtml:div')
+                        ->item(0);
+                    $d      = new DOMDocument('1.0', $this->getEncoding());
+                    $deep   = version_compare(PHP_VERSION, '7', 'ge') ? 1 : true;
                     $xhtmls = $d->importNode($xhtml, $deep);
                     $d->appendChild($xhtmls);
                     $content = $this->collectXhtml(
@@ -132,8 +132,8 @@ class Entry extends Extension\AbstractEntry
     /**
      * Parse out XHTML to remove the namespacing
      *
-     * @param $xhtml
-     * @param $prefix
+     * @param  string $xhtml
+     * @param  string $prefix
      * @return mixed
      */
     protected function collectXhtml($xhtml, $prefix)
@@ -142,12 +142,12 @@ class Entry extends Extension\AbstractEntry
             $prefix = $prefix . ':';
         }
         $matches = [
-            "/<\?xml[^<]*>[^<]*<" . $prefix . "div[^<]*/",
-            "/<\/" . $prefix . "div>\s*$/"
+            '/<\?xml[^<]*>[^<]*<' . $prefix . 'div[^<]*/',
+            '/<\/' . $prefix . 'div>\s*$/',
         ];
-        $xhtml = preg_replace($matches, '', $xhtml);
+        $xhtml   = preg_replace($matches, '', $xhtml);
         if (! empty($prefix)) {
-            $xhtml = preg_replace("/(<[\/]?)" . $prefix . "([a-zA-Z]+)/", '$1$2', $xhtml);
+            $xhtml = preg_replace('/(<[\/]?)' . $prefix . '([a-zA-Z]+)/', '$1$2', $xhtml);
         }
         return $xhtml;
     }
@@ -288,7 +288,7 @@ class Entry extends Extension\AbstractEntry
     /**
      * Get the base URI of the feed (if set).
      *
-     * @return string|null
+     * @return null|string
      */
     public function getBaseUrl()
     {
@@ -297,10 +297,7 @@ class Entry extends Extension\AbstractEntry
         }
 
         $baseUrl = $this->getXpath()->evaluate(
-            'string('
-            . $this->getXpathPrefix()
-            . '/@xml:base[1]'
-            . ')'
+            'string(' . $this->getXpathPrefix() . '/@xml:base[1])'
         );
 
         if (! $baseUrl) {
@@ -349,8 +346,8 @@ class Entry extends Extension\AbstractEntry
         $links = [];
 
         $list = $this->getXpath()->query(
-            $this->getXpathPrefix() . '//atom:link[@rel="alternate"]/@href' . '|' .
-            $this->getXpathPrefix() . '//atom:link[not(@rel)]/@href'
+            $this->getXpathPrefix() . '//atom:link[@rel="alternate"]/@href' . '|'
+            . $this->getXpathPrefix() . '//atom:link[not(@rel)]/@href'
         );
 
         if ($list->length) {
@@ -453,7 +450,7 @@ class Entry extends Extension\AbstractEntry
     /**
      * Returns a URI pointing to a feed of all comments for this entry
      *
-     * @param string $type
+     * @param  string $type
      * @return string
      */
     public function getCommentFeedLink($type = 'atom')
@@ -465,7 +462,7 @@ class Entry extends Extension\AbstractEntry
         $link = null;
 
         $list = $this->getXpath()->query(
-            $this->getXpathPrefix() . '//atom:link[@rel="replies" and @type="application/' . $type.'+xml"]/@href'
+            $this->getXpathPrefix() . '//atom:link[@rel="replies" and @type="application/' . $type . '+xml"]/@href'
         );
 
         if ($list->length) {
@@ -489,7 +486,7 @@ class Entry extends Extension\AbstractEntry
             return $this->data['categories'];
         }
 
-        if ($this->getAtomType() == Reader\Reader::TYPE_ATOM_10) {
+        if ($this->getAtomType() === Reader\Reader::TYPE_ATOM_10) {
             $list = $this->getXpath()->query($this->getXpathPrefix() . '//atom:category');
         } else {
             /**
@@ -502,16 +499,16 @@ class Entry extends Extension\AbstractEntry
         }
 
         if ($list->length) {
-            $categoryCollection = new Collection\Category;
+            $categoryCollection = new Collection\Category();
             foreach ($list as $category) {
                 $categoryCollection[] = [
-                    'term' => $category->getAttribute('term'),
+                    'term'   => $category->getAttribute('term'),
                     'scheme' => $category->getAttribute('scheme'),
-                    'label' => $category->getAttribute('label')
+                    'label'  => $category->getAttribute('label'),
                 ];
             }
         } else {
-            return new Collection\Category;
+            return new Collection\Category();
         }
 
         $this->data['categories'] = $categoryCollection;
@@ -522,7 +519,7 @@ class Entry extends Extension\AbstractEntry
     /**
      * Get source feed metadata from the entry
      *
-     * @return Reader\Feed\Atom\Source|null
+     * @return null|Reader\Feed\Atom\Source
      */
     public function getSource()
     {
@@ -532,11 +529,11 @@ class Entry extends Extension\AbstractEntry
 
         $source = null;
         // TODO: Investigate why _getAtomType() fails here. Is it even needed?
-        if ($this->getType() == Reader\Reader::TYPE_ATOM_10) {
+        if ($this->getType() === Reader\Reader::TYPE_ATOM_10) {
             $list = $this->getXpath()->query($this->getXpathPrefix() . '/atom:source[1]');
             if ($list->length) {
                 $element = $list->item(0);
-                $source = new Reader\Feed\Atom\Source($element, $this->getXpathPrefix());
+                $source  = new Reader\Feed\Atom\Source($element, $this->getXpathPrefix());
             }
         }
 
@@ -545,10 +542,10 @@ class Entry extends Extension\AbstractEntry
     }
 
     /**
-     *  Attempt to absolutise the URI, i.e. if a relative URI apply the
+     * Attempt to absolutise the URI, i.e. if a relative URI apply the
      *  xml:base value as a prefix to turn into an absolute URI.
      *
-     * @param $link
+     * @param  string $link
      * @return string
      */
     protected function absolutiseUri($link)
@@ -567,7 +564,6 @@ class Entry extends Extension\AbstractEntry
     /**
      * Get an author entry
      *
-     * @param DOMElement $element
      * @return string
      */
     protected function getAuthorFromElement(DOMElement $element)
@@ -618,15 +614,17 @@ class Entry extends Extension\AbstractEntry
      */
     protected function getAtomType()
     {
-        $dom = $this->getDomDocument();
+        $dom          = $this->getDomDocument();
         $prefixAtom03 = $dom->lookupPrefix(Reader\Reader::NAMESPACE_ATOM_03);
         $prefixAtom10 = $dom->lookupPrefix(Reader\Reader::NAMESPACE_ATOM_10);
         if ($dom->isDefaultNamespace(Reader\Reader::NAMESPACE_ATOM_03)
-        || ! empty($prefixAtom03)) {
+            || ! empty($prefixAtom03)
+        ) {
             return Reader\Reader::TYPE_ATOM_03;
         }
         if ($dom->isDefaultNamespace(Reader\Reader::NAMESPACE_ATOM_10)
-        || ! empty($prefixAtom10)) {
+            || ! empty($prefixAtom10)
+        ) {
             return Reader\Reader::TYPE_ATOM_10;
         }
     }

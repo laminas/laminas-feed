@@ -15,10 +15,11 @@ use Laminas\Feed\PubSubHubbub\Model\Subscription;
 use Laminas\Feed\PubSubHubbub\Model\SubscriptionPersistenceInterface;
 use PDO;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 /**
- * @group      Laminas_Feed
- * @group      Laminas_Feed_Pubsubhubbub_Model
+ * @group Laminas_Feed
+ * @group Laminas_Feed_Pubsubhubbub_Model
  */
 class SubscriptionTest extends TestCase
 {
@@ -28,7 +29,7 @@ class SubscriptionTest extends TestCase
     public function testAllOperations()
     {
         $adapter = $this->initDb();
-        $table = new TableGateway('subscription', $adapter);
+        $table   = new TableGateway('subscription', $adapter);
 
         $subscription = new Subscription($table);
 
@@ -50,7 +51,7 @@ class SubscriptionTest extends TestCase
             'verify_token',
             'secret',
             'expiration_time',
-            'subscription_state'
+            'subscription_state',
         ];
 
         $this->assertSame($keys, array_keys($dataSubscription));
@@ -60,7 +61,7 @@ class SubscriptionTest extends TestCase
 
     public function testImpemetsSubscriptionInterface()
     {
-        $reflection = new \ReflectionClass(Subscription::class);
+        $reflection = new ReflectionClass(Subscription::class);
         $this->assertTrue(
             $reflection->implementsInterface(SubscriptionPersistenceInterface::class)
         );
@@ -69,7 +70,7 @@ class SubscriptionTest extends TestCase
 
     public function testCurrentTimeSetterAndGetter()
     {
-        $now = new DateTime();
+        $now          = new DateTime();
         $subscription = new Subscription(new TableGateway('subscription', $this->initDb()));
         $subscription->setNow($now);
         $this->assertSame($subscription->getNow(), $now);
@@ -90,17 +91,17 @@ class SubscriptionTest extends TestCase
 
     protected function createTable(DbAdapter $db)
     {
-        $sql = "CREATE TABLE subscription ("
+        $sql = 'CREATE TABLE subscription ('
             . "id varchar(32) PRIMARY KEY NOT NULL DEFAULT '', "
-            . "topic_url varchar(255) DEFAULT NULL, "
-            . "hub_url varchar(255) DEFAULT NULL, "
-            . "created_time datetime DEFAULT NULL, "
-            . "lease_seconds bigint(20) DEFAULT NULL, "
-            . "verify_token varchar(255) DEFAULT NULL, "
-            . "secret varchar(255) DEFAULT NULL, "
-            . "expiration_time datetime DEFAULT NULL, "
-            . "subscription_state varchar(12) DEFAULT NULL"
-            . ");";
+            . 'topic_url varchar(255) DEFAULT NULL, '
+            . 'hub_url varchar(255) DEFAULT NULL, '
+            . 'created_time datetime DEFAULT NULL, '
+            . 'lease_seconds bigint(20) DEFAULT NULL, '
+            . 'verify_token varchar(255) DEFAULT NULL, '
+            . 'secret varchar(255) DEFAULT NULL, '
+            . 'expiration_time datetime DEFAULT NULL, '
+            . 'subscription_state varchar(12) DEFAULT NULL'
+            . ');';
 
         $db->query($sql)->execute();
     }

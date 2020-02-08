@@ -23,28 +23,28 @@ class Psr7ResponseDecoratorTest extends TestCase
     public function testDecoratorIsAFeedResponse()
     {
         $originalResponse = $this->prophesize(Psr7ResponseInterface::class);
-        $decorator = new Psr7ResponseDecorator($originalResponse->reveal());
+        $decorator        = new Psr7ResponseDecorator($originalResponse->reveal());
         $this->assertInstanceOf(ResponseInterface::class, $decorator);
     }
 
     public function testDecoratorIsAHeaderAwareResponse()
     {
         $originalResponse = $this->prophesize(Psr7ResponseInterface::class);
-        $decorator = new Psr7ResponseDecorator($originalResponse->reveal());
+        $decorator        = new Psr7ResponseDecorator($originalResponse->reveal());
         $this->assertInstanceOf(HeaderAwareResponseInterface::class, $decorator);
     }
 
     public function testDecoratorIsNotAPsr7Response()
     {
         $originalResponse = $this->prophesize(Psr7ResponseInterface::class);
-        $decorator = new Psr7ResponseDecorator($originalResponse->reveal());
+        $decorator        = new Psr7ResponseDecorator($originalResponse->reveal());
         $this->assertNotInstanceOf(Psr7ResponseInterface::class, $decorator);
     }
 
     public function testCanRetrieveDecoratedResponse()
     {
         $originalResponse = $this->prophesize(Psr7ResponseInterface::class);
-        $decorator = new Psr7ResponseDecorator($originalResponse->reveal());
+        $decorator        = new Psr7ResponseDecorator($originalResponse->reveal());
         $this->assertSame($originalResponse->reveal(), $decorator->getDecoratedResponse());
     }
 
@@ -66,7 +66,7 @@ class Psr7ResponseDecoratorTest extends TestCase
 
     public function testCastsStreamToStringWhenReturningPsr7Body()
     {
-        $stream = new Psr7Stream('BODY');
+        $stream           = new Psr7Stream('BODY');
         $originalResponse = $this->prophesize(Psr7ResponseInterface::class);
         $originalResponse->getBody()->willReturn($stream);
         $decorator = new Psr7ResponseDecorator($originalResponse->reveal());

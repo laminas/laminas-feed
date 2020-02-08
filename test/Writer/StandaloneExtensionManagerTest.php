@@ -5,8 +5,11 @@
  * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
  * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
  */
+
 namespace LaminasTest\Feed\Writer;
 
+use Laminas\Feed\Writer\Exception\InvalidArgumentException;
+use Laminas\Feed\Writer\Extension;
 use Laminas\Feed\Writer\ExtensionManagerInterface;
 use Laminas\Feed\Writer\StandaloneExtensionManager;
 use PHPUnit\Framework\TestCase;
@@ -18,7 +21,7 @@ class StandaloneExtensionManagerTest extends TestCase
      */
     private $extensions;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->extensions = new StandaloneExtensionManager();
     }
@@ -31,34 +34,19 @@ class StandaloneExtensionManagerTest extends TestCase
     public function defaultPlugins()
     {
         return [
-            'Atom\Renderer\Feed'           => [
-                'Atom\Renderer\Feed', \Laminas\Feed\Writer\Extension\Atom\Renderer\Feed::class
-            ],
-            'Content\Renderer\Entry'       => [
-                'Content\Renderer\Entry', \Laminas\Feed\Writer\Extension\Content\Renderer\Entry::class
-            ],
-            'DublinCore\Renderer\Entry'    => [
-                'DublinCore\Renderer\Entry', \Laminas\Feed\Writer\Extension\DublinCore\Renderer\Entry::class
-            ],
-            'DublinCore\Renderer\Feed'     => [
-                'DublinCore\Renderer\Feed', \Laminas\Feed\Writer\Extension\DublinCore\Renderer\Feed::class
-            ],
-            'ITunes\Entry'                 => ['ITunes\Entry', \Laminas\Feed\Writer\Extension\ITunes\Entry::class],
-            'ITunes\Feed'                  => ['ITunes\Feed', \Laminas\Feed\Writer\Extension\ITunes\Feed::class],
-            'ITunes\Renderer\Entry'        => [
-                'ITunes\Renderer\Entry', \Laminas\Feed\Writer\Extension\ITunes\Renderer\Entry::class
-            ],
-            'ITunes\Renderer\Feed'         => [
-                'ITunes\Renderer\Feed', \Laminas\Feed\Writer\Extension\ITunes\Renderer\Feed::class
-            ],
-            'Slash\Renderer\Entry'         => [
-                'Slash\Renderer\Entry', \Laminas\Feed\Writer\Extension\Slash\Renderer\Entry::class
-            ],
-            'Threading\Renderer\Entry'     => [
-                'Threading\Renderer\Entry', \Laminas\Feed\Writer\Extension\Threading\Renderer\Entry::class
-            ],
+            'Atom\Renderer\Feed'           => ['Atom\Renderer\Feed', Extension\Atom\Renderer\Feed::class],
+            'Content\Renderer\Entry'       => ['Content\Renderer\Entry', Extension\Content\Renderer\Entry::class],
+            'DublinCore\Renderer\Entry'    => ['DublinCore\Renderer\Entry', Extension\DublinCore\Renderer\Entry::class],
+            'DublinCore\Renderer\Feed'     => ['DublinCore\Renderer\Feed', Extension\DublinCore\Renderer\Feed::class],
+            'ITunes\Entry'                 => ['ITunes\Entry', Extension\ITunes\Entry::class],
+            'ITunes\Feed'                  => ['ITunes\Feed', Extension\ITunes\Feed::class],
+            'ITunes\Renderer\Entry'        => ['ITunes\Renderer\Entry', Extension\ITunes\Renderer\Entry::class],
+            'ITunes\Renderer\Feed'         => ['ITunes\Renderer\Feed', Extension\ITunes\Renderer\Feed::class],
+            'Slash\Renderer\Entry'         => ['Slash\Renderer\Entry', Extension\Slash\Renderer\Entry::class],
+            'Threading\Renderer\Entry'     => ['Threading\Renderer\Entry', Extension\Threading\Renderer\Entry::class],
             'WellFormedWeb\Renderer\Entry' => [
-                'WellFormedWeb\Renderer\Entry', \Laminas\Feed\Writer\Extension\WellFormedWeb\Renderer\Entry::class
+                'WellFormedWeb\Renderer\Entry',
+                Extension\WellFormedWeb\Renderer\Entry::class,
             ],
         ];
     }
@@ -101,14 +89,14 @@ class StandaloneExtensionManagerTest extends TestCase
         $this->extensions->add('Test/Entry', 'MyTestExtension_Entry');
         $this->assertTrue($this->extensions->has('Test/Entry'));
 
-        $ext = $this->createMock(\Laminas\Feed\Writer\Extension\AbstractRenderer::class);
+        $ext = $this->prophesize(Extension\AbstractRenderer::class)->reveal();
         $this->extensions->add('Test/Thing', get_class($ext));
         $this->assertTrue($this->extensions->has('Test/Thing'));
     }
 
     public function testAddRejectsInvalidExtensions()
     {
-        $this->expectException(\Laminas\Feed\Writer\Exception\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->extensions->add('Test/Feed', 'blah');
     }
 
