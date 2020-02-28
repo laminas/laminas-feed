@@ -1,68 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    <url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url>
      <loc>https://docs.laminas.dev/laminas-feed/</loc>
-     <lastmod>2020-02-08</lastmod>
+     <lastmod>2020-02-28</lastmod>
      <changefreq>daily</changefreq>
-    </url>
-    <url>
+    </url><url>
      <loc>https://docs.laminas.dev/laminas-feed/intro/</loc>
-     <lastmod>2020-02-08</lastmod>
+     <lastmod>2020-02-28</lastmod>
      <changefreq>daily</changefreq>
-    </url>
-    <url>
+    </url><url>
      <loc>https://docs.laminas.dev/laminas-feed/reader/</loc>
-     <lastmod>2020-02-08</lastmod>
+     <lastmod>2020-02-28</lastmod>
      <changefreq>daily</changefreq>
-    </url>
-    <url>
+    </url><url>
      <loc>https://docs.laminas.dev/laminas-feed/http-clients/</loc>
-     <lastmod>2020-02-08</lastmod>
+     <lastmod>2020-02-28</lastmod>
      <changefreq>daily</changefreq>
-    </url>
-    <url>
+    </url><url>
      <loc>https://docs.laminas.dev/laminas-feed/psr7-clients/</loc>
-     <lastmod>2020-02-08</lastmod>
+     <lastmod>2020-02-28</lastmod>
      <changefreq>daily</changefreq>
-    </url>
-    <url>
+    </url><url>
      <loc>https://docs.laminas.dev/laminas-feed/importing/</loc>
-     <lastmod>2020-02-08</lastmod>
+     <lastmod>2020-02-28</lastmod>
      <changefreq>daily</changefreq>
-    </url>
-    <url>
+    </url><url>
      <loc>https://docs.laminas.dev/laminas-feed/find-feeds/</loc>
-     <lastmod>2020-02-08</lastmod>
+     <lastmod>2020-02-28</lastmod>
      <changefreq>daily</changefreq>
-    </url>
-    <url>
+    </url><url>
      <loc>https://docs.laminas.dev/laminas-feed/consuming-rss/</loc>
-     <lastmod>2020-02-08</lastmod>
+     <lastmod>2020-02-28</lastmod>
      <changefreq>daily</changefreq>
-    </url>
-    <url>
+    </url><url>
      <loc>https://docs.laminas.dev/laminas-feed/consuming-atom/</loc>
-     <lastmod>2020-02-08</lastmod>
+     <lastmod>2020-02-28</lastmod>
      <changefreq>daily</changefreq>
-    </url>
-    <url>
+    </url><url>
      <loc>https://docs.laminas.dev/laminas-feed/consuming-atom-entry/</loc>
-     <lastmod>2020-02-08</lastmod>
+     <lastmod>2020-02-28</lastmod>
      <changefreq>daily</changefreq>
-    </url>
-    <url>
+    </url><url>
      <loc>https://docs.laminas.dev/laminas-feed/security/</loc>
-     <lastmod>2020-02-08</lastmod>
+     <lastmod>2020-02-28</lastmod>
      <changefreq>daily</changefreq>
-    </url>
-    <url>
+    </url><url>
      <loc>https://docs.laminas.dev/laminas-feed/writer/</loc>
-     <lastmod>2020-02-08</lastmod>
+     <lastmod>2020-02-28</lastmod>
      <changefreq>daily</changefreq>
-    </url>
-    <url>
+    </url><url>
      <loc>https://docs.laminas.dev/laminas-feed/pubsubhubbub/</loc>
-     <lastmod>2020-02-08</lastmod>
+     <lastmod>2020-02-28</lastmod>
      <changefreq>daily</changefreq>
     </url>
 </urlset>
