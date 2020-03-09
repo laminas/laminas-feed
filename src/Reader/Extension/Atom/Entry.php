@@ -142,7 +142,7 @@ class Entry extends Extension\AbstractEntry
             $prefix = $prefix . ':';
         }
         $matches = [
-            '/<\?xml[^<]*>[^<]*<' . $prefix . 'div[^<]*/',
+            '/<\?xml[^<]*>[^<]*<' . $prefix . 'div[^>]*>/',
             '/<\/' . $prefix . 'div>\s*$/',
         ];
         $xhtml   = preg_replace($matches, '', $xhtml);
