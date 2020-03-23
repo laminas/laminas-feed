@@ -360,6 +360,15 @@ class AtomTest extends TestCase
         $this->assertEquals('<p class="x:"><em>Entry Content &amp;x:</em></p>', $entry->getContent());
     }
 
+    public function testGetsContentWithoutChildElementsFromAtom10XhtmlNamespaced()
+    {
+        $feed  = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath . '/content/plain/atom10_Xhtml_nochild.xml')
+        );
+        $entry = $feed->current();
+        $this->assertEquals('Entry Content &amp;x:', $entry->getContent());
+    }
+
     /**
      * Get Link (Unencoded Text)
      */
