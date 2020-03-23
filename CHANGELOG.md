@@ -44,7 +44,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- Nothing.
+- [#17](https://github.com/laminas/laminas-feed/pull/17) fixes regular expression to extract content from atom feeds.
 
 ## 2.12.0 - 2019-03-05
 
