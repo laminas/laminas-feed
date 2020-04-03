@@ -364,13 +364,13 @@ when writing code to work with <em>RSS</em> data. <code>Laminas\Feed</code> supp
 properties of the core <em>RSS</em> and <em>Atom</em> specifications.</p>
 </blockquote>
 <h2 id="reading-rss-feed-data">Reading RSS Feed Data</h2>
-<pre class=codehilite><code class=language-php>// Fetch the latest Slashdot headlines
+<pre class="highlight"><code class="language-php">// Fetch the latest Slashdot headlines
 try {
     $slashdotRss =
         Laminas\Feed\Reader\Reader::import('http://rss.slashdot.org/Slashdot/slashdot');
 } catch (Laminas\Feed\Reader\Exception\RuntimeException $e) {
     // feed import failed
-    echo &quot;Exception caught importing feed: {$e-&gt;getMessage()}\n&quot;;
+    echo "Exception caught importing feed: {$e-&gt;getMessage()}\n";
     exit;
 }
 
@@ -390,6 +390,7 @@ foreach ($slashdotRss as $item) {
         'description' =&gt; $item-&gt;getDescription(),
     ];
 }</code></pre>
+
 <p>Your <code>$channel</code> array now contains the basic meta-information for the RSS
 channel and all items that it contained. The process is identical for Atom
 feeds since <code>Laminas\Feed</code> provides a common feed API; i.e. all getters and

@@ -356,7 +356,8 @@
     <h1 id="consuming-rss-feeds">Consuming RSS Feeds</h1>
 <h2 id="reading-a-feed">Reading a feed</h2>
 <p>To read an RSS feed, pass its URL to <code>Laminas\Feed\Reader\Reader::import()</code>:</p>
-<pre class=codehilite><code class=language-php>$channel = Laminas\Feed\Reader\Reader::import('http://rss.example.com/channelName');</code></pre>
+<pre class="highlight"><code class="language-php">$channel = Laminas\Feed\Reader\Reader::import('http://rss.example.com/channelName');</code></pre>
+
 <blockquote>
 <h3>Importing requires an HTTP client</h3>
 <p>To import a feed, you will need to have an <a href="../http-clients/">HTTP client</a>
@@ -369,22 +370,25 @@ client. See the <a href="../http-clients/#providing-a-client-to-reader">section 
 <h2 id="get-properties">Get properties</h2>
 <p>Once you have a feed object, you can access any of the standard RSS channel
 properties via the various instance getter methods:</p>
-<pre class=codehilite><code class=language-php>echo $channel-&gt;getTitle();
+<pre class="highlight"><code class="language-php">echo $channel-&gt;getTitle();
 echo $channel-&gt;getAuthor();
 // etc.</code></pre>
+
 <p>If channel properties have attributes, the getter method will return a key/value
 pair, where the key is the attribute name, and the value is the attribute value.</p>
-<pre class=codehilite><code class=language-php>$author = $channel-&gt;getAuthor();
+<pre class="highlight"><code class="language-php">$author = $channel-&gt;getAuthor();
 echo $author['name'];</code></pre>
+
 <p>Most commonly, you'll want to loop through the feed and do something with its
 entries.  <code>Laminas\Feed\Reader\Feed\Rss</code> internally converts all entries to a
 <code>Laminas\Feed\Reader\Entry\Rss</code> instance. Entry properties, similarly to channel
 properties, can be accessed via getter methods, such as <code>getTitle</code>,
 <code>getDescription</code>, etc.</p>
 <p>An example of printing all titles of articles in a channel is:</p>
-<pre class=codehilite><code class=language-php>foreach ($channel as $item) {
-    echo $item-&gt;getTitle() . &quot;\n&quot;;
+<pre class="highlight"><code class="language-php">foreach ($channel as $item) {
+    echo $item-&gt;getTitle() . "\n";
 }</code></pre>
+
 <p>If you are not familiar with RSS, here are the standard elements you can expect
 to be available in an RSS channel and in individual RSS items (entries).</p>
 <p>Required channel elements:</p>
@@ -415,9 +419,10 @@ either <code>title</code> or <code>description</code> must be present.</p>
 </ul>
 <p>In your code you can always test to see if an element is non-empty by calling
 the getter:</p>
-<pre class=codehilite><code class=language-php>if ($item-&gt;getPropname()) {
+<pre class="highlight"><code class="language-php">if ($item-&gt;getPropname()) {
     // ... proceed.
 }</code></pre>
+
 <p>Where relevant, <code>Laminas\Feed</code> supports a number of common RSS extensions including
 Dublin Core, Atom (inside RSS); the Content, Slash, Syndication,
 Syndication/Thread extensions; as well as several others.</p>

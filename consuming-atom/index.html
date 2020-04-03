@@ -359,13 +359,14 @@ provide their full content inside the feed, splitting RSS' <code>description</co
 into two elements, <code>summary</code> and <code>content</code>, for that purpose.</p>
 <h2 id="basic-use-of-an-atom-feed">Basic Use of an Atom Feed</h2>
 <p>Read an Atom feed and print the <code>title</code> and <code>summary</code> of each entry:</p>
-<pre class=codehilite><code class=language-php>$feed = Laminas\Feed\Reader\Reader::import('http://atom.example.com/feed/');
-echo 'The feed contains ' . $feed-&gt;count() . ' entries.' . &quot;\n\n&quot;;
+<pre class="highlight"><code class="language-php">$feed = Laminas\Feed\Reader\Reader::import('http://atom.example.com/feed/');
+echo 'The feed contains ' . $feed-&gt;count() . ' entries.' . "\n\n";
 foreach ($feed as $entry) {
-    echo 'Title: ' . $entry-&gt;getTitle() . &quot;\n&quot;;
-    echo 'Description: ' . $entry-&gt;getDescription() . &quot;\n&quot;;
-    echo 'URL: ' . $entry-&gt;getLink() . &quot;\n\n&quot;;
+    echo 'Title: ' . $entry-&gt;getTitle() . "\n";
+    echo 'Description: ' . $entry-&gt;getDescription() . "\n";
+    echo 'URL: ' . $entry-&gt;getLink() . "\n\n";
 }</code></pre>
+
 <blockquote>
 <h3>Importing requires an HTTP client</h3>
 <p>To import a feed, you will need to have an <a href="../http-clients/">HTTP client</a>

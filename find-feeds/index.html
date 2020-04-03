@@ -342,7 +342,8 @@
 <p>Web pages often contain <code>&lt;link&gt;</code> tags that refer to feeds with content relevant
 to the particular page. <code>Laminas\Feed\Reader\Reader</code> enables you to retrieve all
 feeds referenced by a web page with one method call:</p>
-<pre class=codehilite><code class=language-php>$feedLinks = Laminas\Feed\Reader\Reader::findFeedLinks('http://www.example.com/news.html');</code></pre>
+<pre class="highlight"><code class="language-php">$feedLinks = Laminas\Feed\Reader\Reader::findFeedLinks('http://www.example.com/news.html');</code></pre>
+
 <blockquote>
 <h3>Finding feed links requires an HTTP client</h3>
 <p>To find feed links, you will need to have an <a href="../http-clients/">HTTP client</a>
@@ -357,19 +358,20 @@ referenced by <code>&lt;link&gt;</code> tags on the <code>news.html</code> web p
 <code>Laminas\Feed\Reader\Exception\RuntimeException</code> upon failure, such as an HTTP
 404 response code or a malformed feed.</p>
 <p>You can examine all feed links located by iterating across the collection:</p>
-<pre class=codehilite><code class=language-php>$rssFeed = null;
+<pre class="highlight"><code class="language-php">$rssFeed = null;
 $feedLinks = Laminas\Feed\Reader\Reader::findFeedLinks('http://www.example.com/news.html');
 foreach ($feedLinks as $link) {
     if (stripos($link['type'], 'application/rss+xml') !== false) {
         $rssFeed = $link['href'];
         break;
 }</code></pre>
+
 <p>Each <code>Laminas\Feed\Reader\FeedSet</code> object will expose the <code>rel</code>, <code>href</code>, <code>type</code>,
 and <code>title</code> properties of detected links for all RSS, Atom, or RDF feeds. You
 can always select the first encountered link of each type by using a shortcut:
 the first encountered link of a given type is assigned to a property named after
 the feed type.</p>
-<pre class=codehilite><code class=language-php>$rssFeed = null;
+<pre class="highlight"><code class="language-php">$rssFeed = null;
 $feedLinks = Laminas\Feed\Reader\Reader::findFeedLinks('http://www.example.com/news.html');
 $firstAtomFeed = $feedLinks-&gt;atom;</code></pre>
 

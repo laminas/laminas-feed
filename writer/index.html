@@ -419,13 +419,13 @@ cover extensions in more detail at the end of this chapter.</p>
 <p>To use <code>Laminas\Feed\Writer\Writer</code>, you will provide it with data, and then
 trigger the renderer. What follows is an example demonstrating generation of a
 minimal Atom 1.0 feed. Each feed or entry uses a separate data container.</p>
-<pre class=codehilite><code class=language-php>use Laminas\Feed\Writer\Feed;
+<pre class="highlight"><code class="language-php">use Laminas\Feed\Writer\Feed;
 
 /**
  * Create the parent feed
  */
 $feed = new Feed;
-$feed-&gt;setTitle(&quot;Paddy's Blog&quot;);
+$feed-&gt;setTitle("Paddy's Blog");
 $feed-&gt;setLink('http://www.example.com');
 $feed-&gt;setFeedLink('http://www.example.com/atom', 'atom');
 $feed-&gt;addAuthor([
@@ -458,51 +458,53 @@ $feed-&gt;addEntry($entry);
 
 /**
  * Render the resulting feed to Atom 1.0 and assign to $out.
- * You can substitute &quot;atom&quot; with &quot;rss&quot; to generate an RSS 2.0 feed.
+ * You can substitute "atom" with "rss" to generate an RSS 2.0 feed.
  */
 $out = $feed-&gt;export('atom');</code></pre>
+
 <p>The output rendered should be as follows:</p>
-<pre class=codehilite><code class=language-xml>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-&lt;feed xmlns=&quot;http://www.w3.org/2005/Atom&quot;&gt;
-    &lt;title type=&quot;text&quot;&gt;Paddy's Blog&lt;/title&gt;
-    &lt;subtitle type=&quot;text&quot;&gt;Writing about PC Games since 176 BC.&lt;/subtitle&gt;
+<pre class="highlight"><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;feed xmlns="http://www.w3.org/2005/Atom"&gt;
+    &lt;title type="text"&gt;Paddy's Blog&lt;/title&gt;
+    &lt;subtitle type="text"&gt;Writing about PC Games since 176 BC.&lt;/subtitle&gt;
     &lt;updated&gt;2009-12-14T20:28:18+00:00&lt;/updated&gt;
-    &lt;generator uri=&quot;https://getlaminas.org&quot; version=&quot;1.10.0alpha&quot;&gt;
+    &lt;generator uri="https://getlaminas.org" version="1.10.0alpha"&gt;
         Laminas\Feed\Writer
     &lt;/generator&gt;
-    &lt;link rel=&quot;alternate&quot; type=&quot;text/html&quot; href=&quot;http://www.example.com&quot;/&gt;
-    &lt;link rel=&quot;self&quot; type=&quot;application/atom+xml&quot;
-        href=&quot;http://www.example.com/atom&quot;/&gt;
+    &lt;link rel="alternate" type="text/html" href="http://www.example.com"/&gt;
+    &lt;link rel="self" type="application/atom+xml"
+        href="http://www.example.com/atom"/&gt;
     &lt;id&gt;http://www.example.com&lt;/id&gt;
     &lt;author&gt;
         &lt;name&gt;Paddy&lt;/name&gt;
         &lt;email&gt;paddy@example.com&lt;/email&gt;
         &lt;uri&gt;http://www.example.com&lt;/uri&gt;
     &lt;/author&gt;
-    &lt;link rel=&quot;hub&quot; href=&quot;http://pubsubhubbub.appspot.com/&quot;/&gt;
+    &lt;link rel="hub" href="http://pubsubhubbub.appspot.com/"/&gt;
     &lt;entry&gt;
-        &lt;title type=&quot;html&quot;&gt;&lt;![CDATA[All Your Base Are Belong To
+        &lt;title type="html"&gt;&lt;![CDATA[All Your Base Are Belong To
             Us]]&gt;&lt;/title&gt;
-        &lt;summary type=&quot;html&quot;&gt;
+        &lt;summary type="html"&gt;
             &lt;![CDATA[Exposing the difficultly of porting games to
                 English.]]&gt;
         &lt;/summary&gt;
         &lt;published&gt;2009-12-14T20:28:18+00:00&lt;/published&gt;
         &lt;updated&gt;2009-12-14T20:28:18+00:00&lt;/updated&gt;
-        &lt;link rel=&quot;alternate&quot; type=&quot;text/html&quot;
-             href=&quot;http://www.example.com/all-your-base-are-belong-to-us&quot;/&gt;
+        &lt;link rel="alternate" type="text/html"
+             href="http://www.example.com/all-your-base-are-belong-to-us"/&gt;
         &lt;id&gt;http://www.example.com/all-your-base-are-belong-to-us&lt;/id&gt;
         &lt;author&gt;
             &lt;name&gt;Paddy&lt;/name&gt;
             &lt;email&gt;paddy@example.com&lt;/email&gt;
             &lt;uri&gt;http://www.example.com&lt;/uri&gt;
         &lt;/author&gt;
-        &lt;content type=&quot;html&quot;&gt;
+        &lt;content type="html"&gt;
             &lt;![CDATA[I am not writing the article.
                      The example is long enough as is ;).]]&gt;
         &lt;/content&gt;
     &lt;/entry&gt;
 &lt;/feed&gt;</code></pre>
+
 <p>This is a perfectly valid Atom 1.0 example. It should be noted that omitting an
 obligatory point of data, such as a title, will trigger an exception when
 rendering as Atom 1.0. This will differ for RSS 2.0, since a title may be

@@ -441,7 +441,7 @@ object. In the event of any errors, it is strongly recommended to attempt the
 operation for failed Hub Endpoints at least once more at a future time. This may
 require the use of either a scheduled task for this purpose or a job queue,
 though such extra steps are optional.</p>
-<pre class=codehilite><code class=language-php>use Laminas\Feed\PubSubHubbub\Publisher;
+<pre class="highlight"><code class="language-php">use Laminas\Feed\PubSubHubbub\Publisher;
 
 $publisher = new Publisher;
 $publisher-&gt;addHubUrls([
@@ -464,6 +464,7 @@ if (! $publisher-&gt;isSuccess()) {
 }
 
 // reschedule notifications for the failed Hubs in $failedHubs</code></pre>
+
 <p>If you prefer having more concrete control over the Publisher, the methods
 <code>addHubUrls()</code> and <code>addUpdatedTopicUrls()</code> pass each array value to the singular
 <code>addHubUrl()</code> and <code>addUpdatedTopicUrl()</code> public methods. There are also matching
@@ -533,7 +534,7 @@ automatic subscription refreshing, and rules out Hub errors for additional
 redundancy.</p>
 <p>With the relevant information to hand, a subscription can be attempted as
 demonstrated below:</p>
-<pre class=codehilite><code class=language-php>use Laminas\Feed\PubSubHubbub\Model\Subscription;
+<pre class="highlight"><code class="language-php">use Laminas\Feed\PubSubHubbub\Model\Subscription;
 use Laminas\Feed\PubSubHubbub\Subscriber;
 
 $storage    = new Subscription;
@@ -543,6 +544,7 @@ $subscriber-&gt;addHubUrl('http://hubbub.example.com');
 $subscriber-&gt;setTopicUrl('http://www.example.net/rss.xml');
 $subscriber-&gt;setCallbackUrl('http://www.mydomain.com/hubbub/callback');
 $subscriber-&gt;subscribeAll();</code></pre>
+
 <p>In order to store subscriptions and offer access to this data for general use,
 the component requires a database (a schema is provided later in this section).
 By default, it is assumed the table name is "subscription", and it utilises
@@ -558,7 +560,7 @@ as the resulting class implements the interface
 <code>Laminas\Feed\PubSubHubbub\Model\SubscriptionInterface</code>.</p>
 <p>An example schema (MySQL) for a subscription table accessible by the provided
 model may look similar to:</p>
-<pre class=codehilite><code class=language-sql>CREATE TABLE IF NOT EXISTS `subscription` (
+<pre class="highlight"><code class="language-sql">CREATE TABLE IF NOT EXISTS `subscription` (
   `id` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `topic_url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `hub_url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -570,6 +572,7 @@ model may look similar to:</p>
   `subscription_state` varchar(12) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;</code></pre>
+
 <p>Behind the scenes, the Subscriber above will send a request to the Hub endpoint
 containing the following parameters (based on the previous example):</p>
 <div class="table-responsive"><table>
@@ -657,7 +660,7 @@ the callback URL should trigger the execution of an instance of
 <code>Laminas\Feed\PubSubHubbub\Subscriber\Callback</code> to handle the request.</p>
 <p>The <code>Callback</code> class should be configured to use the same storage medium as the
 <code>Subscriber</code> class. The bulk of the work is handled internal to these classes.</p>
-<pre class=codehilite><code class=language-php>use Laminas\Feed\PubSubHubbub\Model\Subscription;
+<pre class="highlight"><code class="language-php">use Laminas\Feed\PubSubHubbub\Model\Subscription;
 use Laminas\Feed\PubSubHubbub\Subscriber\Callback;
 
 $storage = new Subscription();
@@ -678,6 +681,7 @@ if ($callback-&gt;hasFeedUpdate()) {
      * Process the feed update asynchronously to avoid a Hub timeout.
      */
 }</code></pre>
+
 <blockquote>
 <h3>Query and body parameters</h3>
 <p>It should be noted that <code>Laminas\Feed\PubSubHubbub\Subscriber\Callback</code> may
@@ -722,7 +726,7 @@ it also requires manually defining a route for this purpose. This is achieved by
 called the method <code>Laminas\Feed\PubSubHubbub\Subscriber\Callback::setSubscriptionKey()</code>
 with the parameter being the key value available from the router. The example
 below demonstrates this using a laminas-mvc controller.</p>
-<pre class=codehilite><code class=language-php>use Laminas\Feed\PubSubHubbub\Model\Subscription;
+<pre class="highlight"><code class="language-php">use Laminas\Feed\PubSubHubbub\Model\Subscription;
 use Laminas\Feed\PubSubHubbub\Subscriber\Callback;
 use Laminas\Mvc\Controller\AbstractActionController;
 
@@ -758,9 +762,10 @@ class CallbackController extends AbstractActionController
         }
     }
 }</code></pre>
+
 <p>The example below illustrates adding a route mapping the path segment to a route
 parameter, using laminas-mvc:</p>
-<pre class=codehilite><code class=language-php>use Laminas\Mvc\Router\Http\Segment as SegmentRoute;;
+<pre class="highlight"><code class="language-php">use Laminas\Mvc\Router\Http\Segment as SegmentRoute;;
 
 // Route defininition for enabling appending of a PuSH Subscription's lookup key
 $route = SegmentRoute::factory([

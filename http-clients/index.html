@@ -383,7 +383,7 @@ component for implementing this behavior.</p>
 <h2 id="clientinterface-and-headerawareclientinterface">ClientInterface and HeaderAwareClientInterface</h2>
 <p>First, we define two interfaces for clients,
 <code>Laminas\Feed\Reader\Http\ClientInterface</code> and <code>HeaderAwareClientInterface</code>:</p>
-<pre class=codehilite><code class=language-php>namespace Laminas\Feed\Reader\Http;
+<pre class="highlight"><code class="language-php">namespace Laminas\Feed\Reader\Http;
 
 interface ClientInterface
 {
@@ -407,27 +407,30 @@ interface HeaderAwareClientInterface extends ClientInterface
      */
     public function get($url, array $headers = []);
 }</code></pre>
+
 <p>The first is header-agnostic, and assumes that the client will simply perform an
 HTTP GET request. The second allows providing headers to the client; typically,
 these are used for HTTP caching headers. <code>$headers</code> must be in the following
 structure:</p>
-<pre class=codehilite><code class=language-php>$headers = [
+<pre class="highlight"><code class="language-php">$headers = [
     'X-Header-Name' =&gt; [
         'header',
         'values',
     ],
 ];</code></pre>
+
 <p>i.e., each key is a header name, and each value is an array of values for that
 header. If the header represents only a single value, it should be an array with
 that value:</p>
-<pre class=codehilite><code class=language-php>$headers = [
+<pre class="highlight"><code class="language-php">$headers = [
     'Accept' =&gt; [ 'application/rss+xml' ],
 ];</code></pre>
+
 <p>A call to <code>get()</code> should yield a <em>response</em>.</p>
 <h2 id="responseinterface-and-headerawareresponseinterface">ResponseInterface and HeaderAwareResponseInterface</h2>
 <p>Responses are modeled using <code>Laminas\Feed\Reader\Http\ResponseInterface</code> and
 <code>HeaderAwareResponseInterface</code>:</p>
-<pre class=codehilite><code class=language-php>namespace Laminas\Feed\Reader\Http;
+<pre class="highlight"><code class="language-php">namespace Laminas\Feed\Reader\Http;
 
 class ResponseInterface
 {
@@ -459,6 +462,7 @@ class HeaderAwareResponseInterface extends ResponseInterface
      * @return string
     public function getHeaderLine($name, $default = null);
 }</code></pre>
+
 <p>Internally, <code>Reader</code> will typehint against <code>ClientInterface</code> for the bulk of
 operations. In some cases, however, certain capabilities are only possible if
 the response can provide headers (e.g., for caching); in such cases, it will
@@ -468,7 +472,7 @@ check the instance against <code>HeaderAwareResponseInterface</code>, and only c
 <p>laminas-feed ships with a generic <code>ResponseInterface</code> implementation,
 <code>Laminas\Feed\Http\Response</code>. It implements <code>HeaderAwareResponseInterface</code>, and
 defines the following constructor:</p>
-<pre class=codehilite><code class=language-php>namespace Laminas\Feed\Reader\Http;
+<pre class="highlight"><code class="language-php">namespace Laminas\Feed\Reader\Http;
 
 class Response implements HeaderAwareResponseInterface
 {
@@ -479,11 +483,12 @@ class Response implements HeaderAwareResponseInterface
      */
     public function __construct($statusCode, $body, array $headers = []);
 }</code></pre>
+
 <h2 id="psr-7-response">PSR-7 Response</h2>
 <p><a href="http://www.php-fig.org/psr/psr-7/">PSR-7</a> defines a set of HTTP message
 interfaces, but not a client interface. To facilitate wrapping an HTTP client
 that uses PSR-7 messages, we provide <code>Laminas\Feed\Reader\Psr7ResponseDecorator</code>:</p>
-<pre class=codehilite><code class=language-php>namespace Laminas\Feed\Reader\Http;
+<pre class="highlight"><code class="language-php">namespace Laminas\Feed\Reader\Http;
 
 use Psr\Http\Message\ResponseInterface as PsrResponseInterface;
 
@@ -499,15 +504,17 @@ class Psr7ResponseDecorator implements HeaderAwareResponseInterface
      */
     public function getDecoratedResponse();
 }</code></pre>
+
 <p>Clients can then take the PSR-7 response they receive, pass it to the decorator,
 and return the decorator.</p>
 <p>To use the PSR-7 response, you will need to add the PSR-7 interfaces to your
 application, if they are not already installed by the client of your choice:</p>
-<pre class=codehilite><code class=language-bash>$ composer require psr/http-message</code></pre>
+<pre class="highlight"><code class="language-bash">$ composer require psr/http-message</code></pre>
+
 <h2 id="laminas-http">laminas-http</h2>
 <p>We also provide a laminas-http client decorator,
 <code>Laminas\Feed\Reader\Http\LaminasHttpClientDecorator</code>:</p>
-<pre class=codehilite><code class=language-php>namespace Laminas\Feed\Reader\Http;
+<pre class="highlight"><code class="language-php">namespace Laminas\Feed\Reader\Http;
 
 use Laminas\Http\Client as HttpClient;
 
@@ -523,11 +530,13 @@ class LaminasHttpClientDecorator implements HeaderAwareClientInterface
      */
     public function getDecoratedClient();
 }</code></pre>
+
 <p>Its <code>get()</code> implementation returns a <code>Response</code> instance seeded from the
 laminas-http response returned, including status, body, and headers.</p>
 <p>laminas-http is the default implementation assumed by <code>Laminas\Feed\Reader\Reader</code>,
 but <em>is not installed by default</em>. You may install it using composer:</p>
-<pre class=codehilite><code class=language-bash>$ composer require laminas/laminas-http</code></pre>
+<pre class="highlight"><code class="language-bash">$ composer require laminas/laminas-http</code></pre>
+
 <h2 id="providing-a-client-to-reader">Providing a client to Reader</h2>
 <p>By default, <code>Laminas\Feed\Reader\Reader</code> will lazy load a laminas-http client. If you
 have not installed laminas-http, however, PHP will raise an error indicating the
@@ -543,10 +552,11 @@ instance of that implementation. Once you do, you can use the static method
 <code>setHttpClient()</code> to inject it.</p>
 <p>As an example, let's say you've created a PSR-7-based implementation named
 <code>My\Http\Psr7FeedClient</code>. You could then do the following:</p>
-<pre class=codehilite><code class=language-php>use My\Http\Psr7FeedClient;
+<pre class="highlight"><code class="language-php">use My\Http\Psr7FeedClient;
 use Laminas\Feed\Reader\Reader;
 
 Reader::setHttpClient(new Psr7FeedClient());</code></pre>
+
 <p>Your client will then be used for all <code>import()</code> and <code>findFeedLinks()</code>
 operations.</p>
 

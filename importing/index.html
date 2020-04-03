@@ -353,7 +353,8 @@
 <p><code>Laminas\Feed</code> enables developers to retrieve feeds via <code>Laminas\Feader\Reader</code>. If
 you know the URI of a feed, use the <code>Laminas\Feed\Reader\Reader::import()</code> method
 to consume it:</p>
-<pre class=codehilite><code class=language-php>$feed = Laminas\Feed\Reader\Reader::import('http://feeds.example.com/feedName');</code></pre>
+<pre class="highlight"><code class="language-php">$feed = Laminas\Feed\Reader\Reader::import('http://feeds.example.com/feedName');</code></pre>
+
 <blockquote>
 <h3>Importing requires an HTTP client</h3>
 <p>To import a feed, you will need to have an <a href="../http-clients/">HTTP client</a>
@@ -363,11 +364,12 @@ client. See the <a href="../http-clients/#providing-a-client-to-reader">section 
 </blockquote>
 <p>You can also use <code>Laminas\Feed\Reader\Reader</code> to fetch the contents of a feed from
 a file or the contents of a PHP string variable:</p>
-<pre class=codehilite><code class=language-php>// importing a feed from a text file
+<pre class="highlight"><code class="language-php">// importing a feed from a text file
 $feedFromFile = Laminas\Feed\Reader\Reader::importFile('feed.xml');
 
 // importing a feed from a PHP string variable
 $feedFromPHP = Laminas\Feed\Reader\Reader::importString($feedString);</code></pre>
+
 <p>In each of the examples above, an object of a class that extends
 <code>Laminas\Feed\Reader\Feed\AbstractFeed</code> is returned upon success, depending on the
 type of the feed. If an RSS feed were retrieved via one of the import methods
@@ -379,7 +381,7 @@ unreadable or malformed feed.</p>
 <h2 id="dumping-the-contents-of-a-feed">Dumping the contents of a feed</h2>
 <p>To dump the contents of a <code>Laminas\Feed\Reader\Feed\AbstractFeed</code> instance, you may
 use the <code>saveXml()</code> method.</p>
-<pre class=codehilite><code class=language-php>assert($feed instanceof Laminas\Feed\Reader\Feed\AbstractFeed);
+<pre class="highlight"><code class="language-php">assert($feed instanceof Laminas\Feed\Reader\Feed\AbstractFeed);
 
 // dump the feed to standard output
 print $feed-&gt;saveXml();</code></pre>
