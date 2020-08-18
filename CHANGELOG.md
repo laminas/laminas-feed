@@ -24,7 +24,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 - Nothing.
 
-## 2.12.3 - TBD
+## 2.12.3 - 2020-08-18
 
 ### Added
 
@@ -44,7 +44,8 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- Nothing.
+- [#21](https://github.com/laminas/laminas-feed/pull/21) fixes the writer extension
+  of iTunes to support valid values for the `itunes:explicit` element.
 
 ## 2.12.2 - 2020-03-29
 
