@@ -22,7 +22,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [laminas/laminas-feed#20](https://github.com/laminas/laminas-feed/issues/20) provides a fix for the writer extension
+- [#21](https://github.com/laminas/laminas-feed/pull/21) fixes the writer extension
   of iTunes to support valid values for the `itunes:explicit` element.
 
 ## 2.12.2 - 2020-03-29
