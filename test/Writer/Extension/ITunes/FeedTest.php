@@ -161,25 +161,45 @@ class FeedTest extends TestCase
         $feed->setItunesDuration('23:234:45');
     }
 
-    public function testSetExplicitToYes()
+    /**
+     * @dataProvider dataProviderForSetExplicit
+     *
+     * @param string|bool $value
+     * @param string $result
+     */
+    public function testSetExplicit($value, $result)
     {
         $feed = new Writer\Feed();
-        $feed->setItunesExplicit('yes');
-        $this->assertEquals('yes', $feed->getItunesExplicit());
+        $feed->setItunesExplicit($value);
+        $this->assertEquals($result, $feed->getItunesExplicit());
     }
 
-    public function testSetExplicitToNo()
+    public function dataProviderForSetExplicit()
     {
-        $feed = new Writer\Feed();
-        $feed->setItunesExplicit('no');
-        $this->assertEquals('no', $feed->getItunesExplicit());
-    }
-
-    public function testSetExplicitToClean()
-    {
-        $feed = new Writer\Feed();
-        $feed->setItunesExplicit('clean');
-        $this->assertEquals('clean', $feed->getItunesExplicit());
+        return [
+            // Current behaviour
+            [
+                true,
+                'true',
+            ],
+            [
+                false,
+                'false',
+            ],
+            // Old behaviour
+            [
+                'yes',
+                'true',
+            ],
+            [
+                'no',
+                'false',
+            ],
+            [
+                'clean',
+                'false',
+            ],
+        ];
     }
 
     public function testSetExplicitThrowsExceptionOnUnknownTerm()

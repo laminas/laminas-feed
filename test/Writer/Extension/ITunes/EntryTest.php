@@ -108,25 +108,45 @@ class EntryTest extends TestCase
         $entry->setItunesDuration('23:234:45');
     }
 
-    public function testSetExplicitToYes()
+    /**
+     * @dataProvider dataProviderForSetExplicit
+     *
+     * @param string|bool $value
+     * @param string $result
+     */
+    public function testSetExplicit($value, $result)
     {
         $entry = new Writer\Entry();
-        $entry->setItunesExplicit('yes');
-        $this->assertEquals('yes', $entry->getItunesExplicit());
+        $entry->setItunesExplicit($value);
+        $this->assertEquals($result, $entry->getItunesExplicit());
     }
 
-    public function testSetExplicitToNo()
+    public function dataProviderForSetExplicit()
     {
-        $entry = new Writer\Entry();
-        $entry->setItunesExplicit('no');
-        $this->assertEquals('no', $entry->getItunesExplicit());
-    }
-
-    public function testSetExplicitToClean()
-    {
-        $entry = new Writer\Entry();
-        $entry->setItunesExplicit('clean');
-        $this->assertEquals('clean', $entry->getItunesExplicit());
+        return [
+            // Current behaviour
+            [
+                true,
+                'true',
+            ],
+            [
+                false,
+                'false',
+            ],
+            // Old behaviour
+            [
+                'yes',
+                'true',
+            ],
+            [
+                'no',
+                'false',
+            ],
+            [
+                'clean',
+                'false',
+            ],
+        ];
     }
 
     public function testSetExplicitThrowsExceptionOnUnknownTerm()
