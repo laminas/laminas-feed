@@ -315,7 +315,9 @@ class Reader implements ReaderImportInterface
         }
 
         $libxmlErrflag = libxml_use_internal_errors(true);
-        $oldValue      = libxml_disable_entity_loader(true);
+        if (LIBXML_VERSION < 20900) {
+            $oldValue = libxml_disable_entity_loader(true);
+        }
         $dom           = new DOMDocument();
         $status        = $dom->loadXML(trim($string));
         foreach ($dom->childNodes as $child) {
@@ -325,7 +327,9 @@ class Reader implements ReaderImportInterface
                 );
             }
         }
-        libxml_disable_entity_loader($oldValue);
+        if (LIBXML_VERSION < 20900) {
+            libxml_disable_entity_loader($oldValue);
+        }
         libxml_use_internal_errors($libxmlErrflag);
 
         if (! $status) {
@@ -395,10 +399,14 @@ class Reader implements ReaderImportInterface
         }
         $responseHtml  = $response->getBody();
         $libxmlErrflag = libxml_use_internal_errors(true);
-        $oldValue      = libxml_disable_entity_loader(true);
+        if (LIBXML_VERSION < 20900) {
+            $oldValue = libxml_disable_entity_loader(true);
+        }
         $dom           = new DOMDocument();
         $status        = $dom->loadHTML(trim($responseHtml));
-        libxml_disable_entity_loader($oldValue);
+        if (LIBXML_VERSION < 20900) {
+            libxml_disable_entity_loader($oldValue);
+        }
         libxml_use_internal_errors($libxmlErrflag);
         if (! $status) {
             // Build error message
@@ -435,9 +443,11 @@ class Reader implements ReaderImportInterface
         } elseif (is_string($feed) && ! empty($feed)) {
             ErrorHandler::start(E_NOTICE | E_WARNING);
             ini_set('track_errors', 1);
-            $oldValue = libxml_disable_entity_loader(true);
-            $dom      = new DOMDocument();
-            $status   = $dom->loadXML($feed);
+            if (LIBXML_VERSION < 20900) {
+                $oldValue = libxml_disable_entity_loader(true);
+            }
+            $dom    = new DOMDocument();
+            $status = $dom->loadXML($feed);
             foreach ($dom->childNodes as $child) {
                 if ($child->nodeType === XML_DOCUMENT_TYPE_NODE) {
                     throw new Exception\InvalidArgumentException(
@@ -445,7 +455,9 @@ class Reader implements ReaderImportInterface
                     );
                 }
             }
-            libxml_disable_entity_loader($oldValue);
+            if (LIBXML_VERSION < 20900) {
+                libxml_disable_entity_loader($oldValue);
+            }
             ini_restore('track_errors');
             ErrorHandler::stop();
             if (! $status) {
