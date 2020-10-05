@@ -62,7 +62,7 @@ class AtomStandaloneEntryTest extends TestCase
         ];
     }
 
-    public function testReaderImportOfAtomEntryDocumentReturnsEntryClass()
+    public function testReaderImportOfAtomEntryDocumentReturnsEntryClass(): void
     {
         $object = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/id/atom10.xml')
@@ -74,8 +74,10 @@ class AtomStandaloneEntryTest extends TestCase
      * Get Id (Unencoded Text)
      *
      * @group LaminasR002
+     *
+     * @return void
      */
-    public function testGetsIdFromAtom10()
+    public function testGetsIdFromAtom10(): void
     {
         $entry = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/id/atom10.xml')
@@ -87,8 +89,10 @@ class AtomStandaloneEntryTest extends TestCase
      * Get creation date (Unencoded Text)
      *
      * @group LaminasR002
+     *
+     * @return void
      */
-    public function testGetsDateCreatedFromAtom10()
+    public function testGetsDateCreatedFromAtom10(): void
     {
         $entry = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/datecreated/atom10.xml')
@@ -101,8 +105,10 @@ class AtomStandaloneEntryTest extends TestCase
      * Get modification date (Unencoded Text)
      *
      * @group LaminasR002
+     *
+     * @return void
      */
-    public function testGetsDateModifiedFromAtom10()
+    public function testGetsDateModifiedFromAtom10(): void
     {
         $entry = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/datemodified/atom10.xml')
@@ -115,8 +121,10 @@ class AtomStandaloneEntryTest extends TestCase
      * Get Title (Unencoded Text)
      *
      * @group LaminasR002
+     *
+     * @return void
      */
-    public function testGetsTitleFromAtom10()
+    public function testGetsTitleFromAtom10(): void
     {
         $entry = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/title/atom10.xml')
@@ -128,8 +136,10 @@ class AtomStandaloneEntryTest extends TestCase
      * Get Authors (Unencoded Text)
      *
      * @group LaminasR002
+     *
+     * @return void
      */
-    public function testGetsAuthorsFromAtom10()
+    public function testGetsAuthorsFromAtom10(): void
     {
         $entry = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/author/atom10.xml')
@@ -151,8 +161,10 @@ class AtomStandaloneEntryTest extends TestCase
      * Get Author (Unencoded Text)
      *
      * @group LaminasR002
+     *
+     * @return void
      */
-    public function testGetsAuthorFromAtom10()
+    public function testGetsAuthorFromAtom10(): void
     {
         $entry = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/author/atom10.xml')
@@ -167,8 +179,10 @@ class AtomStandaloneEntryTest extends TestCase
      * Get Description (Unencoded Text)
      *
      * @group LaminasR002
+     *
+     * @return void
      */
-    public function testGetsDescriptionFromAtom10()
+    public function testGetsDescriptionFromAtom10(): void
     {
         $entry = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/description/atom10.xml')
@@ -180,8 +194,10 @@ class AtomStandaloneEntryTest extends TestCase
      * Get enclosure
      *
      * @group LaminasR002
+     *
+     * @return void
      */
-    public function testGetsEnclosureFromAtom10()
+    public function testGetsEnclosureFromAtom10(): void
     {
         $entry = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/enclosure/atom10.xml')
@@ -199,8 +215,10 @@ class AtomStandaloneEntryTest extends TestCase
      * TEXT
      *
      * @group LaminasRATOMCONTENT
+     *
+     * @return void
      */
-    public function testGetsContentFromAtom10()
+    public function testGetsContentFromAtom10(): void
     {
         $entry = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/content/atom10.xml')
@@ -212,8 +230,10 @@ class AtomStandaloneEntryTest extends TestCase
      * HTML Escaped
      *
      * @group LaminasRATOMCONTENT
+     *
+     * @return void
      */
-    public function testGetsContentFromAtom10Html()
+    public function testGetsContentFromAtom10Html(): void
     {
         $entry = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/content/atom10_Html.xml')
@@ -225,8 +245,10 @@ class AtomStandaloneEntryTest extends TestCase
      * HTML CDATA Escaped
      *
      * @group LaminasRATOMCONTENT
+     *
+     * @return void
      */
-    public function testGetsContentFromAtom10HtmlCdata()
+    public function testGetsContentFromAtom10HtmlCdata(): void
     {
         $entry = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/content/atom10_HtmlCdata.xml')
@@ -238,8 +260,10 @@ class AtomStandaloneEntryTest extends TestCase
      * XHTML
      *
      * @group LaminasRATOMCONTENT
+     *
+     * @return void
      */
-    public function testGetsContentFromAtom10XhtmlNamespaced()
+    public function testGetsContentFromAtom10XhtmlNamespaced(): void
     {
         $entry = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/content/atom10_Xhtml.xml')
@@ -251,8 +275,10 @@ class AtomStandaloneEntryTest extends TestCase
      * Get Link (Unencoded Text)
      *
      * @group LaminasR002
+     *
+     * @return void
      */
-    public function testGetsLinkFromAtom10()
+    public function testGetsLinkFromAtom10(): void
     {
         $entry = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/link/atom10.xml')
@@ -264,8 +290,10 @@ class AtomStandaloneEntryTest extends TestCase
      * Get Comment HTML Link
      *
      * @group LaminasR002
+     *
+     * @return void
      */
-    public function testGetsCommentLinkFromAtom10()
+    public function testGetsCommentLinkFromAtom10(): void
     {
         $entry = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/commentlink/atom10.xml')
@@ -277,8 +305,10 @@ class AtomStandaloneEntryTest extends TestCase
      * Get category data
      *
      * @group LaminasR002
+     *
+     * @return void
      */
-    public function testGetsCategoriesFromAtom10()
+    public function testGetsCategoriesFromAtom10(): void
     {
         $entry = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/category/atom10.xml')

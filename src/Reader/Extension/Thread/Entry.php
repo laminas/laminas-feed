@@ -15,9 +15,9 @@ class Entry extends Extension\AbstractEntry
     /**
      * Get the "in-reply-to" value
      *
-     * @return string
+     * @return void
      */
-    public function getInReplyTo()
+    public function getInReplyTo(): void
     {
         // TODO: to be implemented
     }

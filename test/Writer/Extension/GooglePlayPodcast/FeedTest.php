@@ -14,14 +14,14 @@ use PHPUnit\Framework\TestCase;
 
 class FeedTest extends TestCase
 {
-    public function testSetBlock()
+    public function testSetBlock(): void
     {
         $feed = new Writer\Feed();
         $feed->setPlayPodcastBlock('yes');
         $this->assertEquals('yes', $feed->getPlayPodcastBlock());
     }
 
-    public function testSetBlockThrowsExceptionOnNonAlphaValue()
+    public function testSetBlockThrowsExceptionOnNonAlphaValue(): void
     {
         $feed = new Writer\Feed();
 
@@ -29,7 +29,7 @@ class FeedTest extends TestCase
         $feed->setPlayPodcastBlock('123');
     }
 
-    public function testSetBlockThrowsExceptionIfValueGreaterThan255CharsLength()
+    public function testSetBlockThrowsExceptionIfValueGreaterThan255CharsLength(): void
     {
         $feed = new Writer\Feed();
 
@@ -37,21 +37,21 @@ class FeedTest extends TestCase
         $feed->setPlayPodcastBlock(str_repeat('a', 256));
     }
 
-    public function testAddAuthors()
+    public function testAddAuthors(): void
     {
         $feed = new Writer\Feed();
         $feed->addPlayPodcastAuthors(['joe', 'jane']);
         $this->assertEquals(['joe', 'jane'], $feed->getPlayPodcastAuthors());
     }
 
-    public function testAddAuthor()
+    public function testAddAuthor(): void
     {
         $feed = new Writer\Feed();
         $feed->addPlayPodcastAuthor('joe');
         $this->assertEquals(['joe'], $feed->getPlayPodcastAuthors());
     }
 
-    public function testAddAuthorThrowsExceptionIfValueGreaterThan255CharsLength()
+    public function testAddAuthorThrowsExceptionIfValueGreaterThan255CharsLength(): void
     {
         $feed = new Writer\Feed();
 
@@ -59,7 +59,7 @@ class FeedTest extends TestCase
         $feed->addPlayPodcastAuthor(str_repeat('a', 256));
     }
 
-    public function testSetCategories()
+    public function testSetCategories(): void
     {
         $feed = new Writer\Feed();
         $cats = [
@@ -70,7 +70,7 @@ class FeedTest extends TestCase
         $this->assertEquals($cats, $feed->getPlayPodcastCategories());
     }
 
-    public function testSetCategoriesThrowsExceptionIfAnyCatNameGreaterThan255CharsLength()
+    public function testSetCategoriesThrowsExceptionIfAnyCatNameGreaterThan255CharsLength(): void
     {
         $feed = new Writer\Feed();
         $cats = [
@@ -82,21 +82,21 @@ class FeedTest extends TestCase
         $feed->setPlayPodcastCategories($cats);
     }
 
-    public function testSetImageAsPngFile()
+    public function testSetImageAsPngFile(): void
     {
         $feed = new Writer\Feed();
         $feed->setPlayPodcastImage('http://www.example.com/image.png');
         $this->assertEquals('http://www.example.com/image.png', $feed->getPlayPodcastImage());
     }
 
-    public function testSetImageAsJpgFile()
+    public function testSetImageAsJpgFile(): void
     {
         $feed = new Writer\Feed();
         $feed->setPlayPodcastImage('http://www.example.com/image.jpg');
         $this->assertEquals('http://www.example.com/image.jpg', $feed->getPlayPodcastImage());
     }
 
-    public function testSetImageThrowsExceptionOnInvalidUri()
+    public function testSetImageThrowsExceptionOnInvalidUri(): void
     {
         $feed = new Writer\Feed();
 
@@ -104,28 +104,28 @@ class FeedTest extends TestCase
         $feed->setPlayPodcastImage('http://');
     }
 
-    public function testSetExplicitToYes()
+    public function testSetExplicitToYes(): void
     {
         $feed = new Writer\Feed();
         $feed->setPlayPodcastExplicit('yes');
         $this->assertEquals('yes', $feed->getPlayPodcastExplicit());
     }
 
-    public function testSetExplicitToNo()
+    public function testSetExplicitToNo(): void
     {
         $feed = new Writer\Feed();
         $feed->setPlayPodcastExplicit('no');
         $this->assertEquals('no', $feed->getPlayPodcastExplicit());
     }
 
-    public function testSetExplicitToClean()
+    public function testSetExplicitToClean(): void
     {
         $feed = new Writer\Feed();
         $feed->setPlayPodcastExplicit('clean');
         $this->assertEquals('clean', $feed->getPlayPodcastExplicit());
     }
 
-    public function testSetExplicitThrowsExceptionOnUnknownTerm()
+    public function testSetExplicitThrowsExceptionOnUnknownTerm(): void
     {
         $feed = new Writer\Feed();
 
@@ -133,14 +133,14 @@ class FeedTest extends TestCase
         $feed->setPlayPodcastExplicit('abc');
     }
 
-    public function testSetDescription()
+    public function testSetDescription(): void
     {
         $feed = new Writer\Feed();
         $feed->setPlayPodcastDescription('abc');
         $this->assertEquals('abc', $feed->getPlayPodcastDescription());
     }
 
-    public function testSetDescriptionThrowsExceptionWhenValueExceeds4000Chars()
+    public function testSetDescriptionThrowsExceptionWhenValueExceeds4000Chars(): void
     {
         $feed = new Writer\Feed();
 
@@ -148,7 +148,12 @@ class FeedTest extends TestCase
         $feed->setPlayPodcastDescription(str_repeat('a', 4001));
     }
 
-    public function invalidImageUrls()
+    /**
+     * @return (\stdClass|bool|float|int|null|string|string[])[][]
+     *
+     * @psalm-return array{null: array{0: null}, true: array{0: true}, false: array{0: false}, zero: array{0: int}, int: array{0: int}, zero-float: array{0: float}, float: array{0: float}, string: array{0: string}, array: array{0: array{0: string}}, object: array{0: \stdClass}}
+     */
+    public function invalidImageUrls(): array
     {
         return [
             'null'       => [null],
@@ -168,8 +173,10 @@ class FeedTest extends TestCase
      * @dataProvider invalidImageUrls
      *
      * @param mixed $url
+     *
+     * @return void
      */
-    public function testSetPlayPodcastImageRaisesExceptionForInvalidUrl($url)
+    public function testSetPlayPodcastImageRaisesExceptionForInvalidUrl($url): void
     {
         $feed = new Writer\Feed();
 
@@ -177,7 +184,12 @@ class FeedTest extends TestCase
         $feed->setPlayPodcastImage($url);
     }
 
-    public function validImageUrls()
+    /**
+     * @return string[][]
+     *
+     * @psalm-return array{jpg: array{0: string}, png: array{0: string}}
+     */
+    public function validImageUrls(): array
     {
         return [
             'jpg' => ['https://example.com/image.jpg'],
@@ -189,8 +201,10 @@ class FeedTest extends TestCase
      * @dataProvider validImageUrls
      *
      * @param string $url
+     *
+     * @return void
      */
-    public function testSetPlayPodcastImageSetsInternalDataWithValidUrl($url)
+    public function testSetPlayPodcastImageSetsInternalDataWithValidUrl($url): void
     {
         $feed = new Writer\Feed();
         $feed->setPlayPodcastImage($url);

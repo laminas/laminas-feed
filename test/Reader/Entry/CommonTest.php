@@ -32,8 +32,10 @@ class CommonTest extends TestCase
 
     /**
      * Check DOM Retrieval and Information Methods
+     *
+     * @return void
      */
-    public function testGetsDomDocumentObject()
+    public function testGetsDomDocumentObject(): void
     {
         $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/atom.xml')
@@ -42,7 +44,7 @@ class CommonTest extends TestCase
         $this->assertInstanceOf(DOMDocument::class, $entry->getDomDocument());
     }
 
-    public function testGetsDomXpathObject()
+    public function testGetsDomXpathObject(): void
     {
         $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/atom.xml')
@@ -51,7 +53,7 @@ class CommonTest extends TestCase
         $this->assertInstanceOf(DOMXPath::class, $entry->getXpath());
     }
 
-    public function testGetsXpathPrefixString()
+    public function testGetsXpathPrefixString(): void
     {
         $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/atom.xml')
@@ -60,7 +62,7 @@ class CommonTest extends TestCase
         $this->assertEquals('//atom:entry[1]', $entry->getXpathPrefix());
     }
 
-    public function testGetsDomElementObject()
+    public function testGetsDomElementObject(): void
     {
         $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/atom.xml')
@@ -69,7 +71,7 @@ class CommonTest extends TestCase
         $this->assertInstanceOf(DOMElement::class, $entry->getElement());
     }
 
-    public function testSaveXmlOutputsXmlStringForEntry()
+    public function testSaveXmlOutputsXmlStringForEntry(): void
     {
         $feed     = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/atom.xml')
@@ -80,7 +82,7 @@ class CommonTest extends TestCase
         $this->assertEquals($expected, $entry->saveXml());
     }
 
-    public function testGetsNamedExtension()
+    public function testGetsNamedExtension(): void
     {
         $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/atom.xml')
@@ -89,7 +91,7 @@ class CommonTest extends TestCase
         $this->assertInstanceOf(Entry::class, $entry->getExtension('Atom'));
     }
 
-    public function testReturnsNullIfExtensionDoesNotExist()
+    public function testReturnsNullIfExtensionDoesNotExist(): void
     {
         $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/atom.xml')
@@ -100,8 +102,10 @@ class CommonTest extends TestCase
 
     /**
      * @group Laminas-8213
+     *
+     * @return void
      */
-    public function testReturnsEncodingOfFeed()
+    public function testReturnsEncodingOfFeed(): void
     {
         $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/atom.xml')
@@ -112,8 +116,10 @@ class CommonTest extends TestCase
 
     /**
      * @group Laminas-8213
+     *
+     * @return void
      */
-    public function testReturnsEncodingOfFeedAsUtf8IfUndefined()
+    public function testReturnsEncodingOfFeedAsUtf8IfUndefined(): void
     {
         $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/atom_noencodingdefined.xml')
@@ -124,8 +130,10 @@ class CommonTest extends TestCase
 
     /**
      * When not passing the optional argument type
+     *
+     * @return void
      */
-    public function testFeedEntryCanDetectFeedType()
+    public function testFeedEntryCanDetectFeedType(): void
     {
         $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/atom.xml')
@@ -140,8 +148,10 @@ class CommonTest extends TestCase
 
     /**
      * When passing a newly created DOMElement without any DOMDocument assigned
+     *
+     * @return void
      */
-    public function testFeedEntryCanSetAnyType()
+    public function testFeedEntryCanSetAnyType(): void
     {
         $feed       = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/atom.xml')

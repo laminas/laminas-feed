@@ -27,12 +27,17 @@ class StandaloneExtensionManagerTest extends TestCase
         $this->extensions = new StandaloneExtensionManager();
     }
 
-    public function testIsAnExtensionManagerImplementation()
+    public function testIsAnExtensionManagerImplementation(): void
     {
         $this->assertInstanceOf(ExtensionManagerInterface::class, $this->extensions);
     }
 
-    public function defaultPlugins()
+    /**
+     * @return \Laminas\Feed\Reader\Extension\Atom\Entry::class|\Laminas\Feed\Reader\Extension\Atom\Feed::class|\Laminas\Feed\Reader\Extension\Content\Entry::class|\Laminas\Feed\Reader\Extension\CreativeCommons\Entry::class|\Laminas\Feed\Reader\Extension\CreativeCommons\Feed::class|\Laminas\Feed\Reader\Extension\DublinCore\Entry::class|\Laminas\Feed\Reader\Extension\DublinCore\Feed::class|\Laminas\Feed\Reader\Extension\Podcast\Entry::class|\Laminas\Feed\Reader\Extension\Podcast\Feed::class|\Laminas\Feed\Reader\Extension\Slash\Entry::class|\Laminas\Feed\Reader\Extension\Syndication\Feed::class|\Laminas\Feed\Reader\Extension\Thread\Entry::class|\Laminas\Feed\Reader\Extension\WellFormedWeb\Entry::class|string[][]
+     *
+     * @psalm-return array{'Atom\\Entry': array{0: string, 1: \Laminas\Feed\Reader\Extension\Atom\Entry::class}, 'Atom\\Feed': array{0: string, 1: \Laminas\Feed\Reader\Extension\Atom\Feed::class}, 'Content\\Entry': array{0: string, 1: \Laminas\Feed\Reader\Extension\Content\Entry::class}, 'CreativeCommons\\Entry': array{0: string, 1: \Laminas\Feed\Reader\Extension\CreativeCommons\Entry::class}, 'CreativeCommons\\Feed': array{0: string, 1: \Laminas\Feed\Reader\Extension\CreativeCommons\Feed::class}, 'DublinCore\\Entry': array{0: string, 1: \Laminas\Feed\Reader\Extension\DublinCore\Entry::class}, 'DublinCore\\Feed': array{0: string, 1: \Laminas\Feed\Reader\Extension\DublinCore\Feed::class}, 'Podcast\\Entry': array{0: string, 1: \Laminas\Feed\Reader\Extension\Podcast\Entry::class}, 'Podcast\\Feed': array{0: string, 1: \Laminas\Feed\Reader\Extension\Podcast\Feed::class}, 'Slash\\Entry': array{0: string, 1: \Laminas\Feed\Reader\Extension\Slash\Entry::class}, 'Syndication\\Feed': array{0: string, 1: \Laminas\Feed\Reader\Extension\Syndication\Feed::class}, 'Thread\\Entry': array{0: string, 1: \Laminas\Feed\Reader\Extension\Thread\Entry::class}, 'WellFormedWeb\\Entry': array{0: string, 1: \Laminas\Feed\Reader\Extension\WellFormedWeb\Entry::class}}
+     */
+    public function defaultPlugins(): array
     {
         return [
             'Atom\Entry'            => ['Atom\Entry', Extension\Atom\Entry::class],
@@ -53,16 +58,20 @@ class StandaloneExtensionManagerTest extends TestCase
 
     /**
      * @dataProvider defaultPlugins
+     *
+     * @return void
      */
-    public function testHasAllDefaultPlugins($pluginName, $pluginClass)
+    public function testHasAllDefaultPlugins($pluginName, $pluginClass): void
     {
         $this->assertTrue($this->extensions->has($pluginName));
     }
 
     /**
      * @dataProvider defaultPlugins
+     *
+     * @return void
      */
-    public function testCanRetrieveDefaultPluginInstances($pluginName, $pluginClass)
+    public function testCanRetrieveDefaultPluginInstances($pluginName, $pluginClass): void
     {
         $extension = $this->extensions->get($pluginName);
         $this->assertInstanceOf($pluginClass, $extension);
@@ -70,8 +79,10 @@ class StandaloneExtensionManagerTest extends TestCase
 
     /**
      * @dataProvider defaultPlugins
+     *
+     * @return void
      */
-    public function testEachPluginRetrievalReturnsNewInstance($pluginName, $pluginClass)
+    public function testEachPluginRetrievalReturnsNewInstance($pluginName, $pluginClass): void
     {
         $extension = $this->extensions->get($pluginName);
         $this->assertInstanceOf($pluginClass, $extension);
@@ -81,7 +92,7 @@ class StandaloneExtensionManagerTest extends TestCase
         $this->assertNotSame($extension, $test);
     }
 
-    public function testAddAcceptsValidExtensionClasses()
+    public function testAddAcceptsValidExtensionClasses(): void
     {
         $this->extensions->add('Test/Entry', Extension\AbstractEntry::class);
         $this->assertTrue($this->extensions->has('Test/Entry'));
@@ -89,13 +100,13 @@ class StandaloneExtensionManagerTest extends TestCase
         $this->assertTrue($this->extensions->has('Test/Feed'));
     }
 
-    public function testAddRejectsInvalidExtensions()
+    public function testAddRejectsInvalidExtensions(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->extensions->add('Test/Entry', 'blah');
     }
 
-    public function testExtensionRemoval()
+    public function testExtensionRemoval(): void
     {
         $this->extensions->add('Test/Entry', Extension\AbstractEntry::class);
         $this->assertTrue($this->extensions->has('Test/Entry'));

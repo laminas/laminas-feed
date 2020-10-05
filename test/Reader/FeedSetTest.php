@@ -26,8 +26,10 @@ class FeedSetTest extends TestCase
 
     /**
      * @dataProvider linkAndUriProvider
+     *
+     * @return void
      */
-    public function testAbsolutiseUri($link, $uri, $result)
+    public function testAbsolutiseUri($link, $uri, $result): void
     {
         $method = new ReflectionMethod(FeedSet::class, 'absolutiseUri');
         $method->setAccessible(true);
@@ -35,7 +37,12 @@ class FeedSetTest extends TestCase
         $this->assertEquals($result, $method->invoke($this->feedSet, $link, $uri));
     }
 
-    public function linkAndUriProvider()
+    /**
+     * @return (null|string)[][]
+     *
+     * @psalm-return array{fully-qualified: array{0: string, 1: string, 2: string}, default-scheme: array{0: string, 1: string, 2: string}, relative-path: array{0: string, 1: string, 2: string}, relative-path-parent: array{0: string, 1: string, 2: string}, scheme-relative: array{0: string, 1: string, 2: string}, scheme-relative-default: array{0: string, 1: string, 2: string}, invalid-absolute: array{0: string, 1: string, 2: null}, invalid: array{0: string, 1: null, 2: null}}
+     */
+    public function linkAndUriProvider(): array
     {
         return [
             'fully-qualified'         => ['feed', 'http://example.com', 'http://example.com/feed'],

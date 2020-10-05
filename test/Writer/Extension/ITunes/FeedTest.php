@@ -18,14 +18,14 @@ use PHPUnit\Framework\TestCase;
  */
 class FeedTest extends TestCase
 {
-    public function testSetBlock()
+    public function testSetBlock(): void
     {
         $feed = new Writer\Feed();
         $feed->setItunesBlock('yes');
         $this->assertEquals('yes', $feed->getItunesBlock());
     }
 
-    public function testSetBlockThrowsExceptionOnNonAlphaValue()
+    public function testSetBlockThrowsExceptionOnNonAlphaValue(): void
     {
         $feed = new Writer\Feed();
 
@@ -33,7 +33,7 @@ class FeedTest extends TestCase
         $feed->setItunesBlock('123');
     }
 
-    public function testSetBlockThrowsExceptionIfValueGreaterThan255CharsLength()
+    public function testSetBlockThrowsExceptionIfValueGreaterThan255CharsLength(): void
     {
         $feed = new Writer\Feed();
 
@@ -41,21 +41,21 @@ class FeedTest extends TestCase
         $feed->setItunesBlock(str_repeat('a', 256));
     }
 
-    public function testAddAuthors()
+    public function testAddAuthors(): void
     {
         $feed = new Writer\Feed();
         $feed->addItunesAuthors(['joe', 'jane']);
         $this->assertEquals(['joe', 'jane'], $feed->getItunesAuthors());
     }
 
-    public function testAddAuthor()
+    public function testAddAuthor(): void
     {
         $feed = new Writer\Feed();
         $feed->addItunesAuthor('joe');
         $this->assertEquals(['joe'], $feed->getItunesAuthors());
     }
 
-    public function testAddAuthorThrowsExceptionIfValueGreaterThan255CharsLength()
+    public function testAddAuthorThrowsExceptionIfValueGreaterThan255CharsLength(): void
     {
         $feed = new Writer\Feed();
 
@@ -63,7 +63,7 @@ class FeedTest extends TestCase
         $feed->addItunesAuthor(str_repeat('a', 256));
     }
 
-    public function testSetCategories()
+    public function testSetCategories(): void
     {
         $feed = new Writer\Feed();
         $cats = [
@@ -74,7 +74,7 @@ class FeedTest extends TestCase
         $this->assertEquals($cats, $feed->getItunesCategories());
     }
 
-    public function testSetCategoriesThrowsExceptionIfAnyCatNameGreaterThan255CharsLength()
+    public function testSetCategoriesThrowsExceptionIfAnyCatNameGreaterThan255CharsLength(): void
     {
         $feed = new Writer\Feed();
         $cats = [
@@ -86,21 +86,21 @@ class FeedTest extends TestCase
         $feed->setItunesCategories($cats);
     }
 
-    public function testSetImageAsPngFile()
+    public function testSetImageAsPngFile(): void
     {
         $feed = new Writer\Feed();
         $feed->setItunesImage('http://www.example.com/image.png');
         $this->assertEquals('http://www.example.com/image.png', $feed->getItunesImage());
     }
 
-    public function testSetImageAsJpgFile()
+    public function testSetImageAsJpgFile(): void
     {
         $feed = new Writer\Feed();
         $feed->setItunesImage('http://www.example.com/image.jpg');
         $this->assertEquals('http://www.example.com/image.jpg', $feed->getItunesImage());
     }
 
-    public function testSetImageThrowsExceptionOnInvalidUri()
+    public function testSetImageThrowsExceptionOnInvalidUri(): void
     {
         $feed = new Writer\Feed();
 
@@ -108,7 +108,7 @@ class FeedTest extends TestCase
         $feed->setItunesImage('http://');
     }
 
-    public function testSetImageThrowsExceptionOnInvalidImageExtension()
+    public function testSetImageThrowsExceptionOnInvalidImageExtension(): void
     {
         $feed = new Writer\Feed();
 
@@ -116,28 +116,28 @@ class FeedTest extends TestCase
         $feed->setItunesImage('http://www.example.com/image.gif');
     }
 
-    public function testSetDurationAsSeconds()
+    public function testSetDurationAsSeconds(): void
     {
         $feed = new Writer\Feed();
         $feed->setItunesDuration(23);
         $this->assertEquals(23, $feed->getItunesDuration());
     }
 
-    public function testSetDurationAsMinutesAndSeconds()
+    public function testSetDurationAsMinutesAndSeconds(): void
     {
         $feed = new Writer\Feed();
         $feed->setItunesDuration('23:23');
         $this->assertEquals('23:23', $feed->getItunesDuration());
     }
 
-    public function testSetDurationAsHoursMinutesAndSeconds()
+    public function testSetDurationAsHoursMinutesAndSeconds(): void
     {
         $feed = new Writer\Feed();
         $feed->setItunesDuration('23:23:23');
         $this->assertEquals('23:23:23', $feed->getItunesDuration());
     }
 
-    public function testSetDurationThrowsExceptionOnUnknownFormat()
+    public function testSetDurationThrowsExceptionOnUnknownFormat(): void
     {
         $feed = new Writer\Feed();
 
@@ -145,7 +145,7 @@ class FeedTest extends TestCase
         $feed->setItunesDuration('abc');
     }
 
-    public function testSetDurationThrowsExceptionOnInvalidSeconds()
+    public function testSetDurationThrowsExceptionOnInvalidSeconds(): void
     {
         $feed = new Writer\Feed();
 
@@ -153,7 +153,7 @@ class FeedTest extends TestCase
         $feed->setItunesDuration('23:456');
     }
 
-    public function testSetDurationThrowsExceptionOnInvalidMinutes()
+    public function testSetDurationThrowsExceptionOnInvalidMinutes(): void
     {
         $feed = new Writer\Feed();
 
@@ -166,15 +166,22 @@ class FeedTest extends TestCase
      *
      * @param string|bool $value
      * @param string $result
+     *
+     * @return void
      */
-    public function testSetExplicit($value, $result)
+    public function testSetExplicit($value, $result): void
     {
         $feed = new Writer\Feed();
         $feed->setItunesExplicit($value);
         $this->assertEquals($result, $feed->getItunesExplicit());
     }
 
-    public function dataProviderForSetExplicit()
+    /**
+     * @return (bool|string)[][]
+     *
+     * @psalm-return array{0: array{0: true, 1: string}, 1: array{0: false, 1: string}, 2: array{0: string, 1: string}, 3: array{0: string, 1: string}, 4: array{0: string, 1: string}}
+     */
+    public function dataProviderForSetExplicit(): array
     {
         return [
             // Current behaviour
@@ -202,7 +209,7 @@ class FeedTest extends TestCase
         ];
     }
 
-    public function testSetExplicitThrowsExceptionOnUnknownTerm()
+    public function testSetExplicitThrowsExceptionOnUnknownTerm(): void
     {
         $feed = new Writer\Feed();
 
@@ -210,7 +217,7 @@ class FeedTest extends TestCase
         $feed->setItunesExplicit('abc');
     }
 
-    public function testSetKeywords()
+    public function testSetKeywords(): void
     {
         $feed  = new Writer\Feed();
         $words = [
@@ -237,7 +244,7 @@ class FeedTest extends TestCase
         $this->assertEquals($words, $feed->getItunesKeywords());
     }
 
-    public function testSetKeywordsThrowsExceptionIfMaxKeywordsExceeded()
+    public function testSetKeywordsThrowsExceptionIfMaxKeywordsExceeded(): void
     {
         $feed  = new Writer\Feed();
         $words = [
@@ -268,7 +275,7 @@ class FeedTest extends TestCase
         }
     }
 
-    public function testSetKeywordsThrowsExceptionIfFormattedKeywordsExceeds255CharLength()
+    public function testSetKeywordsThrowsExceptionIfFormattedKeywordsExceeds255CharLength(): void
     {
         $feed  = new Writer\Feed();
         $words = [
@@ -288,14 +295,14 @@ class FeedTest extends TestCase
         }
     }
 
-    public function testSetNewFeedUrl()
+    public function testSetNewFeedUrl(): void
     {
         $feed = new Writer\Feed();
         $feed->setItunesNewFeedUrl('http://example.com/feed');
         $this->assertEquals('http://example.com/feed', $feed->getItunesNewFeedUrl());
     }
 
-    public function testSetNewFeedUrlThrowsExceptionOnInvalidUri()
+    public function testSetNewFeedUrlThrowsExceptionOnInvalidUri(): void
     {
         $feed = new Writer\Feed();
 
@@ -303,28 +310,28 @@ class FeedTest extends TestCase
         $feed->setItunesNewFeedUrl('http://');
     }
 
-    public function testAddOwner()
+    public function testAddOwner(): void
     {
         $feed = new Writer\Feed();
         $feed->addItunesOwner(['name' => 'joe', 'email' => 'joe@example.com']);
         $this->assertEquals([['name' => 'joe', 'email' => 'joe@example.com']], $feed->getItunesOwners());
     }
 
-    public function testAddOwners()
+    public function testAddOwners(): void
     {
         $feed = new Writer\Feed();
         $feed->addItunesOwners([['name' => 'joe', 'email' => 'joe@example.com']]);
         $this->assertEquals([['name' => 'joe', 'email' => 'joe@example.com']], $feed->getItunesOwners());
     }
 
-    public function testSetSubtitle()
+    public function testSetSubtitle(): void
     {
         $feed = new Writer\Feed();
         $feed->setItunesSubtitle('abc');
         $this->assertEquals('abc', $feed->getItunesSubtitle());
     }
 
-    public function testSetSubtitleThrowsExceptionWhenValueExceeds255Chars()
+    public function testSetSubtitleThrowsExceptionWhenValueExceeds255Chars(): void
     {
         $feed = new Writer\Feed();
 
@@ -332,14 +339,14 @@ class FeedTest extends TestCase
         $feed->setItunesSubtitle(str_repeat('a', 256));
     }
 
-    public function testSetSummary()
+    public function testSetSummary(): void
     {
         $feed = new Writer\Feed();
         $feed->setItunesSummary('abc');
         $this->assertEquals('abc', $feed->getItunesSummary());
     }
 
-    public function testSetSummaryThrowsExceptionWhenValueExceeds4000Chars()
+    public function testSetSummaryThrowsExceptionWhenValueExceeds4000Chars(): void
     {
         $feed = new Writer\Feed();
 
@@ -347,7 +354,12 @@ class FeedTest extends TestCase
         $feed->setItunesSummary(str_repeat('a', 4001));
     }
 
-    public function invalidImageUrls()
+    /**
+     * @return (\stdClass|bool|float|int|null|string|string[])[][]
+     *
+     * @psalm-return array{null: array{0: null}, true: array{0: true}, false: array{0: false}, zero: array{0: int}, int: array{0: int}, zero-float: array{0: float}, float: array{0: float}, string: array{0: string}, invalid-extension-gif: array{0: string, 1: string}, invalid-extension-uc: array{0: string, 1: string}, array: array{0: array{0: string}}, object: array{0: \stdClass}}
+     */
+    public function invalidImageUrls(): array
     {
         return [
             'null'                  => [null],
@@ -370,8 +382,10 @@ class FeedTest extends TestCase
      *
      * @param mixed $url
      * @param string $expectedMessage
+     *
+     * @return void
      */
-    public function testSetItunesImageRaisesExceptionForInvalidUrl($url, $expectedMessage = 'valid URI')
+    public function testSetItunesImageRaisesExceptionForInvalidUrl($url, $expectedMessage = 'valid URI'): void
     {
         $feed = new Writer\Feed();
 
@@ -380,7 +394,12 @@ class FeedTest extends TestCase
         $feed->setItunesImage($url);
     }
 
-    public function validImageUrls()
+    /**
+     * @return string[][]
+     *
+     * @psalm-return array{jpg: array{0: string}, png: array{0: string}}
+     */
+    public function validImageUrls(): array
     {
         return [
             'jpg' => ['https://example.com/image.jpg'],
@@ -392,15 +411,22 @@ class FeedTest extends TestCase
      * @dataProvider validImageUrls
      *
      * @param string $url
+     *
+     * @return void
      */
-    public function testSetItunesImageSetsInternalDataWithValidUrl($url)
+    public function testSetItunesImageSetsInternalDataWithValidUrl($url): void
     {
         $feed = new Writer\Feed();
         $feed->setItunesImage($url);
         $this->assertEquals($url, $feed->getItunesImage());
     }
 
-    public function invalidPodcastTypes()
+    /**
+     * @return (\stdClass|bool|float|int|null|string|string[])[][]
+     *
+     * @psalm-return array{null: array{0: null}, true: array{0: true}, false: array{0: false}, zero: array{0: int}, int: array{0: int}, zero-float: array{0: float}, float: array{0: float}, string: array{0: string}, array: array{0: array{0: string}}, object: array{0: \stdClass}}
+     */
+    public function invalidPodcastTypes(): array
     {
         return [
             'null'       => [null],
@@ -420,8 +446,10 @@ class FeedTest extends TestCase
      * @dataProvider invalidPodcastTypes
      *
      * @param mixed $type
+     *
+     * @return void
      */
-    public function testSetItunesTypeWithInvalidTypeRaisesException($type)
+    public function testSetItunesTypeWithInvalidTypeRaisesException($type): void
     {
         $feed = new Writer\Feed();
 
@@ -430,7 +458,12 @@ class FeedTest extends TestCase
         $feed->setItunesType($type);
     }
 
-    public function validPodcastTypes()
+    /**
+     * @return string[][]
+     *
+     * @psalm-return array{episodic: array{0: string}, serial: array{0: string}}
+     */
+    public function validPodcastTypes(): array
     {
         return [
             'episodic' => ['episodic'],
@@ -442,15 +475,22 @@ class FeedTest extends TestCase
      * @dataProvider validPodcastTypes
      *
      * @param mixed $type
+     *
+     * @return void
      */
-    public function testSetItunesTypeMutatesTypeWithValidData($type)
+    public function testSetItunesTypeMutatesTypeWithValidData($type): void
     {
         $feed = new Writer\Feed();
         $feed->setItunesType($type);
         $this->assertEquals($type, $feed->getItunesType());
     }
 
-    public function invalidCompleteStatuses()
+    /**
+     * @return (\stdClass|float|int|null|string|true[])[][]
+     *
+     * @psalm-return array{null: array{0: null}, zero: array{0: int}, int: array{0: int}, zero-float: array{0: float}, float: array{0: float}, string: array{0: string}, array: array{0: array{0: true}}, object: array{0: \stdClass}}
+     */
+    public function invalidCompleteStatuses(): array
     {
         return [
             'null'       => [null],
@@ -468,8 +508,10 @@ class FeedTest extends TestCase
      * @dataProvider invalidCompleteStatuses
      *
      * @param mixed $status
+     *
+     * @return void
      */
-    public function testSetItunesCompleteRaisesExceptionForInvalidStatus($status)
+    public function testSetItunesCompleteRaisesExceptionForInvalidStatus($status): void
     {
         $feed = new Writer\Feed();
 
@@ -478,14 +520,14 @@ class FeedTest extends TestCase
         $feed->setItunesComplete($status);
     }
 
-    public function testSetItunesCompleteWithTrueSetsDataInContainer()
+    public function testSetItunesCompleteWithTrueSetsDataInContainer(): void
     {
         $feed = new Writer\Feed();
         $feed->setItunesComplete(true);
         $this->assertEquals('Yes', $feed->getItunesComplete());
     }
 
-    public function testSetItunesCompleteWithFalseDoesNotSetDataInContainer()
+    public function testSetItunesCompleteWithFalseDoesNotSetDataInContainer(): void
     {
         $feed = new Writer\Feed();
         $feed->setItunesComplete(false);

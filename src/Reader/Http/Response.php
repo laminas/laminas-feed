@@ -74,11 +74,14 @@ class Response implements HeaderAwareResponseInterface
     /**
      * Validate that we have a status code argument that will work for our context.
      *
-     * @param  int $statusCode
+     * @param int $statusCode
+     *
      * @throws Exception\InvalidArgumentException for arguments not castable
      *     to integer HTTP status codes.
+     *
+     * @return void
      */
-    private function validateStatusCode($statusCode)
+    private function validateStatusCode($statusCode): void
     {
         if (! is_numeric($statusCode) || (is_string($statusCode) && trim($statusCode) !== $statusCode)) {
             throw new Exception\InvalidArgumentException(sprintf(
@@ -108,11 +111,14 @@ class Response implements HeaderAwareResponseInterface
     /**
      * Validate that we have a body argument that will work for our context.
      *
-     * @param  mixed $body
+     * @param mixed $body
+     *
      * @throws Exception\InvalidArgumentException for arguments not castable
      *     to strings.
+     *
+     * @return void
      */
-    private function validateBody($body)
+    private function validateBody($body): void
     {
         if (is_string($body)) {
             return;
@@ -133,8 +139,10 @@ class Response implements HeaderAwareResponseInterface
      * Validate header values.
      *
      * @throws Exception\InvalidArgumentException
+     *
+     * @return void
      */
-    private function validateHeaders(array $headers)
+    private function validateHeaders(array $headers): void
     {
         foreach ($headers as $name => $value) {
             if (! is_string($name) || is_numeric($name) || empty($name)) {

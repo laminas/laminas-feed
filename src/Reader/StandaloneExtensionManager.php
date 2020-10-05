@@ -58,8 +58,10 @@ class StandaloneExtensionManager implements ExtensionManagerInterface
      *
      * @param string $name
      * @param string $class
+     *
+     * @return void
      */
-    public function add($name, $class)
+    public function add($name, $class): void
     {
         if (is_string($class)
             && (is_a($class, Extension\AbstractEntry::class, true)
@@ -81,8 +83,10 @@ class StandaloneExtensionManager implements ExtensionManagerInterface
      * Remove an extension.
      *
      * @param string $name
+     *
+     * @return void
      */
-    public function remove($name)
+    public function remove($name): void
     {
         unset($this->extensions[$name]);
     }

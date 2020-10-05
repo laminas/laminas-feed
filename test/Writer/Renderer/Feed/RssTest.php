@@ -44,7 +44,7 @@ class RssTest extends TestCase
         $this->validWriter = null;
     }
 
-    public function testSetsWriterInConstructor()
+    public function testSetsWriterInConstructor(): void
     {
         $writer = new Writer\Feed();
         $feed   = new Renderer\Feed\Rss($writer);
@@ -53,14 +53,16 @@ class RssTest extends TestCase
 
     /**
      * @doesNotPerformAssertions
+     *
+     * @return void
      */
-    public function testBuildMethodRunsMinimalWriterContainerProperlyBeforeICheckRssCompliance()
+    public function testBuildMethodRunsMinimalWriterContainerProperlyBeforeICheckRssCompliance(): void
     {
         $feed = new Renderer\Feed\Rss($this->validWriter);
         $feed->render();
     }
 
-    public function testFeedEncodingHasBeenSet()
+    public function testFeedEncodingHasBeenSet(): void
     {
         $this->validWriter->setEncoding('iso-8859-1');
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
@@ -69,7 +71,7 @@ class RssTest extends TestCase
         $this->assertEquals('iso-8859-1', $feed->getEncoding());
     }
 
-    public function testFeedEncodingDefaultIsUsedIfEncodingNotSetByHand()
+    public function testFeedEncodingDefaultIsUsedIfEncodingNotSetByHand(): void
     {
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $rssFeed->render();
@@ -77,7 +79,7 @@ class RssTest extends TestCase
         $this->assertEquals('UTF-8', $feed->getEncoding());
     }
 
-    public function testFeedTitleHasBeenSet()
+    public function testFeedTitleHasBeenSet(): void
     {
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $rssFeed->render();
@@ -85,7 +87,7 @@ class RssTest extends TestCase
         $this->assertEquals('This is a test feed.', $feed->getTitle());
     }
 
-    public function testFeedTitleIfMissingThrowsException()
+    public function testFeedTitleIfMissingThrowsException(): void
     {
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $this->validWriter->remove('title');
@@ -96,8 +98,10 @@ class RssTest extends TestCase
 
     /**
      * @group LaminasWCHARDATA01
+     *
+     * @return void
      */
-    public function testFeedTitleCharDataEncoding()
+    public function testFeedTitleCharDataEncoding(): void
     {
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $this->validWriter->setTitle('<>&\'"áéíóú');
@@ -106,7 +110,7 @@ class RssTest extends TestCase
         $this->assertEquals('<>&\'"áéíóú', $feed->getTitle());
     }
 
-    public function testFeedDescriptionHasBeenSet()
+    public function testFeedDescriptionHasBeenSet(): void
     {
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $rssFeed->render();
@@ -114,7 +118,7 @@ class RssTest extends TestCase
         $this->assertEquals('This is a test description.', $feed->getDescription());
     }
 
-    public function testFeedDescriptionThrowsExceptionIfMissing()
+    public function testFeedDescriptionThrowsExceptionIfMissing(): void
     {
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $this->validWriter->remove('description');
@@ -125,8 +129,10 @@ class RssTest extends TestCase
 
     /**
      * @group LaminasWCHARDATA01
+     *
+     * @return void
      */
-    public function testFeedDescriptionCharDataEncoding()
+    public function testFeedDescriptionCharDataEncoding(): void
     {
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $this->validWriter->setDescription('<>&\'"áéíóú');
@@ -135,7 +141,7 @@ class RssTest extends TestCase
         $this->assertEquals('<>&\'"áéíóú', $feed->getDescription());
     }
 
-    public function testFeedUpdatedDateHasBeenSet()
+    public function testFeedUpdatedDateHasBeenSet(): void
     {
         $this->validWriter->setDateModified(1234567890);
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
@@ -146,15 +152,17 @@ class RssTest extends TestCase
 
     /**
      * @doesNotPerformAssertions
+     *
+     * @return void
      */
-    public function testFeedUpdatedDateIfMissingThrowsNoException()
+    public function testFeedUpdatedDateIfMissingThrowsNoException(): void
     {
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $this->validWriter->remove('dateModified');
         $rssFeed->render();
     }
 
-    public function testFeedLastBuildDateHasBeenSet()
+    public function testFeedLastBuildDateHasBeenSet(): void
     {
         $this->validWriter->setLastBuildDate(1234567890);
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
@@ -163,7 +171,7 @@ class RssTest extends TestCase
         $this->assertEquals(1234567890, $feed->getLastBuildDate()->getTimestamp());
     }
 
-    public function testFeedGeneratorHasBeenSet()
+    public function testFeedGeneratorHasBeenSet(): void
     {
         $this->validWriter->setGenerator('FooFeedBuilder', '1.00', 'http://www.example.com');
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
@@ -174,15 +182,17 @@ class RssTest extends TestCase
 
     /**
      * @doesNotPerformAssertions
+     *
+     * @return void
      */
-    public function testFeedGeneratorIfMissingThrowsNoException()
+    public function testFeedGeneratorIfMissingThrowsNoException(): void
     {
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $this->validWriter->remove('generator');
         $rssFeed->render();
     }
 
-    public function testFeedGeneratorDefaultIsUsedIfGeneratorNotSetByHand()
+    public function testFeedGeneratorDefaultIsUsedIfGeneratorNotSetByHand(): void
     {
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $rssFeed->render();
@@ -193,7 +203,7 @@ class RssTest extends TestCase
         );
     }
 
-    public function testFeedLanguageHasBeenSet()
+    public function testFeedLanguageHasBeenSet(): void
     {
         $this->validWriter->setLanguage('fr');
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
@@ -204,15 +214,17 @@ class RssTest extends TestCase
 
     /**
      * @doesNotPerformAssertions
+     *
+     * @return void
      */
-    public function testFeedLanguageIfMissingThrowsNoException()
+    public function testFeedLanguageIfMissingThrowsNoException(): void
     {
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $this->validWriter->remove('language');
         $rssFeed->render();
     }
 
-    public function testFeedLanguageDefaultIsUsedIfGeneratorNotSetByHand()
+    public function testFeedLanguageDefaultIsUsedIfGeneratorNotSetByHand(): void
     {
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $rssFeed->render();
@@ -220,7 +232,7 @@ class RssTest extends TestCase
         $this->assertEquals(null, $feed->getLanguage());
     }
 
-    public function testFeedIncludesLinkToHtmlVersionOfFeed()
+    public function testFeedIncludesLinkToHtmlVersionOfFeed(): void
     {
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $rssFeed->render();
@@ -228,7 +240,7 @@ class RssTest extends TestCase
         $this->assertEquals('http://www.example.com', $feed->getLink());
     }
 
-    public function testFeedLinkToHtmlVersionOfFeedIfMissingThrowsException()
+    public function testFeedLinkToHtmlVersionOfFeedIfMissingThrowsException(): void
     {
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $this->validWriter->remove('link');
@@ -239,8 +251,10 @@ class RssTest extends TestCase
 
     /**
      * @group Issue2605
+     *
+     * @return void
      */
-    public function testFeedIncludesLinkToXmlRssWhereRssAndAtomLinksAreProvided()
+    public function testFeedIncludesLinkToXmlRssWhereRssAndAtomLinksAreProvided(): void
     {
         $this->validWriter->setFeedLink('http://www.example.com/rss', 'rss');
         $this->validWriter->setFeedLink('http://www.example.com/atom', 'atom');
@@ -252,7 +266,7 @@ class RssTest extends TestCase
         $this->assertEquals(1, $xpath->evaluate('/rss/channel/atom:link[@rel="self"]')->length);
     }
 
-    public function testFeedIncludesLinkToXmlRssWhereTheFeedWillBeAvailable()
+    public function testFeedIncludesLinkToXmlRssWhereTheFeedWillBeAvailable(): void
     {
         $this->validWriter->setFeedLink('http://www.example.com/rss', 'rss');
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
@@ -263,15 +277,17 @@ class RssTest extends TestCase
 
     /**
      * @doesNotPerformAssertions
+     *
+     * @return void
      */
-    public function testFeedLinkToXmlRssWhereTheFeedWillBeAvailableIfMissingThrowsNoException()
+    public function testFeedLinkToXmlRssWhereTheFeedWillBeAvailableIfMissingThrowsNoException(): void
     {
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $this->validWriter->remove('feedLinks');
         $rssFeed->render();
     }
 
-    public function testBaseUrlCanBeSet()
+    public function testBaseUrlCanBeSet(): void
     {
         $this->validWriter->setBaseUrl('http://www.example.com/base');
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
@@ -282,8 +298,10 @@ class RssTest extends TestCase
 
     /**
      * @group LaminasW003
+     *
+     * @return void
      */
-    public function testFeedHoldsAnyAuthorAdded()
+    public function testFeedHoldsAnyAuthorAdded(): void
     {
         $this->validWriter->addAuthor([
             'name'  => 'Joe',
@@ -299,8 +317,10 @@ class RssTest extends TestCase
 
     /**
      * @group LaminasWCHARDATA01
+     *
+     * @return void
      */
-    public function testFeedAuthorCharDataEncoding()
+    public function testFeedAuthorCharDataEncoding(): void
     {
         $this->validWriter->addAuthor([
             'name'  => '<>&\'"áéíóú',
@@ -314,7 +334,7 @@ class RssTest extends TestCase
         $this->assertEquals(['name' => '<>&\'"áéíóú'], $feed->getAuthor());
     }
 
-    public function testCopyrightCanBeSet()
+    public function testCopyrightCanBeSet(): void
     {
         $this->validWriter->setCopyright('Copyright © 2009 Paddy');
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
@@ -325,8 +345,10 @@ class RssTest extends TestCase
 
     /**
      * @group LaminasWCHARDATA01
+     *
+     * @return void
      */
-    public function testCopyrightCharDataEncoding()
+    public function testCopyrightCharDataEncoding(): void
     {
         $this->validWriter->setCopyright('<>&\'"áéíóú');
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
@@ -335,7 +357,7 @@ class RssTest extends TestCase
         $this->assertEquals('<>&\'"áéíóú', $feed->getCopyright());
     }
 
-    public function testCategoriesCanBeSet()
+    public function testCategoriesCanBeSet(): void
     {
         $this->validWriter->addCategories([
             [
@@ -365,8 +387,10 @@ class RssTest extends TestCase
 
     /**
      * @group LaminasWCHARDATA01
+     *
+     * @return void
      */
-    public function testCategoriesCharDataEncoding()
+    public function testCategoriesCharDataEncoding(): void
     {
         $this->validWriter->addCategories([
             [
@@ -394,7 +418,7 @@ class RssTest extends TestCase
         $this->assertEquals($expected, (array) $feed->getCategories());
     }
 
-    public function testHubsCanBeSet()
+    public function testHubsCanBeSet(): void
     {
         $this->validWriter->addHubs(
             ['http://www.example.com/hub', 'http://www.example.com/hub2']
@@ -409,7 +433,7 @@ class RssTest extends TestCase
         $this->assertEquals($expected, (array) $feed->getHubs());
     }
 
-    public function testImageCanBeSet()
+    public function testImageCanBeSet(): void
     {
         $this->validWriter->setImage([
             'uri'         => 'http://www.example.com/logo.gif',
@@ -433,7 +457,7 @@ class RssTest extends TestCase
         $this->assertEquals($expected, $feed->getImage());
     }
 
-    public function testImageCanBeSetWithOnlyRequiredElements()
+    public function testImageCanBeSetWithOnlyRequiredElements(): void
     {
         $this->validWriter->setImage([
             'uri'   => 'http://www.example.com/logo.gif',
@@ -451,7 +475,7 @@ class RssTest extends TestCase
         $this->assertEquals($expected, $feed->getImage());
     }
 
-    public function testImageThrowsExceptionOnMissingLink()
+    public function testImageThrowsExceptionOnMissingLink(): void
     {
         $this->validWriter->setImage([
             'uri'   => 'http://www.example.com/logo.gif',
@@ -463,7 +487,7 @@ class RssTest extends TestCase
         $rssFeed->render();
     }
 
-    public function testImageThrowsExceptionOnMissingTitle()
+    public function testImageThrowsExceptionOnMissingTitle(): void
     {
         $this->validWriter->setImage([
             'uri'  => 'http://www.example.com/logo.gif',
@@ -475,7 +499,7 @@ class RssTest extends TestCase
         $rssFeed->render();
     }
 
-    public function testImageThrowsExceptionOnMissingUri()
+    public function testImageThrowsExceptionOnMissingUri(): void
     {
         $this->expectException(ExceptionInterface::class);
         $this->validWriter->setImage([
@@ -484,7 +508,7 @@ class RssTest extends TestCase
         ]);
     }
 
-    public function testImageThrowsExceptionIfOptionalDescriptionInvalid()
+    public function testImageThrowsExceptionIfOptionalDescriptionInvalid(): void
     {
         $this->validWriter->setImage([
             'uri'         => 'http://www.example.com/logo.gif',
@@ -498,7 +522,7 @@ class RssTest extends TestCase
         $rssFeed->render();
     }
 
-    public function testImageThrowsExceptionIfOptionalDescriptionEmpty()
+    public function testImageThrowsExceptionIfOptionalDescriptionEmpty(): void
     {
         $this->validWriter->setImage([
             'uri'         => 'http://www.example.com/logo.gif',
@@ -512,7 +536,7 @@ class RssTest extends TestCase
         $rssFeed->render();
     }
 
-    public function testImageThrowsExceptionIfOptionalHeightNotAnInteger()
+    public function testImageThrowsExceptionIfOptionalHeightNotAnInteger(): void
     {
         $this->validWriter->setImage([
             'uri'    => 'http://www.example.com/logo.gif',
@@ -527,7 +551,7 @@ class RssTest extends TestCase
         $rssFeed->render();
     }
 
-    public function testImageThrowsExceptionIfOptionalHeightEmpty()
+    public function testImageThrowsExceptionIfOptionalHeightEmpty(): void
     {
         $this->validWriter->setImage([
             'uri'    => 'http://www.example.com/logo.gif',
@@ -542,7 +566,7 @@ class RssTest extends TestCase
         $rssFeed->render();
     }
 
-    public function testImageThrowsExceptionIfOptionalHeightGreaterThan400()
+    public function testImageThrowsExceptionIfOptionalHeightGreaterThan400(): void
     {
         $this->validWriter->setImage([
             'uri'    => 'http://www.example.com/logo.gif',
@@ -557,7 +581,7 @@ class RssTest extends TestCase
         $rssFeed->render();
     }
 
-    public function testImageThrowsExceptionIfOptionalWidthNotAnInteger()
+    public function testImageThrowsExceptionIfOptionalWidthNotAnInteger(): void
     {
         $this->validWriter->setImage([
             'uri'    => 'http://www.example.com/logo.gif',
@@ -572,7 +596,7 @@ class RssTest extends TestCase
         $rssFeed->render();
     }
 
-    public function testImageThrowsExceptionIfOptionalWidthEmpty()
+    public function testImageThrowsExceptionIfOptionalWidthEmpty(): void
     {
         $this->validWriter->setImage([
             'uri'    => 'http://www.example.com/logo.gif',
@@ -587,7 +611,7 @@ class RssTest extends TestCase
         $rssFeed->render();
     }
 
-    public function testImageThrowsExceptionIfOptionalWidthGreaterThan144()
+    public function testImageThrowsExceptionIfOptionalWidthGreaterThan144(): void
     {
         $this->validWriter->setImage([
             'uri'    => 'http://www.example.com/logo.gif',
@@ -602,7 +626,7 @@ class RssTest extends TestCase
         $rssFeed->render();
     }
 
-    public function testFeedSetDateCreated()
+    public function testFeedSetDateCreated(): void
     {
         $this->validWriter->setDateCreated(1234567890);
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
@@ -612,7 +636,7 @@ class RssTest extends TestCase
         $this->assertEquals($myDate, $feed->getDateCreated());
     }
 
-    public function testFeedRendererEmitsNoticeDuringFeedImportWhenGooglePlayPodcastExtensionUnavailable()
+    public function testFeedRendererEmitsNoticeDuringFeedImportWhenGooglePlayPodcastExtensionUnavailable(): void
     {
         // Since we create feed and entry writer instances in the test constructor,
         // we need to reset it _now_ before creating a new renderer.

@@ -320,8 +320,10 @@ class Reader implements ReaderImportInterface
     /**
      * Import a feed from a string
      *
-     * @param  string $string
-     * @return Feed\FeedInterface
+     * @param string $string
+     *
+     * @return Entry\Atom|Feed\Atom|Feed\Rss
+     *
      * @throws Exception\InvalidArgumentException
      * @throws Exception\RuntimeException
      */
@@ -564,8 +566,10 @@ class Reader implements ReaderImportInterface
 
     /**
      * Set plugin manager for use with Extensions
+     *
+     * @return void
      */
-    public static function setExtensionManager(ExtensionManagerInterface $extensionManager)
+    public static function setExtensionManager(ExtensionManagerInterface $extensionManager): void
     {
         static::$extensionManager = $extensionManager;
     }
@@ -713,7 +717,7 @@ class Reader implements ReaderImportInterface
      * @param  array
      * @return array
      */
-    public static function arrayUnique(array $array)
+    public static function arrayUnique(array $array): array
     {
         foreach ($array as &$value) {
             $value = serialize($value);

@@ -65,14 +65,16 @@ class AtomTest extends TestCase
 
     /**
      * @doesNotPerformAssertions
+     *
+     * @return void
      */
-    public function testRenderMethodRunsMinimalWriterContainerProperlyBeforeICheckAtomCompliance()
+    public function testRenderMethodRunsMinimalWriterContainerProperlyBeforeICheckAtomCompliance(): void
     {
         $renderer = new Renderer\Feed\Atom($this->validWriter);
         $renderer->render();
     }
 
-    public function testEntryEncodingHasBeenSet()
+    public function testEntryEncodingHasBeenSet(): void
     {
         $this->validWriter->setEncoding('iso-8859-1');
         $renderer = new Renderer\Feed\Atom($this->validWriter);
@@ -81,7 +83,7 @@ class AtomTest extends TestCase
         $this->assertEquals('iso-8859-1', $entry->getEncoding());
     }
 
-    public function testEntryEncodingDefaultIsUsedIfEncodingNotSetByHand()
+    public function testEntryEncodingDefaultIsUsedIfEncodingNotSetByHand(): void
     {
         $renderer = new Renderer\Feed\Atom($this->validWriter);
         $feed     = Reader\Reader::importString($renderer->render()->saveXml());
@@ -89,7 +91,7 @@ class AtomTest extends TestCase
         $this->assertEquals('UTF-8', $entry->getEncoding());
     }
 
-    public function testEntryTitleHasBeenSet()
+    public function testEntryTitleHasBeenSet(): void
     {
         $renderer = new Renderer\Feed\Atom($this->validWriter);
         $feed     = Reader\Reader::importString($renderer->render()->saveXml());
@@ -97,7 +99,7 @@ class AtomTest extends TestCase
         $this->assertEquals('This is a test entry.', $entry->getTitle());
     }
 
-    public function testFeedTitleIfMissingThrowsException()
+    public function testFeedTitleIfMissingThrowsException(): void
     {
         $atomFeed = new Renderer\Feed\Atom($this->validWriter);
         $this->validEntry->remove('title');
@@ -106,7 +108,7 @@ class AtomTest extends TestCase
         $atomFeed->render();
     }
 
-    public function testEntrySummaryDescriptionHasBeenSet()
+    public function testEntrySummaryDescriptionHasBeenSet(): void
     {
         $renderer = new Renderer\Feed\Atom($this->validWriter);
         $feed     = Reader\Reader::importString($renderer->render()->saveXml());
@@ -116,8 +118,10 @@ class AtomTest extends TestCase
 
     /**
      * @group LaminasWATOMCONTENT
+     *
+     * @return void
      */
-    public function testEntryContentHasBeenSetXhtml()
+    public function testEntryContentHasBeenSetXhtml(): void
     {
         $renderer = new Renderer\Feed\Atom($this->validWriter);
         $feed     = Reader\Reader::importString($renderer->render()->saveXml());
@@ -125,7 +129,7 @@ class AtomTest extends TestCase
         $this->assertEquals('<p class="xhtml:">This is test content for <em>xhtml:</em></p>', $entry->getContent());
     }
 
-    public function testFeedContentIfMissingThrowsExceptionIfThereIsNoLink()
+    public function testFeedContentIfMissingThrowsExceptionIfThereIsNoLink(): void
     {
         $atomFeed = new Renderer\Feed\Atom($this->validWriter);
         $this->validEntry->remove('content');
@@ -135,7 +139,7 @@ class AtomTest extends TestCase
         $atomFeed->render();
     }
 
-    public function testEntryUpdatedDateHasBeenSet()
+    public function testEntryUpdatedDateHasBeenSet(): void
     {
         $renderer = new Renderer\Feed\Atom($this->validWriter);
         $feed     = Reader\Reader::importString($renderer->render()->saveXml());
@@ -143,7 +147,7 @@ class AtomTest extends TestCase
         $this->assertEquals(1234567890, $entry->getDateModified()->getTimestamp());
     }
 
-    public function testFeedUpdatedDateIfMissingThrowsException()
+    public function testFeedUpdatedDateIfMissingThrowsException(): void
     {
         $atomFeed = new Renderer\Feed\Atom($this->validWriter);
         $this->validEntry->remove('dateModified');
@@ -152,7 +156,7 @@ class AtomTest extends TestCase
         $atomFeed->render();
     }
 
-    public function testEntryPublishedDateHasBeenSet()
+    public function testEntryPublishedDateHasBeenSet(): void
     {
         $renderer = new Renderer\Feed\Atom($this->validWriter);
         $feed     = Reader\Reader::importString($renderer->render()->saveXml());
@@ -160,7 +164,7 @@ class AtomTest extends TestCase
         $this->assertEquals(1234567000, $entry->getDateCreated()->getTimestamp());
     }
 
-    public function testEntryIncludesLinkToHtmlVersionOfFeed()
+    public function testEntryIncludesLinkToHtmlVersionOfFeed(): void
     {
         $renderer = new Renderer\Feed\Atom($this->validWriter);
         $feed     = Reader\Reader::importString($renderer->render()->saveXml());
@@ -168,7 +172,7 @@ class AtomTest extends TestCase
         $this->assertEquals('http://www.example.com/1', $entry->getLink());
     }
 
-    public function testEntryHoldsAnyAuthorAdded()
+    public function testEntryHoldsAnyAuthorAdded(): void
     {
         $renderer = new Renderer\Feed\Atom($this->validWriter);
         $feed     = Reader\Reader::importString($renderer->render()->saveXml());
@@ -181,7 +185,7 @@ class AtomTest extends TestCase
         ], $entry->getAuthor());
     }
 
-    public function testEntryHoldsAnyEnclosureAdded()
+    public function testEntryHoldsAnyEnclosureAdded(): void
     {
         $renderer = new Renderer\Feed\Atom($this->validWriter);
         $this->validEntry->setEnclosure([
@@ -197,7 +201,7 @@ class AtomTest extends TestCase
         $this->assertEquals('http://example.com/audio.mp3', $enc->url);
     }
 
-    public function testEntryIdHasBeenSet()
+    public function testEntryIdHasBeenSet(): void
     {
         $this->validEntry->setId('urn:uuid:60a76c80-d399-11d9-b93C-0003939e0af6');
         $renderer = new Renderer\Feed\Atom($this->validWriter);
@@ -206,7 +210,7 @@ class AtomTest extends TestCase
         $this->assertEquals('urn:uuid:60a76c80-d399-11d9-b93C-0003939e0af6', $entry->getId());
     }
 
-    public function testEntryIdHasBeenSetUsingSimpleTagUri()
+    public function testEntryIdHasBeenSetUsingSimpleTagUri(): void
     {
         $this->validEntry->setId('tag:example.org,2010:/foo/bar/');
         $renderer = new Renderer\Feed\Atom($this->validWriter);
@@ -215,7 +219,7 @@ class AtomTest extends TestCase
         $this->assertEquals('tag:example.org,2010:/foo/bar/', $entry->getId());
     }
 
-    public function testEntryIdHasBeenSetUsingComplexTagUri()
+    public function testEntryIdHasBeenSetUsingComplexTagUri(): void
     {
         $this->validEntry->setId('tag:diveintomark.org,2004-05-27:/archives/2004/05/27/howto-atom-linkblog');
         $renderer = new Renderer\Feed\Atom($this->validWriter);
@@ -227,7 +231,7 @@ class AtomTest extends TestCase
         );
     }
 
-    public function testFeedIdDefaultIsUsedIfNotSetByHand()
+    public function testFeedIdDefaultIsUsedIfNotSetByHand(): void
     {
         $renderer = new Renderer\Feed\Atom($this->validWriter);
         $feed     = Reader\Reader::importString($renderer->render()->saveXml());
@@ -235,7 +239,7 @@ class AtomTest extends TestCase
         $this->assertEquals($entry->getLink(), $entry->getId());
     }
 
-    public function testFeedIdIfMissingThrowsException()
+    public function testFeedIdIfMissingThrowsException(): void
     {
         $atomFeed = new Renderer\Feed\Atom($this->validWriter);
         $this->validEntry->remove('id');
@@ -245,7 +249,7 @@ class AtomTest extends TestCase
         $atomFeed->render();
     }
 
-    public function testFeedIdThrowsExceptionIfNotUri()
+    public function testFeedIdThrowsExceptionIfNotUri(): void
     {
         $this->markTestIncomplete('Pending Laminas\URI fix for validation');
 
@@ -258,7 +262,7 @@ class AtomTest extends TestCase
         $atomFeed->render();
     }
 
-    public function testCommentLinkRendered()
+    public function testCommentLinkRendered(): void
     {
         $renderer = new Renderer\Feed\Atom($this->validWriter);
         $this->validEntry->setCommentLink('http://www.example.com/id/1');
@@ -267,7 +271,7 @@ class AtomTest extends TestCase
         $this->assertEquals('http://www.example.com/id/1', $entry->getCommentLink());
     }
 
-    public function testCommentCountRendered()
+    public function testCommentCountRendered(): void
     {
         $renderer = new Renderer\Feed\Atom($this->validWriter);
         $this->validEntry->setCommentCount(22);
@@ -276,7 +280,7 @@ class AtomTest extends TestCase
         $this->assertEquals(22, $entry->getCommentCount());
     }
 
-    public function testCategoriesCanBeSet()
+    public function testCategoriesCanBeSet(): void
     {
         $this->validEntry->addCategories([
             [
@@ -305,7 +309,7 @@ class AtomTest extends TestCase
         $this->assertEquals($expected, (array) $entry->getCategories());
     }
 
-    public function testCommentFeedLinksRendered()
+    public function testCommentFeedLinksRendered(): void
     {
         $renderer = new Renderer\Feed\Atom($this->validWriter);
         $this->validEntry->setCommentFeedLinks([
@@ -325,7 +329,7 @@ class AtomTest extends TestCase
         $this->assertEquals('http://www.example.com/atom/id/1', $entry->getCommentFeedLink('atom'));
     }
 
-    public function testEntryRendererEmitsNoticeDuringInstantiationWhenGooglePlayPodcastExtensionUnavailable()
+    public function testEntryRendererEmitsNoticeDuringInstantiationWhenGooglePlayPodcastExtensionUnavailable(): void
     {
         // Since we create feed and entry writer instances in the test constructor,
         // we need to reset it _now_ before creating a new renderer.

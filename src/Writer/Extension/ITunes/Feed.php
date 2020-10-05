@@ -67,11 +67,13 @@ class Feed
     /**
      * Set a block value of "yes" or "no". You may also set an empty string.
      *
-     * @param  string
-     * @return $this
+     * @param string
+     *
+     * @return self
+     *
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public function setItunesBlock($value)
+    public function setItunesBlock($value): self
     {
         if (! ctype_alpha($value) && strlen($value) > 0) {
             throw new Writer\Exception\InvalidArgumentException(

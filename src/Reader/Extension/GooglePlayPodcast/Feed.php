@@ -167,6 +167,8 @@ class Feed extends Extension\AbstractFeed
 
     /**
      * Register googleplay namespace
+     *
+     * @return void
      */
     protected function registerNamespaces()
     {

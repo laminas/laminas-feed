@@ -12,6 +12,9 @@ use Laminas\Http\Client as HttpClient;
 
 class ClientNotReset extends HttpClient
 {
+    /**
+     * @return void
+     */
     public function resetParameters($clearCookies = false, $clearAuth = true)
     {
         // Do nothing

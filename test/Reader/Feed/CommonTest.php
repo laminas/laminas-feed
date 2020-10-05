@@ -31,8 +31,10 @@ class CommonTest extends TestCase
 
     /**
      * Check DOM Retrieval and Information Methods
+     *
+     * @return void
      */
-    public function testGetsDomDocumentObject()
+    public function testGetsDomDocumentObject(): void
     {
         $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/atom.xml')
@@ -40,7 +42,7 @@ class CommonTest extends TestCase
         $this->assertInstanceOf(DOMDocument::class, $feed->getDomDocument());
     }
 
-    public function testGetsDomXpathObject()
+    public function testGetsDomXpathObject(): void
     {
         $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/atom.xml')
@@ -48,7 +50,7 @@ class CommonTest extends TestCase
         $this->assertInstanceOf(DOMXPath::class, $feed->getXpath());
     }
 
-    public function testGetsXpathPrefixString()
+    public function testGetsXpathPrefixString(): void
     {
         $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/atom.xml')
@@ -56,7 +58,7 @@ class CommonTest extends TestCase
         $this->assertEquals('/atom:feed', $feed->getXpathPrefix());
     }
 
-    public function testGetsDomElementObject()
+    public function testGetsDomElementObject(): void
     {
         $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/atom.xml')
@@ -64,7 +66,7 @@ class CommonTest extends TestCase
         $this->assertInstanceOf(DOMElement::class, $feed->getElement());
     }
 
-    public function testSaveXmlOutputsXmlStringForFeed()
+    public function testSaveXmlOutputsXmlStringForFeed(): void
     {
         $feed     = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/atom.xml')
@@ -74,7 +76,7 @@ class CommonTest extends TestCase
         $this->assertEquals($expected, $feed->saveXml());
     }
 
-    public function testGetsNamedExtension()
+    public function testGetsNamedExtension(): void
     {
         $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/atom.xml')
@@ -82,7 +84,7 @@ class CommonTest extends TestCase
         $this->assertInstanceOf(Feed::class, $feed->getExtension('Atom'));
     }
 
-    public function testReturnsNullIfExtensionDoesNotExist()
+    public function testReturnsNullIfExtensionDoesNotExist(): void
     {
         $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/atom.xml')
@@ -92,8 +94,10 @@ class CommonTest extends TestCase
 
     /**
      * @group Laminas-8213
+     *
+     * @return void
      */
-    public function testReturnsEncodingOfFeed()
+    public function testReturnsEncodingOfFeed(): void
     {
         $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/atom.xml')
@@ -103,8 +107,10 @@ class CommonTest extends TestCase
 
     /**
      * @group Laminas-8213
+     *
+     * @return void
      */
-    public function testReturnsEncodingOfFeedAsUtf8IfUndefined()
+    public function testReturnsEncodingOfFeedAsUtf8IfUndefined(): void
     {
         $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/atom_noencodingdefined.xml')

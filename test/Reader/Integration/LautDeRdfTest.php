@@ -27,8 +27,10 @@ class LautDeRdfTest extends TestCase
 
     /**
      * Feed level testing
+     *
+     * @return void
      */
-    public function testGetsTitle()
+    public function testGetsTitle(): void
     {
         $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
@@ -36,7 +38,7 @@ class LautDeRdfTest extends TestCase
         $this->assertEquals('laut.de - news', $feed->getTitle());
     }
 
-    public function testGetsAuthors()
+    public function testGetsAuthors(): void
     {
         $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
@@ -44,7 +46,7 @@ class LautDeRdfTest extends TestCase
         $this->assertEquals([['name' => 'laut.de']], (array) $feed->getAuthors());
     }
 
-    public function testGetsSingleAuthor()
+    public function testGetsSingleAuthor(): void
     {
         $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
@@ -52,7 +54,7 @@ class LautDeRdfTest extends TestCase
         $this->assertEquals(['name' => 'laut.de'], $feed->getAuthor());
     }
 
-    public function testGetsCopyright()
+    public function testGetsCopyright(): void
     {
         $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
@@ -60,7 +62,7 @@ class LautDeRdfTest extends TestCase
         $this->assertEquals('Copyright © 2004 laut.de', $feed->getCopyright());
     }
 
-    public function testGetsDescription()
+    public function testGetsDescription(): void
     {
         $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
@@ -68,7 +70,7 @@ class LautDeRdfTest extends TestCase
         $this->assertEquals('laut.de: aktuelle News', $feed->getDescription());
     }
 
-    public function testGetsLanguage()
+    public function testGetsLanguage(): void
     {
         $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
@@ -76,7 +78,7 @@ class LautDeRdfTest extends TestCase
         $this->assertEquals(null, $feed->getLanguage());
     }
 
-    public function testGetsLink()
+    public function testGetsLink(): void
     {
         $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
@@ -84,7 +86,7 @@ class LautDeRdfTest extends TestCase
         $this->assertEquals('http://www.laut.de', $feed->getLink());
     }
 
-    public function testGetsEncoding()
+    public function testGetsEncoding(): void
     {
         $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
@@ -94,8 +96,10 @@ class LautDeRdfTest extends TestCase
 
     /**
      * Entry level testing
+     *
+     * @return void
      */
-    public function testGetsEntryId()
+    public function testGetsEntryId(): void
     {
         $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
@@ -104,7 +108,7 @@ class LautDeRdfTest extends TestCase
         $this->assertEquals('http://www.laut.de/vorlaut/news/2009/07/04/22426/index.htm', $entry->getId());
     }
 
-    public function testGetsEntryTitle()
+    public function testGetsEntryTitle(): void
     {
         $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
@@ -113,7 +117,7 @@ class LautDeRdfTest extends TestCase
         $this->assertEquals('Angelika Express: MySpace-Aus wegen Sido-Werbung', $entry->getTitle());
     }
 
-    public function testGetsEntryAuthors()
+    public function testGetsEntryAuthors(): void
     {
         $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
@@ -122,7 +126,7 @@ class LautDeRdfTest extends TestCase
         $this->assertEquals([['name' => 'laut.de']], (array) $entry->getAuthors());
     }
 
-    public function testGetsEntrySingleAuthor()
+    public function testGetsEntrySingleAuthor(): void
     {
         $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
@@ -136,7 +140,7 @@ class LautDeRdfTest extends TestCase
     // broken itself, or b) We should consider a fix in the future for similar feeds such
     // as using a more limited XML based decoding method (not html_entity_decode())
 
-    public function testGetsEntryDescription()
+    public function testGetsEntryDescription(): void
     {
         $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
@@ -149,7 +153,7 @@ class LautDeRdfTest extends TestCase
         );
     }
 
-    public function testGetsEntryContent()
+    public function testGetsEntryContent(): void
     {
         $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
@@ -162,7 +166,7 @@ class LautDeRdfTest extends TestCase
         );
     }
 
-    public function testGetsEntryLinks()
+    public function testGetsEntryLinks(): void
     {
         $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
@@ -171,7 +175,7 @@ class LautDeRdfTest extends TestCase
         $this->assertEquals(['http://www.laut.de/vorlaut/news/2009/07/04/22426/index.htm'], $entry->getLinks());
     }
 
-    public function testGetsEntryLink()
+    public function testGetsEntryLink(): void
     {
         $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
@@ -180,7 +184,7 @@ class LautDeRdfTest extends TestCase
         $this->assertEquals('http://www.laut.de/vorlaut/news/2009/07/04/22426/index.htm', $entry->getLink());
     }
 
-    public function testGetsEntryPermaLink()
+    public function testGetsEntryPermaLink(): void
     {
         $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
@@ -192,7 +196,7 @@ class LautDeRdfTest extends TestCase
         );
     }
 
-    public function testGetsEntryEncoding()
+    public function testGetsEntryEncoding(): void
     {
         $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)

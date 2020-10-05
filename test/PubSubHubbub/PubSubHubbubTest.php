@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
  */
 class PubSubHubbubTest extends TestCase
 {
-    public function testCanDetectHubs()
+    public function testCanDetectHubs(): void
     {
         $feed = FeedReader::importFile(__DIR__ . '/_files/rss20.xml');
         $this->assertEquals([

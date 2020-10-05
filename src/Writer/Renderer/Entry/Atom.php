@@ -233,6 +233,9 @@ class Atom extends Renderer\AbstractRenderer implements Renderer\RendererInterfa
     }
 
     // @codingStandardsIgnoreStart
+    /**
+     * @return void
+     */
     protected function _setLink(DOMDocument $dom, DOMElement $root)
     {
         // @codingStandardsIgnoreEnd

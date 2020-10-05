@@ -17,18 +17,18 @@ use PHPUnit\Framework\TestCase;
 
 class FeedFactoryTest extends TestCase
 {
-    public function testFactoryShouldCreateFeedWithoutData()
+    public function testFactoryShouldCreateFeedWithoutData(): void
     {
         $this->assertInstanceOf(Feed::class, FeedFactory::factory([]));
     }
 
-    public function testFactoryShouldThrowExceptionOnNonTraversableData()
+    public function testFactoryShouldThrowExceptionOnNonTraversableData(): void
     {
         $this->expectException(InvalidArgumentException::class);
         FeedFactory::factory('string');
     }
 
-    public function testFactoryShouldCreateFeedWithBasicData()
+    public function testFactoryShouldCreateFeedWithBasicData(): void
     {
         // Create
         $data = [
@@ -55,7 +55,7 @@ class FeedFactoryTest extends TestCase
         );
     }
 
-    public function testFactoryShouldCreateFeedWithEntryObjects()
+    public function testFactoryShouldCreateFeedWithEntryObjects(): void
     {
         $data = [
             'entries' => [
@@ -69,7 +69,7 @@ class FeedFactoryTest extends TestCase
         $this->assertCount(2, $feed);
     }
 
-    public function testFactoryShouldCreateFeedWithEntryArrays()
+    public function testFactoryShouldCreateFeedWithEntryArrays(): void
     {
         $data = [
             'entries' => [
@@ -93,7 +93,7 @@ class FeedFactoryTest extends TestCase
         $this->assertCount(2, $feed);
     }
 
-    public function testFactoryShouldThrowExceptionOnNonTraversableEntriesData()
+    public function testFactoryShouldThrowExceptionOnNonTraversableEntriesData(): void
     {
         $this->expectException(InvalidArgumentException::class);
         FeedFactory::factory(
@@ -103,7 +103,7 @@ class FeedFactoryTest extends TestCase
         );
     }
 
-    public function testFactoryShouldThrowExceptionOnNonTraversableEntryData()
+    public function testFactoryShouldThrowExceptionOnNonTraversableEntryData(): void
     {
         $this->expectException(InvalidArgumentException::class);
         FeedFactory::factory(

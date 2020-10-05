@@ -108,8 +108,10 @@ class PubSubHubbub
      * Set the Escaper instance
      *
      * If null, resets the instance
+     *
+     * @return void
      */
-    public static function setEscaper(Escaper $escaper = null)
+    public static function setEscaper(Escaper $escaper = null): void
     {
         static::$escaper = $escaper;
     }

@@ -62,7 +62,7 @@ class AtomSourceTest extends TestCase
         ];
     }
 
-    public function testGetsSourceFromEntry()
+    public function testGetsSourceFromEntry(): void
     {
         $feed   = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/title/atom10.xml')
@@ -73,8 +73,10 @@ class AtomSourceTest extends TestCase
 
     /**
      * Get Title (Unencoded Text)
+     *
+     * @return void
      */
-    public function testGetsTitleFromAtom10()
+    public function testGetsTitleFromAtom10(): void
     {
         $feed   = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/title/atom10.xml')
@@ -85,8 +87,10 @@ class AtomSourceTest extends TestCase
 
     /**
      * Get Authors (Unencoded Text)
+     *
+     * @return void
      */
-    public function testGetsAuthorArrayFromAtom10()
+    public function testGetsAuthorArrayFromAtom10(): void
     {
         $feed   = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/author/atom10.xml')
@@ -107,8 +111,10 @@ class AtomSourceTest extends TestCase
 
     /**
      * Get Single Author (Unencoded Text)
+     *
+     * @return void
      */
-    public function testGetsSingleAuthorFromAtom10()
+    public function testGetsSingleAuthorFromAtom10(): void
     {
         $feed   = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/author/atom10.xml')
@@ -123,8 +129,10 @@ class AtomSourceTest extends TestCase
 
     /**
      * Get creation date (Unencoded Text)
+     *
+     * @return void
      */
-    public function testGetsDateCreatedFromAtom10()
+    public function testGetsDateCreatedFromAtom10(): void
     {
         $feed   = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/datecreated/atom10.xml')
@@ -137,8 +145,10 @@ class AtomSourceTest extends TestCase
 
     /**
      * Get modification date (Unencoded Text)
+     *
+     * @return void
      */
-    public function testGetsDateModifiedFromAtom10()
+    public function testGetsDateModifiedFromAtom10(): void
     {
         $feed   = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/datemodified/atom10.xml')
@@ -151,8 +161,10 @@ class AtomSourceTest extends TestCase
 
     /**
      * Get Generator (Unencoded Text)
+     *
+     * @return void
      */
-    public function testGetsGeneratorFromAtom10()
+    public function testGetsGeneratorFromAtom10(): void
     {
         $feed   = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/generator/atom10.xml')
@@ -163,8 +175,10 @@ class AtomSourceTest extends TestCase
 
     /**
      * Get Copyright (Unencoded Text)
+     *
+     * @return void
      */
-    public function testGetsCopyrightFromAtom10()
+    public function testGetsCopyrightFromAtom10(): void
     {
         $feed   = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/copyright/atom10.xml')
@@ -175,8 +189,10 @@ class AtomSourceTest extends TestCase
 
     /**
      * Get Description (Unencoded Text)
+     *
+     * @return void
      */
-    public function testGetsDescriptionFromAtom10()
+    public function testGetsDescriptionFromAtom10(): void
     {
         $feed   = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/description/atom10.xml')
@@ -187,8 +203,10 @@ class AtomSourceTest extends TestCase
 
     /**
      * Get Id (Unencoded Text)
+     *
+     * @return void
      */
-    public function testGetsIdFromAtom10()
+    public function testGetsIdFromAtom10(): void
     {
         $feed   = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/id/atom10.xml')
@@ -199,8 +217,10 @@ class AtomSourceTest extends TestCase
 
     /**
      * Get Language (Unencoded Text)
+     *
+     * @return void
      */
-    public function testGetsLanguageFromAtom10()
+    public function testGetsLanguageFromAtom10(): void
     {
         $feed   = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/language/atom10.xml')
@@ -211,8 +231,10 @@ class AtomSourceTest extends TestCase
 
     /**
      * Get Link (Unencoded Text)
+     *
+     * @return void
      */
-    public function testGetsLinkFromAtom10()
+    public function testGetsLinkFromAtom10(): void
     {
         $feed   = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/link/atom10.xml')
@@ -223,8 +245,10 @@ class AtomSourceTest extends TestCase
 
     /**
      * Get Feed Link (Unencoded Text)
+     *
+     * @return void
      */
-    public function testGetsFeedLinkFromAtom10()
+    public function testGetsFeedLinkFromAtom10(): void
     {
         $feed   = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/feedlink/atom10.xml')
@@ -235,8 +259,10 @@ class AtomSourceTest extends TestCase
 
     /**
      * Get Pubsubhubbub Hubs
+     *
+     * @return void
      */
-    public function testGetsHubsFromAtom10()
+    public function testGetsHubsFromAtom10(): void
     {
         $feed   = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/hubs/atom10.xml')
@@ -250,8 +276,10 @@ class AtomSourceTest extends TestCase
 
     /**
      * Get category data
+     *
+     * @return void
      */
-    public function testGetsCategoriesFromAtom10()
+    public function testGetsCategoriesFromAtom10(): void
     {
         $feed   = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/category/atom10.xml')

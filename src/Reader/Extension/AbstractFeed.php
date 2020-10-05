@@ -133,9 +133,9 @@ abstract class AbstractFeed
     /**
      * Get the DOMXPath object
      *
-     * @return string
+     * @return DOMXPath
      */
-    public function getXpath()
+    public function getXpath(): DOMXPath
     {
         if (null === $this->xpath) {
             $this->setXpath(new DOMXPath($this->getDomDocument()));

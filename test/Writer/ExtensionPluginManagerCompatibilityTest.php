@@ -28,12 +28,12 @@ class ExtensionPluginManagerCompatibilityTest extends TestCase
         return InvalidArgumentException::class;
     }
 
-    protected function getInstanceOf()
+    protected function getInstanceOf(): void
     {
         return;
     }
 
-    public function testInstanceOfMatches()
+    public function testInstanceOfMatches(): void
     {
         $this->markTestSkipped(sprintf(
             'Skipping test; %s allows multiple extension types',

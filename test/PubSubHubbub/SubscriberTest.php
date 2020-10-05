@@ -46,13 +46,13 @@ class SubscriberTest extends TestCase
             ->will($this->returnValue($this->adapter));
     }
 
-    public function testAddsHubServerUrl()
+    public function testAddsHubServerUrl(): void
     {
         $this->subscriber->addHubUrl('http://www.example.com/hub');
         $this->assertEquals(['http://www.example.com/hub'], $this->subscriber->getHubUrls());
     }
 
-    public function testAddsHubServerUrlsFromArray()
+    public function testAddsHubServerUrlsFromArray(): void
     {
         $this->subscriber->addHubUrls([
             'http://www.example.com/hub',
@@ -64,7 +64,7 @@ class SubscriberTest extends TestCase
         ], $this->subscriber->getHubUrls());
     }
 
-    public function testAddsHubServerUrlsFromArrayUsingSetOptions()
+    public function testAddsHubServerUrlsFromArrayUsingSetOptions(): void
     {
         $this->subscriber->setOptions([
             'hubUrls' => [
@@ -78,7 +78,7 @@ class SubscriberTest extends TestCase
         ], $this->subscriber->getHubUrls());
     }
 
-    public function testRemovesHubServerUrl()
+    public function testRemovesHubServerUrl(): void
     {
         $this->subscriber->addHubUrls([
             'http://www.example.com/hub',
@@ -90,7 +90,7 @@ class SubscriberTest extends TestCase
         ], $this->subscriber->getHubUrls());
     }
 
-    public function testRetrievesUniqueHubServerUrlsOnly()
+    public function testRetrievesUniqueHubServerUrlsOnly(): void
     {
         $this->subscriber->addHubUrls([
             'http://www.example.com/hub',
@@ -103,31 +103,31 @@ class SubscriberTest extends TestCase
         ], $this->subscriber->getHubUrls());
     }
 
-    public function testThrowsExceptionOnSettingEmptyHubServerUrl()
+    public function testThrowsExceptionOnSettingEmptyHubServerUrl(): void
     {
         $this->expectException(ExceptionInterface::class);
         $this->subscriber->addHubUrl('');
     }
 
-    public function testThrowsExceptionOnSettingNonStringHubServerUrl()
+    public function testThrowsExceptionOnSettingNonStringHubServerUrl(): void
     {
         $this->expectException(ExceptionInterface::class);
         $this->subscriber->addHubUrl(123);
     }
 
-    public function testThrowsExceptionOnSettingInvalidHubServerUrl()
+    public function testThrowsExceptionOnSettingInvalidHubServerUrl(): void
     {
         $this->expectException(ExceptionInterface::class);
         $this->subscriber->addHubUrl('http://');
     }
 
-    public function testAddsParameter()
+    public function testAddsParameter(): void
     {
         $this->subscriber->setParameter('foo', 'bar');
         $this->assertEquals(['foo' => 'bar'], $this->subscriber->getParameters());
     }
 
-    public function testAddsParametersFromArray()
+    public function testAddsParametersFromArray(): void
     {
         $this->subscriber->setParameters([
             'foo' => 'bar',
@@ -139,7 +139,7 @@ class SubscriberTest extends TestCase
         ], $this->subscriber->getParameters());
     }
 
-    public function testAddsParametersFromArrayInSingleMethod()
+    public function testAddsParametersFromArrayInSingleMethod(): void
     {
         $this->subscriber->setParameter([
             'foo' => 'bar',
@@ -151,7 +151,7 @@ class SubscriberTest extends TestCase
         ], $this->subscriber->getParameters());
     }
 
-    public function testAddsParametersFromArrayUsingSetOptions()
+    public function testAddsParametersFromArrayUsingSetOptions(): void
     {
         $this->subscriber->setOptions([
             'parameters' => [
@@ -165,7 +165,7 @@ class SubscriberTest extends TestCase
         ], $this->subscriber->getParameters());
     }
 
-    public function testRemovesParameter()
+    public function testRemovesParameter(): void
     {
         $this->subscriber->setParameters([
             'foo' => 'bar',
@@ -177,7 +177,7 @@ class SubscriberTest extends TestCase
         ], $this->subscriber->getParameters());
     }
 
-    public function testRemovesParameterIfSetToNull()
+    public function testRemovesParameterIfSetToNull(): void
     {
         $this->subscriber->setParameters([
             'foo' => 'bar',
@@ -189,122 +189,122 @@ class SubscriberTest extends TestCase
         ], $this->subscriber->getParameters());
     }
 
-    public function testCanSetTopicUrl()
+    public function testCanSetTopicUrl(): void
     {
         $this->subscriber->setTopicUrl('http://www.example.com/topic');
         $this->assertEquals('http://www.example.com/topic', $this->subscriber->getTopicUrl());
     }
 
-    public function testThrowsExceptionOnSettingEmptyTopicUrl()
+    public function testThrowsExceptionOnSettingEmptyTopicUrl(): void
     {
         $this->expectException(ExceptionInterface::class);
         $this->subscriber->setTopicUrl('');
     }
 
-    public function testThrowsExceptionOnSettingNonStringTopicUrl()
+    public function testThrowsExceptionOnSettingNonStringTopicUrl(): void
     {
         $this->expectException(ExceptionInterface::class);
         $this->subscriber->setTopicUrl(123);
     }
 
-    public function testThrowsExceptionOnSettingInvalidTopicUrl()
+    public function testThrowsExceptionOnSettingInvalidTopicUrl(): void
     {
         $this->expectException(ExceptionInterface::class);
         $this->subscriber->setTopicUrl('http://');
     }
 
-    public function testThrowsExceptionOnMissingTopicUrl()
+    public function testThrowsExceptionOnMissingTopicUrl(): void
     {
         $this->expectException(ExceptionInterface::class);
         $this->subscriber->getTopicUrl();
     }
 
-    public function testCanSetCallbackUrl()
+    public function testCanSetCallbackUrl(): void
     {
         $this->subscriber->setCallbackUrl('http://www.example.com/callback');
         $this->assertEquals('http://www.example.com/callback', $this->subscriber->getCallbackUrl());
     }
 
-    public function testThrowsExceptionOnSettingEmptyCallbackUrl()
+    public function testThrowsExceptionOnSettingEmptyCallbackUrl(): void
     {
         $this->expectException(ExceptionInterface::class);
         $this->subscriber->setCallbackUrl('');
     }
 
-    public function testThrowsExceptionOnSettingNonStringCallbackUrl()
+    public function testThrowsExceptionOnSettingNonStringCallbackUrl(): void
     {
         $this->expectException(ExceptionInterface::class);
         $this->subscriber->setCallbackUrl(123);
     }
 
-    public function testThrowsExceptionOnSettingInvalidCallbackUrl()
+    public function testThrowsExceptionOnSettingInvalidCallbackUrl(): void
     {
         $this->expectException(ExceptionInterface::class);
         $this->subscriber->setCallbackUrl('http://');
     }
 
-    public function testThrowsExceptionOnMissingCallbackUrl()
+    public function testThrowsExceptionOnMissingCallbackUrl(): void
     {
         $this->expectException(ExceptionInterface::class);
         $this->subscriber->getCallbackUrl();
     }
 
-    public function testCanSetLeaseSeconds()
+    public function testCanSetLeaseSeconds(): void
     {
         $this->subscriber->setLeaseSeconds('10000');
         $this->assertEquals(10000, $this->subscriber->getLeaseSeconds());
     }
 
-    public function testThrowsExceptionOnSettingZeroAsLeaseSeconds()
+    public function testThrowsExceptionOnSettingZeroAsLeaseSeconds(): void
     {
         $this->expectException(ExceptionInterface::class);
         $this->subscriber->setLeaseSeconds(0);
     }
 
-    public function testThrowsExceptionOnSettingLessThanZeroAsLeaseSeconds()
+    public function testThrowsExceptionOnSettingLessThanZeroAsLeaseSeconds(): void
     {
         $this->expectException(ExceptionInterface::class);
         $this->subscriber->setLeaseSeconds(-1);
     }
 
-    public function testThrowsExceptionOnSettingAnyScalarTypeCastToAZeroOrLessIntegerAsLeaseSeconds()
+    public function testThrowsExceptionOnSettingAnyScalarTypeCastToAZeroOrLessIntegerAsLeaseSeconds(): void
     {
         $this->expectException(ExceptionInterface::class);
         $this->subscriber->setLeaseSeconds('0aa');
     }
 
-    public function testCanSetPreferredVerificationMode()
+    public function testCanSetPreferredVerificationMode(): void
     {
         $this->subscriber->setPreferredVerificationMode(PubSubHubbub::VERIFICATION_MODE_ASYNC);
         $this->assertEquals(PubSubHubbub::VERIFICATION_MODE_ASYNC, $this->subscriber->getPreferredVerificationMode());
     }
 
-    public function testSetsPreferredVerificationModeThrowsExceptionOnSettingBadMode()
+    public function testSetsPreferredVerificationModeThrowsExceptionOnSettingBadMode(): void
     {
         $this->expectException(ExceptionInterface::class);
         $this->subscriber->setPreferredVerificationMode('abc');
     }
 
-    public function testPreferredVerificationModeDefaultsToSync()
+    public function testPreferredVerificationModeDefaultsToSync(): void
     {
         $this->assertEquals(PubSubHubbub::VERIFICATION_MODE_SYNC, $this->subscriber->getPreferredVerificationMode());
     }
 
-    public function testCanSetStorageImplementation()
+    public function testCanSetStorageImplementation(): void
     {
         $storage = new Subscription($this->tableGateway);
         $this->subscriber->setStorage($storage);
         $this->assertThat($this->subscriber->getStorage(), $this->identicalTo($storage));
     }
 
-    public function testGetStorageThrowsExceptionIfNoneSet()
+    public function testGetStorageThrowsExceptionIfNoneSet(): void
     {
         $this->expectException(ExceptionInterface::class);
         $this->subscriber->getStorage();
     }
 
     // @codingStandardsIgnoreStart
-    protected function _getCleanMock($className)
+    protected function _getCleanMock(string $className): \PHPUnit\Framework\MockObject\MockObject
     {
         // @codingStandardsIgnoreEnd
         $class       = new ReflectionClass($className);

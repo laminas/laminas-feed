@@ -13,7 +13,7 @@ use ReflectionMethod;
 
 class AbstractCallbackTest extends TestCase
 {
-    public function testDetectCallbackUrlIgnoresXOriginalUrlHeaderWhenXRewriteUrlHeaderIsNotPresent()
+    public function testDetectCallbackUrlIgnoresXOriginalUrlHeaderWhenXRewriteUrlHeaderIsNotPresent(): void
     {
         $_SERVER = array_merge($_SERVER, [
             'HTTP_X_ORIGINAL_URL' => '/hijack-attempt',
@@ -30,7 +30,7 @@ class AbstractCallbackTest extends TestCase
         $this->assertSame('/requested/path', $r->invoke($callback));
     }
 
-    public function testDetectCallbackUrlRequiresCombinationOfIISWasUrlRewrittenAndUnencodedUrlToReturnEarly()
+    public function testDetectCallbackUrlRequiresCombinationOfIISWasUrlRewrittenAndUnencodedUrlToReturnEarly(): void
     {
         $_SERVER = array_merge($_SERVER, [
             'IIS_WasUrlRewritten' => '1',
@@ -45,7 +45,7 @@ class AbstractCallbackTest extends TestCase
         $this->assertSame('/requested/path', $r->invoke($callback));
     }
 
-    public function testDetectCallbackUrlUsesRequestUriWhenNoOtherRewriteHeadersAreFound()
+    public function testDetectCallbackUrlUsesRequestUriWhenNoOtherRewriteHeadersAreFound(): void
     {
         $_SERVER = array_merge($_SERVER, [
             'REQUEST_URI' => '/expected/path',
@@ -59,7 +59,7 @@ class AbstractCallbackTest extends TestCase
         $this->assertSame('/expected/path', $r->invoke($callback));
     }
 
-    public function testDetectCallbackUrlFallsBackToOrigPathInfoWhenAllElseFails()
+    public function testDetectCallbackUrlFallsBackToOrigPathInfoWhenAllElseFails(): void
     {
         $_SERVER = array_merge($_SERVER, [
             'ORIG_PATH_INFO' => '/expected/path',
@@ -73,7 +73,7 @@ class AbstractCallbackTest extends TestCase
         $this->assertSame('/expected/path', $r->invoke($callback));
     }
 
-    public function testDetectCallbackReturnsEmptyStringIfNoResourcesMatchedInServerSuperglobal()
+    public function testDetectCallbackReturnsEmptyStringIfNoResourcesMatchedInServerSuperglobal(): void
     {
         $callback = new TestAsset\Callback();
 

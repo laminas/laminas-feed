@@ -25,6 +25,9 @@ class Feed extends Extension\AbstractFeed
         return $this->data['dayPopular'];
     }
 
+    /**
+     * @return void
+     */
     protected function registerNamespaces()
     {
         $this->xpath->registerNamespace('jungle', 'http://example.com/junglebooks/rss/module/1.0/');

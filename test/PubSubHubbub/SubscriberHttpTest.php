@@ -66,7 +66,7 @@ class SubscriberHttpTest extends TestCase
         }
     }
 
-    public function testSubscriptionRequestSendsExpectedPostData()
+    public function testSubscriptionRequestSendsExpectedPostData(): void
     {
         $this->subscriber->setTopicUrl('http://www.example.com/topic');
         $this->subscriber->addHubUrl($this->baseuri . '/testRawPostData.php');
@@ -82,7 +82,7 @@ class SubscriberHttpTest extends TestCase
         );
     }
 
-    public function testUnsubscriptionRequestSendsExpectedPostData()
+    public function testUnsubscriptionRequestSendsExpectedPostData(): void
     {
         $this->subscriber->setTopicUrl('http://www.example.com/topic');
         $this->subscriber->addHubUrl($this->baseuri . '/testRawPostData.php');
@@ -102,7 +102,7 @@ class SubscriberHttpTest extends TestCase
     }
 
     // @codingStandardsIgnoreStart
-    protected function _getCleanMock($className)
+    protected function _getCleanMock(string $className): \PHPUnit\Framework\MockObject\MockObject
     {
         // @codingStandardsIgnoreEnd
         $class       = new ReflectionClass($className);

@@ -36,14 +36,14 @@ class EntryTest extends TestCase
         Writer\Writer::reset();
     }
 
-    public function testAddsAuthorNameFromArray()
+    public function testAddsAuthorNameFromArray(): void
     {
         $entry = new Writer\Entry();
         $entry->addAuthor(['name' => 'Joe']);
         $this->assertEquals([['name' => 'Joe']], $entry->getAuthors());
     }
 
-    public function testAddsAuthorEmailFromArray()
+    public function testAddsAuthorEmailFromArray(): void
     {
         $entry = new Writer\Entry();
         $entry->addAuthor([
@@ -58,7 +58,7 @@ class EntryTest extends TestCase
         ], $entry->getAuthors());
     }
 
-    public function testAddsAuthorUriFromArray()
+    public function testAddsAuthorUriFromArray(): void
     {
         $entry = new Writer\Entry();
         $entry->addAuthor([
@@ -73,7 +73,7 @@ class EntryTest extends TestCase
         ], $entry->getAuthors());
     }
 
-    public function testAddAuthorThrowsExceptionOnInvalidNameFromArray()
+    public function testAddAuthorThrowsExceptionOnInvalidNameFromArray(): void
     {
         $entry = new Writer\Entry();
 
@@ -81,7 +81,7 @@ class EntryTest extends TestCase
         $entry->addAuthor(['name' => '']);
     }
 
-    public function testAddAuthorThrowsExceptionOnInvalidEmailFromArray()
+    public function testAddAuthorThrowsExceptionOnInvalidEmailFromArray(): void
     {
         $entry = new Writer\Entry();
 
@@ -89,7 +89,7 @@ class EntryTest extends TestCase
         $entry->addAuthor(['name' => 'Joe', 'email' => '']);
     }
 
-    public function testAddAuthorThrowsExceptionOnInvalidUriFromArray()
+    public function testAddAuthorThrowsExceptionOnInvalidUriFromArray(): void
     {
         $entry = new Writer\Entry();
 
@@ -101,7 +101,7 @@ class EntryTest extends TestCase
         ]);
     }
 
-    public function testAddAuthorThrowsExceptionIfNameOmittedFromArray()
+    public function testAddAuthorThrowsExceptionIfNameOmittedFromArray(): void
     {
         $entry = new Writer\Entry();
 
@@ -109,7 +109,7 @@ class EntryTest extends TestCase
         $entry->addAuthor(['uri' => 'notauri']);
     }
 
-    public function testAddsAuthorsFromArrayOfAuthors()
+    public function testAddsAuthorsFromArrayOfAuthors(): void
     {
         $entry = new Writer\Entry();
         $entry->addAuthors([
@@ -135,7 +135,7 @@ class EntryTest extends TestCase
         $this->assertEquals($expected, $entry->getAuthors());
     }
 
-    public function testAddsEnclosure()
+    public function testAddsEnclosure(): void
     {
         $entry = new Writer\Entry();
         $entry->setEnclosure([
@@ -151,7 +151,7 @@ class EntryTest extends TestCase
         $this->assertEquals($expected, $entry->getEnclosure());
     }
 
-    public function testAddsEnclosureThrowsExceptionOnMissingUri()
+    public function testAddsEnclosureThrowsExceptionOnMissingUri(): void
     {
         $this->markTestIncomplete('Pending Laminas\URI fix for validation');
 
@@ -164,7 +164,7 @@ class EntryTest extends TestCase
         ]);
     }
 
-    public function testAddsEnclosureThrowsExceptionWhenUriIsInvalid()
+    public function testAddsEnclosureThrowsExceptionWhenUriIsInvalid(): void
     {
         $this->markTestIncomplete('Pending Laminas\URI fix for validation');
 
@@ -178,14 +178,14 @@ class EntryTest extends TestCase
         ]);
     }
 
-    public function testSetsCopyright()
+    public function testSetsCopyright(): void
     {
         $entry = new Writer\Entry();
         $entry->setCopyright('Copyright (c) 2009 Paddy Brady');
         $this->assertEquals('Copyright (c) 2009 Paddy Brady', $entry->getCopyright());
     }
 
-    public function testSetCopyrightThrowsExceptionOnInvalidParam()
+    public function testSetCopyrightThrowsExceptionOnInvalidParam(): void
     {
         $entry = new Writer\Entry();
 
@@ -193,14 +193,14 @@ class EntryTest extends TestCase
         $entry->setCopyright('');
     }
 
-    public function testSetsContent()
+    public function testSetsContent(): void
     {
         $entry = new Writer\Entry();
         $entry->setContent('I\'m content.');
         $this->assertEquals("I'm content.", $entry->getContent());
     }
 
-    public function testSetContentThrowsExceptionOnInvalidParam()
+    public function testSetContentThrowsExceptionOnInvalidParam(): void
     {
         $entry = new Writer\Entry();
 
@@ -208,7 +208,7 @@ class EntryTest extends TestCase
         $entry->setContent('');
     }
 
-    public function testSetDateCreatedDefaultsToCurrentTime()
+    public function testSetDateCreatedDefaultsToCurrentTime(): void
     {
         $entry = new Writer\Entry();
         $entry->setDateCreated();
@@ -216,7 +216,7 @@ class EntryTest extends TestCase
         $this->assertLessThanOrEqual($dateNow, $entry->getDateCreated());
     }
 
-    public function testSetDateCreatedUsesGivenUnixTimestamp()
+    public function testSetDateCreatedUsesGivenUnixTimestamp(): void
     {
         $entry = new Writer\Entry();
         $entry->setDateCreated(1234567890);
@@ -226,8 +226,10 @@ class EntryTest extends TestCase
 
     /**
      * @group Laminas-12070
+     *
+     * @return void
      */
-    public function testSetDateCreatedUsesGivenUnixTimestampWhenItIsLessThanTenDigits()
+    public function testSetDateCreatedUsesGivenUnixTimestampWhenItIsLessThanTenDigits(): void
     {
         $entry = new Writer\Entry();
         $entry->setDateCreated(123456789);
@@ -237,8 +239,10 @@ class EntryTest extends TestCase
 
     /**
      * @group Laminas-11610
+     *
+     * @return void
      */
-    public function testSetDateCreatedUsesGivenUnixTimestampWhenItIsAVerySmallInteger()
+    public function testSetDateCreatedUsesGivenUnixTimestampWhenItIsAVerySmallInteger(): void
     {
         $entry = new Writer\Entry();
         $entry->setDateCreated(123);
@@ -246,7 +250,7 @@ class EntryTest extends TestCase
         $this->assertEquals($myDate, $entry->getDateCreated());
     }
 
-    public function testSetDateCreatedUsesDateTimeObject()
+    public function testSetDateCreatedUsesDateTimeObject(): void
     {
         $myDate = new DateTime('@' . 1234567890);
         $entry  = new Writer\Entry();
@@ -254,7 +258,7 @@ class EntryTest extends TestCase
         $this->assertEquals($myDate, $entry->getDateCreated());
     }
 
-    public function testSetDateCreatedUsesDateTimeImmutableObject()
+    public function testSetDateCreatedUsesDateTimeImmutableObject(): void
     {
         $myDate = new DateTimeImmutable('@' . 1234567890);
         $entry  = new Writer\Entry();
@@ -262,7 +266,7 @@ class EntryTest extends TestCase
         $this->assertEquals($myDate, $entry->getDateCreated());
     }
 
-    public function testSetDateModifiedDefaultsToCurrentTime()
+    public function testSetDateModifiedDefaultsToCurrentTime(): void
     {
         $entry = new Writer\Entry();
         $entry->setDateModified();
@@ -270,7 +274,7 @@ class EntryTest extends TestCase
         $this->assertLessThanOrEqual($dateNow, $entry->getDateModified());
     }
 
-    public function testSetDateModifiedUsesGivenUnixTimestamp()
+    public function testSetDateModifiedUsesGivenUnixTimestamp(): void
     {
         $entry = new Writer\Entry();
         $entry->setDateModified(1234567890);
@@ -280,8 +284,10 @@ class EntryTest extends TestCase
 
     /**
      * @group Laminas-12070
+     *
+     * @return void
      */
-    public function testSetDateModifiedUsesGivenUnixTimestampWhenItIsLessThanTenDigits()
+    public function testSetDateModifiedUsesGivenUnixTimestampWhenItIsLessThanTenDigits(): void
     {
         $entry = new Writer\Entry();
         $entry->setDateModified(123456789);
@@ -291,8 +297,10 @@ class EntryTest extends TestCase
 
     /**
      * @group Laminas-11610
+     *
+     * @return void
      */
-    public function testSetDateModifiedUsesGivenUnixTimestampWhenItIsAVerySmallInteger()
+    public function testSetDateModifiedUsesGivenUnixTimestampWhenItIsAVerySmallInteger(): void
     {
         $entry = new Writer\Entry();
         $entry->setDateModified(123);
@@ -300,7 +308,7 @@ class EntryTest extends TestCase
         $this->assertEquals($myDate, $entry->getDateModified());
     }
 
-    public function testSetDateModifiedUsesDateTimeObject()
+    public function testSetDateModifiedUsesDateTimeObject(): void
     {
         $myDate = new DateTime('@' . 1234567890);
         $entry  = new Writer\Entry();
@@ -308,7 +316,7 @@ class EntryTest extends TestCase
         $this->assertEquals($myDate, $entry->getDateModified());
     }
 
-    public function testSetDateModifiedUsesDateTimeImmutableObject()
+    public function testSetDateModifiedUsesDateTimeImmutableObject(): void
     {
         $myDate = new DateTimeImmutable('@' . 1234567890);
         $entry  = new Writer\Entry();
@@ -316,7 +324,7 @@ class EntryTest extends TestCase
         $this->assertEquals($myDate, $entry->getDateModified());
     }
 
-    public function testSetDateCreatedThrowsExceptionOnInvalidParameter()
+    public function testSetDateCreatedThrowsExceptionOnInvalidParameter(): void
     {
         $entry = new Writer\Entry();
 
@@ -324,7 +332,7 @@ class EntryTest extends TestCase
         $entry->setDateCreated('abc');
     }
 
-    public function testSetDateModifiedThrowsExceptionOnInvalidParameter()
+    public function testSetDateModifiedThrowsExceptionOnInvalidParameter(): void
     {
         $entry = new Writer\Entry();
 
@@ -332,38 +340,38 @@ class EntryTest extends TestCase
         $entry->setDateModified('abc');
     }
 
-    public function testGetDateCreatedReturnsNullIfDateNotSet()
+    public function testGetDateCreatedReturnsNullIfDateNotSet(): void
     {
         $entry = new Writer\Entry();
         $this->assertNull($entry->getDateCreated());
     }
 
-    public function testGetDateModifiedReturnsNullIfDateNotSet()
+    public function testGetDateModifiedReturnsNullIfDateNotSet(): void
     {
         $entry = new Writer\Entry();
         $this->assertNull($entry->getDateModified());
     }
 
-    public function testGetCopyrightReturnsNullIfDateNotSet()
+    public function testGetCopyrightReturnsNullIfDateNotSet(): void
     {
         $entry = new Writer\Entry();
         $this->assertNull($entry->getCopyright());
     }
 
-    public function testGetContentReturnsNullIfDateNotSet()
+    public function testGetContentReturnsNullIfDateNotSet(): void
     {
         $entry = new Writer\Entry();
         $this->assertNull($entry->getContent());
     }
 
-    public function testSetsDescription()
+    public function testSetsDescription(): void
     {
         $entry = new Writer\Entry();
         $entry->setDescription('abc');
         $this->assertEquals('abc', $entry->getDescription());
     }
 
-    public function testSetDescriptionThrowsExceptionOnInvalidParameter()
+    public function testSetDescriptionThrowsExceptionOnInvalidParameter(): void
     {
         $entry = new Writer\Entry();
 
@@ -371,20 +379,20 @@ class EntryTest extends TestCase
         $entry->setDescription('');
     }
 
-    public function testGetDescriptionReturnsNullIfDateNotSet()
+    public function testGetDescriptionReturnsNullIfDateNotSet(): void
     {
         $entry = new Writer\Entry();
         $this->assertNull($entry->getDescription());
     }
 
-    public function testSetsId()
+    public function testSetsId(): void
     {
         $entry = new Writer\Entry();
         $entry->setId('http://www.example.com/id');
         $this->assertEquals('http://www.example.com/id', $entry->getId());
     }
 
-    public function testSetIdThrowsExceptionOnInvalidParameter()
+    public function testSetIdThrowsExceptionOnInvalidParameter(): void
     {
         $entry = new Writer\Entry();
 
@@ -392,20 +400,20 @@ class EntryTest extends TestCase
         $entry->setId('');
     }
 
-    public function testGetIdReturnsNullIfNotSet()
+    public function testGetIdReturnsNullIfNotSet(): void
     {
         $entry = new Writer\Entry();
         $this->assertNull($entry->getId());
     }
 
-    public function testSetsLink()
+    public function testSetsLink(): void
     {
         $entry = new Writer\Entry();
         $entry->setLink('http://www.example.com/id');
         $this->assertEquals('http://www.example.com/id', $entry->getLink());
     }
 
-    public function testSetLinkThrowsExceptionOnEmptyString()
+    public function testSetLinkThrowsExceptionOnEmptyString(): void
     {
         $entry = new Writer\Entry();
 
@@ -413,7 +421,7 @@ class EntryTest extends TestCase
         $entry->setLink('');
     }
 
-    public function testSetLinkThrowsExceptionOnInvalidUri()
+    public function testSetLinkThrowsExceptionOnInvalidUri(): void
     {
         $entry = new Writer\Entry();
 
@@ -421,26 +429,26 @@ class EntryTest extends TestCase
         $entry->setLink('http://');
     }
 
-    public function testGetLinkReturnsNullIfNotSet()
+    public function testGetLinkReturnsNullIfNotSet(): void
     {
         $entry = new Writer\Entry();
         $this->assertNull($entry->getLink());
     }
 
-    public function testGetLinksReturnsNullIfNotSet()
+    public function testGetLinksReturnsNullIfNotSet(): void
     {
         $entry = new Writer\Entry();
         $this->assertNull($entry->getLinks());
     }
 
-    public function testSetsCommentLink()
+    public function testSetsCommentLink(): void
     {
         $entry = new Writer\Entry();
         $entry->setCommentLink('http://www.example.com/id/comments');
         $this->assertEquals('http://www.example.com/id/comments', $entry->getCommentLink());
     }
 
-    public function testSetCommentLinkThrowsExceptionOnEmptyString()
+    public function testSetCommentLinkThrowsExceptionOnEmptyString(): void
     {
         $entry = new Writer\Entry();
 
@@ -448,7 +456,7 @@ class EntryTest extends TestCase
         $entry->setCommentLink('');
     }
 
-    public function testSetCommentLinkThrowsExceptionOnInvalidUri()
+    public function testSetCommentLinkThrowsExceptionOnInvalidUri(): void
     {
         $entry = new Writer\Entry();
 
@@ -456,13 +464,13 @@ class EntryTest extends TestCase
         $entry->setCommentLink('http://');
     }
 
-    public function testGetCommentLinkReturnsNullIfDateNotSet()
+    public function testGetCommentLinkReturnsNullIfDateNotSet(): void
     {
         $entry = new Writer\Entry();
         $this->assertNull($entry->getCommentLink());
     }
 
-    public function testSetsCommentFeedLink()
+    public function testSetsCommentFeedLink(): void
     {
         $entry = new Writer\Entry();
 
@@ -478,7 +486,7 @@ class EntryTest extends TestCase
         ], $entry->getCommentFeedLinks());
     }
 
-    public function testSetCommentFeedLinkThrowsExceptionOnEmptyString()
+    public function testSetCommentFeedLinkThrowsExceptionOnEmptyString(): void
     {
         $this->markTestIncomplete('Pending Laminas\URI fix for validation');
 
@@ -491,7 +499,7 @@ class EntryTest extends TestCase
         ]);
     }
 
-    public function testSetCommentFeedLinkThrowsExceptionOnInvalidUri()
+    public function testSetCommentFeedLinkThrowsExceptionOnInvalidUri(): void
     {
         $entry = new Writer\Entry();
 
@@ -502,7 +510,7 @@ class EntryTest extends TestCase
         ]);
     }
 
-    public function testSetCommentFeedLinkThrowsExceptionOnInvalidType()
+    public function testSetCommentFeedLinkThrowsExceptionOnInvalidType(): void
     {
         $entry = new Writer\Entry();
 
@@ -513,20 +521,20 @@ class EntryTest extends TestCase
         ]);
     }
 
-    public function testGetCommentFeedLinkReturnsNullIfNoneSet()
+    public function testGetCommentFeedLinkReturnsNullIfNoneSet(): void
     {
         $entry = new Writer\Entry();
         $this->assertNull($entry->getCommentFeedLinks());
     }
 
-    public function testSetsTitle()
+    public function testSetsTitle(): void
     {
         $entry = new Writer\Entry();
         $entry->setTitle('abc');
         $this->assertEquals('abc', $entry->getTitle());
     }
 
-    public function testSetTitleThrowsExceptionOnInvalidParameter()
+    public function testSetTitleThrowsExceptionOnInvalidParameter(): void
     {
         $entry = new Writer\Entry();
 
@@ -534,27 +542,32 @@ class EntryTest extends TestCase
         $entry->setTitle('');
     }
 
-    public function testGetTitleReturnsNullIfDateNotSet()
+    public function testGetTitleReturnsNullIfDateNotSet(): void
     {
         $entry = new Writer\Entry();
         $this->assertNull($entry->getTitle());
     }
 
-    public function testSetsCommentCount()
+    public function testSetsCommentCount(): void
     {
         $entry = new Writer\Entry();
         $entry->setCommentCount('10');
         $this->assertEquals(10, $entry->getCommentCount());
     }
 
-    public function testSetsCommentCount0()
+    public function testSetsCommentCount0(): void
     {
         $entry = new Writer\Entry();
         $entry->setCommentCount(0);
         $this->assertEquals(0, $entry->getCommentCount());
     }
 
-    public function allowedCommentCounts()
+    /**
+     * @return (float|int)[][]
+     *
+     * @psalm-return array{0: array{0: int, 1: int}, 1: array{0: float, 1: int}, 2: array{0: int, 1: int}, 3: array{0: int, 1: int}}
+     */
+    public function allowedCommentCounts(): array
     {
         return [
             [0, 0],
@@ -566,15 +579,22 @@ class EntryTest extends TestCase
 
     /**
      * @dataProvider allowedCommentCounts
+     *
+     * @return void
      */
-    public function testSetsCommentCountAllowed($count, $expected)
+    public function testSetsCommentCountAllowed($count, $expected): void
     {
         $entry = new Writer\Entry();
         $entry->setCommentCount($count);
         $this->assertSame($expected, $entry->getCommentCount());
     }
 
-    public function disallowedCommentCounts()
+    /**
+     * @return (array|bool|float|int|null|stdClass|string)[][]
+     *
+     * @psalm-return array{0: array{0: float}, 1: array{0: int}, 2: array{0: int}, 3: array{0: array<empty, empty>}, 4: array{0: string}, 5: array{0: false}, 6: array{0: true}, 7: array{0: stdClass}, 8: array{0: null}}
+     */
+    public function disallowedCommentCounts(): array
     {
         return [
             [1.1],
@@ -591,8 +611,10 @@ class EntryTest extends TestCase
 
     /**
      * @dataProvider disallowedCommentCounts
+     *
+     * @return void
      */
-    public function testSetsCommentCountDisallowed($count)
+    public function testSetsCommentCountDisallowed($count): void
     {
         $entry = new Writer\Entry();
 
@@ -600,7 +622,7 @@ class EntryTest extends TestCase
         $entry->setCommentCount($count);
     }
 
-    public function testSetCommentCountThrowsExceptionOnInvalidEmptyParameter()
+    public function testSetCommentCountThrowsExceptionOnInvalidEmptyParameter(): void
     {
         $entry = new Writer\Entry();
 
@@ -608,7 +630,7 @@ class EntryTest extends TestCase
         $entry->setCommentCount('');
     }
 
-    public function testSetCommentCountThrowsExceptionOnInvalidNonIntegerParameter()
+    public function testSetCommentCountThrowsExceptionOnInvalidNonIntegerParameter(): void
     {
         $entry = new Writer\Entry();
 
@@ -616,7 +638,7 @@ class EntryTest extends TestCase
         $entry->setCommentCount('a');
     }
 
-    public function testGetCommentCountReturnsNullIfDateNotSet()
+    public function testGetCommentCountReturnsNullIfDateNotSet(): void
     {
         $entry = new Writer\Entry();
         $this->assertNull($entry->getCommentCount());
@@ -624,8 +646,10 @@ class EntryTest extends TestCase
 
     /**
      * @covers \Laminas\Feed\Writer\Entry::setEncoding
+     *
+     * @return void
      */
-    public function testSetEncodingThrowsExceptionIfNull()
+    public function testSetEncodingThrowsExceptionIfNull(): void
     {
         $entry = new Writer\Entry();
 
@@ -635,8 +659,10 @@ class EntryTest extends TestCase
 
     /**
      * @covers \Laminas\Feed\Writer\Entry::addCategory
+     *
+     * @return void
      */
-    public function testAddCategoryThrowsExceptionIfNotSetTerm()
+    public function testAddCategoryThrowsExceptionIfNotSetTerm(): void
     {
         $entry = new Writer\Entry();
 
@@ -646,8 +672,10 @@ class EntryTest extends TestCase
 
     /**
      * @covers \Laminas\Feed\Writer\Entry::addCategory
+     *
+     * @return void
      */
-    public function testAddCategoryThrowsExceptionIfSchemeNull()
+    public function testAddCategoryThrowsExceptionIfSchemeNull(): void
     {
         $entry = new Writer\Entry();
 
@@ -657,8 +685,10 @@ class EntryTest extends TestCase
 
     /**
      * @covers \Laminas\Feed\Writer\Entry::setEnclosure
+     *
+     * @return void
      */
-    public function testSetEnclosureThrowsExceptionIfNotSetUri()
+    public function testSetEnclosureThrowsExceptionIfNotSetUri(): void
     {
         $entry = new Writer\Entry();
 
@@ -668,8 +698,10 @@ class EntryTest extends TestCase
 
     /**
      * @covers \Laminas\Feed\Writer\Entry::setEnclosure
+     *
+     * @return void
      */
-    public function testSetEnclosureThrowsExceptionIfNotValidUri()
+    public function testSetEnclosureThrowsExceptionIfNotValidUri(): void
     {
         $entry = new Writer\Entry();
 
@@ -679,8 +711,10 @@ class EntryTest extends TestCase
 
     /**
      * @covers \Laminas\Feed\Writer\Entry::getExtension
+     *
+     * @return void
      */
-    public function testGetExtension()
+    public function testGetExtension(): void
     {
         $entry = new Writer\Entry();
         $foo   = $entry->getExtension('foo');
@@ -691,8 +725,10 @@ class EntryTest extends TestCase
 
     /**
      * @covers \Laminas\Feed\Writer\Entry::getExtensions
+     *
+     * @return void
      */
-    public function testGetExtensions()
+    public function testGetExtensions(): void
     {
         $entry = new Writer\Entry();
 
@@ -703,8 +739,10 @@ class EntryTest extends TestCase
     /**
      * @covers \Laminas\Feed\Writer\Entry::getSource
      * @covers \Laminas\Feed\Writer\Entry::createSource
+     *
+     * @return void
      */
-    public function testGetSource()
+    public function testGetSource(): void
     {
         $entry = new Writer\Entry();
 
@@ -715,7 +753,7 @@ class EntryTest extends TestCase
         $this->assertInstanceOf(Source::class, $entry->getSource());
     }
 
-    public function testFluentInterface()
+    public function testFluentInterface(): void
     {
         $entry = new Writer\Entry();
 
@@ -743,14 +781,14 @@ class EntryTest extends TestCase
         $this->assertSame($result, $entry);
     }
 
-    public function testSetTitleShouldAllowAStringWithTheContentsZero()
+    public function testSetTitleShouldAllowAStringWithTheContentsZero(): void
     {
         $entry = new Writer\Entry();
         $entry->setTitle('0');
         $this->assertEquals('0', $entry->getTitle());
     }
 
-    public function testEntryWriterEmitsNoticeDuringFeedImportWhenGooglePlayPodcastExtensionUnavailable()
+    public function testEntryWriterEmitsNoticeDuringFeedImportWhenGooglePlayPodcastExtensionUnavailable(): void
     {
         Writer\Writer::setExtensionManager(new TestAsset\CustomExtensionManager());
 

@@ -50,14 +50,16 @@ class RssTest extends TestCase
 
     /**
      * @doesNotPerformAssertions
+     *
+     * @return void
      */
-    public function testRenderMethodRunsMinimalWriterContainerProperlyBeforeICheckAtomCompliance()
+    public function testRenderMethodRunsMinimalWriterContainerProperlyBeforeICheckAtomCompliance(): void
     {
         $renderer = new Renderer\Feed\Rss($this->validWriter);
         $renderer->render();
     }
 
-    public function testEntryEncodingHasBeenSet()
+    public function testEntryEncodingHasBeenSet(): void
     {
         $this->validWriter->setEncoding('iso-8859-1');
         $renderer = new Renderer\Feed\Rss($this->validWriter);
@@ -66,7 +68,7 @@ class RssTest extends TestCase
         $this->assertEquals('iso-8859-1', $entry->getEncoding());
     }
 
-    public function testEntryEncodingDefaultIsUsedIfEncodingNotSetByHand()
+    public function testEntryEncodingDefaultIsUsedIfEncodingNotSetByHand(): void
     {
         $renderer = new Renderer\Feed\Rss($this->validWriter);
         $feed     = Reader\Reader::importString($renderer->render()->saveXml());
@@ -74,7 +76,7 @@ class RssTest extends TestCase
         $this->assertEquals('UTF-8', $entry->getEncoding());
     }
 
-    public function testEntryTitleHasBeenSet()
+    public function testEntryTitleHasBeenSet(): void
     {
         $renderer = new Renderer\Feed\Rss($this->validWriter);
         $feed     = Reader\Reader::importString($renderer->render()->saveXml());
@@ -82,7 +84,7 @@ class RssTest extends TestCase
         $this->assertEquals('This is a test entry.', $entry->getTitle());
     }
 
-    public function testEntryTitleIfMissingThrowsExceptionIfDescriptionAlsoMissing()
+    public function testEntryTitleIfMissingThrowsExceptionIfDescriptionAlsoMissing(): void
     {
         $atomFeed = new Renderer\Feed\Rss($this->validWriter);
         $this->validEntry->remove('title');
@@ -92,7 +94,7 @@ class RssTest extends TestCase
         $atomFeed->render();
     }
 
-    public function testEntryTitleCharDataEncoding()
+    public function testEntryTitleCharDataEncoding(): void
     {
         $renderer = new Renderer\Feed\Rss($this->validWriter);
         $this->validEntry->setTitle('<>&\'"áéíóú');
@@ -101,7 +103,7 @@ class RssTest extends TestCase
         $this->assertEquals('<>&\'"áéíóú', $entry->getTitle());
     }
 
-    public function testEntrySummaryDescriptionHasBeenSet()
+    public function testEntrySummaryDescriptionHasBeenSet(): void
     {
         $renderer = new Renderer\Feed\Rss($this->validWriter);
         $feed     = Reader\Reader::importString($renderer->render()->saveXml());
@@ -109,7 +111,7 @@ class RssTest extends TestCase
         $this->assertEquals('This is a test entry description.', $entry->getDescription());
     }
 
-    public function testEntryDescriptionIfMissingThrowsExceptionIfAlsoNoTitle()
+    public function testEntryDescriptionIfMissingThrowsExceptionIfAlsoNoTitle(): void
     {
         $atomFeed = new Renderer\Feed\Rss($this->validWriter);
         $this->validEntry->remove('description');
@@ -119,7 +121,7 @@ class RssTest extends TestCase
         $atomFeed->render();
     }
 
-    public function testEntryDescriptionCharDataEncoding()
+    public function testEntryDescriptionCharDataEncoding(): void
     {
         $renderer = new Renderer\Feed\Rss($this->validWriter);
         $this->validEntry->setDescription('<>&\'"áéíóú');
@@ -128,7 +130,7 @@ class RssTest extends TestCase
         $this->assertEquals('<>&\'"áéíóú', $entry->getDescription());
     }
 
-    public function testEntryContentHasBeenSet()
+    public function testEntryContentHasBeenSet(): void
     {
         $this->validEntry->setContent('This is test entry content.');
         $renderer = new Renderer\Feed\Rss($this->validWriter);
@@ -137,7 +139,7 @@ class RssTest extends TestCase
         $this->assertEquals('This is test entry content.', $entry->getContent());
     }
 
-    public function testEntryContentCharDataEncoding()
+    public function testEntryContentCharDataEncoding(): void
     {
         $renderer = new Renderer\Feed\Rss($this->validWriter);
         $this->validEntry->setContent('<>&\'"áéíóú');
@@ -146,7 +148,7 @@ class RssTest extends TestCase
         $this->assertEquals('<>&\'"áéíóú', $entry->getContent());
     }
 
-    public function testEntryUpdatedDateHasBeenSet()
+    public function testEntryUpdatedDateHasBeenSet(): void
     {
         $this->validEntry->setDateModified(1234567890);
         $renderer = new Renderer\Feed\Rss($this->validWriter);
@@ -155,7 +157,7 @@ class RssTest extends TestCase
         $this->assertEquals(1234567890, $entry->getDateModified()->getTimestamp());
     }
 
-    public function testEntryPublishedDateHasBeenSet()
+    public function testEntryPublishedDateHasBeenSet(): void
     {
         $this->validEntry->setDateCreated(1234567000);
         $renderer = new Renderer\Feed\Rss($this->validWriter);
@@ -164,7 +166,7 @@ class RssTest extends TestCase
         $this->assertEquals(1234567000, $entry->getDateCreated()->getTimestamp());
     }
 
-    public function testEntryIncludesLinkToHtmlVersionOfFeed()
+    public function testEntryIncludesLinkToHtmlVersionOfFeed(): void
     {
         $renderer = new Renderer\Feed\Rss($this->validWriter);
         $feed     = Reader\Reader::importString($renderer->render()->saveXml());
@@ -172,7 +174,7 @@ class RssTest extends TestCase
         $this->assertEquals('http://www.example.com/1', $entry->getLink());
     }
 
-    public function testEntryHoldsAnyAuthorAdded()
+    public function testEntryHoldsAnyAuthorAdded(): void
     {
         $this->validEntry->addAuthor([
             'name'  => 'Jane',
@@ -186,7 +188,7 @@ class RssTest extends TestCase
         $this->assertEquals(['name' => 'Jane'], $entry->getAuthor());
     }
 
-    public function testEntryAuthorCharDataEncoding()
+    public function testEntryAuthorCharDataEncoding(): void
     {
         $this->validEntry->addAuthor([
             'name'  => '<>&\'"áéíóú',
@@ -200,7 +202,7 @@ class RssTest extends TestCase
         $this->assertEquals(['name' => '<>&\'"áéíóú'], $entry->getAuthor());
     }
 
-    public function testEntryHoldsAnyEnclosureAdded()
+    public function testEntryHoldsAnyEnclosureAdded(): void
     {
         $renderer = new Renderer\Feed\Rss($this->validWriter);
         $this->validEntry->setEnclosure([
@@ -216,7 +218,7 @@ class RssTest extends TestCase
         $this->assertEquals('http://example.com/audio.mp3', $enc->url);
     }
 
-    public function testAddsEnclosureThrowsExceptionOnMissingType()
+    public function testAddsEnclosureThrowsExceptionOnMissingType(): void
     {
         $renderer = new Renderer\Feed\Rss($this->validWriter);
         $this->validEntry->setEnclosure([
@@ -228,7 +230,7 @@ class RssTest extends TestCase
         $renderer->render();
     }
 
-    public function testAddsEnclosureThrowsExceptionOnMissingLength()
+    public function testAddsEnclosureThrowsExceptionOnMissingLength(): void
     {
         $renderer = new Renderer\Feed\Rss($this->validWriter);
         $this->validEntry->setEnclosure([
@@ -240,7 +242,7 @@ class RssTest extends TestCase
         $renderer->render();
     }
 
-    public function testAddsEnclosureThrowsExceptionOnNonNumericLength()
+    public function testAddsEnclosureThrowsExceptionOnNonNumericLength(): void
     {
         $renderer = new Renderer\Feed\Rss($this->validWriter);
         $this->validEntry->setEnclosure([
@@ -253,7 +255,7 @@ class RssTest extends TestCase
         $renderer->render();
     }
 
-    public function testAddsEnclosureThrowsExceptionOnNegativeLength()
+    public function testAddsEnclosureThrowsExceptionOnNegativeLength(): void
     {
         $renderer = new Renderer\Feed\Rss($this->validWriter);
         $this->validEntry->setEnclosure([
@@ -268,8 +270,10 @@ class RssTest extends TestCase
 
     /**
      * @doesNotPerformAssertions
+     *
+     * @return void
      */
-    public function testEnclosureWorksWithZeroLength()
+    public function testEnclosureWorksWithZeroLength(): void
     {
         $renderer = new Renderer\Feed\Rss($this->validWriter);
         $this->validEntry->setEnclosure([
@@ -282,8 +286,10 @@ class RssTest extends TestCase
 
     /**
      * @doesNotPerformAssertions
+     *
+     * @return void
      */
-    public function testEnclosureWorksWithPositiveLength()
+    public function testEnclosureWorksWithPositiveLength(): void
     {
         $renderer = new Renderer\Feed\Rss($this->validWriter);
         $this->validEntry->setEnclosure([
@@ -296,8 +302,10 @@ class RssTest extends TestCase
 
     /**
      * @doesNotPerformAssertions
+     *
+     * @return void
      */
-    public function testEnclosureWorksWithPositiveLengthString()
+    public function testEnclosureWorksWithPositiveLengthString(): void
     {
         $renderer = new Renderer\Feed\Rss($this->validWriter);
         $this->validEntry->setEnclosure([
@@ -308,7 +316,7 @@ class RssTest extends TestCase
         $renderer->render();
     }
 
-    public function testEntryIdHasBeenSet()
+    public function testEntryIdHasBeenSet(): void
     {
         $this->validEntry->setId('urn:uuid:60a76c80-d399-11d9-b93C-0003939e0af6');
         $renderer = new Renderer\Feed\Rss($this->validWriter);
@@ -317,12 +325,12 @@ class RssTest extends TestCase
         $this->assertEquals('urn:uuid:60a76c80-d399-11d9-b93C-0003939e0af6', $entry->getId());
     }
 
-    public function testEntryIdHasBeenSetWithPermaLinkAsFalseWhenNotUri()
+    public function testEntryIdHasBeenSetWithPermaLinkAsFalseWhenNotUri(): void
     {
         $this->markTestIncomplete('Untest due to LaminasR potential bug');
     }
 
-    public function testEntryIdDefaultIsUsedIfNotSetByHand()
+    public function testEntryIdDefaultIsUsedIfNotSetByHand(): void
     {
         $renderer = new Renderer\Feed\Rss($this->validWriter);
         $feed     = Reader\Reader::importString($renderer->render()->saveXml());
@@ -330,7 +338,7 @@ class RssTest extends TestCase
         $this->assertEquals($entry->getLink(), $entry->getId());
     }
 
-    public function testCommentLinkRendered()
+    public function testCommentLinkRendered(): void
     {
         $renderer = new Renderer\Feed\Rss($this->validWriter);
         $this->validEntry->setCommentLink('http://www.example.com/id/1');
@@ -339,7 +347,7 @@ class RssTest extends TestCase
         $this->assertEquals('http://www.example.com/id/1', $entry->getCommentLink());
     }
 
-    public function testCommentCountRendered()
+    public function testCommentCountRendered(): void
     {
         $renderer = new Renderer\Feed\Rss($this->validWriter);
         $this->validEntry->setCommentCount(22);
@@ -348,7 +356,7 @@ class RssTest extends TestCase
         $this->assertEquals(22, $entry->getCommentCount());
     }
 
-    public function testCommentFeedLinksRendered()
+    public function testCommentFeedLinksRendered(): void
     {
         $renderer = new Renderer\Feed\Rss($this->validWriter);
         $this->validEntry->setCommentFeedLinks([
@@ -368,7 +376,7 @@ class RssTest extends TestCase
         //$this->assertEquals('http://www.example.com/atom/id/1', $entry->getCommentFeedLink('atom'));
     }
 
-    public function testCategoriesCanBeSet()
+    public function testCategoriesCanBeSet(): void
     {
         $this->validEntry->addCategories([
             [
@@ -398,8 +406,10 @@ class RssTest extends TestCase
 
     /**
      * @group LaminasWCHARDATA01
+     *
+     * @return void
      */
-    public function testCategoriesCharDataEncoding()
+    public function testCategoriesCharDataEncoding(): void
     {
         $this->validEntry->addCategories([
             [
@@ -427,7 +437,7 @@ class RssTest extends TestCase
         $this->assertEquals($expected, (array) $entry->getCategories());
     }
 
-    public function testEntryRendererEmitsNoticeDuringInstantiationWhenGooglePlayPodcastExtensionUnavailable()
+    public function testEntryRendererEmitsNoticeDuringInstantiationWhenGooglePlayPodcastExtensionUnavailable(): void
     {
         // Since we create feed and entry writer instances in the test constructor,
         // we need to reset it _now_ before creating a new renderer.
@@ -457,7 +467,7 @@ class RssTest extends TestCase
         );
     }
 
-    public function testPermalinkShouldBeEqualToLinkOfEntry()
+    public function testPermalinkShouldBeEqualToLinkOfEntry(): void
     {
         // Render
         $renderer = new Renderer\Feed\Rss($this->validWriter);
@@ -473,7 +483,7 @@ class RssTest extends TestCase
         );
     }
 
-    public function testPermalinkShouldBeNullOnNonAbsoluteUri()
+    public function testPermalinkShouldBeNullOnNonAbsoluteUri(): void
     {
         // Update entry
         $this->validEntry->remove('link');

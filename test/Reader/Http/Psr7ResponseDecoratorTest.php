@@ -20,35 +20,35 @@ use Psr\Http\Message\ResponseInterface as Psr7ResponseInterface;
  */
 class Psr7ResponseDecoratorTest extends TestCase
 {
-    public function testDecoratorIsAFeedResponse()
+    public function testDecoratorIsAFeedResponse(): void
     {
         $originalResponse = $this->createMock(Psr7ResponseInterface::class);
         $decorator        = new Psr7ResponseDecorator($originalResponse);
         $this->assertInstanceOf(ResponseInterface::class, $decorator);
     }
 
-    public function testDecoratorIsAHeaderAwareResponse()
+    public function testDecoratorIsAHeaderAwareResponse(): void
     {
         $originalResponse = $this->createMock(Psr7ResponseInterface::class);
         $decorator        = new Psr7ResponseDecorator($originalResponse);
         $this->assertInstanceOf(HeaderAwareResponseInterface::class, $decorator);
     }
 
-    public function testDecoratorIsNotAPsr7Response()
+    public function testDecoratorIsNotAPsr7Response(): void
     {
         $originalResponse = $this->createMock(Psr7ResponseInterface::class);
         $decorator        = new Psr7ResponseDecorator($originalResponse);
         $this->assertNotInstanceOf(Psr7ResponseInterface::class, $decorator);
     }
 
-    public function testCanRetrieveDecoratedResponse()
+    public function testCanRetrieveDecoratedResponse(): void
     {
         $originalResponse = $this->createMock(Psr7ResponseInterface::class);
         $decorator        = new Psr7ResponseDecorator($originalResponse);
         $this->assertSame($originalResponse, $decorator->getDecoratedResponse());
     }
 
-    public function testProxiesToDecoratedResponseToRetrieveStatusCode()
+    public function testProxiesToDecoratedResponseToRetrieveStatusCode(): void
     {
         $originalResponse = $this->createMock(Psr7ResponseInterface::class);
         $originalResponse
@@ -58,7 +58,7 @@ class Psr7ResponseDecoratorTest extends TestCase
         $this->assertSame(301, $decorator->getStatusCode());
     }
 
-    public function testProxiesToDecoratedResponseToRetrieveBody()
+    public function testProxiesToDecoratedResponseToRetrieveBody(): void
     {
         $originalResponse = $this->createMock(Psr7ResponseInterface::class);
         $originalResponse
@@ -68,7 +68,7 @@ class Psr7ResponseDecoratorTest extends TestCase
         $this->assertSame('BODY', $decorator->getBody());
     }
 
-    public function testCastsStreamToStringWhenReturningPsr7Body()
+    public function testCastsStreamToStringWhenReturningPsr7Body(): void
     {
         $stream           = new Psr7Stream('BODY');
         $originalResponse = $this->createMock(Psr7ResponseInterface::class);
@@ -79,7 +79,7 @@ class Psr7ResponseDecoratorTest extends TestCase
         $this->assertSame('BODY', $decorator->getBody());
     }
 
-    public function testProxiesToDecoratedResponseToRetrieveHeaderLine()
+    public function testProxiesToDecoratedResponseToRetrieveHeaderLine(): void
     {
         $originalResponse = $this->createMock(Psr7ResponseInterface::class);
         $originalResponse
@@ -95,7 +95,7 @@ class Psr7ResponseDecoratorTest extends TestCase
         $this->assertSame('2015-11-17 12:32:00-06:00', $decorator->getHeaderLine('E-Tag'));
     }
 
-    public function testDecoratorReturnsDefaultValueWhenOriginalResponseDoesNotHaveHeader()
+    public function testDecoratorReturnsDefaultValueWhenOriginalResponseDoesNotHaveHeader(): void
     {
         $originalResponse = $this->createMock(Psr7ResponseInterface::class);
         $originalResponse

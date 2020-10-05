@@ -25,8 +25,10 @@ class SubscriptionTest extends TestCase
 {
     /**
      * @group Laminas-10069
+     *
+     * @return void
      */
-    public function testAllOperations()
+    public function testAllOperations(): void
     {
         $adapter = $this->initDb();
         $table   = new TableGateway('subscription', $adapter);
@@ -59,7 +61,7 @@ class SubscriptionTest extends TestCase
         $this->assertTrue($subscription->deleteSubscription($id));
     }
 
-    public function testImpemetsSubscriptionInterface()
+    public function testImpemetsSubscriptionInterface(): void
     {
         $reflection = new ReflectionClass(Subscription::class);
         $this->assertTrue(
@@ -68,7 +70,7 @@ class SubscriptionTest extends TestCase
         unset($reflection);
     }
 
-    public function testCurrentTimeSetterAndGetter()
+    public function testCurrentTimeSetterAndGetter(): void
     {
         $now          = new DateTime();
         $subscription = new Subscription(new TableGateway('subscription', $this->initDb()));
@@ -76,7 +78,7 @@ class SubscriptionTest extends TestCase
         $this->assertSame($subscription->getNow(), $now);
     }
 
-    protected function initDb()
+    protected function initDb(): DbAdapter
     {
         if (! extension_loaded('pdo')
             || ! in_array('sqlite', PDO::getAvailableDrivers())
@@ -89,7 +91,7 @@ class SubscriptionTest extends TestCase
         return $db;
     }
 
-    protected function createTable(DbAdapter $db)
+    protected function createTable(DbAdapter $db): void
     {
         $sql = 'CREATE TABLE subscription ('
             . "id varchar(32) PRIMARY KEY NOT NULL DEFAULT '', "

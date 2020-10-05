@@ -25,7 +25,7 @@ class HOnlineComAtom10Test extends TestCase
         $this->feedSamplePath = dirname(__FILE__) . '/_files/h-online.com-atom10.xml';
     }
 
-    public function testGetsTitle()
+    public function testGetsTitle(): void
     {
         $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
@@ -33,7 +33,7 @@ class HOnlineComAtom10Test extends TestCase
         $this->assertEquals('The H - news feed', $feed->getTitle());
     }
 
-    public function testGetsAuthors()
+    public function testGetsAuthors(): void
     {
         $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
@@ -41,7 +41,7 @@ class HOnlineComAtom10Test extends TestCase
         $this->assertEquals([['name' => 'The H']], (array) $feed->getAuthors());
     }
 
-    public function testGetsSingleAuthor()
+    public function testGetsSingleAuthor(): void
     {
         $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
@@ -49,7 +49,7 @@ class HOnlineComAtom10Test extends TestCase
         $this->assertEquals(['name' => 'The H'], $feed->getAuthor());
     }
 
-    public function testGetsCopyright()
+    public function testGetsCopyright(): void
     {
         $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
@@ -57,7 +57,7 @@ class HOnlineComAtom10Test extends TestCase
         $this->assertEquals(null, $feed->getCopyright());
     }
 
-    public function testGetsDescription()
+    public function testGetsDescription(): void
     {
         $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
@@ -65,7 +65,7 @@ class HOnlineComAtom10Test extends TestCase
         $this->assertEquals('Technology news', $feed->getDescription());
     }
 
-    public function testGetsLanguage()
+    public function testGetsLanguage(): void
     {
         $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
@@ -73,7 +73,7 @@ class HOnlineComAtom10Test extends TestCase
         $this->assertEquals(null, $feed->getLanguage());
     }
 
-    public function testGetsLink()
+    public function testGetsLink(): void
     {
         $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
@@ -81,7 +81,7 @@ class HOnlineComAtom10Test extends TestCase
         $this->assertEquals('http://www.h-online.com', $feed->getLink());
     }
 
-    public function testGetsEncoding()
+    public function testGetsEncoding(): void
     {
         $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
@@ -89,7 +89,7 @@ class HOnlineComAtom10Test extends TestCase
         $this->assertEquals('UTF-8', $feed->getEncoding());
     }
 
-    public function testGetsEntryCount()
+    public function testGetsEntryCount(): void
     {
         $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
@@ -99,8 +99,10 @@ class HOnlineComAtom10Test extends TestCase
 
     /**
      * Entry level testing
+     *
+     * @return void
      */
-    public function testGetsEntryId()
+    public function testGetsEntryId(): void
     {
         $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
@@ -112,7 +114,7 @@ class HOnlineComAtom10Test extends TestCase
         );
     }
 
-    public function testGetsEntryTitle()
+    public function testGetsEntryTitle(): void
     {
         $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
@@ -121,7 +123,7 @@ class HOnlineComAtom10Test extends TestCase
         $this->assertEquals('McAfee update brings systems down again', $entry->getTitle());
     }
 
-    public function testGetsEntryAuthors()
+    public function testGetsEntryAuthors(): void
     {
         $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
@@ -130,7 +132,7 @@ class HOnlineComAtom10Test extends TestCase
         $this->assertEquals([['name' => 'The H']], (array) $entry->getAuthors());
     }
 
-    public function testGetsEntrySingleAuthor()
+    public function testGetsEntrySingleAuthor(): void
     {
         $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
@@ -139,7 +141,7 @@ class HOnlineComAtom10Test extends TestCase
         $this->assertEquals(['name' => 'The H'], $entry->getAuthor());
     }
 
-    public function testGetsEntryDescription()
+    public function testGetsEntryDescription(): void
     {
         $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
@@ -155,7 +157,7 @@ class HOnlineComAtom10Test extends TestCase
         );
     }
 
-    public function testGetsEntryContent()
+    public function testGetsEntryContent(): void
     {
         $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
@@ -167,7 +169,7 @@ class HOnlineComAtom10Test extends TestCase
         );
     }
 
-    public function testGetsEntryLinks()
+    public function testGetsEntryLinks(): void
     {
         $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
@@ -179,7 +181,7 @@ class HOnlineComAtom10Test extends TestCase
         );
     }
 
-    public function testGetsEntryLink()
+    public function testGetsEntryLink(): void
     {
         $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
@@ -191,7 +193,7 @@ class HOnlineComAtom10Test extends TestCase
         );
     }
 
-    public function testGetsEntryPermaLink()
+    public function testGetsEntryPermaLink(): void
     {
         $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
@@ -203,7 +205,7 @@ class HOnlineComAtom10Test extends TestCase
         );
     }
 
-    public function testGetsEntryEncoding()
+    public function testGetsEntryEncoding(): void
     {
         $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)

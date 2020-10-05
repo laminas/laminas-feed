@@ -31,7 +31,7 @@ class PublisherTest extends TestCase
         $this->publisher = new Publisher();
     }
 
-    public function getClientSuccess()
+    public function getClientSuccess(): ClientNotReset
     {
         $response = new HttpResponse();
         $response->setStatusCode(204);
@@ -42,7 +42,7 @@ class PublisherTest extends TestCase
         return $client;
     }
 
-    public function getClientFail()
+    public function getClientFail(): ClientNotReset
     {
         $response = new HttpResponse();
         $response->setStatusCode(404);
@@ -53,13 +53,13 @@ class PublisherTest extends TestCase
         return $client;
     }
 
-    public function testAddsHubServerUrl()
+    public function testAddsHubServerUrl(): void
     {
         $this->publisher->addHubUrl('http://www.example.com/hub');
         $this->assertEquals(['http://www.example.com/hub'], $this->publisher->getHubUrls());
     }
 
-    public function testAddsHubServerUrlsFromArray()
+    public function testAddsHubServerUrlsFromArray(): void
     {
         $this->publisher->addHubUrls([
             'http://www.example.com/hub',
@@ -71,7 +71,7 @@ class PublisherTest extends TestCase
         ], $this->publisher->getHubUrls());
     }
 
-    public function testAddsHubServerUrlsFromArrayUsingSetConfig()
+    public function testAddsHubServerUrlsFromArrayUsingSetConfig(): void
     {
         $this->publisher->setOptions([
             'hubUrls' => [
@@ -85,7 +85,7 @@ class PublisherTest extends TestCase
         ], $this->publisher->getHubUrls());
     }
 
-    public function testRemovesHubServerUrl()
+    public function testRemovesHubServerUrl(): void
     {
         $this->publisher->addHubUrls([
             'http://www.example.com/hub',
@@ -97,7 +97,7 @@ class PublisherTest extends TestCase
         ], $this->publisher->getHubUrls());
     }
 
-    public function testRetrievesUniqueHubServerUrlsOnly()
+    public function testRetrievesUniqueHubServerUrlsOnly(): void
     {
         $this->publisher->addHubUrls([
             'http://www.example.com/hub',
@@ -110,31 +110,31 @@ class PublisherTest extends TestCase
         ], $this->publisher->getHubUrls());
     }
 
-    public function testThrowsExceptionOnSettingEmptyHubServerUrl()
+    public function testThrowsExceptionOnSettingEmptyHubServerUrl(): void
     {
         $this->expectException(ExceptionInterface::class);
         $this->publisher->addHubUrl('');
     }
 
-    public function testThrowsExceptionOnSettingNonStringHubServerUrl()
+    public function testThrowsExceptionOnSettingNonStringHubServerUrl(): void
     {
         $this->expectException(ExceptionInterface::class);
         $this->publisher->addHubUrl(123);
     }
 
-    public function testThrowsExceptionOnSettingInvalidHubServerUrl()
+    public function testThrowsExceptionOnSettingInvalidHubServerUrl(): void
     {
         $this->expectException(ExceptionInterface::class);
         $this->publisher->addHubUrl('http://');
     }
 
-    public function testAddsUpdatedTopicUrl()
+    public function testAddsUpdatedTopicUrl(): void
     {
         $this->publisher->addUpdatedTopicUrl('http://www.example.com/topic');
         $this->assertEquals(['http://www.example.com/topic'], $this->publisher->getUpdatedTopicUrls());
     }
 
-    public function testAddsUpdatedTopicUrlsFromArray()
+    public function testAddsUpdatedTopicUrlsFromArray(): void
     {
         $this->publisher->addUpdatedTopicUrls([
             'http://www.example.com/topic',
@@ -146,7 +146,7 @@ class PublisherTest extends TestCase
         ], $this->publisher->getUpdatedTopicUrls());
     }
 
-    public function testAddsUpdatedTopicUrlsFromArrayUsingSetConfig()
+    public function testAddsUpdatedTopicUrlsFromArrayUsingSetConfig(): void
     {
         $this->publisher->setOptions([
             'updatedTopicUrls' => [
@@ -160,7 +160,7 @@ class PublisherTest extends TestCase
         ], $this->publisher->getUpdatedTopicUrls());
     }
 
-    public function testRemovesUpdatedTopicUrl()
+    public function testRemovesUpdatedTopicUrl(): void
     {
         $this->publisher->addUpdatedTopicUrls([
             'http://www.example.com/topic',
@@ -172,7 +172,7 @@ class PublisherTest extends TestCase
         ], $this->publisher->getUpdatedTopicUrls());
     }
 
-    public function testRetrievesUniqueUpdatedTopicUrlsOnly()
+    public function testRetrievesUniqueUpdatedTopicUrlsOnly(): void
     {
         $this->publisher->addUpdatedTopicUrls([
             'http://www.example.com/topic',
@@ -185,31 +185,31 @@ class PublisherTest extends TestCase
         ], $this->publisher->getUpdatedTopicUrls());
     }
 
-    public function testThrowsExceptionOnSettingEmptyUpdatedTopicUrl()
+    public function testThrowsExceptionOnSettingEmptyUpdatedTopicUrl(): void
     {
         $this->expectException(ExceptionInterface::class);
         $this->publisher->addUpdatedTopicUrl('');
     }
 
-    public function testThrowsExceptionOnSettingNonStringUpdatedTopicUrl()
+    public function testThrowsExceptionOnSettingNonStringUpdatedTopicUrl(): void
     {
         $this->expectException(ExceptionInterface::class);
         $this->publisher->addUpdatedTopicUrl(123);
     }
 
-    public function testThrowsExceptionOnSettingInvalidUpdatedTopicUrl()
+    public function testThrowsExceptionOnSettingInvalidUpdatedTopicUrl(): void
     {
         $this->expectException(ExceptionInterface::class);
         $this->publisher->addUpdatedTopicUrl('http://');
     }
 
-    public function testAddsParameter()
+    public function testAddsParameter(): void
     {
         $this->publisher->setParameter('foo', 'bar');
         $this->assertEquals(['foo' => 'bar'], $this->publisher->getParameters());
     }
 
-    public function testAddsParametersFromArray()
+    public function testAddsParametersFromArray(): void
     {
         $this->publisher->setParameters([
             'foo' => 'bar',
@@ -221,7 +221,7 @@ class PublisherTest extends TestCase
         ], $this->publisher->getParameters());
     }
 
-    public function testAddsParametersFromArrayInSingleMethod()
+    public function testAddsParametersFromArrayInSingleMethod(): void
     {
         $this->publisher->setParameter([
             'foo' => 'bar',
@@ -233,7 +233,7 @@ class PublisherTest extends TestCase
         ], $this->publisher->getParameters());
     }
 
-    public function testAddsParametersFromArrayUsingSetConfig()
+    public function testAddsParametersFromArrayUsingSetConfig(): void
     {
         $this->publisher->setOptions([
             'parameters' => [
@@ -247,7 +247,7 @@ class PublisherTest extends TestCase
         ], $this->publisher->getParameters());
     }
 
-    public function testRemovesParameter()
+    public function testRemovesParameter(): void
     {
         $this->publisher->setParameters([
             'foo' => 'bar',
@@ -259,7 +259,7 @@ class PublisherTest extends TestCase
         ], $this->publisher->getParameters());
     }
 
-    public function testRemovesParameterIfSetToNull()
+    public function testRemovesParameterIfSetToNull(): void
     {
         $this->publisher->setParameters([
             'foo' => 'bar',
@@ -271,7 +271,7 @@ class PublisherTest extends TestCase
         ], $this->publisher->getParameters());
     }
 
-    public function testNotifiesHubWithCorrectParameters()
+    public function testNotifiesHubWithCorrectParameters(): void
     {
         PubSubHubbub::setHttpClient($this->getClientSuccess());
         $client = PubSubHubbub::getHttpClient();
@@ -285,7 +285,7 @@ class PublisherTest extends TestCase
         );
     }
 
-    public function testNotifiesHubWithCorrectParametersAndMultipleTopics()
+    public function testNotifiesHubWithCorrectParametersAndMultipleTopics(): void
     {
         PubSubHubbub::setHttpClient($this->getClientSuccess());
         $client = PubSubHubbub::getHttpClient();
@@ -300,7 +300,7 @@ class PublisherTest extends TestCase
         );
     }
 
-    public function testNotifiesHubAndReportsSuccess()
+    public function testNotifiesHubAndReportsSuccess(): void
     {
         PubSubHubbub::setHttpClient($this->getClientSuccess());
         $client = PubSubHubbub::getHttpClient();
@@ -311,7 +311,7 @@ class PublisherTest extends TestCase
         $this->assertTrue($this->publisher->isSuccess());
     }
 
-    public function testNotifiesHubAndReportsFail()
+    public function testNotifiesHubAndReportsFail(): void
     {
         PubSubHubbub::setHttpClient($this->getClientFail());
         $client = PubSubHubbub::getHttpClient();

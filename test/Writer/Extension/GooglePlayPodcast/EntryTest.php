@@ -14,14 +14,14 @@ use PHPUnit\Framework\TestCase;
 
 class EntryTest extends TestCase
 {
-    public function testSetBlock()
+    public function testSetBlock(): void
     {
         $entry = new Writer\Entry();
         $entry->setPlayPodcastBlock('yes');
         $this->assertEquals('yes', $entry->getPlayPodcastBlock());
     }
 
-    public function testSetBlockThrowsExceptionOnNonAlphaValue()
+    public function testSetBlockThrowsExceptionOnNonAlphaValue(): void
     {
         $entry = new Writer\Entry();
 
@@ -29,7 +29,7 @@ class EntryTest extends TestCase
         $entry->setPlayPodcastBlock('123');
     }
 
-    public function testSetBlockThrowsExceptionIfValueGreaterThan255CharsLength()
+    public function testSetBlockThrowsExceptionIfValueGreaterThan255CharsLength(): void
     {
         $entry = new Writer\Entry();
 
@@ -37,28 +37,28 @@ class EntryTest extends TestCase
         $entry->setPlayPodcastBlock(str_repeat('a', 256));
     }
 
-    public function testSetExplicitToYes()
+    public function testSetExplicitToYes(): void
     {
         $entry = new Writer\Entry();
         $entry->setPlayPodcastExplicit('yes');
         $this->assertEquals('yes', $entry->getPlayPodcastExplicit());
     }
 
-    public function testSetExplicitToNo()
+    public function testSetExplicitToNo(): void
     {
         $entry = new Writer\Entry();
         $entry->setPlayPodcastExplicit('no');
         $this->assertEquals('no', $entry->getPlayPodcastExplicit());
     }
 
-    public function testSetExplicitToClean()
+    public function testSetExplicitToClean(): void
     {
         $entry = new Writer\Entry();
         $entry->setPlayPodcastExplicit('clean');
         $this->assertEquals('clean', $entry->getPlayPodcastExplicit());
     }
 
-    public function testSetExplicitThrowsExceptionOnUnknownTerm()
+    public function testSetExplicitThrowsExceptionOnUnknownTerm(): void
     {
         $entry = new Writer\Entry();
 
@@ -66,14 +66,14 @@ class EntryTest extends TestCase
         $entry->setPlayPodcastExplicit('abc');
     }
 
-    public function testSetDescription()
+    public function testSetDescription(): void
     {
         $entry = new Writer\Entry();
         $entry->setPlayPodcastDescription('abc');
         $this->assertEquals('abc', $entry->getPlayPodcastDescription());
     }
 
-    public function testSetDescriptionThrowsExceptionWhenValueExceeds255Chars()
+    public function testSetDescriptionThrowsExceptionWhenValueExceeds255Chars(): void
     {
         $entry = new Writer\Entry();
 

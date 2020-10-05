@@ -36,14 +36,14 @@ class FeedTest extends TestCase
         Writer\Writer::reset();
     }
 
-    public function testAddsAuthorNameFromArray()
+    public function testAddsAuthorNameFromArray(): void
     {
         $writer = new Writer\Feed();
         $writer->addAuthor(['name' => 'Joe']);
         $this->assertEquals(['name' => 'Joe'], $writer->getAuthor());
     }
 
-    public function testAddsAuthorEmailFromArray()
+    public function testAddsAuthorEmailFromArray(): void
     {
         $writer = new Writer\Feed();
         $writer->addAuthor([
@@ -56,7 +56,7 @@ class FeedTest extends TestCase
         ], $writer->getAuthor());
     }
 
-    public function testAddsAuthorUriFromArray()
+    public function testAddsAuthorUriFromArray(): void
     {
         $writer = new Writer\Feed();
         $writer->addAuthor([
@@ -69,7 +69,7 @@ class FeedTest extends TestCase
         ], $writer->getAuthor());
     }
 
-    public function testAddAuthorThrowsExceptionOnInvalidNameFromArray()
+    public function testAddAuthorThrowsExceptionOnInvalidNameFromArray(): void
     {
         $writer = new Writer\Feed();
 
@@ -77,7 +77,7 @@ class FeedTest extends TestCase
         $writer->addAuthor(['name' => '']);
     }
 
-    public function testAddAuthorThrowsExceptionOnInvalidEmailFromArray()
+    public function testAddAuthorThrowsExceptionOnInvalidEmailFromArray(): void
     {
         $writer = new Writer\Feed();
 
@@ -88,7 +88,7 @@ class FeedTest extends TestCase
         ]);
     }
 
-    public function testAddAuthorThrowsExceptionOnInvalidUriFromArray()
+    public function testAddAuthorThrowsExceptionOnInvalidUriFromArray(): void
     {
         $this->markTestIncomplete('Pending Laminas\URI fix for validation');
 
@@ -101,7 +101,7 @@ class FeedTest extends TestCase
         ]);
     }
 
-    public function testAddAuthorThrowsExceptionIfNameOmittedFromArray()
+    public function testAddAuthorThrowsExceptionIfNameOmittedFromArray(): void
     {
         $writer = new Writer\Feed();
 
@@ -109,7 +109,7 @@ class FeedTest extends TestCase
         $writer->addAuthor(['uri' => 'notauri']);
     }
 
-    public function testAddsAuthorsFromArrayOfAuthors()
+    public function testAddsAuthorsFromArrayOfAuthors(): void
     {
         $writer = new Writer\Feed();
         $writer->addAuthors([
@@ -128,14 +128,14 @@ class FeedTest extends TestCase
         ], $writer->getAuthor(1));
     }
 
-    public function testSetsCopyright()
+    public function testSetsCopyright(): void
     {
         $writer = new Writer\Feed();
         $writer->setCopyright('Copyright (c) 2009 Paddy Brady');
         $this->assertEquals('Copyright (c) 2009 Paddy Brady', $writer->getCopyright());
     }
 
-    public function testSetCopyrightThrowsExceptionOnInvalidParam()
+    public function testSetCopyrightThrowsExceptionOnInvalidParam(): void
     {
         $writer = new Writer\Feed();
 
@@ -143,7 +143,7 @@ class FeedTest extends TestCase
         $writer->setCopyright('');
     }
 
-    public function testSetDateCreatedDefaultsToCurrentTime()
+    public function testSetDateCreatedDefaultsToCurrentTime(): void
     {
         $writer = new Writer\Feed();
         $writer->setDateCreated();
@@ -151,7 +151,7 @@ class FeedTest extends TestCase
         $this->assertLessThanOrEqual($dateNow, $writer->getDateCreated());
     }
 
-    public function testSetDateCreatedUsesGivenUnixTimestamp()
+    public function testSetDateCreatedUsesGivenUnixTimestamp(): void
     {
         $writer = new Writer\Feed();
         $writer->setDateCreated(1234567890);
@@ -161,8 +161,10 @@ class FeedTest extends TestCase
 
     /**
      * @group Laminas-12023
+     *
+     * @return void
      */
-    public function testSetDateCreatedUsesGivenUnixTimestampThatIsLessThanTenDigits()
+    public function testSetDateCreatedUsesGivenUnixTimestampThatIsLessThanTenDigits(): void
     {
         $writer = new Writer\Feed();
         $writer->setDateCreated(123456789);
@@ -172,8 +174,10 @@ class FeedTest extends TestCase
 
     /**
      * @group Laminas-11610
+     *
+     * @return void
      */
-    public function testSetDateCreatedUsesGivenUnixTimestampThatIsAVerySmallInteger()
+    public function testSetDateCreatedUsesGivenUnixTimestampThatIsAVerySmallInteger(): void
     {
         $writer = new Writer\Feed();
         $writer->setDateCreated(123);
@@ -181,7 +185,7 @@ class FeedTest extends TestCase
         $this->assertEquals($myDate, $writer->getDateCreated());
     }
 
-    public function testSetDateCreatedUsesDateTimeObject()
+    public function testSetDateCreatedUsesDateTimeObject(): void
     {
         $myDate = new DateTime('@' . 1234567890);
         $writer = new Writer\Feed();
@@ -189,7 +193,7 @@ class FeedTest extends TestCase
         $this->assertEquals($myDate, $writer->getDateCreated());
     }
 
-    public function testSetDateCreatedUsesDateTimeImmutableObject()
+    public function testSetDateCreatedUsesDateTimeImmutableObject(): void
     {
         $myDate = new DateTimeImmutable('@' . 1234567890);
         $writer = new Writer\Feed();
@@ -197,7 +201,7 @@ class FeedTest extends TestCase
         $this->assertEquals($myDate, $writer->getDateCreated());
     }
 
-    public function testSetDateModifiedDefaultsToCurrentTime()
+    public function testSetDateModifiedDefaultsToCurrentTime(): void
     {
         $writer = new Writer\Feed();
         $writer->setDateModified();
@@ -205,7 +209,7 @@ class FeedTest extends TestCase
         $this->assertLessThanOrEqual($dateNow, $writer->getDateModified());
     }
 
-    public function testSetDateModifiedUsesGivenUnixTimestamp()
+    public function testSetDateModifiedUsesGivenUnixTimestamp(): void
     {
         $writer = new Writer\Feed();
         $writer->setDateModified(1234567890);
@@ -215,8 +219,10 @@ class FeedTest extends TestCase
 
     /**
      * @group Laminas-12023
+     *
+     * @return void
      */
-    public function testSetDateModifiedUsesGivenUnixTimestampThatIsLessThanTenDigits()
+    public function testSetDateModifiedUsesGivenUnixTimestampThatIsLessThanTenDigits(): void
     {
         $writer = new Writer\Feed();
         $writer->setDateModified(123456789);
@@ -226,8 +232,10 @@ class FeedTest extends TestCase
 
     /**
      * @group Laminas-11610
+     *
+     * @return void
      */
-    public function testSetDateModifiedUsesGivenUnixTimestampThatIsAVerySmallInteger()
+    public function testSetDateModifiedUsesGivenUnixTimestampThatIsAVerySmallInteger(): void
     {
         $writer = new Writer\Feed();
         $writer->setDateModified(123);
@@ -235,7 +243,7 @@ class FeedTest extends TestCase
         $this->assertEquals($myDate, $writer->getDateModified());
     }
 
-    public function testSetDateModifiedUsesDateTimeObject()
+    public function testSetDateModifiedUsesDateTimeObject(): void
     {
         $myDate = new DateTime('@' . 1234567890);
         $writer = new Writer\Feed();
@@ -243,7 +251,7 @@ class FeedTest extends TestCase
         $this->assertEquals($myDate, $writer->getDateModified());
     }
 
-    public function testSetDateModifiedUsesDateTimeImmutableObject()
+    public function testSetDateModifiedUsesDateTimeImmutableObject(): void
     {
         $myDate = new DateTimeImmutable('@' . 1234567890);
         $writer = new Writer\Feed();
@@ -251,7 +259,7 @@ class FeedTest extends TestCase
         $this->assertEquals($myDate, $writer->getDateModified());
     }
 
-    public function testSetDateCreatedThrowsExceptionOnInvalidParameter()
+    public function testSetDateCreatedThrowsExceptionOnInvalidParameter(): void
     {
         $writer = new Writer\Feed();
 
@@ -259,7 +267,7 @@ class FeedTest extends TestCase
         $writer->setDateCreated('abc');
     }
 
-    public function testSetDateModifiedThrowsExceptionOnInvalidParameter()
+    public function testSetDateModifiedThrowsExceptionOnInvalidParameter(): void
     {
         $writer = new Writer\Feed();
 
@@ -267,19 +275,19 @@ class FeedTest extends TestCase
         $writer->setDateModified('abc');
     }
 
-    public function testGetDateCreatedReturnsNullIfDateNotSet()
+    public function testGetDateCreatedReturnsNullIfDateNotSet(): void
     {
         $writer = new Writer\Feed();
         $this->assertNull($writer->getDateCreated());
     }
 
-    public function testGetDateModifiedReturnsNullIfDateNotSet()
+    public function testGetDateModifiedReturnsNullIfDateNotSet(): void
     {
         $writer = new Writer\Feed();
         $this->assertNull($writer->getDateModified());
     }
 
-    public function testSetLastBuildDateDefaultsToCurrentTime()
+    public function testSetLastBuildDateDefaultsToCurrentTime(): void
     {
         $writer = new Writer\Feed();
         $writer->setLastBuildDate();
@@ -287,7 +295,7 @@ class FeedTest extends TestCase
         $this->assertLessThanOrEqual($dateNow, $writer->getLastBuildDate());
     }
 
-    public function testSetLastBuildDateUsesGivenUnixTimestamp()
+    public function testSetLastBuildDateUsesGivenUnixTimestamp(): void
     {
         $writer = new Writer\Feed();
         $writer->setLastBuildDate(1234567890);
@@ -297,8 +305,10 @@ class FeedTest extends TestCase
 
     /**
      * @group Laminas-12023
+     *
+     * @return void
      */
-    public function testSetLastBuildDateUsesGivenUnixTimestampThatIsLessThanTenDigits()
+    public function testSetLastBuildDateUsesGivenUnixTimestampThatIsLessThanTenDigits(): void
     {
         $writer = new Writer\Feed();
         $writer->setLastBuildDate(123456789);
@@ -308,8 +318,10 @@ class FeedTest extends TestCase
 
     /**
      * @group Laminas-11610
+     *
+     * @return void
      */
-    public function testSetLastBuildDateUsesGivenUnixTimestampThatIsAVerySmallInteger()
+    public function testSetLastBuildDateUsesGivenUnixTimestampThatIsAVerySmallInteger(): void
     {
         $writer = new Writer\Feed();
         $writer->setLastBuildDate(123);
@@ -317,7 +329,7 @@ class FeedTest extends TestCase
         $this->assertEquals($myDate, $writer->getLastBuildDate());
     }
 
-    public function testSetLastBuildDateUsesDateTimeObject()
+    public function testSetLastBuildDateUsesDateTimeObject(): void
     {
         $myDate = new DateTime('@' . 1234567890);
         $writer = new Writer\Feed();
@@ -325,7 +337,7 @@ class FeedTest extends TestCase
         $this->assertEquals($myDate, $writer->getLastBuildDate());
     }
 
-    public function testSetLastBuildDateUsesDateTimeImmutableObject()
+    public function testSetLastBuildDateUsesDateTimeImmutableObject(): void
     {
         $myDate = new DateTimeImmutable('@' . 1234567890);
         $writer = new Writer\Feed();
@@ -333,7 +345,7 @@ class FeedTest extends TestCase
         $this->assertEquals($myDate, $writer->getLastBuildDate());
     }
 
-    public function testSetLastBuildDateThrowsExceptionOnInvalidParameter()
+    public function testSetLastBuildDateThrowsExceptionOnInvalidParameter(): void
     {
         $writer = new Writer\Feed();
 
@@ -341,26 +353,26 @@ class FeedTest extends TestCase
         $writer->setLastBuildDate('abc');
     }
 
-    public function testGetLastBuildDateReturnsNullIfDateNotSet()
+    public function testGetLastBuildDateReturnsNullIfDateNotSet(): void
     {
         $writer = new Writer\Feed();
         $this->assertNull($writer->getLastBuildDate());
     }
 
-    public function testGetCopyrightReturnsNullIfDateNotSet()
+    public function testGetCopyrightReturnsNullIfDateNotSet(): void
     {
         $writer = new Writer\Feed();
         $this->assertNull($writer->getCopyright());
     }
 
-    public function testSetsDescription()
+    public function testSetsDescription(): void
     {
         $writer = new Writer\Feed();
         $writer->setDescription('abc');
         $this->assertEquals('abc', $writer->getDescription());
     }
 
-    public function testSetDescriptionThrowsExceptionOnInvalidParameter()
+    public function testSetDescriptionThrowsExceptionOnInvalidParameter(): void
     {
         $writer = new Writer\Feed();
 
@@ -368,34 +380,34 @@ class FeedTest extends TestCase
         $writer->setDescription('');
     }
 
-    public function testGetDescriptionReturnsNullIfDateNotSet()
+    public function testGetDescriptionReturnsNullIfDateNotSet(): void
     {
         $writer = new Writer\Feed();
         $this->assertNull($writer->getDescription());
     }
 
-    public function testSetsId()
+    public function testSetsId(): void
     {
         $writer = new Writer\Feed();
         $writer->setId('http://www.example.com/id');
         $this->assertEquals('http://www.example.com/id', $writer->getId());
     }
 
-    public function testSetsIdAcceptsUrns()
+    public function testSetsIdAcceptsUrns(): void
     {
         $writer = new Writer\Feed();
         $writer->setId('urn:uuid:60a76c80-d399-11d9-b93C-0003939e0af6');
         $this->assertEquals('urn:uuid:60a76c80-d399-11d9-b93C-0003939e0af6', $writer->getId());
     }
 
-    public function testSetsIdAcceptsSimpleTagUri()
+    public function testSetsIdAcceptsSimpleTagUri(): void
     {
         $writer = new Writer\Feed();
         $writer->setId('tag:example.org,2010:/foo/bar/');
         $this->assertEquals('tag:example.org,2010:/foo/bar/', $writer->getId());
     }
 
-    public function testSetsIdAcceptsComplexTagUri()
+    public function testSetsIdAcceptsComplexTagUri(): void
     {
         $writer = new Writer\Feed();
         $writer->setId('tag:diveintomark.org,2004-05-27:/archives/2004/05/27/howto-atom-linkblog');
@@ -405,7 +417,7 @@ class FeedTest extends TestCase
         );
     }
 
-    public function testSetIdThrowsExceptionOnInvalidParameter()
+    public function testSetIdThrowsExceptionOnInvalidParameter(): void
     {
         $writer = new Writer\Feed();
 
@@ -413,7 +425,7 @@ class FeedTest extends TestCase
         $writer->setId('');
     }
 
-    public function testSetIdThrowsExceptionOnInvalidUri()
+    public function testSetIdThrowsExceptionOnInvalidUri(): void
     {
         $writer = new Writer\Feed();
 
@@ -421,20 +433,20 @@ class FeedTest extends TestCase
         $writer->setId('http://');
     }
 
-    public function testGetIdReturnsNullIfDateNotSet()
+    public function testGetIdReturnsNullIfDateNotSet(): void
     {
         $writer = new Writer\Feed();
         $this->assertNull($writer->getId());
     }
 
-    public function testSetsLanguage()
+    public function testSetsLanguage(): void
     {
         $writer = new Writer\Feed();
         $writer->setLanguage('abc');
         $this->assertEquals('abc', $writer->getLanguage());
     }
 
-    public function testSetLanguageThrowsExceptionOnInvalidParameter()
+    public function testSetLanguageThrowsExceptionOnInvalidParameter(): void
     {
         $writer = new Writer\Feed();
 
@@ -442,20 +454,20 @@ class FeedTest extends TestCase
         $writer->setLanguage('');
     }
 
-    public function testGetLanguageReturnsNullIfDateNotSet()
+    public function testGetLanguageReturnsNullIfDateNotSet(): void
     {
         $writer = new Writer\Feed();
         $this->assertNull($writer->getLanguage());
     }
 
-    public function testSetsLink()
+    public function testSetsLink(): void
     {
         $writer = new Writer\Feed();
         $writer->setLink('http://www.example.com/id');
         $this->assertEquals('http://www.example.com/id', $writer->getLink());
     }
 
-    public function testSetLinkThrowsExceptionOnEmptyString()
+    public function testSetLinkThrowsExceptionOnEmptyString(): void
     {
         $writer = new Writer\Feed();
 
@@ -463,7 +475,7 @@ class FeedTest extends TestCase
         $writer->setLink('');
     }
 
-    public function testSetLinkThrowsExceptionOnInvalidUri()
+    public function testSetLinkThrowsExceptionOnInvalidUri(): void
     {
         $writer = new Writer\Feed();
 
@@ -471,20 +483,20 @@ class FeedTest extends TestCase
         $writer->setLink('http://');
     }
 
-    public function testGetLinkReturnsNullIfDateNotSet()
+    public function testGetLinkReturnsNullIfDateNotSet(): void
     {
         $writer = new Writer\Feed();
         $this->assertNull($writer->getLink());
     }
 
-    public function testSetsEncoding()
+    public function testSetsEncoding(): void
     {
         $writer = new Writer\Feed();
         $writer->setEncoding('utf-16');
         $this->assertEquals('utf-16', $writer->getEncoding());
     }
 
-    public function testSetEncodingThrowsExceptionOnInvalidParameter()
+    public function testSetEncodingThrowsExceptionOnInvalidParameter(): void
     {
         $writer = new Writer\Feed();
 
@@ -492,20 +504,20 @@ class FeedTest extends TestCase
         $writer->setEncoding('');
     }
 
-    public function testGetEncodingReturnsUtf8IfNotSet()
+    public function testGetEncodingReturnsUtf8IfNotSet(): void
     {
         $writer = new Writer\Feed();
         $this->assertEquals('UTF-8', $writer->getEncoding());
     }
 
-    public function testSetsTitle()
+    public function testSetsTitle(): void
     {
         $writer = new Writer\Feed();
         $writer->setTitle('abc');
         $this->assertEquals('abc', $writer->getTitle());
     }
 
-    public function testSetTitleThrowsExceptionOnInvalidParameter()
+    public function testSetTitleThrowsExceptionOnInvalidParameter(): void
     {
         $writer = new Writer\Feed();
 
@@ -513,20 +525,20 @@ class FeedTest extends TestCase
         $writer->setTitle('');
     }
 
-    public function testGetTitleReturnsNullIfDateNotSet()
+    public function testGetTitleReturnsNullIfDateNotSet(): void
     {
         $writer = new Writer\Feed();
         $this->assertNull($writer->getTitle());
     }
 
-    public function testSetsGeneratorName()
+    public function testSetsGeneratorName(): void
     {
         $writer = new Writer\Feed();
         $writer->setGenerator(['name' => 'LaminasW']);
         $this->assertEquals(['name' => 'LaminasW'], $writer->getGenerator());
     }
 
-    public function testSetsGeneratorVersion()
+    public function testSetsGeneratorVersion(): void
     {
         $writer = new Writer\Feed();
         $writer->setGenerator([
@@ -539,7 +551,7 @@ class FeedTest extends TestCase
         ], $writer->getGenerator());
     }
 
-    public function testSetsGeneratorUri()
+    public function testSetsGeneratorUri(): void
     {
         $writer = new Writer\Feed();
         $writer->setGenerator([
@@ -552,7 +564,7 @@ class FeedTest extends TestCase
         ], $writer->getGenerator());
     }
 
-    public function testSetsGeneratorThrowsExceptionOnInvalidName()
+    public function testSetsGeneratorThrowsExceptionOnInvalidName(): void
     {
         $writer = new Writer\Feed();
 
@@ -560,7 +572,7 @@ class FeedTest extends TestCase
         $writer->setGenerator([]);
     }
 
-    public function testSetsGeneratorThrowsExceptionOnInvalidVersion()
+    public function testSetsGeneratorThrowsExceptionOnInvalidVersion(): void
     {
         $writer = new Writer\Feed();
 
@@ -571,7 +583,7 @@ class FeedTest extends TestCase
         ]);
     }
 
-    public function testSetsGeneratorThrowsExceptionOnInvalidUri()
+    public function testSetsGeneratorThrowsExceptionOnInvalidUri(): void
     {
         $this->markTestIncomplete('Pending Laminas\URI fix for validation');
 
@@ -586,8 +598,10 @@ class FeedTest extends TestCase
 
     /**
      * @deprecated
+     *
+     * @return void
      */
-    public function testSetsGeneratorNameDeprecated()
+    public function testSetsGeneratorNameDeprecated(): void
     {
         $writer = new Writer\Feed();
         $writer->setGenerator('LaminasW');
@@ -596,8 +610,10 @@ class FeedTest extends TestCase
 
     /**
      * @deprecated
+     *
+     * @return void
      */
-    public function testSetsGeneratorVersionDeprecated()
+    public function testSetsGeneratorVersionDeprecated(): void
     {
         $writer = new Writer\Feed();
         $writer->setGenerator('LaminasW', '1.0');
@@ -609,8 +625,10 @@ class FeedTest extends TestCase
 
     /**
      * @deprecated
+     *
+     * @return void
      */
-    public function testSetsGeneratorUriDeprecated()
+    public function testSetsGeneratorUriDeprecated(): void
     {
         $writer = new Writer\Feed();
         $writer->setGenerator('LaminasW', null, 'http://www.example.com');
@@ -622,8 +640,10 @@ class FeedTest extends TestCase
 
     /**
      * @deprecated
+     *
+     * @return void
      */
-    public function testSetsGeneratorThrowsExceptionOnInvalidNameDeprecated()
+    public function testSetsGeneratorThrowsExceptionOnInvalidNameDeprecated(): void
     {
         $writer = new Writer\Feed();
 
@@ -633,8 +653,10 @@ class FeedTest extends TestCase
 
     /**
      * @deprecated
+     *
+     * @return void
      */
-    public function testSetsGeneratorThrowsExceptionOnInvalidVersionDeprecated()
+    public function testSetsGeneratorThrowsExceptionOnInvalidVersionDeprecated(): void
     {
         $writer = new Writer\Feed();
 
@@ -644,8 +666,10 @@ class FeedTest extends TestCase
 
     /**
      * @deprecated
+     *
+     * @return void
      */
-    public function testSetsGeneratorThrowsExceptionOnInvalidUriDeprecated()
+    public function testSetsGeneratorThrowsExceptionOnInvalidUriDeprecated(): void
     {
         $this->markTestIncomplete('Pending Laminas\URI fix for validation');
 
@@ -655,20 +679,20 @@ class FeedTest extends TestCase
         $writer->setGenerator('LaminasW', null, 'notauri');
     }
 
-    public function testGetGeneratorReturnsNullIfDateNotSet()
+    public function testGetGeneratorReturnsNullIfDateNotSet(): void
     {
         $writer = new Writer\Feed();
         $this->assertNull($writer->getGenerator());
     }
 
-    public function testSetsFeedLink()
+    public function testSetsFeedLink(): void
     {
         $writer = new Writer\Feed();
         $writer->setFeedLink('http://www.example.com/rss', 'RSS');
         $this->assertEquals(['rss' => 'http://www.example.com/rss'], $writer->getFeedLinks());
     }
 
-    public function testSetsFeedLinkThrowsExceptionOnInvalidType()
+    public function testSetsFeedLinkThrowsExceptionOnInvalidType(): void
     {
         $writer = new Writer\Feed();
 
@@ -676,7 +700,7 @@ class FeedTest extends TestCase
         $writer->setFeedLink('http://www.example.com/rss', 'abc');
     }
 
-    public function testSetsFeedLinkThrowsExceptionOnInvalidUri()
+    public function testSetsFeedLinkThrowsExceptionOnInvalidUri(): void
     {
         $writer = new Writer\Feed();
 
@@ -684,20 +708,20 @@ class FeedTest extends TestCase
         $writer->setFeedLink('http://', 'rss');
     }
 
-    public function testGetFeedLinksReturnsNullIfNotSet()
+    public function testGetFeedLinksReturnsNullIfNotSet(): void
     {
         $writer = new Writer\Feed();
         $this->assertNull($writer->getFeedLinks());
     }
 
-    public function testSetsBaseUrl()
+    public function testSetsBaseUrl(): void
     {
         $writer = new Writer\Feed();
         $writer->setBaseUrl('http://www.example.com');
         $this->assertEquals('http://www.example.com', $writer->getBaseUrl());
     }
 
-    public function testSetsBaseUrlThrowsExceptionOnInvalidUri()
+    public function testSetsBaseUrlThrowsExceptionOnInvalidUri(): void
     {
         $writer = new Writer\Feed();
 
@@ -705,27 +729,27 @@ class FeedTest extends TestCase
         $writer->setBaseUrl('http://');
     }
 
-    public function testGetBaseUrlReturnsNullIfNotSet()
+    public function testGetBaseUrlReturnsNullIfNotSet(): void
     {
         $writer = new Writer\Feed();
         $this->assertNull($writer->getBaseUrl());
     }
 
-    public function testAddsHubUrl()
+    public function testAddsHubUrl(): void
     {
         $writer = new Writer\Feed();
         $writer->addHub('http://www.example.com/hub');
         $this->assertEquals(['http://www.example.com/hub'], $writer->getHubs());
     }
 
-    public function testAddsManyHubUrls()
+    public function testAddsManyHubUrls(): void
     {
         $writer = new Writer\Feed();
         $writer->addHubs(['http://www.example.com/hub', 'http://www.example.com/hub2']);
         $this->assertEquals(['http://www.example.com/hub', 'http://www.example.com/hub2'], $writer->getHubs());
     }
 
-    public function testAddingHubUrlThrowsExceptionOnInvalidUri()
+    public function testAddingHubUrlThrowsExceptionOnInvalidUri(): void
     {
         $writer = new Writer\Feed();
 
@@ -733,34 +757,34 @@ class FeedTest extends TestCase
         $writer->addHub('http://');
     }
 
-    public function testAddingHubUrlReturnsNullIfNotSet()
+    public function testAddingHubUrlReturnsNullIfNotSet(): void
     {
         $writer = new Writer\Feed();
         $this->assertNull($writer->getHubs());
     }
 
-    public function testCreatesNewEntryDataContainer()
+    public function testCreatesNewEntryDataContainer(): void
     {
         $writer = new Writer\Feed();
         $entry  = $writer->createEntry();
         $this->assertInstanceOf(Entry::class, $entry);
     }
 
-    public function testAddsCategory()
+    public function testAddsCategory(): void
     {
         $writer = new Writer\Feed();
         $writer->addCategory(['term' => 'cat_dog']);
         $this->assertEquals([['term' => 'cat_dog']], $writer->getCategories());
     }
 
-    public function testAddsManyCategories()
+    public function testAddsManyCategories(): void
     {
         $writer = new Writer\Feed();
         $writer->addCategories([['term' => 'cat_dog'], ['term' => 'cat_mouse']]);
         $this->assertEquals([['term' => 'cat_dog'], ['term' => 'cat_mouse']], $writer->getCategories());
     }
 
-    public function testAddingCategoryWithoutTermThrowsException()
+    public function testAddingCategoryWithoutTermThrowsException(): void
     {
         $writer = new Writer\Feed();
 
@@ -771,7 +795,7 @@ class FeedTest extends TestCase
         ]);
     }
 
-    public function testAddingCategoryWithInvalidUriAsSchemeThrowsException()
+    public function testAddingCategoryWithInvalidUriAsSchemeThrowsException(): void
     {
         $writer = new Writer\Feed();
 
@@ -784,7 +808,7 @@ class FeedTest extends TestCase
 
     // Image Tests
 
-    public function testSetsImageUri()
+    public function testSetsImageUri(): void
     {
         $writer = new Writer\Feed();
         $writer->setImage([
@@ -795,7 +819,7 @@ class FeedTest extends TestCase
         ], $writer->getImage());
     }
 
-    public function testSetsImageUriThrowsExceptionOnEmptyUri()
+    public function testSetsImageUriThrowsExceptionOnEmptyUri(): void
     {
         $writer = new Writer\Feed();
 
@@ -805,7 +829,7 @@ class FeedTest extends TestCase
         ]);
     }
 
-    public function testSetsImageUriThrowsExceptionOnMissingUri()
+    public function testSetsImageUriThrowsExceptionOnMissingUri(): void
     {
         $writer = new Writer\Feed();
 
@@ -813,7 +837,7 @@ class FeedTest extends TestCase
         $writer->setImage([]);
     }
 
-    public function testSetsImageUriThrowsExceptionOnInvalidUri()
+    public function testSetsImageUriThrowsExceptionOnInvalidUri(): void
     {
         $writer = new Writer\Feed();
 
@@ -823,7 +847,7 @@ class FeedTest extends TestCase
         ]);
     }
 
-    public function testSetsImageLink()
+    public function testSetsImageLink(): void
     {
         $writer = new Writer\Feed();
         $writer->setImage([
@@ -836,7 +860,7 @@ class FeedTest extends TestCase
         ], $writer->getImage());
     }
 
-    public function testSetsImageTitle()
+    public function testSetsImageTitle(): void
     {
         $writer = new Writer\Feed();
         $writer->setImage([
@@ -849,7 +873,7 @@ class FeedTest extends TestCase
         ], $writer->getImage());
     }
 
-    public function testSetsImageHeight()
+    public function testSetsImageHeight(): void
     {
         $writer = new Writer\Feed();
         $writer->setImage([
@@ -862,7 +886,7 @@ class FeedTest extends TestCase
         ], $writer->getImage());
     }
 
-    public function testSetsImageWidth()
+    public function testSetsImageWidth(): void
     {
         $writer = new Writer\Feed();
         $writer->setImage([
@@ -875,7 +899,7 @@ class FeedTest extends TestCase
         ], $writer->getImage());
     }
 
-    public function testSetsImageDescription()
+    public function testSetsImageDescription(): void
     {
         $writer = new Writer\Feed();
         $writer->setImage([
@@ -888,13 +912,13 @@ class FeedTest extends TestCase
         ], $writer->getImage());
     }
 
-    public function testGetCategoriesReturnsNullIfNotSet()
+    public function testGetCategoriesReturnsNullIfNotSet(): void
     {
         $writer = new Writer\Feed();
         $this->assertNull($writer->getCategories());
     }
 
-    public function testAddsAndOrdersEntriesByDateIfRequested()
+    public function testAddsAndOrdersEntriesByDateIfRequested(): void
     {
         $writer = new Writer\Feed();
         $entry  = $writer->createEntry();
@@ -909,8 +933,10 @@ class FeedTest extends TestCase
 
     /**
      * @covers \Laminas\Feed\Writer\Feed::orderByDate
+     *
+     * @return void
      */
-    public function testAddsAndOrdersEntriesByModifiedDate()
+    public function testAddsAndOrdersEntriesByModifiedDate(): void
     {
         $writer = new Writer\Feed();
         $entry  = $writer->createEntry();
@@ -925,8 +951,10 @@ class FeedTest extends TestCase
 
     /**
      * @covers \Laminas\Feed\Writer\Feed::getEntry
+     *
+     * @return void
      */
-    public function testGetEntry()
+    public function testGetEntry(): void
     {
         $writer = new Writer\Feed();
         $entry  = $writer->createEntry();
@@ -937,8 +965,10 @@ class FeedTest extends TestCase
 
     /**
      * @covers \Laminas\Feed\Writer\Feed::removeEntry
+     *
+     * @return void
      */
-    public function testGetEntryException()
+    public function testGetEntryException(): void
     {
         $writer = new Writer\Feed();
 
@@ -948,8 +978,10 @@ class FeedTest extends TestCase
 
     /**
      * @covers \Laminas\Feed\Writer\Feed::removeEntry
+     *
+     * @return void
      */
-    public function testRemoveEntry()
+    public function testRemoveEntry(): void
     {
         $writer = new Writer\Feed();
         $entry  = $writer->createEntry();
@@ -972,8 +1004,10 @@ class FeedTest extends TestCase
 
     /**
      * @covers \Laminas\Feed\Writer\Feed::removeEntry
+     *
+     * @return void
      */
-    public function testRemoveEntryException()
+    public function testRemoveEntryException(): void
     {
         $writer = new Writer\Feed();
 
@@ -983,8 +1017,10 @@ class FeedTest extends TestCase
 
     /**
      * @covers \Laminas\Feed\Writer\Feed::createTombstone
+     *
+     * @return Deleted
      */
-    public function testCreateTombstone()
+    public function testCreateTombstone(): Deleted
     {
         $writer    = new Writer\Feed();
         $tombstone = $writer->createTombstone();
@@ -996,8 +1032,10 @@ class FeedTest extends TestCase
 
     /**
      * @covers \Laminas\Feed\Writer\Feed::addTombstone
+     *
+     * @return void
      */
-    public function testAddTombstone()
+    public function testAddTombstone(): void
     {
         $writer    = new Writer\Feed();
         $tombstone = $writer->createTombstone();
@@ -1008,8 +1046,10 @@ class FeedTest extends TestCase
 
     /**
      * @covers \Laminas\Feed\Writer\Feed::export
+     *
+     * @return void
      */
-    public function testExportRss()
+    public function testExportRss(): void
     {
         $writer = new Writer\Feed();
         $writer->setTitle('foo');
@@ -1037,8 +1077,10 @@ EOT;
 
     /**
      * @covers \Laminas\Feed\Writer\Feed::export
+     *
+     * @return void
      */
-    public function testExportRssIgnoreExceptions()
+    public function testExportRssIgnoreExceptions(): void
     {
         $writer = new Writer\Feed();
         $export = $writer->export('rss', true);
@@ -1059,8 +1101,10 @@ EOT;
 
     /**
      * @covers \Laminas\Feed\Writer\Feed::export
+     *
+     * @return void
      */
-    public function testExportWrongTypeException()
+    public function testExportWrongTypeException(): void
     {
         $writer = new Writer\Feed();
 
@@ -1068,7 +1112,7 @@ EOT;
         $writer->export('foo');
     }
 
-    public function testFluentInterface()
+    public function testFluentInterface(): void
     {
         $writer = new Writer\Feed();
         $return = $writer->addAuthor(['name' => 'foo'])
@@ -1094,14 +1138,14 @@ EOT;
         $this->assertSame($return, $writer);
     }
 
-    public function testSetTitleShouldAllowAStringWithTheContentsZero()
+    public function testSetTitleShouldAllowAStringWithTheContentsZero(): void
     {
         $feed = new Writer\Feed();
         $feed->setTitle('0');
         $this->assertEquals('0', $feed->getTitle());
     }
 
-    public function testFeedWriterEmitsNoticeDuringFeedImportWhenGooglePlayPodcastExtensionUnavailable()
+    public function testFeedWriterEmitsNoticeDuringFeedImportWhenGooglePlayPodcastExtensionUnavailable(): void
     {
         Writer\Writer::setExtensionManager(new TestAsset\CustomExtensionManager());
 

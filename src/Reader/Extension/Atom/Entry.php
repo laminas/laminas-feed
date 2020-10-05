@@ -545,10 +545,11 @@ class Entry extends Extension\AbstractEntry
      * Attempt to absolutise the URI, i.e. if a relative URI apply the
      *  xml:base value as a prefix to turn into an absolute URI.
      *
-     * @param  string $link
-     * @return string
+     * @param string $link
+     *
+     * @return null|string
      */
-    protected function absolutiseUri($link)
+    protected function absolutiseUri($link): ?string
     {
         if (! Uri::factory($link)->isAbsolute()) {
             if ($this->getBaseUrl() !== null) {
@@ -564,7 +565,9 @@ class Entry extends Extension\AbstractEntry
     /**
      * Get an author entry
      *
-     * @return string
+     * @return (null|string)[]|null
+     *
+     * @psalm-return array{email?: null|string, name?: null|string, uri?: null|string}|null
      */
     protected function getAuthorFromElement(DOMElement $element)
     {
@@ -610,9 +613,9 @@ class Entry extends Extension\AbstractEntry
     /**
      * Detect the presence of any Atom namespaces in use
      *
-     * @return string
+     * @return null|string
      */
-    protected function getAtomType()
+    protected function getAtomType(): ?string
     {
         $dom          = $this->getDomDocument();
         $prefixAtom03 = $dom->lookupPrefix(Reader\Reader::NAMESPACE_ATOM_03);

@@ -20,14 +20,14 @@ use PHPUnit\Framework\TestCase;
  */
 class DeletedTest extends TestCase
 {
-    public function testSetsReference()
+    public function testSetsReference(): void
     {
         $entry = new Writer\Deleted();
         $entry->setReference('http://www.example.com/id');
         $this->assertEquals('http://www.example.com/id', $entry->getReference());
     }
 
-    public function testSetReferenceThrowsExceptionOnInvalidParameter()
+    public function testSetReferenceThrowsExceptionOnInvalidParameter(): void
     {
         $entry = new Writer\Deleted();
 
@@ -35,13 +35,13 @@ class DeletedTest extends TestCase
         $entry->setReference('');
     }
 
-    public function testGetReferenceReturnsNullIfNotSet()
+    public function testGetReferenceReturnsNullIfNotSet(): void
     {
         $entry = new Writer\Deleted();
         $this->assertNull($entry->getReference());
     }
 
-    public function testSetWhenDefaultsToCurrentTime()
+    public function testSetWhenDefaultsToCurrentTime(): void
     {
         $entry = new Writer\Deleted();
         $entry->setWhen();
@@ -49,7 +49,7 @@ class DeletedTest extends TestCase
         $this->assertLessThanOrEqual($dateNow, $entry->getWhen());
     }
 
-    public function testSetWhenUsesGivenUnixTimestamp()
+    public function testSetWhenUsesGivenUnixTimestamp(): void
     {
         $entry = new Writer\Deleted();
         $entry->setWhen(1234567890);
@@ -59,8 +59,10 @@ class DeletedTest extends TestCase
 
     /**
      * @group Laminas-12070
+     *
+     * @return void
      */
-    public function testSetWhenUsesGivenUnixTimestampWhenItIsLessThanTenDigits()
+    public function testSetWhenUsesGivenUnixTimestampWhenItIsLessThanTenDigits(): void
     {
         $entry = new Writer\Deleted();
         $entry->setWhen(123456789);
@@ -70,8 +72,10 @@ class DeletedTest extends TestCase
 
     /**
      * @group Laminas-11610
+     *
+     * @return void
      */
-    public function testSetWhenUsesGivenUnixTimestampWhenItIsAVerySmallInteger()
+    public function testSetWhenUsesGivenUnixTimestampWhenItIsAVerySmallInteger(): void
     {
         $entry = new Writer\Deleted();
         $entry->setWhen(123);
@@ -79,7 +83,7 @@ class DeletedTest extends TestCase
         $this->assertEquals($myDate, $entry->getWhen());
     }
 
-    public function testSetWhenUsesDateTimeObject()
+    public function testSetWhenUsesDateTimeObject(): void
     {
         $myDate = new DateTime('@' . 1234567890);
         $entry  = new Writer\Deleted();
@@ -87,7 +91,7 @@ class DeletedTest extends TestCase
         $this->assertEquals($myDate, $entry->getWhen());
     }
 
-    public function testSetWhenUsesDateTimeImmutableObject()
+    public function testSetWhenUsesDateTimeImmutableObject(): void
     {
         $myDate = new DateTimeImmutable('@' . 1234567890);
         $entry  = new Writer\Deleted();
@@ -95,7 +99,7 @@ class DeletedTest extends TestCase
         $this->assertEquals($myDate, $entry->getWhen());
     }
 
-    public function testSetWhenThrowsExceptionOnInvalidParameter()
+    public function testSetWhenThrowsExceptionOnInvalidParameter(): void
     {
         $entry = new Writer\Deleted();
 
@@ -103,34 +107,34 @@ class DeletedTest extends TestCase
         $entry->setWhen('abc');
     }
 
-    public function testGetWhenReturnsNullIfDateNotSet()
+    public function testGetWhenReturnsNullIfDateNotSet(): void
     {
         $entry = new Writer\Deleted();
         $this->assertNull($entry->getWhen());
     }
 
-    public function testAddsByNameFromArray()
+    public function testAddsByNameFromArray(): void
     {
         $entry = new Writer\Deleted();
         $entry->setBy(['name' => 'Joe']);
         $this->assertEquals(['name' => 'Joe'], $entry->getBy());
     }
 
-    public function testAddsByEmailFromArray()
+    public function testAddsByEmailFromArray(): void
     {
         $entry = new Writer\Deleted();
         $entry->setBy(['name' => 'Joe', 'email' => 'joe@example.com']);
         $this->assertEquals(['name' => 'Joe', 'email' => 'joe@example.com'], $entry->getBy());
     }
 
-    public function testAddsByUriFromArray()
+    public function testAddsByUriFromArray(): void
     {
         $entry = new Writer\Deleted();
         $entry->setBy(['name' => 'Joe', 'uri' => 'http://www.example.com']);
         $this->assertEquals(['name' => 'Joe', 'uri' => 'http://www.example.com'], $entry->getBy());
     }
 
-    public function testAddByThrowsExceptionOnInvalidNameFromArray()
+    public function testAddByThrowsExceptionOnInvalidNameFromArray(): void
     {
         $entry = new Writer\Deleted();
 
@@ -138,7 +142,7 @@ class DeletedTest extends TestCase
         $entry->setBy(['name' => '']);
     }
 
-    public function testAddByThrowsExceptionOnInvalidEmailFromArray()
+    public function testAddByThrowsExceptionOnInvalidEmailFromArray(): void
     {
         $entry = new Writer\Deleted();
 
@@ -146,7 +150,7 @@ class DeletedTest extends TestCase
         $entry->setBy(['name' => 'Joe', 'email' => '']);
     }
 
-    public function testAddByThrowsExceptionOnInvalidUriFromArray()
+    public function testAddByThrowsExceptionOnInvalidUriFromArray(): void
     {
         $this->markTestIncomplete('Pending Laminas\URI fix for validation');
 
@@ -156,7 +160,7 @@ class DeletedTest extends TestCase
         $entry->setBy(['name' => 'Joe', 'uri' => 'notauri']);
     }
 
-    public function testAddByThrowsExceptionIfNameOmittedFromArray()
+    public function testAddByThrowsExceptionIfNameOmittedFromArray(): void
     {
         $entry = new Writer\Deleted();
 
@@ -166,8 +170,10 @@ class DeletedTest extends TestCase
 
     /**
      * @covers \Laminas\Feed\Writer\Deleted::getBy
+     *
+     * @return void
      */
-    public function testGetBy()
+    public function testGetBy(): void
     {
         $entry = new Writer\Deleted();
 
@@ -178,7 +184,7 @@ class DeletedTest extends TestCase
         $this->assertEquals(['name' => 'Joe', 'email' => 'joe@example.com'], $entry->getBy());
     }
 
-    public function testSetByException()
+    public function testSetByException(): void
     {
         $entry = new Writer\Deleted();
 
@@ -193,8 +199,10 @@ class DeletedTest extends TestCase
      * @covers \Laminas\Feed\Writer\Deleted::getComment
      * @covers \Laminas\Feed\Writer\Deleted::setComment
      * @covers \Laminas\Feed\Writer\Deleted::remove
+     *
+     * @return void
      */
-    public function testCommentAndRemove()
+    public function testCommentAndRemove(): void
     {
         $entry = new Writer\Deleted();
 
@@ -211,8 +219,10 @@ class DeletedTest extends TestCase
     /**
      * @covers \Laminas\Feed\Writer\Deleted::getEncoding
      * @covers \Laminas\Feed\Writer\Deleted::setEncoding
+     *
+     * @return void
      */
-    public function testEncoding()
+    public function testEncoding(): void
     {
         $entry = new Writer\Deleted();
 
@@ -230,8 +240,10 @@ class DeletedTest extends TestCase
     /**
      * @covers \Laminas\Feed\Writer\Deleted::getType
      * @covers \Laminas\Feed\Writer\Deleted::setType
+     *
+     * @return void
      */
-    public function testType()
+    public function testType(): void
     {
         $entry = new Writer\Deleted();
 
@@ -242,7 +254,7 @@ class DeletedTest extends TestCase
         $this->assertEquals('atom', $entry->getType());
     }
 
-    public function testFluentInterface()
+    public function testFluentInterface(): void
     {
         $entry = new Writer\Deleted();
 

@@ -14,6 +14,8 @@ class Callback extends AbstractCallback
 {
     /**
      * {@inheritDoc}
+     *
+     * @return false
      */
     public function handle(array $httpData = null, $sendResponseNow = false)
     {

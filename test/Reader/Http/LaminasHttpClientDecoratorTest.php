@@ -33,7 +33,7 @@ class LaminasHttpClientDecoratorTest extends TestCase
         $this->client = $this->createMock(Client::class);
     }
 
-    public function prepareDefaultClientInteractions($uri, MockObject $response)
+    public function prepareDefaultClientInteractions($uri, MockObject $response): void
     {
         $this->client
             ->expects($this->atLeastOnce())
@@ -63,7 +63,12 @@ class LaminasHttpClientDecoratorTest extends TestCase
             ->willReturn($response);
     }
 
-    public function createMockHttpResponse($statusCode, $body, Headers $headers = null)
+    /**
+     * @return ObjectProphecy
+     *
+     * @psalm-return ObjectProphecy<HttpResponse>
+     */
+    public function createMockHttpResponse(int $statusCode, string $body, Headers $headers = null): ObjectProphecy
     {
         $response = $this->createMock(HttpResponse::class);
         $response
@@ -99,14 +104,14 @@ class LaminasHttpClientDecoratorTest extends TestCase
         return $mock;
     }
 
-    public function testProvidesAccessToDecoratedClient()
+    public function testProvidesAccessToDecoratedClient(): void
     {
         $client    = $this->createMock(Client::class);
         $decorator = new LaminasHttpClientDecorator($client);
         $this->assertSame($client, $decorator->getDecoratedClient());
     }
 
-    public function testDecoratorReturnsFeedResponse()
+    public function testDecoratorReturnsFeedResponse(): void
     {
         $headers      = $this->createMockHttpHeaders(['Content-Type' => 'application/rss+xml']);
         $httpResponse = $this->createMockHttpResponse(200, '', $headers);
@@ -121,7 +126,7 @@ class LaminasHttpClientDecoratorTest extends TestCase
         $this->assertEquals('application/rss+xml', $response->getHeaderLine('Content-Type'));
     }
 
-    public function testDecoratorInjectsProvidedHeadersIntoClientWhenSending()
+    public function testDecoratorInjectsProvidedHeadersIntoClientWhenSending(): void
     {
         $responseHeaders = $this->createMockHttpHeaders([
             'Content-Type'     => 'application/rss+xml',
@@ -158,7 +163,12 @@ class LaminasHttpClientDecoratorTest extends TestCase
         $this->assertEquals(1234.56, $response->getHeaderLine('X-Content-Length'));
     }
 
-    public function invalidHeaders()
+    /**
+     * @return \Generator
+     *
+     * @psalm-return \Generator<string, array{0: array{X-Test?: \stdClass|array{0: \stdClass|array{0: string}|bool|null}|bool|float|int|null|string, ?: array{0: string}, '1.1'?: array{0: string}, 1?: array{0: string}, 0?: array{0: string}}, 1: string}, mixed, void>
+     */
+    public function invalidHeaders(): \Generator
     {
         $basicTests = [
             'zero-name'        => [
@@ -234,8 +244,10 @@ class LaminasHttpClientDecoratorTest extends TestCase
 
     /**
      * @dataProvider invalidHeaders
+     *
+     * @return void
      */
-    public function testDecoratorRaisesExceptionForInvalidHeaders($headers, $contains)
+    public function testDecoratorRaisesExceptionForInvalidHeaders($headers, $contains): void
     {
         $httpResponse = $this->createMockHttpResponse(200, '');
         $this->client

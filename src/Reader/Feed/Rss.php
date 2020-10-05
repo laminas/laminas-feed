@@ -673,6 +673,8 @@ class Rss extends AbstractFeed
 
     /**
      * Read all entries to the internal entries array
+     *
+     * @return void
      */
     protected function indexEntries()
     {
@@ -689,6 +691,8 @@ class Rss extends AbstractFeed
 
     /**
      * Register the default namespaces for the current feed format
+     *
+     * @return void
      */
     protected function registerNamespaces()
     {

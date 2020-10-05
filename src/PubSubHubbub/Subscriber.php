@@ -844,7 +844,7 @@ class Subscriber
      */
     protected $testStaticToken;
 
-    final public function setTestStaticToken($token)
+    final public function setTestStaticToken(string $token): void
     {
         $this->testStaticToken = (string) $token;
     }
