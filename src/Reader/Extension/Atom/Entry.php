@@ -630,5 +630,6 @@ class Entry extends Extension\AbstractEntry
         ) {
             return Reader\Reader::TYPE_ATOM_10;
         }
+        return null;
     }
 }
