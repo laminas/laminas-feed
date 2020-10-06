@@ -93,7 +93,7 @@ abstract class AbstractFeed implements FeedInterface
      *
      * @return void
      */
-    public function setOriginalSourceUri($uri): void
+    public function setOriginalSourceUri($uri)
     {
         $this->originalSourceUri = $uri;
     }
@@ -270,7 +270,7 @@ abstract class AbstractFeed implements FeedInterface
         return null;
     }
 
-    protected function loadExtensions(): void
+    protected function loadExtensions()
     {
         $all     = Reader\Reader::getExtensions();
         $manager = Reader\Reader::getExtensionManager();

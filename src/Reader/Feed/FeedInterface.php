@@ -52,6 +52,13 @@ interface FeedInterface extends Iterator, Countable
     public function getDateModified();
 
     /**
+     * Get the feed lastBuild date
+     *
+     * @return null|DateTime
+     */
+    public function getLastBuildDate();
+
+    /**
      * Get the feed description
      *
      * @return null|string
@@ -80,11 +87,25 @@ interface FeedInterface extends Iterator, Countable
     public function getLanguage();
 
     /**
+     * Get a link to the source website
+     *
+     * @return null|string
+     */
+    public function getBaseUrl();
+
+    /**
      * Get a link to the HTML source
      *
      * @return null|string
      */
     public function getLink();
+
+    /**
+     * Get feed image data
+     *
+     * @return null|array
+     */
+    public function getImage();
 
     /**
      * Get a link to the XML feed
@@ -94,11 +115,29 @@ interface FeedInterface extends Iterator, Countable
     public function getFeedLink();
 
     /**
+     * Set an original source URI for the feed being parsed. This value
+     * is returned from getFeedLink() method if the feed does not carry
+     * a self-referencing URI.
+     *
+     * @param string $uri
+     *
+     * @return void
+     */
+    public function setOriginalSourceUri($uri);
+
+    /**
      * Get the feed title
      *
      * @return null|string
      */
     public function getTitle();
+
+    /**
+     * Get an array of any supported PubSubHubbub endpoints
+     *
+     * @return null|array
+     */
+    public function getHubs();
 
     /**
      * Get all categories

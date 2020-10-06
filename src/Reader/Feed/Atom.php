@@ -329,7 +329,7 @@ class Atom extends AbstractFeed
     }
 
     /**
-     * Get an array of any supported Pusubhubbub endpoints
+     * Get an array of any supported PubSubHubbub endpoints
      *
      * @return null|array
      */

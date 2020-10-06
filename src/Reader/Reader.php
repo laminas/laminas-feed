@@ -322,7 +322,7 @@ class Reader implements ReaderImportInterface
      *
      * @param string $string
      *
-     * @return Entry\Atom|Feed\Atom|Feed\Rss
+     * @return Feed\FeedInterface
      *
      * @throws Exception\InvalidArgumentException
      * @throws Exception\RuntimeException

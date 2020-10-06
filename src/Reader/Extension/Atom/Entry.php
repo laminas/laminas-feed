@@ -565,9 +565,9 @@ class Entry extends Extension\AbstractEntry
     /**
      * Get an author entry
      *
-     * @return array<string,null|string>
+     * @return array<string,null|string>|null
      *
-     * @psalm-return array{email?: null|string, name?: null|string, uri?: null|string}
+     * @psalm-return array{email?: null|string, name?: null|string, uri?: null|string}|null
      */
     protected function getAuthorFromElement(DOMElement $element)
     {
