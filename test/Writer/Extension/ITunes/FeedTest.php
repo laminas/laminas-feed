@@ -166,22 +166,15 @@ class FeedTest extends TestCase
      *
      * @param string|bool $value
      * @param string $result
-     *
-     * @return void
      */
-    public function testSetExplicit($value, $result): void
+    public function testSetExplicit($value, $result)
     {
         $feed = new Writer\Feed();
         $feed->setItunesExplicit($value);
         $this->assertEquals($result, $feed->getItunesExplicit());
     }
 
-    /**
-     * @return (bool|string)[][]
-     *
-     * @psalm-return array{0: array{0: true, 1: string}, 1: array{0: false, 1: string}, 2: array{0: string, 1: string}, 3: array{0: string, 1: string}, 4: array{0: string, 1: string}}
-     */
-    public function dataProviderForSetExplicit(): array
+    public function dataProviderForSetExplicit()
     {
         return [
             // Current behaviour
@@ -354,12 +347,7 @@ class FeedTest extends TestCase
         $feed->setItunesSummary(str_repeat('a', 4001));
     }
 
-    /**
-     * @return (\stdClass|bool|float|int|null|string|string[])[][]
-     *
-     * @psalm-return array{null: array{0: null}, true: array{0: true}, false: array{0: false}, zero: array{0: int}, int: array{0: int}, zero-float: array{0: float}, float: array{0: float}, string: array{0: string}, invalid-extension-gif: array{0: string, 1: string}, invalid-extension-uc: array{0: string, 1: string}, array: array{0: array{0: string}}, object: array{0: \stdClass}}
-     */
-    public function invalidImageUrls(): array
+    public function invalidImageUrls()
     {
         return [
             'null'                  => [null],
@@ -382,10 +370,8 @@ class FeedTest extends TestCase
      *
      * @param mixed $url
      * @param string $expectedMessage
-     *
-     * @return void
      */
-    public function testSetItunesImageRaisesExceptionForInvalidUrl($url, $expectedMessage = 'valid URI'): void
+    public function testSetItunesImageRaisesExceptionForInvalidUrl($url, $expectedMessage = 'valid URI')
     {
         $feed = new Writer\Feed();
 
@@ -394,12 +380,7 @@ class FeedTest extends TestCase
         $feed->setItunesImage($url);
     }
 
-    /**
-     * @return string[][]
-     *
-     * @psalm-return array{jpg: array{0: string}, png: array{0: string}}
-     */
-    public function validImageUrls(): array
+    public function validImageUrls()
     {
         return [
             'jpg' => ['https://example.com/image.jpg'],
@@ -411,22 +392,15 @@ class FeedTest extends TestCase
      * @dataProvider validImageUrls
      *
      * @param string $url
-     *
-     * @return void
      */
-    public function testSetItunesImageSetsInternalDataWithValidUrl($url): void
+    public function testSetItunesImageSetsInternalDataWithValidUrl($url)
     {
         $feed = new Writer\Feed();
         $feed->setItunesImage($url);
         $this->assertEquals($url, $feed->getItunesImage());
     }
 
-    /**
-     * @return (\stdClass|bool|float|int|null|string|string[])[][]
-     *
-     * @psalm-return array{null: array{0: null}, true: array{0: true}, false: array{0: false}, zero: array{0: int}, int: array{0: int}, zero-float: array{0: float}, float: array{0: float}, string: array{0: string}, array: array{0: array{0: string}}, object: array{0: \stdClass}}
-     */
-    public function invalidPodcastTypes(): array
+    public function invalidPodcastTypes()
     {
         return [
             'null'       => [null],
@@ -446,10 +420,8 @@ class FeedTest extends TestCase
      * @dataProvider invalidPodcastTypes
      *
      * @param mixed $type
-     *
-     * @return void
      */
-    public function testSetItunesTypeWithInvalidTypeRaisesException($type): void
+    public function testSetItunesTypeWithInvalidTypeRaisesException($type)
     {
         $feed = new Writer\Feed();
 
@@ -458,12 +430,7 @@ class FeedTest extends TestCase
         $feed->setItunesType($type);
     }
 
-    /**
-     * @return string[][]
-     *
-     * @psalm-return array{episodic: array{0: string}, serial: array{0: string}}
-     */
-    public function validPodcastTypes(): array
+    public function validPodcastTypes()
     {
         return [
             'episodic' => ['episodic'],
@@ -475,22 +442,15 @@ class FeedTest extends TestCase
      * @dataProvider validPodcastTypes
      *
      * @param mixed $type
-     *
-     * @return void
      */
-    public function testSetItunesTypeMutatesTypeWithValidData($type): void
+    public function testSetItunesTypeMutatesTypeWithValidData($type)
     {
         $feed = new Writer\Feed();
         $feed->setItunesType($type);
         $this->assertEquals($type, $feed->getItunesType());
     }
 
-    /**
-     * @return (\stdClass|float|int|null|string|true[])[][]
-     *
-     * @psalm-return array{null: array{0: null}, zero: array{0: int}, int: array{0: int}, zero-float: array{0: float}, float: array{0: float}, string: array{0: string}, array: array{0: array{0: true}}, object: array{0: \stdClass}}
-     */
-    public function invalidCompleteStatuses(): array
+    public function invalidCompleteStatuses()
     {
         return [
             'null'       => [null],
@@ -508,10 +468,8 @@ class FeedTest extends TestCase
      * @dataProvider invalidCompleteStatuses
      *
      * @param mixed $status
-     *
-     * @return void
      */
-    public function testSetItunesCompleteRaisesExceptionForInvalidStatus($status): void
+    public function testSetItunesCompleteRaisesExceptionForInvalidStatus($status)
     {
         $feed = new Writer\Feed();
 

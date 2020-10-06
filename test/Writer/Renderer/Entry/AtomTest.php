@@ -66,7 +66,6 @@ class AtomTest extends TestCase
     /**
      * @doesNotPerformAssertions
      *
-     * @return void
      */
     public function testRenderMethodRunsMinimalWriterContainerProperlyBeforeICheckAtomCompliance(): void
     {
@@ -118,8 +117,6 @@ class AtomTest extends TestCase
 
     /**
      * @group LaminasWATOMCONTENT
-     *
-     * @return void
      */
     public function testEntryContentHasBeenSetXhtml(): void
     {

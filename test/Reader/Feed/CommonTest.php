@@ -32,7 +32,6 @@ class CommonTest extends TestCase
     /**
      * Check DOM Retrieval and Information Methods
      *
-     * @return void
      */
     public function testGetsDomDocumentObject(): void
     {
@@ -95,7 +94,6 @@ class CommonTest extends TestCase
     /**
      * @group Laminas-8213
      *
-     * @return void
      */
     public function testReturnsEncodingOfFeed(): void
     {
@@ -108,7 +106,6 @@ class CommonTest extends TestCase
     /**
      * @group Laminas-8213
      *
-     * @return void
      */
     public function testReturnsEncodingOfFeedAsUtf8IfUndefined(): void
     {

@@ -38,7 +38,7 @@ class Deleted
      *
      * @throws Exception\InvalidArgumentException
      */
-    public function setEncoding(?string $encoding): self
+    public function setEncoding(?string $encoding)
     {
         if (empty($encoding) || ! is_string($encoding)) {
             throw new Exception\InvalidArgumentException('Invalid parameter: parameter must be a non-empty string');

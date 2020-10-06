@@ -59,8 +59,6 @@ class DeletedTest extends TestCase
 
     /**
      * @group Laminas-12070
-     *
-     * @return void
      */
     public function testSetWhenUsesGivenUnixTimestampWhenItIsLessThanTenDigits(): void
     {
@@ -72,8 +70,6 @@ class DeletedTest extends TestCase
 
     /**
      * @group Laminas-11610
-     *
-     * @return void
      */
     public function testSetWhenUsesGivenUnixTimestampWhenItIsAVerySmallInteger(): void
     {
@@ -170,8 +166,6 @@ class DeletedTest extends TestCase
 
     /**
      * @covers \Laminas\Feed\Writer\Deleted::getBy
-     *
-     * @return void
      */
     public function testGetBy(): void
     {
@@ -199,8 +193,6 @@ class DeletedTest extends TestCase
      * @covers \Laminas\Feed\Writer\Deleted::getComment
      * @covers \Laminas\Feed\Writer\Deleted::setComment
      * @covers \Laminas\Feed\Writer\Deleted::remove
-     *
-     * @return void
      */
     public function testCommentAndRemove(): void
     {
@@ -219,8 +211,6 @@ class DeletedTest extends TestCase
     /**
      * @covers \Laminas\Feed\Writer\Deleted::getEncoding
      * @covers \Laminas\Feed\Writer\Deleted::setEncoding
-     *
-     * @return void
      */
     public function testEncoding(): void
     {
@@ -240,8 +230,6 @@ class DeletedTest extends TestCase
     /**
      * @covers \Laminas\Feed\Writer\Deleted::getType
      * @covers \Laminas\Feed\Writer\Deleted::setType
-     *
-     * @return void
      */
     public function testType(): void
     {

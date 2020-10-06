@@ -112,8 +112,8 @@ class Person
 
     public $name = null;
 
-    public function getAge()
-    {
+    public function getAge(): void
+ {
         return $this-&gt;_age;
     }
 
@@ -166,8 +166,8 @@ class Person extends ModelAbstract
 
     public $name = null;
 
-    public function getAge()
-    {
+    public function getAge(): void
+ {
         return $this-&gt;_age;
     }
 
@@ -223,8 +223,8 @@ class User
 {
     private $_name = '';
 
-    public function getName()
-    {
+    public function getName(): void
+ {
         return $this-&gt;_name;
     }
 
@@ -253,8 +253,8 @@ class UserFilter implements Laminas_Filter_Interface
 
 class MyModel
 {
-    public static function getUserPaginator()
-    {
+    public static function getUserPaginator(): void
+ {
         $userTable = new UserTable();
         $paginator = Laminas_Paginator::factory($userTable-&gt;select());
         $paginator-&gt;setFilter(new UserFilter());
@@ -276,8 +276,8 @@ foreach ($items as $user) {
 &lt;?php
 class MyModel
 {
-    public static function getUserPaginator()
-    {
+    public static function getUserPaginator(): void
+ {
         $userTable = new UserTable();
         $paginator = Laminas_Paginator::factory($userTable-&gt;select());
         $paginator-&gt;setFilter(new Laminas_Filter_Callback(
@@ -675,8 +675,8 @@ class Bar
 {
     private $_foo = 'foo';
 
-    public function get foo()
-    {
+    public function get foo(): void
+ {
         return $this->_foo;
     }
 

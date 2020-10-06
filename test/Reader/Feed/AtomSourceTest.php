@@ -74,7 +74,6 @@ class AtomSourceTest extends TestCase
     /**
      * Get Title (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsTitleFromAtom10(): void
     {
@@ -88,7 +87,6 @@ class AtomSourceTest extends TestCase
     /**
      * Get Authors (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsAuthorArrayFromAtom10(): void
     {
@@ -112,7 +110,6 @@ class AtomSourceTest extends TestCase
     /**
      * Get Single Author (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsSingleAuthorFromAtom10(): void
     {
@@ -130,7 +127,6 @@ class AtomSourceTest extends TestCase
     /**
      * Get creation date (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsDateCreatedFromAtom10(): void
     {
@@ -146,7 +142,6 @@ class AtomSourceTest extends TestCase
     /**
      * Get modification date (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsDateModifiedFromAtom10(): void
     {
@@ -162,7 +157,6 @@ class AtomSourceTest extends TestCase
     /**
      * Get Generator (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsGeneratorFromAtom10(): void
     {
@@ -176,7 +170,6 @@ class AtomSourceTest extends TestCase
     /**
      * Get Copyright (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsCopyrightFromAtom10(): void
     {
@@ -190,7 +183,6 @@ class AtomSourceTest extends TestCase
     /**
      * Get Description (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsDescriptionFromAtom10(): void
     {
@@ -204,7 +196,6 @@ class AtomSourceTest extends TestCase
     /**
      * Get Id (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsIdFromAtom10(): void
     {
@@ -218,7 +209,6 @@ class AtomSourceTest extends TestCase
     /**
      * Get Language (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsLanguageFromAtom10(): void
     {
@@ -232,7 +222,6 @@ class AtomSourceTest extends TestCase
     /**
      * Get Link (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsLinkFromAtom10(): void
     {
@@ -246,7 +235,6 @@ class AtomSourceTest extends TestCase
     /**
      * Get Feed Link (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsFeedLinkFromAtom10(): void
     {
@@ -260,7 +248,6 @@ class AtomSourceTest extends TestCase
     /**
      * Get Pubsubhubbub Hubs
      *
-     * @return void
      */
     public function testGetsHubsFromAtom10(): void
     {
@@ -277,7 +264,6 @@ class AtomSourceTest extends TestCase
     /**
      * Get category data
      *
-     * @return void
      */
     public function testGetsCategoriesFromAtom10(): void
     {

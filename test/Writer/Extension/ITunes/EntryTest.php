@@ -112,23 +112,16 @@ class EntryTest extends TestCase
      * @dataProvider dataProviderForSetExplicit
      *
      * @param string|bool $value
-     * @param string $result
-     *
-     * @return void
+     * @param string      $result
      */
-    public function testSetExplicit($value, $result): void
+    public function testSetExplicit($value, $result)
     {
         $entry = new Writer\Entry();
         $entry->setItunesExplicit($value);
         $this->assertEquals($result, $entry->getItunesExplicit());
     }
 
-    /**
-     * @return (bool|string)[][]
-     *
-     * @psalm-return array{0: array{0: true, 1: string}, 1: array{0: false, 1: string}, 2: array{0: string, 1: string}, 3: array{0: string, 1: string}, 4: array{0: string, 1: string}}
-     */
-    public function dataProviderForSetExplicit(): array
+    public function dataProviderForSetExplicit()
     {
         return [
             // Current behaviour
@@ -260,38 +253,31 @@ class EntryTest extends TestCase
         $entry->setItunesSummary(str_repeat('a', 4001));
     }
 
-    /**
-     * @return (\stdClass|bool|float|int|null|string|string[])[][]
-     *
-     * @psalm-return array{null: array{0: null}, true: array{0: true}, false: array{0: false}, zero: array{0: int}, int: array{0: int}, zero-float: array{0: float}, float: array{0: float}, string: array{0: string}, invalid-extension-gif: array{0: string, 1: string}, invalid-extension-uc: array{0: string, 1: string}, array: array{0: array{0: string}}, object: array{0: \stdClass}}
-     */
-    public function invalidImageUrls(): array
+    public function invalidImageUrls()
     {
         return [
-            'null'                  => [null],
-            'true'                  => [true],
-            'false'                 => [false],
-            'zero'                  => [0],
-            'int'                   => [1],
-            'zero-float'            => [0.0],
-            'float'                 => [1.1],
-            'string'                => ['scheme:/host.path'],
+            'null' => [null],
+            'true' => [true],
+            'false' => [false],
+            'zero' => [0],
+            'int' => [1],
+            'zero-float' => [0.0],
+            'float' => [1.1],
+            'string' => ['scheme:/host.path'],
             'invalid-extension-gif' => ['https://example.com/image.gif', 'file extension'],
-            'invalid-extension-uc'  => ['https://example.com/image.PNG', 'file extension'],
-            'array'                 => [['https://example.com/image.png']],
-            'object'                => [(object) ['image' => 'https://example.com/image.png']],
+            'invalid-extension-uc' => ['https://example.com/image.PNG', 'file extension'],
+            'array' => [['https://example.com/image.png']],
+            'object' => [(object) ['image' => 'https://example.com/image.png']],
         ];
     }
 
     /**
      * @dataProvider invalidImageUrls
      *
-     * @param mixed $url
+     * @param mixed  $url
      * @param string $expectedMessage
-     *
-     * @return void
      */
-    public function testSetItunesImageRaisesExceptionForInvalidUrl($url, $expectedMessage = 'valid URI'): void
+    public function testSetItunesImageRaisesExceptionForInvalidUrl($url, $expectedMessage = 'valid URI')
     {
         $entry = new Writer\Entry();
 
@@ -300,12 +286,7 @@ class EntryTest extends TestCase
         $entry->setItunesImage($url);
     }
 
-    /**
-     * @return string[][]
-     *
-     * @psalm-return array{jpg: array{0: string}, png: array{0: string}}
-     */
-    public function validImageUrls(): array
+    public function validImageUrls()
     {
         return [
             'jpg' => ['https://example.com/image.jpg'],
@@ -317,32 +298,25 @@ class EntryTest extends TestCase
      * @dataProvider validImageUrls
      *
      * @param string $url
-     *
-     * @return void
      */
-    public function testSetItunesImageSetsInternalDataWithValidUrl($url): void
+    public function testSetItunesImageSetsInternalDataWithValidUrl($url)
     {
         $entry = new Writer\Entry();
         $entry->setItunesImage($url);
         $this->assertEquals($url, $entry->getItunesImage());
     }
 
-    /**
-     * @return (\stdClass|bool|float|int[]|null|string)[][]
-     *
-     * @psalm-return array{null: array{0: null}, true: array{0: true}, false: array{0: false}, zero-float: array{0: float}, float: array{0: float}, string: array{0: string}, array: array{0: array{0: int}}, object: array{0: \stdClass}}
-     */
-    public function nonNumericEpisodeNumbers(): array
+    public function nonNumericEpisodeNumbers()
     {
         return [
-            'null'       => [null],
-            'true'       => [true],
-            'false'      => [false],
+            'null' => [null],
+            'true' => [true],
+            'false' => [false],
             'zero-float' => [0.000],
-            'float'      => [1.1],
-            'string'     => ['not-a-number'],
-            'array'      => [[1]],
-            'object'     => [(object) ['number' => 1]],
+            'float' => [1.1],
+            'string' => ['not-a-number'],
+            'array' => [[1]],
+            'object' => [(object) ['number' => 1]],
         ];
     }
 
@@ -350,10 +324,8 @@ class EntryTest extends TestCase
      * @dataProvider nonNumericEpisodeNumbers
      *
      * @param mixed $number
-     *
-     * @return void
      */
-    public function testSetEpisodeRaisesExceptionForNonNumericEpisodeNumbers($number): void
+    public function testSetEpisodeRaisesExceptionForNonNumericEpisodeNumbers($number)
     {
         $entry = new Writer\Entry();
 
@@ -369,24 +341,19 @@ class EntryTest extends TestCase
         $this->assertEquals(42, $entry->getItunesEpisode());
     }
 
-    /**
-     * @return (\stdClass|bool|float|int|null|string|string[])[][]
-     *
-     * @psalm-return array{null: array{0: null}, true: array{0: true}, false: array{0: false}, zero: array{0: int}, int: array{0: int}, zero-float: array{0: float}, float: array{0: float}, string: array{0: string}, array: array{0: array{0: string}}, object: array{0: \stdClass}}
-     */
-    public function invalidEpisodeTypes(): array
+    public function invalidEpisodeTypes()
     {
         return [
-            'null'       => [null],
-            'true'       => [true],
-            'false'      => [false],
-            'zero'       => [0],
-            'int'        => [1],
+            'null' => [null],
+            'true' => [true],
+            'false' => [false],
+            'zero' => [0],
+            'int' => [1],
             'zero-float' => [0.0],
-            'float'      => [1.1],
-            'string'     => ['not-a-type'],
-            'array'      => [['full']],
-            'object'     => [(object) ['type' => 'full']],
+            'float' => [1.1],
+            'string' => ['not-a-type'],
+            'array' => [['full']],
+            'object' => [(object) ['type' => 'full']],
         ];
     }
 
@@ -394,10 +361,8 @@ class EntryTest extends TestCase
      * @dataProvider invalidEpisodeTypes
      *
      * @param mixed $type
-     *
-     * @return void
      */
-    public function testSetEpisodeTypeRaisesExceptionForInvalidTypes($type): void
+    public function testSetEpisodeTypeRaisesExceptionForInvalidTypes($type)
     {
         $entry = new Writer\Entry();
 
@@ -406,17 +371,12 @@ class EntryTest extends TestCase
         $entry->setItunesEpisodeType($type);
     }
 
-    /**
-     * @return string[][]
-     *
-     * @psalm-return array{full: array{0: string}, trailer: array{0: string}, bonus: array{0: string}}
-     */
-    public function validEpisodeTypes(): array
+    public function validEpisodeTypes()
     {
         return [
-            'full'    => ['full'],
+            'full' => ['full'],
             'trailer' => ['trailer'],
-            'bonus'   => ['bonus'],
+            'bonus' => ['bonus'],
         ];
     }
 
@@ -424,32 +384,25 @@ class EntryTest extends TestCase
      * @dataProvider validEpisodeTypes
      *
      * @param string $type
-     *
-     * @return void
      */
-    public function testEpisodeTypeMaybeMutatedWithAcceptedValues($type): void
+    public function testEpisodeTypeMaybeMutatedWithAcceptedValues($type)
     {
         $entry = new Writer\Entry();
         $entry->setItunesEpisodeType($type);
         $this->assertEquals($type, $entry->getItunesEpisodeType());
     }
 
-    /**
-     * @return (\stdClass|float|int|null|string|string[])[][]
-     *
-     * @psalm-return array{null: array{0: null}, zero: array{0: int}, int: array{0: int}, zero-float: array{0: float}, float: array{0: float}, string: array{0: string}, array: array{0: array{0: string}}, object: array{0: \stdClass}}
-     */
-    public function invalidClosedCaptioningFlags(): array
+    public function invalidClosedCaptioningFlags()
     {
         return [
-            'null'       => [null],
-            'zero'       => [0],
-            'int'        => [1],
+            'null' => [null],
+            'zero' => [0],
+            'int' => [1],
             'zero-float' => [0.0],
-            'float'      => [1.1],
-            'string'     => ['Yes'],
-            'array'      => [['Yes']],
-            'object'     => [(object) ['isClosedCaptioned' => 'Yes']],
+            'float' => [1.1],
+            'string' => ['Yes'],
+            'array' => [['Yes']],
+            'object' => [(object) ['isClosedCaptioned' => 'Yes']],
         ];
     }
 
@@ -457,10 +410,8 @@ class EntryTest extends TestCase
      * @dataProvider invalidClosedCaptioningFlags
      *
      * @param mixed $status
-     *
-     * @return void
      */
-    public function testSettingClosedCaptioningToNonBooleanRaisesException($status): void
+    public function testSettingClosedCaptioningToNonBooleanRaisesException($status)
     {
         $entry = new Writer\Entry();
 
@@ -487,10 +438,8 @@ class EntryTest extends TestCase
      * @dataProvider nonNumericEpisodeNumbers
      *
      * @param mixed $number
-     *
-     * @return void
      */
-    public function testSetSeasonRaisesExceptionForNonNumericSeasonNumbers($number): void
+    public function testSetSeasonRaisesExceptionForNonNumericSeasonNumbers($number)
     {
         $entry = new Writer\Entry();
 

@@ -9,6 +9,7 @@
 namespace LaminasTest\Feed\Reader\Feed;
 
 use DateTime;
+use DateTimeInterface;
 use Laminas\Feed\Reader;
 use PHPUnit\Framework\TestCase;
 
@@ -82,7 +83,6 @@ class RssTest extends TestCase
     /**
      * Get Title (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsTitleFromRss20(): void
     {
@@ -375,7 +375,6 @@ class RssTest extends TestCase
     /**
      * Get Authors (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsAuthorArrayFromRss20(): void
     {
@@ -780,7 +779,6 @@ class RssTest extends TestCase
     /**
      * Get Single Author (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsSingleAuthorFromRss20(): void
     {
@@ -1015,7 +1013,6 @@ class RssTest extends TestCase
     /**
      * Get Copyright (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsCopyrightFromRss20(): void
     {
@@ -1250,7 +1247,6 @@ class RssTest extends TestCase
     /**
      * Get Description (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsDescriptionFromRss20(): void
     {
@@ -1485,7 +1481,6 @@ class RssTest extends TestCase
     /**
      * Get Language (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsLanguageFromRss20(): void
     {
@@ -1730,7 +1725,6 @@ class RssTest extends TestCase
     /**
      * Get Link (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsLinkFromRss20(): void
     {
@@ -1849,7 +1843,6 @@ class RssTest extends TestCase
     /**
      * Implements Countable
      *
-     * @return void
      */
     public function testCountableInterface(): void
     {
@@ -1862,7 +1855,6 @@ class RssTest extends TestCase
     /**
      * Get Feed Link (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsFeedLinkFromRss20(): void
     {
@@ -1990,7 +1982,6 @@ class RssTest extends TestCase
     /**
      * Get Generator (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsGeneratorFromRss20(): void
     {
@@ -2109,7 +2100,6 @@ class RssTest extends TestCase
     /**
      * Get Last Build Date (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsLastBuildDateFromRss20(): void
     {
@@ -2131,9 +2121,9 @@ class RssTest extends TestCase
     /**
      * Get DateModified (Unencoded Text)
      *
+     * @param string $path
+     * @param DateTimeInterface|null $edate
      * @dataProvider dateModifiedProvider
-     *
-     * @return void
      */
     public function testGetsDateModified($path, $edate): void
     {
@@ -2145,14 +2135,15 @@ class RssTest extends TestCase
     }
 
     /**
-     * @return (DateTime|false|null|string)[][]
-     *
-     * @psalm-return array{0: array{0: string, 1: DateTime|false}, 1: array{0: string, 1: DateTime|false}, 2: array{0: string, 1: DateTime|false}, 3: array{0: string, 1: DateTime|false}, 4: array{0: string, 1: DateTime|false}, 5: array{0: string, 1: DateTime|false}, 6: array{0: string, 1: DateTime|false}, 7: array{0: string, 1: DateTime|false}, 8: array{0: string, 1: DateTime|false}, 9: array{0: string, 1: DateTime|false}, 10: array{0: string, 1: DateTime|false}, 11: array{0: string, 1: DateTime|false}, 12: array{0: string, 1: DateTime|false}, 13: array{0: string, 1: DateTime|false}, 14: array{0: string, 1: DateTime|false}, 15: array{0: string, 1: DateTime|false}, 16: array{0: string, 1: DateTime|false}, 17: array{0: string, 1: DateTime|false}, 18: array{0: string, 1: DateTime|false}, 19: array{0: string, 1: DateTime|false}, 20: array{0: string, 1: DateTime|false}, 21: array{0: string, 1: DateTime|false}, 22: array{0: string, 1: DateTime|false}, 23: array{0: string, 1: null}, 24: array{0: string, 1: null}, 25: array{0: string, 1: null}, 26: array{0: string, 1: null}, 27: array{0: string, 1: null}, 28: array{0: string, 1: null}, 29: array{0: string, 1: null}}
+     * @psalm-return array<int,array{0:string,1:DateTimeInterface|null}>
      */
     public function dateModifiedProvider(): array
     {
-        $iso = DateTime::createFromFormat(DateTime::ISO8601, '2009-03-07T08:03:50Z');
-        $us  = DateTime::createFromFormat(DateTime::ISO8601, '2010-01-04T02:14:00-0600');
+        $iso = DateTime::createFromFormat(DateTimeInterface::ISO8601, '2009-03-07T08:03:50Z');
+        assert($iso instanceof DateTimeInterface);
+        $us  = DateTime::createFromFormat(DateTimeInterface::ISO8601, '2010-01-04T02:14:00-0600');
+        assert($us instanceof DateTimeInterface);
+
         return [
             ['/datemodified/plain/rss20.xml', $iso],
             ['/datemodified/plain/rss20_en_US.xml', $us],
@@ -2190,7 +2181,6 @@ class RssTest extends TestCase
     /**
      * Get Hubs (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsHubsFromRss20(): void
     {
@@ -2330,7 +2320,6 @@ class RssTest extends TestCase
     /**
      * Get category data
      *
-     * @return void
      */
     public function testGetsCategoriesFromRss20(): void
     {
@@ -2577,7 +2566,6 @@ class RssTest extends TestCase
     /**
      * Get Image data (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsImageFromRss20(): void
     {
@@ -2654,8 +2642,8 @@ class RssTest extends TestCase
         ], $feed->getImage());
     }
 
-    /*public function testGetsImageFromRss10()
-    {
+    /*public function testGetsImageFromRss10(): void
+ {
         $feed = Reader\Reader::importString(
             file_get_contents($this->_feedSamplePath.'/image/plain/rss10.xml')
         );
@@ -2669,8 +2657,8 @@ class RssTest extends TestCase
         ), $feed->getImage());
     }
 
-    public function testGetsImageFromRss090()
-    {
+    public function testGetsImageFromRss090(): void
+ {
         $feed = Reader\Reader::importString(
             file_get_contents($this->_feedSamplePath.'/image/plain/rss090.xml')
         );
@@ -2687,7 +2675,6 @@ class RssTest extends TestCase
     /**
      * Get Image data (Unencoded Text) Missing
      *
-     * @return void
      */
     public function testGetsImageFromRss20None(): void
     {

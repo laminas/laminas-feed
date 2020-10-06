@@ -32,11 +32,6 @@ class StandaloneExtensionManagerTest extends TestCase
         $this->assertInstanceOf(ExtensionManagerInterface::class, $this->extensions);
     }
 
-    /**
-     * @return \Laminas\Feed\Reader\Extension\Atom\Entry::class|\Laminas\Feed\Reader\Extension\Atom\Feed::class|\Laminas\Feed\Reader\Extension\Content\Entry::class|\Laminas\Feed\Reader\Extension\CreativeCommons\Entry::class|\Laminas\Feed\Reader\Extension\CreativeCommons\Feed::class|\Laminas\Feed\Reader\Extension\DublinCore\Entry::class|\Laminas\Feed\Reader\Extension\DublinCore\Feed::class|\Laminas\Feed\Reader\Extension\Podcast\Entry::class|\Laminas\Feed\Reader\Extension\Podcast\Feed::class|\Laminas\Feed\Reader\Extension\Slash\Entry::class|\Laminas\Feed\Reader\Extension\Syndication\Feed::class|\Laminas\Feed\Reader\Extension\Thread\Entry::class|\Laminas\Feed\Reader\Extension\WellFormedWeb\Entry::class|string[][]
-     *
-     * @psalm-return array{'Atom\\Entry': array{0: string, 1: \Laminas\Feed\Reader\Extension\Atom\Entry::class}, 'Atom\\Feed': array{0: string, 1: \Laminas\Feed\Reader\Extension\Atom\Feed::class}, 'Content\\Entry': array{0: string, 1: \Laminas\Feed\Reader\Extension\Content\Entry::class}, 'CreativeCommons\\Entry': array{0: string, 1: \Laminas\Feed\Reader\Extension\CreativeCommons\Entry::class}, 'CreativeCommons\\Feed': array{0: string, 1: \Laminas\Feed\Reader\Extension\CreativeCommons\Feed::class}, 'DublinCore\\Entry': array{0: string, 1: \Laminas\Feed\Reader\Extension\DublinCore\Entry::class}, 'DublinCore\\Feed': array{0: string, 1: \Laminas\Feed\Reader\Extension\DublinCore\Feed::class}, 'Podcast\\Entry': array{0: string, 1: \Laminas\Feed\Reader\Extension\Podcast\Entry::class}, 'Podcast\\Feed': array{0: string, 1: \Laminas\Feed\Reader\Extension\Podcast\Feed::class}, 'Slash\\Entry': array{0: string, 1: \Laminas\Feed\Reader\Extension\Slash\Entry::class}, 'Syndication\\Feed': array{0: string, 1: \Laminas\Feed\Reader\Extension\Syndication\Feed::class}, 'Thread\\Entry': array{0: string, 1: \Laminas\Feed\Reader\Extension\Thread\Entry::class}, 'WellFormedWeb\\Entry': array{0: string, 1: \Laminas\Feed\Reader\Extension\WellFormedWeb\Entry::class}}
-     */
     public function defaultPlugins(): array
     {
         return [
@@ -59,7 +54,6 @@ class StandaloneExtensionManagerTest extends TestCase
     /**
      * @dataProvider defaultPlugins
      *
-     * @return void
      */
     public function testHasAllDefaultPlugins($pluginName, $pluginClass): void
     {
@@ -69,7 +63,6 @@ class StandaloneExtensionManagerTest extends TestCase
     /**
      * @dataProvider defaultPlugins
      *
-     * @return void
      */
     public function testCanRetrieveDefaultPluginInstances($pluginName, $pluginClass): void
     {
@@ -80,7 +73,6 @@ class StandaloneExtensionManagerTest extends TestCase
     /**
      * @dataProvider defaultPlugins
      *
-     * @return void
      */
     public function testEachPluginRetrievalReturnsNewInstance($pluginName, $pluginClass): void
     {

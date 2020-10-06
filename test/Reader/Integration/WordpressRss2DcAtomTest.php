@@ -28,7 +28,6 @@ class WordpressRss2DcAtomTest extends TestCase
     /**
      * Feed level testing
      *
-     * @return void
      */
     public function testGetsTitle(): void
     {
@@ -107,7 +106,6 @@ class WordpressRss2DcAtomTest extends TestCase
     /**
      * Entry level testing
      *
-     * @return void
      */
     public function testGetsEntryId(): void
     {

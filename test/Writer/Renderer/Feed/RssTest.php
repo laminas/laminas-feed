@@ -54,7 +54,6 @@ class RssTest extends TestCase
     /**
      * @doesNotPerformAssertions
      *
-     * @return void
      */
     public function testBuildMethodRunsMinimalWriterContainerProperlyBeforeICheckRssCompliance(): void
     {
@@ -99,7 +98,6 @@ class RssTest extends TestCase
     /**
      * @group LaminasWCHARDATA01
      *
-     * @return void
      */
     public function testFeedTitleCharDataEncoding(): void
     {
@@ -130,7 +128,6 @@ class RssTest extends TestCase
     /**
      * @group LaminasWCHARDATA01
      *
-     * @return void
      */
     public function testFeedDescriptionCharDataEncoding(): void
     {
@@ -153,7 +150,6 @@ class RssTest extends TestCase
     /**
      * @doesNotPerformAssertions
      *
-     * @return void
      */
     public function testFeedUpdatedDateIfMissingThrowsNoException(): void
     {
@@ -183,7 +179,6 @@ class RssTest extends TestCase
     /**
      * @doesNotPerformAssertions
      *
-     * @return void
      */
     public function testFeedGeneratorIfMissingThrowsNoException(): void
     {
@@ -215,7 +210,6 @@ class RssTest extends TestCase
     /**
      * @doesNotPerformAssertions
      *
-     * @return void
      */
     public function testFeedLanguageIfMissingThrowsNoException(): void
     {
@@ -252,7 +246,6 @@ class RssTest extends TestCase
     /**
      * @group Issue2605
      *
-     * @return void
      */
     public function testFeedIncludesLinkToXmlRssWhereRssAndAtomLinksAreProvided(): void
     {
@@ -278,7 +271,6 @@ class RssTest extends TestCase
     /**
      * @doesNotPerformAssertions
      *
-     * @return void
      */
     public function testFeedLinkToXmlRssWhereTheFeedWillBeAvailableIfMissingThrowsNoException(): void
     {
@@ -299,7 +291,6 @@ class RssTest extends TestCase
     /**
      * @group LaminasW003
      *
-     * @return void
      */
     public function testFeedHoldsAnyAuthorAdded(): void
     {
@@ -318,7 +309,6 @@ class RssTest extends TestCase
     /**
      * @group LaminasWCHARDATA01
      *
-     * @return void
      */
     public function testFeedAuthorCharDataEncoding(): void
     {
@@ -346,7 +336,6 @@ class RssTest extends TestCase
     /**
      * @group LaminasWCHARDATA01
      *
-     * @return void
      */
     public function testCopyrightCharDataEncoding(): void
     {
@@ -388,7 +377,6 @@ class RssTest extends TestCase
     /**
      * @group LaminasWCHARDATA01
      *
-     * @return void
      */
     public function testCategoriesCharDataEncoding(): void
     {

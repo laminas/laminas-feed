@@ -89,7 +89,6 @@ class CallbackTest extends TestCase
      * the $inputStream property of the callback via reflection.
      *
      * @param string $contents
-     * @return void
      */
     public function mockInputStream(AbstractCallback $callback, $contents)
     {
@@ -163,8 +162,6 @@ class CallbackTest extends TestCase
 
     /**
      * @group Laminas_CONFLICT
-     *
-     * @return void
      */
     public function testValidatesValidHttpGetData(): void
     {
@@ -423,8 +420,6 @@ class CallbackTest extends TestCase
      * of the wellformedness of any XML payload, by returning a 2xx response code.
      * The validation of feeds and their processing must occur outside the Hubbub
      * protocol.
-     *
-     * @return void
      */
     public function testRespondsToInvalidFeedUpdateWrongFeedTypeForMimeWith200Response(): void
     {

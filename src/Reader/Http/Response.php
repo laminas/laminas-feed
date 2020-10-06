@@ -81,7 +81,7 @@ class Response implements HeaderAwareResponseInterface
      *
      * @return void
      */
-    private function validateStatusCode($statusCode): void
+    private function validateStatusCode($statusCode)
     {
         if (! is_numeric($statusCode) || (is_string($statusCode) && trim($statusCode) !== $statusCode)) {
             throw new Exception\InvalidArgumentException(sprintf(
@@ -118,7 +118,7 @@ class Response implements HeaderAwareResponseInterface
      *
      * @return void
      */
-    private function validateBody($body): void
+    private function validateBody($body)
     {
         if (is_string($body)) {
             return;
@@ -142,7 +142,7 @@ class Response implements HeaderAwareResponseInterface
      *
      * @return void
      */
-    private function validateHeaders(array $headers): void
+    private function validateHeaders(array $headers)
     {
         foreach ($headers as $name => $value) {
             if (! is_string($name) || is_numeric($name) || empty($name)) {

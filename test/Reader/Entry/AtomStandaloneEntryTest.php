@@ -74,8 +74,6 @@ class AtomStandaloneEntryTest extends TestCase
      * Get Id (Unencoded Text)
      *
      * @group LaminasR002
-     *
-     * @return void
      */
     public function testGetsIdFromAtom10(): void
     {
@@ -89,8 +87,6 @@ class AtomStandaloneEntryTest extends TestCase
      * Get creation date (Unencoded Text)
      *
      * @group LaminasR002
-     *
-     * @return void
      */
     public function testGetsDateCreatedFromAtom10(): void
     {
@@ -106,7 +102,6 @@ class AtomStandaloneEntryTest extends TestCase
      *
      * @group LaminasR002
      *
-     * @return void
      */
     public function testGetsDateModifiedFromAtom10(): void
     {
@@ -122,7 +117,6 @@ class AtomStandaloneEntryTest extends TestCase
      *
      * @group LaminasR002
      *
-     * @return void
      */
     public function testGetsTitleFromAtom10(): void
     {
@@ -137,7 +131,6 @@ class AtomStandaloneEntryTest extends TestCase
      *
      * @group LaminasR002
      *
-     * @return void
      */
     public function testGetsAuthorsFromAtom10(): void
     {
@@ -162,7 +155,6 @@ class AtomStandaloneEntryTest extends TestCase
      *
      * @group LaminasR002
      *
-     * @return void
      */
     public function testGetsAuthorFromAtom10(): void
     {
@@ -180,7 +172,6 @@ class AtomStandaloneEntryTest extends TestCase
      *
      * @group LaminasR002
      *
-     * @return void
      */
     public function testGetsDescriptionFromAtom10(): void
     {
@@ -195,7 +186,6 @@ class AtomStandaloneEntryTest extends TestCase
      *
      * @group LaminasR002
      *
-     * @return void
      */
     public function testGetsEnclosureFromAtom10(): void
     {
@@ -216,7 +206,6 @@ class AtomStandaloneEntryTest extends TestCase
      *
      * @group LaminasRATOMCONTENT
      *
-     * @return void
      */
     public function testGetsContentFromAtom10(): void
     {
@@ -231,7 +220,6 @@ class AtomStandaloneEntryTest extends TestCase
      *
      * @group LaminasRATOMCONTENT
      *
-     * @return void
      */
     public function testGetsContentFromAtom10Html(): void
     {
@@ -246,7 +234,6 @@ class AtomStandaloneEntryTest extends TestCase
      *
      * @group LaminasRATOMCONTENT
      *
-     * @return void
      */
     public function testGetsContentFromAtom10HtmlCdata(): void
     {
@@ -261,7 +248,6 @@ class AtomStandaloneEntryTest extends TestCase
      *
      * @group LaminasRATOMCONTENT
      *
-     * @return void
      */
     public function testGetsContentFromAtom10XhtmlNamespaced(): void
     {
@@ -276,7 +262,6 @@ class AtomStandaloneEntryTest extends TestCase
      *
      * @group LaminasR002
      *
-     * @return void
      */
     public function testGetsLinkFromAtom10(): void
     {
@@ -291,7 +276,6 @@ class AtomStandaloneEntryTest extends TestCase
      *
      * @group LaminasR002
      *
-     * @return void
      */
     public function testGetsCommentLinkFromAtom10(): void
     {
@@ -306,7 +290,6 @@ class AtomStandaloneEntryTest extends TestCase
      *
      * @group LaminasR002
      *
-     * @return void
      */
     public function testGetsCategoriesFromAtom10(): void
     {

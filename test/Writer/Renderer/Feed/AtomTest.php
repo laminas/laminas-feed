@@ -60,7 +60,6 @@ class AtomTest extends TestCase
     /**
      * @doesNotPerformAssertions
      *
-     * @return void
      */
     public function testBuildMethodRunsMinimalWriterContainerProperlyBeforeICheckAtomCompliance(): void
     {
@@ -81,7 +80,6 @@ class AtomTest extends TestCase
      * @group 6358
      * @group 6935
      *
-     * @return void
      */
     public function testDateModifiedHasTheCorrectFormat(): void
     {
@@ -125,7 +123,6 @@ class AtomTest extends TestCase
     /**
      * @group LaminasWCHARDATA01
      *
-     * @return void
      */
     public function testFeedTitleCharDataEncoding(): void
     {
@@ -147,7 +144,6 @@ class AtomTest extends TestCase
     /**
      * @doesNotPerformAssertions
      *
-     * @return void
      */
     public function testFeedSubtitleThrowsNoExceptionIfMissing(): void
     {
@@ -159,7 +155,6 @@ class AtomTest extends TestCase
     /**
      * @group LaminasWCHARDATA01
      *
-     * @return void
      */
     public function testFeedSubtitleCharDataEncoding(): void
     {
@@ -199,7 +194,6 @@ class AtomTest extends TestCase
     /**
      * @doesNotPerformAssertions
      *
-     * @return void
      */
     public function testFeedGeneratorIfMissingThrowsNoException(): void
     {
@@ -219,7 +213,6 @@ class AtomTest extends TestCase
     /**
      * @group LaminasWCHARDATA01
      *
-     * @return void
      */
     public function testFeedGeneratorCharDataEncoding(): void
     {
@@ -242,7 +235,6 @@ class AtomTest extends TestCase
     /**
      * @doesNotPerformAssertions
      *
-     * @return void
      */
     public function testFeedLanguageIfMissingThrowsNoException(): void
     {
@@ -270,7 +262,6 @@ class AtomTest extends TestCase
     /**
      * @doesNotPerformAssertions
      *
-     * @return void
      */
     public function testFeedLinkToHtmlVersionOfFeedIfMissingThrowsNoExceptionIfIdSet(): void
     {
@@ -322,7 +313,6 @@ class AtomTest extends TestCase
     /**
      * @group LaminasWCHARDATA01
      *
-     * @return void
      */
     public function testFeedAuthorCharDataEncoding(): void
     {

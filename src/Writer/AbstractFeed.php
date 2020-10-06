@@ -133,7 +133,7 @@ class AbstractFeed
      *
      * @throws Exception\InvalidArgumentException
      */
-    public function setDateCreated($date = null): self
+    public function setDateCreated($date = null)
     {
         if ($date === null) {
             $date = new DateTime();
@@ -161,7 +161,7 @@ class AbstractFeed
      *
      * @throws Exception\InvalidArgumentException
      */
-    public function setDateModified($date = null): self
+    public function setDateModified($date = null)
     {
         if ($date === null) {
             $date = new DateTime();
@@ -189,7 +189,7 @@ class AbstractFeed
      *
      * @throws Exception\InvalidArgumentException
      */
-    public function setLastBuildDate($date = null): self
+    public function setLastBuildDate($date = null)
     {
         if ($date === null) {
             $date = new DateTime();

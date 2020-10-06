@@ -445,9 +445,9 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get an author entry in RSS format
      *
-     * @return (null|string)[]|null
+     * @return array<string,null|string>
      *
-     * @psalm-return array{email?: null|string, name?: null|string, uri?: null|string}|null
+     * @psalm-return array{email?: null|string, name?: null|string, uri?: null|string}
      */
     protected function getAuthorFromElement(DOMElement $element)
     {

@@ -148,24 +148,19 @@ class FeedTest extends TestCase
         $feed->setPlayPodcastDescription(str_repeat('a', 4001));
     }
 
-    /**
-     * @return (\stdClass|bool|float|int|null|string|string[])[][]
-     *
-     * @psalm-return array{null: array{0: null}, true: array{0: true}, false: array{0: false}, zero: array{0: int}, int: array{0: int}, zero-float: array{0: float}, float: array{0: float}, string: array{0: string}, array: array{0: array{0: string}}, object: array{0: \stdClass}}
-     */
-    public function invalidImageUrls(): array
+    public function invalidImageUrls()
     {
         return [
-            'null'       => [null],
-            'true'       => [true],
-            'false'      => [false],
-            'zero'       => [0],
-            'int'        => [1],
+            'null' => [null],
+            'true' => [true],
+            'false' => [false],
+            'zero' => [0],
+            'int' => [1],
             'zero-float' => [0.0],
-            'float'      => [1.1],
-            'string'     => ['scheme:/host.path'],
-            'array'      => [['https://example.com/image.png']],
-            'object'     => [(object) ['image' => 'https://example.com/image.png']],
+            'float' => [1.1],
+            'string' => ['scheme:/host.path'],
+            'array' => [['https://example.com/image.png']],
+            'object' => [(object) ['image' => 'https://example.com/image.png']],
         ];
     }
 
@@ -173,10 +168,8 @@ class FeedTest extends TestCase
      * @dataProvider invalidImageUrls
      *
      * @param mixed $url
-     *
-     * @return void
      */
-    public function testSetPlayPodcastImageRaisesExceptionForInvalidUrl($url): void
+    public function testSetPlayPodcastImageRaisesExceptionForInvalidUrl($url)
     {
         $feed = new Writer\Feed();
 
@@ -184,12 +177,7 @@ class FeedTest extends TestCase
         $feed->setPlayPodcastImage($url);
     }
 
-    /**
-     * @return string[][]
-     *
-     * @psalm-return array{jpg: array{0: string}, png: array{0: string}}
-     */
-    public function validImageUrls(): array
+    public function validImageUrls()
     {
         return [
             'jpg' => ['https://example.com/image.jpg'],
@@ -201,10 +189,8 @@ class FeedTest extends TestCase
      * @dataProvider validImageUrls
      *
      * @param string $url
-     *
-     * @return void
      */
-    public function testSetPlayPodcastImageSetsInternalDataWithValidUrl($url): void
+    public function testSetPlayPodcastImageSetsInternalDataWithValidUrl($url)
     {
         $feed = new Writer\Feed();
         $feed->setPlayPodcastImage($url);

@@ -72,7 +72,7 @@ class Entry
      *
      * @return void
      */
-    public function setPlayPodcastBlock($value): void
+    public function setPlayPodcastBlock($value)
     {
         if (! ctype_alpha($value) && strlen($value) > 0) {
             throw new Writer\Exception\InvalidArgumentException(

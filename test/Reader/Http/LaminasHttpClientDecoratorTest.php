@@ -64,11 +64,11 @@ class LaminasHttpClientDecoratorTest extends TestCase
     }
 
     /**
-     * @return ObjectProphecy
+     * @return MockObject
      *
-     * @psalm-return ObjectProphecy<HttpResponse>
+     * @psalm-return MockObject<HttpResponse>
      */
-    public function createMockHttpResponse(int $statusCode, string $body, Headers $headers = null): ObjectProphecy
+    public function createMockHttpResponse(int $statusCode, string $body, Headers $headers = null): MockObject
     {
         $response = $this->createMock(HttpResponse::class);
         $response
@@ -243,13 +243,12 @@ class LaminasHttpClientDecoratorTest extends TestCase
     }
 
     /**
+     * @psalm-param array<array-key,string> $headers
+     * @param string $contains
      * @dataProvider invalidHeaders
-     *
-     * @return void
      */
     public function testDecoratorRaisesExceptionForInvalidHeaders($headers, $contains): void
     {
-        $httpResponse = $this->createMockHttpResponse(200, '');
         $this->client
             ->expects($this->atLeastOnce())
             ->method('resetParameters');

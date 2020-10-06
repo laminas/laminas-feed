@@ -73,7 +73,7 @@ class Entry
      *
      * @return void
      */
-    public function setItunesBlock($value): void
+    public function setItunesBlock($value)
     {
         if (! ctype_alpha($value) && strlen($value) > 0) {
             throw new Writer\Exception\InvalidArgumentException(

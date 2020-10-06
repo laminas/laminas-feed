@@ -133,7 +133,6 @@ class ReaderTest extends TestCase
     /**
      * @group Laminas-9723
      *
-     * @return void
      */
     public function testDetectsTypeFromStringOrToRemindPaddyAboutForgettingATestWhichLetsAStupidTypoSurviveUnnoticedForMonths(): void
     {
@@ -174,7 +173,6 @@ class ReaderTest extends TestCase
     /**
      * @group Laminas-8328
      *
-     * @return void
      */
     public function testImportsUriAndThrowsExceptionIfNotAFeed(): void
     {
@@ -235,7 +233,6 @@ class ReaderTest extends TestCase
     /**
      * @group Laminas-8327
      *
-     * @return void
      */
     public function testGetsFeedLinksAndTrimsNewlines(): void
     {
@@ -250,7 +247,6 @@ class ReaderTest extends TestCase
     /**
      * @group Laminas-8330
      *
-     * @return void
      */
     public function testGetsFeedLinksAndNormalisesRelativeUrlsOnUriWithPath(): void
     {
@@ -298,7 +294,6 @@ class ReaderTest extends TestCase
      *
      * @todo why is the assertEquals commented out?
      *
-     * @return void
      */
     public function testXxePreventionOnFeedParsing(): void
     {

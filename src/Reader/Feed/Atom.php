@@ -145,7 +145,7 @@ class Atom extends AbstractFeed
      *
      * @return void
      */
-    public function getLastBuildDate(): void
+    public function getLastBuildDate()
     {
         return;
     }

@@ -28,7 +28,7 @@ class ExtensionPluginManagerCompatibilityTest extends TestCase
         return InvalidArgumentException::class;
     }
 
-    protected function getInstanceOf(): void
+    protected function getInstanceOf()
     {
         return;
     }

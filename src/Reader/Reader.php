@@ -569,7 +569,7 @@ class Reader implements ReaderImportInterface
      *
      * @return void
      */
-    public static function setExtensionManager(ExtensionManagerInterface $extensionManager): void
+    public static function setExtensionManager(ExtensionManagerInterface $extensionManager)
     {
         static::$extensionManager = $extensionManager;
     }
@@ -717,7 +717,7 @@ class Reader implements ReaderImportInterface
      * @param  array
      * @return array
      */
-    public static function arrayUnique(array $array): array
+    public static function arrayUnique(array $array)
     {
         foreach ($array as &$value) {
             $value = serialize($value);

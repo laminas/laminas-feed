@@ -61,7 +61,7 @@ class StandaloneExtensionManager implements ExtensionManagerInterface
      *
      * @return void
      */
-    public function add($name, $class): void
+    public function add($name, $class)
     {
         if (is_string($class)
             && (is_a($class, Extension\AbstractRenderer::class, true)
@@ -88,7 +88,7 @@ class StandaloneExtensionManager implements ExtensionManagerInterface
      *
      * @return void
      */
-    public function remove($name): void
+    public function remove($name)
     {
         unset($this->extensions[$name]);
     }

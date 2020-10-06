@@ -51,7 +51,6 @@ class RssTest extends TestCase
     /**
      * @doesNotPerformAssertions
      *
-     * @return void
      */
     public function testRenderMethodRunsMinimalWriterContainerProperlyBeforeICheckAtomCompliance(): void
     {
@@ -271,7 +270,6 @@ class RssTest extends TestCase
     /**
      * @doesNotPerformAssertions
      *
-     * @return void
      */
     public function testEnclosureWorksWithZeroLength(): void
     {
@@ -287,7 +285,6 @@ class RssTest extends TestCase
     /**
      * @doesNotPerformAssertions
      *
-     * @return void
      */
     public function testEnclosureWorksWithPositiveLength(): void
     {
@@ -303,7 +300,6 @@ class RssTest extends TestCase
     /**
      * @doesNotPerformAssertions
      *
-     * @return void
      */
     public function testEnclosureWorksWithPositiveLengthString(): void
     {
@@ -407,7 +403,6 @@ class RssTest extends TestCase
     /**
      * @group LaminasWCHARDATA01
      *
-     * @return void
      */
     public function testCategoriesCharDataEncoding(): void
     {

@@ -32,11 +32,6 @@ class StandaloneExtensionManagerTest extends TestCase
         $this->assertInstanceOf(ExtensionManagerInterface::class, $this->extensions);
     }
 
-    /**
-     * @return \Laminas\Feed\Writer\Extension\Atom\Renderer\Feed::class|\Laminas\Feed\Writer\Extension\Content\Renderer\Entry::class|\Laminas\Feed\Writer\Extension\DublinCore\Renderer\Entry::class|\Laminas\Feed\Writer\Extension\DublinCore\Renderer\Feed::class|\Laminas\Feed\Writer\Extension\ITunes\Entry::class|\Laminas\Feed\Writer\Extension\ITunes\Feed::class|\Laminas\Feed\Writer\Extension\ITunes\Renderer\Entry::class|\Laminas\Feed\Writer\Extension\ITunes\Renderer\Feed::class|\Laminas\Feed\Writer\Extension\Slash\Renderer\Entry::class|\Laminas\Feed\Writer\Extension\Threading\Renderer\Entry::class|\Laminas\Feed\Writer\Extension\WellFormedWeb\Renderer\Entry::class|string[][]
-     *
-     * @psalm-return array{'Atom\\Renderer\\Feed': array{0: string, 1: \Laminas\Feed\Writer\Extension\Atom\Renderer\Feed::class}, 'Content\\Renderer\\Entry': array{0: string, 1: \Laminas\Feed\Writer\Extension\Content\Renderer\Entry::class}, 'DublinCore\\Renderer\\Entry': array{0: string, 1: \Laminas\Feed\Writer\Extension\DublinCore\Renderer\Entry::class}, 'DublinCore\\Renderer\\Feed': array{0: string, 1: \Laminas\Feed\Writer\Extension\DublinCore\Renderer\Feed::class}, 'ITunes\\Entry': array{0: string, 1: \Laminas\Feed\Writer\Extension\ITunes\Entry::class}, 'ITunes\\Feed': array{0: string, 1: \Laminas\Feed\Writer\Extension\ITunes\Feed::class}, 'ITunes\\Renderer\\Entry': array{0: string, 1: \Laminas\Feed\Writer\Extension\ITunes\Renderer\Entry::class}, 'ITunes\\Renderer\\Feed': array{0: string, 1: \Laminas\Feed\Writer\Extension\ITunes\Renderer\Feed::class}, 'Slash\\Renderer\\Entry': array{0: string, 1: \Laminas\Feed\Writer\Extension\Slash\Renderer\Entry::class}, 'Threading\\Renderer\\Entry': array{0: string, 1: \Laminas\Feed\Writer\Extension\Threading\Renderer\Entry::class}, 'WellFormedWeb\\Renderer\\Entry': array{0: string, 1: \Laminas\Feed\Writer\Extension\WellFormedWeb\Renderer\Entry::class}}
-     */
     public function defaultPlugins(): array
     {
         return [
@@ -60,7 +55,6 @@ class StandaloneExtensionManagerTest extends TestCase
     /**
      * @dataProvider defaultPlugins
      *
-     * @return void
      */
     public function testHasAllDefaultPlugins($pluginName, $pluginClass): void
     {
@@ -70,7 +64,6 @@ class StandaloneExtensionManagerTest extends TestCase
     /**
      * @dataProvider defaultPlugins
      *
-     * @return void
      */
     public function testCanRetrieveDefaultPluginInstances($pluginName, $pluginClass): void
     {
@@ -81,7 +74,6 @@ class StandaloneExtensionManagerTest extends TestCase
     /**
      * @dataProvider defaultPlugins
      *
-     * @return void
      */
     public function testEachPluginRetrievalReturnsNewInstance($pluginName, $pluginClass): void
     {

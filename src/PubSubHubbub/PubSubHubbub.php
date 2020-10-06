@@ -111,7 +111,7 @@ class PubSubHubbub
      *
      * @return void
      */
-    public static function setEscaper(Escaper $escaper = null): void
+    public static function setEscaper(Escaper $escaper = null)
     {
         static::$escaper = $escaper;
     }

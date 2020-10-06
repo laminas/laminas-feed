@@ -63,7 +63,7 @@ class Writer
      *
      * @return void
      */
-    public static function setExtensionManager(ExtensionManagerInterface $extensionManager): void
+    public static function setExtensionManager(ExtensionManagerInterface $extensionManager)
     {
         static::$extensionManager = $extensionManager;
     }

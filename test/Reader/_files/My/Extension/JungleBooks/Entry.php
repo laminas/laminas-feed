@@ -25,7 +25,7 @@ class Entry extends Extension\AbstractEntry
         return $this->data['isbn'];
     }
 
-    protected function registerNamespaces()
+    protected function registerNamespaces(): void
     {
         $this->xpath->registerNamespace('jungle', 'http://example.com/junglebooks/rss/module/1.0/');
     }

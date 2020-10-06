@@ -65,7 +65,6 @@ class AtomTest extends TestCase
     /**
      * Get Title (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsTitleFromAtom03(): void
     {
@@ -94,7 +93,6 @@ class AtomTest extends TestCase
     /**
      * Get Authors (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsAuthorArrayFromAtom03(): void
     {
@@ -135,7 +133,6 @@ class AtomTest extends TestCase
     /**
      * Get Single Author (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsSingleAuthorFromAtom03(): void
     {
@@ -172,7 +169,6 @@ class AtomTest extends TestCase
     /**
      * Get creation date (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsDateCreatedFromAtom03(): void
     {
@@ -203,7 +199,6 @@ class AtomTest extends TestCase
     /**
      * Get modification date (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsDateModifiedFromAtom03(): void
     {
@@ -234,7 +229,6 @@ class AtomTest extends TestCase
     /**
      * Get Last Build Date (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsLastBuildDateAlwaysReturnsNullForAtom(): void
     {
@@ -247,7 +241,6 @@ class AtomTest extends TestCase
     /**
      * Get Generator (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsGeneratorFromAtom03(): void
     {
@@ -276,7 +269,6 @@ class AtomTest extends TestCase
     /**
      * Get Copyright (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsCopyrightFromAtom03(): void
     {
@@ -305,7 +297,6 @@ class AtomTest extends TestCase
     /**
      * Get Description (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsDescriptionFromAtom03(): void
     {
@@ -334,7 +325,6 @@ class AtomTest extends TestCase
     /**
      * Get Id (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsIdFromAtom03(): void
     {
@@ -363,7 +353,6 @@ class AtomTest extends TestCase
     /**
      * Get Language (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsLanguageFromAtom03(): void
     {
@@ -392,7 +381,6 @@ class AtomTest extends TestCase
     /**
      * Get Link (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsLinkFromAtom03(): void
     {
@@ -437,7 +425,6 @@ class AtomTest extends TestCase
     /**
      * Get Base Uri
      *
-     * @return void
      */
     public function testGetsBaseUriFromAtom10(): void
     {
@@ -450,7 +437,6 @@ class AtomTest extends TestCase
     /**
      * Get Feed Link (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsFeedLinkFromAtom03(): void
     {
@@ -496,7 +482,6 @@ class AtomTest extends TestCase
     /**
      * Get Pubsubhubbub Hubs
      *
-     * @return void
      */
     public function testGetsHubsFromAtom03(): void
     {
@@ -523,7 +508,6 @@ class AtomTest extends TestCase
     /**
      * Implements Countable
      *
-     * @return void
      */
     public function testCountableInterface(): void
     {
@@ -536,7 +520,6 @@ class AtomTest extends TestCase
     /**
      * Get category data
      *
-     * @return void
      */
     public function testGetsCategoriesFromAtom10(): void
     {
@@ -599,7 +582,6 @@ class AtomTest extends TestCase
     /**
      * Get Image (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsImageFromAtom03(): void
     {
@@ -620,7 +602,6 @@ class AtomTest extends TestCase
     /**
      * Get Image (Unencoded Text) When Missing
      *
-     * @return void
      */
     public function testGetsImageFromAtom03None(): void
     {

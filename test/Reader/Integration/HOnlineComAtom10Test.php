@@ -100,7 +100,6 @@ class HOnlineComAtom10Test extends TestCase
     /**
      * Entry level testing
      *
-     * @return void
      */
     public function testGetsEntryId(): void
     {

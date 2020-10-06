@@ -549,7 +549,7 @@ class Entry extends Extension\AbstractEntry
      *
      * @return null|string
      */
-    protected function absolutiseUri($link): ?string
+    protected function absolutiseUri($link)
     {
         if (! Uri::factory($link)->isAbsolute()) {
             if ($this->getBaseUrl() !== null) {
@@ -565,9 +565,9 @@ class Entry extends Extension\AbstractEntry
     /**
      * Get an author entry
      *
-     * @return (null|string)[]|null
+     * @return array<string,null|string>
      *
-     * @psalm-return array{email?: null|string, name?: null|string, uri?: null|string}|null
+     * @psalm-return array{email?: null|string, name?: null|string, uri?: null|string}
      */
     protected function getAuthorFromElement(DOMElement $element)
     {
@@ -615,7 +615,7 @@ class Entry extends Extension\AbstractEntry
      *
      * @return null|string
      */
-    protected function getAtomType(): ?string
+    protected function getAtomType()
     {
         $dom          = $this->getDomDocument();
         $prefixAtom03 = $dom->lookupPrefix(Reader\Reader::NAMESPACE_ATOM_03);

@@ -65,7 +65,6 @@ class AtomTest extends TestCase
      *
      * @group LaminasR003
      *
-     * @return void
      */
     public function testGetsIdFromAtom03(): void
     {
@@ -88,7 +87,6 @@ class AtomTest extends TestCase
     /**
      * Get creation date (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsDateCreatedFromAtom03(): void
     {
@@ -123,7 +121,6 @@ class AtomTest extends TestCase
     /**
      * Get modification date (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsDateModifiedFromAtom03(): void
     {
@@ -158,7 +155,6 @@ class AtomTest extends TestCase
     /**
      * Get Title (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsTitleFromAtom03(): void
     {
@@ -181,7 +177,6 @@ class AtomTest extends TestCase
     /**
      * Get Authors (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsAuthorsFromAtom03(): void
     {
@@ -224,7 +219,6 @@ class AtomTest extends TestCase
     /**
      * Get Author (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsAuthorFromAtom03(): void
     {
@@ -253,7 +247,6 @@ class AtomTest extends TestCase
     /**
      * Get Description (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsDescriptionFromAtom03(): void
     {
@@ -276,7 +269,6 @@ class AtomTest extends TestCase
     /**
      * Get enclosure
      *
-     * @return void
      */
     public function testGetsEnclosureFromAtom03(): void
     {
@@ -311,7 +303,6 @@ class AtomTest extends TestCase
     /**
      * Get Content (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsContentFromAtom03(): void
     {
@@ -327,7 +318,6 @@ class AtomTest extends TestCase
      *
      * @group LaminasRATOMCONTENT
      *
-     * @return void
      */
     public function testGetsContentFromAtom10(): void
     {
@@ -343,7 +333,6 @@ class AtomTest extends TestCase
      *
      * @group LaminasRATOMCONTENT
      *
-     * @return void
      */
     public function testGetsContentFromAtom10Html(): void
     {
@@ -359,7 +348,6 @@ class AtomTest extends TestCase
      *
      * @group LaminasRATOMCONTENT
      *
-     * @return void
      */
     public function testGetsContentFromAtom10HtmlCdata(): void
     {
@@ -375,7 +363,6 @@ class AtomTest extends TestCase
      *
      * @group LaminasRATOMCONTENT
      *
-     * @return void
      */
     public function testGetsContentFromAtom10XhtmlNamespaced(): void
     {
@@ -398,7 +385,6 @@ class AtomTest extends TestCase
     /**
      * Get Link (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsLinkFromAtom03(): void
     {
@@ -439,7 +425,6 @@ class AtomTest extends TestCase
     /**
      * Get Base Uri
      *
-     * @return void
      */
     public function testGetsBaseUriFromAtom10FromFeedElement(): void
     {
@@ -462,7 +447,6 @@ class AtomTest extends TestCase
     /**
      * Get Comment HTML Link
      *
-     * @return void
      */
     public function testGetsCommentLinkFromAtom03(): void
     {
@@ -494,7 +478,6 @@ class AtomTest extends TestCase
     /**
      * Get category data
      *
-     * @return void
      */
     public function testGetsCategoriesFromAtom10(): void
     {

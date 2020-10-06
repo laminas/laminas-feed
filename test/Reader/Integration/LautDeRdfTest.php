@@ -28,7 +28,6 @@ class LautDeRdfTest extends TestCase
     /**
      * Feed level testing
      *
-     * @return void
      */
     public function testGetsTitle(): void
     {
@@ -97,7 +96,6 @@ class LautDeRdfTest extends TestCase
     /**
      * Entry level testing
      *
-     * @return void
      */
     public function testGetsEntryId(): void
     {

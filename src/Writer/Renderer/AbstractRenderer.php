@@ -170,7 +170,7 @@ class AbstractRenderer
      *
      * @return void
      */
-    public function setType($type): void
+    public function setType($type)
     {
         $this->type = $type;
     }
@@ -193,7 +193,7 @@ class AbstractRenderer
      *
      * @return void
      */
-    public function setRootElement(DOMElement $root): void
+    public function setRootElement(DOMElement $root)
     {
         $this->rootElement = $root;
     }

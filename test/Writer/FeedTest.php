@@ -162,7 +162,6 @@ class FeedTest extends TestCase
     /**
      * @group Laminas-12023
      *
-     * @return void
      */
     public function testSetDateCreatedUsesGivenUnixTimestampThatIsLessThanTenDigits(): void
     {
@@ -175,7 +174,6 @@ class FeedTest extends TestCase
     /**
      * @group Laminas-11610
      *
-     * @return void
      */
     public function testSetDateCreatedUsesGivenUnixTimestampThatIsAVerySmallInteger(): void
     {
@@ -220,7 +218,6 @@ class FeedTest extends TestCase
     /**
      * @group Laminas-12023
      *
-     * @return void
      */
     public function testSetDateModifiedUsesGivenUnixTimestampThatIsLessThanTenDigits(): void
     {
@@ -233,7 +230,6 @@ class FeedTest extends TestCase
     /**
      * @group Laminas-11610
      *
-     * @return void
      */
     public function testSetDateModifiedUsesGivenUnixTimestampThatIsAVerySmallInteger(): void
     {
@@ -306,7 +302,6 @@ class FeedTest extends TestCase
     /**
      * @group Laminas-12023
      *
-     * @return void
      */
     public function testSetLastBuildDateUsesGivenUnixTimestampThatIsLessThanTenDigits(): void
     {
@@ -319,7 +314,6 @@ class FeedTest extends TestCase
     /**
      * @group Laminas-11610
      *
-     * @return void
      */
     public function testSetLastBuildDateUsesGivenUnixTimestampThatIsAVerySmallInteger(): void
     {
@@ -599,7 +593,6 @@ class FeedTest extends TestCase
     /**
      * @deprecated
      *
-     * @return void
      */
     public function testSetsGeneratorNameDeprecated(): void
     {
@@ -611,7 +604,6 @@ class FeedTest extends TestCase
     /**
      * @deprecated
      *
-     * @return void
      */
     public function testSetsGeneratorVersionDeprecated(): void
     {
@@ -626,7 +618,6 @@ class FeedTest extends TestCase
     /**
      * @deprecated
      *
-     * @return void
      */
     public function testSetsGeneratorUriDeprecated(): void
     {
@@ -641,7 +632,6 @@ class FeedTest extends TestCase
     /**
      * @deprecated
      *
-     * @return void
      */
     public function testSetsGeneratorThrowsExceptionOnInvalidNameDeprecated(): void
     {
@@ -654,7 +644,6 @@ class FeedTest extends TestCase
     /**
      * @deprecated
      *
-     * @return void
      */
     public function testSetsGeneratorThrowsExceptionOnInvalidVersionDeprecated(): void
     {
@@ -667,7 +656,6 @@ class FeedTest extends TestCase
     /**
      * @deprecated
      *
-     * @return void
      */
     public function testSetsGeneratorThrowsExceptionOnInvalidUriDeprecated(): void
     {
@@ -934,7 +922,6 @@ class FeedTest extends TestCase
     /**
      * @covers \Laminas\Feed\Writer\Feed::orderByDate
      *
-     * @return void
      */
     public function testAddsAndOrdersEntriesByModifiedDate(): void
     {
@@ -952,7 +939,6 @@ class FeedTest extends TestCase
     /**
      * @covers \Laminas\Feed\Writer\Feed::getEntry
      *
-     * @return void
      */
     public function testGetEntry(): void
     {
@@ -966,7 +952,6 @@ class FeedTest extends TestCase
     /**
      * @covers \Laminas\Feed\Writer\Feed::removeEntry
      *
-     * @return void
      */
     public function testGetEntryException(): void
     {
@@ -979,7 +964,6 @@ class FeedTest extends TestCase
     /**
      * @covers \Laminas\Feed\Writer\Feed::removeEntry
      *
-     * @return void
      */
     public function testRemoveEntry(): void
     {
@@ -1005,7 +989,6 @@ class FeedTest extends TestCase
     /**
      * @covers \Laminas\Feed\Writer\Feed::removeEntry
      *
-     * @return void
      */
     public function testRemoveEntryException(): void
     {
@@ -1033,7 +1016,6 @@ class FeedTest extends TestCase
     /**
      * @covers \Laminas\Feed\Writer\Feed::addTombstone
      *
-     * @return void
      */
     public function testAddTombstone(): void
     {
@@ -1047,7 +1029,6 @@ class FeedTest extends TestCase
     /**
      * @covers \Laminas\Feed\Writer\Feed::export
      *
-     * @return void
      */
     public function testExportRss(): void
     {
@@ -1078,7 +1059,6 @@ EOT;
     /**
      * @covers \Laminas\Feed\Writer\Feed::export
      *
-     * @return void
      */
     public function testExportRssIgnoreExceptions(): void
     {
@@ -1102,7 +1082,6 @@ EOT;
     /**
      * @covers \Laminas\Feed\Writer\Feed::export
      *
-     * @return void
      */
     public function testExportWrongTypeException(): void
     {

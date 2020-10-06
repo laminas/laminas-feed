@@ -227,7 +227,6 @@ class EntryTest extends TestCase
     /**
      * @group Laminas-12070
      *
-     * @return void
      */
     public function testSetDateCreatedUsesGivenUnixTimestampWhenItIsLessThanTenDigits(): void
     {
@@ -240,7 +239,6 @@ class EntryTest extends TestCase
     /**
      * @group Laminas-11610
      *
-     * @return void
      */
     public function testSetDateCreatedUsesGivenUnixTimestampWhenItIsAVerySmallInteger(): void
     {
@@ -285,7 +283,6 @@ class EntryTest extends TestCase
     /**
      * @group Laminas-12070
      *
-     * @return void
      */
     public function testSetDateModifiedUsesGivenUnixTimestampWhenItIsLessThanTenDigits(): void
     {
@@ -298,7 +295,6 @@ class EntryTest extends TestCase
     /**
      * @group Laminas-11610
      *
-     * @return void
      */
     public function testSetDateModifiedUsesGivenUnixTimestampWhenItIsAVerySmallInteger(): void
     {
@@ -562,11 +558,6 @@ class EntryTest extends TestCase
         $this->assertEquals(0, $entry->getCommentCount());
     }
 
-    /**
-     * @return (float|int)[][]
-     *
-     * @psalm-return array{0: array{0: int, 1: int}, 1: array{0: float, 1: int}, 2: array{0: int, 1: int}, 3: array{0: int, 1: int}}
-     */
     public function allowedCommentCounts(): array
     {
         return [
@@ -580,7 +571,6 @@ class EntryTest extends TestCase
     /**
      * @dataProvider allowedCommentCounts
      *
-     * @return void
      */
     public function testSetsCommentCountAllowed($count, $expected): void
     {
@@ -589,11 +579,6 @@ class EntryTest extends TestCase
         $this->assertSame($expected, $entry->getCommentCount());
     }
 
-    /**
-     * @return (array|bool|float|int|null|stdClass|string)[][]
-     *
-     * @psalm-return array{0: array{0: float}, 1: array{0: int}, 2: array{0: int}, 3: array{0: array<empty, empty>}, 4: array{0: string}, 5: array{0: false}, 6: array{0: true}, 7: array{0: stdClass}, 8: array{0: null}}
-     */
     public function disallowedCommentCounts(): array
     {
         return [
@@ -612,7 +597,6 @@ class EntryTest extends TestCase
     /**
      * @dataProvider disallowedCommentCounts
      *
-     * @return void
      */
     public function testSetsCommentCountDisallowed($count): void
     {
@@ -647,7 +631,6 @@ class EntryTest extends TestCase
     /**
      * @covers \Laminas\Feed\Writer\Entry::setEncoding
      *
-     * @return void
      */
     public function testSetEncodingThrowsExceptionIfNull(): void
     {
@@ -660,7 +643,6 @@ class EntryTest extends TestCase
     /**
      * @covers \Laminas\Feed\Writer\Entry::addCategory
      *
-     * @return void
      */
     public function testAddCategoryThrowsExceptionIfNotSetTerm(): void
     {
@@ -673,7 +655,6 @@ class EntryTest extends TestCase
     /**
      * @covers \Laminas\Feed\Writer\Entry::addCategory
      *
-     * @return void
      */
     public function testAddCategoryThrowsExceptionIfSchemeNull(): void
     {
@@ -686,7 +667,6 @@ class EntryTest extends TestCase
     /**
      * @covers \Laminas\Feed\Writer\Entry::setEnclosure
      *
-     * @return void
      */
     public function testSetEnclosureThrowsExceptionIfNotSetUri(): void
     {
@@ -699,7 +679,6 @@ class EntryTest extends TestCase
     /**
      * @covers \Laminas\Feed\Writer\Entry::setEnclosure
      *
-     * @return void
      */
     public function testSetEnclosureThrowsExceptionIfNotValidUri(): void
     {
@@ -712,7 +691,6 @@ class EntryTest extends TestCase
     /**
      * @covers \Laminas\Feed\Writer\Entry::getExtension
      *
-     * @return void
      */
     public function testGetExtension(): void
     {
@@ -726,7 +704,6 @@ class EntryTest extends TestCase
     /**
      * @covers \Laminas\Feed\Writer\Entry::getExtensions
      *
-     * @return void
      */
     public function testGetExtensions(): void
     {
@@ -740,7 +717,6 @@ class EntryTest extends TestCase
      * @covers \Laminas\Feed\Writer\Entry::getSource
      * @covers \Laminas\Feed\Writer\Entry::createSource
      *
-     * @return void
      */
     public function testGetSource(): void
     {

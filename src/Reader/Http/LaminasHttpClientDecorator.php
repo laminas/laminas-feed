@@ -58,7 +58,7 @@ class LaminasHttpClientDecorator implements HeaderAwareClientInterface
      *
      * @return void
      */
-    private function injectHeaders(array $headerValues): void
+    private function injectHeaders(array $headerValues)
     {
         $headers = $this->client->getRequest()->getHeaders();
         foreach ($headerValues as $name => $values) {

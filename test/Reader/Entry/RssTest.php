@@ -9,6 +9,7 @@
 namespace LaminasTest\Feed\Reader\Entry;
 
 use DateTime;
+use DateTimeInterface;
 use Laminas\Feed\Reader;
 use PHPUnit\Framework\TestCase;
 use stdClass;
@@ -83,7 +84,6 @@ class RssTest extends TestCase
     /**
      * Get Id (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsIdFromRss20(): void
     {
@@ -411,7 +411,6 @@ class RssTest extends TestCase
     /**
      * Get Title (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsTitleFromRss20(): void
     {
@@ -674,7 +673,6 @@ class RssTest extends TestCase
     /**
      * Get Authors (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsAuthorsFromRss20(): void
     {
@@ -997,7 +995,6 @@ class RssTest extends TestCase
     /**
      * Get Author (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsAuthorFromRss20(): void
     {
@@ -1260,7 +1257,6 @@ class RssTest extends TestCase
     /**
      * Get Description (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsDescriptionFromRss20(): void
     {
@@ -1523,7 +1519,6 @@ class RssTest extends TestCase
     /**
      * Get enclosure
      *
-     * @return void
      */
     public function testGetsEnclosureFromRss20(): void
     {
@@ -1552,7 +1547,6 @@ class RssTest extends TestCase
     /**
      * Get Content (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsContentFromRss20(): void
     {
@@ -1750,7 +1744,6 @@ class RssTest extends TestCase
     /**
      * Get Link (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsLinkFromRss20(): void
     {
@@ -1885,7 +1878,6 @@ class RssTest extends TestCase
      *
      * @dataProvider dateModifiedProvider
      *
-     * @return void
      */
     public function testGetsDateModified($path, $edate): void
     {
@@ -1898,15 +1890,16 @@ class RssTest extends TestCase
     }
 
     /**
-     * @return (DateTime|false|null|string)[][]
-     *
-     * @psalm-return array{0: array{0: string, 1: DateTime|false}, 1: array{0: string, 1: DateTime|false}, 2: array{0: string, 1: DateTime|false}, 3: array{0: string, 1: DateTime|false}, 4: array{0: string, 1: DateTime|false}, 5: array{0: string, 1: DateTime|false}, 6: array{0: string, 1: DateTime|false}, 7: array{0: string, 1: DateTime|false}, 8: array{0: string, 1: DateTime|false}, 9: array{0: string, 1: DateTime|false}, 10: array{0: string, 1: DateTime|false}, 11: array{0: string, 1: DateTime|false}, 12: array{0: string, 1: DateTime|false}, 13: array{0: string, 1: DateTime|false}, 14: array{0: string, 1: DateTime|false}, 15: array{0: string, 1: DateTime|false}, 16: array{0: string, 1: null}, 17: array{0: string, 1: null}, 18: array{0: string, 1: null}, 19: array{0: string, 1: null}, 20: array{0: string, 1: null}, 21: array{0: string, 1: null}, 22: array{0: string, 1: null}, 23: array{0: string, 1: DateTime|false}}
+     * @psalm-return array<int,<array{0:string,1:DateTimeInterface|null}>>
      */
     public function dateModifiedProvider(): array
     {
-        $iso = DateTime::createFromFormat(DateTime::ISO8601, '2009-03-07T08:03:50Z');
-        $us  = DateTime::createFromFormat(DateTime::ISO8601, '2010-01-04T02:14:00-0600');
-        $rss = DateTime::createFromFormat(DateTime::RSS, 'Sun, 11 Jan 2009 09:55:59 GMT');
+        $iso = DateTime::createFromFormat(DateTimeInterface::ISO8601, '2009-03-07T08:03:50Z');
+        assert($iso instanceof DateTimeInterface);
+        $us  = DateTime::createFromFormat(DateTimeInterface::ISO8601, '2010-01-04T02:14:00-0600');
+        assert($us instanceof DateTimeInterface);
+        $rss = DateTime::createFromFormat(DateTimeInterface::RSS, 'Sun, 11 Jan 2009 09:55:59 GMT');
+        assert($rss instanceof DateTimeInterface);
         return [
             ['/datemodified/plain/rss20.xml', $iso],
             ['/datemodified/plain/rss20_en_US.xml', $us],
@@ -1937,8 +1930,6 @@ class RssTest extends TestCase
 
     /**
      * Get CommentCount (Unencoded Text)
-     *
-     * @return void
      */
     public function testGetsCommentCountFromRss20Slash10(): void
     {
@@ -2201,7 +2192,6 @@ class RssTest extends TestCase
     /**
      * Get CommentLink (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsCommentLinkFromRss20(): void
     {
@@ -2381,7 +2371,6 @@ class RssTest extends TestCase
     /**
      * Get CommentFeedLink (Unencoded Text)
      *
-     * @return void
      */
     public function testGetsCommentFeedLinkFromRss20WellFormedWeb10(): void
     {
@@ -2579,7 +2568,6 @@ class RssTest extends TestCase
     /**
      * Get category data
      *
-     * @return void
      */
     public function testGetsCategoriesFromRss20(): void
     {

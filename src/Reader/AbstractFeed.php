@@ -94,7 +94,7 @@ abstract class AbstractFeed implements Feed\FeedInterface
      *
      * @return void
      */
-    public function setOriginalSourceUri($uri): void
+    public function setOriginalSourceUri($uri)
     {
         $this->originalSourceUri = $uri;
     }
@@ -239,7 +239,7 @@ abstract class AbstractFeed implements Feed\FeedInterface
         return 0 <= $this->entriesKey && $this->entriesKey < $this->count();
     }
 
-    public function getExtensions(): array
+    public function getExtensions()
     {
         return $this->extensions;
     }
@@ -270,7 +270,7 @@ abstract class AbstractFeed implements Feed\FeedInterface
         return;
     }
 
-    protected function loadExtensions(): void
+    protected function loadExtensions()
     {
         $all     = Reader::getExtensions();
         $manager = Reader::getExtensionManager();

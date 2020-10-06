@@ -33,7 +33,6 @@ class CommonTest extends TestCase
     /**
      * Check DOM Retrieval and Information Methods
      *
-     * @return void
      */
     public function testGetsDomDocumentObject(): void
     {
@@ -103,7 +102,6 @@ class CommonTest extends TestCase
     /**
      * @group Laminas-8213
      *
-     * @return void
      */
     public function testReturnsEncodingOfFeed(): void
     {
@@ -117,7 +115,6 @@ class CommonTest extends TestCase
     /**
      * @group Laminas-8213
      *
-     * @return void
      */
     public function testReturnsEncodingOfFeedAsUtf8IfUndefined(): void
     {
@@ -131,7 +128,6 @@ class CommonTest extends TestCase
     /**
      * When not passing the optional argument type
      *
-     * @return void
      */
     public function testFeedEntryCanDetectFeedType(): void
     {
@@ -149,7 +145,6 @@ class CommonTest extends TestCase
     /**
      * When passing a newly created DOMElement without any DOMDocument assigned
      *
-     * @return void
      */
     public function testFeedEntryCanSetAnyType(): void
     {

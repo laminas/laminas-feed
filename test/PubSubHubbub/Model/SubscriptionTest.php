@@ -25,8 +25,6 @@ class SubscriptionTest extends TestCase
 {
     /**
      * @group Laminas-10069
-     *
-     * @return void
      */
     public function testAllOperations(): void
     {
@@ -78,7 +76,7 @@ class SubscriptionTest extends TestCase
         $this->assertSame($subscription->getNow(), $now);
     }
 
-    protected function initDb(): DbAdapter
+    protected function initDb()
     {
         if (! extension_loaded('pdo')
             || ! in_array('sqlite', PDO::getAvailableDrivers())
@@ -91,7 +89,7 @@ class SubscriptionTest extends TestCase
         return $db;
     }
 
-    protected function createTable(DbAdapter $db): void
+    protected function createTable(DbAdapter $db)
     {
         $sql = 'CREATE TABLE subscription ('
             . "id varchar(32) PRIMARY KEY NOT NULL DEFAULT '', "

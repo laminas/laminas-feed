@@ -25,9 +25,10 @@ class FeedSetTest extends TestCase
     }
 
     /**
+     * @param string $link
+     * @param string|null $uri
+     * @param string|null $result
      * @dataProvider linkAndUriProvider
-     *
-     * @return void
      */
     public function testAbsolutiseUri($link, $uri, $result): void
     {
@@ -38,9 +39,7 @@ class FeedSetTest extends TestCase
     }
 
     /**
-     * @return (null|string)[][]
-     *
-     * @psalm-return array{fully-qualified: array{0: string, 1: string, 2: string}, default-scheme: array{0: string, 1: string, 2: string}, relative-path: array{0: string, 1: string, 2: string}, relative-path-parent: array{0: string, 1: string, 2: string}, scheme-relative: array{0: string, 1: string, 2: string}, scheme-relative-default: array{0: string, 1: string, 2: string}, invalid-absolute: array{0: string, 1: string, 2: null}, invalid: array{0: string, 1: null, 2: null}}
+     * @psalm-return array<string,array{0:string,1:string|null,2:string|null}>
      */
     public function linkAndUriProvider(): array
     {

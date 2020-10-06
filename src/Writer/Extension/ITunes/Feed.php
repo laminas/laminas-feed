@@ -73,7 +73,7 @@ class Feed
      *
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public function setItunesBlock($value): self
+    public function setItunesBlock($value)
     {
         if (! ctype_alpha($value) && strlen($value) > 0) {
             throw new Writer\Exception\InvalidArgumentException(

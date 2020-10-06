@@ -29,7 +29,6 @@ class PodcastRss2Test extends TestCase
     /**
      * Feed level testing
      *
-     * @return void
      */
     public function testGetsNewFeedUrl(): void
     {
@@ -156,7 +155,6 @@ class PodcastRss2Test extends TestCase
     /**
      * Entry level testing
      *
-     * @return void
      */
     public function testGetsEntryBlock(): void
     {

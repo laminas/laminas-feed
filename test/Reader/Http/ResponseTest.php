@@ -35,7 +35,7 @@ class ResponseTest extends TestCase
 
     public function testConstructorCanAcceptAStringCastableObjectForTheResponseBody(): void
     {
-        $stream   = new Psr7Stream('BODY');
+        $stream = new Psr7Stream('BODY');
         $response = new Response(200, $stream);
         $this->assertEquals('BODY', $response->getBody());
     }
@@ -43,8 +43,8 @@ class ResponseTest extends TestCase
     public function testConstructorCanAcceptHeaders(): void
     {
         $response = new Response(204, '', [
-            'Location'         => 'http://example.org/foo',
-            'Content-Length'   => 1234,
+            'Location' => 'http://example.org/foo',
+            'Content-Length' => 1234,
             'X-Content-Length' => 1234.56,
         ]);
         $this->assertEquals(204, $response->getStatusCode());
@@ -54,12 +54,7 @@ class ResponseTest extends TestCase
         $this->assertEquals(1234.56, $response->getHeaderLine('X-Content-Length'));
     }
 
-    /**
-     * @return \Generator
-     *
-     * @psalm-return \Generator<float|int|string, array{0: \stdClass|array{0: int}|bool|float|int|null|string, 1: string}, mixed, void>
-     */
-    public function invalidStatusCodes(): \Generator
+    public function invalidStatusCodes()
     {
         foreach ([-100, 0, 1, 99] as $statusCode) {
             yield $statusCode => [$statusCode, 'between 100 and 599'];
@@ -74,11 +69,11 @@ class ResponseTest extends TestCase
         }
 
         $invalidTypes = [
-            'null'   => [null, 'numeric status code'],
-            'true'   => [true, 'numeric status code'],
-            'false'  => [false, 'numeric status code'],
+            'null' => [null, 'numeric status code'],
+            'true' => [true, 'numeric status code'],
+            'false' => [false, 'numeric status code'],
             'string' => [' 100 ', 'numeric status code'],
-            'array'  => [[200], 'numeric status code'],
+            'array' => [[200], 'numeric status code'],
             'object' => [(object) [100], 'numeric status code'],
         ];
         foreach ($invalidTypes as $key => $value) {
@@ -88,64 +83,50 @@ class ResponseTest extends TestCase
 
     /**
      * @dataProvider invalidStatusCodes
-     *
-     * @return void
      */
-    public function testConstructorRaisesExceptionForInvalidStatusCode($statusCode, $contains): void
+    public function testConstructorRaisesExceptionForInvalidStatusCode($statusCode, $contains)
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage($contains);
         new Response($statusCode);
     }
 
-    /**
-     * @return (\stdClass|bool|float|int|null|string[])[][]
-     *
-     * @psalm-return array{null: array{0: null}, true: array{0: true}, false: array{0: false}, zero: array{0: int}, int: array{0: int}, zero-float: array{0: float}, float: array{0: float}, array: array{0: array{0: string}}, object: array{0: \stdClass}}
-     */
-    public function invalidBodies(): array
+    public function invalidBodies()
     {
         return [
-            'null'       => [null],
-            'true'       => [true],
-            'false'      => [false],
-            'zero'       => [0],
-            'int'        => [1],
+            'null' => [null],
+            'true' => [true],
+            'false' => [false],
+            'zero' => [0],
+            'int' => [1],
             'zero-float' => [0.0],
-            'float'      => [1.1],
-            'array'      => [['BODY']],
-            'object'     => [(object) ['body' => 'BODY']],
+            'float' => [1.1],
+            'array' => [['BODY']],
+            'object' => [(object) ['body' => 'BODY']],
         ];
     }
 
     /**
      * @dataProvider invalidBodies
-     *
-     * @return void
      */
-    public function testConstructorRaisesExceptionForInvalidBody($body): void
+    public function testConstructorRaisesExceptionForInvalidBody($body)
     {
         $this->expectException(InvalidArgumentException::class);
         new Response(200, $body);
     }
 
-    /**
-     * @return ((\stdClass|bool|null|string|string[])[]|string)[][]
-     *
-     * @psalm-return array{empty-name: array{0: array{: string}, 1: string}, zero-name: array{0: array{0: string}, 1: string}, int-name: array{0: array{1: string}, 1: string}, numeric-name: array{0: array{'1.1': string}, 1: string}, null-value: array{0: array{X-Test: null}, 1: string}, true-value: array{0: array{X-Test: true}, 1: string}, false-value: array{0: array{X-Test: false}, 1: string}, array-value: array{0: array{X-Test: array{0: string}}, 1: string}, object-value: array{0: array{X-Test: \stdClass}, 1: string}}
-     */
-    public function invalidHeaders(): array
+    public function invalidHeaders()
     {
         return [
-            'empty-name'   => [
+            'empty-name' => [
                 ['' => 'value'],
                 'non-empty, non-numeric',
             ],
-            'zero-name'    => [
+            'zero-name' => [
                 ['value'],
                 'non-empty, non-numeric',
             ],
-            'int-name'     => [
+            'int-name' => [
                 [1 => 'value'],
                 'non-empty, non-numeric',
             ],
@@ -153,19 +134,19 @@ class ResponseTest extends TestCase
                 ['1.1' => 'value'],
                 'non-empty, non-numeric',
             ],
-            'null-value'   => [
+            'null-value' => [
                 ['X-Test' => null],
                 'must be a string or numeric',
             ],
-            'true-value'   => [
+            'true-value' => [
                 ['X-Test' => true],
                 'must be a string or numeric',
             ],
-            'false-value'  => [
+            'false-value' => [
                 ['X-Test' => false],
                 'must be a string or numeric',
             ],
-            'array-value'  => [
+            'array-value' => [
                 ['X-Test' => ['BODY']],
                 'must be a string or numeric',
             ],
@@ -178,10 +159,8 @@ class ResponseTest extends TestCase
 
     /**
      * @dataProvider invalidHeaders
-     *
-     * @return void
      */
-    public function testConstructorRaisesExceptionForInvalidHeaderStructures($headers, $contains): void
+    public function testConstructorRaisesExceptionForInvalidHeaderStructures($headers, $contains)
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage($contains);
