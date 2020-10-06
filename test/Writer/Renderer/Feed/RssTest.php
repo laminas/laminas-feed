@@ -53,7 +53,6 @@ class RssTest extends TestCase
 
     /**
      * @doesNotPerformAssertions
-     *
      */
     public function testBuildMethodRunsMinimalWriterContainerProperlyBeforeICheckRssCompliance(): void
     {
@@ -97,7 +96,6 @@ class RssTest extends TestCase
 
     /**
      * @group LaminasWCHARDATA01
-     *
      */
     public function testFeedTitleCharDataEncoding(): void
     {
@@ -127,7 +125,6 @@ class RssTest extends TestCase
 
     /**
      * @group LaminasWCHARDATA01
-     *
      */
     public function testFeedDescriptionCharDataEncoding(): void
     {
@@ -149,7 +146,6 @@ class RssTest extends TestCase
 
     /**
      * @doesNotPerformAssertions
-     *
      */
     public function testFeedUpdatedDateIfMissingThrowsNoException(): void
     {
@@ -178,7 +174,6 @@ class RssTest extends TestCase
 
     /**
      * @doesNotPerformAssertions
-     *
      */
     public function testFeedGeneratorIfMissingThrowsNoException(): void
     {
@@ -209,7 +204,6 @@ class RssTest extends TestCase
 
     /**
      * @doesNotPerformAssertions
-     *
      */
     public function testFeedLanguageIfMissingThrowsNoException(): void
     {
@@ -245,7 +239,6 @@ class RssTest extends TestCase
 
     /**
      * @group Issue2605
-     *
      */
     public function testFeedIncludesLinkToXmlRssWhereRssAndAtomLinksAreProvided(): void
     {
@@ -270,7 +263,6 @@ class RssTest extends TestCase
 
     /**
      * @doesNotPerformAssertions
-     *
      */
     public function testFeedLinkToXmlRssWhereTheFeedWillBeAvailableIfMissingThrowsNoException(): void
     {
@@ -285,7 +277,7 @@ class RssTest extends TestCase
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $rssFeed->render();
         $feed = Reader\Reader::importString($rssFeed->saveXml());
-        $this->assertEquals('http://www.example.com/base', $feed->getBaseUrl());
+        $this->assertEquals(null, $feed->getBaseUrl());
     }
 
     /**
