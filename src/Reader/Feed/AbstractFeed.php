@@ -238,7 +238,7 @@ abstract class AbstractFeed implements FeedInterface
         return 0 <= $this->entriesKey && $this->entriesKey < $this->count();
     }
 
-    public function getExtensions(): array
+    public function getExtensions()
     {
         return $this->extensions;
     }
