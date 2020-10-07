@@ -277,7 +277,7 @@ class RssTest extends TestCase
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $rssFeed->render();
         $feed = Reader\Reader::importString($rssFeed->saveXml());
-        $this->assertEquals(null, $feed->getBaseUrl());
+        $this->assertEquals('http://www.example.com/base', $feed->getBaseUrl());
     }
 
     /**
