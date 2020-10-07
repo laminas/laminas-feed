@@ -1550,17 +1550,10 @@
     </MixedReturnStatement>
   </file>
   <file src="src/Reader/Feed/AbstractFeed.php">
-    <InvalidScalarArgument occurrences="1">
-      <code>$this-&gt;key()</code>
-    </InvalidScalarArgument>
-    <MissingParamType occurrences="2">
-      <code>$args</code>
-      <code>$method</code>
-    </MissingParamType>
+    <InvalidScalarArgument occurrences="1"/>
+    <MissingParamType occurrences="2"/>
     <MissingReturnType occurrences="3">
-      <code>indexEntries</code>
       <code>loadExtensions</code>
-      <code>registerNamespaces</code>
     </MissingReturnType>
     <MixedArgument occurrences="8">
       <code>$all['core']</code>
@@ -1568,9 +1561,6 @@
       <code>$extension</code>
       <code>$extension</code>
       <code>$extension</code>
-      <code>$method</code>
-      <code>$this-&gt;entries[$this-&gt;key()]</code>
-      <code>$this-&gt;entries[$this-&gt;key()]</code>
     </MixedArgument>
     <MixedArrayOffset occurrences="1">
       <code>$this-&gt;extensions[$extension]</code>
@@ -1581,22 +1571,14 @@
       <code>$feed</code>
       <code>$plugin</code>
     </MixedAssignment>
-    <MixedInferredReturnType occurrences="2">
-      <code>null|Reader\Extension\AbstractFeed</code>
-      <code>string</code>
-    </MixedInferredReturnType>
+    <MixedInferredReturnType occurrences="2"/>
     <MixedMethodCall occurrences="3">
       <code>setDomDocument</code>
       <code>setType</code>
       <code>setXpath</code>
     </MixedMethodCall>
-    <MixedOperand occurrences="1">
-      <code>$method</code>
-    </MixedOperand>
-    <MixedReturnStatement occurrences="2">
-      <code>$this-&gt;data['type']</code>
-      <code>$this-&gt;extensions[$name . '\\Feed']</code>
-    </MixedReturnStatement>
+    <MixedOperand occurrences="1"/>
+    <MixedReturnStatement occurrences="2"/>
     <PropertyNotSetInConstructor occurrences="1">
       <code>$originalSourceUri</code>
     </PropertyNotSetInConstructor>
