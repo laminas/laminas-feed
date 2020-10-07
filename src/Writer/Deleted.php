@@ -40,7 +40,7 @@ class Deleted
      */
     public function setEncoding(?string $encoding)
     {
-        if (empty($encoding)) {
+        if (empty($encoding) || ! is_string($encoding)) {
             throw new Exception\InvalidArgumentException('Invalid parameter: parameter must be a non-empty string');
         }
         $this->data['encoding'] = $encoding;
