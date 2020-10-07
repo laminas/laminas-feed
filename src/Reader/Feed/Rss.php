@@ -475,16 +475,6 @@ class Rss extends AbstractFeed
     }
 
     /**
-     * Get a link to the source website. This is not implemented in RSS.
-     *
-     * @return void
-     */
-    public function getBaseUrl()
-    {
-        return;
-    }
-
-    /**
      * Get a link to the feed
      *
      * @return null|string
