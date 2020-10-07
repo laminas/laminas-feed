@@ -32,13 +32,12 @@ class Deleted
     /**
      * Set the feed character encoding
      *
-     * @param null|string $encoding
-     *
-     * @return self
-     *
+     * @param  string $encoding
+     * @return null|string
+     * @return Deleted
      * @throws Exception\InvalidArgumentException
      */
-    public function setEncoding(?string $encoding)
+    public function setEncoding($encoding)
     {
         if (empty($encoding) || ! is_string($encoding)) {
             throw new Exception\InvalidArgumentException('Invalid parameter: parameter must be a non-empty string');
