@@ -58,7 +58,6 @@ class StandaloneExtensionManager implements ExtensionManagerInterface
      *
      * @param string $name
      * @param string $class
-     *
      * @return void
      */
     public function add($name, $class)
@@ -85,7 +84,6 @@ class StandaloneExtensionManager implements ExtensionManagerInterface
      * Remove an extension.
      *
      * @param string $name
-     *
      * @return void
      */
     public function remove($name)

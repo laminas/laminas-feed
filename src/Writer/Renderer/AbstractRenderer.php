@@ -167,7 +167,6 @@ class AbstractRenderer
      * on their appropriateness for the current type, e.g. renderers.
      *
      * @param string $type
-     *
      * @return void
      */
     public function setType($type)

@@ -546,7 +546,6 @@ class Entry extends Extension\AbstractEntry
      *  xml:base value as a prefix to turn into an absolute URI.
      *
      * @param string $link
-     *
      * @return null|string
      */
     protected function absolutiseUri($link)

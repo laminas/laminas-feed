@@ -90,7 +90,6 @@ abstract class AbstractFeed implements FeedInterface
      * a self-referencing URI.
      *
      * @param string $uri
-     *
      * @return void
      */
     public function setOriginalSourceUri($uri)

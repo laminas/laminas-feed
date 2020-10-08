@@ -321,7 +321,6 @@ class Reader implements ReaderImportInterface
      * Import a feed from a string
      *
      * @param string $string
-     *
      * @return Feed\FeedInterface
      *
      * @throws Exception\InvalidArgumentException
