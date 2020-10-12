@@ -19,7 +19,7 @@ class WordpressRss2DcAtomTest extends TestCase
 {
     protected $feedSamplePath;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         Reader\Reader::reset();
         $this->feedSamplePath = dirname(__FILE__) . '/_files/wordpress-rss2-dc-atom.xml';

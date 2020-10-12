@@ -26,7 +26,7 @@ class AtomTest extends TestCase
 {
     protected $validWriter;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         Writer\Writer::reset();
         $this->validWriter = new Writer\Feed();
@@ -44,7 +44,7 @@ class AtomTest extends TestCase
         $this->validWriter->setType('atom');
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         Writer\Writer::reset();
         $this->validWriter = null;

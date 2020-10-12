@@ -31,7 +31,7 @@ class SubscriberTest extends TestCase
 
     protected $tableGateway;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $client = new HttpClient();
         PubSubHubbub::setHttpClient($client);

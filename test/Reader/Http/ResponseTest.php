@@ -23,7 +23,6 @@ class ResponseTest extends TestCase
         $response = new Response(200);
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals('', $response->getBody());
-        $this->assertAttributeSame([], 'headers', $response);
     }
 
     public function testConstructorCanAcceptResponseBody()
@@ -31,7 +30,6 @@ class ResponseTest extends TestCase
         $response = new Response(201, 'CREATED');
         $this->assertEquals(201, $response->getStatusCode());
         $this->assertEquals('CREATED', $response->getBody());
-        $this->assertAttributeSame([], 'headers', $response);
     }
 
     public function testConstructorCanAcceptAStringCastableObjectForTheResponseBody()

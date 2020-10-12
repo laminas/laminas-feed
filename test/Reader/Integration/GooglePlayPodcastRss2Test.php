@@ -16,7 +16,7 @@ class GoolePlayPodcastRss2Test extends TestCase
 {
     protected $feedSamplePath;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         Reader\Reader::reset();
         $this->feedSamplePath = dirname(__FILE__) . '/_files/google-podcast.xml';

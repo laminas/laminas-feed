@@ -26,7 +26,7 @@ class AtomTest extends TestCase
 
     protected $expectedCatsDc = [];
 
-    protected function setUp()
+    protected function setUp(): void
     {
         Reader\Reader::reset();
         $this->feedSamplePath = dirname(__FILE__) . '/_files/Atom';

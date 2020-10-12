@@ -19,7 +19,7 @@ class FeedSetTest extends TestCase
      */
     protected $feedSet;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->feedSet = new FeedSet();
     }

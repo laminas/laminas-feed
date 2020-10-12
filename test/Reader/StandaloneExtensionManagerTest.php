@@ -21,7 +21,7 @@ class StandaloneExtensionManagerTest extends TestCase
      */
     private $extensions;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->extensions = new StandaloneExtensionManager();
     }
