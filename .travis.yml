@@ -6,39 +6,13 @@ cache:
 
 env:
   global:
-    - COMPOSER_ARGS="--no-interaction"
+    - COMPOSER_ARGS="--no-interaction --ignore-platform-reqs"
     - COVERAGE_DEPS="php-coveralls/php-coveralls"
     - TESTS_LAMINAS_FEED_READER_ONLINE_ENABLED=true
 
 matrix:
   fast_finish: true
   include:
-    - php: 5.6
-      env:
-        - DEPS=lowest
-    - php: 5.6
-      env:
-        - DEPS=latest
-    - php: 7
-      env:
-        - DEPS=lowest
-    - php: 7
-      env:
-        - DEPS=latest
-    - php: 7.1
-      env:
-        - DEPS=lowest
-    - php: 7.1
-      env:
-        - DEPS=latest
-        - CS_CHECK=true
-        - TEST_COVERAGE=true
-    - php: 7.2
-      env:
-        - DEPS=lowest
-    - php: 7.2
-      env:
-        - DEPS=latest
     - php: 7.3
       env:
         - DEPS=lowest
@@ -46,6 +20,12 @@ matrix:
       env:
         - DEPS=latest
     - php: 7.4
+      env:
+        - DEPS=latest
+    - php: 8.0
+      env:
+        - DEPS=lowest
+    - php: 8.0
       env:
         - DEPS=latest
 
