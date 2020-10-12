@@ -6,7 +6,7 @@ cache:
 
 env:
   global:
-    - COMPOSER_ARGS="--no-interaction --ignore-platform-reqs"
+    - COMPOSER_ARGS="--no-interaction"
     - COVERAGE_DEPS="php-coveralls/php-coveralls"
     - TESTS_LAMINAS_FEED_READER_ONLINE_ENABLED=true
 
@@ -22,12 +22,14 @@ matrix:
     - php: 7.4
       env:
         - DEPS=latest
-    - php: 8.0
+    - php: nightly
       env:
         - DEPS=lowest
-    - php: 8.0
+        - COMPOSER_ARGS="--no-interaction --ignore-platform-reqs"
+    - php: nightly
       env:
         - DEPS=latest
+        - COMPOSER_ARGS="--no-interaction --ignore-platform-reqs"
 
 before_install:
   - if [[ $TEST_COVERAGE != 'true' ]]; then phpenv config-rm xdebug.ini || return 0 ; fi
