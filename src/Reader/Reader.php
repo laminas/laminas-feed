@@ -102,9 +102,8 @@ class Reader implements ReaderImportInterface
     public static function disableEntityLoader($flag = true)
     {
         if (LIBXML_VERSION < 20900) {
-            return $flag;
+            return libxml_disable_entity_loader($flag);
         }
-        return libxml_disable_entity_loader($flag);
     }
 
     /**
