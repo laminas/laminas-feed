@@ -104,6 +104,7 @@ class Reader implements ReaderImportInterface
         if (LIBXML_VERSION < 20900) {
             return libxml_disable_entity_loader($flag);
         }
+        return $flag;
     }
 
     /**
