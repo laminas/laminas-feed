@@ -13,6 +13,7 @@ use Laminas\Feed\Reader\Http\Psr7ResponseDecorator;
 use Laminas\Feed\Reader\Http\ResponseInterface;
 use LaminasTest\Feed\Reader\TestAsset\Psr7Stream;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Http\Message\ResponseInterface as Psr7ResponseInterface;
 
 /**
@@ -20,6 +21,8 @@ use Psr\Http\Message\ResponseInterface as Psr7ResponseInterface;
  */
 class Psr7ResponseDecoratorTest extends TestCase
 {
+    use ProphecyTrait;
+
     public function testDecoratorIsAFeedResponse()
     {
         $originalResponse = $this->prophesize(Psr7ResponseInterface::class);

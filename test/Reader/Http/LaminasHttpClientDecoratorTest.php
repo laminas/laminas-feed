@@ -17,6 +17,7 @@ use Laminas\Http\Request as HttpRequest;
 use Laminas\Http\Response as HttpResponse;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 
 /**
@@ -24,6 +25,8 @@ use Prophecy\Prophecy\ObjectProphecy;
  */
 class LaminasHttpClientDecoratorTest extends TestCase
 {
+    use ProphecyTrait;
+
     protected function setUp(): void
     {
         $this->client = $this->prophesize(Client::class);

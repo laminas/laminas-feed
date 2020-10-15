@@ -13,9 +13,12 @@ use Laminas\Feed\Writer\Extension;
 use Laminas\Feed\Writer\ExtensionManagerInterface;
 use Laminas\Feed\Writer\StandaloneExtensionManager;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class StandaloneExtensionManagerTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @var StandaloneExtensionManager
      */
