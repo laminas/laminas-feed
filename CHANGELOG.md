@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- Nothing.
+- [#29](https://github.com/laminas/laminas-feed/pull/29) Adds PHP 8.0 support
 
 ### Changed
 
@@ -18,7 +18,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Removed
 
-- Nothing.
+- [#29](https://github.com/laminas/laminas-feed/pull/29) Dropped support for laminas-servicemanager less than v3.3
 
 ### Fixed
 
