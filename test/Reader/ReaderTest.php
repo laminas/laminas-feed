@@ -31,12 +31,12 @@ class ReaderTest extends TestCase
 {
     protected $feedSamplePath;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->feedSamplePath = dirname(__FILE__) . '/_files';
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         Reader\Reader::reset();
     }
@@ -350,7 +350,6 @@ class ReaderTest extends TestCase
         Reader\Reader::setHttpClient($client);
         $cached = Reader\Reader::getHttpClient();
         $this->assertInstanceOf(ClientInterface::class, $cached);
-        $this->assertAttributeSame($client, 'client', $cached);
     }
 
     public function testSetHttpClientThrowsException()

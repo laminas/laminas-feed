@@ -25,13 +25,13 @@ class FeedTest extends TestCase
 {
     protected $feedSamplePath;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->feedSamplePath = dirname(__FILE__) . '/Writer/_files';
         Writer\Writer::reset();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         Writer\Writer::reset();
     }

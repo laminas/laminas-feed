@@ -22,72 +22,93 @@ class Psr7ResponseDecoratorTest extends TestCase
 {
     public function testDecoratorIsAFeedResponse()
     {
-        $originalResponse = $this->prophesize(Psr7ResponseInterface::class);
-        $decorator        = new Psr7ResponseDecorator($originalResponse->reveal());
+        $originalResponse = $this->createMock(Psr7ResponseInterface::class);
+        $decorator        = new Psr7ResponseDecorator($originalResponse);
         $this->assertInstanceOf(ResponseInterface::class, $decorator);
     }
 
     public function testDecoratorIsAHeaderAwareResponse()
     {
-        $originalResponse = $this->prophesize(Psr7ResponseInterface::class);
-        $decorator        = new Psr7ResponseDecorator($originalResponse->reveal());
+        $originalResponse = $this->createMock(Psr7ResponseInterface::class);
+        $decorator        = new Psr7ResponseDecorator($originalResponse);
         $this->assertInstanceOf(HeaderAwareResponseInterface::class, $decorator);
     }
 
     public function testDecoratorIsNotAPsr7Response()
     {
-        $originalResponse = $this->prophesize(Psr7ResponseInterface::class);
-        $decorator        = new Psr7ResponseDecorator($originalResponse->reveal());
+        $originalResponse = $this->createMock(Psr7ResponseInterface::class);
+        $decorator        = new Psr7ResponseDecorator($originalResponse);
         $this->assertNotInstanceOf(Psr7ResponseInterface::class, $decorator);
     }
 
     public function testCanRetrieveDecoratedResponse()
     {
-        $originalResponse = $this->prophesize(Psr7ResponseInterface::class);
-        $decorator        = new Psr7ResponseDecorator($originalResponse->reveal());
-        $this->assertSame($originalResponse->reveal(), $decorator->getDecoratedResponse());
+        $originalResponse = $this->createMock(Psr7ResponseInterface::class);
+        $decorator        = new Psr7ResponseDecorator($originalResponse);
+        $this->assertSame($originalResponse, $decorator->getDecoratedResponse());
     }
 
     public function testProxiesToDecoratedResponseToRetrieveStatusCode()
     {
-        $originalResponse = $this->prophesize(Psr7ResponseInterface::class);
-        $originalResponse->getStatusCode()->willReturn(301);
-        $decorator = new Psr7ResponseDecorator($originalResponse->reveal());
+        $originalResponse = $this->createMock(Psr7ResponseInterface::class);
+        $originalResponse
+            ->method('getStatusCode')
+            ->willReturn(301);
+        $decorator = new Psr7ResponseDecorator($originalResponse);
         $this->assertSame(301, $decorator->getStatusCode());
     }
 
     public function testProxiesToDecoratedResponseToRetrieveBody()
     {
-        $originalResponse = $this->prophesize(Psr7ResponseInterface::class);
-        $originalResponse->getBody()->willReturn('BODY');
-        $decorator = new Psr7ResponseDecorator($originalResponse->reveal());
+        $originalResponse = $this->createMock(Psr7ResponseInterface::class);
+        $originalResponse
+            ->method('getBody')
+            ->willReturn('BODY');
+        $decorator = new Psr7ResponseDecorator($originalResponse);
         $this->assertSame('BODY', $decorator->getBody());
     }
 
     public function testCastsStreamToStringWhenReturningPsr7Body()
     {
         $stream           = new Psr7Stream('BODY');
-        $originalResponse = $this->prophesize(Psr7ResponseInterface::class);
-        $originalResponse->getBody()->willReturn($stream);
-        $decorator = new Psr7ResponseDecorator($originalResponse->reveal());
+        $originalResponse = $this->createMock(Psr7ResponseInterface::class);
+        $originalResponse
+            ->method('getBody')
+            ->willReturn($stream);
+        $decorator = new Psr7ResponseDecorator($originalResponse);
         $this->assertSame('BODY', $decorator->getBody());
     }
 
     public function testProxiesToDecoratedResponseToRetrieveHeaderLine()
     {
-        $originalResponse = $this->prophesize(Psr7ResponseInterface::class);
-        $originalResponse->hasHeader('E-Tag')->willReturn(true);
-        $originalResponse->getHeaderLine('E-Tag')->willReturn('2015-11-17 12:32:00-06:00');
-        $decorator = new Psr7ResponseDecorator($originalResponse->reveal());
+        $originalResponse = $this->createMock(Psr7ResponseInterface::class);
+        $originalResponse
+            ->method('hasHeader')
+            ->with('E-Tag')
+            ->willReturn(true);
+
+        $originalResponse
+            ->method('getHeaderLine')
+            ->with('E-Tag')
+            ->willReturn('2015-11-17 12:32:00-06:00');
+        $decorator = new Psr7ResponseDecorator($originalResponse);
         $this->assertSame('2015-11-17 12:32:00-06:00', $decorator->getHeaderLine('E-Tag'));
     }
 
     public function testDecoratorReturnsDefaultValueWhenOriginalResponseDoesNotHaveHeader()
     {
-        $originalResponse = $this->prophesize(Psr7ResponseInterface::class);
-        $originalResponse->hasHeader('E-Tag')->willReturn(false);
-        $originalResponse->getHeaderLine('E-Tag')->shouldNotBeCalled();
-        $decorator = new Psr7ResponseDecorator($originalResponse->reveal());
+        $originalResponse = $this->createMock(Psr7ResponseInterface::class);
+        $originalResponse
+            ->method('hasHeader')
+            ->with('E-Tag')
+            ->willReturn(false);
+
+        $originalResponse
+            ->expects($this->never())
+            ->method('getHeaderLine')
+            ->with('E-Tag');
+
+        $decorator = new Psr7ResponseDecorator($originalResponse);
         $this->assertSame('2015-11-17 12:32:00-06:00', $decorator->getHeaderLine('E-Tag', '2015-11-17 12:32:00-06:00'));
     }
 }

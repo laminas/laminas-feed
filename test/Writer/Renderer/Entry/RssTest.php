@@ -24,7 +24,7 @@ class RssTest extends TestCase
     protected $validWriter;
     protected $validEntry;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         Writer\Writer::reset();
         $this->validWriter = new Writer\Feed();
@@ -41,7 +41,7 @@ class RssTest extends TestCase
         $this->validWriter->addEntry($this->validEntry);
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         Writer\Writer::reset();
         $this->validWriter = null;

@@ -15,50 +15,93 @@ use Laminas\Http\Client;
 use Laminas\Http\Headers;
 use Laminas\Http\Request as HttpRequest;
 use Laminas\Http\Response as HttpResponse;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Prophecy\Argument;
-use Prophecy\Prophecy\ObjectProphecy;
 
 /**
  * @covers \Laminas\Feed\Reader\Http\LaminasHttpClientDecorator
  */
 class LaminasHttpClientDecoratorTest extends TestCase
 {
-    protected function setUp()
+    /**
+     * @var Client|mixed|\PHPUnit\Framework\MockObject\MockObject
+     */
+    private $client;
+
+    protected function setUp(): void
     {
-        $this->client = $this->prophesize(Client::class);
+        $this->client = $this->createMock(Client::class);
     }
 
-    public function prepareDefaultClientInteractions($uri, ObjectProphecy $response)
+    public function prepareDefaultClientInteractions($uri, MockObject $response)
     {
-        $this->client->resetParameters()->shouldBeCalled();
-        $this->client->setMethod('GET')->shouldBeCalled();
-        $this->client->setHeaders(Argument::type(Headers::class))->shouldBeCalled();
-        $this->client->setUri($uri)->shouldBeCalled();
-        $this->client->send()->will(function () use ($response) {
-            return $response->reveal();
-        });
+        $this->client
+            ->expects($this->atLeastOnce())
+            ->method('resetParameters');
+
+        $this->client
+            ->expects($this->atLeastOnce())
+            ->method('setMethod')
+            ->with('GET');
+
+        $this->client
+            ->expects($this->atLeastOnce())
+            ->method('setHeaders')
+            ->with($this->callback(static function ($parameter): bool {
+                self::assertInstanceOf(Headers::class, $parameter);
+                return true;
+            }));
+
+        $this->client
+            ->expects($this->atLeastOnce())
+            ->method('setUri')
+            ->with($uri);
+
+        $this->client
+            ->expects($this->once())
+            ->method('send')
+            ->willReturn($response);
     }
 
     public function createMockHttpResponse($statusCode, $body, Headers $headers = null)
     {
-        $response = $this->prophesize(HttpResponse::class);
-        $response->getStatusCode()->willReturn($statusCode);
-        $response->getBody()->willReturn($body);
-        $response->getHeaders()->willReturn($headers ?: new Headers());
+        $response = $this->createMock(HttpResponse::class);
+        $response
+            ->expects($this->any())
+            ->method('getStatusCode')
+            ->willReturn($statusCode);
+
+        $response
+            ->expects($this->any())
+            ->method('getBody')
+            ->willReturn($body);
+        $response
+            ->expects($this->any())
+            ->method('getHeaders')
+            ->willReturn($headers ?? new Headers());
+
         return $response;
     }
 
-    public function createMockHttpHeaders(array $headers)
+    /**
+     * @param array $headers
+     *
+     * @return MockObject<Headers>
+     */
+    public function createMockHttpHeaders(array $headers): Headers
     {
-        $mock = $this->prophesize(Headers::class);
-        $mock->toArray()->willReturn($headers);
+        $mock = $this->createMock(Headers::class);
+        $mock
+            ->expects($this->any())
+            ->method('toArray')
+            ->willReturn($headers);
+
         return $mock;
     }
 
     public function testProvidesAccessToDecoratedClient()
     {
-        $client    = $this->prophesize(Client::class)->reveal();
+        $client    = $this->createMock(Client::class);
         $decorator = new LaminasHttpClientDecorator($client);
         $this->assertSame($client, $decorator->getDecoratedClient());
     }
@@ -66,10 +109,10 @@ class LaminasHttpClientDecoratorTest extends TestCase
     public function testDecoratorReturnsFeedResponse()
     {
         $headers      = $this->createMockHttpHeaders(['Content-Type' => 'application/rss+xml']);
-        $httpResponse = $this->createMockHttpResponse(200, '', $headers->reveal());
+        $httpResponse = $this->createMockHttpResponse(200, '', $headers);
         $this->prepareDefaultClientInteractions('http://example.com', $httpResponse);
 
-        $client   = new LaminasHttpClientDecorator($this->client->reveal());
+        $client   = new LaminasHttpClientDecorator($this->client);
         $response = $client->get('http://example.com');
 
         $this->assertInstanceOf(FeedResponse::class, $response);
@@ -85,16 +128,26 @@ class LaminasHttpClientDecoratorTest extends TestCase
             'Content-Length'   => 1234,
             'X-Content-Length' => 1234.56,
         ]);
-        $httpResponse    = $this->createMockHttpResponse(200, '', $responseHeaders->reveal());
+        $httpResponse    = $this->createMockHttpResponse(200, '', $responseHeaders);
         $this->prepareDefaultClientInteractions('http://example.com', $httpResponse);
 
-        $requestHeaders = $this->prophesize(Headers::class);
-        $requestHeaders->addHeaderLine('Accept', 'application/rss+xml')->shouldBeCalled();
-        $request = $this->prophesize(HttpRequest::class);
-        $request->getHeaders()->willReturn($requestHeaders->reveal());
-        $this->client->getRequest()->willReturn($request->reveal());
+        $requestHeaders = $this->createMock(Headers::class);
+        $requestHeaders
+            ->expects($this->atLeastOnce())
+            ->method('addHeaderLine')
+            ->with('Accept', 'application/rss+xml');
 
-        $client   = new LaminasHttpClientDecorator($this->client->reveal());
+        $request = $this->createMock(HttpRequest::class);
+        $request
+            ->expects($this->any())
+            ->method('getHeaders')
+            ->willReturn($requestHeaders);
+        $this->client
+            ->expects($this->any())
+            ->method('getRequest')
+            ->willReturn($request);
+
+        $client   = new LaminasHttpClientDecorator($this->client);
         $response = $client->get('http://example.com', ['Accept' => ['application/rss+xml']]);
 
         $this->assertInstanceOf(FeedResponse::class, $response);
@@ -185,17 +238,38 @@ class LaminasHttpClientDecoratorTest extends TestCase
     public function testDecoratorRaisesExceptionForInvalidHeaders($headers, $contains)
     {
         $httpResponse = $this->createMockHttpResponse(200, '');
-        $this->client->resetParameters()->shouldBeCalled();
-        $this->client->setMethod('GET')->shouldBeCalled();
-        $this->client->setHeaders(Argument::type(Headers::class))->shouldBeCalled();
-        $this->client->setUri('http://example.com')->shouldBeCalled();
+        $this->client
+            ->expects($this->atLeastOnce())
+            ->method('resetParameters');
+        $this->client
+            ->expects($this->atLeastOnce())
+            ->method('setMethod')
+            ->with('GET');
+        $this->client
+            ->expects($this->atLeastOnce())
+            ->method('setHeaders')
+            ->with($this->callback(static function ($argument): bool {
+                self::assertInstanceOf(Headers::class, $argument);
+                return true;
+            }));
 
-        $requestHeaders = $this->prophesize(Headers::class);
-        $request        = $this->prophesize(HttpRequest::class);
-        $request->getHeaders()->willReturn($requestHeaders->reveal());
-        $this->client->getRequest()->willReturn($request->reveal());
+        $this->client
+            ->expects($this->atLeastOnce())
+            ->method('setUri')
+            ->with('http://example.com');
 
-        $client = new LaminasHttpClientDecorator($this->client->reveal());
+        $requestHeaders = $this->createMock(Headers::class);
+        $request        = $this->createMock(HttpRequest::class);
+        $request
+            ->expects($this->any())
+            ->method('getHeaders')
+            ->willReturn($requestHeaders);
+        $this->client
+            ->expects($this->any())
+            ->method('getRequest')
+            ->willReturn($request);
+
+        $client = new LaminasHttpClientDecorator($this->client);
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage($contains);

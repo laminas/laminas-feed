@@ -27,7 +27,7 @@ class RssTest extends TestCase
 
     protected $expectedCatsAtom = [];
 
-    protected function setUp()
+    protected function setUp(): void
     {
         Reader\Reader::reset();
         $this->feedSamplePath = dirname(__FILE__) . '/_files/Rss';

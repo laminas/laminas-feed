@@ -16,12 +16,13 @@ use PHPUnit\Framework\TestCase;
 
 class StandaloneExtensionManagerTest extends TestCase
 {
+
     /**
      * @var StandaloneExtensionManager
      */
     private $extensions;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->extensions = new StandaloneExtensionManager();
     }
@@ -82,11 +83,9 @@ class StandaloneExtensionManagerTest extends TestCase
 
     public function testAddAcceptsValidExtensionClasses()
     {
-        $ext = $this->prophesize(Extension\AbstractEntry::class)->reveal();
-        $this->extensions->add('Test/Entry', get_class($ext));
+        $this->extensions->add('Test/Entry', Extension\AbstractEntry::class);
         $this->assertTrue($this->extensions->has('Test/Entry'));
-        $ext = $this->prophesize(Extension\AbstractFeed::class)->reveal();
-        $this->extensions->add('Test/Feed', get_class($ext));
+        $this->extensions->add('Test/Feed', Extension\AbstractFeed::class);
         $this->assertTrue($this->extensions->has('Test/Feed'));
     }
 
@@ -98,8 +97,7 @@ class StandaloneExtensionManagerTest extends TestCase
 
     public function testExtensionRemoval()
     {
-        $ext = $this->prophesize(Extension\AbstractEntry::class)->reveal();
-        $this->extensions->add('Test/Entry', get_class($ext));
+        $this->extensions->add('Test/Entry', Extension\AbstractEntry::class);
         $this->assertTrue($this->extensions->has('Test/Entry'));
         $this->extensions->remove('Test/Entry');
         $this->assertFalse($this->extensions->has('Test/Entry'));

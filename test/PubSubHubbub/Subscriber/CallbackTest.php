@@ -46,7 +46,7 @@ class CallbackTest extends TestCase
     /** @var DateTime */
     public $now;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->_callback = new CallbackSubscriber();
 

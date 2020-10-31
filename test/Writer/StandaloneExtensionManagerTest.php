@@ -16,12 +16,13 @@ use PHPUnit\Framework\TestCase;
 
 class StandaloneExtensionManagerTest extends TestCase
 {
+
     /**
      * @var StandaloneExtensionManager
      */
     private $extensions;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->extensions = new StandaloneExtensionManager();
     }
@@ -89,8 +90,7 @@ class StandaloneExtensionManagerTest extends TestCase
         $this->extensions->add('Test/Entry', 'MyTestExtension_Entry');
         $this->assertTrue($this->extensions->has('Test/Entry'));
 
-        $ext = $this->prophesize(Extension\AbstractRenderer::class)->reveal();
-        $this->extensions->add('Test/Thing', get_class($ext));
+        $this->extensions->add('Test/Thing', Extension\AbstractRenderer::class);
         $this->assertTrue($this->extensions->has('Test/Thing'));
     }
 

@@ -41,7 +41,7 @@ class SubscriptionTest extends TestCase
 
         $this->assertTrue($subscription->hasSubscription($id));
         $dataSubscription = $subscription->getSubscription($id);
-        $this->assertInternalType('array', $dataSubscription);
+        $this->assertIsArray($dataSubscription);
         $keys = [
             'id',
             'topic_url',
