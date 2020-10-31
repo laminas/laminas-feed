@@ -25,6 +25,8 @@ matrix:
     - php: 7.4
       env:
         - DEPS=latest
+        - CS_CHECK=true
+        - TEST_COVERAGE=true
     - php: nightly
       env:
         - DEPS=lowest
