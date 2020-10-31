@@ -13,11 +13,9 @@ use Laminas\Feed\Reader\Extension;
 use Laminas\Feed\Reader\ExtensionManagerInterface;
 use Laminas\Feed\Reader\StandaloneExtensionManager;
 use PHPUnit\Framework\TestCase;
-use Prophecy\PhpUnit\ProphecyTrait;
 
 class StandaloneExtensionManagerTest extends TestCase
 {
-    use ProphecyTrait;
 
     /**
      * @var StandaloneExtensionManager
@@ -85,11 +83,9 @@ class StandaloneExtensionManagerTest extends TestCase
 
     public function testAddAcceptsValidExtensionClasses()
     {
-        $ext = $this->prophesize(Extension\AbstractEntry::class)->reveal();
-        $this->extensions->add('Test/Entry', get_class($ext));
+        $this->extensions->add('Test/Entry', Extension\AbstractEntry::class);
         $this->assertTrue($this->extensions->has('Test/Entry'));
-        $ext = $this->prophesize(Extension\AbstractFeed::class)->reveal();
-        $this->extensions->add('Test/Feed', get_class($ext));
+        $this->extensions->add('Test/Feed', Extension\AbstractFeed::class);
         $this->assertTrue($this->extensions->has('Test/Feed'));
     }
 
@@ -101,8 +97,7 @@ class StandaloneExtensionManagerTest extends TestCase
 
     public function testExtensionRemoval()
     {
-        $ext = $this->prophesize(Extension\AbstractEntry::class)->reveal();
-        $this->extensions->add('Test/Entry', get_class($ext));
+        $this->extensions->add('Test/Entry', Extension\AbstractEntry::class);
         $this->assertTrue($this->extensions->has('Test/Entry'));
         $this->extensions->remove('Test/Entry');
         $this->assertFalse($this->extensions->has('Test/Entry'));

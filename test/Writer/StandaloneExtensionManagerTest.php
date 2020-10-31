@@ -13,11 +13,9 @@ use Laminas\Feed\Writer\Extension;
 use Laminas\Feed\Writer\ExtensionManagerInterface;
 use Laminas\Feed\Writer\StandaloneExtensionManager;
 use PHPUnit\Framework\TestCase;
-use Prophecy\PhpUnit\ProphecyTrait;
 
 class StandaloneExtensionManagerTest extends TestCase
 {
-    use ProphecyTrait;
 
     /**
      * @var StandaloneExtensionManager
@@ -92,8 +90,7 @@ class StandaloneExtensionManagerTest extends TestCase
         $this->extensions->add('Test/Entry', 'MyTestExtension_Entry');
         $this->assertTrue($this->extensions->has('Test/Entry'));
 
-        $ext = $this->prophesize(Extension\AbstractRenderer::class)->reveal();
-        $this->extensions->add('Test/Thing', get_class($ext));
+        $this->extensions->add('Test/Thing', Extension\AbstractRenderer::class);
         $this->assertTrue($this->extensions->has('Test/Thing'));
     }
 
