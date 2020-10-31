@@ -12,6 +12,7 @@ use Laminas\Feed\Reader\Exception\InvalidArgumentException;
 use Laminas\Feed\Reader\Http\Response;
 use LaminasTest\Feed\Reader\TestAsset\Psr7Stream;
 use PHPUnit\Framework\TestCase;
+use function var_export;
 
 /**
  * @covers \Laminas\Feed\Reader\Http\Response
@@ -64,7 +65,7 @@ class ResponseTest extends TestCase
         }
 
         foreach ([100.1, 599.1] as $statusCode) {
-            yield $statusCode => [$statusCode, 'integer status code'];
+            yield var_export($statusCode, true) => [$statusCode, 'integer status code'];
         }
 
         $invalidTypes = [
