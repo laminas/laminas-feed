@@ -5752,10 +5752,9 @@
     </UndefinedInterfaceMethod>
   </file>
   <file src="test/Reader/Http/LaminasHttpClientDecoratorTest.php">
-    <InvalidArgument occurrences="3">
+    <InvalidArgument occurrences="2">
       <code>$headers</code>
       <code>$responseHeaders</code>
-      <code>testDecoratorRaisesExceptionForInvalidHeaders</code>
     </InvalidArgument>
     <MismatchingDocblockReturnType occurrences="1">
       <code>MockObject&lt;Headers&gt;</code>
@@ -5772,8 +5771,9 @@
       <code>$this-&gt;client</code>
       <code>$this-&gt;client</code>
     </MixedArgument>
-    <MixedInferredReturnType occurrences="1">
+    <MixedInferredReturnType occurrences="2">
       <code>MockObject&lt;Headers&gt;</code>
+      <code>\Generator</code>
     </MixedInferredReturnType>
     <MixedMethodCall occurrences="31">
       <code>expects</code>
