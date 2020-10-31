@@ -163,11 +163,6 @@ class LaminasHttpClientDecoratorTest extends TestCase
         $this->assertEquals(1234.56, $response->getHeaderLine('X-Content-Length'));
     }
 
-    /**
-     * @return \Generator
-     *
-     * @psalm-return \Generator<string, array{0: array{X-Test?: \stdClass|array{0: \stdClass|array{0: string}|bool|null}|bool|float|int|null|string, ?: array{0: string}, '1.1'?: array{0: string}, 1?: array{0: string}, 0?: array{0: string}}, 1: string}, mixed, void>
-     */
     public function invalidHeaders(): \Generator
     {
         $basicTests = [

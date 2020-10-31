@@ -132,7 +132,7 @@ class ReaderTest extends TestCase
 
     /**
      * @group Laminas-9723
-     *
+     * @codingStandardsIgnoreStart
      */
     public function testDetectsTypeFromStringOrToRemindPaddyAboutForgettingATestWhichLetsAStupidTypoSurviveUnnoticedForMonths(): void
     {
