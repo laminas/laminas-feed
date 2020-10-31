@@ -9,6 +9,7 @@
 namespace Laminas\Feed\Reader\Http;
 
 use Laminas\Feed\Reader\Exception;
+use function is_string;
 
 class Response implements HeaderAwareResponseInterface
 {
@@ -79,7 +80,7 @@ class Response implements HeaderAwareResponseInterface
      */
     private function validateStatusCode($statusCode)
     {
-        if (! is_numeric($statusCode)) {
+        if (! is_numeric($statusCode) || (is_string($statusCode) && trim($statusCode) !== $statusCode)) {
             throw new Exception\InvalidArgumentException(sprintf(
                 '%s expects a numeric status code; received %s',
                 __CLASS__,
