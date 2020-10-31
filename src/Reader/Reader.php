@@ -91,12 +91,12 @@ class Reader implements ReaderImportInterface
 
     /**
      * Disable the ability to load external XML entities based on libxml version
-     * 
+     *
      * If we are using libxml < 2.9, unsafe XML entity loading must be
      * disabled with a flag.
-     * 
+     *
      * If we are using libxml >= 2.9, XML entity loading is disabled by default.
-     * 
+     *
      * @return bool
      */
     public static function disableEntityLoader($flag = true)
