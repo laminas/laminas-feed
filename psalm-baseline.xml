@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="3.16@d03e5ef057d6adc656c0ff7e166c50b73b4f48f3">
+<files psalm-version="4.1.1@16bfbd9224698bd738c665f33039fade2a1a3977">
   <file src="src/PubSubHubbub/AbstractCallback.php">
     <DocblockTypeContradiction occurrences="4">
       <code>! $httpResponse instanceof HttpResponse &amp;&amp; ! $httpResponse instanceof PhpResponse</code>
@@ -58,7 +58,8 @@
     </MissingReturnType>
   </file>
   <file src="src/PubSubHubbub/HttpResponse.php">
-    <DocblockTypeContradiction occurrences="1">
+    <DocblockTypeContradiction occurrences="2">
+      <code>! is_int($code)</code>
       <code>is_int($code)</code>
     </DocblockTypeContradiction>
     <InvalidScalarArgument occurrences="1">
@@ -99,8 +100,7 @@
     <RedundantCondition occurrences="1">
       <code>200 == $this-&gt;statusCode</code>
     </RedundantCondition>
-    <RedundantConditionGivenDocblockType occurrences="2">
-      <code>! is_int($code) || (100 &gt; $code)</code>
+    <RedundantConditionGivenDocblockType occurrences="1">
       <code>is_int($code)</code>
     </RedundantConditionGivenDocblockType>
   </file>
@@ -110,7 +110,9 @@
     </NullArgument>
   </file>
   <file src="src/PubSubHubbub/Model/Subscription.php">
-    <DocblockTypeContradiction occurrences="3">
+    <DocblockTypeContradiction occurrences="5">
+      <code>! is_string($key)</code>
+      <code>! is_string($key)</code>
       <code>is_string($key)</code>
       <code>is_string($key)</code>
       <code>null === $this-&gt;now</code>
@@ -151,6 +153,10 @@
     <PropertyNotSetInConstructor occurrences="1">
       <code>$now</code>
     </PropertyNotSetInConstructor>
+    <RedundantConditionGivenDocblockType occurrences="2">
+      <code>is_string($key)</code>
+      <code>is_string($key)</code>
+    </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/PubSubHubbub/PubSubHubbub.php">
     <DocblockTypeContradiction occurrences="2">
@@ -171,8 +177,16 @@
     </UndefinedInterfaceMethod>
   </file>
   <file src="src/PubSubHubbub/Publisher.php">
-    <DocblockTypeContradiction occurrences="9">
-      <code>! is_string($value) &amp;&amp; $value !== null</code>
+    <DocblockTypeContradiction occurrences="17">
+      <code>! is_string($name)</code>
+      <code>! is_string($name)</code>
+      <code>! is_string($url)</code>
+      <code>! is_string($url)</code>
+      <code>! is_string($url)</code>
+      <code>! is_string($value)</code>
+      <code>empty($url) || ! is_string($url)</code>
+      <code>empty($url) || ! is_string($url)</code>
+      <code>empty($url) || ! is_string($url)</code>
       <code>is_array($name)</code>
       <code>is_array($options)</code>
       <code>is_string($name)</code>
@@ -209,10 +223,9 @@
     <MixedOperand occurrences="1">
       <code>$response-&gt;getContent()</code>
     </MixedOperand>
-    <RedundantConditionGivenDocblockType occurrences="7">
-      <code>empty($url) || ! is_string($url) || ! Uri::factory($url)-&gt;isValid()</code>
-      <code>empty($url) || ! is_string($url) || ! Uri::factory($url)-&gt;isValid()</code>
-      <code>empty($url) || ! is_string($url) || ! Uri::factory($url)-&gt;isValid()</code>
+    <RedundantConditionGivenDocblockType occurrences="6">
+      <code>is_string($name)</code>
+      <code>is_string($name)</code>
       <code>is_string($url)</code>
       <code>is_string($url)</code>
       <code>is_string($url)</code>
@@ -220,9 +233,19 @@
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/PubSubHubbub/Subscriber.php">
-    <DocblockTypeContradiction occurrences="11">
-      <code>! is_string($value) &amp;&amp; $value !== null</code>
+    <DocblockTypeContradiction occurrences="21">
+      <code>! is_string($name)</code>
+      <code>! is_string($name)</code>
+      <code>! is_string($url)</code>
+      <code>! is_string($url)</code>
+      <code>! is_string($url)</code>
+      <code>! is_string($url)</code>
+      <code>! is_string($value)</code>
       <code>$this-&gt;storage === null</code>
+      <code>empty($url) || ! is_string($url)</code>
+      <code>empty($url) || ! is_string($url)</code>
+      <code>empty($url) || ! is_string($url)</code>
+      <code>empty($url) || ! is_string($url)</code>
       <code>is_array($name)</code>
       <code>is_array($options)</code>
       <code>is_string($name)</code>
@@ -314,12 +337,10 @@
       <code>$leaseSeconds</code>
       <code>$storage</code>
     </PropertyNotSetInConstructor>
-    <RedundantConditionGivenDocblockType occurrences="10">
+    <RedundantConditionGivenDocblockType occurrences="8">
       <code>$this-&gt;getLeaseSeconds() !== null</code>
-      <code>empty($url) || ! is_string($url) || ! Uri::factory($url)-&gt;isValid()</code>
-      <code>empty($url) || ! is_string($url) || ! Uri::factory($url)-&gt;isValid()</code>
-      <code>empty($url) || ! is_string($url) || ! Uri::factory($url)-&gt;isValid()</code>
-      <code>empty($url) || ! is_string($url) || ! Uri::factory($url)-&gt;isValid()</code>
+      <code>is_string($name)</code>
+      <code>is_string($name)</code>
       <code>is_string($url)</code>
       <code>is_string($url)</code>
       <code>is_string($url)</code>
@@ -965,8 +986,7 @@
       <code>$this-&gt;data['title']</code>
       <code>$this-&gt;data['title']</code>
     </MixedReturnStatement>
-    <NullableReturnStatement occurrences="9">
-      <code>$this-&gt;data['commentcount']</code>
+    <NullableReturnStatement occurrences="8">
       <code>$this-&gt;data['commentfeedlink']</code>
       <code>$this-&gt;data['commentlink']</code>
       <code>$this-&gt;data['datecreated']</code>
@@ -1461,10 +1481,9 @@
     <MixedArgument occurrences="1">
       <code>$stringParade</code>
     </MixedArgument>
-    <MixedAssignment occurrences="4">
+    <MixedAssignment occurrences="3">
       <code>$comments</code>
       <code>$data</code>
-      <code>$hitParade[]</code>
       <code>$stringParade</code>
     </MixedAssignment>
     <MixedInferredReturnType occurrences="4">
@@ -1612,7 +1631,7 @@
     <MixedArrayOffset occurrences="1">
       <code>$this-&gt;entries[$index]</code>
     </MixedArrayOffset>
-    <MixedAssignment occurrences="22">
+    <MixedAssignment occurrences="23">
       <code>$atomFeed</code>
       <code>$atomFeed</code>
       <code>$authors</code>
@@ -1629,6 +1648,7 @@
       <code>$generator</code>
       <code>$hubs</code>
       <code>$id</code>
+      <code>$index</code>
       <code>$language</code>
       <code>$language</code>
       <code>$link</code>
@@ -1782,7 +1802,7 @@
     <MixedArrayOffset occurrences="1">
       <code>$this-&gt;entries[$index]</code>
     </MixedArrayOffset>
-    <MixedAssignment occurrences="55">
+    <MixedAssignment occurrences="56">
       <code>$author</code>
       <code>$authors</code>
       <code>$authorsDc</code>
@@ -1819,6 +1839,7 @@
       <code>$image['title']</code>
       <code>$image['uri']</code>
       <code>$image['width']</code>
+      <code>$index</code>
       <code>$language</code>
       <code>$language</code>
       <code>$language</code>
@@ -1985,11 +2006,10 @@
     <InvalidScalarArgument occurrences="1">
       <code>$value</code>
     </InvalidScalarArgument>
-    <MixedAssignment occurrences="4">
+    <MixedAssignment occurrences="3">
       <code>$normalized[$name]</code>
       <code>$value</code>
       <code>$value</code>
-      <code>$values</code>
     </MixedAssignment>
     <PossiblyInvalidMethodCall occurrences="1">
       <code>addHeaderLine</code>
@@ -2010,7 +2030,8 @@
     </NullableReturnStatement>
   </file>
   <file src="src/Reader/Http/Response.php">
-    <DocblockTypeContradiction occurrences="3">
+    <DocblockTypeContradiction occurrences="4">
+      <code>! is_numeric($statusCode)</code>
       <code>is_numeric($statusCode)</code>
       <code>is_object($statusCode)</code>
       <code>is_string($statusCode)</code>
@@ -2022,9 +2043,8 @@
     <MixedArgumentTypeCoercion occurrences="1">
       <code>$name</code>
     </MixedArgumentTypeCoercion>
-    <MixedAssignment occurrences="3">
+    <MixedAssignment occurrences="2">
       <code>$normalized[strtolower($name)]</code>
-      <code>$value</code>
       <code>$value</code>
     </MixedAssignment>
     <MixedInferredReturnType occurrences="1">
@@ -2035,14 +2055,14 @@
     <PossiblyInvalidCast occurrences="1">
       <code>$body</code>
     </PossiblyInvalidCast>
-    <RedundantConditionGivenDocblockType occurrences="3">
-      <code>! is_numeric($statusCode) || (is_string($statusCode) &amp;&amp; trim($statusCode) !== $statusCode)</code>
+    <RedundantConditionGivenDocblockType occurrences="2">
       <code>gettype($statusCode)</code>
       <code>is_numeric($statusCode)</code>
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Reader/Reader.php">
-    <DocblockTypeContradiction occurrences="4">
+    <DocblockTypeContradiction occurrences="5">
+      <code>! is_string($string)</code>
       <code>$httpClient instanceof Http\ClientInterface</code>
       <code>$response instanceof Http\ResponseInterface</code>
       <code>is_string($string)</code>
@@ -2114,8 +2134,7 @@
       <code>static::$extensionManager</code>
       <code>static::$extensions</code>
     </MixedReturnStatement>
-    <RedundantConditionGivenDocblockType occurrences="4">
-      <code>! is_string($string) || empty($trimmed)</code>
+    <RedundantConditionGivenDocblockType occurrences="3">
       <code>is_string($feed)</code>
       <code>is_string($string)</code>
       <code>static::$httpConditionalGet &amp;&amp; $cache</code>
@@ -2197,7 +2216,26 @@
     </UnsafeInstantiation>
   </file>
   <file src="src/Writer/AbstractFeed.php">
-    <DocblockTypeContradiction occurrences="13">
+    <DocblockTypeContradiction occurrences="32">
+      <code>! is_string($copyright)</code>
+      <code>! is_string($description)</code>
+      <code>! is_string($encoding)</code>
+      <code>! is_string($id)</code>
+      <code>! is_string($language)</code>
+      <code>! is_string($link)</code>
+      <code>! is_string($link)</code>
+      <code>! is_string($name)</code>
+      <code>! is_string($title)</code>
+      <code>! is_string($uri)</code>
+      <code>! is_string($url)</code>
+      <code>! is_string($url)</code>
+      <code>! is_string($version)</code>
+      <code>empty($id) || ! is_string($id)</code>
+      <code>empty($link) || ! is_string($link)</code>
+      <code>empty($link) || ! is_string($link)</code>
+      <code>empty($uri) || ! is_string($uri)</code>
+      <code>empty($url) || ! is_string($url)</code>
+      <code>empty($url) || ! is_string($url)</code>
       <code>is_string($copyright)</code>
       <code>is_string($description)</code>
       <code>is_string($encoding)</code>
@@ -2301,23 +2339,25 @@
       <code>$extensions</code>
       <code>$type</code>
     </PropertyNotSetInConstructor>
-    <RedundantConditionGivenDocblockType occurrences="12">
-      <code>empty($id) || ! is_string($id) || ! Uri::factory($id)-&gt;isValid()</code>
-      <code>empty($link) || ! is_string($link) || ! Uri::factory($link)-&gt;isValid()</code>
-      <code>empty($link) || ! is_string($link) || ! Uri::factory($link)-&gt;isValid()</code>
-      <code>empty($uri) || ! is_string($uri) || ! Uri::factory($uri)-&gt;isValid()</code>
-      <code>empty($url) || ! is_string($url) || ! Uri::factory($url)-&gt;isValid()</code>
-      <code>empty($url) || ! is_string($url) || ! Uri::factory($url)-&gt;isValid()</code>
+    <RedundantConditionGivenDocblockType occurrences="13">
+      <code>is_string($copyright)</code>
+      <code>is_string($description)</code>
+      <code>is_string($encoding)</code>
       <code>is_string($id)</code>
+      <code>is_string($language)</code>
       <code>is_string($link)</code>
       <code>is_string($link)</code>
+      <code>is_string($name)</code>
+      <code>is_string($title)</code>
       <code>is_string($uri)</code>
       <code>is_string($url)</code>
       <code>is_string($url)</code>
+      <code>is_string($version)</code>
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Writer/Deleted.php">
-    <DocblockTypeContradiction occurrences="2">
+    <DocblockTypeContradiction occurrences="3">
+      <code>! is_string($reference)</code>
       <code>$date instanceof DateTimeInterface</code>
       <code>is_string($reference)</code>
     </DocblockTypeContradiction>
@@ -2347,11 +2387,25 @@
       <code>$this-&gt;data['reference']</code>
       <code>$this-&gt;data['when']</code>
     </MixedReturnStatement>
+    <RedundantConditionGivenDocblockType occurrences="1">
+      <code>is_string($reference)</code>
+    </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Writer/Entry.php">
-    <DocblockTypeContradiction occurrences="11">
+    <DocblockTypeContradiction occurrences="22">
+      <code>! is_numeric($count)</code>
+      <code>! is_string($content)</code>
+      <code>! is_string($copyright)</code>
+      <code>! is_string($description)</code>
+      <code>! is_string($encoding)</code>
+      <code>! is_string($id)</code>
+      <code>! is_string($link)</code>
+      <code>! is_string($link)</code>
+      <code>! is_string($title)</code>
       <code>$date instanceof DateTimeInterface</code>
       <code>$date instanceof DateTimeInterface</code>
+      <code>empty($link) || ! is_string($link)</code>
+      <code>empty($link) || ! is_string($link)</code>
       <code>is_numeric($count)</code>
       <code>is_string($content)</code>
       <code>is_string($copyright)</code>
@@ -2434,13 +2488,16 @@
     <PropertyNotSetInConstructor occurrences="1">
       <code>$type</code>
     </PropertyNotSetInConstructor>
-    <RedundantConditionGivenDocblockType occurrences="6">
-      <code>! is_numeric($count) || (int) $count != $count</code>
-      <code>empty($link) || ! is_string($link) || ! Uri::factory($link)-&gt;isValid()</code>
-      <code>empty($link) || ! is_string($link) || ! Uri::factory($link)-&gt;isValid()</code>
+    <RedundantConditionGivenDocblockType occurrences="9">
       <code>is_numeric($count)</code>
+      <code>is_string($content)</code>
+      <code>is_string($copyright)</code>
+      <code>is_string($description)</code>
+      <code>is_string($encoding)</code>
+      <code>is_string($id)</code>
       <code>is_string($link)</code>
       <code>is_string($link)</code>
+      <code>is_string($title)</code>
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Writer/Extension/AbstractRenderer.php">
@@ -2502,16 +2559,21 @@
       <code>$type</code>
       <code>$type</code>
     </MixedArgument>
-    <MixedAssignment occurrences="4">
+    <MixedAssignment occurrences="5">
       <code>$flinks</code>
       <code>$href</code>
       <code>$hubUrl</code>
       <code>$hubs</code>
+      <code>$type</code>
     </MixedAssignment>
     <MixedMethodCall occurrences="2">
       <code>getFeedLinks</code>
       <code>getHubs</code>
     </MixedMethodCall>
+    <ParadoxicalCondition occurrences="2">
+      <code>empty($flinks)</code>
+      <code>empty($hubs)</code>
+    </ParadoxicalCondition>
   </file>
   <file src="src/Writer/Extension/Content/Renderer/Entry.php">
     <MixedArgument occurrences="1">
@@ -2539,6 +2601,9 @@
     <MixedMethodCall occurrences="1">
       <code>getAuthors</code>
     </MixedMethodCall>
+    <ParadoxicalCondition occurrences="1">
+      <code>empty($authors)</code>
+    </ParadoxicalCondition>
   </file>
   <file src="src/Writer/Extension/DublinCore/Renderer/Feed.php">
     <MixedArgument occurrences="2">
@@ -2555,6 +2620,9 @@
     <MixedMethodCall occurrences="1">
       <code>getAuthors</code>
     </MixedMethodCall>
+    <ParadoxicalCondition occurrences="1">
+      <code>empty($authors)</code>
+    </ParadoxicalCondition>
   </file>
   <file src="src/Writer/Extension/GooglePlayPodcast/Entry.php">
     <InvalidDocblock occurrences="1">
@@ -2578,7 +2646,8 @@
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Writer/Extension/GooglePlayPodcast/Feed.php">
-    <DocblockTypeContradiction occurrences="1">
+    <DocblockTypeContradiction occurrences="2">
+      <code>! is_string($value)</code>
       <code>is_string($value)</code>
     </DocblockTypeContradiction>
     <InvalidDocblock occurrences="1">
@@ -2612,8 +2681,7 @@
       <code>$value</code>
       <code>$value</code>
     </MixedAssignment>
-    <RedundantConditionGivenDocblockType occurrences="5">
-      <code>! is_string($value) || ! Uri::factory($value)-&gt;isValid()</code>
+    <RedundantConditionGivenDocblockType occurrences="4">
       <code>in_array($value, ['yes', 'no', 'clean'], true)</code>
       <code>in_array($value, ['yes', 'no', 'clean'], true)</code>
       <code>in_array($value, ['yes', 'no', 'clean'], true)</code>
@@ -2648,7 +2716,7 @@
       <code>$key</code>
       <code>$subcat</code>
     </MixedArgument>
-    <MixedAssignment occurrences="9">
+    <MixedAssignment occurrences="10">
       <code>$author</code>
       <code>$authors</code>
       <code>$block</code>
@@ -2657,6 +2725,7 @@
       <code>$description</code>
       <code>$explicit</code>
       <code>$image</code>
+      <code>$key</code>
       <code>$subcat</code>
     </MixedAssignment>
     <MixedMethodCall occurrences="6">
@@ -2667,10 +2736,17 @@
       <code>getPlayPodcastExplicit</code>
       <code>getPlayPodcastImage</code>
     </MixedMethodCall>
+    <ParadoxicalCondition occurrences="2">
+      <code>empty($authors)</code>
+      <code>empty($cats)</code>
+    </ParadoxicalCondition>
   </file>
   <file src="src/Writer/Extension/ITunes/Entry.php">
-    <DocblockTypeContradiction occurrences="11">
-      <code>! is_bool($value) &amp;&amp; ! in_array($value, ['yes', 'no', 'clean'])</code>
+    <DocblockTypeContradiction occurrences="14">
+      <code>! is_bool($value)</code>
+      <code>! is_numeric($number)</code>
+      <code>! is_numeric($number)</code>
+      <code>! is_string($value)</code>
       <code>is_bool($status)</code>
       <code>is_bool($value)</code>
       <code>is_float($number)</code>
@@ -2706,10 +2782,7 @@
     <MixedAssignment occurrences="1">
       <code>$value</code>
     </MixedAssignment>
-    <RedundantConditionGivenDocblockType occurrences="9">
-      <code>! is_numeric($number) || is_float($number)</code>
-      <code>! is_numeric($number) || is_float($number)</code>
-      <code>! is_string($value) || ! Uri::factory($value)-&gt;isValid()</code>
+    <RedundantConditionGivenDocblockType occurrences="6">
       <code>gettype($number)</code>
       <code>gettype($number)</code>
       <code>is_numeric($number)</code>
@@ -2719,8 +2792,9 @@
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Writer/Extension/ITunes/Feed.php">
-    <DocblockTypeContradiction occurrences="5">
-      <code>! is_bool($value) &amp;&amp; ! in_array($value, ['yes', 'no', 'clean'])</code>
+    <DocblockTypeContradiction occurrences="6">
+      <code>! is_bool($value)</code>
+      <code>! is_string($value)</code>
       <code>is_bool($status)</code>
       <code>is_bool($value)</code>
       <code>is_object($type)</code>
@@ -2763,8 +2837,7 @@
       <code>$value</code>
       <code>$value</code>
     </MixedAssignment>
-    <RedundantConditionGivenDocblockType occurrences="3">
-      <code>! is_string($value) || ! Uri::factory($value)-&gt;isValid()</code>
+    <RedundantConditionGivenDocblockType occurrences="2">
       <code>is_string($value)</code>
       <code>var_export($type, true)</code>
     </RedundantConditionGivenDocblockType>
@@ -2815,6 +2888,10 @@
       <code>getItunesSummary</code>
       <code>getItunesTitle</code>
     </MixedMethodCall>
+    <ParadoxicalCondition occurrences="2">
+      <code>empty($authors)</code>
+      <code>empty($keywords)</code>
+    </ParadoxicalCondition>
   </file>
   <file src="src/Writer/Extension/ITunes/Renderer/Feed.php">
     <MixedArgument occurrences="15">
@@ -2838,7 +2915,7 @@
       <code>$owner['email']</code>
       <code>$owner['name']</code>
     </MixedArrayAccess>
-    <MixedAssignment occurrences="17">
+    <MixedAssignment occurrences="18">
       <code>$author</code>
       <code>$authors</code>
       <code>$block</code>
@@ -2847,6 +2924,7 @@
       <code>$duration</code>
       <code>$explicit</code>
       <code>$image</code>
+      <code>$key</code>
       <code>$keywords</code>
       <code>$owner</code>
       <code>$owners</code>
@@ -2872,6 +2950,12 @@
       <code>getItunesSummary</code>
       <code>getItunesType</code>
     </MixedMethodCall>
+    <ParadoxicalCondition occurrences="4">
+      <code>empty($authors)</code>
+      <code>empty($cats)</code>
+      <code>empty($keywords)</code>
+      <code>empty($owners)</code>
+    </ParadoxicalCondition>
   </file>
   <file src="src/Writer/Extension/Slash/Renderer/Entry.php">
     <MixedAssignment occurrences="2">
@@ -2912,6 +2996,9 @@
     <MixedOperand occurrences="1">
       <code>$link['type']</code>
     </MixedOperand>
+    <ParadoxicalCondition occurrences="1">
+      <code>empty($links)</code>
+    </ParadoxicalCondition>
   </file>
   <file src="src/Writer/Extension/WellFormedWeb/Renderer/Entry.php">
     <MixedArgument occurrences="1">
@@ -2928,6 +3015,9 @@
     <MixedMethodCall occurrences="1">
       <code>getCommentFeedLinks</code>
     </MixedMethodCall>
+    <ParadoxicalCondition occurrences="1">
+      <code>empty($links)</code>
+    </ParadoxicalCondition>
   </file>
   <file src="src/Writer/ExtensionManager.php">
     <MissingPropertyType occurrences="1">
@@ -3008,8 +3098,8 @@
       <code>$value['type']</code>
     </MixedArgument>
     <MixedAssignment occurrences="3">
-      <code>$data</code>
-      <code>$value</code>
+      <code>$key</code>
+      <code>$key</code>
       <code>$value</code>
     </MixedAssignment>
   </file>
@@ -3101,6 +3191,10 @@
       <code>setRootElement</code>
       <code>setType</code>
     </MixedMethodCall>
+    <ParadoxicalCondition occurrences="2">
+      <code>! $authors || empty($authors)</code>
+      <code>empty($data)</code>
+    </ParadoxicalCondition>
     <PossiblyNullArgument occurrences="9">
       <code>$this-&gt;container-&gt;getEncoding()</code>
       <code>$this-&gt;getDataContainer()-&gt;getDescription()</code>
@@ -3149,6 +3243,9 @@
     <MixedMethodCall occurrences="1">
       <code>format</code>
     </MixedMethodCall>
+    <ParadoxicalCondition occurrences="1">
+      <code>empty($data)</code>
+    </ParadoxicalCondition>
     <PossiblyNullArgument occurrences="1">
       <code>$this-&gt;container-&gt;getEncoding()</code>
     </PossiblyNullArgument>
@@ -3185,6 +3282,9 @@
     <MixedMethodCall occurrences="1">
       <code>format</code>
     </MixedMethodCall>
+    <ParadoxicalCondition occurrences="1">
+      <code>empty($data)</code>
+    </ParadoxicalCondition>
     <PossiblyNullArgument occurrences="1">
       <code>$this-&gt;container-&gt;getEncoding()</code>
     </PossiblyNullArgument>
@@ -3247,6 +3347,10 @@
       <code>$data['email']</code>
       <code>$data['name']</code>
     </MixedOperand>
+    <ParadoxicalCondition occurrences="2">
+      <code>! $authors || empty($authors)</code>
+      <code>empty($data)</code>
+    </ParadoxicalCondition>
     <PossiblyNullArgument occurrences="7">
       <code>$this-&gt;container-&gt;getEncoding()</code>
       <code>$this-&gt;getDataContainer()-&gt;getDescription()</code>
@@ -3307,12 +3411,16 @@
       <code>$data['name']</code>
       <code>$data['uri']</code>
     </MixedArrayAccess>
-    <MixedAssignment occurrences="4">
+    <MixedAssignment occurrences="5">
       <code>$cat</code>
       <code>$data</code>
       <code>$href</code>
       <code>$hubUrl</code>
+      <code>$type</code>
     </MixedAssignment>
+    <ParadoxicalCondition occurrences="1">
+      <code>! $authors || empty($authors)</code>
+    </ParadoxicalCondition>
     <PossiblyNullArgument occurrences="8">
       <code>$gdata['uri']</code>
       <code>$gdata['version']</code>
@@ -3409,12 +3517,16 @@
       <code>$data['name']</code>
       <code>$data['uri']</code>
     </MixedArrayAccess>
-    <MixedAssignment occurrences="4">
+    <MixedAssignment occurrences="5">
       <code>$cat</code>
       <code>$data</code>
       <code>$href</code>
       <code>$hubUrl</code>
+      <code>$type</code>
     </MixedAssignment>
+    <ParadoxicalCondition occurrences="1">
+      <code>! $authors || empty($authors)</code>
+    </ParadoxicalCondition>
     <PossiblyNullArgument occurrences="8">
       <code>$gdata['uri']</code>
       <code>$gdata['version']</code>
@@ -3570,6 +3682,9 @@
       <code>$name</code>
       <code>$name</code>
     </MixedOperand>
+    <ParadoxicalCondition occurrences="1">
+      <code>! $authors || empty($authors)</code>
+    </ParadoxicalCondition>
     <PossiblyNullArgument occurrences="3">
       <code>$this-&gt;container-&gt;getEncoding()</code>
       <code>$this-&gt;getDataContainer()-&gt;getDescription()</code>
@@ -5734,9 +5849,6 @@
       <code>expects</code>
       <code>expects</code>
     </PossiblyUndefinedMethod>
-    <ReservedWord occurrences="1">
-      <code>$this-&gt;expectExceptionMessage($contains)</code>
-    </ReservedWord>
     <TooManyTemplateParams occurrences="2">
       <code>MockObject&lt;Headers&gt;</code>
       <code>MockObject&lt;HttpResponse&gt;</code>
@@ -5765,10 +5877,6 @@
       <code>$headers</code>
       <code>$statusCode</code>
     </MixedArgument>
-    <ReservedWord occurrences="2">
-      <code>$this-&gt;expectExceptionMessage($contains)</code>
-      <code>$this-&gt;expectExceptionMessage($contains)</code>
-    </ReservedWord>
   </file>
   <file src="test/Reader/Integration/GooglePlayPodcastRss2Test.php">
     <MissingPropertyType occurrences="1">
@@ -6365,9 +6473,6 @@
       <code>setReference</code>
       <code>setWhen</code>
     </MixedMethodCall>
-    <ReservedWord occurrences="2">
-      <code>$this-&gt;expectExceptionMessage('Invalid parameter: parameter must be a non-empty string')</code>
-    </ReservedWord>
   </file>
   <file src="test/Writer/EntryTest.php">
     <DocblockTypeContradiction occurrences="2">
@@ -6510,13 +6615,6 @@
       <code>$errstr</code>
       <code>$errstr</code>
     </MixedArgument>
-    <ReservedWord occurrences="5">
-      <code>$this-&gt;expectExceptionMessage($expectedMessage)</code>
-      <code>$this-&gt;expectExceptionMessage('MUST be a boolean')</code>
-      <code>$this-&gt;expectExceptionMessage('MUST be one of')</code>
-      <code>$this-&gt;expectExceptionMessage('may only be an integer')</code>
-      <code>$this-&gt;expectExceptionMessage('may only be an integer')</code>
-    </ReservedWord>
   </file>
   <file src="test/Writer/Extension/ITunes/FeedTest.php">
     <InvalidArgument occurrences="18">
@@ -6566,11 +6664,6 @@
       <code>$errstr</code>
       <code>$errstr</code>
     </MixedArgument>
-    <ReservedWord occurrences="3">
-      <code>$this-&gt;expectExceptionMessage($expectedMessage)</code>
-      <code>$this-&gt;expectExceptionMessage('MUST be boolean')</code>
-      <code>$this-&gt;expectExceptionMessage('MUST be one of')</code>
-    </ReservedWord>
   </file>
   <file src="test/Writer/ExtensionPluginManagerCompatibilityTest.php">
     <ImplementedReturnTypeMismatch occurrences="1">
