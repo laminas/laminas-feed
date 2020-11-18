@@ -273,7 +273,7 @@
             </div>
 
             
-            <div class="col-4 text-sm-right">
+            <div class="col-4 text-right">
                 
                     
 
@@ -376,14 +376,12 @@ In this section, we'll demonstrate doing so in order to use a client that is
 PSR-7-capable client, you can pass the response to this decorator, and
 immediately return it from your custom client:</p>
 <pre class="highlight"><code class="language-php">return new Psr7ResponseDecorator($psr7Response);</code></pre>
-
 <p>We'll do this with our PSR-7 client.</p>
 <h2 id="guzzle">Guzzle</h2>
 <p><a href="http://docs.guzzlephp.org/en/latest/">Guzzle</a> is arguably the most popular HTTP
 client library for PHP, and fully supports PSR-7 since version 5. Let's install
 it:</p>
 <pre class="highlight"><code class="language-bash">$ composer require guzzlehttp/guzzle</code></pre>
-
 <p>We'll use the <code>GuzzleHttp\Client</code> to make our requests to feeds.</p>
 <h2 id="creating-a-client">Creating a client</h2>
 <p>From here, we'll create our client. To do this, we'll create a class that:</p>
@@ -424,12 +422,10 @@ class GuzzleClient implements FeedReaderHttpClientInterface
         );
     }
 }</code></pre>
-
 <h2 id="using-the-client">Using the client</h2>
 <p>In order to use our new client, we need to tell <code>Laminas\Feed\Reader\Reader</code> about
 it:</p>
 <pre class="highlight"><code class="language-php">Laminas\Feed\Reader\Reader::setHttpClient(new GuzzleClient());</code></pre>
-
 <p>From this point forward, this custom client will be used to retrieve feeds.</p>
 <h2 id="references">References</h2>
 <p>This chapter is based on <a href="https://www.teqneers.de/2016/05/laminasfeedreader-guzzle-and-psr-7/">a blog post by Stefan Gehrig</a>.</p>

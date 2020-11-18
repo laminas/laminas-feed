@@ -273,7 +273,7 @@
             </div>
 
             
-            <div class="col-4 text-sm-right">
+            <div class="col-4 text-right">
                 
                     
 
@@ -358,7 +358,6 @@ pattern may exist for some web services which use Atom as a container syntax.</p
 <h2 id="reading-a-single-entry-atom-feed">Reading a Single-Entry Atom Feed</h2>
 <pre class="highlight"><code class="language-php">$entry = Laminas\Feed\Reader\Reader::import('http://atom.example.com/feed/1');
 echo 'Entry title: ' . $entry-&gt;getTitle();</code></pre>
-
 <blockquote>
 <h3>Importing requires an HTTP client</h3>
 <p>To import a feed, you will need to have an <a href="../http-clients/">HTTP client</a>

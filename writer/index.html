@@ -273,7 +273,7 @@
             </div>
 
             
-            <div class="col-4 text-sm-right">
+            <div class="col-4 text-right">
                 
                     
 
@@ -461,7 +461,6 @@ $feed-&gt;addEntry($entry);
  * You can substitute "atom" with "rss" to generate an RSS 2.0 feed.
  */
 $out = $feed-&gt;export('atom');</code></pre>
-
 <p>The output rendered should be as follows:</p>
 <pre class="highlight"><code class="language-xml">&lt;?xml version="1.0" encoding="utf-8"?&gt;
 &lt;feed xmlns="http://www.w3.org/2005/Atom"&gt;
@@ -504,7 +503,6 @@ $out = $feed-&gt;export('atom');</code></pre>
         &lt;/content&gt;
     &lt;/entry&gt;
 &lt;/feed&gt;</code></pre>
-
 <p>This is a perfectly valid Atom 1.0 example. It should be noted that omitting an
 obligatory point of data, such as a title, will trigger an exception when
 rendering as Atom 1.0. This will differ for RSS 2.0, since a title may be

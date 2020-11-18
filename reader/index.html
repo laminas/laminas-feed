@@ -273,7 +273,7 @@
             </div>
 
             
-            <div class="col-4 text-sm-right">
+            <div class="col-4 text-right">
                 
                     
 
@@ -436,7 +436,6 @@ foreach ($feed as $entry) {
     ];
     $data['entries'][] = $edata;
 }</code></pre>
-
 <blockquote>
 <h3>Importing requires an HTTP client</h3>
 <p>To import a feed, you will need to have an <a href="../http-clients/">HTTP client</a>
@@ -462,7 +461,6 @@ $feed = Laminas\Feed\Reader\Reader::importString($feedXmlString);
 
 // from a file
 $feed = Laminas\Feed\Reader\Reader::importFile('./feed.xml');</code></pre>
-
 <h2 id="retrieving-underlying-feed-and-entry-sources">Retrieving Underlying Feed and Entry Sources</h2>
 <p><code>Laminas\Feed\Reader\Reader</code> does its best not to stick you in a narrow confine. If
 you need to work on a feed outside of <code>Laminas\Feed\Reader\Reader</code>, you can extract
@@ -500,7 +498,6 @@ $xpath-&gt;registerNamespace('admin', 'http://webns.net/mvcb/');
 $reportErrorsTo = $xpath-&gt;evaluate(
     'string(' . $xpathPrefix . '/admin:errorReportsTo)'
 );</code></pre>
-
 <blockquote>
 <h3>Do not register duplicate namespaces</h3>
 <p>If you register an already registered namespace with a different prefix name
@@ -517,7 +514,6 @@ create and configure your cache instance, and then tell
 "<code>Laminas\Feed\Reader\\</code>" followed by the MD5 hash of the feed's URI.</p>
 <pre class="highlight"><code class="language-php">$cache = Laminas\Cache\StorageFactory::adapterFactory('Memory');
 Laminas\Feed\Reader\Reader::setCache($cache);</code></pre>
-
 <h3>HTTP Conditional GET Support</h3>
 <p>The big question often asked when importing a feed frequently is if it has even
 changed. With a cache enabled, you can add HTTP Conditional <code>GET</code> support to
@@ -545,7 +541,6 @@ Laminas\Feed\Reader\Reader::setCache($cache);
 Laminas\Feed\Reader\Reader::useHttpConditionalGet();
 
 $feed = Laminas\Feed\Reader\Reader::import('http://www.planet-php.net/rdf/');</code></pre>
-
 <p>In the example above, with HTTP Conditional <code>GET</code> requests enabled, the response
 header values for ETag and Last-Modified will be cached along with the feed. For
 the the cache's lifetime, feeds will only be updated on the cache if a non-304
@@ -558,7 +553,6 @@ $lastModifiedDateReceived = 'Wed, 08 Jul 2009 13:37:22 GMT';
 $feed = Laminas\Feed\Reader\Reader::import(
     $uri, $lastEtagReceived, $lastModifiedDateReceived
 );</code></pre>
-
 <h2 id="locating-feed-uris-from-websites">Locating Feed URIs from Websites</h2>
 <p>These days, many websites are aware that the location of their XML feeds is not
 always obvious. A small RDF, RSS, or Atom graphic helps when the user is reading
@@ -588,7 +582,6 @@ if (isset($links-&gt;rss)) {
 if (isset($links-&gt;atom)) {
     echo $links-&gt;atom, "\n"; // http://www.planet-php.org/atom/
 }</code></pre>
-
 <p>Based on these links, you can then import from whichever source you wish in the usual manner.</p>
 <blockquote>
 <h3>Finding feed links requires an HTTP client</h3>
@@ -606,7 +599,6 @@ iterator.</p>
 foreach ($links as $link) {
     echo $link['href'], "\n";
 }</code></pre>
-
 <h2 id="attribute-collections">Attribute Collections</h2>
 <p>In an attempt to simplify return types, return types from the various feed and
 entry level methods may include an object of type
@@ -636,7 +628,6 @@ $labels = [];
 foreach ($categories as $cat) {
     $labels[] = $cat['label']
 }</code></pre>
-
 <p>It's a contrived example, but the point is that the labels are tied up with
 other information.</p>
 <p>However, the container class allows you to access the "most relevant" data as a
@@ -648,7 +639,6 @@ through <code>array_unique()</code> to remove duplication.</p>
 <pre class="highlight"><code class="language-php">$feed = Laminas\Feed\Reader\Reader::import('http://www.example.com/atom.xml');
 $categories = $feed-&gt;getCategories();
 $labels = $categories-&gt;getValues();</code></pre>
-
 <p>The above example shows how to extract only labels and nothing else thus giving
 simple access to the category labels without any additional work to extract that
 data by itself.</p>
@@ -1043,7 +1033,6 @@ can inject an alternate implementation using <code>Reader::setExtensionManager()
 Laminas\Feed\Reader\Reader::setExtensionManager(
     new ExtensionManager($extensions)
 );</code></pre>
-
 <p>The shipped implementations all provide the default extensions (so-called
 "Core Extensions") used internally by <code>Laminas\Feed\Reader\Reader</code>. These
 include:</p>
@@ -1128,7 +1117,6 @@ extension names are case sensitive and use camelCasing for multiple terms.)</p>
 Reader::registerExtension('Syndication');
 $feed = Reader::import('http://rss.slashdot.org/Slashdot/slashdot');
 $updatePeriod = $feed-&gt;getUpdatePeriod();</code></pre>
-
 <p>In the simple example above, we checked how frequently a feed is being updated
 using the <code>getUpdatePeriod()</code> method. Since it's not part of
 <code>Laminas\Feed\Reader\Reader</code>'s core API, it could only be a method supported by
@@ -1142,7 +1130,6 @@ Reader::registerExtension('Syndication');
 $feed = Reader::import('http://rss.slashdot.org/Slashdot/slashdot');
 $syndication = $feed-&gt;getExtension('Syndication');
 $updatePeriod = $syndication-&gt;getUpdatePeriod();</code></pre>
-
 <h3>Writing Laminas\Feed\Reader Extensions</h3>
 <p>Inevitably, there will be times when the <code>Laminas\Feed\Reader</code> API is just
 not capable of getting something you need from a feed or entry. You can use the
@@ -1188,7 +1175,6 @@ similar to:</p>
     &lt;/item&gt;
 &lt;/channel&gt;
 &lt;/rss&gt;</code></pre>
-
 <p>Implementing this new ISBN element as a simple entry level extension would
 require the following class (using your own namespace).</p>
 <pre class="highlight"><code class="language-php">namespace My\FeedReader\Extension\JungleBooks;
@@ -1223,7 +1209,6 @@ class Entry extends AbstractEntry
         );
     }
 }</code></pre>
-
 <p>This extension creates a new method <code>getIsbn()</code>, which runs an XPath query on
 the current entry to extract the ISBN number enclosed by the <code>&lt;jungle:isbn&gt;</code>
 element. It can optionally store this to the internal non-persistent cache (no
@@ -1244,7 +1229,6 @@ requiring extension of the plugin manager itself (note that this example works
 with ServiceManager v2, but not v3). To use it, first install
 laminas-servicemanager:</p>
 <pre class="highlight"><code class="language-bash">$ composer require laminas/laminas-servicemanager</code></pre>
-
 <p>From there:</p>
 <pre class="highlight"><code class="language-php">use My\FeedReader\Extension\JungleBooks;
 use Laminas\Feed\Reader\ExtensionManager;
@@ -1260,7 +1244,6 @@ $feed = Reader::import('http://example.com/junglebooks/rss');
 
 // ISBN for whatever book the first entry in the feed was concerned with
 $firstIsbn = $feed-&gt;current()-&gt;getIsbn();</code></pre>
-
 <p>Writing a feed extension is not much different. The example feed from earlier
 included an unmentioned <code>&lt;jungle:dayPopular&gt;</code> element which Jungle Books have
 added to their standard to include a link to the day's most popular book (in
@@ -1298,7 +1281,6 @@ class Feed extends AbstractFeed
         );
     }
 }</code></pre>
-
 <p>Let's add to the previous example; we'll register the new class with the
 extension manager, and then demonstrate using the newly exposed method:</p>
 <pre class="highlight"><code class="language-php">use My\FeedReader\Extension\JungleBooks;
@@ -1316,7 +1298,6 @@ $feed = Reader::import('http://example.com/junglebooks/rss');
 
 // URI to the information page of the day's most popular book with visitors
 $daysPopularBookLink = $feed-&gt;getDaysPopularBookLink();</code></pre>
-
 <p>Going through these examples, you'll note that while we need to register the
 feed and entry classes separately with the plugin manager, we don't register
 them separately when registering the extension with the <code>Reader</code>.  Extensions

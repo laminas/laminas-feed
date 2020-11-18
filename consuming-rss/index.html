@@ -273,7 +273,7 @@
             </div>
 
             
-            <div class="col-4 text-sm-right">
+            <div class="col-4 text-right">
                 
                     
 
@@ -357,7 +357,6 @@
 <h2 id="reading-a-feed">Reading a feed</h2>
 <p>To read an RSS feed, pass its URL to <code>Laminas\Feed\Reader\Reader::import()</code>:</p>
 <pre class="highlight"><code class="language-php">$channel = Laminas\Feed\Reader\Reader::import('http://rss.example.com/channelName');</code></pre>
-
 <blockquote>
 <h3>Importing requires an HTTP client</h3>
 <p>To import a feed, you will need to have an <a href="../http-clients/">HTTP client</a>
@@ -373,12 +372,10 @@ properties via the various instance getter methods:</p>
 <pre class="highlight"><code class="language-php">echo $channel-&gt;getTitle();
 echo $channel-&gt;getAuthor();
 // etc.</code></pre>
-
 <p>If channel properties have attributes, the getter method will return a key/value
 pair, where the key is the attribute name, and the value is the attribute value.</p>
 <pre class="highlight"><code class="language-php">$author = $channel-&gt;getAuthor();
 echo $author['name'];</code></pre>
-
 <p>Most commonly, you'll want to loop through the feed and do something with its
 entries.  <code>Laminas\Feed\Reader\Feed\Rss</code> internally converts all entries to a
 <code>Laminas\Feed\Reader\Entry\Rss</code> instance. Entry properties, similarly to channel
@@ -388,7 +385,6 @@ properties, can be accessed via getter methods, such as <code>getTitle</code>,
 <pre class="highlight"><code class="language-php">foreach ($channel as $item) {
     echo $item-&gt;getTitle() . "\n";
 }</code></pre>
-
 <p>If you are not familiar with RSS, here are the standard elements you can expect
 to be available in an RSS channel and in individual RSS items (entries).</p>
 <p>Required channel elements:</p>
@@ -422,7 +418,6 @@ the getter:</p>
 <pre class="highlight"><code class="language-php">if ($item-&gt;getPropname()) {
     // ... proceed.
 }</code></pre>
-
 <p>Where relevant, <code>Laminas\Feed</code> supports a number of common RSS extensions including
 Dublin Core, Atom (inside RSS); the Content, Slash, Syndication,
 Syndication/Thread extensions; as well as several others.</p>

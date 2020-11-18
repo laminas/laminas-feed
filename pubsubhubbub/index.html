@@ -273,7 +273,7 @@
             </div>
 
             
-            <div class="col-4 text-sm-right">
+            <div class="col-4 text-right">
                 
                     
 
@@ -464,7 +464,6 @@ if (! $publisher-&gt;isSuccess()) {
 }
 
 // reschedule notifications for the failed Hubs in $failedHubs</code></pre>
-
 <p>If you prefer having more concrete control over the Publisher, the methods
 <code>addHubUrls()</code> and <code>addUpdatedTopicUrls()</code> pass each array value to the singular
 <code>addHubUrl()</code> and <code>addUpdatedTopicUrl()</code> public methods. There are also matching
@@ -544,7 +543,6 @@ $subscriber-&gt;addHubUrl('http://hubbub.example.com');
 $subscriber-&gt;setTopicUrl('http://www.example.net/rss.xml');
 $subscriber-&gt;setCallbackUrl('http://www.mydomain.com/hubbub/callback');
 $subscriber-&gt;subscribeAll();</code></pre>
-
 <p>In order to store subscriptions and offer access to this data for general use,
 the component requires a database (a schema is provided later in this section).
 By default, it is assumed the table name is "subscription", and it utilises
@@ -572,7 +570,6 @@ model may look similar to:</p>
   `subscription_state` varchar(12) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;</code></pre>
-
 <p>Behind the scenes, the Subscriber above will send a request to the Hub endpoint
 containing the following parameters (based on the previous example):</p>
 <div class="table-responsive"><table>
@@ -681,7 +678,6 @@ if ($callback-&gt;hasFeedUpdate()) {
      * Process the feed update asynchronously to avoid a Hub timeout.
      */
 }</code></pre>
-
 <blockquote>
 <h3>Query and body parameters</h3>
 <p>It should be noted that <code>Laminas\Feed\PubSubHubbub\Subscriber\Callback</code> may
@@ -762,7 +758,6 @@ class CallbackController extends AbstractActionController
         }
     }
 }</code></pre>
-
 <p>The example below illustrates adding a route mapping the path segment to a route
 parameter, using laminas-mvc:</p>
 <pre class="highlight"><code class="language-php">use Laminas\Mvc\Router\Http\Segment as SegmentRoute;;

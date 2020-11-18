@@ -273,7 +273,7 @@
             </div>
 
             
-            <div class="col-4 text-sm-right">
+            <div class="col-4 text-right">
                 
                     
 
@@ -436,7 +436,6 @@ foreach ($rss as $item) {
        'description' =&gt; $purifier-&gt;purify($item-&gt;getDescription()),
    ];
 }</code></pre>
-
 <blockquote>
 <h3>Tidy is required</h3>
 <p>HTMLPurifier is using the PHP <a href="http://php.net/tidy">Tidy extension</a> to clean
@@ -491,7 +490,6 @@ foreach ($rss as $item) {
         'description' =&gt; $escaper-&gt;escapeHtml($item-&gt;getDescription()),
     ];
 }</code></pre>
-
 <p>The feed data is now safe for output to HTML templates. You can, of course, skip
 escaping when simply storing the data persistently, but remember to escape it on
 output later!</p>

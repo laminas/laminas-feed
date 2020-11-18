@@ -273,7 +273,7 @@
             </div>
 
             
-            <div class="col-4 text-sm-right">
+            <div class="col-4 text-right">
                 
                     
 
@@ -354,7 +354,6 @@
 you know the URI of a feed, use the <code>Laminas\Feed\Reader\Reader::import()</code> method
 to consume it:</p>
 <pre class="highlight"><code class="language-php">$feed = Laminas\Feed\Reader\Reader::import('http://feeds.example.com/feedName');</code></pre>
-
 <blockquote>
 <h3>Importing requires an HTTP client</h3>
 <p>To import a feed, you will need to have an <a href="../http-clients/">HTTP client</a>
@@ -369,7 +368,6 @@ $feedFromFile = Laminas\Feed\Reader\Reader::importFile('feed.xml');
 
 // importing a feed from a PHP string variable
 $feedFromPHP = Laminas\Feed\Reader\Reader::importString($feedString);</code></pre>
-
 <p>In each of the examples above, an object of a class that extends
 <code>Laminas\Feed\Reader\Feed\AbstractFeed</code> is returned upon success, depending on the
 type of the feed. If an RSS feed were retrieved via one of the import methods
