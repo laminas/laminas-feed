@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
+- [#28](https://github.com/laminas/laminas-feed/pull/28) Adds Psalm as QA tool
 - [#29](https://github.com/laminas/laminas-feed/pull/29) Adds PHP 8.0 support
 
 ### Changed
