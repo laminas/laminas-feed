@@ -15,6 +15,7 @@ use Laminas\Feed\Uri;
 use Laminas\Feed\Writer;
 use Laminas\Feed\Writer\Renderer;
 use Laminas\Validator;
+use tidy;
 
 class Atom extends Renderer\AbstractRenderer implements Renderer\RendererInterface
 {
@@ -381,8 +382,8 @@ class Atom extends Renderer\AbstractRenderer implements Renderer\RendererInterfa
     protected function _loadXhtml($content)
     {
         // @codingStandardsIgnoreEnd
-        if (class_exists('tidy', false)) {
-            $tidy = new \tidy;
+        if (class_exists(tidy::class, false)) {
+            $tidy = new tidy();
             $config   = [
                 'output-xhtml'   => true,
                 'show-body-only' => true,
