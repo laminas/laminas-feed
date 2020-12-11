@@ -569,6 +569,7 @@ Slash | Implements support for the Slash RSS 1.0 module.
 WellFormedWeb | Implements support for the Well Formed Web CommentAPI 1.0.
 Thread | Implements support for Atom Threading Extensions as described in RFC 4685.
 Podcast | Implements support for the Podcast 1.0 DTD from Apple.
+PodcastIndex | Implements support for the Podcast Index 1.0 RSS namespace.
 GooglePlayPodcast | Implements support for the Google Play Podcasts 1.0 DTD from Google.
 
 The core extensions are somewhat special since they are extremely common and
