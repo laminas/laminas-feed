@@ -695,6 +695,7 @@ class Reader implements ReaderImportInterface
         static::registerExtension('WellFormedWeb');
         static::registerExtension('Thread');
         static::registerExtension('Podcast');
+        static::registerExtension('Podcast');
 
         // Added in 2.10.0; check for it conditionally
         static::hasExtension('GooglePlayPodcast')
@@ -703,6 +704,18 @@ class Reader implements ReaderImportInterface
                 sprintf(
                     'Please update your %1$s\ExtensionManagerInterface implementation to add entries for'
                     . ' %1$s\Extension\GooglePlayPodcast\Entry and %1$s\Extension\GooglePlayPodcast\Feed.',
+                    __NAMESPACE__
+                ),
+                \E_USER_NOTICE
+            );
+
+        // Added in development; check for it conditionally
+        static::hasExtension('PodcastIndex')
+            ? static::registerExtension('PodcastIndex')
+            : trigger_error(
+                sprintf(
+                    'Please update your %1$s\ExtensionManagerInterface implementation to add entries for'
+                    . ' %1$s\Extension\PodcastIndex\Entry and %1$s\Extension\PodcastIndex\Feed.',
                     __NAMESPACE__
                 ),
                 \E_USER_NOTICE
