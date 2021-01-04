@@ -206,22 +206,21 @@ class Rss extends AbstractFeed
                         DateTime::RSS,
                         DateTime::RFC822,
                         DateTime::RFC2822,
-                        null,
                     ];
                     foreach ($dateStandards as $standard) {
-                        try {
-                            $date = DateTime::createFromFormat($standard, $dateModified);
+                        $date = DateTime::createFromFormat(
+                            $standard,
+                            $dateModified
+                        );
+                        if ($date instanceof DateTime) {
                             break;
-                        } catch (\Exception $e) {
-                            if ($standard === null) {
-                                throw new Exception\RuntimeException(
-                                    'Could not load date due to unrecognised format'
-                                    . ' (should follow RFC 822 or 2822): ' . $e->getMessage(),
-                                    0,
-                                    $e
-                                );
-                            }
                         }
+                    }
+                    if (! $date) {
+                        throw new Exception\RuntimeException(
+                            'Could not load date due to unrecognised'
+                            . ' format (should follow RFC 822 or 2822).'
+                        );
                     }
                 }
             }

@@ -19,6 +19,7 @@ use PHPUnit\Framework\TestCase;
  */
 class RssTest extends TestCase
 {
+    /** @var string */
     protected $feedSamplePath;
 
     protected $expectedCats = [];
@@ -2176,6 +2177,22 @@ class RssTest extends TestCase
             ['/datemodified/plain/none/rss10.xml', null],
             ['/datemodified/plain/none/rss090.xml', null],
         ];
+    }
+
+    public function testGetDateModifiedShouldThrowExceptionForInvalidDate(): void
+    {
+        $feed = Reader\Reader::importString(
+            file_get_contents(
+                $this->feedSamplePath . '/datemodified/plain/invalid.xml'
+            )
+        );
+
+        $this->expectException(Reader\Exception\RuntimeException::class);
+        $this->expectExceptionMessage(
+            'Could not load date due to unrecognised format (should follow RFC 822 or 2822).'
+        );
+
+        $feed->getDateModified();
     }
 
     /**
