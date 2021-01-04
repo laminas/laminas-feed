@@ -2,27 +2,29 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 2.13.1 - TBD
-
-### Added
-
-- Nothing.
-
-### Changed
-
-- Nothing.
-
-### Deprecated
-
-- Nothing.
-
-### Removed
-
-- Nothing.
+## 2.13.1 - 2021-01-04
 
 ### Fixed
 
 - [#33](https://github.com/laminas/laminas-feed/pull/33) fixes an issue whereby parsing a feed entry date that is in an incorrect format was incorrectly causing a `null` value to be returned for the date, rather than correctly throwing an exception.
+
+
+-----
+
+### Release Notes for [2.13.1](https://github.com/laminas/laminas-feed/milestone/6)
+
+2.13.x bugfix release (patch)
+
+### 2.13.1
+
+- Total issues resolved: **1**
+- Total pull requests resolved: **1**
+- Total contributors: **2**
+
+#### Bug
+
+ - [33: Fixes 32 - Method getDateModified of RSS reader doesn't iterate over different formats](https://github.com/laminas/laminas-feed/pull/33) thanks to @froschdesign
+ - [32: Method getDateModified of RSS reader doesn't iterate over different formats](https://github.com/laminas/laminas-feed/issues/32) thanks to @Klaasie
 
 ## 2.13.0 - 2020-11-18
 
