@@ -22,7 +22,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- Nothing.
+- [#33](https://github.com/laminas/laminas-feed/pull/33) fixes an issue whereby parsing a feed entry date that is in an incorrect format was incorrectly causing a `null` value to be returned for the date, rather than correctly throwing an exception.
 
 ## 2.13.0 - 2020-11-18
 
