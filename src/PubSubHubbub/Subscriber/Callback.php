@@ -27,7 +27,7 @@ class Callback extends PubSubHubbub\AbstractCallback
      * but is part of the Callback URL path, requiring manual retrieval e.g.
      * using a route and the \Laminas\Mvc\Router\RouteMatch::getParam() method.
      *
-     * @var string
+     * @var null|string
      */
     protected $subscriptionKey;
 
