@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.1.1@16bfbd9224698bd738c665f33039fade2a1a3977">
+<files psalm-version="4.4.1@9fd7a7d885b3a216cff8dec9d8c21a132f275224">
   <file src="src/PubSubHubbub/AbstractCallback.php">
     <DocblockTypeContradiction occurrences="4">
       <code>! $httpResponse instanceof HttpResponse &amp;&amp; ! $httpResponse instanceof PhpResponse</code>
@@ -58,9 +58,8 @@
     </MissingReturnType>
   </file>
   <file src="src/PubSubHubbub/HttpResponse.php">
-    <DocblockTypeContradiction occurrences="2">
+    <DocblockTypeContradiction occurrences="1">
       <code>! is_int($code)</code>
-      <code>is_int($code)</code>
     </DocblockTypeContradiction>
     <InvalidScalarArgument occurrences="1">
       <code>strlen($content)</code>
@@ -97,12 +96,14 @@
     <MixedReturnStatement occurrences="1">
       <code>$header['value']</code>
     </MixedReturnStatement>
+    <RedundantCastGivenDocblockType occurrences="3">
+      <code>(string) $content</code>
+      <code>(string) $name</code>
+      <code>(string) $value</code>
+    </RedundantCastGivenDocblockType>
     <RedundantCondition occurrences="1">
       <code>200 == $this-&gt;statusCode</code>
     </RedundantCondition>
-    <RedundantConditionGivenDocblockType occurrences="1">
-      <code>is_int($code)</code>
-    </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/PubSubHubbub/Model/AbstractModel.php">
     <NullArgument occurrences="1">
@@ -110,11 +111,9 @@
     </NullArgument>
   </file>
   <file src="src/PubSubHubbub/Model/Subscription.php">
-    <DocblockTypeContradiction occurrences="5">
+    <DocblockTypeContradiction occurrences="3">
       <code>! is_string($key)</code>
       <code>! is_string($key)</code>
-      <code>is_string($key)</code>
-      <code>is_string($key)</code>
       <code>null === $this-&gt;now</code>
     </DocblockTypeContradiction>
     <FalsableReturnStatement occurrences="1">
@@ -153,14 +152,9 @@
     <PropertyNotSetInConstructor occurrences="1">
       <code>$now</code>
     </PropertyNotSetInConstructor>
-    <RedundantConditionGivenDocblockType occurrences="2">
-      <code>is_string($key)</code>
-      <code>is_string($key)</code>
-    </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/PubSubHubbub/PubSubHubbub.php">
-    <DocblockTypeContradiction occurrences="2">
-      <code>isset(static::$httpClient)</code>
+    <DocblockTypeContradiction occurrences="1">
       <code>null === static::$escaper</code>
     </DocblockTypeContradiction>
     <MixedInferredReturnType occurrences="1">
@@ -177,7 +171,7 @@
     </UndefinedInterfaceMethod>
   </file>
   <file src="src/PubSubHubbub/Publisher.php">
-    <DocblockTypeContradiction occurrences="17">
+    <DocblockTypeContradiction occurrences="11">
       <code>! is_string($name)</code>
       <code>! is_string($name)</code>
       <code>! is_string($url)</code>
@@ -189,12 +183,6 @@
       <code>empty($url) || ! is_string($url)</code>
       <code>is_array($name)</code>
       <code>is_array($options)</code>
-      <code>is_string($name)</code>
-      <code>is_string($name)</code>
-      <code>is_string($url)</code>
-      <code>is_string($url)</code>
-      <code>is_string($url)</code>
-      <code>is_string($value)</code>
     </DocblockTypeContradiction>
     <MixedArgument occurrences="10">
       <code>$name</code>
@@ -223,17 +211,9 @@
     <MixedOperand occurrences="1">
       <code>$response-&gt;getContent()</code>
     </MixedOperand>
-    <RedundantConditionGivenDocblockType occurrences="6">
-      <code>is_string($name)</code>
-      <code>is_string($name)</code>
-      <code>is_string($url)</code>
-      <code>is_string($url)</code>
-      <code>is_string($url)</code>
-      <code>is_string($value)</code>
-    </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/PubSubHubbub/Subscriber.php">
-    <DocblockTypeContradiction occurrences="21">
+    <DocblockTypeContradiction occurrences="14">
       <code>! is_string($name)</code>
       <code>! is_string($name)</code>
       <code>! is_string($url)</code>
@@ -248,13 +228,6 @@
       <code>empty($url) || ! is_string($url)</code>
       <code>is_array($name)</code>
       <code>is_array($options)</code>
-      <code>is_string($name)</code>
-      <code>is_string($name)</code>
-      <code>is_string($url)</code>
-      <code>is_string($url)</code>
-      <code>is_string($url)</code>
-      <code>is_string($url)</code>
-      <code>is_string($value)</code>
     </DocblockTypeContradiction>
     <InvalidPropertyAssignmentValue occurrences="1">
       <code>$bool</code>
@@ -337,15 +310,11 @@
       <code>$leaseSeconds</code>
       <code>$storage</code>
     </PropertyNotSetInConstructor>
-    <RedundantConditionGivenDocblockType occurrences="8">
+    <RedundantCast occurrences="1">
+      <code>(string) $token</code>
+    </RedundantCast>
+    <RedundantConditionGivenDocblockType occurrences="1">
       <code>$this-&gt;getLeaseSeconds() !== null</code>
-      <code>is_string($name)</code>
-      <code>is_string($name)</code>
-      <code>is_string($url)</code>
-      <code>is_string($url)</code>
-      <code>is_string($url)</code>
-      <code>is_string($url)</code>
-      <code>is_string($value)</code>
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/PubSubHubbub/Subscriber/Callback.php">
@@ -398,10 +367,9 @@
     <PossiblyUndefinedMethod occurrences="1">
       <code>setHeader</code>
     </PossiblyUndefinedMethod>
-    <PropertyNotSetInConstructor occurrences="5">
+    <PropertyNotSetInConstructor occurrences="4">
       <code>$currentSubscriptionData</code>
       <code>$feedUpdate</code>
-      <code>$subscriptionKey</code>
       <code>Callback</code>
       <code>Callback</code>
     </PropertyNotSetInConstructor>
@@ -868,6 +836,11 @@
     <PossiblyNullPropertyAssignmentValue occurrences="1">
       <code>$entry-&gt;ownerDocument</code>
     </PossiblyNullPropertyAssignmentValue>
+    <RedundantCastGivenDocblockType occurrences="3">
+      <code>(int) $this-&gt;entryKey</code>
+      <code>(int) $this-&gt;entryKey</code>
+      <code>(int) $this-&gt;entryKey</code>
+    </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Reader/Extension/AbstractFeed.php">
     <DocblockTypeContradiction occurrences="1">
@@ -1323,9 +1296,6 @@
       <code>$this-&gt;data['explicit']</code>
       <code>$this-&gt;data['image']</code>
     </NullableReturnStatement>
-    <RedundantCondition occurrences="1">
-      <code>$categories</code>
-    </RedundantCondition>
     <UndefinedMethod occurrences="2">
       <code>getAttribute</code>
       <code>getAttribute</code>
@@ -1466,9 +1436,6 @@
       <code>$this-&gt;data['subtitle']</code>
       <code>$this-&gt;data['summary']</code>
     </NullableReturnStatement>
-    <RedundantCondition occurrences="1">
-      <code>$categories</code>
-    </RedundantCondition>
     <UndefinedMethod occurrences="2">
       <code>getAttribute</code>
       <code>getAttribute</code>
@@ -1919,8 +1886,7 @@
       <code>$this-&gt;data['datemodified']</code>
       <code>$this-&gt;data['lastBuildDate']</code>
     </NullableReturnStatement>
-    <PossiblyNullArgument occurrences="2">
-      <code>$standard</code>
+    <PossiblyNullArgument occurrences="1">
       <code>$standard</code>
     </PossiblyNullArgument>
     <PossiblyNullReference occurrences="20">
@@ -2030,9 +1996,8 @@
     </NullableReturnStatement>
   </file>
   <file src="src/Reader/Http/Response.php">
-    <DocblockTypeContradiction occurrences="4">
+    <DocblockTypeContradiction occurrences="3">
       <code>! is_numeric($statusCode)</code>
-      <code>is_numeric($statusCode)</code>
       <code>is_object($statusCode)</code>
       <code>is_string($statusCode)</code>
     </DocblockTypeContradiction>
@@ -2055,17 +2020,18 @@
     <PossiblyInvalidCast occurrences="1">
       <code>$body</code>
     </PossiblyInvalidCast>
-    <RedundantConditionGivenDocblockType occurrences="2">
+    <RedundantCastGivenDocblockType occurrences="1">
+      <code>(int) $statusCode</code>
+    </RedundantCastGivenDocblockType>
+    <RedundantConditionGivenDocblockType occurrences="1">
       <code>gettype($statusCode)</code>
-      <code>is_numeric($statusCode)</code>
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Reader/Reader.php">
-    <DocblockTypeContradiction occurrences="5">
+    <DocblockTypeContradiction occurrences="4">
       <code>! is_string($string)</code>
       <code>$httpClient instanceof Http\ClientInterface</code>
       <code>$response instanceof Http\ResponseInterface</code>
-      <code>is_string($string)</code>
       <code>static::$httpClient</code>
     </DocblockTypeContradiction>
     <ImplementedReturnTypeMismatch occurrences="1">
@@ -2134,9 +2100,13 @@
       <code>static::$extensionManager</code>
       <code>static::$extensions</code>
     </MixedReturnStatement>
-    <RedundantConditionGivenDocblockType occurrences="3">
+    <RedundantCastGivenDocblockType occurrences="3">
+      <code>(int) $response-&gt;getStatusCode()</code>
+      <code>(int) $response-&gt;getStatusCode()</code>
+      <code>(int) $response-&gt;getStatusCode()</code>
+    </RedundantCastGivenDocblockType>
+    <RedundantConditionGivenDocblockType occurrences="2">
       <code>is_string($feed)</code>
-      <code>is_string($string)</code>
       <code>static::$httpConditionalGet &amp;&amp; $cache</code>
     </RedundantConditionGivenDocblockType>
     <TooManyArguments occurrences="1">
@@ -2216,7 +2186,7 @@
     </UnsafeInstantiation>
   </file>
   <file src="src/Writer/AbstractFeed.php">
-    <DocblockTypeContradiction occurrences="32">
+    <DocblockTypeContradiction occurrences="19">
       <code>! is_string($copyright)</code>
       <code>! is_string($description)</code>
       <code>! is_string($encoding)</code>
@@ -2236,19 +2206,6 @@
       <code>empty($uri) || ! is_string($uri)</code>
       <code>empty($url) || ! is_string($url)</code>
       <code>empty($url) || ! is_string($url)</code>
-      <code>is_string($copyright)</code>
-      <code>is_string($description)</code>
-      <code>is_string($encoding)</code>
-      <code>is_string($id)</code>
-      <code>is_string($language)</code>
-      <code>is_string($link)</code>
-      <code>is_string($link)</code>
-      <code>is_string($name)</code>
-      <code>is_string($title)</code>
-      <code>is_string($uri)</code>
-      <code>is_string($url)</code>
-      <code>is_string($url)</code>
-      <code>is_string($version)</code>
     </DocblockTypeContradiction>
     <InvalidDocblock occurrences="3">
       <code>public function setDateCreated($date = null)</code>
@@ -2339,27 +2296,11 @@
       <code>$extensions</code>
       <code>$type</code>
     </PropertyNotSetInConstructor>
-    <RedundantConditionGivenDocblockType occurrences="13">
-      <code>is_string($copyright)</code>
-      <code>is_string($description)</code>
-      <code>is_string($encoding)</code>
-      <code>is_string($id)</code>
-      <code>is_string($language)</code>
-      <code>is_string($link)</code>
-      <code>is_string($link)</code>
-      <code>is_string($name)</code>
-      <code>is_string($title)</code>
-      <code>is_string($uri)</code>
-      <code>is_string($url)</code>
-      <code>is_string($url)</code>
-      <code>is_string($version)</code>
-    </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Writer/Deleted.php">
-    <DocblockTypeContradiction occurrences="3">
+    <DocblockTypeContradiction occurrences="2">
       <code>! is_string($reference)</code>
       <code>$date instanceof DateTimeInterface</code>
-      <code>is_string($reference)</code>
     </DocblockTypeContradiction>
     <InvalidDocblock occurrences="1">
       <code>public function setEncoding($encoding)</code>
@@ -2387,12 +2328,9 @@
       <code>$this-&gt;data['reference']</code>
       <code>$this-&gt;data['when']</code>
     </MixedReturnStatement>
-    <RedundantConditionGivenDocblockType occurrences="1">
-      <code>is_string($reference)</code>
-    </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Writer/Entry.php">
-    <DocblockTypeContradiction occurrences="22">
+    <DocblockTypeContradiction occurrences="13">
       <code>! is_numeric($count)</code>
       <code>! is_string($content)</code>
       <code>! is_string($copyright)</code>
@@ -2406,15 +2344,6 @@
       <code>$date instanceof DateTimeInterface</code>
       <code>empty($link) || ! is_string($link)</code>
       <code>empty($link) || ! is_string($link)</code>
-      <code>is_numeric($count)</code>
-      <code>is_string($content)</code>
-      <code>is_string($copyright)</code>
-      <code>is_string($description)</code>
-      <code>is_string($encoding)</code>
-      <code>is_string($id)</code>
-      <code>is_string($link)</code>
-      <code>is_string($link)</code>
-      <code>is_string($title)</code>
     </DocblockTypeContradiction>
     <MixedArgument occurrences="5">
       <code>$author</code>
@@ -2488,17 +2417,11 @@
     <PropertyNotSetInConstructor occurrences="1">
       <code>$type</code>
     </PropertyNotSetInConstructor>
-    <RedundantConditionGivenDocblockType occurrences="9">
-      <code>is_numeric($count)</code>
-      <code>is_string($content)</code>
-      <code>is_string($copyright)</code>
-      <code>is_string($description)</code>
-      <code>is_string($encoding)</code>
-      <code>is_string($id)</code>
-      <code>is_string($link)</code>
-      <code>is_string($link)</code>
-      <code>is_string($title)</code>
-    </RedundantConditionGivenDocblockType>
+    <RedundantCastGivenDocblockType occurrences="3">
+      <code>(int) $count</code>
+      <code>(int) $count</code>
+      <code>(int) $count</code>
+    </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Writer/Extension/AbstractRenderer.php">
     <ImplementedReturnTypeMismatch occurrences="2">
@@ -2646,9 +2569,8 @@
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Writer/Extension/GooglePlayPodcast/Feed.php">
-    <DocblockTypeContradiction occurrences="2">
+    <DocblockTypeContradiction occurrences="1">
       <code>! is_string($value)</code>
-      <code>is_string($value)</code>
     </DocblockTypeContradiction>
     <InvalidDocblock occurrences="1">
       <code>public function setPlayPodcastBlock($value)</code>
@@ -2681,11 +2603,10 @@
       <code>$value</code>
       <code>$value</code>
     </MixedAssignment>
-    <RedundantConditionGivenDocblockType occurrences="4">
+    <RedundantConditionGivenDocblockType occurrences="3">
       <code>in_array($value, ['yes', 'no', 'clean'], true)</code>
       <code>in_array($value, ['yes', 'no', 'clean'], true)</code>
       <code>in_array($value, ['yes', 'no', 'clean'], true)</code>
-      <code>is_string($value)</code>
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Writer/Extension/GooglePlayPodcast/Renderer/Entry.php">
@@ -2742,21 +2663,17 @@
     </ParadoxicalCondition>
   </file>
   <file src="src/Writer/Extension/ITunes/Entry.php">
-    <DocblockTypeContradiction occurrences="14">
+    <DocblockTypeContradiction occurrences="10">
       <code>! is_bool($value)</code>
       <code>! is_numeric($number)</code>
       <code>! is_numeric($number)</code>
       <code>! is_string($value)</code>
       <code>is_bool($status)</code>
-      <code>is_bool($value)</code>
       <code>is_float($number)</code>
       <code>is_float($number)</code>
-      <code>is_numeric($number)</code>
-      <code>is_numeric($number)</code>
       <code>is_object($number)</code>
       <code>is_object($number)</code>
       <code>is_object($type)</code>
-      <code>is_string($value)</code>
     </DocblockTypeContradiction>
     <InvalidDocblock occurrences="1">
       <code>public function setItunesBlock($value)</code>
@@ -2782,23 +2699,22 @@
     <MixedAssignment occurrences="1">
       <code>$value</code>
     </MixedAssignment>
-    <RedundantConditionGivenDocblockType occurrences="6">
+    <RedundantCastGivenDocblockType occurrences="2">
+      <code>(int) $number</code>
+      <code>(int) $number</code>
+    </RedundantCastGivenDocblockType>
+    <RedundantConditionGivenDocblockType occurrences="3">
       <code>gettype($number)</code>
       <code>gettype($number)</code>
-      <code>is_numeric($number)</code>
-      <code>is_numeric($number)</code>
-      <code>is_string($value)</code>
       <code>var_export($type, true)</code>
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Writer/Extension/ITunes/Feed.php">
-    <DocblockTypeContradiction occurrences="6">
+    <DocblockTypeContradiction occurrences="4">
       <code>! is_bool($value)</code>
       <code>! is_string($value)</code>
       <code>is_bool($status)</code>
-      <code>is_bool($value)</code>
       <code>is_object($type)</code>
-      <code>is_string($value)</code>
     </DocblockTypeContradiction>
     <InvalidDocblock occurrences="1">
       <code>public function setItunesBlock($value)</code>
@@ -2837,8 +2753,10 @@
       <code>$value</code>
       <code>$value</code>
     </MixedAssignment>
-    <RedundantConditionGivenDocblockType occurrences="2">
-      <code>is_string($value)</code>
+    <RedundantCastGivenDocblockType occurrences="1">
+      <code>(string) $value</code>
+    </RedundantCastGivenDocblockType>
+    <RedundantConditionGivenDocblockType occurrences="1">
       <code>var_export($type, true)</code>
     </RedundantConditionGivenDocblockType>
   </file>
@@ -3746,9 +3664,6 @@
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Writer/Writer.php">
-    <DocblockTypeContradiction occurrences="1">
-      <code>isset(static::$extensionManager)</code>
-    </DocblockTypeContradiction>
     <InvalidDocblock occurrences="1">
       <code>public static function setExtensionManager(ExtensionManagerInterface $extensionManager)</code>
     </InvalidDocblock>
@@ -3767,6 +3682,9 @@
       <code>static::$extensions['feed'][]</code>
       <code>static::$extensions['feedRenderer'][]</code>
     </MixedArrayAssignment>
+    <RedundantPropertyInitializationCheck occurrences="1">
+      <code>isset(static::$extensionManager)</code>
+    </RedundantPropertyInitializationCheck>
   </file>
   <file src="test/PubSubHubbub/ClientNotReset.php">
     <InvalidReturnType occurrences="1">
@@ -4025,6 +3943,9 @@
     </MixedArgument>
   </file>
   <file src="test/PubSubHubbub/TestAsset/Callback.php">
+    <MissingParamType occurrences="1">
+      <code>$sendResponseNow</code>
+    </MissingParamType>
     <PropertyNotSetInConstructor occurrences="2">
       <code>Callback</code>
       <code>Callback</code>
@@ -4054,6 +3975,9 @@
       <code>$this-&gt;feedSamplePath</code>
       <code>$this-&gt;feedSamplePath</code>
     </MixedOperand>
+    <RedundantCastGivenDocblockType occurrences="1">
+      <code>(array) $entry-&gt;getAuthors()</code>
+    </RedundantCastGivenDocblockType>
     <UndefinedInterfaceMethod occurrences="6">
       <code>getCommentLink</code>
       <code>getContent</code>
@@ -5382,6 +5306,10 @@
       <code>$this-&gt;feedSamplePath</code>
       <code>$this-&gt;feedSamplePath</code>
     </MixedOperand>
+    <RedundantCastGivenDocblockType occurrences="2">
+      <code>(array) $feed-&gt;getAuthors()</code>
+      <code>(array) $feed-&gt;getAuthors()</code>
+    </RedundantCastGivenDocblockType>
     <UndefinedInterfaceMethod occurrences="9">
       <code>getBaseUrl</code>
       <code>getHubs</code>
@@ -5453,296 +5381,41 @@
       <code>getValues</code>
       <code>getValues</code>
     </InvalidMethodCall>
-    <MissingPropertyType occurrences="4">
+    <MissingPropertyType occurrences="3">
       <code>$expectedCats</code>
       <code>$expectedCatsAtom</code>
       <code>$expectedCatsRdf</code>
-      <code>$feedSamplePath</code>
     </MissingPropertyType>
-    <MixedOperand occurrences="282">
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-      <code>$this-&gt;feedSamplePath</code>
-    </MixedOperand>
+    <RedundantCastGivenDocblockType occurrences="28">
+      <code>(array) $feed-&gt;getAuthors()</code>
+      <code>(array) $feed-&gt;getAuthors()</code>
+      <code>(array) $feed-&gt;getAuthors()</code>
+      <code>(array) $feed-&gt;getAuthors()</code>
+      <code>(array) $feed-&gt;getAuthors()</code>
+      <code>(array) $feed-&gt;getAuthors()</code>
+      <code>(array) $feed-&gt;getAuthors()</code>
+      <code>(array) $feed-&gt;getAuthors()</code>
+      <code>(array) $feed-&gt;getAuthors()</code>
+      <code>(array) $feed-&gt;getAuthors()</code>
+      <code>(array) $feed-&gt;getAuthors()</code>
+      <code>(array) $feed-&gt;getAuthors()</code>
+      <code>(array) $feed-&gt;getAuthors()</code>
+      <code>(array) $feed-&gt;getAuthors()</code>
+      <code>(array) $feed-&gt;getAuthors()</code>
+      <code>(array) $feed-&gt;getAuthors()</code>
+      <code>(array) $feed-&gt;getAuthors()</code>
+      <code>(array) $feed-&gt;getAuthors()</code>
+      <code>(array) $feed-&gt;getAuthors()</code>
+      <code>(array) $feed-&gt;getAuthors()</code>
+      <code>(array) $feed-&gt;getAuthors()</code>
+      <code>(array) $feed-&gt;getAuthors()</code>
+      <code>(array) $feed-&gt;getAuthors()</code>
+      <code>(array) $feed-&gt;getAuthors()</code>
+      <code>(array) $feed-&gt;getAuthors()</code>
+      <code>(array) $feed-&gt;getAuthors()</code>
+      <code>(array) $feed-&gt;getAuthors()</code>
+      <code>(array) $feed-&gt;getAuthors()</code>
+    </RedundantCastGivenDocblockType>
     <UndefinedInterfaceMethod occurrences="29">
       <code>getHubs</code>
       <code>getHubs</code>
@@ -6029,6 +5702,9 @@
       <code>getPermaLink</code>
       <code>getTitle</code>
     </MixedMethodCall>
+    <RedundantCastGivenDocblockType occurrences="1">
+      <code>(array) $feed-&gt;getAuthors()</code>
+    </RedundantCastGivenDocblockType>
     <UndefinedInterfaceMethod occurrences="1">
       <code>getEncoding</code>
     </UndefinedInterfaceMethod>
@@ -6081,6 +5757,9 @@
       <code>getPermaLink</code>
       <code>getTitle</code>
     </MixedMethodCall>
+    <RedundantCastGivenDocblockType occurrences="1">
+      <code>(array) $feed-&gt;getAuthors()</code>
+    </RedundantCastGivenDocblockType>
     <UndefinedInterfaceMethod occurrences="1">
       <code>getEncoding</code>
     </UndefinedInterfaceMethod>
@@ -6244,6 +5923,9 @@
       <code>getPermaLink</code>
       <code>getTitle</code>
     </MixedMethodCall>
+    <RedundantCastGivenDocblockType occurrences="1">
+      <code>(array) $feed-&gt;getAuthors()</code>
+    </RedundantCastGivenDocblockType>
     <UndefinedInterfaceMethod occurrences="1">
       <code>getEncoding</code>
     </UndefinedInterfaceMethod>
@@ -6297,6 +5979,9 @@
       <code>getPermaLink</code>
       <code>getTitle</code>
     </MixedMethodCall>
+    <RedundantCastGivenDocblockType occurrences="1">
+      <code>(array) $feed-&gt;getAuthors()</code>
+    </RedundantCastGivenDocblockType>
     <UndefinedInterfaceMethod occurrences="1">
       <code>getEncoding</code>
     </UndefinedInterfaceMethod>
@@ -6318,7 +6003,7 @@
       <code>setMethods</code>
       <code>setMethods</code>
     </DeprecatedMethod>
-    <InvalidArgument occurrences="1">
+    <InvalidArgument occurrences="2">
       <code>new stdClass()</code>
     </InvalidArgument>
     <MissingClosureParamType occurrences="4">
@@ -6338,7 +6023,6 @@
       <code>$message</code>
       <code>$notices-&gt;messages</code>
     </MixedArgument>
-    <MixedArgumentTypeCoercion occurrences="1"/>
     <MixedArrayAccess occurrences="1">
       <code>$link['feed']</code>
     </MixedArrayAccess>
@@ -6366,13 +6050,6 @@
       <code>$this-&gt;feedSamplePath</code>
       <code>$this-&gt;feedSamplePath</code>
     </MixedOperand>
-    <RedundantConditionGivenDocblockType occurrences="5">
-      <code>assertInstanceOf</code>
-      <code>assertInstanceOf</code>
-      <code>assertInstanceOf</code>
-      <code>assertInstanceOf</code>
-      <code>assertInstanceOf</code>
-    </RedundantConditionGivenDocblockType>
     <UndefinedInterfaceMethod occurrences="1">
       <code>getEncoding</code>
     </UndefinedInterfaceMethod>
@@ -6479,7 +6156,7 @@
       <code>assertNull</code>
       <code>assertNull</code>
     </DocblockTypeContradiction>
-    <InvalidArgument occurrences="19">
+    <InvalidArgument occurrences="20">
       <code>ExceptionInterface::class</code>
       <code>ExceptionInterface::class</code>
       <code>ExceptionInterface::class</code>
@@ -6527,7 +6204,6 @@
       <code>$message</code>
       <code>$notices-&gt;messages</code>
     </MixedArgument>
-    <MixedArgumentTypeCoercion occurrences="1"/>
     <MixedArrayAssignment occurrences="1">
       <code>$notices-&gt;messages[]</code>
     </MixedArrayAssignment>
@@ -6665,11 +6341,6 @@
       <code>$errstr</code>
     </MixedArgument>
   </file>
-  <file src="test/Writer/ExtensionPluginManagerCompatibilityTest.php">
-    <ImplementedReturnTypeMismatch occurrences="1">
-      <code>void</code>
-    </ImplementedReturnTypeMismatch>
-  </file>
   <file src="test/Writer/FeedFactoryTest.php">
     <InvalidArgument occurrences="1">
       <code>'string'</code>
@@ -6680,14 +6351,9 @@
     <PossiblyNullReference occurrences="1">
       <code>format</code>
     </PossiblyNullReference>
-    <RedundantConditionGivenDocblockType occurrences="3">
-      <code>assertInstanceOf</code>
-      <code>assertInstanceOf</code>
-      <code>assertInstanceOf</code>
-    </RedundantConditionGivenDocblockType>
   </file>
   <file src="test/Writer/FeedTest.php">
-    <InvalidArgument occurrences="27">
+    <InvalidArgument occurrences="28">
       <code>ExceptionInterface::class</code>
       <code>ExceptionInterface::class</code>
       <code>ExceptionInterface::class</code>
@@ -6735,7 +6401,6 @@
       <code>$message</code>
       <code>$notices-&gt;messages</code>
     </MixedArgument>
-    <MixedArgumentTypeCoercion occurrences="1"/>
     <MixedArrayAssignment occurrences="1">
       <code>$notices-&gt;messages[]</code>
     </MixedArrayAssignment>
@@ -6754,13 +6419,9 @@
       <code>setTitle</code>
       <code>setType</code>
     </MixedMethodCall>
-    <RedundantConditionGivenDocblockType occurrences="2">
-      <code>assertInstanceOf</code>
-      <code>assertInstanceOf</code>
-    </RedundantConditionGivenDocblockType>
   </file>
   <file src="test/Writer/Renderer/Entry/AtomTest.php">
-    <InvalidArgument occurrences="5">
+    <InvalidArgument occurrences="6">
       <code>ExceptionInterface::class</code>
       <code>ExceptionInterface::class</code>
       <code>ExceptionInterface::class</code>
@@ -6806,7 +6467,6 @@
       <code>$this-&gt;validWriter</code>
       <code>$this-&gt;validWriter</code>
     </MixedArgument>
-    <MixedArgumentTypeCoercion occurrences="1"/>
     <MixedArrayAssignment occurrences="1">
       <code>$notices-&gt;messages[]</code>
     </MixedArrayAssignment>
@@ -6881,7 +6541,7 @@
     </MixedPropertyFetch>
   </file>
   <file src="test/Writer/Renderer/Entry/RssTest.php">
-    <InvalidArgument occurrences="6">
+    <InvalidArgument occurrences="7">
       <code>ExceptionInterface::class</code>
       <code>ExceptionInterface::class</code>
       <code>ExceptionInterface::class</code>
@@ -6937,7 +6597,6 @@
       <code>$this-&gt;validWriter</code>
       <code>$this-&gt;validWriter</code>
     </MixedArgument>
-    <MixedArgumentTypeCoercion occurrences="1"/>
     <MixedArrayAssignment occurrences="1">
       <code>$notices-&gt;messages[]</code>
     </MixedArrayAssignment>
@@ -7032,7 +6691,7 @@
     </MixedPropertyFetch>
   </file>
   <file src="test/Writer/Renderer/Feed/AtomTest.php">
-    <InvalidArgument occurrences="4">
+    <InvalidArgument occurrences="5">
       <code>ExceptionInterface::class</code>
       <code>ExceptionInterface::class</code>
       <code>ExceptionInterface::class</code>
@@ -7087,7 +6746,6 @@
       <code>$this-&gt;validWriter</code>
       <code>$this-&gt;validWriter</code>
     </MixedArgument>
-    <MixedArgumentTypeCoercion occurrences="1"/>
     <MixedArrayAssignment occurrences="1">
       <code>$notices-&gt;messages[]</code>
     </MixedArrayAssignment>
@@ -7118,7 +6776,7 @@
     </UndefinedInterfaceMethod>
   </file>
   <file src="test/Writer/Renderer/Feed/RssTest.php">
-    <InvalidArgument occurrences="14">
+    <InvalidArgument occurrences="15">
       <code>ExceptionInterface::class</code>
       <code>ExceptionInterface::class</code>
       <code>ExceptionInterface::class</code>
@@ -7193,7 +6851,6 @@
       <code>$this-&gt;validWriter</code>
       <code>$this-&gt;validWriter</code>
     </MixedArgument>
-    <MixedArgumentTypeCoercion occurrences="1"/>
     <MixedArrayAssignment occurrences="1">
       <code>$notices-&gt;messages[]</code>
     </MixedArrayAssignment>

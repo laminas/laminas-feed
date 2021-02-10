@@ -35,7 +35,7 @@ class PubSubHubbub
     /**
      * Singleton instance if required of the HTTP client
      *
-     * @var Http\Client
+     * @var null|Http\Client
      */
     protected static $httpClient;
 
