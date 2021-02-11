@@ -1441,6 +1441,43 @@
       <code>getAttribute</code>
     </UndefinedMethod>
   </file>
+  <file src="src/Reader/Extension/PodcastIndex/Entry.php">
+    <MismatchingDocblockReturnType occurrences="2">
+      <code>object{url: string, type: string, language: string, rel: string}</code>
+      <code>object{url: string, type: string}</code>
+    </MismatchingDocblockReturnType>
+    <MixedInferredReturnType occurrences="3">
+      <code>array&lt;int, object{title: string, startTime: string, duration: string}&gt;</code>
+      <code>object{url: string, type: string, language: string, rel: string}</code>
+      <code>object{url: string, type: string}</code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement occurrences="1">
+      <code>$this-&gt;data['soundbites']</code>
+    </MixedReturnStatement>
+    <UndefinedMethod occurrences="2">
+      <code>getAttribute</code>
+      <code>getAttribute</code>
+    </UndefinedMethod>
+  </file>
+  <file src="src/Reader/Extension/PodcastIndex/Feed.php">
+    <MismatchingDocblockReturnType occurrences="1">
+      <code>object{url: string, title: string}</code>
+    </MismatchingDocblockReturnType>
+    <MixedAssignment occurrences="2">
+      <code>$locked</code>
+      <code>$owner</code>
+    </MixedAssignment>
+    <MixedInferredReturnType occurrences="3">
+      <code>?string</code>
+      <code>bool</code>
+      <code>object{url: string, title: string}</code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement occurrences="3">
+      <code>$this-&gt;data['locked']</code>
+      <code>$this-&gt;data['owner']</code>
+      <code>$this-&gt;data['owner']</code>
+    </MixedReturnStatement>
+  </file>
   <file src="src/Reader/Extension/Slash/Entry.php">
     <InvalidOperand occurrences="1">
       <code>$hit</code>
@@ -2874,6 +2911,80 @@
       <code>empty($keywords)</code>
       <code>empty($owners)</code>
     </ParadoxicalCondition>
+  </file>
+  <file src="src/Writer/Extension/PodcastIndex/Entry.php">
+    <MixedArgument occurrences="1">
+      <code>$value</code>
+    </MixedArgument>
+    <MixedArrayAssignment occurrences="1">
+      <code>$this-&gt;data['soundbites'][]</code>
+    </MixedArrayAssignment>
+    <MixedAssignment occurrences="1">
+      <code>$value</code>
+    </MixedAssignment>
+  </file>
+  <file src="src/Writer/Extension/PodcastIndex/Renderer/Entry.php">
+    <MixedArgument occurrences="12">
+      <code>$chapters['type']</code>
+      <code>$chapters['url']</code>
+      <code>$locked</code>
+      <code>$locked</code>
+      <code>$locked['language']</code>
+      <code>$locked['rel']</code>
+      <code>$locked['type']</code>
+      <code>$locked['url']</code>
+      <code>$soundbite</code>
+      <code>$soundbite['duration']</code>
+      <code>$soundbite['startTime']</code>
+      <code>$soundbite['title']</code>
+    </MixedArgument>
+    <MixedArrayAccess occurrences="9">
+      <code>$chapters['type']</code>
+      <code>$chapters['url']</code>
+      <code>$locked['language']</code>
+      <code>$locked['rel']</code>
+      <code>$locked['type']</code>
+      <code>$locked['url']</code>
+      <code>$soundbite['duration']</code>
+      <code>$soundbite['startTime']</code>
+      <code>$soundbite['title']</code>
+    </MixedArrayAccess>
+    <MixedAssignment occurrences="4">
+      <code>$chapters</code>
+      <code>$locked</code>
+      <code>$soundbite</code>
+      <code>$soundbites</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="3">
+      <code>getPodcastIndexChapters</code>
+      <code>getPodcastIndexSoundbites</code>
+      <code>getPodcastIndexTranscript</code>
+    </MixedMethodCall>
+    <ParadoxicalCondition occurrences="1">
+      <code>empty($soundbites)</code>
+    </ParadoxicalCondition>
+  </file>
+  <file src="src/Writer/Extension/PodcastIndex/Renderer/Feed.php">
+    <MixedArgument occurrences="4">
+      <code>$funding['title']</code>
+      <code>$funding['url']</code>
+      <code>$locked['owner']</code>
+      <code>$locked['value']</code>
+    </MixedArgument>
+    <MixedArrayAccess occurrences="4">
+      <code>$funding['title']</code>
+      <code>$funding['url']</code>
+      <code>$locked['owner']</code>
+      <code>$locked['value']</code>
+    </MixedArrayAccess>
+    <MixedAssignment occurrences="2">
+      <code>$funding</code>
+      <code>$locked</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="2">
+      <code>getPodcastIndexFunding</code>
+      <code>getPodcastIndexLocked</code>
+    </MixedMethodCall>
   </file>
   <file src="src/Writer/Extension/Slash/Renderer/Entry.php">
     <MixedAssignment occurrences="2">
@@ -5764,6 +5875,34 @@
       <code>getEncoding</code>
     </UndefinedInterfaceMethod>
   </file>
+  <file src="test/Reader/Integration/PodcastIndexRss2Test.php">
+    <MissingPropertyType occurrences="1">
+      <code>$feedSamplePath</code>
+    </MissingPropertyType>
+    <MixedArgument occurrences="6">
+      <code>$this-&gt;feedSamplePath</code>
+      <code>$this-&gt;feedSamplePath</code>
+      <code>$this-&gt;feedSamplePath</code>
+      <code>$this-&gt;feedSamplePath</code>
+      <code>$this-&gt;feedSamplePath</code>
+      <code>$this-&gt;feedSamplePath</code>
+    </MixedArgument>
+    <MixedAssignment occurrences="3">
+      <code>$entry</code>
+      <code>$entry</code>
+      <code>$entry</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="3">
+      <code>getChapters</code>
+      <code>getSoundbites</code>
+      <code>getTranscript</code>
+    </MixedMethodCall>
+    <UndefinedInterfaceMethod occurrences="3">
+      <code>getFunding</code>
+      <code>getLockOwner</code>
+      <code>isLocked</code>
+    </UndefinedInterfaceMethod>
+  </file>
   <file src="test/Reader/Integration/PodcastRss2Test.php">
     <MissingClosureParamType occurrences="2">
       <code>$errno</code>
@@ -6340,6 +6479,31 @@
       <code>$errstr</code>
       <code>$errstr</code>
     </MixedArgument>
+  </file>
+  <file src="test/Writer/Extension/PodcastIndex/EntryTest.php">
+    <InvalidArgument occurrences="8">
+      <code>ExceptionInterface::class</code>
+      <code>ExceptionInterface::class</code>
+      <code>ExceptionInterface::class</code>
+      <code>ExceptionInterface::class</code>
+      <code>ExceptionInterface::class</code>
+      <code>ExceptionInterface::class</code>
+      <code>ExceptionInterface::class</code>
+      <code>ExceptionInterface::class</code>
+    </InvalidArgument>
+    <MixedInferredReturnType occurrences="1">
+      <code>array</code>
+    </MixedInferredReturnType>
+  </file>
+  <file src="test/Writer/Extension/PodcastIndex/FeedTest.php">
+    <InvalidArgument occurrences="3">
+      <code>ExceptionInterface::class</code>
+      <code>ExceptionInterface::class</code>
+      <code>ExceptionInterface::class</code>
+    </InvalidArgument>
+    <MixedInferredReturnType occurrences="1">
+      <code>array</code>
+    </MixedInferredReturnType>
   </file>
   <file src="test/Writer/FeedFactoryTest.php">
     <InvalidArgument occurrences="1">
