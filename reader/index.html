@@ -235,6 +235,29 @@
                     
                 
             
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Extensions</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../extensions/podcast-index/" class="subnavigation__link">Podcast Index</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
         </ul>
     </div>
 
@@ -437,7 +460,7 @@ foreach ($feed as $entry) {
     $data['entries'][] = $edata;
 }</code></pre>
 <blockquote>
-<h3>Importing requires an HTTP client</h3>
+<h3 id="importing-requires-an-http-client">Importing requires an HTTP client</h3>
 <p>To import a feed, you will need to have an <a href="../http-clients/">HTTP client</a>
 available.</p>
 <p>If you are not using laminas-http, you will need to inject <code>Reader</code> with the HTTP
@@ -499,13 +522,13 @@ $reportErrorsTo = $xpath-&gt;evaluate(
     'string(' . $xpathPrefix . '/admin:errorReportsTo)'
 );</code></pre>
 <blockquote>
-<h3>Do not register duplicate namespaces</h3>
+<h3 id="do-not-register-duplicate-namespaces">Do not register duplicate namespaces</h3>
 <p>If you register an already registered namespace with a different prefix name
 to that used internally by <code>Laminas\Feed\Reader\Reader</code>, it will break the
 internal operation of this component.</p>
 </blockquote>
 <h2 id="cache-support-and-intelligent-requests">Cache Support and Intelligent Requests</h2>
-<h3>Adding Cache Support to Laminas\Feed\Reader\Reader</h3>
+<h3 id="adding-cache-support-to-laminasfeedreaderreader">Adding Cache Support to Laminas\Feed\Reader\Reader</h3>
 <p><code>Laminas\Feed\Reader\Reader</code> supports using a
 <a href="https://github.com/laminas/laminas-cache">laminas-cache</a> storage instance to
 cache feeds (as XML) to avoid unnecessary network requests. To add a cache,
@@ -514,7 +537,7 @@ create and configure your cache instance, and then tell
 "<code>Laminas\Feed\Reader\\</code>" followed by the MD5 hash of the feed's URI.</p>
 <pre class="highlight"><code class="language-php">$cache = Laminas\Cache\StorageFactory::adapterFactory('Memory');
 Laminas\Feed\Reader\Reader::setCache($cache);</code></pre>
-<h3>HTTP Conditional GET Support</h3>
+<h3 id="http-conditional-get-support">HTTP Conditional GET Support</h3>
 <p>The big question often asked when importing a feed frequently is if it has even
 changed. With a cache enabled, you can add HTTP Conditional <code>GET</code> support to
 your arsenal to answer that question.</p>
@@ -527,7 +550,7 @@ response with a status code of 200, this means the feed has changed and
 <code>Laminas\Feed\Reader\Reader</code> will parse the new version and save it to the cache.
 It will also cache the new ETag and Last-Modified header values for future use.</p>
 <blockquote>
-<h3>Conditional GET requires a HeaderAwareClientInterface</h3>
+<h3 id="conditional-get-requires-a-headerawareclientinterface">Conditional GET requires a HeaderAwareClientInterface</h3>
 <p>Conditional GET support only works for <code>Laminas\Feed\Reader\Http\HeaderAwareClientInterface</code>
 client implementations, as it requires the ability to send HTTP headers.</p>
 </blockquote>
@@ -584,7 +607,7 @@ if (isset($links-&gt;atom)) {
 }</code></pre>
 <p>Based on these links, you can then import from whichever source you wish in the usual manner.</p>
 <blockquote>
-<h3>Finding feed links requires an HTTP client</h3>
+<h3 id="finding-feed-links-requires-an-http-client">Finding feed links requires an HTTP client</h3>
 <p>To find feed links, you will need to have an <a href="../http-clients/">HTTP client</a>
 available.</p>
 <p>If you are not using laminas-http, you will need to inject <code>Reader</code> with the HTTP
@@ -655,7 +678,7 @@ differences and wrangling over alternative tags are handled internally by
 Ideally, you should not have to care whether a feed is RSS or Atom so long as
 you can extract the information you want.</p>
 <blockquote>
-<h3>RSS feeds vary widely</h3>
+<h3 id="rss-feeds-vary-widely">RSS feeds vary widely</h3>
 <p>While determining common ground between feed types is itself complex, it
 should be noted that <em>RSS</em> in particular is a constantly disputed
 "specification". This has its roots in the original RSS 2.0 document, which
@@ -681,7 +704,7 @@ included extensions bundled with <code>Laminas\Feed\Reader\Reader</code>. The na
 extension sourced methods remain fairly generic; all Extension methods operate
 at the same level as the Core API though we do allow you to retrieve any
 specific extension object separately if required.</p>
-<h3>Feed Level API Methods</h3>
+<h3 id="feed-level-api-methods">Feed Level API Methods</h3>
 <div class="table-responsive"><table>
 <thead>
 <tr>
@@ -775,7 +798,7 @@ alternative that should have the right answer.</p>
 retrieving the DOM and XPath objects for the current feeds as described
 earlier. Feed objects also implement the SPL Iterator and Countable
 interfaces. The extended API is summarised below.</p>
-<h3>Extended Feed API Methods</h3>
+<h3 id="extended-feed-api-methods">Extended Feed API Methods</h3>
 <div class="table-responsive"><table>
 <thead>
 <tr>
@@ -851,7 +874,7 @@ interfaces. The extended API is summarised below.</p>
 speak Atom or RSS) is identical to feed level data. Accessing entries is
 simply a matter of iterating over a feed object or using the SPL <code>Iterator</code>
 interface feed objects implement, and calling the appropriate method on each.</p>
-<h3>Entry API Methods</h3>
+<h3 id="entry-api-methods">Entry API Methods</h3>
 <div class="table-responsive"><table>
 <thead>
 <tr>
@@ -925,7 +948,7 @@ interface feed objects implement, and calling the appropriate method on each.</p
 <p>The extended API for entries is identical to that for feeds with the exception
 of the <code>Iterator</code> methods, which are not needed here.</p>
 <blockquote>
-<h3>Modified vs Created dates</h3>
+<h3 id="modified-vs-created-dates">Modified vs Created dates</h3>
 <p>There is often confusion over the concepts of <em>modified</em> and <em>created</em> dates.
 In Atom, these are two clearly defined concepts (so knock yourself out) but in
 RSS they are vague. RSS 2.0 defines a single <code>&lt;pubDate&gt;</code> element which
@@ -943,14 +966,14 @@ Atom and Dublin Core dates should follow ISO 8601, and RSS dates should
 follow RFC 822 or RFC 2822 (which is also common). Date methods will throw an
 exception if <code>DateTime</code> cannot load the date string using one of the above
 standards, or the PHP recognised possibilities for RSS dates.</p>
-<h3>Validation</h3>
+<h3 id="validation">Validation</h3>
 <p>The values returned from these methods are not validated. This means users
 must perform validation on all retrieved data including the filtering of any
 HTML such as from <code>getContent()</code> before it is output from your application.
 Remember that most feeds come from external sources, and therefore the default
 assumption should be that they cannot be trusted.</p>
 </blockquote>
-<h3>Extended Entry Level API Methods</h3>
+<h3 id="extended-entry-level-api-methods">Extended Entry Level API Methods</h3>
 <div class="table-responsive"><table>
 <thead>
 <tr>
@@ -1073,6 +1096,10 @@ include:</p>
 <td>Implements support for the Podcast 1.0 DTD from Apple.</td>
 </tr>
 <tr>
+<td><a href="../extensions/podcast-index/">PodcastIndex</a></td>
+<td>Implements support for the Podcast Index 1.0 RSS namespace.</td>
+</tr>
+<tr>
 <td>GooglePlayPodcast</td>
 <td>Implements support for the Google Play Podcasts 1.0 DTD from Google.</td>
 </tr>
@@ -1130,7 +1157,7 @@ Reader::registerExtension('Syndication');
 $feed = Reader::import('http://rss.slashdot.org/Slashdot/slashdot');
 $syndication = $feed-&gt;getExtension('Syndication');
 $updatePeriod = $syndication-&gt;getUpdatePeriod();</code></pre>
-<h3>Writing Laminas\Feed\Reader Extensions</h3>
+<h3 id="writing-laminasfeedreader-extensions">Writing Laminas\Feed\Reader Extensions</h3>
 <p>Inevitably, there will be times when the <code>Laminas\Feed\Reader</code> API is just
 not capable of getting something you need from a feed or entry. You can use the
 underlying source objects, like DOMDocument, to get these by hand; however, there
@@ -1488,9 +1515,33 @@ extension now, spanning the classes <code>JungleBooks\Feed</code> and <code>Jung
                     
                 
             
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Extensions</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../extensions/podcast-index/" class="subnavigation__link">Podcast Index</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
         </ul>
     </div>
 
+                    
                 
             </div>
         </div>

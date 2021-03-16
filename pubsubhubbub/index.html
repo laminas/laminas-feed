@@ -235,6 +235,29 @@
                     
                 
             
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Extensions</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../extensions/podcast-index/" class="subnavigation__link">Podcast Index</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
         </ul>
     </div>
 
@@ -501,7 +524,7 @@ confirm all subscriptions and unsubscriptions. This is handled by using an
 instance of <code>Laminas\Feed\PubSubHubbub\Subscriber\Callback</code> when the callback URL
 is accessed.</p>
 <blockquote>
-<h3>Query strings in callback URLs</h3>
+<h3 id="query-strings-in-callback-urls">Query strings in callback URLs</h3>
 <p><code>Laminas\Feed\PubSubHubbub\Subscriber</code> implements the Pubsubhubbub 0.2/0.3
 specification. As this is a new specification version, not all Hubs currently
 implement it. The new specification allows the callback URL to include a query
@@ -511,7 +534,7 @@ query string component of the Subscriber callback URI be presented as a path
 element, i.e. recognised as a parameter in the route associated with the
 callback URI and used by the application's router.</p>
 </blockquote>
-<h3>Subscribing and Unsubscribing</h3>
+<h3 id="subscribing-and-unsubscribing">Subscribing and Unsubscribing</h3>
 <p><code>Laminas\Feed\PubSubHubbub\Subscriber</code> implements a full Pubsubhubbub Subscriber
 capable of subscribing to, or unsubscribing from, any Topic via any Hub
 advertised by that Topic. It operates in conjunction with
@@ -622,7 +645,7 @@ for this reason the component is deliberately designed to work across almost any
 set of options with minimum end-user configuration required. Conventions are
 great when they work!</p>
 <blockquote>
-<h3>Verification modes</h3>
+<h3 id="verification-modes">Verification modes</h3>
 <p>While Hubs may require the use of a specific verification mode (both are
 supported by <code>Laminas\Feed\PubSubHubbub</code>), you may indicate a specific preference
 using the <code>setPreferredVerificationMode()</code> method. In <code>sync</code> (synchronous)
@@ -648,7 +671,7 @@ storage solution where these defaults are not apt either by passing in a new
 model supporting the required interface or by passing a new instance of
 <code>Laminas\Db\TableGateway\TableGateway</code> to the default model's constructor to change
 the used table name.</p>
-<h3>Handling Subscriber Callbacks</h3>
+<h3 id="handling-subscriber-callbacks">Handling Subscriber Callbacks</h3>
 <p>Whenever a subscription or unsubscription request is made, the Hub must verify
 the request by forwarding a new verification request to the callback URL set in
 the subscription or unsubscription parameters. To handle these Hub requests,
@@ -679,14 +702,14 @@ if ($callback-&gt;hasFeedUpdate()) {
      */
 }</code></pre>
 <blockquote>
-<h3>Query and body parameters</h3>
+<h3 id="query-and-body-parameters">Query and body parameters</h3>
 <p>It should be noted that <code>Laminas\Feed\PubSubHubbub\Subscriber\Callback</code> may
 independently parse any incoming query string and other parameters. This is
 necessary since PHP alters the structure and keys of a query string when it is
 parsed into the <code>$_GET</code> or <code>$_POST</code> superglobals; for example, all duplicate
 keys are ignored and periods are converted to underscores. Pubsubhubbub
 features both of these in the query strings it generates.</p>
-<h3>Always delay feed processing</h3>
+<h3 id="always-delay-feed-processing">Always delay feed processing</h3>
 <p>It is essential that developers recognise that Hubs are only concerned with
 sending requests and receiving a response which verifies its receipt. If a
 feed update is received, it should never be processed on the spot since this
@@ -702,7 +725,7 @@ Hubs are expected to distribute vast volumes of updates so their resources are
 stretched; please process feeds asynchronously (e.g. in a separate process or
 a job queue or even a cronjob) as much as possible.</p>
 </blockquote>
-<h3>Setting Up And Using A Callback URL Route</h3>
+<h3 id="setting-up-and-using-a-callback-url-route">Setting Up And Using A Callback URL Route</h3>
 <p>As noted earlier, the <code>Laminas\Feed\PubSubHubbub\Subscriber\Callback</code> class
 receives the combined key associated with any subscription from the Hub via one
 of two methods. The technically preferred method is to add this key to the
@@ -791,6 +814,10 @@ $route = SegmentRoute::factory([
 
         
         <li class="page-nav__item">
+            
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../extensions/podcast-index/">
+                    Next <i class="fa fa-chevron-right"></i>
+                </a>
             
         </li>
     </ul>
@@ -951,9 +978,33 @@ $route = SegmentRoute::factory([
                     
                 
             
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Extensions</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../extensions/podcast-index/" class="subnavigation__link">Podcast Index</a>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
         </ul>
     </div>
 
+                    
                 
             </div>
         </div>
