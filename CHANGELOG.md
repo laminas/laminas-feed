@@ -2,27 +2,27 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 2.14.0 - TBD
+## 2.14.0 - 2021-03-16
+
+
+-----
+
+### Release Notes for [2.14.0](https://github.com/laminas/laminas-feed/milestone/7)
 
 ### Added
 
-- Nothing.
+- Adds a new `PodcastIndex` extension to each of the Reader and Writer subcomponents, allowing users to both create and consume [xmlns:podcast feeds](https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/1.0.md). Please [read the documentation for more details](https://docs.laminas.dev/laminas-feed/extensions/podcast-index/).
 
-### Changed
+### 2.14.0
 
-- Nothing.
+- Total issues resolved: **0**
+- Total pull requests resolved: **2**
+- Total contributors: **2**
 
-### Deprecated
+#### Enhancement
 
-- Nothing.
-
-### Removed
-
-- Nothing.
-
-### Fixed
-
-- Nothing.
+ - [35: Switch from Travis-CI to GitHub Actions](https://github.com/laminas/laminas-feed/pull/35) thanks to @weierophinney
+ - [31: Create PodcastIndex extension](https://github.com/laminas/laminas-feed/pull/31) thanks to @codedmonkey
 
 ## 2.13.1 - 2021-01-04
 
