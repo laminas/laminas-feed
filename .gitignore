@@ -1,3 +1,5 @@
+/.phpunit.result.cache
+/.psalm-cache
 /clover.xml
 /coveralls-upload.json
 /docs/html/
@@ -5,4 +7,3 @@
 /laminas-mkdoc-theme/
 /phpunit.xml
 /vendor/
-/.phpunit.result.cache
