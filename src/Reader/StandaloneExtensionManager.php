@@ -24,6 +24,8 @@ class StandaloneExtensionManager implements ExtensionManagerInterface
         'GooglePlayPodcast\Feed'  => Extension\GooglePlayPodcast\Feed::class,
         'Podcast\Entry'           => Extension\Podcast\Entry::class,
         'Podcast\Feed'            => Extension\Podcast\Feed::class,
+        'PodcastIndex\Entry'      => Extension\PodcastIndex\Entry::class,
+        'PodcastIndex\Feed'       => Extension\PodcastIndex\Feed::class,
         'Slash\Entry'             => Extension\Slash\Entry::class,
         'Syndication\Feed'        => Extension\Syndication\Feed::class,
         'Thread\Entry'            => Extension\Thread\Entry::class,
