@@ -59,7 +59,7 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get the entry funding link
      *
-     * @psalm-return object{url: string, title: string}
+     * @psalm-return null|object{url: string, title: string}
      */
     public function getFunding(): ?stdClass
     {

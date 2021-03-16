@@ -18,6 +18,7 @@ use stdClass;
  */
 class PodcastIndexRss2Test extends TestCase
 {
+    /** @var string */
     protected $feedSamplePath;
 
     protected function setUp(): void
@@ -28,10 +29,10 @@ class PodcastIndexRss2Test extends TestCase
 
     /**
      * Feed level testing
-     *
      */
     public function testGetsLocked(): void
     {
+        /** @var Reader\Extension\PodcastIndex\Feed $feed */
         $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
@@ -40,6 +41,7 @@ class PodcastIndexRss2Test extends TestCase
 
     public function testGetsLockOwner(): void
     {
+        /** @var Reader\Extension\PodcastIndex\Feed $feed */
         $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
@@ -49,6 +51,7 @@ class PodcastIndexRss2Test extends TestCase
 
     public function testGetsFunding(): void
     {
+        /** @var Reader\Extension\PodcastIndex\Feed $feed */
         $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
@@ -69,6 +72,8 @@ class PodcastIndexRss2Test extends TestCase
         $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
+
+        /** @var Reader\Extension\PodcastIndex\Entry $entry */
         $entry = $feed->current();
 
         $expected           = new stdClass();
@@ -85,6 +90,8 @@ class PodcastIndexRss2Test extends TestCase
         $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
+
+        /** @var Reader\Extension\PodcastIndex\Entry $entry */
         $entry = $feed->current();
 
         $expected       = new stdClass();
@@ -99,6 +106,8 @@ class PodcastIndexRss2Test extends TestCase
         $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
+
+        /** @var Reader\Extension\PodcastIndex\Entry $entry */
         $entry = $feed->current();
 
         $expected            = new stdClass();

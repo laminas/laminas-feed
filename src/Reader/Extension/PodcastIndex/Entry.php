@@ -19,7 +19,7 @@ class Entry extends Extension\AbstractEntry
     /**
      * Get the entry transcript
      *
-     * @psalm-return object{url: string, type: string, language: string, rel: string}
+     * @psalm-return null|object{url: string, type: string, language: string, rel: string}
      */
     public function getTranscript(): ?stdClass
     {
@@ -47,7 +47,7 @@ class Entry extends Extension\AbstractEntry
     /**
      * Get the entry chapters
      *
-     * @psalm-return object{url: string, type: string}
+     * @psalm-return null|object{url: string, type: string}
      */
     public function getChapters(): ?stdClass
     {
@@ -88,6 +88,7 @@ class Entry extends Extension\AbstractEntry
 
         if ($nodeList->length > 0) {
             foreach ($nodeList as $node) {
+                /** @var \DOMElement $node */
                 $soundbite            = new stdClass();
                 $soundbite->title     = $node->nodeValue;
                 $soundbite->startTime = $node->getAttribute('startTime');

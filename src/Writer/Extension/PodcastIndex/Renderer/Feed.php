@@ -56,6 +56,7 @@ class Feed extends Extension\AbstractRenderer
      */
     protected function setLocked(DOMDocument $dom, DOMElement $root): void
     {
+        /** @psalm-var null|array<string, string> $locked */
         $locked = $this->getDataContainer()->getPodcastIndexLocked();
         if ($locked === null) {
             return;
@@ -73,6 +74,7 @@ class Feed extends Extension\AbstractRenderer
      */
     protected function setFunding(DOMDocument $dom, DOMElement $root): void
     {
+        /** @psalm-var null|array<string, string> $funding */
         $funding = $this->getDataContainer()->getPodcastIndexFunding();
         if ($funding === null) {
             return;

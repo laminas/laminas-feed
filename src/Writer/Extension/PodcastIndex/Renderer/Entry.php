@@ -57,6 +57,7 @@ class Entry extends Extension\AbstractRenderer
      */
     protected function setTranscript(DOMDocument $dom, DOMElement $root): void
     {
+        /** @psalm-var null|array<string, string> $locked */
         $locked = $this->getDataContainer()->getPodcastIndexTranscript();
         if ($locked === null) {
             return;
@@ -79,6 +80,7 @@ class Entry extends Extension\AbstractRenderer
      */
     protected function setChapters(DOMDocument $dom, DOMElement $root): void
     {
+        /** @psalm-var null|array<string, string> $chapters */
         $chapters = $this->getDataContainer()->getPodcastIndexChapters();
         if ($chapters === null) {
             return;
@@ -95,11 +97,13 @@ class Entry extends Extension\AbstractRenderer
      */
     protected function setSoundbites(DOMDocument $dom, DOMElement $root): void
     {
+        /** @psalm-var null|list $soundbites */
         $soundbites = $this->getDataContainer()->getPodcastIndexSoundbites();
-        if (! $soundbites || empty($soundbites)) {
+        if (! $soundbites) {
             return;
         }
         foreach ($soundbites as $soundbite) {
+            /** @psalm-var array<string, string> $soundbite */
             $el = $dom->createElement('podcast:soundbite');
             if (array_key_exists('title', $soundbite)) {
                 $text = $dom->createTextNode($soundbite['title']);

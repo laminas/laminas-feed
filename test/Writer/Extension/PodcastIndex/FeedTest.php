@@ -9,13 +9,8 @@
 namespace LaminasTest\Feed\Writer\Extension\PodcastIndex;
 
 use Laminas\Feed\Writer;
-use Laminas\Feed\Writer\Exception\ExceptionInterface;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group Laminas_Feed
- * @group Laminas_Feed_Writer
- */
 class FeedTest extends TestCase
 {
     public function testSetLocked(): void
@@ -37,21 +32,24 @@ class FeedTest extends TestCase
         $locked = [
             'abc' => 'def',
         ];
-        $this->expectException(ExceptionInterface::class);
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $feed->setPodcastIndexLocked($locked);
     }
 
+    /**
+     * @psalm-return array<string, array{0: mixed}>
+     */
     public function nonAlphaValues(): array
     {
         return [
-            'null' => [null],
-            'zero' => [0],
-            'int' => [1],
+            'null'       => [null],
+            'zero'       => [0],
+            'int'        => [1],
             'zero-float' => [0.0],
-            'float' => [1.1],
-            'string' => ['1'],
-            'array' => [['yes']],
-            'object' => [(object) ['value' => 'yes']],
+            'float'      => [1.1],
+            'string'     => ['1'],
+            'array'      => [['yes']],
+            'object'     => [(object) ['value' => 'yes']],
         ];
     }
 
@@ -68,7 +66,7 @@ class FeedTest extends TestCase
             'value' => $value,
             'owner' => 'john.doe@example.com',
         ];
-        $this->expectException(ExceptionInterface::class);
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $feed->setPodcastIndexLocked($locked);
     }
 
@@ -91,7 +89,7 @@ class FeedTest extends TestCase
         $locked = [
             'abc' => 'def',
         ];
-        $this->expectException(ExceptionInterface::class);
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $feed->setPodcastIndexFunding($locked);
     }
 }

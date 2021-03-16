@@ -9,13 +9,8 @@
 namespace LaminasTest\Feed\Writer\Extension\PodcastIndex;
 
 use Laminas\Feed\Writer;
-use Laminas\Feed\Writer\Exception\ExceptionInterface;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group Laminas_Feed
- * @group Laminas_Feed_Writer
- */
 class EntryTest extends TestCase
 {
     public function testSetTranscript(): void
@@ -52,7 +47,7 @@ class EntryTest extends TestCase
             'url' => 'https://example.com/podcasts/everything/TranscriptEpisode3.html',
             'abc' => 'def',
         ];
-        $this->expectException(ExceptionInterface::class);
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $entry->setPodcastIndexTranscript($transcript);
     }
 
@@ -76,20 +71,23 @@ class EntryTest extends TestCase
             'url' => 'https://example.com/podcasts/everything/ChaptersEpisode3.json',
             'abc' => 'def',
         ];
-        $this->expectException(ExceptionInterface::class);
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $entry->setPodcastIndexChapters($chapters);
     }
 
+    /**
+     * @psalm-return array<string, array{0: mixed}>
+     */
     public function invalidTimeValues(): array
     {
         return [
-            'null' => [null],
-            'zero' => [0],
-            'int' => [1],
+            'null'       => [null],
+            'zero'       => [0],
+            'int'        => [1],
             'zero-float' => [0.0],
-            'float' => [1.1],
-            'array' => [['1.1']],
-            'object' => [(object) ['time' => '1.1']],
+            'float'      => [1.1],
+            'array'      => [['1.1']],
+            'object'     => [(object) ['time' => '1.1']],
         ];
     }
 
@@ -124,7 +122,7 @@ class EntryTest extends TestCase
                 'abc' => 'def',
             ]
         ];
-        $this->expectException(ExceptionInterface::class);
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $entry->addPodcastIndexSoundbites($soundbites);
     }
 
@@ -144,7 +142,7 @@ class EntryTest extends TestCase
                 'title' => 'Pepper shakers comparison',
             ],
         ];
-        $this->expectException(ExceptionInterface::class);
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $entry->addPodcastIndexSoundbites($soundbites);
     }
 
@@ -164,7 +162,7 @@ class EntryTest extends TestCase
                 'title' => 'Pepper shakers comparison',
             ],
         ];
-        $this->expectException(ExceptionInterface::class);
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $entry->addPodcastIndexSoundbites($soundbites);
     }
 
@@ -199,7 +197,7 @@ class EntryTest extends TestCase
             'title' => 'Pepper shakers comparison',
             'abc' => 'def',
         ];
-        $this->expectException(ExceptionInterface::class);
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $entry->addPodcastIndexSoundbite($soundbite);
     }
 
@@ -217,7 +215,7 @@ class EntryTest extends TestCase
             'duration' => '39.0',
             'title' => 'Pepper shakers comparison',
         ];
-        $this->expectException(ExceptionInterface::class);
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $entry->addPodcastIndexSoundbite($soundbite);
     }
 
@@ -235,7 +233,7 @@ class EntryTest extends TestCase
             'duration' => $time,
             'title' => 'Pepper shakers comparison',
         ];
-        $this->expectException(ExceptionInterface::class);
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $entry->addPodcastIndexSoundbite($soundbite);
     }
 }

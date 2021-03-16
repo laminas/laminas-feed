@@ -875,7 +875,8 @@ class AbstractFeed
     {
         foreach ($this->extensions as $extension) {
             try {
-                return call_user_func_array([$extension, $method], $args);
+                $callback = [$extension, $method];
+                return $callback(...$args);
             } catch (Exception\BadMethodCallException $e) {
             }
         }
