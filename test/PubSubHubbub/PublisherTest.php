@@ -321,4 +321,31 @@ class PublisherTest extends TestCase
         $this->publisher->notifyAll();
         $this->assertFalse($this->publisher->isSuccess());
     }
+
+    public function testNotifyAllSendsRequestViaClient(): void
+    {
+        $response = $this->createMock(HttpResponse::class);
+        $response->expects($this->once())->method('getStatusCode')->willReturn(204);
+
+        $client = $this->createMock(HttpClient::class);
+        $client
+            ->expects($this->once())
+            ->method('setUri')
+            ->with('http://www.example.com/hub');
+        $client
+            ->expects($this->once())
+            ->method('send');
+        $client
+            ->expects($this->once())
+            ->method('getResponse')
+            ->willReturn($response);
+
+        PubSubHubbub::setHttpClient($client);
+
+        $this->publisher->addHubUrl('http://www.example.com/hub');
+        $this->publisher->addUpdatedTopicUrl('http://www.example.com/topic');
+        $this->publisher->setParameter('foo', 'bar');
+        $this->publisher->notifyAll();
+        $this->assertTrue($this->publisher->isSuccess());
+    }
 }
