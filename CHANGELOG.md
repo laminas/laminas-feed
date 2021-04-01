@@ -2,27 +2,26 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 2.14.1 - TBD
+## 2.14.1 - 2021-04-01
 
-### Added
 
-- Nothing.
+-----
 
-### Changed
-
-- Nothing.
-
-### Deprecated
-
-- Nothing.
-
-### Removed
-
-- Nothing.
+### Release Notes for [2.14.1](https://github.com/laminas/laminas-feed/milestone/9)
 
 ### Fixed
 
-- Nothing.
+- Fixes the behavior of `Laminas\PubSubHubbub\Publisher::notifyAll()` to actually send requests to the various hubs associated with the instance; previously, it did not.
+
+### 2.14.1
+
+- Total issues resolved: **0**
+- Total pull requests resolved: **1**
+- Total contributors: **1**
+
+#### Bug
+
+ - [37: Ensure PubSubHubbub\Publisher::notifyAll() calls HTTP client send() method](https://github.com/laminas/laminas-feed/pull/37) thanks to @weierophinney
 
 ## 2.14.0 - 2021-03-16
 
