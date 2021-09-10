@@ -1,19 +1,17 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Feed\Writer\TestAsset;
 
 use Laminas\Feed\Writer\Exception\InvalidArgumentException;
 use Laminas\Feed\Writer\Extension;
 use Laminas\Feed\Writer\ExtensionManagerInterface;
 
+use function array_key_exists;
+use function sprintf;
+
 class CustomExtensionManager implements ExtensionManagerInterface
 {
+    /** @var array<string, class-string> */
     private $extensions = [
         'Atom\Renderer\Feed'           => Extension\Atom\Renderer\Feed::class,
         'Content\Renderer\Entry'       => Extension\Content\Renderer\Entry::class,
@@ -50,9 +48,8 @@ class CustomExtensionManager implements ExtensionManagerInterface
         $class = $this->has($extension) ? $this->extensions[$extension] : false;
         if (! $class) {
             throw new InvalidArgumentException(sprintf(
-                'Cannot fetch extension "%s"; class "%s" does not exist',
-                $extension,
-                $class
+                'Cannot fetch extension "%s"; does not exist',
+                $extension
             ));
         }
         return new $class();

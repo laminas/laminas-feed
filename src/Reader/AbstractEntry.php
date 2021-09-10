@@ -1,16 +1,15 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Feed\Reader;
 
 use DOMDocument;
 use DOMElement;
 use DOMXPath;
+
+use function array_key_exists;
+use function call_user_func_array;
+use function in_array;
+use function method_exists;
 
 /**
  * @deprecated This (abstract) class is deprecated. Use Laminas\Feed\Reader\Entry\AbstractEntry instead.
@@ -188,7 +187,7 @@ abstract class AbstractEntry
      * @param  string $method
      * @param  array $args
      * @return mixed
-     * @throws Exception\BadMethodCallException if no extensions implements the method
+     * @throws Exception\BadMethodCallException If no extensions implements the method.
      */
     public function __call($method, $args)
     {
@@ -207,10 +206,9 @@ abstract class AbstractEntry
      *
      * @return void
      */
-    // @codingStandardsIgnoreStart
+    // phpcs:ignore PSR2.Methods.MethodDeclaration.Underscore
     protected function _loadExtensions()
     {
-        // @codingStandardsIgnoreEnd
         $all  = Reader::getExtensions();
         $feed = $all['entry'];
         foreach ($feed as $extension) {

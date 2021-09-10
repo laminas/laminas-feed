@@ -1,16 +1,19 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Feed\PubSubHubbub\Subscriber;
 
 use Laminas\Feed\PubSubHubbub;
 use Laminas\Feed\PubSubHubbub\Exception;
 use Laminas\Feed\Uri;
+
+use function array_key_exists;
+use function explode;
+use function hash;
+use function is_array;
+use function rawurldecode;
+use function sprintf;
+use function stripos;
+use function strtolower;
 
 class Callback extends PubSubHubbub\AbstractCallback
 {
@@ -60,7 +63,7 @@ class Callback extends PubSubHubbub\AbstractCallback
      * @param  bool       $sendResponseNow Whether to send response now or when asked
      * @return void
      */
-    public function handle(array $httpGetData = null, $sendResponseNow = false)
+    public function handle(?array $httpGetData = null, $sendResponseNow = false)
     {
         if ($httpGetData === null) {
             $httpGetData = $_GET;
@@ -74,7 +77,8 @@ class Callback extends PubSubHubbub\AbstractCallback
          * to avoid holding up responses to the Hub.
          */
         $contentType = $this->_getHeader('Content-Type');
-        if (strtolower($_SERVER['REQUEST_METHOD']) === 'post'
+        if (
+            strtolower($_SERVER['REQUEST_METHOD']) === 'post'
             && $this->_hasValidVerifyToken(null, false)
             && (stripos($contentType, 'application/atom+xml') === 0
                 || stripos($contentType, 'application/rss+xml') === 0
@@ -149,12 +153,14 @@ class Callback extends PubSubHubbub\AbstractCallback
                 return false;
             }
         }
-        if ($httpGetData['hub_mode'] !== 'subscribe'
+        if (
+            $httpGetData['hub_mode'] !== 'subscribe'
             && $httpGetData['hub_mode'] !== 'unsubscribe'
         ) {
             return false;
         }
-        if ($httpGetData['hub_mode'] === 'subscribe'
+        if (
+            $httpGetData['hub_mode'] === 'subscribe'
             && ! array_key_exists('hub_lease_seconds', $httpGetData)
         ) {
             return false;
@@ -210,6 +216,8 @@ class Callback extends PubSubHubbub\AbstractCallback
         return $this->feedUpdate;
     }
 
+    // phpcs:disable PSR2.Methods.MethodDeclaration.Underscore
+
     /**
      * Check for a valid verify_token. By default attempts to compare values
      * with that sent from Hub, otherwise merely ascertains its existence.
@@ -218,10 +226,8 @@ class Callback extends PubSubHubbub\AbstractCallback
      * @param  bool $checkValue
      * @return bool
      */
-    // @codingStandardsIgnoreStart
-    protected function _hasValidVerifyToken(array $httpGetData = null, $checkValue = true)
+    protected function _hasValidVerifyToken(?array $httpGetData = null, $checkValue = true)
     {
-        // @codingStandardsIgnoreEnd
         $verifyTokenKey = $this->_detectVerifyTokenKey($httpGetData);
         if (empty($verifyTokenKey)) {
             return false;
@@ -250,10 +256,8 @@ class Callback extends PubSubHubbub\AbstractCallback
      * @param  null|array $httpGetData
      * @return false|string
      */
-    // @codingStandardsIgnoreStart
-    protected function _detectVerifyTokenKey(array $httpGetData = null)
+    protected function _detectVerifyTokenKey(?array $httpGetData = null)
     {
-        // @codingStandardsIgnoreEnd
         /**
          * Available when sub keys encoding in Callback URL path
          */
@@ -264,7 +268,8 @@ class Callback extends PubSubHubbub\AbstractCallback
         /**
          * Available only if allowed by PuSH 0.2 Hubs
          */
-        if (is_array($httpGetData)
+        if (
+            is_array($httpGetData)
             && isset($httpGetData['xhub_subscription'])
         ) {
             return $httpGetData['xhub_subscription'];
@@ -288,10 +293,8 @@ class Callback extends PubSubHubbub\AbstractCallback
      *
      * @return array|void
      */
-    // @codingStandardsIgnoreStart
     protected function _parseQueryString()
     {
-        // @codingStandardsIgnoreEnd
         $params      = [];
         $queryString = '';
         if (isset($_SERVER['QUERY_STRING'])) {
@@ -317,4 +320,6 @@ class Callback extends PubSubHubbub\AbstractCallback
         }
         return $params;
     }
+
+    // phpcs:enable PSR2.Methods.MethodDeclaration.Underscore
 }

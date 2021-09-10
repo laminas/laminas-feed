@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Feed\Reader\Feed;
 
 use DOMDocument;
@@ -13,6 +7,14 @@ use DOMElement;
 use DOMXPath;
 use Laminas\Feed\Reader;
 use Laminas\Feed\Reader\Exception;
+
+use function array_key_exists;
+use function call_user_func_array;
+use function count;
+use function in_array;
+use function method_exists;
+use function sprintf;
+use function strpos;
 
 abstract class AbstractFeed implements FeedInterface
 {
@@ -237,11 +239,17 @@ abstract class AbstractFeed implements FeedInterface
         return 0 <= $this->entriesKey && $this->entriesKey < $this->count();
     }
 
+    /** @return array */
     public function getExtensions()
     {
         return $this->extensions;
     }
 
+    /**
+     * @param string $method
+     * @param mixed[] $args
+     * @return mixed
+     */
     public function __call($method, $args)
     {
         foreach ($this->extensions as $extension) {

@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Feed\Writer\Renderer\Entry;
 
 use DateTime;
@@ -16,6 +10,18 @@ use Laminas\Feed\Writer;
 use Laminas\Feed\Writer\Renderer;
 use Laminas\Validator;
 use tidy;
+
+use function array_key_exists;
+use function class_exists;
+use function date;
+use function preg_match;
+use function preg_replace;
+use function str_replace;
+use function strlen;
+use function strtotime;
+use function version_compare;
+
+use const PHP_VERSION;
 
 class Atom extends Renderer\AbstractRenderer implements Renderer\RendererInterface
 {
@@ -58,18 +64,16 @@ class Atom extends Renderer\AbstractRenderer implements Renderer\RendererInterfa
         return $this;
     }
 
+    // phpcs:disable PSR2.Methods.MethodDeclaration.Underscore
+
     /**
      * Set entry title
      *
-     * @param  DOMDocument $dom
-     * @param  DOMElement $root
      * @return void
      * @throws Writer\Exception\InvalidArgumentException
      */
-    // @codingStandardsIgnoreStart
     protected function _setTitle(DOMDocument $dom, DOMElement $root)
     {
-        // @codingStandardsIgnoreEnd
         if (! $this->getDataContainer()->getTitle()) {
             $message   = 'Atom 1.0 entry elements MUST contain exactly one'
                 . ' atom:title element but a title has not been set';
@@ -91,14 +95,10 @@ class Atom extends Renderer\AbstractRenderer implements Renderer\RendererInterfa
     /**
      * Set entry description
      *
-     * @param  DOMDocument $dom
-     * @param  DOMElement $root
      * @return void
      */
-    // @codingStandardsIgnoreStart
     protected function _setDescription(DOMDocument $dom, DOMElement $root)
     {
-        // @codingStandardsIgnoreEnd
         if (! $this->getDataContainer()->getDescription()) {
             return; // unless src content or base64
         }
@@ -114,15 +114,11 @@ class Atom extends Renderer\AbstractRenderer implements Renderer\RendererInterfa
     /**
      * Set date entry was modified
      *
-     * @param  DOMDocument $dom
-     * @param  DOMElement $root
      * @return void
      * @throws Writer\Exception\InvalidArgumentException
      */
-    // @codingStandardsIgnoreStart
     protected function _setDateModified(DOMDocument $dom, DOMElement $root)
     {
-        // @codingStandardsIgnoreEnd
         if (! $this->getDataContainer()->getDateModified()) {
             $message   = 'Atom 1.0 entry elements MUST contain exactly one'
                 . ' atom:updated element but a modification date has not been set';
@@ -146,14 +142,10 @@ class Atom extends Renderer\AbstractRenderer implements Renderer\RendererInterfa
     /**
      * Set date entry was created
      *
-     * @param  DOMDocument $dom
-     * @param  DOMElement $root
      * @return void
      */
-    // @codingStandardsIgnoreStart
     protected function _setDateCreated(DOMDocument $dom, DOMElement $root)
     {
-        // @codingStandardsIgnoreEnd
         if (! $this->getDataContainer()->getDateCreated()) {
             return;
         }
@@ -168,14 +160,10 @@ class Atom extends Renderer\AbstractRenderer implements Renderer\RendererInterfa
     /**
      * Set entry authors
      *
-     * @param  DOMDocument $dom
-     * @param  DOMElement $root
      * @return void
      */
-    // @codingStandardsIgnoreStart
     protected function _setAuthors(DOMDocument $dom, DOMElement $root)
     {
-        // @codingStandardsIgnoreEnd
         $authors = $this->container->getAuthors();
         if (! $authors || empty($authors)) {
             /**
@@ -209,14 +197,10 @@ class Atom extends Renderer\AbstractRenderer implements Renderer\RendererInterfa
     /**
      * Set entry enclosure
      *
-     * @param  DOMDocument $dom
-     * @param  DOMElement $root
      * @return void
      */
-    // @codingStandardsIgnoreStart
     protected function _setEnclosure(DOMDocument $dom, DOMElement $root)
     {
-        // @codingStandardsIgnoreEnd
         $data = $this->container->getEnclosure();
         if (! $data || empty($data)) {
             return;
@@ -233,13 +217,11 @@ class Atom extends Renderer\AbstractRenderer implements Renderer\RendererInterfa
         $root->appendChild($enclosure);
     }
 
-    // @codingStandardsIgnoreStart
     /**
      * @return void
      */
     protected function _setLink(DOMDocument $dom, DOMElement $root)
     {
-        // @codingStandardsIgnoreEnd
         if (! $this->getDataContainer()->getLink()) {
             return;
         }
@@ -253,16 +235,13 @@ class Atom extends Renderer\AbstractRenderer implements Renderer\RendererInterfa
     /**
      * Set entry identifier
      *
-     * @param  DOMDocument $dom
-     * @param  DOMElement $root
      * @return void
      * @throws Writer\Exception\InvalidArgumentException
      */
-    // @codingStandardsIgnoreStart
     protected function _setId(DOMDocument $dom, DOMElement $root)
     {
-        // @codingStandardsIgnoreEnd
-        if (! $this->getDataContainer()->getId()
+        if (
+            ! $this->getDataContainer()->getId()
             && ! $this->getDataContainer()->getLink()
         ) {
             $message   = 'Atom 1.0 entry elements MUST contain exactly one '
@@ -283,7 +262,8 @@ class Atom extends Renderer\AbstractRenderer implements Renderer\RendererInterfa
                 $this->getDataContainer()->getLink()
             );
         }
-        if (! Uri::factory($this->getDataContainer()->getId())->isValid()
+        if (
+            ! Uri::factory($this->getDataContainer()->getId())->isValid()
             && ! preg_match(
                 "#^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{1,31}:([a-zA-Z0-9\(\)\+\,\.\:\=\@\;\$\_\!\*\-]|%[0-9a-fA-F]{2})*#",
                 $this->getDataContainer()->getId()
@@ -304,15 +284,15 @@ class Atom extends Renderer\AbstractRenderer implements Renderer\RendererInterfa
      * @param  string $id
      * @return bool
      */
-    // @codingStandardsIgnoreStart
     protected function _validateTagUri($id)
     {
-        // @codingStandardsIgnoreEnd
-        if (preg_match(
-            '/^tag:(?P<name>.*),(?P<date>\d{4}-?\d{0,2}-?\d{0,2}):(?P<specific>.*)(.*:)*$/',
-            $id,
-            $matches
-        )) {
+        if (
+            preg_match(
+                '/^tag:(?P<name>.*),(?P<date>\d{4}-?\d{0,2}-?\d{0,2}):(?P<specific>.*)(.*:)*$/',
+                $id,
+                $matches
+            )
+        ) {
             $dvalid = false;
             $date   = $matches['date'];
             $d6     = strtotime($date);
@@ -337,15 +317,11 @@ class Atom extends Renderer\AbstractRenderer implements Renderer\RendererInterfa
     /**
      * Set entry content
      *
-     * @param  DOMDocument $dom
-     * @param  DOMElement $root
      * @return void
      * @throws Writer\Exception\InvalidArgumentException
      */
-    // @codingStandardsIgnoreStart
     protected function _setContent(DOMDocument $dom, DOMElement $root)
     {
-        // @codingStandardsIgnoreEnd
         $content = $this->getDataContainer()->getContent();
         if (! $content && ! $this->getDataContainer()->getLink()) {
             $message   = 'Atom 1.0 entry elements MUST contain exactly one '
@@ -376,14 +352,12 @@ class Atom extends Renderer\AbstractRenderer implements Renderer\RendererInterfa
      * Load a HTML string and attempt to normalise to XML
      *
      * @param string $content
-     * @return \DOMElement
+     * @return DOMElement
      */
-    // @codingStandardsIgnoreStart
     protected function _loadXhtml($content)
     {
-        // @codingStandardsIgnoreEnd
         if (class_exists(tidy::class, false)) {
-            $tidy = new tidy();
+            $tidy     = new tidy();
             $config   = [
                 'output-xhtml'   => true,
                 'show-body-only' => true,
@@ -411,14 +385,10 @@ class Atom extends Renderer\AbstractRenderer implements Renderer\RendererInterfa
     /**
      * Set entry categories
      *
-     * @param  DOMDocument $dom
-     * @param  DOMElement $root
      * @return void
      */
-    // @codingStandardsIgnoreStart
     protected function _setCategories(DOMDocument $dom, DOMElement $root)
     {
-        // @codingStandardsIgnoreEnd
         $categories = $this->getDataContainer()->getCategories();
         if (! $categories) {
             return;
@@ -441,14 +411,10 @@ class Atom extends Renderer\AbstractRenderer implements Renderer\RendererInterfa
     /**
      * Append Source element (Atom 1.0 Feed Metadata)
      *
-     * @param  DOMDocument $dom
-     * @param  DOMElement $root
      * @return void
      */
-    // @codingStandardsIgnoreStart
     protected function _setSource(DOMDocument $dom, DOMElement $root)
     {
-        // @codingStandardsIgnoreEnd
         $source = $this->getDataContainer()->getSource();
         if (! $source) {
             return;
@@ -459,4 +425,6 @@ class Atom extends Renderer\AbstractRenderer implements Renderer\RendererInterfa
         $imported = $dom->importNode($element, true);
         $root->appendChild($imported);
     }
+
+    // phpcs:enable PSR2.Methods.MethodDeclaration.Underscore
 }

@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Feed\Writer;
 
 use DateTime;
@@ -17,12 +11,22 @@ use Laminas\Feed\Writer\Exception\ExceptionInterface;
 use Laminas\Feed\Writer\Version;
 use PHPUnit\Framework\TestCase;
 
+use function array_reduce;
+use function dirname;
+use function restore_error_handler;
+use function set_error_handler;
+use function str_replace;
+use function strstr;
+
+use const E_USER_NOTICE;
+
 /**
  * @group Laminas_Feed
  * @group Laminas_Feed_Writer
  */
 class FeedTest extends TestCase
 {
+    /** @var string */
     protected $feedSamplePath;
 
     protected function setUp(): void
@@ -161,7 +165,6 @@ class FeedTest extends TestCase
 
     /**
      * @group Laminas-12023
-     *
      */
     public function testSetDateCreatedUsesGivenUnixTimestampThatIsLessThanTenDigits(): void
     {
@@ -173,7 +176,6 @@ class FeedTest extends TestCase
 
     /**
      * @group Laminas-11610
-     *
      */
     public function testSetDateCreatedUsesGivenUnixTimestampThatIsAVerySmallInteger(): void
     {
@@ -217,7 +219,6 @@ class FeedTest extends TestCase
 
     /**
      * @group Laminas-12023
-     *
      */
     public function testSetDateModifiedUsesGivenUnixTimestampThatIsLessThanTenDigits(): void
     {
@@ -229,7 +230,6 @@ class FeedTest extends TestCase
 
     /**
      * @group Laminas-11610
-     *
      */
     public function testSetDateModifiedUsesGivenUnixTimestampThatIsAVerySmallInteger(): void
     {
@@ -301,7 +301,6 @@ class FeedTest extends TestCase
 
     /**
      * @group Laminas-12023
-     *
      */
     public function testSetLastBuildDateUsesGivenUnixTimestampThatIsLessThanTenDigits(): void
     {
@@ -313,7 +312,6 @@ class FeedTest extends TestCase
 
     /**
      * @group Laminas-11610
-     *
      */
     public function testSetLastBuildDateUsesGivenUnixTimestampThatIsAVerySmallInteger(): void
     {
@@ -592,7 +590,6 @@ class FeedTest extends TestCase
 
     /**
      * @deprecated
-     *
      */
     public function testSetsGeneratorNameDeprecated(): void
     {
@@ -603,7 +600,6 @@ class FeedTest extends TestCase
 
     /**
      * @deprecated
-     *
      */
     public function testSetsGeneratorVersionDeprecated(): void
     {
@@ -617,7 +613,6 @@ class FeedTest extends TestCase
 
     /**
      * @deprecated
-     *
      */
     public function testSetsGeneratorUriDeprecated(): void
     {
@@ -631,7 +626,6 @@ class FeedTest extends TestCase
 
     /**
      * @deprecated
-     *
      */
     public function testSetsGeneratorThrowsExceptionOnInvalidNameDeprecated(): void
     {
@@ -643,7 +637,6 @@ class FeedTest extends TestCase
 
     /**
      * @deprecated
-     *
      */
     public function testSetsGeneratorThrowsExceptionOnInvalidVersionDeprecated(): void
     {
@@ -655,7 +648,6 @@ class FeedTest extends TestCase
 
     /**
      * @deprecated
-     *
      */
     public function testSetsGeneratorThrowsExceptionOnInvalidUriDeprecated(): void
     {
@@ -796,6 +788,7 @@ class FeedTest extends TestCase
 
     // Image Tests
 
+    // phpcs:ignore Squiz.Commenting.FunctionComment.WrongStyle
     public function testSetsImageUri(): void
     {
         $writer = new Writer\Feed();
@@ -921,7 +914,6 @@ class FeedTest extends TestCase
 
     /**
      * @covers \Laminas\Feed\Writer\Feed::orderByDate
-     *
      */
     public function testAddsAndOrdersEntriesByModifiedDate(): void
     {
@@ -938,7 +930,6 @@ class FeedTest extends TestCase
 
     /**
      * @covers \Laminas\Feed\Writer\Feed::getEntry
-     *
      */
     public function testGetEntry(): void
     {
@@ -951,7 +942,6 @@ class FeedTest extends TestCase
 
     /**
      * @covers \Laminas\Feed\Writer\Feed::removeEntry
-     *
      */
     public function testGetEntryException(): void
     {
@@ -963,7 +953,6 @@ class FeedTest extends TestCase
 
     /**
      * @covers \Laminas\Feed\Writer\Feed::removeEntry
-     *
      */
     public function testRemoveEntry(): void
     {
@@ -988,7 +977,6 @@ class FeedTest extends TestCase
 
     /**
      * @covers \Laminas\Feed\Writer\Feed::removeEntry
-     *
      */
     public function testRemoveEntryException(): void
     {
@@ -1000,8 +988,6 @@ class FeedTest extends TestCase
 
     /**
      * @covers \Laminas\Feed\Writer\Feed::createTombstone
-     *
-     * @return Deleted
      */
     public function testCreateTombstone(): Deleted
     {
@@ -1015,7 +1001,6 @@ class FeedTest extends TestCase
 
     /**
      * @covers \Laminas\Feed\Writer\Feed::addTombstone
-     *
      */
     public function testAddTombstone(): void
     {
@@ -1028,7 +1013,6 @@ class FeedTest extends TestCase
 
     /**
      * @covers \Laminas\Feed\Writer\Feed::export
-     *
      */
     public function testExportRss(): void
     {
@@ -1058,7 +1042,6 @@ EOT;
 
     /**
      * @covers \Laminas\Feed\Writer\Feed::export
-     *
      */
     public function testExportRssIgnoreExceptions(): void
     {
@@ -1081,7 +1064,6 @@ EOT;
 
     /**
      * @covers \Laminas\Feed\Writer\Feed::export
-     *
      */
     public function testExportWrongTypeException(): void
     {
@@ -1132,10 +1114,11 @@ EOT;
             'messages' => [],
         ];
 
-        set_error_handler(static function ($errno, $errstr) use ($notices) {
+        /** @psalm-suppress UnusedClosureParam */
+        set_error_handler(static function (int $errno, string $errstr) use ($notices): void {
             $notices->messages[] = $errstr;
-        }, \E_USER_NOTICE);
-        $writer = new Writer\Feed();
+        }, E_USER_NOTICE);
+        new Writer\Feed();
         restore_error_handler();
 
         $message = array_reduce($notices->messages, static function ($toReturn, $message) {

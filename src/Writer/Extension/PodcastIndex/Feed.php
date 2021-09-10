@@ -1,16 +1,19 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Feed\Writer\Extension\PodcastIndex;
 
 use Laminas\Feed\Writer;
 use Laminas\Stdlib\StringUtils;
 use Laminas\Stdlib\StringWrapper\StringWrapperInterface;
+
+use function array_key_exists;
+use function ctype_alpha;
+use function is_string;
+use function lcfirst;
+use function method_exists;
+use function strlen;
+use function substr;
+use function ucfirst;
 
 /**
  * Describes PodcastIndex data of a RSS Feed
@@ -73,7 +76,8 @@ class Feed
                 'invalid parameter: "locked" must be an array containing keys "value" and "owner"'
             );
         }
-        if (! is_string($value['value'])
+        if (
+            ! is_string($value['value'])
             || ! ctype_alpha($value['value']) && strlen($value['value']) > 0
         ) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -109,7 +113,8 @@ class Feed
     public function __call(string $method, array $params)
     {
         $point = lcfirst(substr($method, 15));
-        if (! method_exists($this, 'setPodcastIndex' . ucfirst($point))
+        if (
+            ! method_exists($this, 'setPodcastIndex' . ucfirst($point))
             && ! method_exists($this, 'addPodcastIndex' . ucfirst($point))
         ) {
             throw new Writer\Exception\BadMethodCallException(

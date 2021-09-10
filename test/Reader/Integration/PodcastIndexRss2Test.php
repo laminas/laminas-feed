@@ -1,16 +1,13 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Feed\Reader\Integration;
 
 use Laminas\Feed\Reader;
 use PHPUnit\Framework\TestCase;
 use stdClass;
+
+use function dirname;
+use function file_get_contents;
 
 /**
  * @group Laminas_Feed
@@ -48,7 +45,6 @@ class PodcastIndexRss2Test extends TestCase
         $this->assertEquals('john.doe@example.com', $feed->getLockOwner());
     }
 
-
     public function testGetsFunding(): void
     {
         /** @var Reader\Extension\PodcastIndex\Feed $feed */
@@ -65,11 +61,10 @@ class PodcastIndexRss2Test extends TestCase
 
     /**
      * Entry level testing
-     *
      */
     public function testGetsEntryTranscript(): void
     {
-        $feed  = Reader\Reader::importString(
+        $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
 
@@ -87,7 +82,7 @@ class PodcastIndexRss2Test extends TestCase
 
     public function testGetsEntryChapters(): void
     {
-        $feed  = Reader\Reader::importString(
+        $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
 
@@ -103,7 +98,7 @@ class PodcastIndexRss2Test extends TestCase
 
     public function testGetsEntrySoundbites(): void
     {
-        $feed  = Reader\Reader::importString(
+        $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
 
@@ -116,7 +111,7 @@ class PodcastIndexRss2Test extends TestCase
         $expected->duration  = '39.0';
 
         $this->assertEquals([
-            $expected
+            $expected,
         ], $entry->getSoundbites());
     }
 }

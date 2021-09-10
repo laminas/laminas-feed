@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Feed\Reader;
 
 use Interop\Container\ContainerInterface;
@@ -15,13 +9,24 @@ use Laminas\Feed\Reader\Feed\FeedInterface;
 use Laminas\Feed\Reader\FeedSet;
 use Laminas\Feed\Reader\Http\ClientInterface;
 use Laminas\Feed\Reader\Http\ResponseInterface;
-use Laminas\Http\Client\Adapter\Test as TestAdapter;
 use Laminas\Http\Client as HttpClient;
+use Laminas\Http\Client\Adapter\Test as TestAdapter;
 use Laminas\Http\Response as HttpResponse;
 use My\Extension\JungleBooks\Entry;
 use My\Extension\JungleBooks\Feed;
 use PHPUnit\Framework\TestCase;
 use stdClass;
+
+use function array_reduce;
+use function dirname;
+use function file_get_contents;
+use function getenv;
+use function restore_error_handler;
+use function set_error_handler;
+use function str_replace;
+use function strstr;
+
+use const E_USER_NOTICE;
 
 /**
  * @group Laminas_Feed
@@ -29,6 +34,7 @@ use stdClass;
  */
 class ReaderTest extends TestCase
 {
+    /** @var string */
     protected $feedSamplePath;
 
     protected function setUp(): void
@@ -132,14 +138,14 @@ class ReaderTest extends TestCase
 
     /**
      * @group Laminas-9723
-     * @codingStandardsIgnoreStart
      */
+    // phpcs:disable Generic.Files.LineLength.TooLong
     public function testDetectsTypeFromStringOrToRemindPaddyAboutForgettingATestWhichLetsAStupidTypoSurviveUnnoticedForMonths(): void
     {
         $feed = '<?xml version="1.0" encoding="utf-8" ?><rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://purl.org/rss/1.0/"><channel></channel></rdf:RDF>';
-        // @codingStandardsIgnoreEnd
         $type = Reader\Reader::detectType($feed);
         $this->assertEquals(Reader\Reader::TYPE_RSS_10, $type);
+        // phpcs:enable Generic.Files.LineLength.TooLong
     }
 
     public function testGetEncoding(): void
@@ -172,7 +178,6 @@ class ReaderTest extends TestCase
 
     /**
      * @group Laminas-8328
-     *
      */
     public function testImportsUriAndThrowsExceptionIfNotAFeed(): void
     {
@@ -232,7 +237,6 @@ class ReaderTest extends TestCase
 
     /**
      * @group Laminas-8327
-     *
      */
     public function testGetsFeedLinksAndTrimsNewlines(): void
     {
@@ -246,7 +250,6 @@ class ReaderTest extends TestCase
 
     /**
      * @group Laminas-8330
-     *
      */
     public function testGetsFeedLinksAndNormalisesRelativeUrlsOnUriWithPath(): void
     {
@@ -293,7 +296,6 @@ class ReaderTest extends TestCase
      * Message was: "DOMDocument cannot parse XML: Entity 'discloseInfo' failed to parse".
      *
      * @todo why is the assertEquals commented out?
-     *
      */
     public function testXxePreventionOnFeedParsing(): void
     {
@@ -301,8 +303,7 @@ class ReaderTest extends TestCase
         $string = str_replace('XXE_URI', $this->feedSamplePath . '/Reader/xxe-info.txt', $string);
 
         $this->expectException(InvalidArgumentException::class);
-        $feed = Reader\Reader::importString($string);
-        //$this->assertEquals('info:', $feed->getTitle());
+        Reader\Reader::importString($string);
     }
 
     public function testImportRemoteFeedMethodPerformsAsExpected(): void
@@ -370,10 +371,11 @@ class ReaderTest extends TestCase
             'messages' => [],
         ];
 
-        set_error_handler(static function ($errno, $errstr) use ($notices) {
+        /** @psalm-suppress UnusedClosureParam */
+        set_error_handler(static function (int $errno, string $errstr) use ($notices): void {
             $notices->messages[] = $errstr;
-        }, \E_USER_NOTICE);
-        $feed = Reader\Reader::importFile(
+        }, E_USER_NOTICE);
+        Reader\Reader::importFile(
             dirname(__FILE__) . '/Entry/_files/Atom/title/plain/atom10.xml'
         );
         restore_error_handler();

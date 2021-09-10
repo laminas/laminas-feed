@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Feed\PubSubHubbub\Model;
 
 use DateTime;
@@ -16,6 +10,11 @@ use Laminas\Feed\PubSubHubbub\Model\SubscriptionPersistenceInterface;
 use PDO;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
+
+use function array_keys;
+use function extension_loaded;
+use function in_array;
+use function uniqid;
 
 /**
  * @group Laminas_Feed
@@ -76,9 +75,10 @@ class SubscriptionTest extends TestCase
         $this->assertSame($subscription->getNow(), $now);
     }
 
-    protected function initDb()
+    protected function initDb(): DbAdapter
     {
-        if (! extension_loaded('pdo')
+        if (
+            ! extension_loaded('pdo')
             || ! in_array('sqlite', PDO::getAvailableDrivers())
         ) {
             $this->markTestSkipped('Test only with pdo_sqlite');

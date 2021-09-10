@@ -1,27 +1,26 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace My\Extension\JungleBooks;
 
 use Laminas\Feed\Reader\Extension;
 
+use function is_string;
+
 class Entry extends Extension\AbstractEntry
 {
+    /** @return null|string */
     public function getIsbn()
     {
-        if (isset($this->data['isbn'])) {
+        if (isset($this->data['isbn']) && is_string($this->data['isbn'])) {
             return $this->data['isbn'];
         }
+
         $isbn = $this->xpath->evaluate('string(' . $this->getXpathPrefix() . '/jungle:isbn)');
-        if (! $isbn) {
+        if (! is_string($isbn)) {
             $isbn = null;
         }
-        $this->data['isbn'] = $title;
+
+        $this->data['isbn'] = $isbn;
         return $this->data['isbn'];
     }
 

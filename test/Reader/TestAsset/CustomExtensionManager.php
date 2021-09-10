@@ -1,21 +1,18 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Feed\Reader\TestAsset;
 
 use Laminas\Feed\Reader\Extension;
 use Laminas\Feed\Reader\ExtensionManagerInterface;
+
+use function array_key_exists;
 
 /**
  * Standalone extension manager that omits any extensions added after the 2.9 series.
  */
 class CustomExtensionManager implements ExtensionManagerInterface
 {
+    /** @var array<string, class-string> */
     private $extensions = [
         'Atom\Entry'            => Extension\Atom\Entry::class,
         'Atom\Feed'             => Extension\Atom\Feed::class,

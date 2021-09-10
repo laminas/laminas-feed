@@ -1,10 +1,4 @@
-<?php
-
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
+<?php // phpcs:disable Squiz.Commenting.FunctionComment.WrongStyle
 
 namespace LaminasTest\Feed\Reader\Feed;
 
@@ -12,6 +6,11 @@ use DateTime;
 use DateTimeInterface;
 use Laminas\Feed\Reader;
 use PHPUnit\Framework\TestCase;
+
+use function array_values;
+use function assert;
+use function dirname;
+use function file_get_contents;
 
 /**
  * @group Laminas_Feed
@@ -22,10 +21,13 @@ class RssTest extends TestCase
     /** @var string */
     protected $feedSamplePath;
 
+    /** @var array<array-key, array<string, null|string>> */
     protected $expectedCats = [];
 
+    /** @var array<array-key, array<string, null|string>> */
     protected $expectedCatsRdf = [];
 
+    /** @var array<array-key, array<string, null|string>> */
     protected $expectedCatsAtom = [];
 
     protected function setUp(): void
@@ -83,7 +85,6 @@ class RssTest extends TestCase
 
     /**
      * Get Title (Unencoded Text)
-     *
      */
     public function testGetsTitleFromRss20(): void
     {
@@ -375,7 +376,6 @@ class RssTest extends TestCase
 
     /**
      * Get Authors (Unencoded Text)
-     *
      */
     public function testGetsAuthorArrayFromRss20(): void
     {
@@ -779,7 +779,6 @@ class RssTest extends TestCase
 
     /**
      * Get Single Author (Unencoded Text)
-     *
      */
     public function testGetsSingleAuthorFromRss20(): void
     {
@@ -1013,7 +1012,6 @@ class RssTest extends TestCase
 
     /**
      * Get Copyright (Unencoded Text)
-     *
      */
     public function testGetsCopyrightFromRss20(): void
     {
@@ -1247,7 +1245,6 @@ class RssTest extends TestCase
 
     /**
      * Get Description (Unencoded Text)
-     *
      */
     public function testGetsDescriptionFromRss20(): void
     {
@@ -1481,7 +1478,6 @@ class RssTest extends TestCase
 
     /**
      * Get Language (Unencoded Text)
-     *
      */
     public function testGetsLanguageFromRss20(): void
     {
@@ -1725,7 +1721,6 @@ class RssTest extends TestCase
 
     /**
      * Get Link (Unencoded Text)
-     *
      */
     public function testGetsLinkFromRss20(): void
     {
@@ -1843,7 +1838,6 @@ class RssTest extends TestCase
 
     /**
      * Implements Countable
-     *
      */
     public function testCountableInterface(): void
     {
@@ -1855,7 +1849,6 @@ class RssTest extends TestCase
 
     /**
      * Get Feed Link (Unencoded Text)
-     *
      */
     public function testGetsFeedLinkFromRss20(): void
     {
@@ -1982,7 +1975,6 @@ class RssTest extends TestCase
 
     /**
      * Get Generator (Unencoded Text)
-     *
      */
     public function testGetsGeneratorFromRss20(): void
     {
@@ -2100,7 +2092,6 @@ class RssTest extends TestCase
 
     /**
      * Get Last Build Date (Unencoded Text)
-     *
      */
     public function testGetsLastBuildDateFromRss20(): void
     {
@@ -2142,7 +2133,7 @@ class RssTest extends TestCase
     {
         $iso = DateTime::createFromFormat(DateTimeInterface::ISO8601, '2009-03-07T08:03:50Z');
         assert($iso instanceof DateTimeInterface);
-        $us  = DateTime::createFromFormat(DateTimeInterface::ISO8601, '2010-01-04T02:14:00-0600');
+        $us = DateTime::createFromFormat(DateTimeInterface::ISO8601, '2010-01-04T02:14:00-0600');
         assert($us instanceof DateTimeInterface);
 
         return [
@@ -2197,7 +2188,6 @@ class RssTest extends TestCase
 
     /**
      * Get Hubs (Unencoded Text)
-     *
      */
     public function testGetsHubsFromRss20(): void
     {
@@ -2336,7 +2326,6 @@ class RssTest extends TestCase
 
     /**
      * Get category data
-     *
      */
     public function testGetsCategoriesFromRss20(): void
     {
@@ -2582,7 +2571,6 @@ class RssTest extends TestCase
 
     /**
      * Get Image data (Unencoded Text)
-     *
      */
     public function testGetsImageFromRss20(): void
     {
@@ -2691,7 +2679,6 @@ class RssTest extends TestCase
 
     /**
      * Get Image data (Unencoded Text) Missing
-     *
      */
     public function testGetsImageFromRss20None(): void
     {

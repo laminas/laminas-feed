@@ -1,19 +1,24 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Feed\Reader\Entry;
 
 use DateTime;
+use DateTimeInterface;
 use DOMElement;
+use DOMNodeList;
 use DOMXPath;
 use Laminas\Feed\Reader;
 use Laminas\Feed\Reader\Exception;
 use stdClass;
+
+use function array_key_exists;
+use function count;
+use function date_create_from_format;
+use function is_array;
+use function is_string;
+use function preg_match;
+use function strtotime;
+use function trim;
 
 class Rss extends AbstractEntry implements EntryInterface
 {
@@ -60,17 +65,17 @@ class Rss extends AbstractEntry implements EntryInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
+     * @param int $index
+     * @return null|array<string, string>
      */
     public function getAuthor($index = 0)
     {
         $authors = $this->getAuthors();
 
-        if (isset($authors[$index])) {
-            return $authors[$index];
-        }
-
-        return;
+        return isset($authors[$index]) && is_array($authors[$index])
+            ? $authors[$index]
+            : null;
     }
 
     /**
@@ -84,7 +89,9 @@ class Rss extends AbstractEntry implements EntryInterface
             return $this->data['authors'];
         }
 
-        $authors   = [];
+        $authors = [];
+
+        /** @psalm-suppress PossiblyNullReference */
         $authorsDc = $this->getExtension('DublinCore')->getAuthors();
         if (! empty($authorsDc)) {
             foreach ($authorsDc as $author) {
@@ -94,14 +101,15 @@ class Rss extends AbstractEntry implements EntryInterface
             }
         }
 
-        if ($this->getType() !== Reader\Reader::TYPE_RSS_10
+        if (
+            $this->getType() !== Reader\Reader::TYPE_RSS_10
             && $this->getType() !== Reader\Reader::TYPE_RSS_090
         ) {
             $list = $this->xpath->query($this->xpathQueryRss . '//author');
         } else {
             $list = $this->xpath->query($this->xpathQueryRdf . '//rss:author');
         }
-        if ($list->length) {
+        if ($list instanceof DOMNodeList && $list->length) {
             foreach ($list as $author) {
                 $string = trim($author->nodeValue);
                 $data   = [];
@@ -117,6 +125,7 @@ class Rss extends AbstractEntry implements EntryInterface
         }
 
         if (count($authors) === 0) {
+            /** @psalm-suppress PossiblyNullReference */
             $authors = $this->getExtension('Atom')->getAuthors();
         } else {
             $authors = new Reader\Collection\Author(
@@ -144,13 +153,15 @@ class Rss extends AbstractEntry implements EntryInterface
             return $this->data['content'];
         }
 
+        /** @psalm-suppress PossiblyNullReference */
         $content = $this->getExtension('Content')->getContent();
 
-        if (! $content) {
+        if (empty($content)) {
             $content = $this->getDescription();
         }
 
         if (empty($content)) {
+            /** @psalm-suppress PossiblyNullReference */
             $content = $this->getExtension('Atom')->getContent();
         }
 
@@ -183,7 +194,8 @@ class Rss extends AbstractEntry implements EntryInterface
 
         $date = null;
 
-        if ($this->getType() !== Reader\Reader::TYPE_RSS_10
+        if (
+            $this->getType() !== Reader\Reader::TYPE_RSS_10
             && $this->getType() !== Reader\Reader::TYPE_RSS_090
         ) {
             $dateModified = $this->xpath->evaluate('string(' . $this->xpathQueryRss . '/pubDate)');
@@ -217,15 +229,17 @@ class Rss extends AbstractEntry implements EntryInterface
             }
         }
 
-        if (! $date) {
+        if (! $date instanceof DateTimeInterface) {
+            /** @psalm-suppress PossiblyNullReference */
             $date = $this->getExtension('DublinCore')->getDate();
         }
 
-        if (! $date) {
+        if (! $date instanceof DateTimeInterface) {
+            /** @psalm-suppress PossiblyNullReference */
             $date = $this->getExtension('Atom')->getDateModified();
         }
 
-        if (! $date) {
+        if (! $date instanceof DateTimeInterface) {
             $date = null;
         }
 
@@ -245,9 +259,11 @@ class Rss extends AbstractEntry implements EntryInterface
             return $this->data['description'];
         }
 
+        /** @psalm-suppress UnusedVariable */
         $description = null;
 
-        if ($this->getType() !== Reader\Reader::TYPE_RSS_10
+        if (
+            $this->getType() !== Reader\Reader::TYPE_RSS_10
             && $this->getType() !== Reader\Reader::TYPE_RSS_090
         ) {
             $description = $this->xpath->evaluate('string(' . $this->xpathQueryRss . '/description)');
@@ -256,14 +272,16 @@ class Rss extends AbstractEntry implements EntryInterface
         }
 
         if (! $description) {
+            /** @psalm-suppress PossiblyNullReference */
             $description = $this->getExtension('DublinCore')->getDescription();
         }
 
         if (empty($description)) {
+            /** @psalm-suppress PossiblyNullReference */
             $description = $this->getExtension('Atom')->getDescription();
         }
 
-        if (! $description) {
+        if (! is_string($description)) {
             $description = null;
         }
 
@@ -288,15 +306,18 @@ class Rss extends AbstractEntry implements EntryInterface
         if ($this->getType() === Reader\Reader::TYPE_RSS_20) {
             $nodeList = $this->xpath->query($this->xpathQueryRss . '/enclosure');
 
-            if ($nodeList->length > 0) {
+            if ($nodeList instanceof DOMNodeList && $nodeList->length > 0) {
+                /** @var DOMElement $node */
+                $node              = $nodeList->item(0);
                 $enclosure         = new stdClass();
-                $enclosure->url    = $nodeList->item(0)->getAttribute('url');
-                $enclosure->length = $nodeList->item(0)->getAttribute('length');
-                $enclosure->type   = $nodeList->item(0)->getAttribute('type');
+                $enclosure->url    = $node->getAttribute('url');
+                $enclosure->length = $node->getAttribute('length');
+                $enclosure->type   = $node->getAttribute('type');
             }
         }
 
         if (! $enclosure) {
+            /** @psalm-suppress PossiblyNullReference */
             $enclosure = $this->getExtension('Atom')->getEnclosure();
         }
 
@@ -318,17 +339,20 @@ class Rss extends AbstractEntry implements EntryInterface
 
         $id = null;
 
-        if ($this->getType() !== Reader\Reader::TYPE_RSS_10
+        if (
+            $this->getType() !== Reader\Reader::TYPE_RSS_10
             && $this->getType() !== Reader\Reader::TYPE_RSS_090
         ) {
             $id = $this->xpath->evaluate('string(' . $this->xpathQueryRss . '/guid)');
         }
 
         if (! $id) {
+            /** @psalm-suppress PossiblyNullReference */
             $id = $this->getExtension('DublinCore')->getId();
         }
 
         if (empty($id)) {
+            /** @psalm-suppress PossiblyNullReference */
             $id = $this->getExtension('Atom')->getId();
         }
 
@@ -351,7 +375,7 @@ class Rss extends AbstractEntry implements EntryInterface
      * Get a specific link
      *
      * @param  int $index
-     * @return string
+     * @return null|string
      */
     public function getLink($index = 0)
     {
@@ -359,11 +383,9 @@ class Rss extends AbstractEntry implements EntryInterface
             $this->getLinks();
         }
 
-        if (isset($this->data['links'][$index])) {
-            return $this->data['links'][$index];
-        }
-
-        return;
+        return isset($this->data['links'][$index]) && is_string($this->data['links'][$index])
+            ? $this->data['links'][$index]
+            : null;
     }
 
     /**
@@ -379,7 +401,8 @@ class Rss extends AbstractEntry implements EntryInterface
 
         $links = [];
 
-        if ($this->getType() !== Reader\Reader::TYPE_RSS_10
+        if (
+            $this->getType() !== Reader\Reader::TYPE_RSS_10
             && $this->getType() !== Reader\Reader::TYPE_RSS_090
         ) {
             $list = $this->xpath->query($this->xpathQueryRss . '//link');
@@ -387,12 +410,13 @@ class Rss extends AbstractEntry implements EntryInterface
             $list = $this->xpath->query($this->xpathQueryRdf . '//rss:link');
         }
 
-        if (! $list->length) {
-            $links = $this->getExtension('Atom')->getLinks();
-        } else {
+        if ($list instanceof DOMNodeList && $list->length) {
             foreach ($list as $link) {
                 $links[] = $link->nodeValue;
             }
+        } else {
+            /** @psalm-suppress PossiblyNullReference */
+            $links = $this->getExtension('Atom')->getLinks();
         }
 
         $this->data['links'] = $links;
@@ -411,7 +435,8 @@ class Rss extends AbstractEntry implements EntryInterface
             return $this->data['categories'];
         }
 
-        if ($this->getType() !== Reader\Reader::TYPE_RSS_10
+        if (
+            $this->getType() !== Reader\Reader::TYPE_RSS_10
             && $this->getType() !== Reader\Reader::TYPE_RSS_090
         ) {
             $list = $this->xpath->query($this->xpathQueryRss . '//category');
@@ -419,7 +444,7 @@ class Rss extends AbstractEntry implements EntryInterface
             $list = $this->xpath->query($this->xpathQueryRdf . '//rss:category');
         }
 
-        if ($list->length) {
+        if ($list instanceof DOMNodeList && $list->length) {
             $categoryCollection = new Reader\Collection\Category();
             foreach ($list as $category) {
                 $categoryCollection[] = [
@@ -429,10 +454,12 @@ class Rss extends AbstractEntry implements EntryInterface
                 ];
             }
         } else {
+            /** @psalm-suppress PossiblyNullReference */
             $categoryCollection = $this->getExtension('DublinCore')->getCategories();
         }
 
         if (count($categoryCollection) === 0) {
+            /** @psalm-suppress PossiblyNullReference */
             $categoryCollection = $this->getExtension('Atom')->getCategories();
         }
 
@@ -454,7 +481,7 @@ class Rss extends AbstractEntry implements EntryInterface
     /**
      * Get the entry title
      *
-     * @return string
+     * @return null|string
      */
     public function getTitle()
     {
@@ -462,9 +489,11 @@ class Rss extends AbstractEntry implements EntryInterface
             return $this->data['title'];
         }
 
+        /** @psalm-suppress UnusedVariable */
         $title = null;
 
-        if ($this->getType() !== Reader\Reader::TYPE_RSS_10
+        if (
+            $this->getType() !== Reader\Reader::TYPE_RSS_10
             && $this->getType() !== Reader\Reader::TYPE_RSS_090
         ) {
             $title = $this->xpath->evaluate('string(' . $this->xpathQueryRss . '/title)');
@@ -473,14 +502,16 @@ class Rss extends AbstractEntry implements EntryInterface
         }
 
         if (! $title) {
+            /** @psalm-suppress PossiblyNullReference */
             $title = $this->getExtension('DublinCore')->getTitle();
         }
 
         if (! $title) {
+            /** @psalm-suppress PossiblyNullReference */
             $title = $this->getExtension('Atom')->getTitle();
         }
 
-        if (! $title) {
+        if (! is_string($title)) {
             $title = null;
         }
 
@@ -500,13 +531,16 @@ class Rss extends AbstractEntry implements EntryInterface
             return $this->data['commentcount'];
         }
 
+        /** @psalm-suppress PossiblyNullReference */
         $commentcount = $this->getExtension('Slash')->getCommentCount();
 
         if (! $commentcount) {
+            /** @psalm-suppress PossiblyNullReference */
             $commentcount = $this->getExtension('Thread')->getCommentCount();
         }
 
         if (! $commentcount) {
+            /** @psalm-suppress PossiblyNullReference */
             $commentcount = $this->getExtension('Atom')->getCommentCount();
         }
 
@@ -532,13 +566,15 @@ class Rss extends AbstractEntry implements EntryInterface
 
         $commentlink = null;
 
-        if ($this->getType() !== Reader\Reader::TYPE_RSS_10
+        if (
+            $this->getType() !== Reader\Reader::TYPE_RSS_10
             && $this->getType() !== Reader\Reader::TYPE_RSS_090
         ) {
             $commentlink = $this->xpath->evaluate('string(' . $this->xpathQueryRss . '/comments)');
         }
 
         if (! $commentlink) {
+            /** @psalm-suppress PossiblyNullReference */
             $commentlink = $this->getExtension('Atom')->getCommentLink();
         }
 
@@ -562,13 +598,16 @@ class Rss extends AbstractEntry implements EntryInterface
             return $this->data['commentfeedlink'];
         }
 
+        /** @psalm-suppress PossiblyNullReference */
         $commentfeedlink = $this->getExtension('WellFormedWeb')->getCommentFeedLink();
 
         if (! $commentfeedlink) {
+            /** @psalm-suppress PossiblyNullReference */
             $commentfeedlink = $this->getExtension('Atom')->getCommentFeedLink('rss');
         }
 
         if (! $commentfeedlink) {
+            /** @psalm-suppress PossiblyNullReference */
             $commentfeedlink = $this->getExtension('Atom')->getCommentFeedLink('rdf');
         }
 

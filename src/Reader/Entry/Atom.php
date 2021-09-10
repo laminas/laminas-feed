@@ -1,17 +1,16 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Feed\Reader\Entry;
 
 use DateTime;
 use DOMElement;
 use DOMXPath;
 use Laminas\Feed\Reader;
+
+use function array_key_exists;
+use function count;
+use function is_array;
+use function is_string;
 
 class Atom extends AbstractEntry implements EntryInterface
 {
@@ -46,17 +45,17 @@ class Atom extends AbstractEntry implements EntryInterface
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
+     * @param int $index
+     * @return null|array<string, string>
      */
     public function getAuthor($index = 0)
     {
         $authors = $this->getAuthors();
 
-        if (isset($authors[$index])) {
-            return $authors[$index];
-        }
-
-        return;
+        return isset($authors[$index]) && is_array($authors[$index])
+            ? $authors[$index]
+            : null;
     }
 
     /**
@@ -70,6 +69,7 @@ class Atom extends AbstractEntry implements EntryInterface
             return $this->data['authors'];
         }
 
+        /** @psalm-suppress PossiblyNullReference */
         $people = $this->getExtension('Atom')->getAuthors();
 
         $this->data['authors'] = $people;
@@ -88,6 +88,7 @@ class Atom extends AbstractEntry implements EntryInterface
             return $this->data['content'];
         }
 
+        /** @psalm-suppress PossiblyNullReference */
         $content = $this->getExtension('Atom')->getContent();
 
         $this->data['content'] = $content;
@@ -106,6 +107,7 @@ class Atom extends AbstractEntry implements EntryInterface
             return $this->data['datecreated'];
         }
 
+        /** @psalm-suppress PossiblyNullReference */
         $dateCreated = $this->getExtension('Atom')->getDateCreated();
 
         $this->data['datecreated'] = $dateCreated;
@@ -124,6 +126,7 @@ class Atom extends AbstractEntry implements EntryInterface
             return $this->data['datemodified'];
         }
 
+        /** @psalm-suppress PossiblyNullReference */
         $dateModified = $this->getExtension('Atom')->getDateModified();
 
         $this->data['datemodified'] = $dateModified;
@@ -142,6 +145,7 @@ class Atom extends AbstractEntry implements EntryInterface
             return $this->data['description'];
         }
 
+        /** @psalm-suppress PossiblyNullReference */
         $description = $this->getExtension('Atom')->getDescription();
 
         $this->data['description'] = $description;
@@ -160,6 +164,7 @@ class Atom extends AbstractEntry implements EntryInterface
             return $this->data['enclosure'];
         }
 
+        /** @psalm-suppress PossiblyNullReference */
         $enclosure = $this->getExtension('Atom')->getEnclosure();
 
         $this->data['enclosure'] = $enclosure;
@@ -178,6 +183,7 @@ class Atom extends AbstractEntry implements EntryInterface
             return $this->data['id'];
         }
 
+        /** @psalm-suppress PossiblyNullReference */
         $id = $this->getExtension('Atom')->getId();
 
         $this->data['id'] = $id;
@@ -189,7 +195,7 @@ class Atom extends AbstractEntry implements EntryInterface
      * Get a specific link
      *
      * @param  int $index
-     * @return string
+     * @return null|string
      */
     public function getLink($index = 0)
     {
@@ -197,11 +203,9 @@ class Atom extends AbstractEntry implements EntryInterface
             $this->getLinks();
         }
 
-        if (isset($this->data['links'][$index])) {
-            return $this->data['links'][$index];
-        }
-
-        return;
+        return isset($this->data['links'][$index]) && is_string($this->data['links'][$index])
+            ? $this->data['links'][$index]
+            : null;
     }
 
     /**
@@ -215,6 +219,7 @@ class Atom extends AbstractEntry implements EntryInterface
             return $this->data['links'];
         }
 
+        /** @psalm-suppress PossiblyNullReference */
         $links = $this->getExtension('Atom')->getLinks();
 
         $this->data['links'] = $links;
@@ -243,6 +248,7 @@ class Atom extends AbstractEntry implements EntryInterface
             return $this->data['title'];
         }
 
+        /** @psalm-suppress PossiblyNullReference */
         $title = $this->getExtension('Atom')->getTitle();
 
         $this->data['title'] = $title;
@@ -261,9 +267,11 @@ class Atom extends AbstractEntry implements EntryInterface
             return $this->data['commentcount'];
         }
 
+        /** @psalm-suppress PossiblyNullReference */
         $commentcount = $this->getExtension('Thread')->getCommentCount();
 
         if (! $commentcount) {
+            /** @psalm-suppress PossiblyNullReference */
             $commentcount = $this->getExtension('Atom')->getCommentCount();
         }
 
@@ -283,6 +291,7 @@ class Atom extends AbstractEntry implements EntryInterface
             return $this->data['commentlink'];
         }
 
+        /** @psalm-suppress PossiblyNullReference */
         $commentlink = $this->getExtension('Atom')->getCommentLink();
 
         $this->data['commentlink'] = $commentlink;
@@ -301,6 +310,7 @@ class Atom extends AbstractEntry implements EntryInterface
             return $this->data['commentfeedlink'];
         }
 
+        /** @psalm-suppress PossiblyNullReference */
         $commentfeedlink = $this->getExtension('Atom')->getCommentFeedLink();
 
         $this->data['commentfeedlink'] = $commentfeedlink;
@@ -319,9 +329,11 @@ class Atom extends AbstractEntry implements EntryInterface
             return $this->data['categories'];
         }
 
+        /** @psalm-suppress PossiblyNullReference */
         $categoryCollection = $this->getExtension('Atom')->getCategories();
 
         if (count($categoryCollection) === 0) {
+            /** @psalm-suppress PossiblyNullReference */
             $categoryCollection = $this->getExtension('DublinCore')->getCategories();
         }
 
@@ -341,6 +353,7 @@ class Atom extends AbstractEntry implements EntryInterface
             return $this->data['source'];
         }
 
+        /** @psalm-suppress PossiblyNullReference */
         $source = $this->getExtension('Atom')->getSource();
 
         $this->data['source'] = $source;

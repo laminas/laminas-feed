@@ -1,16 +1,17 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Feed\Writer\Extension\ITunes;
 
 use Laminas\Feed\Writer;
 use Laminas\Feed\Writer\Exception\ExceptionInterface;
 use PHPUnit\Framework\TestCase;
+
+use function preg_match;
+use function restore_error_handler;
+use function set_error_handler;
+use function str_repeat;
+
+use const E_USER_DEPRECATED;
 
 /**
  * @group Laminas_Feed
@@ -163,7 +164,6 @@ class FeedTest extends TestCase
 
     /**
      * @dataProvider dataProviderForSetExplicit
-     *
      * @param string|bool $value
      * @param string $result
      */
@@ -174,7 +174,8 @@ class FeedTest extends TestCase
         $this->assertEquals($result, $feed->getItunesExplicit());
     }
 
-    public function dataProviderForSetExplicit()
+    /** @psalm-return array<array-key, array{0: bool|string, 1: string}> */
+    public function dataProviderForSetExplicit(): array
     {
         return [
             // Current behaviour
@@ -228,9 +229,10 @@ class FeedTest extends TestCase
             'a12',
         ];
 
-        set_error_handler(static function ($errno, $errstr) {
+        /** @psalm-suppress UnusedClosureParam */
+        set_error_handler(static function (int $errno, string $errstr): bool {
             return (bool) preg_match('/itunes:keywords/', $errstr);
-        }, \E_USER_DEPRECATED);
+        }, E_USER_DEPRECATED);
         $feed->setItunesKeywords($words);
         restore_error_handler();
 
@@ -256,9 +258,10 @@ class FeedTest extends TestCase
             'a13',
         ];
 
-        set_error_handler(static function ($errno, $errstr) {
+        /** @psalm-suppress UnusedClosureParam */
+        set_error_handler(static function (int $errno, string $errstr): bool {
             return (bool) preg_match('/itunes:keywords/', $errstr);
-        }, \E_USER_DEPRECATED);
+        }, E_USER_DEPRECATED);
 
         try {
             $this->expectException(ExceptionInterface::class);
@@ -276,9 +279,10 @@ class FeedTest extends TestCase
             str_repeat('b', 2),
         ];
 
-        set_error_handler(static function ($errno, $errstr) {
+        /** @psalm-suppress UnusedClosureParam */
+        set_error_handler(static function (int $errno, string $errstr): bool {
             return (bool) preg_match('/itunes:keywords/', $errstr);
-        }, \E_USER_DEPRECATED);
+        }, E_USER_DEPRECATED);
 
         try {
             $this->expectException(ExceptionInterface::class);
@@ -347,31 +351,31 @@ class FeedTest extends TestCase
         $feed->setItunesSummary(str_repeat('a', 4001));
     }
 
-    public function invalidImageUrls()
+    /** @psalm-return array<string, array{0: mixed, 1: string}> */
+    public function invalidImageUrls(): array
     {
+        $defaultExpectedMessage = 'valid URI';
         return [
-            'null'                  => [null],
-            'true'                  => [true],
-            'false'                 => [false],
-            'zero'                  => [0],
-            'int'                   => [1],
-            'zero-float'            => [0.0],
-            'float'                 => [1.1],
-            'string'                => ['scheme:/host.path'],
+            'null'                  => [null, $defaultExpectedMessage],
+            'true'                  => [true, $defaultExpectedMessage],
+            'false'                 => [false, $defaultExpectedMessage],
+            'zero'                  => [0, $defaultExpectedMessage],
+            'int'                   => [1, $defaultExpectedMessage],
+            'zero-float'            => [0.0, $defaultExpectedMessage],
+            'float'                 => [1.1, $defaultExpectedMessage],
+            'string'                => ['scheme:/host.path', $defaultExpectedMessage],
             'invalid-extension-gif' => ['https://example.com/image.gif', 'file extension'],
             'invalid-extension-uc'  => ['https://example.com/image.PNG', 'file extension'],
-            'array'                 => [['https://example.com/image.png']],
-            'object'                => [(object) ['image' => 'https://example.com/image.png']],
+            'array'                 => [['https://example.com/image.png'], $defaultExpectedMessage],
+            'object'                => [(object) ['image' => 'https://example.com/image.png'], $defaultExpectedMessage],
         ];
     }
 
     /**
      * @dataProvider invalidImageUrls
-     *
      * @param mixed $url
-     * @param string $expectedMessage
      */
-    public function testSetItunesImageRaisesExceptionForInvalidUrl($url, $expectedMessage = 'valid URI')
+    public function testSetItunesImageRaisesExceptionForInvalidUrl($url, string $expectedMessage)
     {
         $feed = new Writer\Feed();
 
@@ -380,7 +384,8 @@ class FeedTest extends TestCase
         $feed->setItunesImage($url);
     }
 
-    public function validImageUrls()
+    /** @psalm-return array<string, array{0: string}> */
+    public function validImageUrls(): array
     {
         return [
             'jpg' => ['https://example.com/image.jpg'],
@@ -390,7 +395,6 @@ class FeedTest extends TestCase
 
     /**
      * @dataProvider validImageUrls
-     *
      * @param string $url
      */
     public function testSetItunesImageSetsInternalDataWithValidUrl($url)
@@ -400,7 +404,8 @@ class FeedTest extends TestCase
         $this->assertEquals($url, $feed->getItunesImage());
     }
 
-    public function invalidPodcastTypes()
+    /** @psalm-return array<string, array{0: mixed}> */
+    public function invalidPodcastTypes(): array
     {
         return [
             'null'       => [null],
@@ -418,7 +423,6 @@ class FeedTest extends TestCase
 
     /**
      * @dataProvider invalidPodcastTypes
-     *
      * @param mixed $type
      */
     public function testSetItunesTypeWithInvalidTypeRaisesException($type)
@@ -430,7 +434,8 @@ class FeedTest extends TestCase
         $feed->setItunesType($type);
     }
 
-    public function validPodcastTypes()
+    /** @psalm-return array<string, array{0: string}> */
+    public function validPodcastTypes(): array
     {
         return [
             'episodic' => ['episodic'],
@@ -440,7 +445,6 @@ class FeedTest extends TestCase
 
     /**
      * @dataProvider validPodcastTypes
-     *
      * @param mixed $type
      */
     public function testSetItunesTypeMutatesTypeWithValidData($type)
@@ -450,7 +454,8 @@ class FeedTest extends TestCase
         $this->assertEquals($type, $feed->getItunesType());
     }
 
-    public function invalidCompleteStatuses()
+    /** @psalm-return array<string, array{0: mixed}> */
+    public function invalidCompleteStatuses(): array
     {
         return [
             'null'       => [null],
@@ -466,7 +471,6 @@ class FeedTest extends TestCase
 
     /**
      * @dataProvider invalidCompleteStatuses
-     *
      * @param mixed $status
      */
     public function testSetItunesCompleteRaisesExceptionForInvalidStatus($status)

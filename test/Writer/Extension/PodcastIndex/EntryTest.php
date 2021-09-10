@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Feed\Writer\Extension\PodcastIndex;
 
 use Laminas\Feed\Writer;
@@ -18,7 +12,7 @@ class EntryTest extends TestCase
         $entry = new Writer\Entry();
 
         $transcript = [
-            'url' => 'https://example.com/podcasts/everything/TranscriptEpisode3.html',
+            'url'  => 'https://example.com/podcasts/everything/TranscriptEpisode3.html',
             'type' => 'text/html',
         ];
         $entry->setPodcastIndexTranscript($transcript);
@@ -30,10 +24,10 @@ class EntryTest extends TestCase
         $entry = new Writer\Entry();
 
         $transcript = [
-            'url' => 'https://example.com/podcasts/everything/TranscriptEpisode3.html',
-            'type' => 'text/html',
+            'url'      => 'https://example.com/podcasts/everything/TranscriptEpisode3.html',
+            'type'     => 'text/html',
             'language' => 'en',
-            'rel' => 'captions',
+            'rel'      => 'captions',
         ];
         $entry->setPodcastIndexTranscript($transcript);
         $this->assertEquals($transcript, $entry->getPodcastIndexTranscript());
@@ -56,7 +50,7 @@ class EntryTest extends TestCase
         $entry = new Writer\Entry();
 
         $chapters = [
-            'url' => 'https://example.com/podcasts/everything/ChaptersEpisode3.json',
+            'url'  => 'https://example.com/podcasts/everything/ChaptersEpisode3.json',
             'type' => 'application/json+chapters',
         ];
         $entry->setPodcastIndexChapters($chapters);
@@ -98,14 +92,14 @@ class EntryTest extends TestCase
         $soundbites = [
             [
                 'startTime' => '66',
-                'duration' => '39.0',
-                'title' => 'Pepper shakers comparison',
+                'duration'  => '39.0',
+                'title'     => 'Pepper shakers comparison',
             ],
             [
                 'startTime' => '112.45',
-                'duration' => '24.83',
-                'title' => 'Pepper shakers comparison',
-            ]
+                'duration'  => '24.83',
+                'title'     => 'Pepper shakers comparison',
+            ],
         ];
 
         $entry->addPodcastIndexSoundbites($soundbites);
@@ -119,8 +113,8 @@ class EntryTest extends TestCase
         $soundbites = [
             [
                 'title' => 'Pepper shakers comparison',
-                'abc' => 'def',
-            ]
+                'abc'   => 'def',
+            ],
         ];
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $entry->addPodcastIndexSoundbites($soundbites);
@@ -128,7 +122,6 @@ class EntryTest extends TestCase
 
     /**
      * @dataProvider invalidTimeValues
-     *
      * @param mixed $time
      */
     public function testAddSoundbitesThrowsExceptionOnNonNumericStartTimeValue($time): void
@@ -138,8 +131,8 @@ class EntryTest extends TestCase
         $soundbites = [
             [
                 'startTime' => $time,
-                'duration' => '39.0',
-                'title' => 'Pepper shakers comparison',
+                'duration'  => '39.0',
+                'title'     => 'Pepper shakers comparison',
             ],
         ];
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
@@ -148,7 +141,6 @@ class EntryTest extends TestCase
 
     /**
      * @dataProvider invalidTimeValues
-     *
      * @param mixed $time
      */
     public function testAddSoundbitesThrowsExceptionOnNonNumericDurationValue($time): void
@@ -158,8 +150,8 @@ class EntryTest extends TestCase
         $soundbites = [
             [
                 'startTime' => '66',
-                'duration' => $time,
-                'title' => 'Pepper shakers comparison',
+                'duration'  => $time,
+                'title'     => 'Pepper shakers comparison',
             ],
         ];
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
@@ -173,13 +165,13 @@ class EntryTest extends TestCase
         $soundbites = [
             [
                 'startTime' => '66',
-                'duration' => '39.0',
-                'title' => 'Pepper shakers comparison',
+                'duration'  => '39.0',
+                'title'     => 'Pepper shakers comparison',
             ],
             [
                 'startTime' => '112.45',
-                'duration' => '24.83',
-                'title' => 'Pepper shakers comparison',
+                'duration'  => '24.83',
+                'title'     => 'Pepper shakers comparison',
             ],
         ];
 
@@ -195,7 +187,7 @@ class EntryTest extends TestCase
 
         $soundbite = [
             'title' => 'Pepper shakers comparison',
-            'abc' => 'def',
+            'abc'   => 'def',
         ];
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $entry->addPodcastIndexSoundbite($soundbite);
@@ -203,7 +195,6 @@ class EntryTest extends TestCase
 
     /**
      * @dataProvider invalidTimeValues
-     *
      * @param mixed $time
      */
     public function testAddSoundbiteThrowsExceptionOnNonNumericStartTimeValue($time): void
@@ -212,8 +203,8 @@ class EntryTest extends TestCase
 
         $soundbite = [
             'startTime' => $time,
-            'duration' => '39.0',
-            'title' => 'Pepper shakers comparison',
+            'duration'  => '39.0',
+            'title'     => 'Pepper shakers comparison',
         ];
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $entry->addPodcastIndexSoundbite($soundbite);
@@ -221,7 +212,6 @@ class EntryTest extends TestCase
 
     /**
      * @dataProvider invalidTimeValues
-     *
      * @param mixed $time
      */
     public function testAddSoundbiteThrowsExceptionOnNonNumericDurationValue($time): void
@@ -230,8 +220,8 @@ class EntryTest extends TestCase
 
         $soundbite = [
             'startTime' => '66',
-            'duration' => $time,
-            'title' => 'Pepper shakers comparison',
+            'duration'  => $time,
+            'title'     => 'Pepper shakers comparison',
         ];
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $entry->addPodcastIndexSoundbite($soundbite);

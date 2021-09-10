@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Feed\Writer;
 
 use DateTime;
@@ -17,12 +11,22 @@ use Laminas\Feed\Writer\Source;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
+use function array_reduce;
+use function dirname;
+use function restore_error_handler;
+use function set_error_handler;
+use function strstr;
+
+use const E_USER_NOTICE;
+use const PHP_INT_MAX;
+
 /**
  * @group Laminas_Feed
  * @group Laminas_Feed_Writer
  */
 class EntryTest extends TestCase
 {
+    /** @var string */
     protected $feedSamplePath;
 
     protected function setUp(): void
@@ -226,7 +230,6 @@ class EntryTest extends TestCase
 
     /**
      * @group Laminas-12070
-     *
      */
     public function testSetDateCreatedUsesGivenUnixTimestampWhenItIsLessThanTenDigits(): void
     {
@@ -238,7 +241,6 @@ class EntryTest extends TestCase
 
     /**
      * @group Laminas-11610
-     *
      */
     public function testSetDateCreatedUsesGivenUnixTimestampWhenItIsAVerySmallInteger(): void
     {
@@ -282,7 +284,6 @@ class EntryTest extends TestCase
 
     /**
      * @group Laminas-12070
-     *
      */
     public function testSetDateModifiedUsesGivenUnixTimestampWhenItIsLessThanTenDigits(): void
     {
@@ -294,7 +295,6 @@ class EntryTest extends TestCase
 
     /**
      * @group Laminas-11610
-     *
      */
     public function testSetDateModifiedUsesGivenUnixTimestampWhenItIsAVerySmallInteger(): void
     {
@@ -558,6 +558,7 @@ class EntryTest extends TestCase
         $this->assertEquals(0, $entry->getCommentCount());
     }
 
+    /** @psalm-return array<array-key, array{0: int|float, 1: int}> */
     public function allowedCommentCounts(): array
     {
         return [
@@ -570,15 +571,16 @@ class EntryTest extends TestCase
 
     /**
      * @dataProvider allowedCommentCounts
-     *
+     * @param int|float $count
      */
-    public function testSetsCommentCountAllowed($count, $expected): void
+    public function testSetsCommentCountAllowed($count, int $expected): void
     {
         $entry = new Writer\Entry();
         $entry->setCommentCount($count);
         $this->assertSame($expected, $entry->getCommentCount());
     }
 
+    /** @psalm-return array<array-key, array{0:mixed}> */
     public function disallowedCommentCounts(): array
     {
         return [
@@ -596,7 +598,7 @@ class EntryTest extends TestCase
 
     /**
      * @dataProvider disallowedCommentCounts
-     *
+     * @param mixed $count
      */
     public function testSetsCommentCountDisallowed($count): void
     {
@@ -630,7 +632,6 @@ class EntryTest extends TestCase
 
     /**
      * @covers \Laminas\Feed\Writer\Entry::setEncoding
-     *
      */
     public function testSetEncodingThrowsExceptionIfNull(): void
     {
@@ -642,7 +643,6 @@ class EntryTest extends TestCase
 
     /**
      * @covers \Laminas\Feed\Writer\Entry::addCategory
-     *
      */
     public function testAddCategoryThrowsExceptionIfNotSetTerm(): void
     {
@@ -654,7 +654,6 @@ class EntryTest extends TestCase
 
     /**
      * @covers \Laminas\Feed\Writer\Entry::addCategory
-     *
      */
     public function testAddCategoryThrowsExceptionIfSchemeNull(): void
     {
@@ -666,7 +665,6 @@ class EntryTest extends TestCase
 
     /**
      * @covers \Laminas\Feed\Writer\Entry::setEnclosure
-     *
      */
     public function testSetEnclosureThrowsExceptionIfNotSetUri(): void
     {
@@ -678,7 +676,6 @@ class EntryTest extends TestCase
 
     /**
      * @covers \Laminas\Feed\Writer\Entry::setEnclosure
-     *
      */
     public function testSetEnclosureThrowsExceptionIfNotValidUri(): void
     {
@@ -690,7 +687,6 @@ class EntryTest extends TestCase
 
     /**
      * @covers \Laminas\Feed\Writer\Entry::getExtension
-     *
      */
     public function testGetExtension(): void
     {
@@ -703,7 +699,6 @@ class EntryTest extends TestCase
 
     /**
      * @covers \Laminas\Feed\Writer\Entry::getExtensions
-     *
      */
     public function testGetExtensions(): void
     {
@@ -716,7 +711,6 @@ class EntryTest extends TestCase
     /**
      * @covers \Laminas\Feed\Writer\Entry::getSource
      * @covers \Laminas\Feed\Writer\Entry::createSource
-     *
      */
     public function testGetSource(): void
     {
@@ -772,10 +766,11 @@ class EntryTest extends TestCase
             'messages' => [],
         ];
 
-        set_error_handler(static function ($errno, $errstr) use ($notices) {
+        /** @psalm-suppress UnusedClosureParam */
+        set_error_handler(static function (int $errno, string $errstr) use ($notices): void {
             $notices->messages[] = $errstr;
-        }, \E_USER_NOTICE);
-        $writer = new Writer\Entry();
+        }, E_USER_NOTICE);
+        new Writer\Entry();
         restore_error_handler();
 
         $message = array_reduce($notices->messages, static function ($toReturn, $message) {

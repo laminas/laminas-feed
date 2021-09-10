@@ -1,15 +1,13 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Feed\Reader\Extension\Podcast;
 
 use DOMText;
 use Laminas\Feed\Reader\Extension;
+
+use function trigger_error;
+
+use const E_USER_DEPRECATED;
 
 class Feed extends Extension\AbstractFeed
 {
@@ -74,9 +72,11 @@ class Feed extends Extension\AbstractFeed
 
         if ($categoryList->length > 0) {
             foreach ($categoryList as $node) {
+                /** @psalm-suppress UnusedVariable */
                 $children = null;
 
                 if ($node->childNodes->length > 0) {
+                    /** @psalm-suppress UnusedVariable */
                     $children = [];
 
                     foreach ($node->childNodes as $childNode) {
@@ -148,6 +148,7 @@ class Feed extends Extension\AbstractFeed
      *
      * @deprecated since 2.10.0; itunes:keywords is no longer part of the
      *     iTunes podcast RSS specification.
+     *
      * @return string
      */
     public function getKeywords()
@@ -155,7 +156,7 @@ class Feed extends Extension\AbstractFeed
         trigger_error(
             'itunes:keywords has been deprecated in the iTunes podcast RSS specification,'
             . ' and should not be relied on.',
-            \E_USER_DEPRECATED
+            E_USER_DEPRECATED
         );
 
         if (isset($this->data['keywords'])) {

@@ -1,16 +1,19 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Feed\Writer\Extension\PodcastIndex;
 
 use Laminas\Feed\Writer;
 use Laminas\Stdlib\StringUtils;
 use Laminas\Stdlib\StringWrapper\StringWrapperInterface;
+
+use function array_key_exists;
+use function is_numeric;
+use function is_string;
+use function lcfirst;
+use function method_exists;
+use function strlen;
+use function substr;
+use function ucfirst;
 
 /**
  * Describes PodcastIndex data of an entry in a RSS Feed
@@ -121,14 +124,16 @@ class Entry
                 . ' keys "startTime" and "duration" and optionally "title"'
             );
         }
-        if (! is_string($value['startTime'])
+        if (
+            ! is_string($value['startTime'])
             || (! is_numeric($value['startTime']) && strlen($value['startTime']) > 0)
         ) {
             throw new Writer\Exception\InvalidArgumentException(
                 'invalid parameter: "startTime" of "soundbite" may only contain numeric characters and dots'
             );
         }
-        if (! is_string($value['duration'])
+        if (
+            ! is_string($value['duration'])
             || (! is_numeric($value['duration']) && strlen($value['duration']) > 0)
         ) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -151,14 +156,16 @@ class Entry
     public function __call(string $method, array $params)
     {
         $point = lcfirst(substr($method, 15));
-        if (! method_exists($this, 'setPodcastIndex' . ucfirst($point))
+        if (
+            ! method_exists($this, 'setPodcastIndex' . ucfirst($point))
             && ! method_exists($this, 'addPodcastIndex' . ucfirst($point))
         ) {
             throw new Writer\Exception\BadMethodCallException(
                 'invalid method: ' . $method
             );
         }
-        if (! array_key_exists($point, $this->data)
+        if (
+            ! array_key_exists($point, $this->data)
             || empty($this->data[$point])
         ) {
             return;

@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Feed\Reader\Http;
 
 use Laminas\Feed\Reader\Exception\InvalidArgumentException;
@@ -15,6 +9,7 @@ use Laminas\Http\Client;
 use Laminas\Http\Headers;
 use Laminas\Http\Request as HttpRequest;
 use Laminas\Http\Response as HttpResponse;
+use Laminas\Uri\Http;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -23,9 +18,7 @@ use PHPUnit\Framework\TestCase;
  */
 class LaminasHttpClientDecoratorTest extends TestCase
 {
-    /**
-     * @var Client|mixed|\PHPUnit\Framework\MockObject\MockObject
-     */
+    /** @var Client|mixed|MockObject */
     private $client;
 
     protected function setUp(): void
@@ -33,6 +26,7 @@ class LaminasHttpClientDecoratorTest extends TestCase
         $this->client = $this->createMock(Client::class);
     }
 
+    /** @param string|Http $uri */
     public function prepareDefaultClientInteractions($uri, MockObject $response): void
     {
         $this->client
@@ -64,11 +58,9 @@ class LaminasHttpClientDecoratorTest extends TestCase
     }
 
     /**
-     * @return MockObject
-     *
      * @psalm-return MockObject<HttpResponse>
      */
-    public function createMockHttpResponse(int $statusCode, string $body, Headers $headers = null): MockObject
+    public function createMockHttpResponse(int $statusCode, string $body, ?Headers $headers = null): MockObject
     {
         $response = $this->createMock(HttpResponse::class);
         $response
@@ -90,7 +82,6 @@ class LaminasHttpClientDecoratorTest extends TestCase
 
     /**
      * @param array $headers
-     *
      * @return MockObject<Headers>
      */
     public function createMockHttpHeaders(array $headers): Headers
@@ -163,7 +154,13 @@ class LaminasHttpClientDecoratorTest extends TestCase
         $this->assertEquals(1234.56, $response->getHeaderLine('X-Content-Length'));
     }
 
-    public function invalidHeaders(): \Generator
+    /**
+     * @psalm-return iterable<string, array{
+     *     0: array<int|string, mixed>,
+     *     1: string
+     * }>
+     */
+    public function invalidHeaders(): iterable
     {
         $basicTests = [
             'zero-name'        => [
@@ -238,11 +235,10 @@ class LaminasHttpClientDecoratorTest extends TestCase
     }
 
     /**
-     * @psalm-param array<array-key,string> $headers
-     * @param string $contains
      * @dataProvider invalidHeaders
+     * @psalm-param array<array-key, mixed> $headers
      */
-    public function testDecoratorRaisesExceptionForInvalidHeaders($headers, $contains): void
+    public function testDecoratorRaisesExceptionForInvalidHeaders($headers, string $contains): void
     {
         $this->client
             ->expects($this->atLeastOnce())

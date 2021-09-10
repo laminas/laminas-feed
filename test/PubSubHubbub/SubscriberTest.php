@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Feed\PubSubHubbub;
 
 use Laminas\Db\Adapter\Adapter;
@@ -15,8 +9,12 @@ use Laminas\Feed\PubSubHubbub\Model\Subscription;
 use Laminas\Feed\PubSubHubbub\PubSubHubbub;
 use Laminas\Feed\PubSubHubbub\Subscriber;
 use Laminas\Http\Client as HttpClient;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
+
+use function str_replace;
+use function uniqid;
 
 /**
  * @group Laminas_Feed
@@ -27,22 +25,30 @@ class SubscriberTest extends TestCase
     /** @var Subscriber */
     protected $subscriber;
 
+    /** @var Adapter&MockObject */
     protected $adapter;
 
+    /** @var TableGateway&MockObject */
     protected $tableGateway;
 
     protected function setUp(): void
     {
         $client = new HttpClient();
         PubSubHubbub::setHttpClient($client);
-        $this->subscriber   = new Subscriber();
-        $this->adapter      = $this->_getCleanMock(
+        $this->subscriber = new Subscriber();
+
+        /** @psalm-suppress InvalidPropertyAssignmentValue */
+        $this->adapter = $this->getCleanMock(
             Adapter::class
         );
-        $this->tableGateway = $this->_getCleanMock(
+
+        /** @psalm-suppress InvalidPropertyAssignmentValue */
+        $this->tableGateway = $this->getCleanMock(
             TableGateway::class
         );
-        $this->tableGateway->expects($this->any())->method('getAdapter')
+        $this->tableGateway
+            ->expects($this->any())
+            ->method('getAdapter')
             ->will($this->returnValue($this->adapter));
     }
 
@@ -303,27 +309,25 @@ class SubscriberTest extends TestCase
         $this->subscriber->getStorage();
     }
 
-    // @codingStandardsIgnoreStart
-    protected function _getCleanMock(string $className): \PHPUnit\Framework\MockObject\MockObject
+    protected function getCleanMock(string $className): MockObject
     {
-        // @codingStandardsIgnoreEnd
         $class       = new ReflectionClass($className);
         $methods     = $class->getMethods();
         $stubMethods = [];
         foreach ($methods as $method) {
-            if ($method->isPublic()
+            if (
+                $method->isPublic()
                 || ($method->isProtected() && $method->isAbstract())
             ) {
                 $stubMethods[] = $method->getName();
             }
         }
 
-        $mocked = $this->getMockBuilder($className)
+        return $this->getMockBuilder($className)
             ->setMethods($stubMethods)
             ->setConstructorArgs([])
             ->setMockClassName(str_replace('\\', '_', $className . '_PubsubSubscriberMock_' . uniqid()))
             ->disableOriginalConstructor()
             ->getMock();
-        return $mocked;
     }
 }

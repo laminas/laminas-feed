@@ -1,22 +1,23 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Feed\Reader\Http;
 
 use Laminas\Feed\Reader\Exception;
 use Laminas\Http\Client as LaminasHttpClient;
 use Laminas\Http\Headers;
 
+use function get_class;
+use function gettype;
+use function implode;
+use function is_array;
+use function is_numeric;
+use function is_object;
+use function is_string;
+use function sprintf;
+
 class LaminasHttpClientDecorator implements HeaderAwareClientInterface
 {
-    /**
-     * @var LaminasHttpClient
-     */
+    /** @var LaminasHttpClient */
     private $client;
 
     public function __construct(LaminasHttpClient $client)
@@ -65,7 +66,7 @@ class LaminasHttpClientDecorator implements HeaderAwareClientInterface
             if (! is_string($name) || is_numeric($name) || empty($name)) {
                 throw new Exception\InvalidArgumentException(sprintf(
                     'Header names provided to %s::get must be non-empty, non-numeric strings; received %s',
-                    __CLASS__,
+                    self::class,
                     $name
                 ));
             }
@@ -73,7 +74,7 @@ class LaminasHttpClientDecorator implements HeaderAwareClientInterface
             if (! is_array($values)) {
                 throw new Exception\InvalidArgumentException(sprintf(
                     'Header values provided to %s::get must be arrays of values; received %s',
-                    __CLASS__,
+                    self::class,
                     is_object($values) ? get_class($values) : gettype($values)
                 ));
             }
@@ -83,7 +84,7 @@ class LaminasHttpClientDecorator implements HeaderAwareClientInterface
                     throw new Exception\InvalidArgumentException(sprintf(
                         'Individual header values provided to %s::get must be strings or numbers; '
                         . 'received %s for header %s',
-                        __CLASS__,
+                        self::class,
                         is_object($value) ? get_class($value) : gettype($value),
                         $name
                     ));

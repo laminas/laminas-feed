@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Feed\Reader\Extension\GooglePlayPodcast;
 
 use DOMText;
@@ -74,9 +68,11 @@ class Feed extends Extension\AbstractFeed
 
         if ($categoryList->length > 0) {
             foreach ($categoryList as $node) {
+                /** @psalm-suppress UnusedVariable */
                 $children = null;
 
                 if ($node->childNodes->length > 0) {
+                    /** @psalm-suppress UnusedVariable */
                     $children = [];
 
                     foreach ($node->childNodes as $childNode) {

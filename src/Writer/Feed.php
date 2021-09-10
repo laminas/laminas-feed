@@ -1,15 +1,18 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Feed\Writer;
 
 use Countable;
 use Iterator;
+
+use function array_values;
+use function count;
+use function krsort;
+use function strtolower;
+use function time;
+use function ucfirst;
+
+use const SORT_NUMERIC;
 
 class Feed extends AbstractFeed implements Iterator, Countable
 {
@@ -64,9 +67,10 @@ class Feed extends AbstractFeed implements Iterator, Countable
      */
     public function createTombstone()
     {
-        $deleted = new Deleted();
-        if ($this->getEncoding()) {
-            $deleted->setEncoding($this->getEncoding());
+        $deleted  = new Deleted();
+        $encoding = $this->getEncoding();
+        if (null !== $encoding) {
+            $deleted->setEncoding($encoding);
         }
         $deleted->setType($this->getType());
         return $deleted;

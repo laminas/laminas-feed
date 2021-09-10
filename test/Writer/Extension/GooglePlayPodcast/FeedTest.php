@@ -1,16 +1,12 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Feed\Writer\Extension\GooglePlayPodcast;
 
 use Laminas\Feed\Writer;
 use Laminas\Feed\Writer\Exception\ExceptionInterface;
 use PHPUnit\Framework\TestCase;
+
+use function str_repeat;
 
 class FeedTest extends TestCase
 {
@@ -148,25 +144,25 @@ class FeedTest extends TestCase
         $feed->setPlayPodcastDescription(str_repeat('a', 4001));
     }
 
-    public function invalidImageUrls()
+    /** @psalm-return array<string, array{0: mixed}> */
+    public function invalidImageUrls(): array
     {
         return [
-            'null' => [null],
-            'true' => [true],
-            'false' => [false],
-            'zero' => [0],
-            'int' => [1],
+            'null'       => [null],
+            'true'       => [true],
+            'false'      => [false],
+            'zero'       => [0],
+            'int'        => [1],
             'zero-float' => [0.0],
-            'float' => [1.1],
-            'string' => ['scheme:/host.path'],
-            'array' => [['https://example.com/image.png']],
-            'object' => [(object) ['image' => 'https://example.com/image.png']],
+            'float'      => [1.1],
+            'string'     => ['scheme:/host.path'],
+            'array'      => [['https://example.com/image.png']],
+            'object'     => [(object) ['image' => 'https://example.com/image.png']],
         ];
     }
 
     /**
      * @dataProvider invalidImageUrls
-     *
      * @param mixed $url
      */
     public function testSetPlayPodcastImageRaisesExceptionForInvalidUrl($url)
@@ -177,7 +173,8 @@ class FeedTest extends TestCase
         $feed->setPlayPodcastImage($url);
     }
 
-    public function validImageUrls()
+    /** @psalm-return array<string, array{0: string}> */
+    public function validImageUrls(): array
     {
         return [
             'jpg' => ['https://example.com/image.jpg'],
@@ -187,7 +184,6 @@ class FeedTest extends TestCase
 
     /**
      * @dataProvider validImageUrls
-     *
      * @param string $url
      */
     public function testSetPlayPodcastImageSetsInternalDataWithValidUrl($url)

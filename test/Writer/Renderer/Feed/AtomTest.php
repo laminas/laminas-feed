@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Feed\Writer\Renderer\Feed;
 
 use DateTime;
@@ -18,12 +12,20 @@ use Laminas\Feed\Writer\Renderer;
 use LaminasTest\Feed\Writer\TestAsset;
 use PHPUnit\Framework\TestCase;
 
+use function array_reduce;
+use function restore_error_handler;
+use function set_error_handler;
+use function strstr;
+
+use const E_USER_NOTICE;
+
 /**
  * @group Laminas_Feed
  * @group Laminas_Feed_Writer
  */
 class AtomTest extends TestCase
 {
+    /** @var Writer\Feed */
     protected $validWriter;
 
     protected function setUp(): void
@@ -47,7 +49,6 @@ class AtomTest extends TestCase
     protected function tearDown(): void
     {
         Writer\Writer::reset();
-        $this->validWriter = null;
     }
 
     public function testSetsWriterInConstructor(): void
@@ -59,7 +60,6 @@ class AtomTest extends TestCase
 
     /**
      * @doesNotPerformAssertions
-     *
      */
     public function testBuildMethodRunsMinimalWriterContainerProperlyBeforeICheckAtomCompliance(): void
     {
@@ -79,7 +79,6 @@ class AtomTest extends TestCase
     /**
      * @group 6358
      * @group 6935
-     *
      */
     public function testDateModifiedHasTheCorrectFormat(): void
     {
@@ -122,7 +121,6 @@ class AtomTest extends TestCase
 
     /**
      * @group LaminasWCHARDATA01
-     *
      */
     public function testFeedTitleCharDataEncoding(): void
     {
@@ -143,7 +141,6 @@ class AtomTest extends TestCase
 
     /**
      * @doesNotPerformAssertions
-     *
      */
     public function testFeedSubtitleThrowsNoExceptionIfMissing(): void
     {
@@ -154,7 +151,6 @@ class AtomTest extends TestCase
 
     /**
      * @group LaminasWCHARDATA01
-     *
      */
     public function testFeedSubtitleCharDataEncoding(): void
     {
@@ -193,7 +189,6 @@ class AtomTest extends TestCase
 
     /**
      * @doesNotPerformAssertions
-     *
      */
     public function testFeedGeneratorIfMissingThrowsNoException(): void
     {
@@ -212,7 +207,6 @@ class AtomTest extends TestCase
 
     /**
      * @group LaminasWCHARDATA01
-     *
      */
     public function testFeedGeneratorCharDataEncoding(): void
     {
@@ -234,7 +228,6 @@ class AtomTest extends TestCase
 
     /**
      * @doesNotPerformAssertions
-     *
      */
     public function testFeedLanguageIfMissingThrowsNoException(): void
     {
@@ -261,7 +254,6 @@ class AtomTest extends TestCase
 
     /**
      * @doesNotPerformAssertions
-     *
      */
     public function testFeedLinkToHtmlVersionOfFeedIfMissingThrowsNoExceptionIfIdSet(): void
     {
@@ -301,8 +293,7 @@ class AtomTest extends TestCase
     {
         $atomFeed = new Renderer\Feed\Atom($this->validWriter);
         $atomFeed->render();
-        $feed   = Reader\Reader::importString($atomFeed->saveXml());
-        $author = $feed->getAuthor();
+        $feed = Reader\Reader::importString($atomFeed->saveXml());
         $this->assertEquals([
             'email' => 'joe@example.com',
             'name'  => 'Joe',
@@ -312,7 +303,6 @@ class AtomTest extends TestCase
 
     /**
      * @group LaminasWCHARDATA01
-     *
      */
     public function testFeedAuthorCharDataEncoding(): void
     {
@@ -324,8 +314,7 @@ class AtomTest extends TestCase
             'uri'   => 'http://www.example.com/joe',
         ]);
         $atomFeed->render();
-        $feed   = Reader\Reader::importString($atomFeed->saveXml());
-        $author = $feed->getAuthor();
+        $feed = Reader\Reader::importString($atomFeed->saveXml());
         $this->assertEquals([
             'email' => '<>&\'"áéíóú',
             'name'  => '<>&\'"áéíóú',
@@ -483,10 +472,11 @@ class AtomTest extends TestCase
             'messages' => [],
         ];
 
-        set_error_handler(static function ($errno, $errstr) use ($notices) {
+        /** @psalm-suppress UnusedClosureParam */
+        set_error_handler(static function (int $errno, string $errstr) use ($notices): void {
             $notices->messages[] = $errstr;
-        }, \E_USER_NOTICE);
-        $renderer = new Renderer\Feed\Atom($this->validWriter);
+        }, E_USER_NOTICE);
+        new Renderer\Feed\Atom($this->validWriter);
         restore_error_handler();
 
         $message = array_reduce($notices->messages, static function ($toReturn, $message) {

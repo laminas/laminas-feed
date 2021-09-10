@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Feed\Writer\Extension\GooglePlayPodcast\Renderer;
 
 use DOMDocument;
@@ -38,15 +32,15 @@ class Entry extends Extension\AbstractRenderer
         }
     }
 
+    // phpcs:disable PSR2.Methods.MethodDeclaration.Underscore
+
     /**
      * Append namespaces to entry root
      *
      * @return void
      */
-    // @codingStandardsIgnoreStart
     protected function _appendNamespaces()
     {
-        // @codingStandardsIgnoreEnd
         $this->getRootElement()->setAttribute(
             'xmlns:googleplay',
             'http://www.google.com/schemas/play-podcasts/1.0'
@@ -56,14 +50,10 @@ class Entry extends Extension\AbstractRenderer
     /**
      * Set itunes block
      *
-     * @param  DOMDocument $dom
-     * @param  DOMElement $root
      * @return void
      */
-    // @codingStandardsIgnoreStart
     protected function _setBlock(DOMDocument $dom, DOMElement $root)
     {
-        // @codingStandardsIgnoreEnd
         $block = $this->getDataContainer()->getPlayPodcastBlock();
         if ($block === null) {
             return;
@@ -78,14 +68,10 @@ class Entry extends Extension\AbstractRenderer
     /**
      * Set explicit flag
      *
-     * @param  DOMDocument $dom
-     * @param  DOMElement $root
      * @return void
      */
-    // @codingStandardsIgnoreStart
     protected function _setExplicit(DOMDocument $dom, DOMElement $root)
     {
-        // @codingStandardsIgnoreEnd
         $explicit = $this->getDataContainer()->getPlayPodcastExplicit();
         if ($explicit === null) {
             return;
@@ -100,14 +86,10 @@ class Entry extends Extension\AbstractRenderer
     /**
      * Set episode description
      *
-     * @param  DOMDocument $dom
-     * @param  DOMElement $root
      * @return void
      */
-    // @codingStandardsIgnoreStart
     protected function _setDescription(DOMDocument $dom, DOMElement $root)
     {
-        // @codingStandardsIgnoreEnd
         $description = $this->getDataContainer()->getPlayPodcastDescription();
         if (! $description) {
             return;
@@ -118,4 +100,6 @@ class Entry extends Extension\AbstractRenderer
         $root->appendChild($el);
         $this->called = true;
     }
+
+    // phpcs:enable PSR2.Methods.MethodDeclaration.Underscore
 }

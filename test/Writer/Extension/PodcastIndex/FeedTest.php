@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Feed\Writer\Extension\PodcastIndex;
 
 use Laminas\Feed\Writer;
@@ -55,7 +49,6 @@ class FeedTest extends TestCase
 
     /**
      * @dataProvider nonAlphaValues
-     *
      * @param mixed $value
      */
     public function testSetLockedThrowsExceptionOnNonAlphaValue($value): void
@@ -76,7 +69,7 @@ class FeedTest extends TestCase
 
         $funding = [
             'title' => 'Support the show!',
-            'url' => 'http://example.com/donate',
+            'url'   => 'http://example.com/donate',
         ];
         $feed->setPodcastIndexFunding($funding);
         $this->assertEquals($funding, $feed->getPodcastIndexFunding());

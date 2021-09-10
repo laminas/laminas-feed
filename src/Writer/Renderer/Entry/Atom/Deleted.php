@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Feed\Writer\Renderer\Entry\Atom;
 
 use DateTime;
@@ -13,6 +7,8 @@ use DOMDocument;
 use DOMElement;
 use Laminas\Feed\Writer;
 use Laminas\Feed\Writer\Renderer;
+
+use function array_key_exists;
 
 class Deleted extends Renderer\AbstractRenderer implements Renderer\RendererInterface
 {
@@ -42,17 +38,15 @@ class Deleted extends Renderer\AbstractRenderer implements Renderer\RendererInte
         return $this;
     }
 
+    // phpcs:disable PSR2.Methods.MethodDeclaration.Underscore
+
     /**
      * Set tombstone comment
      *
-     * @param  DOMDocument $dom
-     * @param  DOMElement $root
      * @return void
      */
-    // @codingStandardsIgnoreStart
     protected function _setComment(DOMDocument $dom, DOMElement $root)
     {
-        // @codingStandardsIgnoreEnd
         if (! $this->getDataContainer()->getComment()) {
             return;
         }
@@ -66,14 +60,10 @@ class Deleted extends Renderer\AbstractRenderer implements Renderer\RendererInte
     /**
      * Set entry authors
      *
-     * @param  DOMDocument $dom
-     * @param  DOMElement $root
      * @return void
      */
-    // @codingStandardsIgnoreStart
     protected function _setBy(DOMDocument $dom, DOMElement $root)
     {
-        // @codingStandardsIgnoreEnd
         $data = $this->container->getBy();
         if (! $data || empty($data)) {
             return;
@@ -97,4 +87,6 @@ class Deleted extends Renderer\AbstractRenderer implements Renderer\RendererInte
             $uri->appendChild($text);
         }
     }
+
+    // phpcs:enable PSR2.Methods.MethodDeclaration.Underscore
 }

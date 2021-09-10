@@ -1,16 +1,12 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Feed\Writer\Extension\ITunes\Renderer;
 
 use DOMDocument;
 use DOMElement;
 use Laminas\Feed\Writer\Extension;
+
+use function implode;
 
 class Entry extends Extension\AbstractRenderer
 {
@@ -48,15 +44,15 @@ class Entry extends Extension\AbstractRenderer
         }
     }
 
+    // phpcs:disable PSR2.Methods.MethodDeclaration.Underscore
+
     /**
      * Append namespaces to entry root
      *
      * @return void
      */
-    // @codingStandardsIgnoreStart
     protected function _appendNamespaces()
     {
-        // @codingStandardsIgnoreEnd
         $this->getRootElement()->setAttribute(
             'xmlns:itunes',
             'http://www.itunes.com/dtds/podcast-1.0.dtd'
@@ -66,14 +62,10 @@ class Entry extends Extension\AbstractRenderer
     /**
      * Set entry authors
      *
-     * @param  DOMDocument $dom
-     * @param  DOMElement $root
      * @return void
      */
-    // @codingStandardsIgnoreStart
     protected function _setAuthors(DOMDocument $dom, DOMElement $root)
     {
-        // @codingStandardsIgnoreEnd
         $authors = $this->getDataContainer()->getItunesAuthors();
         if (! $authors || empty($authors)) {
             return;
@@ -90,14 +82,10 @@ class Entry extends Extension\AbstractRenderer
     /**
      * Set itunes block
      *
-     * @param  DOMDocument $dom
-     * @param  DOMElement $root
      * @return void
      */
-    // @codingStandardsIgnoreStart
     protected function _setBlock(DOMDocument $dom, DOMElement $root)
     {
-        // @codingStandardsIgnoreEnd
         $block = $this->getDataContainer()->getItunesBlock();
         if ($block === null) {
             return;
@@ -112,14 +100,10 @@ class Entry extends Extension\AbstractRenderer
     /**
      * Set entry duration
      *
-     * @param  DOMDocument $dom
-     * @param  DOMElement $root
      * @return void
      */
-    // @codingStandardsIgnoreStart
     protected function _setDuration(DOMDocument $dom, DOMElement $root)
     {
-        // @codingStandardsIgnoreEnd
         $duration = $this->getDataContainer()->getItunesDuration();
         if (! $duration) {
             return;
@@ -134,14 +118,10 @@ class Entry extends Extension\AbstractRenderer
     /**
      * Set feed image (icon)
      *
-     * @param  DOMDocument $dom
-     * @param  DOMElement $root
      * @return void
      */
-    // @codingStandardsIgnoreStart
     protected function _setImage(DOMDocument $dom, DOMElement $root)
     {
-        // @codingStandardsIgnoreEnd
         $image = $this->getDataContainer()->getItunesImage();
         if (! $image) {
             return;
@@ -155,14 +135,10 @@ class Entry extends Extension\AbstractRenderer
     /**
      * Set explicit flag
      *
-     * @param  DOMDocument $dom
-     * @param  DOMElement $root
      * @return void
      */
-    // @codingStandardsIgnoreStart
     protected function _setExplicit(DOMDocument $dom, DOMElement $root)
     {
-        // @codingStandardsIgnoreEnd
         $explicit = $this->getDataContainer()->getItunesExplicit();
         if ($explicit === null) {
             return;
@@ -177,14 +153,10 @@ class Entry extends Extension\AbstractRenderer
     /**
      * Set entry keywords
      *
-     * @param  DOMDocument $dom
-     * @param  DOMElement $root
      * @return void
      */
-    // @codingStandardsIgnoreStart
     protected function _setKeywords(DOMDocument $dom, DOMElement $root)
     {
-        // @codingStandardsIgnoreEnd
         $keywords = $this->getDataContainer()->getItunesKeywords();
         if (! $keywords || empty($keywords)) {
             return;
@@ -199,14 +171,10 @@ class Entry extends Extension\AbstractRenderer
     /**
      * Set entry title
      *
-     * @param  DOMDocument $dom
-     * @param  DOMElement $root
      * @return void
      */
-    // @codingStandardsIgnoreStart
     protected function _setTitle(DOMDocument $dom, DOMElement $root)
     {
-        // @codingStandardsIgnoreEnd
         $title = $this->getDataContainer()->getItunesTitle();
         if (! $title) {
             return;
@@ -221,14 +189,10 @@ class Entry extends Extension\AbstractRenderer
     /**
      * Set entry subtitle
      *
-     * @param  DOMDocument $dom
-     * @param  DOMElement $root
      * @return void
      */
-    // @codingStandardsIgnoreStart
     protected function _setSubtitle(DOMDocument $dom, DOMElement $root)
     {
-        // @codingStandardsIgnoreEnd
         $subtitle = $this->getDataContainer()->getItunesSubtitle();
         if (! $subtitle) {
             return;
@@ -243,14 +207,10 @@ class Entry extends Extension\AbstractRenderer
     /**
      * Set entry summary
      *
-     * @param  DOMDocument $dom
-     * @param  DOMElement $root
      * @return void
      */
-    // @codingStandardsIgnoreStart
     protected function _setSummary(DOMDocument $dom, DOMElement $root)
     {
-        // @codingStandardsIgnoreEnd
         $summary = $this->getDataContainer()->getItunesSummary();
         if (! $summary) {
             return;
@@ -265,14 +225,10 @@ class Entry extends Extension\AbstractRenderer
     /**
      * Set entry episode number
      *
-     * @param  DOMDocument $dom
-     * @param  DOMElement $root
      * @return void
      */
-    // @codingStandardsIgnoreStart
     protected function _setEpisode(DOMDocument $dom, DOMElement $root)
     {
-        // @codingStandardsIgnoreEnd
         $episode = $this->getDataContainer()->getItunesEpisode();
         if (! $episode) {
             return;
@@ -287,14 +243,10 @@ class Entry extends Extension\AbstractRenderer
     /**
      * Set entry episode type
      *
-     * @param  DOMDocument $dom
-     * @param  DOMElement $root
      * @return void
      */
-    // @codingStandardsIgnoreStart
     protected function _setEpisodeType(DOMDocument $dom, DOMElement $root)
     {
-        // @codingStandardsIgnoreEnd
         $type = $this->getDataContainer()->getItunesEpisodeType();
         if (! $type) {
             return;
@@ -309,14 +261,10 @@ class Entry extends Extension\AbstractRenderer
     /**
      * Set closed captioning status for episode
      *
-     * @param  DOMDocument $dom
-     * @param  DOMElement $root
      * @return void
      */
-    // @codingStandardsIgnoreStart
     protected function _setClosedCaptioned(DOMDocument $dom, DOMElement $root)
     {
-        // @codingStandardsIgnoreEnd
         $status = $this->getDataContainer()->getItunesIsClosedCaptioned();
         if (! $status) {
             return;
@@ -331,14 +279,10 @@ class Entry extends Extension\AbstractRenderer
     /**
      * Set entry season number
      *
-     * @param  DOMDocument $dom
-     * @param  DOMElement $root
      * @return void
      */
-    // @codingStandardsIgnoreStart
     protected function _setSeason(DOMDocument $dom, DOMElement $root)
     {
-        // @codingStandardsIgnoreEnd
         $season = $this->getDataContainer()->getItunesSeason();
         if (! $season) {
             return;
@@ -349,4 +293,6 @@ class Entry extends Extension\AbstractRenderer
         $root->appendChild($el);
         $this->called = true;
     }
+
+    // phpcs:enable PSR2.Methods.MethodDeclaration.Underscore
 }

@@ -1,17 +1,15 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Feed\Reader\Extension\DublinCore;
 
 use DateTime;
+use DOMNodeList;
 use Laminas\Feed\Reader;
 use Laminas\Feed\Reader\Collection;
 use Laminas\Feed\Reader\Extension;
+
+use function array_key_exists;
+use function is_string;
 
 class Feed extends Extension\AbstractFeed
 {
@@ -25,11 +23,11 @@ class Feed extends Extension\AbstractFeed
     {
         $authors = $this->getAuthors();
 
-        if (isset($authors[$index])) {
+        if (isset($authors[$index]) && is_string($authors[$index])) {
             return $authors[$index];
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -239,11 +237,11 @@ class Feed extends Extension\AbstractFeed
 
         $list = $this->getXpath()->evaluate($this->getXpathPrefix() . '//dc11:subject');
 
-        if (! $list->length) {
+        if (! $list instanceof DOMNodeList || ! $list->length) {
             $list = $this->getXpath()->evaluate($this->getXpathPrefix() . '//dc10:subject');
         }
 
-        if ($list->length) {
+        if ($list instanceof DOMNodeList && $list->length) {
             $categoryCollection = new Collection\Category();
             foreach ($list as $category) {
                 $categoryCollection[] = [

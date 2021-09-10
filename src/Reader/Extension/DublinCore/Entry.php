@@ -1,17 +1,15 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Feed\Reader\Extension\DublinCore;
 
 use DateTime;
+use DOMNodeList;
 use Laminas\Feed\Reader;
 use Laminas\Feed\Reader\Collection;
 use Laminas\Feed\Reader\Extension;
+
+use function array_key_exists;
+use function is_array;
 
 class Entry extends Extension\AbstractEntry
 {
@@ -19,17 +17,15 @@ class Entry extends Extension\AbstractEntry
      * Get an author entry
      *
      * @param  int $index
-     * @return string
+     * @return null|array<string, string>
      */
     public function getAuthor($index = 0)
     {
         $authors = $this->getAuthors();
 
-        if (isset($authors[$index])) {
-            return $authors[$index];
-        }
-
-        return;
+        return isset($authors[$index]) && is_array($authors[$index])
+            ? $authors[$index]
+            : null;
     }
 
     /**
@@ -46,18 +42,19 @@ class Entry extends Extension\AbstractEntry
         $authors = [];
         $list    = $this->getXpath()->evaluate($this->getXpathPrefix() . '//dc11:creator');
 
-        if (! $list->length) {
+        if (! $list instanceof DOMNodeList || ! $list->length) {
             $list = $this->getXpath()->evaluate($this->getXpathPrefix() . '//dc10:creator');
         }
-        if (! $list->length) {
+
+        if (! $list instanceof DOMNodeList || ! $list->length) {
             $list = $this->getXpath()->evaluate($this->getXpathPrefix() . '//dc11:publisher');
 
-            if (! $list->length) {
+            if (! $list instanceof DOMNodeList || ! $list->length) {
                 $list = $this->getXpath()->evaluate($this->getXpathPrefix() . '//dc10:publisher');
             }
         }
 
-        if ($list->length) {
+        if ($list instanceof DOMNodeList && $list->length) {
             foreach ($list as $author) {
                 $authors[] = [
                     'name' => $author->nodeValue,
@@ -88,11 +85,11 @@ class Entry extends Extension\AbstractEntry
 
         $list = $this->getXpath()->evaluate($this->getXpathPrefix() . '//dc11:subject');
 
-        if (! $list->length) {
+        if (! $list instanceof DOMNodeList || ! $list->length) {
             $list = $this->getXpath()->evaluate($this->getXpathPrefix() . '//dc10:subject');
         }
 
-        if ($list->length) {
+        if ($list instanceof DOMNodeList && $list->length) {
             $categoryCollection = new Collection\Category();
             foreach ($list as $category) {
                 $categoryCollection[] = [

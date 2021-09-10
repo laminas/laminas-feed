@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Feed\Reader;
 
 use Laminas\Feed\Reader\Exception\InvalidArgumentException;
@@ -16,10 +10,7 @@ use PHPUnit\Framework\TestCase;
 
 class StandaloneExtensionManagerTest extends TestCase
 {
-
-    /**
-     * @var StandaloneExtensionManager
-     */
+    /** @var StandaloneExtensionManager */
     private $extensions;
 
     protected function setUp(): void
@@ -32,6 +23,7 @@ class StandaloneExtensionManagerTest extends TestCase
         $this->assertInstanceOf(ExtensionManagerInterface::class, $this->extensions);
     }
 
+    /** @psalm-return array<string, array{0:string, 1: class-string}> */
     public function defaultPlugins(): array
     {
         return [
@@ -53,18 +45,17 @@ class StandaloneExtensionManagerTest extends TestCase
 
     /**
      * @dataProvider defaultPlugins
-     *
      */
-    public function testHasAllDefaultPlugins($pluginName, $pluginClass): void
+    public function testHasAllDefaultPlugins(string $pluginName): void
     {
         $this->assertTrue($this->extensions->has($pluginName));
     }
 
     /**
      * @dataProvider defaultPlugins
-     *
+     * @psalm-param class-string $pluginClass
      */
-    public function testCanRetrieveDefaultPluginInstances($pluginName, $pluginClass): void
+    public function testCanRetrieveDefaultPluginInstances(string $pluginName, string $pluginClass): void
     {
         $extension = $this->extensions->get($pluginName);
         $this->assertInstanceOf($pluginClass, $extension);
@@ -72,9 +63,9 @@ class StandaloneExtensionManagerTest extends TestCase
 
     /**
      * @dataProvider defaultPlugins
-     *
+     * @psalm-param class-string $pluginClass
      */
-    public function testEachPluginRetrievalReturnsNewInstance($pluginName, $pluginClass): void
+    public function testEachPluginRetrievalReturnsNewInstance(string $pluginName, string $pluginClass): void
     {
         $extension = $this->extensions->get($pluginName);
         $this->assertInstanceOf($pluginClass, $extension);

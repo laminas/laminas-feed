@@ -1,17 +1,25 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Feed\Writer;
 
 use DateTime;
+use DateTimeImmutable;
 use DateTimeInterface;
 use Laminas\Feed\Uri;
 use Laminas\Validator;
+
+use function array_key_exists;
+use function date;
+use function in_array;
+use function is_array;
+use function is_int;
+use function is_numeric;
+use function is_string;
+use function preg_match;
+use function sprintf;
+use function strlen;
+use function strtolower;
+use function strtotime;
 
 class AbstractFeed
 {
@@ -30,9 +38,7 @@ class AbstractFeed
      */
     protected $type;
 
-    /**
-     * @var Extension\RendererInterface[]
-     */
+    /** @var Extension\RendererInterface[] */
     protected $extensions;
 
     /**
@@ -59,7 +65,8 @@ class AbstractFeed
     public function addAuthor(array $author)
     {
         // Check array values
-        if (! array_key_exists('name', $author)
+        if (
+            ! array_key_exists('name', $author)
             || empty($author['name'])
             || ! is_string($author['name'])
         ) {
@@ -76,7 +83,8 @@ class AbstractFeed
             }
         }
         if (isset($author['uri'])) {
-            if (empty($author['uri'])
+            if (
+                empty($author['uri'])
                 || ! is_string($author['uri'])
                 || ! Uri::factory($author['uri'])->isValid()
             ) {
@@ -95,6 +103,7 @@ class AbstractFeed
      * Set an array with feed authors
      *
      * @see addAuthor
+     *
      * @return $this
      */
     public function addAuthors(array $authors)
@@ -126,11 +135,8 @@ class AbstractFeed
     /**
      * Set the feed creation date
      *
-     * @param null|int|DateTimeInterface
-     * @param DateTime|\DateTimeImmutable|int|null|string $date
-     *
+     * @param DateTime|DateTimeImmutable|int|null|string $date
      * @return self
-     *
      * @throws Exception\InvalidArgumentException
      */
     public function setDateCreated($date = null)
@@ -154,11 +160,8 @@ class AbstractFeed
     /**
      * Set the feed modification date
      *
-     * @param null|int|DateTimeInterface
-     * @param DateTime|\DateTimeImmutable|int|null|string $date
-     *
+     * @param DateTime|DateTimeImmutable|int|null|string $date
      * @return self
-     *
      * @throws Exception\InvalidArgumentException
      */
     public function setDateModified($date = null)
@@ -182,11 +185,8 @@ class AbstractFeed
     /**
      * Set the feed last-build date. Ignored for Atom 1.0.
      *
-     * @param null|int|DateTimeInterface
-     * @param DateTime|\DateTimeImmutable|int|null|string $date
-     *
+     * @param DateTime|DateTimeImmutable|int|null|string $date
      * @return self
-     *
      * @throws Exception\InvalidArgumentException
      */
     public function setLastBuildDate($date = null)
@@ -293,55 +293,21 @@ class AbstractFeed
      */
     public function setId($id)
     {
-        // @codingStandardsIgnoreStart
-        if ((empty($id) || ! is_string($id) || ! Uri::factory($id)->isValid())
+        // phpcs:disable Generic.Files.LineLength.TooLong
+        if (
+            (empty($id) || ! is_string($id) || ! Uri::factory($id)->isValid())
             && ! preg_match("#^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{1,31}:([a-zA-Z0-9\(\)\+\,\.\:\=\@\;\$\_\!\*\-]|%[0-9a-fA-F]{2})*#", $id)
             && ! $this->_validateTagUri($id)
         ) {
-            // @codingStandardsIgnoreEnd
             throw new Exception\InvalidArgumentException(
                 'Invalid parameter: parameter must be a non-empty string and valid URI/IRI'
             );
         }
+        // phpcs:enable Generic.Files.LineLength.TooLong
+
         $this->data['id'] = $id;
 
         return $this;
-    }
-
-    /**
-     * Validate a URI using the tag scheme (RFC 4151)
-     *
-     * @param  string $id
-     * @return bool
-     */
-    // @codingStandardsIgnoreStart
-    protected function _validateTagUri($id)
-    {
-        // @codingStandardsIgnoreEnd
-        if (preg_match(
-            '/^tag:(?P<name>.*),(?P<date>\d{4}-?\d{0,2}-?\d{0,2}):(?P<specific>.*)(.*:)*$/',
-            $id,
-            $matches
-        )) {
-            $dvalid = false;
-            $date   = $matches['date'];
-            $d6     = strtotime($date);
-            if ((strlen($date) === 4) && $date <= date('Y')) {
-                $dvalid = true;
-            } elseif ((strlen($date) === 7) && ($d6 < strtotime('now'))) {
-                $dvalid = true;
-            } elseif ((strlen($date) === 10) && ($d6 < strtotime('now'))) {
-                $dvalid = true;
-            }
-            $validator = new Validator\EmailAddress();
-            if ($validator->isValid($matches['name'])) {
-                $nvalid = true;
-            } else {
-                $nvalid = $validator->isValid('info@' . $matches['name']);
-            }
-            return $dvalid && $nvalid;
-        }
-        return false;
     }
 
     /**
@@ -355,7 +321,8 @@ class AbstractFeed
      */
     public function setImage(array $data)
     {
-        if (empty($data['uri']) || ! is_string($data['uri'])
+        if (
+            empty($data['uri']) || ! is_string($data['uri'])
             || ! Uri::factory($data['uri'])->isValid()
         ) {
             throw new Exception\InvalidArgumentException(
@@ -532,7 +499,8 @@ class AbstractFeed
             );
         }
         if (isset($category['scheme'])) {
-            if (empty($category['scheme'])
+            if (
+                empty($category['scheme'])
                 || ! is_string($category['scheme'])
                 || ! Uri::factory($category['scheme'])->isValid()
             ) {
@@ -869,7 +837,7 @@ class AbstractFeed
      * @param  string $method
      * @param  array $args
      * @return mixed
-     * @throws Exception\BadMethodCallException if no extensions implements the method
+     * @throws Exception\BadMethodCallException If no extensions implements the method.
      */
     public function __call($method, $args)
     {
@@ -885,16 +853,52 @@ class AbstractFeed
         );
     }
 
+    // phpcs:disable PSR2.Methods.MethodDeclaration.Underscore
+
+    /**
+     * Validate a URI using the tag scheme (RFC 4151)
+     *
+     * @param  string $id
+     * @return bool
+     */
+    protected function _validateTagUri($id)
+    {
+        if (
+            preg_match(
+                '/^tag:(?P<name>.*),(?P<date>\d{4}-?\d{0,2}-?\d{0,2}):(?P<specific>.*)(.*:)*$/',
+                $id,
+                $matches
+            )
+        ) {
+            $dvalid = false;
+            $date   = $matches['date'];
+            $d6     = strtotime($date);
+            if ((strlen($date) === 4) && $date <= date('Y')) {
+                $dvalid = true;
+            } elseif ((strlen($date) === 7) && ($d6 < strtotime('now'))) {
+                $dvalid = true;
+            } elseif ((strlen($date) === 10) && ($d6 < strtotime('now'))) {
+                $dvalid = true;
+            }
+            $validator = new Validator\EmailAddress();
+            if ($validator->isValid($matches['name'])) {
+                $nvalid = true;
+            } else {
+                $nvalid = $validator->isValid('info@' . $matches['name']);
+            }
+            return $dvalid && $nvalid;
+        }
+        return false;
+    }
+
     /**
      * Load extensions from Laminas\Feed\Writer\Writer
      *
      * @throws Exception\RuntimeException
      * @return void
      */
-    // @codingStandardsIgnoreStart
     protected function _loadExtensions()
     {
-        // @codingStandardsIgnoreEnd
         $all     = Writer::getExtensions();
         $manager = Writer::getExtensionManager();
         $exts    = $all['feed'];
@@ -908,4 +912,6 @@ class AbstractFeed
             $this->extensions[$ext]->setEncoding($this->getEncoding());
         }
     }
+
+    // phpcs:enable PSR2.Methods.MethodDeclaration.Underscore
 }

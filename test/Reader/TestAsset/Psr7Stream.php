@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Feed\Reader\TestAsset;
 
 /**
@@ -16,13 +10,16 @@ namespace LaminasTest\Feed\Reader\TestAsset;
  */
 class Psr7Stream
 {
+    /** @var mixed */
     private $streamValue;
 
+    /** @param mixed $streamValue */
     public function __construct($streamValue)
     {
         $this->streamValue = $streamValue;
     }
 
+    /** @return string */
     public function __toString()
     {
         return (string) $this->streamValue;
