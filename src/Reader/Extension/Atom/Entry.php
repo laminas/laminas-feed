@@ -127,7 +127,7 @@ class Entry extends Extension\AbstractEntry
             $content = $this->getDescription();
         }
 
-        $this->data['content'] = trim($content);
+        $this->data['content'] = trim($content ?? '');
 
         return $this->data['content'];
     }

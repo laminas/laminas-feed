@@ -7,6 +7,8 @@ use DOMElement;
 use DOMXPath;
 use Laminas\Feed\Reader;
 use Laminas\Feed\Reader\Exception;
+// phpcs:ignore SlevomatCodingStandard.Namespaces.UnusedUses.UnusedUse
+use ReturnTypeWillChange;
 
 use function array_key_exists;
 use function call_user_func_array;
@@ -116,6 +118,7 @@ abstract class AbstractFeed implements FeedInterface
      *
      * @return int
      */
+    #[ReturnTypeWillChange]
     public function count()
     {
         return count($this->entries);
@@ -126,6 +129,7 @@ abstract class AbstractFeed implements FeedInterface
      *
      * @return Reader\Entry\EntryInterface
      */
+    #[ReturnTypeWillChange]
     public function current()
     {
         if (0 === strpos($this->getType(), 'rss')) {
@@ -208,6 +212,7 @@ abstract class AbstractFeed implements FeedInterface
      *
      * @return int
      */
+    #[ReturnTypeWillChange]
     public function key()
     {
         return $this->entriesKey;
@@ -216,6 +221,7 @@ abstract class AbstractFeed implements FeedInterface
     /**
      * Move the feed pointer forward
      */
+    #[ReturnTypeWillChange]
     public function next()
     {
         ++$this->entriesKey;
@@ -224,6 +230,7 @@ abstract class AbstractFeed implements FeedInterface
     /**
      * Reset the pointer in the feed object
      */
+    #[ReturnTypeWillChange]
     public function rewind()
     {
         $this->entriesKey = 0;
@@ -234,6 +241,7 @@ abstract class AbstractFeed implements FeedInterface
      *
      * @return bool
      */
+    #[ReturnTypeWillChange]
     public function valid()
     {
         return 0 <= $this->entriesKey && $this->entriesKey < $this->count();

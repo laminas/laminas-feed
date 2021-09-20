@@ -6,6 +6,8 @@ use ArrayObject;
 use DOMElement;
 use DOMNodeList;
 use Laminas\Feed\Uri;
+// phpcs:ignore SlevomatCodingStandard.Namespaces.UnusedUses.UnusedUse
+use ReturnTypeWillChange;
 
 use function array_filter;
 use function array_pop;
@@ -167,6 +169,7 @@ class FeedSet extends ArrayObject
      * @param  string $offset
      * @return mixed
      */
+    #[ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         if ($offset === 'feed' && ! $this->offsetExists('feed')) {

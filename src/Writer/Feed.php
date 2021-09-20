@@ -4,6 +4,8 @@ namespace Laminas\Feed\Writer;
 
 use Countable;
 use Iterator;
+// phpcs:ignore SlevomatCodingStandard.Namespaces.UnusedUses.UnusedUse
+use ReturnTypeWillChange;
 
 use function array_values;
 use function count;
@@ -158,6 +160,7 @@ class Feed extends AbstractFeed implements Iterator, Countable
      *
      * @return int
      */
+    #[ReturnTypeWillChange]
     public function count()
     {
         return count($this->entries);
@@ -168,6 +171,7 @@ class Feed extends AbstractFeed implements Iterator, Countable
      *
      * @return Entry
      */
+    #[ReturnTypeWillChange]
     public function current()
     {
         return $this->entries[$this->key()];
@@ -178,6 +182,7 @@ class Feed extends AbstractFeed implements Iterator, Countable
      *
      * @return mixed
      */
+    #[ReturnTypeWillChange]
     public function key()
     {
         return $this->entriesKey;
@@ -188,6 +193,7 @@ class Feed extends AbstractFeed implements Iterator, Countable
      *
      * @return void
      */
+    #[ReturnTypeWillChange]
     public function next()
     {
         ++$this->entriesKey;
@@ -198,6 +204,7 @@ class Feed extends AbstractFeed implements Iterator, Countable
      *
      * @return void
      */
+    #[ReturnTypeWillChange]
     public function rewind()
     {
         $this->entriesKey = 0;
@@ -208,6 +215,7 @@ class Feed extends AbstractFeed implements Iterator, Countable
      *
      * @return bool
      */
+    #[ReturnTypeWillChange]
     public function valid()
     {
         return 0 <= $this->entriesKey && $this->entriesKey < $this->count();
