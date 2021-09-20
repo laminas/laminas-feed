@@ -116,33 +116,22 @@
     <FalsableReturnStatement occurrences="1">
       <code>false</code>
     </FalsableReturnStatement>
-    <MixedArgument occurrences="4">
-      <code>$result</code>
-      <code>$result</code>
-      <code>$result</code>
-      <code>$result</code>
-    </MixedArgument>
-    <MixedAssignment occurrences="5">
+    <MixedArgumentTypeCoercion occurrences="2">
+      <code>$data</code>
+      <code>$data</code>
+    </MixedArgumentTypeCoercion>
+    <MixedAssignment occurrences="1">
       <code>$data['created_time']</code>
-      <code>$result</code>
-      <code>$result</code>
-      <code>$result</code>
-      <code>$result</code>
     </MixedAssignment>
     <MixedInferredReturnType occurrences="1">
       <code>array</code>
     </MixedInferredReturnType>
-    <MixedMethodCall occurrences="3">
-      <code>current</code>
-      <code>current</code>
+    <MixedMethodCall occurrences="1">
       <code>getArrayCopy</code>
     </MixedMethodCall>
     <MixedOperand occurrences="1">
       <code>$data['lease_seconds']</code>
     </MixedOperand>
-    <MixedPropertyFetch occurrences="1">
-      <code>$result-&gt;current()-&gt;created_time</code>
-    </MixedPropertyFetch>
     <MixedReturnStatement occurrences="1">
       <code>$result-&gt;current()-&gt;getArrayCopy()</code>
     </MixedReturnStatement>
@@ -879,7 +868,7 @@
       <code>$deep</code>
     </InvalidScalarArgument>
     <MixedArgument occurrences="6">
-      <code>$content</code>
+      <code>$content ?? ''</code>
       <code>$dateCreated</code>
       <code>$dateModified</code>
       <code>$link</code>

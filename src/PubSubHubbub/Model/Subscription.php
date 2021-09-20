@@ -33,7 +33,8 @@ class Subscription extends AbstractModel implements SubscriptionPersistenceInter
             );
         }
         $result = $this->db->select(['id' => $data['id']]);
-        if ($result && (0 < count($result))) {
+        if (0 < count($result)) {
+            /** @psalm-suppress UndefinedInterfaceMethod */
             $data['created_time'] = $result->current()->created_time;
             $now                  = $this->getNow();
             if (
@@ -69,7 +70,8 @@ class Subscription extends AbstractModel implements SubscriptionPersistenceInter
             );
         }
         $result = $this->db->select(['id' => $key]);
-        if ($result && count($result)) {
+        if (count($result)) {
+            /** @psalm-suppress UndefinedInterfaceMethod */
             return $result->current()->getArrayCopy();
         }
         return false;
@@ -90,7 +92,7 @@ class Subscription extends AbstractModel implements SubscriptionPersistenceInter
             );
         }
         $result = $this->db->select(['id' => $key]);
-        if ($result && count($result)) {
+        if (count($result)) {
             return true;
         }
         return false;
@@ -105,7 +107,7 @@ class Subscription extends AbstractModel implements SubscriptionPersistenceInter
     public function deleteSubscription($key)
     {
         $result = $this->db->select(['id' => $key]);
-        if ($result && count($result)) {
+        if (count($result)) {
             $this->db->delete(
                 ['id' => $key]
             );
