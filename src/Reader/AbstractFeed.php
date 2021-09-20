@@ -1,16 +1,16 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Feed\Reader;
 
 use DOMDocument;
 use DOMElement;
 use DOMXPath;
+
+use function call_user_func_array;
+use function count;
+use function in_array;
+use function method_exists;
+use function strpos;
 
 /**
  * @deprecated This (abstract) class is deprecated. Use \Laminas\Feed\Reader\Feed\AbstractFeed instead.
@@ -238,11 +238,17 @@ abstract class AbstractFeed implements Feed\FeedInterface
         return 0 <= $this->entriesKey && $this->entriesKey < $this->count();
     }
 
+    /** @return array */
     public function getExtensions()
     {
         return $this->extensions;
     }
 
+    /**
+     * @param string $method
+     * @param mixed[] $args
+     * @return mixed
+     */
     public function __call($method, $args)
     {
         foreach ($this->extensions as $extension) {
@@ -259,14 +265,15 @@ abstract class AbstractFeed implements Feed\FeedInterface
      * Return an Extension object with the matching name (postfixed with _Feed)
      *
      * @param  string $name
-     * @return Extension\AbstractFeed
+     * @return null|Extension\AbstractFeed
      */
     public function getExtension($name)
     {
-        if (array_key_exists($name . '\Feed', $this->extensions)) {
-            return $this->extensions[$name . '\Feed'];
-        }
-        return;
+        $extensionClass = $name . '\\Feed';
+        return isset($this->extensions[$extensionClass])
+            && $this->extensions[$extensionClass] instanceof Extension\AbstractFeed
+            ? $this->extensions[$extensionClass]
+            : null;
     }
 
     protected function loadExtensions()

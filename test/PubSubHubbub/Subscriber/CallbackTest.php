@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Feed\PubSubHubbub\Subscriber;
 
 use ArrayObject;
@@ -13,16 +7,28 @@ use DateInterval;
 use DateTime;
 use Laminas\Db\Adapter\Adapter;
 use Laminas\Db\ResultSet\ResultSet;
+use Laminas\Db\ResultSet\ResultSetInterface;
 use Laminas\Db\TableGateway\TableGateway;
 use Laminas\Feed\PubSubHubbub\AbstractCallback;
 use Laminas\Feed\PubSubHubbub\Exception\ExceptionInterface;
 use Laminas\Feed\PubSubHubbub\HttpResponse;
 use Laminas\Feed\PubSubHubbub\Model;
 use Laminas\Feed\PubSubHubbub\Subscriber\Callback as CallbackSubscriber;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use ReflectionProperty;
 use stdClass;
+
+use function file_get_contents;
+use function fopen;
+use function fwrite;
+use function hash;
+use function rewind;
+use function sprintf;
+use function str_replace;
+use function time;
+use function uniqid;
 
 /**
  * @group Laminas_Feed
@@ -30,47 +36,45 @@ use stdClass;
  */
 class CallbackTest extends TestCase
 {
-    // @codingStandardsIgnoreStart
     /** @var CallbackSubscriber */
-    public $_callback;
-    /** @var \Laminas\Db\Adapter\Adapter|\PHPUnit_Framework_MockObject_MockObject */
-    public $_adapter;
-    /** @var \Laminas\Db\TableGateway\TableGateway|\PHPUnit_Framework_MockObject_MockObject */
-    public $_tableGateway;
-    /** @var \Laminas\Db\ResultSet\ResultSet|\PHPUnit_Framework_MockObject_MockObject */
-    public $_rowset;
+    public $callback;
+    /** @var Adapter&MockObject */
+    public $adapter;
+    /** @var TableGateway&MockObject */
+    public $tableGateway;
+    /** @var ResultSet&MockObject */
+    public $rowset;
     /** @var array */
-    public $_get;
-    // @codingStandardsIgnoreEnd
+    public $get;
 
     /** @var DateTime */
     public $now;
 
     protected function setUp(): void
     {
-        $this->_callback = new CallbackSubscriber();
+        $this->callback = new CallbackSubscriber();
 
-        $this->_adapter      = $this->_getCleanMock(
+        $this->adapter      = $this->getCleanMock(
             Adapter::class
         );
-        $this->_tableGateway = $this->_getCleanMock(
+        $this->tableGateway = $this->getCleanMock(
             TableGateway::class
         );
-        $this->_rowset       = $this->_getCleanMock(
+        $this->rowset       = $this->getCleanMock(
             ResultSet::class
         );
 
-        $this->_tableGateway->expects($this->any())
+        $this->tableGateway->expects($this->any())
             ->method('getAdapter')
-            ->will($this->returnValue($this->_adapter));
-        $storage = new Model\Subscription($this->_tableGateway);
+            ->will($this->returnValue($this->adapter));
+        $storage = new Model\Subscription($this->tableGateway);
 
         $this->now = new DateTime();
         $storage->setNow(clone $this->now);
 
-        $this->_callback->setStorage($storage);
+        $this->callback->setStorage($storage);
 
-        $this->_get = [
+        $this->get = [
             'hub_mode'          => 'subscribe',
             'hub_topic'         => 'http://www.example.com/topic',
             'hub_challenge'     => 'abc',
@@ -103,61 +107,61 @@ class CallbackTest extends TestCase
 
     public function testCanSetHttpResponseObject(): void
     {
-        $this->_callback->setHttpResponse(new HttpResponse());
-        $this->assertInstanceOf(HttpResponse::class, $this->_callback->getHttpResponse());
+        $this->callback->setHttpResponse(new HttpResponse());
+        $this->assertInstanceOf(HttpResponse::class, $this->callback->getHttpResponse());
     }
 
     public function testCanUsesDefaultHttpResponseObject(): void
     {
-        $this->assertInstanceOf(HttpResponse::class, $this->_callback->getHttpResponse());
+        $this->assertInstanceOf(HttpResponse::class, $this->callback->getHttpResponse());
     }
 
     public function testThrowsExceptionOnInvalidHttpResponseObjectSet(): void
     {
         $this->expectException(ExceptionInterface::class);
-        $this->_callback->setHttpResponse(new stdClass());
+        $this->callback->setHttpResponse(new stdClass());
     }
 
     public function testThrowsExceptionIfNonObjectSetAsHttpResponseObject(): void
     {
         $this->expectException(ExceptionInterface::class);
-        $this->_callback->setHttpResponse('');
+        $this->callback->setHttpResponse('');
     }
 
     public function testCanSetSubscriberCount(): void
     {
-        $this->_callback->setSubscriberCount('10000');
-        $this->assertEquals(10000, $this->_callback->getSubscriberCount());
+        $this->callback->setSubscriberCount('10000');
+        $this->assertEquals(10000, $this->callback->getSubscriberCount());
     }
 
     public function testDefaultSubscriberCountIsOne(): void
     {
-        $this->assertEquals(1, $this->_callback->getSubscriberCount());
+        $this->assertEquals(1, $this->callback->getSubscriberCount());
     }
 
     public function testThrowsExceptionOnSettingZeroAsSubscriberCount(): void
     {
         $this->expectException(ExceptionInterface::class);
-        $this->_callback->setSubscriberCount(0);
+        $this->callback->setSubscriberCount(0);
     }
 
     public function testThrowsExceptionOnSettingLessThanZeroAsSubscriberCount(): void
     {
         $this->expectException(ExceptionInterface::class);
-        $this->_callback->setSubscriberCount(-1);
+        $this->callback->setSubscriberCount(-1);
     }
 
     public function testThrowsExceptionOnSettingAnyScalarTypeCastToAZeroOrLessIntegerAsSubscriberCount(): void
     {
         $this->expectException(ExceptionInterface::class);
-        $this->_callback->setSubscriberCount('0aa');
+        $this->callback->setSubscriberCount('0aa');
     }
 
     public function testCanSetStorageImplementation(): void
     {
-        $storage = new Model\Subscription($this->_tableGateway);
-        $this->_callback->setStorage($storage);
-        $this->assertThat($this->_callback->getStorage(), $this->identicalTo($storage));
+        $storage = new Model\Subscription($this->tableGateway);
+        $this->callback->setStorage($storage);
+        $this->assertThat($this->callback->getStorage(), $this->identicalTo($storage));
     }
 
     /**
@@ -172,48 +176,48 @@ class CallbackTest extends TestCase
                 'verify_token' => hash('sha256', 'cba'),
             ]));
 
-        $this->_tableGateway->expects($this->any())
+        $this->tableGateway->expects($this->any())
             ->method('select')
             ->with($this->equalTo(['id' => 'verifytokenkey']))
-            ->will($this->returnValue($this->_rowset));
-        $this->_rowset->expects($this->any())
+            ->will($this->returnValue($this->rowset));
+        $this->rowset->expects($this->any())
             ->method('current')
             ->will($this->returnValue($mockReturnValue));
-        $this->_rowset->expects($this->any())
+        $this->rowset->expects($this->any())
             ->method('count')
             ->will($this->returnValue(1));
 
-        $this->assertTrue($this->_callback->isValidHubVerification($this->_get));
+        $this->assertTrue($this->callback->isValidHubVerification($this->get));
     }
 
     public function testReturnsFalseIfHubVerificationNotAGetRequest(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'POST';
-        $this->assertFalse($this->_callback->isValidHubVerification($this->_get));
+        $this->assertFalse($this->callback->isValidHubVerification($this->get));
     }
 
     public function testReturnsFalseIfModeMissingFromHttpGetData(): void
     {
-        unset($this->_get['hub_mode']);
-        $this->assertFalse($this->_callback->isValidHubVerification($this->_get));
+        unset($this->get['hub_mode']);
+        $this->assertFalse($this->callback->isValidHubVerification($this->get));
     }
 
     public function testReturnsFalseIfTopicMissingFromHttpGetData(): void
     {
-        unset($this->_get['hub_topic']);
-        $this->assertFalse($this->_callback->isValidHubVerification($this->_get));
+        unset($this->get['hub_topic']);
+        $this->assertFalse($this->callback->isValidHubVerification($this->get));
     }
 
     public function testReturnsFalseIfChallengeMissingFromHttpGetData(): void
     {
-        unset($this->_get['hub_challenge']);
-        $this->assertFalse($this->_callback->isValidHubVerification($this->_get));
+        unset($this->get['hub_challenge']);
+        $this->assertFalse($this->callback->isValidHubVerification($this->get));
     }
 
     public function testReturnsFalseIfVerifyTokenMissingFromHttpGetData(): void
     {
-        unset($this->_get['hub_verify_token']);
-        $this->assertFalse($this->_callback->isValidHubVerification($this->_get));
+        unset($this->get['hub_verify_token']);
+        $this->assertFalse($this->callback->isValidHubVerification($this->get));
     }
 
     public function testReturnsTrueIfModeSetAsUnsubscribeFromHttpGetData(): void
@@ -225,64 +229,84 @@ class CallbackTest extends TestCase
                 'verify_token' => hash('sha256', 'cba'),
             ]));
 
-        $this->_get['hub_mode'] = 'unsubscribe';
-        $this->_tableGateway->expects($this->any())
+        $this->get['hub_mode'] = 'unsubscribe';
+        $this->tableGateway->expects($this->any())
             ->method('select')
             ->with($this->equalTo(['id' => 'verifytokenkey']))
-            ->will($this->returnValue($this->_rowset));
-        $this->_rowset->expects($this->any())
+            ->will($this->returnValue($this->rowset));
+        $this->rowset->expects($this->any())
             ->method('current')
             ->will($this->returnValue($mockReturnValue));
         // require for the count call on the rowset in Model/Subscription
-        $this->_rowset->expects($this->any())
+        $this->rowset->expects($this->any())
             ->method('count')
             ->will($this->returnValue(1));
 
-        $this->assertTrue($this->_callback->isValidHubVerification($this->_get));
+        $this->assertTrue($this->callback->isValidHubVerification($this->get));
     }
 
     public function testReturnsFalseIfModeNotRecognisedFromHttpGetData(): void
     {
-        $this->_get['hub_mode'] = 'abc';
-        $this->assertFalse($this->_callback->isValidHubVerification($this->_get));
+        $this->get['hub_mode'] = 'abc';
+        $this->assertFalse($this->callback->isValidHubVerification($this->get));
     }
 
     public function testReturnsFalseIfLeaseSecondsMissedWhenModeIsSubscribeFromHttpGetData(): void
     {
-        unset($this->_get['hub_lease_seconds']);
-        $this->assertFalse($this->_callback->isValidHubVerification($this->_get));
+        unset($this->get['hub_lease_seconds']);
+        $this->assertFalse($this->callback->isValidHubVerification($this->get));
     }
 
     public function testReturnsFalseIfHubTopicInvalidFromHttpGetData(): void
     {
-        $this->_get['hub_topic'] = 'http://';
-        $this->assertFalse($this->_callback->isValidHubVerification($this->_get));
+        $this->get['hub_topic'] = 'http://';
+        $this->assertFalse($this->callback->isValidHubVerification($this->get));
     }
 
     public function testReturnsFalseIfVerifyTokenRecordDoesNotExistForConfirmRequest(): void
     {
-        $this->assertFalse($this->_callback->isValidHubVerification($this->_get));
+        $resultSet = $this->createMock(ResultSetInterface::class);
+        $resultSet
+            ->expects($this->once())
+            ->method('count')
+            ->willReturn(0);
+
+        $this->tableGateway
+            ->expects($this->once())
+            ->method('select')
+            ->with(['id' => 'verifytokenkey'])
+            ->willReturn($resultSet);
+
+        $this->assertFalse($this->callback->isValidHubVerification($this->get));
     }
 
+    /** @todo Determine what this is supposed to actually test */
     public function testReturnsFalseIfVerifyTokenRecordDoesNotAgreeWithConfirmRequest(): void
     {
-        $this->assertFalse($this->_callback->isValidHubVerification($this->_get));
+        $this->markTestSkipped(sprintf(
+            '%s needs to be rewritten, as it has the same setup and expectations of'
+            . ' testReturnsFalseIfVerifyTokenRecordDoesNotExistForConfirmRequest(),'
+            . ' but is clearly meant to test different functionality; unfortunately,'
+            . ' not sure what that is currently',
+            __METHOD__
+        ));
+        $this->assertFalse($this->callback->isValidHubVerification($this->get));
     }
 
     public function testRespondsToInvalidConfirmationWith404Response(): void
     {
-        unset($this->_get['hub_mode']);
-        $this->_callback->handle($this->_get);
-        $this->assertEquals(404, $this->_callback->getHttpResponse()->getStatusCode());
+        unset($this->get['hub_mode']);
+        $this->callback->handle($this->get);
+        $this->assertEquals(404, $this->callback->getHttpResponse()->getStatusCode());
     }
 
     public function testRespondsToValidConfirmationWith200Response(): void
     {
-        $this->_get['hub_mode'] = 'unsubscribe';
-        $this->_tableGateway->expects($this->any())
+        $this->get['hub_mode'] = 'unsubscribe';
+        $this->tableGateway->expects($this->any())
             ->method('select')
             ->with($this->equalTo(['id' => 'verifytokenkey']))
-            ->will($this->returnValue($this->_rowset));
+            ->will($this->returnValue($this->rowset));
 
         $t       = clone $this->now;
         $rowdata = [
@@ -294,29 +318,29 @@ class CallbackTest extends TestCase
 
         $row = new ArrayObject($rowdata, ArrayObject::ARRAY_AS_PROPS);
 
-        $this->_rowset->expects($this->any())
+        $this->rowset->expects($this->any())
             ->method('current')
             ->will($this->returnValue($row));
         // require for the count call on the rowset in Model/Subscription
-        $this->_rowset->expects($this->any())
+        $this->rowset->expects($this->any())
             ->method('count')
             ->will($this->returnValue(1));
 
-        $this->_tableGateway->expects($this->once())
+        $this->tableGateway->expects($this->once())
             ->method('delete')
             ->with($this->equalTo(['id' => 'verifytokenkey']))
             ->will($this->returnValue(true));
 
-        $this->_callback->handle($this->_get);
-        $this->assertEquals(200, $this->_callback->getHttpResponse()->getStatusCode());
+        $this->callback->handle($this->get);
+        $this->assertEquals(200, $this->callback->getHttpResponse()->getStatusCode());
     }
 
     public function testRespondsToValidConfirmationWithBodyContainingHubChallenge(): void
     {
-        $this->_tableGateway->expects($this->any())
+        $this->tableGateway->expects($this->any())
             ->method('select')
             ->with($this->equalTo(['id' => 'verifytokenkey']))
-            ->will($this->returnValue($this->_rowset));
+            ->will($this->returnValue($this->rowset));
 
         $t       = clone $this->now;
         $rowdata = [
@@ -328,15 +352,15 @@ class CallbackTest extends TestCase
 
         $row = new ArrayObject($rowdata, ArrayObject::ARRAY_AS_PROPS);
 
-        $this->_rowset->expects($this->any())
+        $this->rowset->expects($this->any())
             ->method('current')
             ->will($this->returnValue($row));
         // require for the count call on the rowset in Model/Subscription
-        $this->_rowset->expects($this->any())
+        $this->rowset->expects($this->any())
             ->method('count')
             ->will($this->returnValue(1));
 
-        $this->_tableGateway->expects($this->once())
+        $this->tableGateway->expects($this->once())
             ->method('update')
             ->with(
                 $this->equalTo([
@@ -350,8 +374,8 @@ class CallbackTest extends TestCase
                 $this->equalTo(['id' => 'verifytokenkey'])
             );
 
-        $this->_callback->handle($this->_get);
-        $this->assertEquals('abc', $this->_callback->getHttpResponse()->getContent());
+        $this->callback->handle($this->get);
+        $this->assertEquals('abc', $this->callback->getHttpResponse()->getContent());
     }
 
     public function testRespondsToValidFeedUpdateRequestWith200Response(): void
@@ -361,12 +385,12 @@ class CallbackTest extends TestCase
         $_SERVER['CONTENT_TYPE']   = 'application/atom+xml';
         $feedXml                   = file_get_contents(__DIR__ . '/_files/atom10.xml');
 
-        $this->mockInputStream($this->_callback, $feedXml);
+        $this->mockInputStream($this->callback, $feedXml);
 
-        $this->_tableGateway->expects($this->any())
+        $this->tableGateway->expects($this->any())
             ->method('select')
             ->with($this->equalTo(['id' => 'verifytokenkey']))
-            ->will($this->returnValue($this->_rowset));
+            ->will($this->returnValue($this->rowset));
 
         $rowdata = [
             'id'           => 'verifytokenkey',
@@ -376,16 +400,16 @@ class CallbackTest extends TestCase
 
         $row = new ArrayObject($rowdata, ArrayObject::ARRAY_AS_PROPS);
 
-        $this->_rowset->expects($this->any())
+        $this->rowset->expects($this->any())
             ->method('current')
             ->will($this->returnValue($row));
         // require for the count call on the rowset in Model/Subscription
-        $this->_rowset->expects($this->any())
+        $this->rowset->expects($this->any())
             ->method('count')
             ->will($this->returnValue(1));
 
-        $this->_callback->handle([]);
-        $this->assertEquals(200, $this->_callback->getHttpResponse()->getStatusCode());
+        $this->callback->handle([]);
+        $this->assertEquals(200, $this->callback->getHttpResponse()->getStatusCode());
     }
 
     public function testRespondsToInvalidFeedUpdateNotPostWith404Response(): void
@@ -396,10 +420,10 @@ class CallbackTest extends TestCase
         $_SERVER['CONTENT_TYPE']   = 'application/atom+xml';
         $feedXml                   = file_get_contents(__DIR__ . '/_files/atom10.xml');
 
-        $this->mockInputStream($this->_callback, $feedXml);
+        $this->mockInputStream($this->callback, $feedXml);
 
-        $this->_callback->handle([]);
-        $this->assertEquals(404, $this->_callback->getHttpResponse()->getStatusCode());
+        $this->callback->handle([]);
+        $this->assertEquals(404, $this->callback->getHttpResponse()->getStatusCode());
     }
 
     public function testRespondsToInvalidFeedUpdateWrongMimeWith404Response(): void
@@ -409,10 +433,22 @@ class CallbackTest extends TestCase
         $_SERVER['CONTENT_TYPE']   = 'application/kml+xml';
         $feedXml                   = file_get_contents(__DIR__ . '/_files/atom10.xml');
 
-        $this->mockInputStream($this->_callback, $feedXml);
+        $this->mockInputStream($this->callback, $feedXml);
 
-        $this->_callback->handle([]);
-        $this->assertEquals(404, $this->_callback->getHttpResponse()->getStatusCode());
+        $resultSet = $this->createMock(ResultSetInterface::class);
+        $resultSet
+            ->expects($this->once())
+            ->method('count')
+            ->willReturn(1);
+
+        $this->tableGateway
+            ->expects($this->once())
+            ->method('select')
+            ->with(['id' => 'verifytokenkey'])
+            ->willReturn($resultSet);
+
+        $this->callback->handle([]);
+        $this->assertEquals(404, $this->callback->getHttpResponse()->getStatusCode());
     }
 
     /**
@@ -428,12 +464,12 @@ class CallbackTest extends TestCase
         $_SERVER['CONTENT_TYPE']   = 'application/rss+xml';
         $feedXml                   = file_get_contents(__DIR__ . '/_files/atom10.xml');
 
-        $this->mockInputStream($this->_callback, $feedXml);
+        $this->mockInputStream($this->callback, $feedXml);
 
-        $this->_tableGateway->expects($this->any())
+        $this->tableGateway->expects($this->any())
             ->method('select')
             ->with($this->equalTo(['id' => 'verifytokenkey']))
-            ->will($this->returnValue($this->_rowset));
+            ->will($this->returnValue($this->rowset));
 
         $rowdata = [
             'id'            => 'verifytokenkey',
@@ -444,16 +480,16 @@ class CallbackTest extends TestCase
 
         $row = new ArrayObject($rowdata, ArrayObject::ARRAY_AS_PROPS);
 
-        $this->_rowset->expects($this->any())
+        $this->rowset->expects($this->any())
             ->method('current')
             ->will($this->returnValue($row));
         // require for the count call on the rowset in Model/Subscription
-        $this->_rowset->expects($this->any())
+        $this->rowset->expects($this->any())
             ->method('count')
             ->will($this->returnValue(1));
 
-        $this->_callback->handle([]);
-        $this->assertEquals(200, $this->_callback->getHttpResponse()->getStatusCode());
+        $this->callback->handle([]);
+        $this->assertEquals(200, $this->callback->getHttpResponse()->getStatusCode());
     }
 
     public function testRespondsToValidFeedUpdateWithXHubOnBehalfOfHeader(): void
@@ -463,12 +499,12 @@ class CallbackTest extends TestCase
         $_SERVER['CONTENT_TYPE']   = 'application/atom+xml';
         $feedXml                   = file_get_contents(__DIR__ . '/_files/atom10.xml');
 
-        $this->mockInputStream($this->_callback, $feedXml);
+        $this->mockInputStream($this->callback, $feedXml);
 
-        $this->_tableGateway->expects($this->any())
+        $this->tableGateway->expects($this->any())
             ->method('select')
             ->with($this->equalTo(['id' => 'verifytokenkey']))
-            ->will($this->returnValue($this->_rowset));
+            ->will($this->returnValue($this->rowset));
 
         $rowdata = [
             'id'            => 'verifytokenkey',
@@ -479,38 +515,36 @@ class CallbackTest extends TestCase
 
         $row = new ArrayObject($rowdata, ArrayObject::ARRAY_AS_PROPS);
 
-        $this->_rowset->expects($this->any())
+        $this->rowset->expects($this->any())
             ->method('current')
             ->will($this->returnValue($row));
         // require for the count call on the rowset in Model/Subscription
-        $this->_rowset->expects($this->any())
+        $this->rowset->expects($this->any())
             ->method('count')
             ->will($this->returnValue(1));
 
-        $this->_callback->handle([]);
-        $this->assertEquals(1, $this->_callback->getHttpResponse()->getHeader('X-Hub-On-Behalf-Of'));
+        $this->callback->handle([]);
+        $this->assertEquals(1, $this->callback->getHttpResponse()->getHeader('X-Hub-On-Behalf-Of'));
     }
 
-    // @codingStandardsIgnoreStart
-    protected function _getCleanMock(string $className): \PHPUnit\Framework\MockObject\MockObject
+    protected function getCleanMock(string $className): MockObject
     {
-        // @codingStandardsIgnoreEnd
         $class       = new ReflectionClass($className);
         $methods     = $class->getMethods();
         $stubMethods = [];
         foreach ($methods as $method) {
-            if ($method->isPublic()
+            if (
+                $method->isPublic()
                 || ($method->isProtected() && $method->isAbstract())
             ) {
                 $stubMethods[] = $method->getName();
             }
         }
-        $mocked = $this->getMockBuilder($className)
+        return $this->getMockBuilder($className)
             ->setMethods($stubMethods)
             ->setConstructorArgs([])
             ->setMockClassName(str_replace('\\', '_', $className . '_PubsubSubscriberMock_' . uniqid()))
             ->disableOriginalConstructor()
             ->getMock();
-        return $mocked;
     }
 }

@@ -1,15 +1,12 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Feed\Reader\Integration;
 
 use Laminas\Feed\Reader;
 use PHPUnit\Framework\TestCase;
+
+use function dirname;
+use function file_get_contents;
 
 /**
  * @group Laminas_Feed
@@ -17,6 +14,7 @@ use PHPUnit\Framework\TestCase;
  */
 class HOnlineComAtom10Test extends TestCase
 {
+    /** @var string */
     protected $feedSamplePath;
 
     protected function setUp(): void
@@ -99,7 +97,6 @@ class HOnlineComAtom10Test extends TestCase
 
     /**
      * Entry level testing
-     *
      */
     public function testGetsEntryId(): void
     {

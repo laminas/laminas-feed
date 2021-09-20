@@ -1,17 +1,18 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Feed\Writer;
 
 use Laminas\Feed\Writer\Exception\InvalidArgumentException;
 
+use function array_key_exists;
+use function is_a;
+use function is_string;
+use function sprintf;
+use function substr;
+
 class StandaloneExtensionManager implements ExtensionManagerInterface
 {
+    /** @var array<string, class-string> */
     private $extensions = [
         'Atom\Renderer\Feed'               => Extension\Atom\Renderer\Feed::class,
         'Content\Renderer\Entry'           => Extension\Content\Renderer\Entry::class,
@@ -62,11 +63,13 @@ class StandaloneExtensionManager implements ExtensionManagerInterface
      *
      * @param string $name
      * @param string $class
+     * @psalm-param class-string $class
      * @return void
      */
     public function add($name, $class)
     {
-        if (is_string($class)
+        if (
+            is_string($class)
             && (is_a($class, Extension\AbstractRenderer::class, true)
                 || 'Feed' === substr($class, -4)
                 || 'Entry' === substr($class, -5))

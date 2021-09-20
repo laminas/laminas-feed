@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Feed\Reader\Http;
 
 use Psr\Http\Message\ResponseInterface as Psr7ResponseInterface;
@@ -15,9 +9,7 @@ use Psr\Http\Message\ResponseInterface as Psr7ResponseInterface;
  */
 class Psr7ResponseDecorator implements HeaderAwareResponseInterface
 {
-    /**
-     * @var Psr7ResponseInterface
-     */
+    /** @var Psr7ResponseInterface */
     private $decoratedResponse;
 
     public function __construct(Psr7ResponseInterface $response)

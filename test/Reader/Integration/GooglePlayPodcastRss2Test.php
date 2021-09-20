@@ -1,19 +1,18 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Feed\Reader\Integration;
 
 use Laminas\Feed\Reader;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class GoolePlayPodcastRss2Test extends TestCase
+use function dirname;
+use function file_get_contents;
+use function str_replace;
+
+class GooglePlayPodcastRss2Test extends TestCase
 {
+    /** @var string */
     protected $feedSamplePath;
 
     protected function setUp(): void
@@ -24,7 +23,6 @@ class GoolePlayPodcastRss2Test extends TestCase
 
     /**
      * Feed level testing
-     *
      */
     public function testGetsNewFeedUrl(): void
     {
@@ -166,7 +164,6 @@ class GoolePlayPodcastRss2Test extends TestCase
 
     /**
      * Entry level testing
-     *
      */
     public function testGetsEntryBlock(): void
     {

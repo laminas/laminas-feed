@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Feed\Reader\Extension\GooglePlayPodcast;
 
 use DOMText;
@@ -74,11 +68,9 @@ class Feed extends Extension\AbstractFeed
 
         if ($categoryList->length > 0) {
             foreach ($categoryList as $node) {
-                $children = null;
+                $children = [];
 
                 if ($node->childNodes->length > 0) {
-                    $children = [];
-
                     foreach ($node->childNodes as $childNode) {
                         if (! $childNode instanceof DOMText) {
                             $children[$childNode->getAttribute('text')] = null;
@@ -86,7 +78,7 @@ class Feed extends Extension\AbstractFeed
                     }
                 }
 
-                $categories[$node->getAttribute('text')] = $children;
+                $categories[$node->getAttribute('text')] = $children === [] ? null : $children;
             }
         }
 

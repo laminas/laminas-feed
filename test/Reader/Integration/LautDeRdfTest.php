@@ -1,15 +1,12 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Feed\Reader\Integration;
 
 use Laminas\Feed\Reader;
 use PHPUnit\Framework\TestCase;
+
+use function dirname;
+use function file_get_contents;
 
 /**
  * @group Laminas_Feed
@@ -17,6 +14,7 @@ use PHPUnit\Framework\TestCase;
  */
 class LautDeRdfTest extends TestCase
 {
+    /** @var string */
     protected $feedSamplePath;
 
     protected function setUp(): void
@@ -27,7 +25,6 @@ class LautDeRdfTest extends TestCase
 
     /**
      * Feed level testing
-     *
      */
     public function testGetsTitle(): void
     {
@@ -95,7 +92,6 @@ class LautDeRdfTest extends TestCase
 
     /**
      * Entry level testing
-     *
      */
     public function testGetsEntryId(): void
     {
@@ -138,6 +134,7 @@ class LautDeRdfTest extends TestCase
     // broken itself, or b) We should consider a fix in the future for similar feeds such
     // as using a more limited XML based decoding method (not html_entity_decode())
 
+    // phpcs:ignore Squiz.Commenting.FunctionComment.WrongStyle
     public function testGetsEntryDescription(): void
     {
         $feed  = Reader\Reader::importString(

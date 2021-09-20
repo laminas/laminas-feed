@@ -1,17 +1,34 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Feed\Writer\Extension\ITunes;
 
 use Laminas\Feed\Uri;
 use Laminas\Feed\Writer;
 use Laminas\Stdlib\StringUtils;
 use Laminas\Stdlib\StringWrapper\StringWrapperInterface;
+
+use function array_key_exists;
+use function count;
+use function ctype_alpha;
+use function ctype_digit;
+use function get_class;
+use function implode;
+use function in_array;
+use function is_array;
+use function is_bool;
+use function is_object;
+use function is_string;
+use function lcfirst;
+use function method_exists;
+use function preg_match;
+use function sprintf;
+use function strlen;
+use function substr;
+use function trigger_error;
+use function ucfirst;
+use function var_export;
+
+use const E_USER_DEPRECATED;
 
 class Feed
 {
@@ -67,10 +84,8 @@ class Feed
     /**
      * Set a block value of "yes" or "no". You may also set an empty string.
      *
-     * @param string
-     *
+     * @param string $value
      * @return self
-     *
      * @throws Writer\Exception\InvalidArgumentException
      */
     public function setItunesBlock($value)
@@ -197,7 +212,8 @@ class Feed
     public function setItunesDuration($value)
     {
         $value = (string) $value;
-        if (! ctype_digit($value)
+        if (
+            ! ctype_digit($value)
             && ! preg_match('/^\d+:[0-5]{1}[0-9]{1}$/', $value)
             && ! preg_match('/^\d+:[0-5]{1}[0-9]{1}:[0-5]{1}[0-9]{1}$/', $value)
         ) {
@@ -247,6 +263,8 @@ class Feed
      *
      * @deprecated since 2.10.0; itunes:keywords is no longer part of the
      *     iTunes podcast RSS specification.
+     *
+     * @param string[] $value
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
@@ -255,7 +273,7 @@ class Feed
         trigger_error(
             'itunes:keywords has been deprecated in the iTunes podcast RSS specification,'
             . ' and should not be relied on.',
-            \E_USER_DEPRECATED
+            E_USER_DEPRECATED
         );
 
         if (count($value) > 12) {
@@ -319,7 +337,8 @@ class Feed
                 'invalid parameter: any "owner" must be an array containing keys "name" and "email"'
             );
         }
-        if ($this->stringWrapper->strlen($value['name']) > 255
+        if (
+            $this->stringWrapper->strlen($value['name']) > 255
             || $this->stringWrapper->strlen($value['email']) > 255
         ) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -425,7 +444,8 @@ class Feed
     public function __call($method, array $params)
     {
         $point = lcfirst(substr($method, 9));
-        if (! method_exists($this, 'setItunes' . ucfirst($point))
+        if (
+            ! method_exists($this, 'setItunes' . ucfirst($point))
             && ! method_exists($this, 'addItunes' . ucfirst($point))
         ) {
             throw new Writer\Exception\BadMethodCallException(

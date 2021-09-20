@@ -1,15 +1,20 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Feed\Writer;
 
 use Countable;
 use Iterator;
+// phpcs:ignore SlevomatCodingStandard.Namespaces.UnusedUses.UnusedUse
+use ReturnTypeWillChange;
+
+use function array_values;
+use function count;
+use function krsort;
+use function strtolower;
+use function time;
+use function ucfirst;
+
+use const SORT_NUMERIC;
 
 class Feed extends AbstractFeed implements Iterator, Countable
 {
@@ -64,9 +69,10 @@ class Feed extends AbstractFeed implements Iterator, Countable
      */
     public function createTombstone()
     {
-        $deleted = new Deleted();
-        if ($this->getEncoding()) {
-            $deleted->setEncoding($this->getEncoding());
+        $deleted  = new Deleted();
+        $encoding = $this->getEncoding();
+        if (null !== $encoding) {
+            $deleted->setEncoding($encoding);
         }
         $deleted->setType($this->getType());
         return $deleted;
@@ -154,6 +160,7 @@ class Feed extends AbstractFeed implements Iterator, Countable
      *
      * @return int
      */
+    #[ReturnTypeWillChange]
     public function count()
     {
         return count($this->entries);
@@ -164,6 +171,7 @@ class Feed extends AbstractFeed implements Iterator, Countable
      *
      * @return Entry
      */
+    #[ReturnTypeWillChange]
     public function current()
     {
         return $this->entries[$this->key()];
@@ -174,6 +182,7 @@ class Feed extends AbstractFeed implements Iterator, Countable
      *
      * @return mixed
      */
+    #[ReturnTypeWillChange]
     public function key()
     {
         return $this->entriesKey;
@@ -184,6 +193,7 @@ class Feed extends AbstractFeed implements Iterator, Countable
      *
      * @return void
      */
+    #[ReturnTypeWillChange]
     public function next()
     {
         ++$this->entriesKey;
@@ -194,6 +204,7 @@ class Feed extends AbstractFeed implements Iterator, Countable
      *
      * @return void
      */
+    #[ReturnTypeWillChange]
     public function rewind()
     {
         $this->entriesKey = 0;
@@ -204,6 +215,7 @@ class Feed extends AbstractFeed implements Iterator, Countable
      *
      * @return bool
      */
+    #[ReturnTypeWillChange]
     public function valid()
     {
         return 0 <= $this->entriesKey && $this->entriesKey < $this->count();

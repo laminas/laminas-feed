@@ -1,10 +1,4 @@
-<?php
-
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
+<?php // phpcs:disable Squiz.Commenting.FunctionComment.WrongStyle
 
 namespace LaminasTest\Feed\Reader\Entry;
 
@@ -14,18 +8,27 @@ use Laminas\Feed\Reader;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
+use function array_values;
+use function assert;
+use function dirname;
+use function file_get_contents;
+
 /**
  * @group Laminas_Feed
  * @group Laminas_Feed_Reader
  */
 class RssTest extends TestCase
 {
+    /** @var string */
     protected $feedSamplePath;
 
+    /** @var array<array-key, array<string, null|string>> */
     protected $expectedCats = [];
 
+    /** @var array<array-key, array<string, null|string>> */
     protected $expectedCatsRdf = [];
 
+    /** @var array<array-key, array<string, null|string>> */
     protected $expectedCatsAtom = [];
 
     protected function setUp(): void
@@ -83,7 +86,6 @@ class RssTest extends TestCase
 
     /**
      * Get Id (Unencoded Text)
-     *
      */
     public function testGetsIdFromRss20(): void
     {
@@ -410,7 +412,6 @@ class RssTest extends TestCase
 
     /**
      * Get Title (Unencoded Text)
-     *
      */
     public function testGetsTitleFromRss20(): void
     {
@@ -672,7 +673,6 @@ class RssTest extends TestCase
 
     /**
      * Get Authors (Unencoded Text)
-     *
      */
     public function testGetsAuthorsFromRss20(): void
     {
@@ -994,7 +994,6 @@ class RssTest extends TestCase
 
     /**
      * Get Author (Unencoded Text)
-     *
      */
     public function testGetsAuthorFromRss20(): void
     {
@@ -1256,7 +1255,6 @@ class RssTest extends TestCase
 
     /**
      * Get Description (Unencoded Text)
-     *
      */
     public function testGetsDescriptionFromRss20(): void
     {
@@ -1518,7 +1516,6 @@ class RssTest extends TestCase
 
     /**
      * Get enclosure
-     *
      */
     public function testGetsEnclosureFromRss20(): void
     {
@@ -1546,7 +1543,6 @@ class RssTest extends TestCase
 
     /**
      * Get Content (Unencoded Text)
-     *
      */
     public function testGetsContentFromRss20(): void
     {
@@ -1743,7 +1739,6 @@ class RssTest extends TestCase
 
     /**
      * Get Link (Unencoded Text)
-     *
      */
     public function testGetsLinkFromRss20(): void
     {
@@ -1877,9 +1872,8 @@ class RssTest extends TestCase
      * Get DateModified (Unencoded Text)
      *
      * @dataProvider dateModifiedProvider
-     *
      */
-    public function testGetsDateModified($path, $edate): void
+    public function testGetsDateModified(string $path, ?DateTimeInterface $edate): void
     {
         $feed  = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . $path)
@@ -1896,7 +1890,7 @@ class RssTest extends TestCase
     {
         $iso = DateTime::createFromFormat(DateTimeInterface::ISO8601, '2009-03-07T08:03:50Z');
         assert($iso instanceof DateTimeInterface);
-        $us  = DateTime::createFromFormat(DateTimeInterface::ISO8601, '2010-01-04T02:14:00-0600');
+        $us = DateTime::createFromFormat(DateTimeInterface::ISO8601, '2010-01-04T02:14:00-0600');
         assert($us instanceof DateTimeInterface);
         $rss = DateTime::createFromFormat(DateTimeInterface::RSS, 'Sun, 11 Jan 2009 09:55:59 GMT');
         assert($rss instanceof DateTimeInterface);
@@ -2191,7 +2185,6 @@ class RssTest extends TestCase
 
     /**
      * Get CommentLink (Unencoded Text)
-     *
      */
     public function testGetsCommentLinkFromRss20(): void
     {
@@ -2370,7 +2363,6 @@ class RssTest extends TestCase
 
     /**
      * Get CommentFeedLink (Unencoded Text)
-     *
      */
     public function testGetsCommentFeedLinkFromRss20WellFormedWeb10(): void
     {
@@ -2567,7 +2559,6 @@ class RssTest extends TestCase
 
     /**
      * Get category data
-     *
      */
     public function testGetsCategoriesFromRss20(): void
     {

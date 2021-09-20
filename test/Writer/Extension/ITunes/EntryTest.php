@@ -1,16 +1,17 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Feed\Writer\Extension\ITunes;
 
 use Laminas\Feed\Writer;
 use Laminas\Feed\Writer\Exception\ExceptionInterface;
 use PHPUnit\Framework\TestCase;
+
+use function preg_match;
+use function restore_error_handler;
+use function set_error_handler;
+use function str_repeat;
+
+use const E_USER_DEPRECATED;
 
 /**
  * @group Laminas_Feed
@@ -110,7 +111,6 @@ class EntryTest extends TestCase
 
     /**
      * @dataProvider dataProviderForSetExplicit
-     *
      * @param string|bool $value
      * @param string      $result
      */
@@ -121,7 +121,8 @@ class EntryTest extends TestCase
         $this->assertEquals($result, $entry->getItunesExplicit());
     }
 
-    public function dataProviderForSetExplicit()
+    /** @psalm-return array<array-key, array{0: bool|string, 1: string}> */
+    public function dataProviderForSetExplicit(): array
     {
         return [
             // Current behaviour
@@ -162,9 +163,10 @@ class EntryTest extends TestCase
         $entry = new Writer\Entry();
         $words = ['a1', 'a2', 'a3', 'a4', 'a5', 'a6', 'a7', 'a8', 'a9', 'a10', 'a11', 'a12'];
 
-        set_error_handler(static function ($errno, $errstr) {
+        /** @psalm-suppress UnusedClosureParam */
+        set_error_handler(static function (int $errno, string $errstr): bool {
             return (bool) preg_match('/itunes:keywords/', $errstr);
-        }, \E_USER_DEPRECATED);
+        }, E_USER_DEPRECATED);
         $entry->setItunesKeywords($words);
         restore_error_handler();
 
@@ -176,9 +178,10 @@ class EntryTest extends TestCase
         $entry = new Writer\Entry();
         $words = ['a1', 'a2', 'a3', 'a4', 'a5', 'a6', 'a7', 'a8', 'a9', 'a10', 'a11', 'a12', 'a13'];
 
-        set_error_handler(static function ($errno, $errstr) {
+        /** @psalm-suppress UnusedClosureParam */
+        set_error_handler(static function (int $errno, string $errstr): bool {
             return (bool) preg_match('/itunes:keywords/', $errstr);
-        }, \E_USER_DEPRECATED);
+        }, E_USER_DEPRECATED);
 
         try {
             $this->expectException(ExceptionInterface::class);
@@ -196,9 +199,10 @@ class EntryTest extends TestCase
             str_repeat('b', 2),
         ];
 
-        set_error_handler(static function ($errno, $errstr) {
+        /** @psalm-suppress UnusedClosureParam */
+        set_error_handler(static function (int $errno, string $errstr): bool {
             return (bool) preg_match('/itunes:keywords/', $errstr);
-        }, \E_USER_DEPRECATED);
+        }, E_USER_DEPRECATED);
 
         try {
             $this->expectException(ExceptionInterface::class);
@@ -253,27 +257,27 @@ class EntryTest extends TestCase
         $entry->setItunesSummary(str_repeat('a', 4001));
     }
 
-    public function invalidImageUrls()
+    /** @psalm-return array<string, array{0: mixed}> */
+    public function invalidImageUrls(): array
     {
         return [
-            'null' => [null],
-            'true' => [true],
-            'false' => [false],
-            'zero' => [0],
-            'int' => [1],
-            'zero-float' => [0.0],
-            'float' => [1.1],
-            'string' => ['scheme:/host.path'],
+            'null'                  => [null],
+            'true'                  => [true],
+            'false'                 => [false],
+            'zero'                  => [0],
+            'int'                   => [1],
+            'zero-float'            => [0.0],
+            'float'                 => [1.1],
+            'string'                => ['scheme:/host.path'],
             'invalid-extension-gif' => ['https://example.com/image.gif', 'file extension'],
-            'invalid-extension-uc' => ['https://example.com/image.PNG', 'file extension'],
-            'array' => [['https://example.com/image.png']],
-            'object' => [(object) ['image' => 'https://example.com/image.png']],
+            'invalid-extension-uc'  => ['https://example.com/image.PNG', 'file extension'],
+            'array'                 => [['https://example.com/image.png']],
+            'object'                => [(object) ['image' => 'https://example.com/image.png']],
         ];
     }
 
     /**
      * @dataProvider invalidImageUrls
-     *
      * @param mixed  $url
      * @param string $expectedMessage
      */
@@ -286,7 +290,8 @@ class EntryTest extends TestCase
         $entry->setItunesImage($url);
     }
 
-    public function validImageUrls()
+    /** @psalm-return array<string, array{0: string}> */
+    public function validImageUrls(): array
     {
         return [
             'jpg' => ['https://example.com/image.jpg'],
@@ -296,7 +301,6 @@ class EntryTest extends TestCase
 
     /**
      * @dataProvider validImageUrls
-     *
      * @param string $url
      */
     public function testSetItunesImageSetsInternalDataWithValidUrl($url)
@@ -306,23 +310,23 @@ class EntryTest extends TestCase
         $this->assertEquals($url, $entry->getItunesImage());
     }
 
-    public function nonNumericEpisodeNumbers()
+    /** @psalm-return array<string, array{0: mixed}> */
+    public function nonNumericEpisodeNumbers(): array
     {
         return [
-            'null' => [null],
-            'true' => [true],
-            'false' => [false],
+            'null'       => [null],
+            'true'       => [true],
+            'false'      => [false],
             'zero-float' => [0.000],
-            'float' => [1.1],
-            'string' => ['not-a-number'],
-            'array' => [[1]],
-            'object' => [(object) ['number' => 1]],
+            'float'      => [1.1],
+            'string'     => ['not-a-number'],
+            'array'      => [[1]],
+            'object'     => [(object) ['number' => 1]],
         ];
     }
 
     /**
      * @dataProvider nonNumericEpisodeNumbers
-     *
      * @param mixed $number
      */
     public function testSetEpisodeRaisesExceptionForNonNumericEpisodeNumbers($number)
@@ -341,25 +345,25 @@ class EntryTest extends TestCase
         $this->assertEquals(42, $entry->getItunesEpisode());
     }
 
-    public function invalidEpisodeTypes()
+    /** @psalm-return array<string, array{0: mixed}> */
+    public function invalidEpisodeTypes(): array
     {
         return [
-            'null' => [null],
-            'true' => [true],
-            'false' => [false],
-            'zero' => [0],
-            'int' => [1],
+            'null'       => [null],
+            'true'       => [true],
+            'false'      => [false],
+            'zero'       => [0],
+            'int'        => [1],
             'zero-float' => [0.0],
-            'float' => [1.1],
-            'string' => ['not-a-type'],
-            'array' => [['full']],
-            'object' => [(object) ['type' => 'full']],
+            'float'      => [1.1],
+            'string'     => ['not-a-type'],
+            'array'      => [['full']],
+            'object'     => [(object) ['type' => 'full']],
         ];
     }
 
     /**
      * @dataProvider invalidEpisodeTypes
-     *
      * @param mixed $type
      */
     public function testSetEpisodeTypeRaisesExceptionForInvalidTypes($type)
@@ -371,18 +375,18 @@ class EntryTest extends TestCase
         $entry->setItunesEpisodeType($type);
     }
 
-    public function validEpisodeTypes()
+    /** @psalm-return array<string, array{0: string}> */
+    public function validEpisodeTypes(): array
     {
         return [
-            'full' => ['full'],
+            'full'    => ['full'],
             'trailer' => ['trailer'],
-            'bonus' => ['bonus'],
+            'bonus'   => ['bonus'],
         ];
     }
 
     /**
      * @dataProvider validEpisodeTypes
-     *
      * @param string $type
      */
     public function testEpisodeTypeMaybeMutatedWithAcceptedValues($type)
@@ -392,23 +396,23 @@ class EntryTest extends TestCase
         $this->assertEquals($type, $entry->getItunesEpisodeType());
     }
 
-    public function invalidClosedCaptioningFlags()
+    /** @psalm-return array<string, array{0: mixed}> */
+    public function invalidClosedCaptioningFlags(): array
     {
         return [
-            'null' => [null],
-            'zero' => [0],
-            'int' => [1],
+            'null'       => [null],
+            'zero'       => [0],
+            'int'        => [1],
             'zero-float' => [0.0],
-            'float' => [1.1],
-            'string' => ['Yes'],
-            'array' => [['Yes']],
-            'object' => [(object) ['isClosedCaptioned' => 'Yes']],
+            'float'      => [1.1],
+            'string'     => ['Yes'],
+            'array'      => [['Yes']],
+            'object'     => [(object) ['isClosedCaptioned' => 'Yes']],
         ];
     }
 
     /**
      * @dataProvider invalidClosedCaptioningFlags
-     *
      * @param mixed $status
      */
     public function testSettingClosedCaptioningToNonBooleanRaisesException($status)
@@ -436,7 +440,6 @@ class EntryTest extends TestCase
 
     /**
      * @dataProvider nonNumericEpisodeNumbers
-     *
      * @param mixed $number
      */
     public function testSetSeasonRaisesExceptionForNonNumericSeasonNumbers($number)

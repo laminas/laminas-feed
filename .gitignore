@@ -1,5 +1,6 @@
+/.phpcs-cache
 /.phpunit.result.cache
-/.psalm-cache
+/.psalm-cache/
 /clover.xml
 /coveralls-upload.json
 /docs/html/

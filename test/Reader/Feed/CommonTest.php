@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Feed\Reader\Feed;
 
 use DOMDocument;
@@ -15,12 +9,17 @@ use Laminas\Feed\Reader;
 use Laminas\Feed\Reader\Extension\Atom\Feed;
 use PHPUnit\Framework\TestCase;
 
+use function dirname;
+use function file_get_contents;
+use function str_replace;
+
 /**
  * @group Laminas_Feed
  * @group Reader\Reader
  */
 class CommonTest extends TestCase
 {
+    /** @var string */
     protected $feedSamplePath;
 
     protected function setUp(): void
@@ -31,7 +30,6 @@ class CommonTest extends TestCase
 
     /**
      * Check DOM Retrieval and Information Methods
-     *
      */
     public function testGetsDomDocumentObject(): void
     {
@@ -93,7 +91,6 @@ class CommonTest extends TestCase
 
     /**
      * @group Laminas-8213
-     *
      */
     public function testReturnsEncodingOfFeed(): void
     {
@@ -105,7 +102,6 @@ class CommonTest extends TestCase
 
     /**
      * @group Laminas-8213
-     *
      */
     public function testReturnsEncodingOfFeedAsUtf8IfUndefined(): void
     {

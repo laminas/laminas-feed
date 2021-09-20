@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Feed\Reader;
 
 interface ReaderImportInterface
@@ -32,7 +26,7 @@ interface ReaderImportInterface
      *
      * @param  string $uri
      * @return self
-     * @throws Exception\RuntimeException if response is not an Http\ResponseInterface
+     * @throws Exception\RuntimeException If response is not an Http\ResponseInterface.
      */
     public static function importRemoteFeed($uri, Http\ClientInterface $client);
 

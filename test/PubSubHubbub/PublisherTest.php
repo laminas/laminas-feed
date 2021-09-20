@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Feed\PubSubHubbub;
 
 use Laminas\Feed\PubSubHubbub\Exception\ExceptionInterface;
@@ -303,7 +297,7 @@ class PublisherTest extends TestCase
     public function testNotifiesHubAndReportsSuccess(): void
     {
         PubSubHubbub::setHttpClient($this->getClientSuccess());
-        $client = PubSubHubbub::getHttpClient();
+
         $this->publisher->addHubUrl('http://www.example.com/hub');
         $this->publisher->addUpdatedTopicUrl('http://www.example.com/topic');
         $this->publisher->setParameter('foo', 'bar');
@@ -314,7 +308,7 @@ class PublisherTest extends TestCase
     public function testNotifiesHubAndReportsFail(): void
     {
         PubSubHubbub::setHttpClient($this->getClientFail());
-        $client = PubSubHubbub::getHttpClient();
+
         $this->publisher->addHubUrl('http://www.example.com/hub');
         $this->publisher->addUpdatedTopicUrl('http://www.example.com/topic');
         $this->publisher->setParameter('foo', 'bar');

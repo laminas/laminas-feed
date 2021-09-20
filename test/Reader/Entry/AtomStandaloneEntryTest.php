@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Feed\Reader\Entry;
 
 use DateTime;
@@ -14,16 +8,23 @@ use Laminas\Feed\Reader\Entry\Atom;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
+use function array_values;
+use function dirname;
+use function file_get_contents;
+
 /**
  * @group Laminas_Feed
  * @group Laminas_Feed_Reader
  */
 class AtomStandaloneEntryTest extends TestCase
 {
+    /** @var string */
     protected $feedSamplePath;
 
+    /** @var array<array-key, array<string, null|string>> */
     protected $expectedCats = [];
 
+    /** @var array<array-key, array<string, null|string>> */
     protected $expectedCatsDc = [];
 
     protected function setUp(): void
@@ -101,7 +102,6 @@ class AtomStandaloneEntryTest extends TestCase
      * Get modification date (Unencoded Text)
      *
      * @group LaminasR002
-     *
      */
     public function testGetsDateModifiedFromAtom10(): void
     {
@@ -116,7 +116,6 @@ class AtomStandaloneEntryTest extends TestCase
      * Get Title (Unencoded Text)
      *
      * @group LaminasR002
-     *
      */
     public function testGetsTitleFromAtom10(): void
     {
@@ -130,7 +129,6 @@ class AtomStandaloneEntryTest extends TestCase
      * Get Authors (Unencoded Text)
      *
      * @group LaminasR002
-     *
      */
     public function testGetsAuthorsFromAtom10(): void
     {
@@ -154,7 +152,6 @@ class AtomStandaloneEntryTest extends TestCase
      * Get Author (Unencoded Text)
      *
      * @group LaminasR002
-     *
      */
     public function testGetsAuthorFromAtom10(): void
     {
@@ -171,7 +168,6 @@ class AtomStandaloneEntryTest extends TestCase
      * Get Description (Unencoded Text)
      *
      * @group LaminasR002
-     *
      */
     public function testGetsDescriptionFromAtom10(): void
     {
@@ -185,7 +181,6 @@ class AtomStandaloneEntryTest extends TestCase
      * Get enclosure
      *
      * @group LaminasR002
-     *
      */
     public function testGetsEnclosureFromAtom10(): void
     {
@@ -205,7 +200,6 @@ class AtomStandaloneEntryTest extends TestCase
      * TEXT
      *
      * @group LaminasRATOMCONTENT
-     *
      */
     public function testGetsContentFromAtom10(): void
     {
@@ -219,7 +213,6 @@ class AtomStandaloneEntryTest extends TestCase
      * HTML Escaped
      *
      * @group LaminasRATOMCONTENT
-     *
      */
     public function testGetsContentFromAtom10Html(): void
     {
@@ -233,7 +226,6 @@ class AtomStandaloneEntryTest extends TestCase
      * HTML CDATA Escaped
      *
      * @group LaminasRATOMCONTENT
-     *
      */
     public function testGetsContentFromAtom10HtmlCdata(): void
     {
@@ -247,7 +239,6 @@ class AtomStandaloneEntryTest extends TestCase
      * XHTML
      *
      * @group LaminasRATOMCONTENT
-     *
      */
     public function testGetsContentFromAtom10XhtmlNamespaced(): void
     {
@@ -261,7 +252,6 @@ class AtomStandaloneEntryTest extends TestCase
      * Get Link (Unencoded Text)
      *
      * @group LaminasR002
-     *
      */
     public function testGetsLinkFromAtom10(): void
     {
@@ -275,7 +265,6 @@ class AtomStandaloneEntryTest extends TestCase
      * Get Comment HTML Link
      *
      * @group LaminasR002
-     *
      */
     public function testGetsCommentLinkFromAtom10(): void
     {
@@ -289,7 +278,6 @@ class AtomStandaloneEntryTest extends TestCase
      * Get category data
      *
      * @group LaminasR002
-     *
      */
     public function testGetsCategoriesFromAtom10(): void
     {

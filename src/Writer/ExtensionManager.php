@@ -1,12 +1,10 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Feed\Writer;
+
+use function call_user_func_array;
+use function method_exists;
+use function sprintf;
 
 /**
  * Default implementation of ExtensionManagerInterface
@@ -15,13 +13,14 @@ namespace Laminas\Feed\Writer;
  */
 class ExtensionManager implements ExtensionManagerInterface
 {
+    /** @var ExtensionManagerInterface */
     protected $pluginManager;
 
     /**
      * Seeds the extension manager with a plugin manager; if none provided,
      * creates and decorates an instance of StandaloneExtensionManager.
      */
-    public function __construct(ExtensionManagerInterface $pluginManager = null)
+    public function __construct(?ExtensionManagerInterface $pluginManager = null)
     {
         if (null === $pluginManager) {
             $pluginManager = new StandaloneExtensionManager();
@@ -45,7 +44,7 @@ class ExtensionManager implements ExtensionManagerInterface
             throw new Exception\BadMethodCallException(sprintf(
                 'Method by name of %s does not exist in %s',
                 $method,
-                __CLASS__
+                self::class
             ));
         }
         return call_user_func_array([$this->pluginManager, $method], $args);
@@ -54,22 +53,22 @@ class ExtensionManager implements ExtensionManagerInterface
     /**
      * Get the named extension
      *
-     * @param  string $name
+     * @param  string $extension
      * @return Extension\AbstractRenderer
      */
-    public function get($name)
+    public function get($extension)
     {
-        return $this->pluginManager->get($name);
+        return $this->pluginManager->get($extension);
     }
 
     /**
      * Do we have the named extension?
      *
-     * @param  string $name
+     * @param  string $extension
      * @return bool
      */
-    public function has($name)
+    public function has($extension)
     {
-        return $this->pluginManager->has($name);
+        return $this->pluginManager->has($extension);
     }
 }

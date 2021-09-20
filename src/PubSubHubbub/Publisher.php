@@ -1,17 +1,22 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Feed\PubSubHubbub;
 
 use Laminas\Feed\Uri;
+use Laminas\Http\Client;
 use Laminas\Http\Request as HttpRequest;
 use Laminas\Stdlib\ArrayUtils;
 use Traversable;
+
+use function array_key_exists;
+use function array_search;
+use function array_unique;
+use function gettype;
+use function implode;
+use function in_array;
+use function is_array;
+use function is_string;
+use function urlencode;
 
 class Publisher
 {
@@ -270,7 +275,7 @@ class Publisher
     /**
      * Add an optional parameter to the update notification requests
      *
-     * @param  string $name
+     * @param  string|array<string, string> $name
      * @param  null|string $value
      * @return $this
      * @throws Exception\InvalidArgumentException
@@ -368,13 +373,12 @@ class Publisher
     /**
      * Get a basic prepared HTTP client for use
      *
-     * @return \Laminas\Http\Client
+     * @return Client
      * @throws Exception\RuntimeException
      */
-    // @codingStandardsIgnoreStart
+    // phpcs:ignore PSR2.Methods.MethodDeclaration.Underscore
     protected function _getHttpClient()
     {
-        // @codingStandardsIgnoreEnd
         $client = PubSubHubbub::getHttpClient();
         $client->setMethod(HttpRequest::METHOD_POST);
         $client->setOptions([

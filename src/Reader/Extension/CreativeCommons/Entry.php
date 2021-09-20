@@ -1,14 +1,18 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Feed\Reader\Extension\CreativeCommons;
 
+use DOMNodeList;
+use Laminas\Feed\Reader\Exception\RuntimeException;
 use Laminas\Feed\Reader\Extension;
+
+use function array_key_exists;
+use function array_unique;
+use function get_class;
+use function gettype;
+use function is_object;
+use function is_string;
+use function sprintf;
 
 class Entry extends Extension\AbstractEntry
 {
@@ -22,11 +26,18 @@ class Entry extends Extension\AbstractEntry
     {
         $licenses = $this->getLicenses();
 
-        if (isset($licenses[$index])) {
-            return $licenses[$index];
+        if (! isset($licenses[$index])) {
+            return null;
         }
 
-        return;
+        if (! is_string($licenses[$index])) {
+            throw new RuntimeException(sprintf(
+                'Unable to retrieve license; expected string, received "%s"',
+                is_object($licenses[$index]) ? get_class($licenses[$index]) : gettype($licenses[$index])
+            ));
+        }
+
+        return $licenses[$index];
     }
 
     /**
@@ -44,7 +55,7 @@ class Entry extends Extension\AbstractEntry
         $licenses = [];
         $list     = $this->xpath->evaluate($this->getXpathPrefix() . '//cc:license');
 
-        if ($list->length) {
+        if ($list instanceof DOMNodeList && $list->length) {
             foreach ($list as $license) {
                 $licenses[] = $license->nodeValue;
             }

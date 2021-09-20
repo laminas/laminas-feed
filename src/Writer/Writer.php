@@ -1,45 +1,44 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Feed\Writer;
+
+use function in_array;
+use function lcfirst;
+use function sprintf;
+use function trigger_error;
+
+use const E_USER_NOTICE;
 
 class Writer
 {
     /**
      * Namespace constants
      */
-    const NAMESPACE_ATOM_03 = 'http://purl.org/atom/ns#';
-    const NAMESPACE_ATOM_10 = 'http://www.w3.org/2005/Atom';
-    const NAMESPACE_RDF     = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#';
-    const NAMESPACE_RSS_090 = 'http://my.netscape.com/rdf/simple/0.9/';
-    const NAMESPACE_RSS_10  = 'http://purl.org/rss/1.0/';
+    public const NAMESPACE_ATOM_03 = 'http://purl.org/atom/ns#';
+    public const NAMESPACE_ATOM_10 = 'http://www.w3.org/2005/Atom';
+    public const NAMESPACE_RDF     = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#';
+    public const NAMESPACE_RSS_090 = 'http://my.netscape.com/rdf/simple/0.9/';
+    public const NAMESPACE_RSS_10  = 'http://purl.org/rss/1.0/';
 
     /**
      * Feed type constants
      */
-    const TYPE_ANY              = 'any';
-    const TYPE_ATOM_03          = 'atom-03';
-    const TYPE_ATOM_10          = 'atom-10';
-    const TYPE_ATOM_ANY         = 'atom';
-    const TYPE_RSS_090          = 'rss-090';
-    const TYPE_RSS_091          = 'rss-091';
-    const TYPE_RSS_091_NETSCAPE = 'rss-091n';
-    const TYPE_RSS_091_USERLAND = 'rss-091u';
-    const TYPE_RSS_092          = 'rss-092';
-    const TYPE_RSS_093          = 'rss-093';
-    const TYPE_RSS_094          = 'rss-094';
-    const TYPE_RSS_10           = 'rss-10';
-    const TYPE_RSS_20           = 'rss-20';
-    const TYPE_RSS_ANY          = 'rss';
+    public const TYPE_ANY              = 'any';
+    public const TYPE_ATOM_03          = 'atom-03';
+    public const TYPE_ATOM_10          = 'atom-10';
+    public const TYPE_ATOM_ANY         = 'atom';
+    public const TYPE_RSS_090          = 'rss-090';
+    public const TYPE_RSS_091          = 'rss-091';
+    public const TYPE_RSS_091_NETSCAPE = 'rss-091n';
+    public const TYPE_RSS_091_USERLAND = 'rss-091u';
+    public const TYPE_RSS_092          = 'rss-092';
+    public const TYPE_RSS_093          = 'rss-093';
+    public const TYPE_RSS_094          = 'rss-094';
+    public const TYPE_RSS_10           = 'rss-10';
+    public const TYPE_RSS_20           = 'rss-20';
+    public const TYPE_RSS_ANY          = 'rss';
 
-    /**
-     * @var ExtensionManagerInterface
-     */
+    /** @var ExtensionManagerInterface */
     protected static $extensionManager;
 
     /**
@@ -58,8 +57,6 @@ class Writer
 
     /**
      * Set plugin loader for use with Extensions
-     *
-     * @param ExtensionManagerInterface
      *
      * @return void
      */
@@ -86,7 +83,7 @@ class Writer
      *
      * @param  string $name
      * @return void
-     * @throws Exception\RuntimeException if unable to resolve Extension class
+     * @throws Exception\RuntimeException If unable to resolve Extension class.
      */
     public static function registerExtension($name)
     {
@@ -137,7 +134,8 @@ class Writer
         $entryName         = $extensionName . '\Entry';
         $feedRendererName  = $extensionName . '\Renderer\Feed';
         $entryRendererName = $extensionName . '\Renderer\Entry';
-        if (in_array($feedName, static::$extensions['feed'])
+        if (
+            in_array($feedName, static::$extensions['feed'])
             || in_array($entryName, static::$extensions['entry'])
             || in_array($feedRendererName, static::$extensions['feedRenderer'])
             || in_array($entryRendererName, static::$extensions['entryRenderer'])
@@ -200,7 +198,7 @@ class Writer
                     . ' and %1$s\Extension\GooglePlayPodcast\Renderer\Feed.',
                     __NAMESPACE__
                 ),
-                \E_USER_NOTICE
+                E_USER_NOTICE
             );
 
         // Added in development; check for it conditionally
@@ -215,7 +213,7 @@ class Writer
                     . ' and %1$s\Extension\PodcastIndex\Renderer\Feed.',
                     __NAMESPACE__
                 ),
-                \E_USER_NOTICE
+                E_USER_NOTICE
             );
     }
 

@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Feed\Writer\Renderer\Feed;
 
 use DateTime;
@@ -19,29 +13,36 @@ use Laminas\Feed\Writer\Version;
 use LaminasTest\Feed\Writer\TestAsset;
 use PHPUnit\Framework\TestCase;
 
+use function array_reduce;
+use function restore_error_handler;
+use function set_error_handler;
+use function strstr;
+
+use const E_USER_NOTICE;
+
 /**
  * @group Laminas_Feed
  * @group Laminas_Feed_Writer
  */
 class RssTest extends TestCase
 {
+    /** @var Writer\Feed */
     protected $validWriter;
 
     protected function setUp(): void
     {
         Writer\Writer::reset();
+
         $this->validWriter = new Writer\Feed();
         $this->validWriter->setTitle('This is a test feed.');
         $this->validWriter->setDescription('This is a test description.');
         $this->validWriter->setLink('http://www.example.com');
-
         $this->validWriter->setType('rss');
     }
 
     protected function tearDown(): void
     {
         Writer\Writer::reset();
-        $this->validWriter = null;
     }
 
     public function testSetsWriterInConstructor(): void
@@ -282,7 +283,6 @@ class RssTest extends TestCase
 
     /**
      * @group LaminasW003
-     *
      */
     public function testFeedHoldsAnyAuthorAdded(): void
     {
@@ -293,14 +293,12 @@ class RssTest extends TestCase
         ]);
         $atomFeed = new Renderer\Feed\Rss($this->validWriter);
         $atomFeed->render();
-        $feed   = Reader\Reader::importString($atomFeed->saveXml());
-        $author = $feed->getAuthor();
+        $feed = Reader\Reader::importString($atomFeed->saveXml());
         $this->assertEquals(['name' => 'Joe'], $feed->getAuthor());
     }
 
     /**
      * @group LaminasWCHARDATA01
-     *
      */
     public function testFeedAuthorCharDataEncoding(): void
     {
@@ -311,8 +309,7 @@ class RssTest extends TestCase
         ]);
         $atomFeed = new Renderer\Feed\Rss($this->validWriter);
         $atomFeed->render();
-        $feed   = Reader\Reader::importString($atomFeed->saveXml());
-        $author = $feed->getAuthor();
+        $feed = Reader\Reader::importString($atomFeed->saveXml());
         $this->assertEquals(['name' => '<>&\'"áéíóú'], $feed->getAuthor());
     }
 
@@ -327,7 +324,6 @@ class RssTest extends TestCase
 
     /**
      * @group LaminasWCHARDATA01
-     *
      */
     public function testCopyrightCharDataEncoding(): void
     {
@@ -368,7 +364,6 @@ class RssTest extends TestCase
 
     /**
      * @group LaminasWCHARDATA01
-     *
      */
     public function testCategoriesCharDataEncoding(): void
     {
@@ -627,10 +622,11 @@ class RssTest extends TestCase
             'messages' => [],
         ];
 
-        set_error_handler(static function ($errno, $errstr) use ($notices) {
+        /** @psalm-suppress UnusedClosureParam */
+        set_error_handler(static function (int $errno, string $errstr) use ($notices): void {
             $notices->messages[] = $errstr;
-        }, \E_USER_NOTICE);
-        $renderer = new Renderer\Feed\Rss($this->validWriter);
+        }, E_USER_NOTICE);
+        new Renderer\Feed\Rss($this->validWriter);
         restore_error_handler();
 
         $message = array_reduce($notices->messages, static function ($toReturn, $message) {

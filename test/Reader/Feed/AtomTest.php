@@ -1,16 +1,14 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Feed\Reader\Feed;
 
 use DateTime;
 use Laminas\Feed\Reader;
 use PHPUnit\Framework\TestCase;
+
+use function array_values;
+use function dirname;
+use function file_get_contents;
 
 /**
  * @group Laminas_Feed
@@ -18,12 +16,16 @@ use PHPUnit\Framework\TestCase;
  */
 class AtomTest extends TestCase
 {
+    /** @var string */
     protected $feedSamplePath;
 
+    /** @var array<string, mixed> */
     protected $options = [];
 
+    /** @var array<array-key, array<string, null|string>> */
     protected $expectedCats = [];
 
+    /** @var array<array-key, array<string, null|string>> */
     protected $expectedCatsDc = [];
 
     protected function setUp(): void
@@ -64,7 +66,6 @@ class AtomTest extends TestCase
 
     /**
      * Get Title (Unencoded Text)
-     *
      */
     public function testGetsTitleFromAtom03(): void
     {
@@ -92,7 +93,6 @@ class AtomTest extends TestCase
 
     /**
      * Get Authors (Unencoded Text)
-     *
      */
     public function testGetsAuthorArrayFromAtom03(): void
     {
@@ -132,7 +132,6 @@ class AtomTest extends TestCase
 
     /**
      * Get Single Author (Unencoded Text)
-     *
      */
     public function testGetsSingleAuthorFromAtom03(): void
     {
@@ -168,7 +167,6 @@ class AtomTest extends TestCase
 
     /**
      * Get creation date (Unencoded Text)
-     *
      */
     public function testGetsDateCreatedFromAtom03(): void
     {
@@ -198,7 +196,6 @@ class AtomTest extends TestCase
 
     /**
      * Get modification date (Unencoded Text)
-     *
      */
     public function testGetsDateModifiedFromAtom03(): void
     {
@@ -228,7 +225,6 @@ class AtomTest extends TestCase
 
     /**
      * Get Last Build Date (Unencoded Text)
-     *
      */
     public function testGetsLastBuildDateAlwaysReturnsNullForAtom(): void
     {
@@ -240,7 +236,6 @@ class AtomTest extends TestCase
 
     /**
      * Get Generator (Unencoded Text)
-     *
      */
     public function testGetsGeneratorFromAtom03(): void
     {
@@ -268,7 +263,6 @@ class AtomTest extends TestCase
 
     /**
      * Get Copyright (Unencoded Text)
-     *
      */
     public function testGetsCopyrightFromAtom03(): void
     {
@@ -296,7 +290,6 @@ class AtomTest extends TestCase
 
     /**
      * Get Description (Unencoded Text)
-     *
      */
     public function testGetsDescriptionFromAtom03(): void
     {
@@ -324,7 +317,6 @@ class AtomTest extends TestCase
 
     /**
      * Get Id (Unencoded Text)
-     *
      */
     public function testGetsIdFromAtom03(): void
     {
@@ -352,7 +344,6 @@ class AtomTest extends TestCase
 
     /**
      * Get Language (Unencoded Text)
-     *
      */
     public function testGetsLanguageFromAtom03(): void
     {
@@ -380,7 +371,6 @@ class AtomTest extends TestCase
 
     /**
      * Get Link (Unencoded Text)
-     *
      */
     public function testGetsLinkFromAtom03(): void
     {
@@ -424,7 +414,6 @@ class AtomTest extends TestCase
 
     /**
      * Get Base Uri
-     *
      */
     public function testGetsBaseUriFromAtom10(): void
     {
@@ -436,7 +425,6 @@ class AtomTest extends TestCase
 
     /**
      * Get Feed Link (Unencoded Text)
-     *
      */
     public function testGetsFeedLinkFromAtom03(): void
     {
@@ -481,7 +469,6 @@ class AtomTest extends TestCase
 
     /**
      * Get Pubsubhubbub Hubs
-     *
      */
     public function testGetsHubsFromAtom03(): void
     {
@@ -507,7 +494,6 @@ class AtomTest extends TestCase
 
     /**
      * Implements Countable
-     *
      */
     public function testCountableInterface(): void
     {
@@ -519,7 +505,6 @@ class AtomTest extends TestCase
 
     /**
      * Get category data
-     *
      */
     public function testGetsCategoriesFromAtom10(): void
     {
@@ -541,6 +526,7 @@ class AtomTest extends TestCase
 
     // DC 1.0/1.1 for Atom 0.3
 
+    // phpcs:ignore Squiz.Commenting.FunctionComment.WrongStyle
     public function testGetsCategoriesFromAtom03Dc10(): void
     {
         $feed = Reader\Reader::importString(
@@ -561,6 +547,7 @@ class AtomTest extends TestCase
 
     // No Categories In Entry
 
+    // phpcs:ignore Squiz.Commenting.FunctionComment.WrongStyle
     public function testGetsCategoriesFromAtom10None(): void
     {
         $feed = Reader\Reader::importString(
@@ -581,7 +568,6 @@ class AtomTest extends TestCase
 
     /**
      * Get Image (Unencoded Text)
-     *
      */
     public function testGetsImageFromAtom03(): void
     {
@@ -601,7 +587,6 @@ class AtomTest extends TestCase
 
     /**
      * Get Image (Unencoded Text) When Missing
-     *
      */
     public function testGetsImageFromAtom03None(): void
     {

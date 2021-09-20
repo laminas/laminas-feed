@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Feed\Reader\Feed;
 
 use DateTime;
@@ -13,18 +7,26 @@ use Laminas\Feed\Reader;
 use Laminas\Feed\Reader\Feed\Atom\Source;
 use PHPUnit\Framework\TestCase;
 
+use function array_values;
+use function dirname;
+use function file_get_contents;
+
 /**
  * @group Laminas_Feed
  * @group Laminas_Feed_Reader
  */
 class AtomSourceTest extends TestCase
 {
+    /** @var string */
     protected $feedSamplePath;
 
+    /** @var array<string, mixed> */
     protected $options = [];
 
+    /** @var array<array-key, array<string, null|string>> */
     protected $expectedCats = [];
 
+    /** @var array<array-key, array<string, null|string>> */
     protected $expectedCatsDc = [];
 
     protected function setUp(): void
@@ -73,7 +75,6 @@ class AtomSourceTest extends TestCase
 
     /**
      * Get Title (Unencoded Text)
-     *
      */
     public function testGetsTitleFromAtom10(): void
     {
@@ -86,7 +87,6 @@ class AtomSourceTest extends TestCase
 
     /**
      * Get Authors (Unencoded Text)
-     *
      */
     public function testGetsAuthorArrayFromAtom10(): void
     {
@@ -109,14 +109,13 @@ class AtomSourceTest extends TestCase
 
     /**
      * Get Single Author (Unencoded Text)
-     *
      */
     public function testGetsSingleAuthorFromAtom10(): void
     {
-        $feed   = Reader\Reader::importString(
+        $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/author/atom10.xml')
         );
-        $source = $feed->current()->getSource();
+        $feed->current()->getSource();
 
         $this->assertEquals(
             ['name' => 'Joe Bloggs', 'email' => 'joe@example.com', 'uri' => 'http://www.example.com'],
@@ -126,7 +125,6 @@ class AtomSourceTest extends TestCase
 
     /**
      * Get creation date (Unencoded Text)
-     *
      */
     public function testGetsDateCreatedFromAtom10(): void
     {
@@ -141,7 +139,6 @@ class AtomSourceTest extends TestCase
 
     /**
      * Get modification date (Unencoded Text)
-     *
      */
     public function testGetsDateModifiedFromAtom10(): void
     {
@@ -156,7 +153,6 @@ class AtomSourceTest extends TestCase
 
     /**
      * Get Generator (Unencoded Text)
-     *
      */
     public function testGetsGeneratorFromAtom10(): void
     {
@@ -169,7 +165,6 @@ class AtomSourceTest extends TestCase
 
     /**
      * Get Copyright (Unencoded Text)
-     *
      */
     public function testGetsCopyrightFromAtom10(): void
     {
@@ -182,7 +177,6 @@ class AtomSourceTest extends TestCase
 
     /**
      * Get Description (Unencoded Text)
-     *
      */
     public function testGetsDescriptionFromAtom10(): void
     {
@@ -195,7 +189,6 @@ class AtomSourceTest extends TestCase
 
     /**
      * Get Id (Unencoded Text)
-     *
      */
     public function testGetsIdFromAtom10(): void
     {
@@ -208,7 +201,6 @@ class AtomSourceTest extends TestCase
 
     /**
      * Get Language (Unencoded Text)
-     *
      */
     public function testGetsLanguageFromAtom10(): void
     {
@@ -221,7 +213,6 @@ class AtomSourceTest extends TestCase
 
     /**
      * Get Link (Unencoded Text)
-     *
      */
     public function testGetsLinkFromAtom10(): void
     {
@@ -234,7 +225,6 @@ class AtomSourceTest extends TestCase
 
     /**
      * Get Feed Link (Unencoded Text)
-     *
      */
     public function testGetsFeedLinkFromAtom10(): void
     {
@@ -247,7 +237,6 @@ class AtomSourceTest extends TestCase
 
     /**
      * Get Pubsubhubbub Hubs
-     *
      */
     public function testGetsHubsFromAtom10(): void
     {
@@ -263,7 +252,6 @@ class AtomSourceTest extends TestCase
 
     /**
      * Get category data
-     *
      */
     public function testGetsCategoriesFromAtom10(): void
     {

@@ -1,20 +1,19 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Feed\PubSubHubbub;
 
 use Laminas\Feed\PubSubHubbub\Model\Subscription;
 use Laminas\Feed\PubSubHubbub\PubSubHubbub;
 use Laminas\Feed\PubSubHubbub\Subscriber;
-use Laminas\Http\Client\Adapter\Socket;
 use Laminas\Http\Client as HttpClient;
+use Laminas\Http\Client\Adapter\Socket;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
+
+use function getenv;
+use function strpos;
+use function substr;
 
 /**
  * Note that $this->_baseuri must point to a directory on a web server
@@ -39,6 +38,7 @@ class SubscriberHttpTest extends TestCase
     /** @var HttpClient */
     protected $client;
 
+    /** @var Subscription&MockObject */
     protected $storage;
 
     protected function setUp(): void
@@ -58,7 +58,8 @@ class SubscriberHttpTest extends TestCase
             PubSubHubbub::setHttpClient($this->client);
             $this->subscriber = new Subscriber();
 
-            $this->storage = $this->_getCleanMock(Subscription::class);
+            /** @psalm-suppress InvalidPropertyAssignmentValue */
+            $this->storage = $this->getCleanMock(Subscription::class);
             $this->subscriber->setStorage($this->storage);
         } else {
             // Skip tests
@@ -71,6 +72,7 @@ class SubscriberHttpTest extends TestCase
         $this->subscriber->setTopicUrl('http://www.example.com/topic');
         $this->subscriber->addHubUrl($this->baseuri . '/testRawPostData.php');
         $this->subscriber->setCallbackUrl('http://www.example.com/callback');
+        /** @psalm-suppress InternalMethod */
         $this->subscriber->setTestStaticToken('abc'); // override for testing
         $this->subscriber->subscribeAll();
         $this->assertEquals(
@@ -87,6 +89,7 @@ class SubscriberHttpTest extends TestCase
         $this->subscriber->setTopicUrl('http://www.example.com/topic');
         $this->subscriber->addHubUrl($this->baseuri . '/testRawPostData.php');
         $this->subscriber->setCallbackUrl('http://www.example.com/callback');
+        /** @psalm-suppress InternalMethod */
         $this->subscriber->setTestStaticToken('abc'); //override for testing
         $this->subscriber->unsubscribeAll();
         $this->assertEquals(
@@ -101,21 +104,19 @@ class SubscriberHttpTest extends TestCase
         $this->assertEquals($subscriptionRecord['subscription_state'], PubSubHubbub::SUBSCRIPTION_TODELETE);
     }
 
-    // @codingStandardsIgnoreStart
-    protected function _getCleanMock(string $className): \PHPUnit\Framework\MockObject\MockObject
+    protected function getCleanMock(string $className): MockObject
     {
-        // @codingStandardsIgnoreEnd
         $class       = new ReflectionClass($className);
         $methods     = $class->getMethods();
         $stubMethods = [];
         foreach ($methods as $method) {
-            if ($method->isPublic()
+            if (
+                $method->isPublic()
                 || ($method->isProtected() && $method->isAbstract())
             ) {
                 $stubMethods[] = $method->getName();
             }
         }
-        $mocked = $this->getMockBuilder($className)->setMethods($stubMethods)->getMock();
-        return $mocked;
+        return $this->getMockBuilder($className)->setMethods($stubMethods)->getMock();
     }
 }

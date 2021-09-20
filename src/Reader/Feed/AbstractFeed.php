@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Feed\Reader\Feed;
 
 use DOMDocument;
@@ -13,6 +7,16 @@ use DOMElement;
 use DOMXPath;
 use Laminas\Feed\Reader;
 use Laminas\Feed\Reader\Exception;
+// phpcs:ignore SlevomatCodingStandard.Namespaces.UnusedUses.UnusedUse
+use ReturnTypeWillChange;
+
+use function array_key_exists;
+use function call_user_func_array;
+use function count;
+use function in_array;
+use function method_exists;
+use function sprintf;
+use function strpos;
 
 abstract class AbstractFeed implements FeedInterface
 {
@@ -114,6 +118,7 @@ abstract class AbstractFeed implements FeedInterface
      *
      * @return int
      */
+    #[ReturnTypeWillChange]
     public function count()
     {
         return count($this->entries);
@@ -124,6 +129,7 @@ abstract class AbstractFeed implements FeedInterface
      *
      * @return Reader\Entry\EntryInterface
      */
+    #[ReturnTypeWillChange]
     public function current()
     {
         if (0 === strpos($this->getType(), 'rss')) {
@@ -206,6 +212,7 @@ abstract class AbstractFeed implements FeedInterface
      *
      * @return int
      */
+    #[ReturnTypeWillChange]
     public function key()
     {
         return $this->entriesKey;
@@ -214,6 +221,7 @@ abstract class AbstractFeed implements FeedInterface
     /**
      * Move the feed pointer forward
      */
+    #[ReturnTypeWillChange]
     public function next()
     {
         ++$this->entriesKey;
@@ -222,6 +230,7 @@ abstract class AbstractFeed implements FeedInterface
     /**
      * Reset the pointer in the feed object
      */
+    #[ReturnTypeWillChange]
     public function rewind()
     {
         $this->entriesKey = 0;
@@ -232,16 +241,23 @@ abstract class AbstractFeed implements FeedInterface
      *
      * @return bool
      */
+    #[ReturnTypeWillChange]
     public function valid()
     {
         return 0 <= $this->entriesKey && $this->entriesKey < $this->count();
     }
 
+    /** @return array */
     public function getExtensions()
     {
         return $this->extensions;
     }
 
+    /**
+     * @param string $method
+     * @param mixed[] $args
+     * @return mixed
+     */
     public function __call($method, $args)
     {
         foreach ($this->extensions as $extension) {

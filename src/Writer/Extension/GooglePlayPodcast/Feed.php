@@ -1,17 +1,22 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Feed\Writer\Extension\GooglePlayPodcast;
 
 use Laminas\Feed\Uri;
 use Laminas\Feed\Writer;
 use Laminas\Stdlib\StringUtils;
 use Laminas\Stdlib\StringWrapper\StringWrapperInterface;
+
+use function array_key_exists;
+use function ctype_alpha;
+use function in_array;
+use function is_array;
+use function is_string;
+use function lcfirst;
+use function method_exists;
+use function strlen;
+use function substr;
+use function ucfirst;
 
 class Feed
 {
@@ -67,10 +72,8 @@ class Feed
     /**
      * Set a block value of "yes" or "no". You may also set an empty string.
      *
-     * @param string
-     *
+     * @param string $value
      * @return self
-     *
      * @throws Writer\Exception\InvalidArgumentException
      */
     public function setPlayPodcastBlock($value)
@@ -226,7 +229,8 @@ class Feed
     public function __call($method, array $params)
     {
         $point = lcfirst(substr($method, 14));
-        if (! method_exists($this, 'setPlayPodcast' . ucfirst($point))
+        if (
+            ! method_exists($this, 'setPlayPodcast' . ucfirst($point))
             && ! method_exists($this, 'addPlayPodcast' . ucfirst($point))
         ) {
             throw new Writer\Exception\BadMethodCallException(

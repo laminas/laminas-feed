@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Feed\Reader\Feed;
 
 use DateTime;
@@ -13,6 +7,14 @@ use DOMDocument;
 use Laminas\Feed\Reader;
 use Laminas\Feed\Reader\Collection;
 use Laminas\Feed\Reader\Exception;
+
+use function array_key_exists;
+use function array_unique;
+use function count;
+use function is_array;
+use function preg_match;
+use function strtotime;
+use function trim;
 
 class Rss extends AbstractFeed
 {
@@ -37,7 +39,8 @@ class Rss extends AbstractFeed
         $feed->setXpath($this->xpath);
         $this->extensions['Atom\Feed'] = $feed;
 
-        if ($this->getType() !== Reader\Reader::TYPE_RSS_10
+        if (
+            $this->getType() !== Reader\Reader::TYPE_RSS_10
             && $this->getType() !== Reader\Reader::TYPE_RSS_090
         ) {
             $xpathPrefix = '/rss/channel';
@@ -53,17 +56,15 @@ class Rss extends AbstractFeed
      * Get a single author
      *
      * @param  int $index
-     * @return null|string
+     * @return null|array<string, string>
      */
     public function getAuthor($index = 0)
     {
         $authors = $this->getAuthors();
 
-        if (isset($authors[$index])) {
-            return $authors[$index];
-        }
-
-        return;
+        return isset($authors[$index]) && is_array($authors[$index])
+            ? $authors[$index]
+            : null;
     }
 
     /**
@@ -91,7 +92,8 @@ class Rss extends AbstractFeed
          * Technically RSS doesn't specific author element use at the feed level
          * but it's supported on a "just in case" basis.
          */
-        if ($this->getType() !== Reader\Reader::TYPE_RSS_10
+        if (
+            $this->getType() !== Reader\Reader::TYPE_RSS_10
             && $this->getType() !== Reader\Reader::TYPE_RSS_090
         ) {
             $list = $this->xpath->query('//author');
@@ -143,7 +145,8 @@ class Rss extends AbstractFeed
 
         $copyright = null;
 
-        if ($this->getType() !== Reader\Reader::TYPE_RSS_10
+        if (
+            $this->getType() !== Reader\Reader::TYPE_RSS_10
             && $this->getType() !== Reader\Reader::TYPE_RSS_090
         ) {
             $copyright = $this->xpath->evaluate('string(/rss/channel/copyright)');
@@ -190,7 +193,8 @@ class Rss extends AbstractFeed
 
         $date = null;
 
-        if ($this->getType() !== Reader\Reader::TYPE_RSS_10
+        if (
+            $this->getType() !== Reader\Reader::TYPE_RSS_10
             && $this->getType() !== Reader\Reader::TYPE_RSS_090
         ) {
             $dateModified = $this->xpath->evaluate('string(/rss/channel/pubDate)');
@@ -257,7 +261,8 @@ class Rss extends AbstractFeed
 
         $date = null;
 
-        if ($this->getType() !== Reader\Reader::TYPE_RSS_10
+        if (
+            $this->getType() !== Reader\Reader::TYPE_RSS_10
             && $this->getType() !== Reader\Reader::TYPE_RSS_090
         ) {
             $lastBuildDate = $this->xpath->evaluate('string(/rss/channel/lastBuildDate)');
@@ -311,7 +316,8 @@ class Rss extends AbstractFeed
             return $this->data['description'];
         }
 
-        if ($this->getType() !== Reader\Reader::TYPE_RSS_10
+        if (
+            $this->getType() !== Reader\Reader::TYPE_RSS_10
             && $this->getType() !== Reader\Reader::TYPE_RSS_090
         ) {
             $description = $this->xpath->evaluate('string(/rss/channel/description)');
@@ -349,7 +355,8 @@ class Rss extends AbstractFeed
 
         $id = null;
 
-        if ($this->getType() !== Reader\Reader::TYPE_RSS_10
+        if (
+            $this->getType() !== Reader\Reader::TYPE_RSS_10
             && $this->getType() !== Reader\Reader::TYPE_RSS_090
         ) {
             $id = $this->xpath->evaluate('string(/rss/channel/guid)');
@@ -389,7 +396,8 @@ class Rss extends AbstractFeed
             return $this->data['image'];
         }
 
-        if ($this->getType() !== Reader\Reader::TYPE_RSS_10
+        if (
+            $this->getType() !== Reader\Reader::TYPE_RSS_10
             && $this->getType() !== Reader\Reader::TYPE_RSS_090
         ) {
             $list   = $this->xpath->query('/rss/channel/image');
@@ -446,7 +454,8 @@ class Rss extends AbstractFeed
 
         $language = null;
 
-        if ($this->getType() !== Reader\Reader::TYPE_RSS_10
+        if (
+            $this->getType() !== Reader\Reader::TYPE_RSS_10
             && $this->getType() !== Reader\Reader::TYPE_RSS_090
         ) {
             $language = $this->xpath->evaluate('string(/rss/channel/language)');
@@ -484,7 +493,8 @@ class Rss extends AbstractFeed
             return $this->data['link'];
         }
 
-        if ($this->getType() !== Reader\Reader::TYPE_RSS_10
+        if (
+            $this->getType() !== Reader\Reader::TYPE_RSS_10
             && $this->getType() !== Reader\Reader::TYPE_RSS_090
         ) {
             $link = $this->xpath->evaluate('string(/rss/channel/link)');
@@ -540,14 +550,16 @@ class Rss extends AbstractFeed
 
         $generator = null;
 
-        if ($this->getType() !== Reader\Reader::TYPE_RSS_10
+        if (
+            $this->getType() !== Reader\Reader::TYPE_RSS_10
             && $this->getType() !== Reader\Reader::TYPE_RSS_090
         ) {
             $generator = $this->xpath->evaluate('string(/rss/channel/generator)');
         }
 
         if (! $generator) {
-            if ($this->getType() !== Reader\Reader::TYPE_RSS_10
+            if (
+                $this->getType() !== Reader\Reader::TYPE_RSS_10
                 && $this->getType() !== Reader\Reader::TYPE_RSS_090
             ) {
                 $generator = $this->xpath->evaluate('string(/rss/channel/atom:generator)');
@@ -580,7 +592,8 @@ class Rss extends AbstractFeed
             return $this->data['title'];
         }
 
-        if ($this->getType() !== Reader\Reader::TYPE_RSS_10
+        if (
+            $this->getType() !== Reader\Reader::TYPE_RSS_10
             && $this->getType() !== Reader\Reader::TYPE_RSS_090
         ) {
             $title = $this->xpath->evaluate('string(/rss/channel/title)');
@@ -640,7 +653,8 @@ class Rss extends AbstractFeed
             return $this->data['categories'];
         }
 
-        if ($this->getType() !== Reader\Reader::TYPE_RSS_10
+        if (
+            $this->getType() !== Reader\Reader::TYPE_RSS_10
             && $this->getType() !== Reader\Reader::TYPE_RSS_090
         ) {
             $list = $this->xpath->query('/rss/channel//category');

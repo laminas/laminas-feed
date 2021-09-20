@@ -1,15 +1,13 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Feed\PubSubHubbub\Model;
 
 use Laminas\Db\TableGateway\TableGateway;
 use Laminas\Db\TableGateway\TableGatewayInterface;
+
+use function array_pop;
+use function explode;
+use function strtolower;
 
 class AbstractModel
 {
@@ -20,10 +18,10 @@ class AbstractModel
      */
     protected $db;
 
-    public function __construct(TableGatewayInterface $tableGateway = null)
+    public function __construct(?TableGatewayInterface $tableGateway = null)
     {
         if ($tableGateway === null) {
-            $parts    = explode('\\', get_class($this));
+            $parts    = explode('\\', static::class);
             $table    = strtolower(array_pop($parts));
             $this->db = new TableGateway($table, null);
         } else {

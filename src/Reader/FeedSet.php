@@ -1,23 +1,32 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Feed\Reader;
 
 use ArrayObject;
+use DOMElement;
 use DOMNodeList;
 use Laminas\Feed\Uri;
+// phpcs:ignore SlevomatCodingStandard.Namespaces.UnusedUses.UnusedUse
+use ReturnTypeWillChange;
+
+use function array_filter;
+use function array_pop;
+use function explode;
+use function implode;
+use function ltrim;
+use function sprintf;
+use function strtolower;
+use function trim;
 
 class FeedSet extends ArrayObject
 {
+    /** @var null|string */
     public $rss;
 
+    /** @var null|string */
     public $rdf;
 
+    /** @var null|string */
     public $atom;
 
     /**
@@ -38,16 +47,18 @@ class FeedSet extends ArrayObject
     public function addLinks(DOMNodeList $links, $uri)
     {
         foreach ($links as $link) {
-            if (strtolower($link->getAttribute('rel')) !== 'alternate'
+            /** @var DOMElement $link */
+            if (
+                strtolower($link->getAttribute('rel')) !== 'alternate'
                 || ! $link->getAttribute('type') || ! $link->getAttribute('href')
             ) {
                 continue;
             }
-            if (! isset($this->rss) && $link->getAttribute('type') === 'application/rss+xml') {
+            if (null === $this->rss && $link->getAttribute('type') === 'application/rss+xml') {
                 $this->rss = $this->absolutiseUri(trim($link->getAttribute('href')), $uri);
-            } elseif (! isset($this->atom) && $link->getAttribute('type') === 'application/atom+xml') {
+            } elseif (null === $this->atom && $link->getAttribute('type') === 'application/atom+xml') {
                 $this->atom = $this->absolutiseUri(trim($link->getAttribute('href')), $uri);
-            } elseif (! isset($this->rdf) && $link->getAttribute('type') === 'application/rdf+xml') {
+            } elseif (null === $this->rdf && $link->getAttribute('type') === 'application/rdf+xml') {
                 $this->rdf = $this->absolutiseUri(trim($link->getAttribute('href')), $uri);
             }
             $this[] = new static([
@@ -158,6 +169,7 @@ class FeedSet extends ArrayObject
      * @param  string $offset
      * @return mixed
      */
+    #[ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         if ($offset === 'feed' && ! $this->offsetExists('feed')) {

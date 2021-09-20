@@ -1,16 +1,19 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Feed\Reader\Integration;
 
 use Laminas\Feed\Reader;
 use PHPUnit\Framework\TestCase;
 use stdClass;
+
+use function dirname;
+use function file_get_contents;
+use function preg_match;
+use function restore_error_handler;
+use function set_error_handler;
+use function str_replace;
+
+use const E_USER_DEPRECATED;
 
 /**
  * @group Laminas_Feed
@@ -18,6 +21,7 @@ use stdClass;
  */
 class PodcastRss2Test extends TestCase
 {
+    /** @var string */
     protected $feedSamplePath;
 
     protected function setUp(): void
@@ -28,7 +32,6 @@ class PodcastRss2Test extends TestCase
 
     /**
      * Feed level testing
-     *
      */
     public function testGetsNewFeedUrl(): void
     {
@@ -154,7 +157,6 @@ class PodcastRss2Test extends TestCase
 
     /**
      * Entry level testing
-     *
      */
     public function testGetsEntryBlock(): void
     {
@@ -246,9 +248,10 @@ class PodcastRss2Test extends TestCase
             ';
         $expected = str_replace("\r\n", "\n", $expected);
 
-        set_error_handler(static function ($errno, $errstr) {
+        /** @psalm-suppress UnusedClosureParam */
+        set_error_handler(static function (int $errno, string $errstr): bool {
             return (bool) preg_match('/itunes:keywords/', $errstr);
-        }, \E_USER_DEPRECATED);
+        }, E_USER_DEPRECATED);
         $keywords = $entry->getKeywords();
         restore_error_handler();
 

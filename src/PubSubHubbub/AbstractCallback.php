@@ -1,16 +1,26 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Feed\PubSubHubbub;
 
 use Laminas\Http\PhpEnvironment\Response as PhpResponse;
 use Laminas\Stdlib\ArrayUtils;
 use Traversable;
+
+use function array_key_exists;
+use function file_get_contents;
+use function function_exists;
+use function gettype;
+use function intval;
+use function is_array;
+use function is_resource;
+use function sprintf;
+use function str_replace;
+use function stream_get_contents;
+use function strlen;
+use function strpos;
+use function strtoupper;
+use function substr;
+use function trim;
 
 abstract class AbstractCallback implements CallbackInterface
 {
@@ -208,22 +218,22 @@ abstract class AbstractCallback implements CallbackInterface
         return $this->subscriberCount;
     }
 
+    // phpcs:disable PSR2.Methods.MethodDeclaration.Underscore
+
     /**
      * Attempt to detect the callback URL (specifically the path forward)
      *
      * @return string
      */
-    // @codingStandardsIgnoreStart
     protected function _detectCallbackUrl()
     {
-        // @codingStandardsIgnoreEnd
         $callbackUrl = null;
 
         // IIS7 with URL Rewrite: make sure we get the unencoded url
         // (double slash problem).
-        $iisUrlRewritten = isset($_SERVER['IIS_WasUrlRewritten']) ? $_SERVER['IIS_WasUrlRewritten'] : null;
-        $unencodedUrl    = isset($_SERVER['UNENCODED_URL']) ? $_SERVER['UNENCODED_URL'] : null;
-        if ('1' == $iisUrlRewritten && ! empty($unencodedUrl)) {
+        $iisUrlRewritten = $_SERVER['IIS_WasUrlRewritten'] ?? null;
+        $unencodedUrl    = $_SERVER['UNENCODED_URL'] ?? null;
+        if ('1' === $iisUrlRewritten && ! empty($unencodedUrl)) {
             return $unencodedUrl;
         }
 
@@ -249,20 +259,19 @@ abstract class AbstractCallback implements CallbackInterface
      *
      * @return string
      */
-    // @codingStandardsIgnoreStart
     protected function _getHttpHost()
     {
-        // @codingStandardsIgnoreEnd
         if (! empty($_SERVER['HTTP_HOST'])) {
             return $_SERVER['HTTP_HOST'];
         }
 
-        $https  = isset($_SERVER['HTTPS']) ? $_SERVER['HTTPS'] : null;
+        $https  = $_SERVER['HTTPS'] ?? null;
         $scheme = $https === 'on' ? 'https' : 'http';
-        $name   = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : '';
+        $name   = $_SERVER['SERVER_NAME'] ?? '';
         $port   = isset($_SERVER['SERVER_PORT']) ? (int) $_SERVER['SERVER_PORT'] : 80;
 
-        if (($scheme === 'http' && $port === 80)
+        if (
+            ($scheme === 'http' && $port === 80)
             || ($scheme === 'https' && $port === 443)
         ) {
             return $name;
@@ -277,10 +286,8 @@ abstract class AbstractCallback implements CallbackInterface
      * @param  string $header
      * @return bool|string
      */
-    // @codingStandardsIgnoreStart
     protected function _getHeader($header)
     {
-        // @codingStandardsIgnoreEnd
         $temp = strtoupper(str_replace('-', '_', $header));
         if (! empty($_SERVER[$temp])) {
             return $_SERVER[$temp];
@@ -303,16 +310,16 @@ abstract class AbstractCallback implements CallbackInterface
      *
      * @return false|string Raw body, or false if not present
      */
-    // @codingStandardsIgnoreStart
     protected function _getRawBody()
     {
-        // @codingStandardsIgnoreEnd
         $body = is_resource($this->inputStream)
             ? stream_get_contents($this->inputStream)
             : file_get_contents($this->inputStream);
 
         return strlen(trim($body)) > 0 ? $body : false;
     }
+
+    // phpcs:enable PSR2.Methods.MethodDeclaration.Underscore
 
     /**
      * Build the callback URL from the REQUEST_URI server parameter.
@@ -322,7 +329,7 @@ abstract class AbstractCallback implements CallbackInterface
     private function buildCallbackUrlFromRequestUri()
     {
         $callbackUrl = $_SERVER['REQUEST_URI'];
-        $https       = isset($_SERVER['HTTPS']) ? $_SERVER['HTTPS'] : null;
+        $https       = $_SERVER['HTTPS'] ?? null;
         $scheme      = $https === 'on' ? 'https' : 'http';
         if ($https === 'on') {
             $scheme = 'https';

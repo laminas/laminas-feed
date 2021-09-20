@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Feed\Writer\Renderer\Feed;
 
 use DateTime;
@@ -15,6 +9,13 @@ use Laminas\Feed\Uri;
 use Laminas\Feed\Writer;
 use Laminas\Feed\Writer\Renderer;
 use Laminas\Feed\Writer\Version;
+
+use function array_key_exists;
+use function ctype_digit;
+use function is_string;
+use function version_compare;
+
+use const PHP_VERSION;
 
 class Rss extends Renderer\AbstractRenderer implements Renderer\RendererInterface
 {
@@ -84,17 +85,15 @@ class Rss extends Renderer\AbstractRenderer implements Renderer\RendererInterfac
         return $this;
     }
 
+    // phpcs:disable PSR2.Methods.MethodDeclaration.Underscore
+
     /**
      * Set feed language
      *
-     * @param DOMDocument $dom
-     * @param DOMElement $root
      * @return void
      */
-    // @codingStandardsIgnoreStart
     protected function _setLanguage(DOMDocument $dom, DOMElement $root)
     {
-        // @codingStandardsIgnoreEnd
         $lang = $this->getDataContainer()->getLanguage();
         if (! $lang) {
             return;
@@ -107,15 +106,11 @@ class Rss extends Renderer\AbstractRenderer implements Renderer\RendererInterfac
     /**
      * Set feed title
      *
-     * @param  DOMDocument $dom
-     * @param  DOMElement $root
      * @return void
      * @throws Writer\Exception\InvalidArgumentException
      */
-    // @codingStandardsIgnoreStart
     protected function _setTitle(DOMDocument $dom, DOMElement $root)
     {
-        // @codingStandardsIgnoreEnd
         if (! $this->getDataContainer()->getTitle()) {
             $message   = 'RSS 2.0 feed elements MUST contain exactly one'
                 . ' title element but a title has not been set';
@@ -137,15 +132,11 @@ class Rss extends Renderer\AbstractRenderer implements Renderer\RendererInterfac
     /**
      * Set feed description
      *
-     * @param  DOMDocument $dom
-     * @param  DOMElement $root
      * @return void
      * @throws Writer\Exception\InvalidArgumentException
      */
-    // @codingStandardsIgnoreStart
     protected function _setDescription(DOMDocument $dom, DOMElement $root)
     {
-        // @codingStandardsIgnoreEnd
         if (! $this->getDataContainer()->getDescription()) {
             $message   = 'RSS 2.0 feed elements MUST contain exactly one'
                 . ' description element but one has not been set';
@@ -166,14 +157,10 @@ class Rss extends Renderer\AbstractRenderer implements Renderer\RendererInterfac
     /**
      * Set date feed was last modified
      *
-     * @param  DOMDocument $dom
-     * @param  DOMElement $root
      * @return void
      */
-    // @codingStandardsIgnoreStart
     protected function _setDateModified(DOMDocument $dom, DOMElement $root)
     {
-        // @codingStandardsIgnoreEnd
         if (! $this->getDataContainer()->getDateModified()) {
             return;
         }
@@ -189,14 +176,10 @@ class Rss extends Renderer\AbstractRenderer implements Renderer\RendererInterfac
     /**
      * Set feed generator string
      *
-     * @param  DOMDocument $dom
-     * @param  DOMElement $root
      * @return void
      */
-    // @codingStandardsIgnoreStart
     protected function _setGenerator(DOMDocument $dom, DOMElement $root)
     {
-        // @codingStandardsIgnoreEnd
         if (! $this->getDataContainer()->getGenerator()) {
             $this->getDataContainer()->setGenerator(
                 'Laminas_Feed_Writer',
@@ -222,15 +205,11 @@ class Rss extends Renderer\AbstractRenderer implements Renderer\RendererInterfac
     /**
      * Set link to feed
      *
-     * @param  DOMDocument $dom
-     * @param  DOMElement $root
      * @return void
      * @throws Writer\Exception\InvalidArgumentException
      */
-    // @codingStandardsIgnoreStart
     protected function _setLink(DOMDocument $dom, DOMElement $root)
     {
-        // @codingStandardsIgnoreEnd
         $value = $this->getDataContainer()->getLink();
         if (! $value) {
             $message   = 'RSS 2.0 feed elements MUST contain exactly one'
@@ -255,14 +234,10 @@ class Rss extends Renderer\AbstractRenderer implements Renderer\RendererInterfac
     /**
      * Set feed authors
      *
-     * @param  DOMDocument $dom
-     * @param  DOMElement $root
      * @return void
      */
-    // @codingStandardsIgnoreStart
     protected function _setAuthors(DOMDocument $dom, DOMElement $root)
     {
-        // @codingStandardsIgnoreEnd
         $authors = $this->getDataContainer()->getAuthors();
         if (! $authors || empty($authors)) {
             return;
@@ -282,14 +257,10 @@ class Rss extends Renderer\AbstractRenderer implements Renderer\RendererInterfac
     /**
      * Set feed copyright
      *
-     * @param  DOMDocument $dom
-     * @param  DOMElement $root
      * @return void
      */
-    // @codingStandardsIgnoreStart
     protected function _setCopyright(DOMDocument $dom, DOMElement $root)
     {
-        // @codingStandardsIgnoreEnd
         $copyright = $this->getDataContainer()->getCopyright();
         if (! $copyright) {
             return;
@@ -303,21 +274,18 @@ class Rss extends Renderer\AbstractRenderer implements Renderer\RendererInterfac
     /**
      * Set feed channel image
      *
-     * @param  DOMDocument $dom
-     * @param  DOMElement $root
      * @return void
      * @throws Writer\Exception\InvalidArgumentException
      */
-    // @codingStandardsIgnoreStart
     protected function _setImage(DOMDocument $dom, DOMElement $root)
     {
-        // @codingStandardsIgnoreEnd
         $image = $this->getDataContainer()->getImage();
         if (! $image) {
             return;
         }
 
-        if (! isset($image['title']) || empty($image['title'])
+        if (
+            ! isset($image['title']) || empty($image['title'])
             || ! is_string($image['title'])
         ) {
             $message   = 'RSS 2.0 feed images must include a title';
@@ -330,7 +298,8 @@ class Rss extends Renderer\AbstractRenderer implements Renderer\RendererInterfac
             }
         }
 
-        if (empty($image['link']) || ! is_string($image['link'])
+        if (
+            empty($image['link']) || ! is_string($image['link'])
             || ! Uri::factory($image['link'])->isValid()
         ) {
             $message   = 'Invalid parameter: parameter \'link\''
@@ -419,14 +388,10 @@ class Rss extends Renderer\AbstractRenderer implements Renderer\RendererInterfac
     /**
      * Set date feed was created
      *
-     * @param  DOMDocument $dom
-     * @param  DOMElement $root
      * @return void
      */
-    // @codingStandardsIgnoreStart
     protected function _setDateCreated(DOMDocument $dom, DOMElement $root)
     {
-        // @codingStandardsIgnoreEnd
         if (! $this->getDataContainer()->getDateCreated()) {
             return;
         }
@@ -440,14 +405,10 @@ class Rss extends Renderer\AbstractRenderer implements Renderer\RendererInterfac
     /**
      * Set date feed last build date
      *
-     * @param  DOMDocument $dom
-     * @param  DOMElement $root
      * @return void
      */
-    // @codingStandardsIgnoreStart
     protected function _setLastBuildDate(DOMDocument $dom, DOMElement $root)
     {
-        // @codingStandardsIgnoreEnd
         if (! $this->getDataContainer()->getLastBuildDate()) {
             return;
         }
@@ -463,14 +424,10 @@ class Rss extends Renderer\AbstractRenderer implements Renderer\RendererInterfac
     /**
      * Set base URL to feed links
      *
-     * @param  DOMDocument $dom
-     * @param  DOMElement $root
      * @return void
      */
-    // @codingStandardsIgnoreStart
     protected function _setBaseUrl(DOMDocument $dom, DOMElement $root)
     {
-        // @codingStandardsIgnoreEnd
         $baseUrl = $this->getDataContainer()->getBaseUrl();
         if (! $baseUrl) {
             return;
@@ -481,14 +438,10 @@ class Rss extends Renderer\AbstractRenderer implements Renderer\RendererInterfac
     /**
      * Set feed categories
      *
-     * @param  DOMDocument $dom
-     * @param  DOMElement $root
      * @return void
      */
-    // @codingStandardsIgnoreStart
     protected function _setCategories(DOMDocument $dom, DOMElement $root)
     {
-        // @codingStandardsIgnoreEnd
         $categories = $this->getDataContainer()->getCategories();
         if (! $categories) {
             return;
@@ -503,4 +456,6 @@ class Rss extends Renderer\AbstractRenderer implements Renderer\RendererInterfac
             $root->appendChild($category);
         }
     }
+
+    // phpcs:enable PSR2.Methods.MethodDeclaration.Underscore
 }

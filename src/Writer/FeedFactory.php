@@ -1,15 +1,20 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Feed\Writer;
 
 use Traversable;
 
+use function array_key_exists;
+use function get_class;
+use function gettype;
+use function is_array;
+use function is_object;
+use function method_exists;
+use function sprintf;
+use function str_replace;
+use function strtolower;
+
+// phpcs:ignore WebimpressCodingStandard.NamingConventions.AbstractClass.Prefix
 abstract class FeedFactory
 {
     /**
@@ -89,7 +94,7 @@ abstract class FeedFactory
         if (! is_array($entries) && ! $entries instanceof Traversable) {
             throw new Exception\InvalidArgumentException(sprintf(
                 '%s::factory expects the "entries" value to be an array or Traversable; received "%s"',
-                get_called_class(),
+                static::class,
                 is_object($entries) ? get_class($entries) : gettype($entries)
             ));
         }

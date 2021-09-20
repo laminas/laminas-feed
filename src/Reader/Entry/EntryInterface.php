@@ -1,16 +1,9 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Feed\Reader\Entry;
 
 use DateTime;
 use Laminas\Feed\Reader\Collection\Category;
-use stdClass;
 
 interface EntryInterface
 {
@@ -25,7 +18,7 @@ interface EntryInterface
     /**
      * Get an array with feed authors
      *
-     * @return array
+     * @return null|array|iterable
      */
     public function getAuthors();
 
@@ -39,14 +32,14 @@ interface EntryInterface
     /**
      * Get the entry creation date
      *
-     * @return DateTime
+     * @return null|DateTime
      */
     public function getDateCreated();
 
     /**
      * Get the entry modification date
      *
-     * @return DateTime
+     * @return null|DateTime
      */
     public function getDateModified();
 
@@ -60,7 +53,7 @@ interface EntryInterface
     /**
      * Get the entry enclosure
      *
-     * @return stdClass
+     * @return null|object{url?: string, href?: string, length: int, type: string}
      */
     public function getEnclosure();
 

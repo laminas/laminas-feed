@@ -1,19 +1,21 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-feed for the canonical source repository
- * @copyright https://github.com/laminas/laminas-feed/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-feed/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Feed\Writer\Renderer\Entry;
 
 use Laminas\Feed\Reader;
 use Laminas\Feed\Writer;
+use Laminas\Feed\Writer\Entry;
 use Laminas\Feed\Writer\Exception\ExceptionInterface;
 use Laminas\Feed\Writer\Renderer;
 use LaminasTest\Feed\Writer\TestAsset;
 use PHPUnit\Framework\TestCase;
+
+use function array_reduce;
+use function restore_error_handler;
+use function set_error_handler;
+use function strstr;
+
+use const E_USER_NOTICE;
 
 /**
  * @group Laminas_Feed
@@ -21,16 +23,18 @@ use PHPUnit\Framework\TestCase;
  */
 class AtomTest extends TestCase
 {
+    /** @var Writer\Feed */
     protected $validWriter;
+
+    /** @var Entry */
     protected $validEntry;
 
     protected function setUp(): void
     {
         Writer\Writer::reset();
+
         $this->validWriter = new Writer\Feed();
-
         $this->validWriter->setType('atom');
-
         $this->validWriter->setTitle('This is a test feed.');
         $this->validWriter->setDescription('This is a test description.');
         $this->validWriter->setDateModified(1234567890);
@@ -41,6 +45,7 @@ class AtomTest extends TestCase
             'email' => 'joe@example.com',
             'uri'   => 'http://www.example.com/joe',
         ]);
+
         $this->validEntry = $this->validWriter->createEntry();
         $this->validEntry->setTitle('This is a test entry.');
         $this->validEntry->setDescription('This is a test entry description.');
@@ -53,19 +58,17 @@ class AtomTest extends TestCase
             'uri'   => 'http://www.example.com/jane',
         ]);
         $this->validEntry->setContent('<p class="xhtml:">This is test content for <em>xhtml:</em></p>');
+
         $this->validWriter->addEntry($this->validEntry);
     }
 
     protected function tearDown(): void
     {
         Writer\Writer::reset();
-        $this->validWriter = null;
-        $this->validEntry  = null;
     }
 
     /**
      * @doesNotPerformAssertions
-     *
      */
     public function testRenderMethodRunsMinimalWriterContainerProperlyBeforeICheckAtomCompliance(): void
     {
@@ -174,7 +177,6 @@ class AtomTest extends TestCase
         $renderer = new Renderer\Feed\Atom($this->validWriter);
         $feed     = Reader\Reader::importString($renderer->render()->saveXml());
         $entry    = $feed->current();
-        $author   = $entry->getAuthor();
         $this->assertEquals([
             'name'  => 'Jane',
             'email' => 'jane@example.com',
@@ -337,10 +339,11 @@ class AtomTest extends TestCase
             'messages' => [],
         ];
 
-        set_error_handler(static function ($errno, $errstr) use ($notices) {
+        /** @psalm-suppress UnusedClosureParam */
+        set_error_handler(static function (int $errno, string $errstr) use ($notices): void {
             $notices->messages[] = $errstr;
-        }, \E_USER_NOTICE);
-        $renderer = new Renderer\Entry\Atom($this->validEntry);
+        }, E_USER_NOTICE);
+        new Renderer\Entry\Atom($this->validEntry);
         restore_error_handler();
 
         $message = array_reduce($notices->messages, static function ($toReturn, $message) {
