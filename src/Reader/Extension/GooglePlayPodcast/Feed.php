@@ -68,13 +68,9 @@ class Feed extends Extension\AbstractFeed
 
         if ($categoryList->length > 0) {
             foreach ($categoryList as $node) {
-                /** @psalm-suppress UnusedVariable */
-                $children = null;
+                $children = [];
 
                 if ($node->childNodes->length > 0) {
-                    /** @psalm-suppress UnusedVariable */
-                    $children = [];
-
                     foreach ($node->childNodes as $childNode) {
                         if (! $childNode instanceof DOMText) {
                             $children[$childNode->getAttribute('text')] = null;
@@ -82,7 +78,7 @@ class Feed extends Extension\AbstractFeed
                     }
                 }
 
-                $categories[$node->getAttribute('text')] = $children;
+                $categories[$node->getAttribute('text')] = $children === [] ? null : $children;
             }
         }
 

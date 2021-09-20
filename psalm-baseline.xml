@@ -487,46 +487,27 @@
   </file>
   <file src="src/Reader/Entry/Atom.php">
     <ImplementedReturnTypeMismatch occurrences="3">
+      <code>AuthorCollection</code>
       <code>null|string</code>
-      <code>string</code>
       <code>void</code>
     </ImplementedReturnTypeMismatch>
     <InvalidNullableReturnType occurrences="1">
       <code>string</code>
     </InvalidNullableReturnType>
-    <MixedArgument occurrences="1">
-      <code>$categoryCollection</code>
-    </MixedArgument>
-    <MixedAssignment occurrences="18">
-      <code>$categoryCollection</code>
-      <code>$categoryCollection</code>
-      <code>$commentcount</code>
-      <code>$commentcount</code>
-      <code>$commentfeedlink</code>
-      <code>$commentlink</code>
-      <code>$content</code>
-      <code>$dateCreated</code>
-      <code>$dateModified</code>
-      <code>$description</code>
-      <code>$enclosure</code>
+    <MixedAssignment occurrences="2">
       <code>$extension</code>
       <code>$extension</code>
-      <code>$id</code>
-      <code>$links</code>
-      <code>$people</code>
-      <code>$source</code>
-      <code>$title</code>
     </MixedAssignment>
     <MixedInferredReturnType occurrences="15">
-      <code>DateTime</code>
-      <code>DateTime</code>
+      <code>AuthorCollection</code>
       <code>Reader\Collection\Category</code>
       <code>array</code>
-      <code>array</code>
       <code>int</code>
+      <code>null|DateTime</code>
+      <code>null|DateTime</code>
       <code>null|Reader\Feed\Atom\Source</code>
+      <code>null|object{href: string, length: int, type: string}</code>
       <code>null|string</code>
-      <code>string</code>
       <code>string</code>
       <code>string</code>
       <code>string</code>
@@ -540,34 +521,20 @@
       <code>setType</code>
       <code>setXpath</code>
     </MixedMethodCall>
-    <MixedReturnStatement occurrences="29">
-      <code>$this-&gt;data['authors']</code>
+    <MixedReturnStatement occurrences="15">
       <code>$this-&gt;data['authors']</code>
       <code>$this-&gt;data['categories']</code>
-      <code>$this-&gt;data['categories']</code>
-      <code>$this-&gt;data['commentcount']</code>
       <code>$this-&gt;data['commentcount']</code>
       <code>$this-&gt;data['commentfeedlink']</code>
-      <code>$this-&gt;data['commentfeedlink']</code>
-      <code>$this-&gt;data['commentlink']</code>
       <code>$this-&gt;data['commentlink']</code>
       <code>$this-&gt;data['content']</code>
-      <code>$this-&gt;data['content']</code>
-      <code>$this-&gt;data['datecreated']</code>
       <code>$this-&gt;data['datecreated']</code>
       <code>$this-&gt;data['datemodified']</code>
-      <code>$this-&gt;data['datemodified']</code>
-      <code>$this-&gt;data['description']</code>
       <code>$this-&gt;data['description']</code>
       <code>$this-&gt;data['enclosure']</code>
-      <code>$this-&gt;data['enclosure']</code>
-      <code>$this-&gt;data['id']</code>
       <code>$this-&gt;data['id']</code>
       <code>$this-&gt;data['links']</code>
-      <code>$this-&gt;data['links']</code>
       <code>$this-&gt;data['source']</code>
-      <code>$this-&gt;data['source']</code>
-      <code>$this-&gt;data['title']</code>
       <code>$this-&gt;data['title']</code>
     </MixedReturnStatement>
     <MixedReturnTypeCoercion occurrences="2">
@@ -579,83 +546,38 @@
     <PropertyNotSetInConstructor occurrences="1">
       <code>Atom</code>
     </PropertyNotSetInConstructor>
-    <UndefinedMethod occurrences="16">
-      <code>getAuthors</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCommentCount</code>
-      <code>getCommentCount</code>
-      <code>getCommentFeedLink</code>
-      <code>getCommentLink</code>
-      <code>getContent</code>
-      <code>getDateCreated</code>
-      <code>getDateModified</code>
-      <code>getDescription</code>
-      <code>getEnclosure</code>
-      <code>getId</code>
-      <code>getLinks</code>
-      <code>getSource</code>
-      <code>getTitle</code>
-    </UndefinedMethod>
   </file>
   <file src="src/Reader/Entry/Rss.php">
-    <ImplementedReturnTypeMismatch occurrences="5">
+    <ImplementedReturnTypeMismatch occurrences="3">
       <code>null|string</code>
       <code>null|string</code>
-      <code>null|string</code>
-      <code>string</code>
       <code>void</code>
     </ImplementedReturnTypeMismatch>
     <InvalidNullableReturnType occurrences="1">
       <code>string</code>
     </InvalidNullableReturnType>
+    <InvalidReturnStatement occurrences="1">
+      <code>$this-&gt;data['authors']</code>
+    </InvalidReturnStatement>
     <InvalidScalarArgument occurrences="1">
       <code>$entryKey</code>
     </InvalidScalarArgument>
-    <LessSpecificReturnStatement occurrences="1">
-      <code>$this-&gt;data['datemodified']</code>
-    </LessSpecificReturnStatement>
-    <MixedArgument occurrences="4">
-      <code>$authors</code>
-      <code>$categoryCollection</code>
+    <MixedArgument occurrences="2">
       <code>$dateModified</code>
       <code>$dateModified</code>
     </MixedArgument>
     <MixedArrayAccess occurrences="1">
       <code>$author['name']</code>
     </MixedArrayAccess>
-    <MixedAssignment occurrences="33">
+    <MixedAssignment occurrences="10">
       <code>$author</code>
-      <code>$authors</code>
-      <code>$authorsDc</code>
-      <code>$categoryCollection</code>
-      <code>$categoryCollection</code>
-      <code>$commentcount</code>
-      <code>$commentcount</code>
-      <code>$commentcount</code>
-      <code>$commentfeedlink</code>
-      <code>$commentfeedlink</code>
-      <code>$commentfeedlink</code>
       <code>$commentlink</code>
-      <code>$commentlink</code>
-      <code>$content</code>
-      <code>$content</code>
-      <code>$date</code>
-      <code>$date</code>
       <code>$dateModified</code>
       <code>$description</code>
       <code>$description</code>
-      <code>$description</code>
-      <code>$description</code>
-      <code>$enclosure</code>
       <code>$extension</code>
       <code>$extension</code>
       <code>$id</code>
-      <code>$id</code>
-      <code>$id</code>
-      <code>$links</code>
-      <code>$title</code>
-      <code>$title</code>
       <code>$title</code>
       <code>$title</code>
     </MixedAssignment>
@@ -663,11 +585,11 @@
       <code>DateTime</code>
       <code>Reader\Collection\Category</code>
       <code>array</code>
-      <code>array</code>
+      <code>int</code>
+      <code>null|array</code>
+      <code>null|object{url?: string, href?: string, length: int, type: string}</code>
       <code>null|string</code>
       <code>null|string</code>
-      <code>null|string</code>
-      <code>string</code>
       <code>string</code>
       <code>string</code>
       <code>string</code>
@@ -680,34 +602,26 @@
       <code>setType</code>
       <code>setXpath</code>
     </MixedMethodCall>
-    <MixedReturnStatement occurrences="22">
-      <code>$this-&gt;data['authors']</code>
+    <MixedReturnStatement occurrences="15">
       <code>$this-&gt;data['authors']</code>
       <code>$this-&gt;data['categories']</code>
-      <code>$this-&gt;data['categories']</code>
       <code>$this-&gt;data['commentcount']</code>
-      <code>$this-&gt;data['commentcount']</code>
-      <code>$this-&gt;data['commentfeedlink']</code>
       <code>$this-&gt;data['commentfeedlink']</code>
       <code>$this-&gt;data['commentlink']</code>
       <code>$this-&gt;data['commentlink']</code>
-      <code>$this-&gt;data['content']</code>
       <code>$this-&gt;data['content']</code>
       <code>$this-&gt;data['datemodified']</code>
       <code>$this-&gt;data['description']</code>
       <code>$this-&gt;data['enclosure']</code>
-      <code>$this-&gt;data['enclosure']</code>
       <code>$this-&gt;data['id']</code>
       <code>$this-&gt;data['id']</code>
-      <code>$this-&gt;data['links']</code>
       <code>$this-&gt;data['links']</code>
       <code>$this-&gt;data['title']</code>
     </MixedReturnStatement>
     <MixedReturnTypeCoercion occurrences="2">
       <code>null|array&lt;string, string&gt;</code>
     </MixedReturnTypeCoercion>
-    <NullableReturnStatement occurrences="7">
-      <code>$this-&gt;data['authors']</code>
+    <NullableReturnStatement occurrences="6">
       <code>$this-&gt;data['commentfeedlink']</code>
       <code>$this-&gt;data['commentlink']</code>
       <code>$this-&gt;data['datemodified']</code>
@@ -721,31 +635,8 @@
     <PropertyNotSetInConstructor occurrences="1">
       <code>Rss</code>
     </PropertyNotSetInConstructor>
-    <UndefinedMethod occurrences="24">
+    <UndefinedMethod occurrences="1">
       <code>getAttribute</code>
-      <code>getAuthors</code>
-      <code>getAuthors</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCommentCount</code>
-      <code>getCommentCount</code>
-      <code>getCommentCount</code>
-      <code>getCommentFeedLink</code>
-      <code>getCommentFeedLink</code>
-      <code>getCommentFeedLink</code>
-      <code>getCommentLink</code>
-      <code>getContent</code>
-      <code>getContent</code>
-      <code>getDate</code>
-      <code>getDateModified</code>
-      <code>getDescription</code>
-      <code>getDescription</code>
-      <code>getEnclosure</code>
-      <code>getId</code>
-      <code>getId</code>
-      <code>getLinks</code>
-      <code>getTitle</code>
-      <code>getTitle</code>
     </UndefinedMethod>
     <UnusedVariable occurrences="2">
       <code>$description</code>
@@ -859,11 +750,6 @@
       <code>$author</code>
       <code>$element</code>
     </ArgumentTypeCoercion>
-    <InvalidReturnStatement occurrences="3">
-      <code>$this-&gt;data['datecreated']</code>
-      <code>$this-&gt;data['datemodified']</code>
-      <code>$this-&gt;data['enclosure']</code>
-    </InvalidReturnStatement>
     <InvalidScalarArgument occurrences="1">
       <code>$deep</code>
     </InvalidScalarArgument>
@@ -896,11 +782,11 @@
       <code>Collection\Category</code>
       <code>array</code>
       <code>int</code>
+      <code>null|DateTime</code>
+      <code>null|DateTime</code>
       <code>null|Reader\Feed\Atom\Source</code>
+      <code>null|object{href: string, length: int, type: string}</code>
       <code>null|string</code>
-      <code>string</code>
-      <code>string</code>
-      <code>string</code>
       <code>string</code>
       <code>string</code>
       <code>string</code>
@@ -929,13 +815,10 @@
       <code>$this-&gt;data['source']</code>
       <code>$this-&gt;data['title']</code>
     </MixedReturnStatement>
-    <NullableReturnStatement occurrences="8">
+    <NullableReturnStatement occurrences="5">
       <code>$this-&gt;data['commentfeedlink']</code>
       <code>$this-&gt;data['commentlink']</code>
-      <code>$this-&gt;data['datecreated']</code>
-      <code>$this-&gt;data['datemodified']</code>
       <code>$this-&gt;data['description']</code>
-      <code>$this-&gt;data['enclosure']</code>
       <code>$this-&gt;data['id']</code>
       <code>$this-&gt;data['title']</code>
     </NullableReturnStatement>

@@ -81,20 +81,11 @@ class Feed extends Extension\AbstractFeed
             return $this->data['copyright'];
         }
 
-        /** @psalm-suppress UnusedVariable */
-        $copyright = null;
+        $copyright = $this->getType() === Reader\Reader::TYPE_ATOM_03
+            ? $this->xpath->evaluate('string(' . $this->getXpathPrefix() . '/atom:copyright)')
+            : $this->xpath->evaluate('string(' . $this->getXpathPrefix() . '/atom:rights)');
 
-        if ($this->getType() === Reader\Reader::TYPE_ATOM_03) {
-            $copyright = $this->xpath->evaluate('string(' . $this->getXpathPrefix() . '/atom:copyright)');
-        } else {
-            $copyright = $this->xpath->evaluate('string(' . $this->getXpathPrefix() . '/atom:rights)');
-        }
-
-        if (! $copyright) {
-            $copyright = null;
-        }
-
-        $this->data['copyright'] = $copyright;
+        $this->data['copyright'] = is_string($copyright) ? $copyright : null;
 
         return $this->data['copyright'];
     }
@@ -166,20 +157,11 @@ class Feed extends Extension\AbstractFeed
             return $this->data['description'];
         }
 
-        /** @psalm-suppress UnusedVariable */
-        $description = null;
+        $description = $this->getType() === Reader\Reader::TYPE_ATOM_03
+            ? $this->xpath->evaluate('string(' . $this->getXpathPrefix() . '/atom:tagline)')
+            : $this->xpath->evaluate('string(' . $this->getXpathPrefix() . '/atom:subtitle)');
 
-        if ($this->getType() === Reader\Reader::TYPE_ATOM_03) {
-            $description = $this->xpath->evaluate('string(' . $this->getXpathPrefix() . '/atom:tagline)');
-        } else {
-            $description = $this->xpath->evaluate('string(' . $this->getXpathPrefix() . '/atom:subtitle)');
-        }
-
-        if (! $description) {
-            $description = null;
-        }
-
-        $this->data['description'] = $description;
+        $this->data['description'] = is_string($description) ? $description : null;
 
         return $this->data['description'];
     }

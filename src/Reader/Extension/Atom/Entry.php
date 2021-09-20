@@ -158,7 +158,7 @@ class Entry extends Extension\AbstractEntry
     /**
      * Get the entry creation date
      *
-     * @return string
+     * @return null|DateTime
      */
     public function getDateCreated()
     {
@@ -186,7 +186,7 @@ class Entry extends Extension\AbstractEntry
     /**
      * Get the entry modification date
      *
-     * @return string
+     * @return null|DateTime
      */
     public function getDateModified()
     {
@@ -236,7 +236,7 @@ class Entry extends Extension\AbstractEntry
     /**
      * Get the entry enclosure
      *
-     * @return string
+     * @return null|object{href: string, length: int, type: string}
      */
     public function getEnclosure()
     {
