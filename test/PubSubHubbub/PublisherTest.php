@@ -297,7 +297,6 @@ class PublisherTest extends TestCase
     public function testNotifiesHubAndReportsSuccess(): void
     {
         PubSubHubbub::setHttpClient($this->getClientSuccess());
-        PubSubHubbub::getHttpClient();
 
         $this->publisher->addHubUrl('http://www.example.com/hub');
         $this->publisher->addUpdatedTopicUrl('http://www.example.com/topic');
@@ -309,7 +308,6 @@ class PublisherTest extends TestCase
     public function testNotifiesHubAndReportsFail(): void
     {
         PubSubHubbub::setHttpClient($this->getClientFail());
-        PubSubHubbub::getHttpClient();
 
         $this->publisher->addHubUrl('http://www.example.com/hub');
         $this->publisher->addUpdatedTopicUrl('http://www.example.com/topic');
