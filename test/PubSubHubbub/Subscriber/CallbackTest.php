@@ -7,6 +7,7 @@ use DateInterval;
 use DateTime;
 use Laminas\Db\Adapter\Adapter;
 use Laminas\Db\ResultSet\ResultSet;
+use Laminas\Db\ResultSet\ResultSetInterface;
 use Laminas\Db\TableGateway\TableGateway;
 use Laminas\Feed\PubSubHubbub\AbstractCallback;
 use Laminas\Feed\PubSubHubbub\Exception\ExceptionInterface;
@@ -24,6 +25,7 @@ use function fopen;
 use function fwrite;
 use function hash;
 use function rewind;
+use function sprintf;
 use function str_replace;
 use function time;
 use function uniqid;
@@ -263,11 +265,31 @@ class CallbackTest extends TestCase
 
     public function testReturnsFalseIfVerifyTokenRecordDoesNotExistForConfirmRequest(): void
     {
+        $resultSet = $this->createMock(ResultSetInterface::class);
+        $resultSet
+            ->expects($this->once())
+            ->method('count')
+            ->willReturn(0);
+
+        $this->tableGateway
+            ->expects($this->once())
+            ->method('select')
+            ->with(['id' => 'verifytokenkey'])
+            ->willReturn($resultSet);
+
         $this->assertFalse($this->callback->isValidHubVerification($this->get));
     }
 
+    /** @todo Determine what this is supposed to actually test */
     public function testReturnsFalseIfVerifyTokenRecordDoesNotAgreeWithConfirmRequest(): void
     {
+        $this->markTestSkipped(sprintf(
+            '%s needs to be rewritten, as it has the same setup and expectations of'
+            . ' testReturnsFalseIfVerifyTokenRecordDoesNotExistForConfirmRequest(),'
+            . ' but is clearly meant to test different functionality; unfortunately,'
+            . ' not sure what that is currently',
+            __METHOD__
+        ));
         $this->assertFalse($this->callback->isValidHubVerification($this->get));
     }
 
@@ -412,6 +434,18 @@ class CallbackTest extends TestCase
         $feedXml                   = file_get_contents(__DIR__ . '/_files/atom10.xml');
 
         $this->mockInputStream($this->callback, $feedXml);
+
+        $resultSet = $this->createMock(ResultSetInterface::class);
+        $resultSet
+            ->expects($this->once())
+            ->method('count')
+            ->willReturn(1);
+
+        $this->tableGateway
+            ->expects($this->once())
+            ->method('select')
+            ->with(['id' => 'verifytokenkey'])
+            ->willReturn($resultSet);
 
         $this->callback->handle([]);
         $this->assertEquals(404, $this->callback->getHttpResponse()->getStatusCode());
