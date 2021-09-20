@@ -30,9 +30,9 @@
     "require-dev": {
         "laminas/laminas-cache": "^2.7.2",
         "laminas/laminas-coding-standard": "~2.2.1",
-        "laminas/laminas-db": "^2.8.2",
+        "laminas/laminas-db": "^2.13.3",
         "laminas/laminas-http": "^2.15",
-        "laminas/laminas-servicemanager": "^3.3",
+        "laminas/laminas-servicemanager": "^3.7",
         "laminas/laminas-validator": "^2.15",
         "phpunit/phpunit": "^9.5.5",
         "psalm/plugin-phpunit": "^0.13.0",
