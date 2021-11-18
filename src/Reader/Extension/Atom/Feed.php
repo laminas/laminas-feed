@@ -330,7 +330,11 @@ class Feed extends Extension\AbstractFeed
 
         $link = $this->xpath->evaluate('string(' . $this->getXpathPrefix() . '/atom:link[@rel="self"]/@href)');
 
-        $link = $this->absolutiseUri($link);
+        if ($link) {
+            $link = $this->absolutiseUri($link);
+        } else {
+            $link = null;
+        }
 
         $this->data['feedlink'] = $link;
 
