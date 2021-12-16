@@ -5,6 +5,7 @@ namespace Laminas\Feed\Reader;
 use DOMDocument;
 use DOMElement;
 use DOMXPath;
+// phpcs:ignore SlevomatCodingStandard.Namespaces.UnusedUses.UnusedUse
 use ReturnTypeWillChange;
 
 use function call_user_func_array;
