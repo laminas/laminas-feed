@@ -1,10 +1,12 @@
 {
     "name": "laminas/laminas-feed",
-    "description": "provides functionality for consuming RSS and Atom feeds",
+    "description": "provides functionality for creating and consuming RSS and Atom feeds",
     "license": "BSD-3-Clause",
     "keywords": [
         "laminas",
-        "feed"
+        "feed",
+        "rss",
+        "atom"
     ],
     "homepage": "https://laminas.dev",
     "support": {
