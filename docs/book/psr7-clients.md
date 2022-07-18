@@ -68,8 +68,8 @@ class GuzzleClient implements FeedReaderHttpClientInterface
     public function get($uri)
     {
         return new Psr7ResponseDecorator(
-			$this->client->request('GET', $uri)
-		);
+            $this->client->request('GET', $uri)
+        );
     }
 }
 ```

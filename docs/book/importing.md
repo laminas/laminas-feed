@@ -8,6 +8,7 @@ to consume it:
 $feed = Laminas\Feed\Reader\Reader::import('http://feeds.example.com/feedName');
 ```
 
+<!-- markdownlint-disable-next-line heading-increment -->
 > ### Importing requires an HTTP client
 >
 > To import a feed, you will need to have an [HTTP client](http-clients.md)
