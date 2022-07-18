@@ -18,7 +18,7 @@ In the example below, we demonstrate a simple use case of retrieving an RSS feed
 and saving relevant portions of the feed data to a simple PHP array, which could
 then be used for printing the data, storing to a database, etc.
 
-> NOTE: **RSS optional properties**
+> NOTE: **RSS Optional Properties**
 >
 > Many *RSS* feeds have different channel and item properties available. The
 > *RSS* specification provides for many optional properties, so be aware of this
