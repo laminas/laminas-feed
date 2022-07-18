@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace Laminas\Feed\Reader;
 
+use Laminas\Feed\Reader\Extension\AbstractEntry;
+use Laminas\Feed\Reader\Extension\AbstractFeed;
 use Laminas\ServiceManager\AbstractPluginManager;
+use Laminas\ServiceManager\ConfigInterface;
 use Laminas\ServiceManager\Exception\InvalidServiceException;
 use Laminas\ServiceManager\Factory\InvokableFactory;
 
@@ -19,6 +22,8 @@ use function sprintf;
  *
  * Validation checks that we have an Extension\AbstractEntry or
  * Extension\AbstractFeed.
+ *
+ * @psalm-import-type FactoriesConfigurationType from ConfigInterface
  */
 class ExtensionPluginManager extends AbstractPluginManager implements ExtensionManagerInterface
 {
@@ -136,6 +141,7 @@ class ExtensionPluginManager extends AbstractPluginManager implements ExtensionM
      * Factories for default set of extension classes
      *
      * @var array<array-key, callable|string>
+     * @psalm-var FactoriesConfigurationType
      */
     protected $factories = [
         Extension\Atom\Entry::class              => InvokableFactory::class,
@@ -180,6 +186,8 @@ class ExtensionPluginManager extends AbstractPluginManager implements ExtensionM
     /**
      * Do not share instances (v2)
      *
+     * @deprecated
+     *
      * @var bool
      */
     protected $shareByDefault = false;
@@ -203,24 +211,26 @@ class ExtensionPluginManager extends AbstractPluginManager implements ExtensionM
     public function validate($instance)
     {
         if (
-            $instance instanceof Extension\AbstractEntry
-            || $instance instanceof Extension\AbstractFeed
+            $instance instanceof AbstractEntry
+            || $instance instanceof AbstractFeed
         ) {
             // we're okay
             return;
         }
 
         throw new InvalidServiceException(sprintf(
-            'Plugin of type %s is invalid; must implement %s\Extension\AbstractFeed '
-            . 'or %s\Extension\AbstractEntry',
+            'Plugin of type %s is invalid; must implement %s or %s',
             is_object($instance) ? get_class($instance) : gettype($instance),
-            __NAMESPACE__,
-            __NAMESPACE__
+            AbstractEntry::class,
+            AbstractFeed::class
         ));
     }
 
     /**
      * Validate the plugin (v2)
+     *
+     * @deprecated Since 2.18.0 This component is no longer compatible with service manager v2 series.
+     *             This method will be removed in version 3.0 of this component
      *
      * @param  mixed $plugin
      * @return void
@@ -232,11 +242,10 @@ class ExtensionPluginManager extends AbstractPluginManager implements ExtensionM
             $this->validate($plugin);
         } catch (InvalidServiceException $e) {
             throw new Exception\InvalidArgumentException(sprintf(
-                'Plugin of type %s is invalid; must implement %s\Extension\AbstractFeed '
-                . 'or %s\Extension\AbstractEntry',
+                'Plugin of type %s is invalid; must implement %s or %s',
                 is_object($plugin) ? get_class($plugin) : gettype($plugin),
-                __NAMESPACE__,
-                __NAMESPACE__
+                AbstractEntry::class,
+                AbstractFeed::class
             ));
         }
     }

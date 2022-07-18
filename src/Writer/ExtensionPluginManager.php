@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laminas\Feed\Writer;
 
 use Laminas\ServiceManager\AbstractPluginManager;
+use Laminas\ServiceManager\ConfigInterface;
 use Laminas\ServiceManager\Exception\InvalidServiceException;
 use Laminas\ServiceManager\Factory\InvokableFactory;
 
@@ -18,6 +19,8 @@ use function substr;
  * Plugin manager implementation for feed writer extensions
  *
  * Validation checks that we have an Entry, Feed, or Extension\AbstractRenderer.
+ *
+ * @psalm-import-type FactoriesConfigurationType from ConfigInterface
  */
 class ExtensionPluginManager extends AbstractPluginManager implements ExtensionManagerInterface
 {
@@ -169,7 +172,7 @@ class ExtensionPluginManager extends AbstractPluginManager implements ExtensionM
     /**
      * Factories for default set of extension classes
      *
-     * @var array<array-key, callable|string>
+     * @var FactoriesConfigurationType
      */
     protected $factories = [
         Extension\Atom\Renderer\Feed::class               => InvokableFactory::class,
@@ -234,7 +237,7 @@ class ExtensionPluginManager extends AbstractPluginManager implements ExtensionM
      *
      * Checks that the extension loaded is of a valid type.
      *
-     * @param  object $instance
+     * @param  mixed $instance
      * @return void
      * @throws InvalidServiceException If invalid.
      */
@@ -245,12 +248,12 @@ class ExtensionPluginManager extends AbstractPluginManager implements ExtensionM
             return;
         }
 
-        if ('Feed' === substr(get_class($instance), -4)) {
+        if (is_object($instance) && 'Feed' === substr(get_class($instance), -4)) {
             // we're okay
             return;
         }
 
-        if ('Entry' === substr(get_class($instance), -5)) {
+        if (is_object($instance) && 'Entry' === substr(get_class($instance), -5)) {
             // we're okay
             return;
         }
