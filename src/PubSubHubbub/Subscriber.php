@@ -782,7 +782,7 @@ class Subscriber
         if (! empty($this->testStaticToken)) {
             return $this->testStaticToken;
         }
-        return uniqid(rand(), true) . time();
+        return uniqid((string) rand(), true) . time();
     }
 
     /**
