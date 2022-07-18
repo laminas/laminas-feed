@@ -8,7 +8,7 @@ to consume it:
 $feed = Laminas\Feed\Reader\Reader::import('http://feeds.example.com/feedName');
 ```
 
-> NOTE: Importing requires an HTTP client
+> MISSING: **Importing Requires an HTTP Client**
 >
 > To import a feed, you will need to have an [HTTP client](http-clients.md)
 > available.
