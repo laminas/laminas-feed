@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace LaminasTest\Feed\Reader;
 
-use Interop\Container\ContainerInterface;
 use Laminas\Feed\Reader;
 use Laminas\Feed\Reader\Exception\InvalidArgumentException;
 use Laminas\Feed\Reader\Feed\FeedInterface;
@@ -17,6 +16,7 @@ use Laminas\Http\Response as HttpResponse;
 use My\Extension\JungleBooks\Entry;
 use My\Extension\JungleBooks\Feed;
 use PHPUnit\Framework\TestCase;
+use Psr\Container\ContainerInterface;
 use stdClass;
 
 use function array_reduce;
