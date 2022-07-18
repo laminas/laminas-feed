@@ -8,6 +8,7 @@ use DOMDocument;
 use DOMElement;
 use Laminas\Feed\Writer\Extension;
 
+use function is_numeric;
 use function strtolower;
 
 class Entry extends Extension\AbstractRenderer
@@ -110,11 +111,12 @@ class Entry extends Extension\AbstractRenderer
     protected function _setCommentCount(DOMDocument $dom, DOMElement $root)
     {
         $count = $this->getDataContainer()->getCommentCount();
-        if ($count === null) {
+        if ($count === null || ! is_numeric($count)) {
             return;
         }
+
         $tcount            = $this->dom->createElement('thr:total');
-        $tcount->nodeValue = $count;
+        $tcount->nodeValue = (string) $count;
         $root->appendChild($tcount);
         $this->called = true;
     }
