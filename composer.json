@@ -44,7 +44,7 @@
         "laminas/laminas-servicemanager": "^3.7",
         "laminas/laminas-validator": "^2.15",
         "phpunit/phpunit": "^9.5.5",
-        "psalm/plugin-phpunit": "^0.13.0",
+        "psalm/plugin-phpunit": "^0.17.0",
         "psr/http-message": "^1.0.1",
         "vimeo/psalm": "^4.1"
     },
