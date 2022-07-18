@@ -7,8 +7,6 @@ namespace Laminas\Feed\Reader;
 use Laminas\ServiceManager\AbstractPluginManager;
 use Laminas\ServiceManager\Exception\InvalidServiceException;
 use Laminas\ServiceManager\Factory\InvokableFactory;
-use Zend\Feed\Reader\Extension\Atom\Entry;
-use Zend\Feed\Reader\Extension\Atom\Feed;
 
 use function get_class;
 use function gettype;
@@ -100,21 +98,21 @@ class ExtensionPluginManager extends AbstractPluginManager implements ExtensionM
         'WellFormedWeb\Entry'     => Extension\WellFormedWeb\Entry::class,
 
         // Legacy Zend Framework aliases
-        Entry::class                                               => Extension\Atom\Entry::class,
-        Feed::class                                                => Extension\Atom\Feed::class,
-        \Zend\Feed\Reader\Extension\Content\Entry::class           => Extension\Content\Entry::class,
-        \Zend\Feed\Reader\Extension\CreativeCommons\Entry::class   => Extension\CreativeCommons\Entry::class,
-        \Zend\Feed\Reader\Extension\CreativeCommons\Feed::class    => Extension\CreativeCommons\Feed::class,
-        \Zend\Feed\Reader\Extension\DublinCore\Entry::class        => Extension\DublinCore\Entry::class,
-        \Zend\Feed\Reader\Extension\DublinCore\Feed::class         => Extension\DublinCore\Feed::class,
-        \Zend\Feed\Reader\Extension\GooglePlayPodcast\Entry::class => Extension\GooglePlayPodcast\Entry::class,
-        \Zend\Feed\Reader\Extension\GooglePlayPodcast\Feed::class  => Extension\GooglePlayPodcast\Feed::class,
-        \Zend\Feed\Reader\Extension\Podcast\Entry::class           => Extension\Podcast\Entry::class,
-        \Zend\Feed\Reader\Extension\Podcast\Feed::class            => Extension\Podcast\Feed::class,
-        \Zend\Feed\Reader\Extension\Slash\Entry::class             => Extension\Slash\Entry::class,
-        \Zend\Feed\Reader\Extension\Syndication\Feed::class        => Extension\Syndication\Feed::class,
-        \Zend\Feed\Reader\Extension\Thread\Entry::class            => Extension\Thread\Entry::class,
-        \Zend\Feed\Reader\Extension\WellFormedWeb\Entry::class     => Extension\WellFormedWeb\Entry::class,
+        'Zend\Feed\Reader\Extension\Atom\Entry'              => Extension\Atom\Entry::class,
+        'Zend\Feed\Reader\Extension\Atom\Feed'               => Extension\Atom\Feed::class,
+        'Zend\Feed\Reader\Extension\Content\Entry'           => Extension\Content\Entry::class,
+        'Zend\Feed\Reader\Extension\CreativeCommons\Entry'   => Extension\CreativeCommons\Entry::class,
+        'Zend\Feed\Reader\Extension\CreativeCommons\Feed'    => Extension\CreativeCommons\Feed::class,
+        'Zend\Feed\Reader\Extension\DublinCore\Entry'        => Extension\DublinCore\Entry::class,
+        'Zend\Feed\Reader\Extension\DublinCore\Feed'         => Extension\DublinCore\Feed::class,
+        'Zend\Feed\Reader\Extension\GooglePlayPodcast\Entry' => Extension\GooglePlayPodcast\Entry::class,
+        'Zend\Feed\Reader\Extension\GooglePlayPodcast\Feed'  => Extension\GooglePlayPodcast\Feed::class,
+        'Zend\Feed\Reader\Extension\Podcast\Entry'           => Extension\Podcast\Entry::class,
+        'Zend\Feed\Reader\Extension\Podcast\Feed'            => Extension\Podcast\Feed::class,
+        'Zend\Feed\Reader\Extension\Slash\Entry'             => Extension\Slash\Entry::class,
+        'Zend\Feed\Reader\Extension\Syndication\Feed'        => Extension\Syndication\Feed::class,
+        'Zend\Feed\Reader\Extension\Thread\Entry'            => Extension\Thread\Entry::class,
+        'Zend\Feed\Reader\Extension\WellFormedWeb\Entry'     => Extension\WellFormedWeb\Entry::class,
 
         // v2 normalized FQCNs
         'zendfeedreaderextensionatomentry'              => Extension\Atom\Entry::class,
