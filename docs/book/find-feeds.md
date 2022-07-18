@@ -8,6 +8,7 @@ feeds referenced by a web page with one method call:
 $feedLinks = Laminas\Feed\Reader\Reader::findFeedLinks('http://www.example.com/news.html');
 ```
 
+<!-- markdownlint-disable-next-line heading-increment -->
 > ### Finding feed links requires an HTTP client
 >
 > To find feed links, you will need to have an [HTTP client](http-clients.md)
