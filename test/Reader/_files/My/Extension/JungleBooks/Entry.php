@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace My\Extension\JungleBooks;
 
 use Laminas\Feed\Reader\Extension;

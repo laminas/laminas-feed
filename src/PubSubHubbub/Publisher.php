@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Feed\PubSubHubbub;
 
 use Laminas\Feed\Uri;

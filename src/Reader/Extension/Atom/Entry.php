@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Feed\Reader\Extension\Atom;
 
 use DateTime;
@@ -18,9 +20,6 @@ use function is_string;
 use function preg_replace;
 use function strlen;
 use function trim;
-use function version_compare;
-
-use const PHP_VERSION;
 
 class Entry extends Extension\AbstractEntry
 {
@@ -112,8 +111,7 @@ class Entry extends Extension\AbstractEntry
                         ->query($this->getXpathPrefix() . '/atom:content/xhtml:div')
                         ->item(0);
                     $d      = new DOMDocument('1.0', $this->getEncoding());
-                    $deep   = version_compare(PHP_VERSION, '7', 'ge') ? 1 : true;
-                    $xhtmls = $d->importNode($xhtml, $deep);
+                    $xhtmls = $d->importNode($xhtml, true);
                     $d->appendChild($xhtmls);
                     $content = $this->collectXhtml(
                         $d->saveXML(),

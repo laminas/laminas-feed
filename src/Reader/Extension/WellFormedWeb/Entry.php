@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Feed\Reader\Extension\WellFormedWeb;
 
 use Laminas\Feed\Reader\Extension;

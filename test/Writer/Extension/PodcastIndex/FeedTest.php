@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Feed\Writer\Extension\PodcastIndex;
 
 use Laminas\Feed\Writer;

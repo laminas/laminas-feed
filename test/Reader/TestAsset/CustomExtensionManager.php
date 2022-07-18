@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Feed\Reader\TestAsset;
 
 use Laminas\Feed\Reader\Extension;

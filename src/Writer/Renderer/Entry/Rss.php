@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Feed\Writer\Renderer\Entry;
 
 use DateTime;
@@ -218,7 +220,7 @@ class Rss extends Renderer\AbstractRenderer implements Renderer\RendererInterfac
         }
         $enclosure = $this->dom->createElement('enclosure');
         $enclosure->setAttribute('type', $data['type']);
-        $enclosure->setAttribute('length', $data['length']);
+        $enclosure->setAttribute('length', (string) $data['length']);
         $enclosure->setAttribute('url', $data['uri']);
         $root->appendChild($enclosure);
     }

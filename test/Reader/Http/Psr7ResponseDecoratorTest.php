@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Feed\Reader\Http;
 
 use Laminas\Feed\Reader\Http\HeaderAwareResponseInterface;

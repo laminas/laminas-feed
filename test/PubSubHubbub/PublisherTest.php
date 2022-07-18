@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Feed\PubSubHubbub;
 
 use Laminas\Feed\PubSubHubbub\Exception\ExceptionInterface;
