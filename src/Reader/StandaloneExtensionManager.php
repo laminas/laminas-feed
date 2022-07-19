@@ -11,6 +11,10 @@ use function is_a;
 use function is_string;
 use function sprintf;
 
+/**
+ * @final this class wasn't designed to be inherited from, but we can't assume that consumers haven't already
+ *        extended it, therefore we cannot add the final marker without a new major release.
+ */
 class StandaloneExtensionManager implements ExtensionManagerInterface
 {
     /** @var array<string, class-string> */
@@ -38,9 +42,8 @@ class StandaloneExtensionManager implements ExtensionManagerInterface
      * Do we have the extension?
      *
      * @param  string $extension
-     * @return bool
      */
-    public function has($extension)
+    public function has($extension): bool
     {
         return array_key_exists($extension, $this->extensions);
     }

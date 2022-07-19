@@ -12,6 +12,9 @@ use function sprintf;
  * Default implementation of ExtensionManagerInterface
  *
  * Decorator of ExtensionPluginManager.
+ *
+ * @final this class wasn't designed to be inherited from, but we can't assume that consumers haven't already
+ *        extended it, therefore we cannot add the final marker without a new major release.
  */
 class ExtensionManager implements ExtensionManagerInterface
 {
@@ -67,9 +70,8 @@ class ExtensionManager implements ExtensionManagerInterface
      * Do we have the named extension?
      *
      * @param  string $extension
-     * @return bool
      */
-    public function has($extension)
+    public function has($extension): bool
     {
         return $this->pluginManager->has($extension);
     }
