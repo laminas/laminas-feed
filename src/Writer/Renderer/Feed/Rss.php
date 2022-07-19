@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Feed\Writer\Renderer\Feed;
 
 use DateTime;
@@ -13,9 +15,6 @@ use Laminas\Feed\Writer\Version;
 use function array_key_exists;
 use function ctype_digit;
 use function is_string;
-use function version_compare;
-
-use const PHP_VERSION;
 
 class Rss extends Renderer\AbstractRenderer implements Renderer\RendererInterface
 {
@@ -78,8 +77,7 @@ class Rss extends Renderer\AbstractRenderer implements Renderer\RendererInterfac
             $renderer->setRootElement($this->dom->documentElement);
             $renderer->render();
             $element  = $renderer->getElement();
-            $deep     = version_compare(PHP_VERSION, '7', 'ge') ? 1 : true;
-            $imported = $this->dom->importNode($element, $deep);
+            $imported = $this->dom->importNode($element, true);
             $channel->appendChild($imported);
         }
         return $this;

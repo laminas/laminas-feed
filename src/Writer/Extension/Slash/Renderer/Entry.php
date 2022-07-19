@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Feed\Writer\Extension\Slash\Renderer;
 
 use DOMDocument;
 use DOMElement;
 use Laminas\Feed\Writer\Extension;
 
+use function is_numeric;
 use function strtolower;
 
 class Entry extends Extension\AbstractRenderer
@@ -58,11 +61,11 @@ class Entry extends Extension\AbstractRenderer
     protected function _setCommentCount(DOMDocument $dom, DOMElement $root)
     {
         $count = $this->getDataContainer()->getCommentCount();
-        if (! $count) {
+        if (! $count || ! is_numeric($count)) {
             $count = 0;
         }
         $tcount            = $this->dom->createElement('slash:comments');
-        $tcount->nodeValue = $count;
+        $tcount->nodeValue = (string) $count;
         $root->appendChild($tcount);
         $this->called = true;
     }

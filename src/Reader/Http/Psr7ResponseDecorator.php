@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Feed\Reader\Http;
 
 use Psr\Http\Message\ResponseInterface as Psr7ResponseInterface;

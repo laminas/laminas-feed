@@ -1,14 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Feed\Writer\Renderer\Feed;
 
 use DOMDocument;
 use Laminas\Feed\Writer;
 use Laminas\Feed\Writer\Renderer;
-
-use function version_compare;
-
-use const PHP_VERSION;
 
 class Atom extends AbstractAtom implements Renderer\RendererInterface
 {
@@ -80,8 +78,7 @@ class Atom extends AbstractAtom implements Renderer\RendererInterface
             $renderer->setRootElement($this->dom->documentElement);
             $renderer->render();
             $element  = $renderer->getElement();
-            $deep     = version_compare(PHP_VERSION, '7', 'ge') ? 1 : true;
-            $imported = $this->dom->importNode($element, $deep);
+            $imported = $this->dom->importNode($element, true);
             $root->appendChild($imported);
         }
         return $this;

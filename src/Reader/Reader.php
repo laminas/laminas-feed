@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Feed\Reader;
 
 use DOMDocument;
@@ -478,7 +480,7 @@ class Reader implements ReaderImportInterface
             $dom = $feed;
         } elseif (is_string($feed) && ! empty($feed)) {
             ErrorHandler::start(E_NOTICE | E_WARNING);
-            ini_set('track_errors', 1);
+            ini_set('track_errors', '1');
             $disableEntityLoaderFlag = self::disableEntityLoader();
             $dom                     = new DOMDocument();
             $status                  = $dom->loadXML($feed);
@@ -603,10 +605,13 @@ class Reader implements ReaderImportInterface
      */
     public static function getExtensionManager()
     {
-        if (! isset(static::$extensionManager)) {
-            static::setExtensionManager(new StandaloneExtensionManager());
+        $manager = static::$extensionManager;
+        if (! $manager instanceof ExtensionManagerInterface) {
+            $manager = new StandaloneExtensionManager();
+            static::setExtensionManager($manager);
         }
-        return static::$extensionManager;
+
+        return $manager;
     }
 
     /**
