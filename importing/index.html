@@ -5,7 +5,14 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Consume and generate Atom and RSS feeds, and interact with Pubsubhubbub.">  
+    <meta name="description" content="Consume and generate Atom and RSS feeds, and interact with Pubsubhubbub."> 
+
+    
+    
+    <meta name="docsearch:version" content="latest">
+    <meta name="docsearch:language" content="en">
+    <meta name="docsearch:component" content="laminas-feed">
+
     <link rel="canonical" href="https://docs.laminas.dev/laminas-feed/importing/">
     <link rel="shortcut icon" href="https://docs.laminas.dev/img/trademark-laminas-foundation-rgb.svg">
 
@@ -303,7 +310,7 @@
                     <a href="#" class="header__link header__link--search" data-toggle="modal" data-target="#mkdocs_search_modal" title="Open search">
                         <i class="fa fa-search"></i> Search
                     </a>
-                    <a href="https://github.com/laminas/laminas-feed/" class="header__link header__link--github" title="Go to repository of laminas-feed">
+                    <a href="https://github.com/laminas/laminas-feed" class="header__link header__link--github" title="Go to repository of laminas-feed">
                         <i class="fa fa-github"></i> GitHub
                     </a>
                 
@@ -377,13 +384,13 @@
 you know the URI of a feed, use the <code>Laminas\Feed\Reader\Reader::import()</code> method
 to consume it:</p>
 <pre class="highlight"><code class="language-php">$feed = Laminas\Feed\Reader\Reader::import('http://feeds.example.com/feedName');</code></pre>
-<blockquote>
-<h3 id="importing-requires-an-http-client">Importing requires an HTTP client</h3>
+<div class="admonition missing">
+<p class="admonition-title">Importing Requires an HTTP Client</p>
 <p>To import a feed, you will need to have an <a href="../http-clients/">HTTP client</a>
 available.</p>
 <p>If you are not using laminas-http, you will need to inject <code>Reader</code> with the HTTP
 client. See the <a href="../http-clients/#providing-a-client-to-reader">section on providing a client to Reader</a>.</p>
-</blockquote>
+</div>
 <p>You can also use <code>Laminas\Feed\Reader\Reader</code> to fetch the contents of a feed from
 a file or the contents of a PHP string variable:</p>
 <pre class="highlight"><code class="language-php">// importing a feed from a text file
@@ -417,7 +424,9 @@ print $feed-&gt;saveXml();</code></pre>
         <li class="page-nav__item">
             
                 <a rel="prev" class="page-nav__link page-nav__link--prev" href="../psr7-clients/">
-                    <i class="fa fa-chevron-left"></i> Previous
+                    <small class="page-nav__label">Previous</small>
+                    <i class="fa fa-chevron-left"></i>
+                    Using PSR-7 Clients
                 </a>
             
         </li>
@@ -426,7 +435,9 @@ print $feed-&gt;saveXml();</code></pre>
         <li class="page-nav__item">
             
                 <a rel="next" class="page-nav__link page-nav__link--next" href="../find-feeds/">
-                    Next <i class="fa fa-chevron-right"></i>
+                    <small class="page-nav__label">Next</small>
+                    Feed Discovery
+                    <i class="fa fa-chevron-right"></i>
                 </a>
             
         </li>
@@ -667,7 +678,7 @@ print $feed-&gt;saveXml();</code></pre>
                         <h4 class="footer__headline">License</h4>
                         <p>
                             Code licensed under <a
-                                href="https://github.com/laminas/laminas-feed/blob/master/LICENSE.md">BSD 3-Clause</a>.
+                                href="https://github.com/laminas/laminas-feed/blob/-/LICENSE.md">BSD 3-Clause</a>.
                         </p>
                     </div>
 
@@ -677,7 +688,7 @@ print $feed-&gt;saveXml();</code></pre>
                         <p>
                             <!--Built with love by the Laminas team with the help of our
                             <a href="https://github.com/laminas/laminas-feed/graphs/contributors">contributors</a>.<br>-->
-                            &copy; 2021 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
+                            &copy; 2022 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
                         </p>
                     </div>
                 </div>
