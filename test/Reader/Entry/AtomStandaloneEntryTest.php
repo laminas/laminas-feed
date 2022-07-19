@@ -32,7 +32,7 @@ class AtomStandaloneEntryTest extends TestCase
     protected function setUp(): void
     {
         Reader\Reader::reset();
-        $this->feedSamplePath = dirname(__FILE__) . '/_files/AtomStandaloneEntry';
+        $this->feedSamplePath = __DIR__ . '/_files/AtomStandaloneEntry';
 
         $this->expectedCats   = [
             [

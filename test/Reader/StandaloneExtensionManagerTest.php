@@ -12,8 +12,7 @@ use PHPUnit\Framework\TestCase;
 
 class StandaloneExtensionManagerTest extends TestCase
 {
-    /** @var StandaloneExtensionManager */
-    private $extensions;
+    private \Laminas\Feed\Reader\StandaloneExtensionManager $extensions;
 
     protected function setUp(): void
     {

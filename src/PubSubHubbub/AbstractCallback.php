@@ -299,7 +299,7 @@ abstract class AbstractCallback implements CallbackInterface
             return $_SERVER[$temp];
         }
         if (function_exists('apache_request_headers')) {
-            $headers = apache_request_headers();
+            $headers = getallheaders();
             if (! empty($headers[$header])) {
                 return $headers[$header];
             }

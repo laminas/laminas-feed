@@ -19,8 +19,7 @@ use function sprintf;
 
 class LaminasHttpClientDecorator implements HeaderAwareClientInterface
 {
-    /** @var LaminasHttpClient */
-    private $client;
+    private LaminasHttpClient $client;
 
     public function __construct(LaminasHttpClient $client)
     {

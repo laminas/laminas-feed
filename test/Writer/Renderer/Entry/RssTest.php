@@ -153,20 +153,20 @@ class RssTest extends TestCase
 
     public function testEntryUpdatedDateHasBeenSet(): void
     {
-        $this->validEntry->setDateModified(1234567890);
+        $this->validEntry->setDateModified(1_234_567_890);
         $renderer = new Renderer\Feed\Rss($this->validWriter);
         $feed     = Reader\Reader::importString($renderer->render()->saveXml());
         $entry    = $feed->current();
-        $this->assertEquals(1234567890, $entry->getDateModified()->getTimestamp());
+        $this->assertEquals(1_234_567_890, $entry->getDateModified()->getTimestamp());
     }
 
     public function testEntryPublishedDateHasBeenSet(): void
     {
-        $this->validEntry->setDateCreated(1234567000);
+        $this->validEntry->setDateCreated(1_234_567_000);
         $renderer = new Renderer\Feed\Rss($this->validWriter);
         $feed     = Reader\Reader::importString($renderer->render()->saveXml());
         $entry    = $feed->current();
-        $this->assertEquals(1234567000, $entry->getDateCreated()->getTimestamp());
+        $this->assertEquals(1_234_567_000, $entry->getDateCreated()->getTimestamp());
     }
 
     public function testEntryIncludesLinkToHtmlVersionOfFeed(): void

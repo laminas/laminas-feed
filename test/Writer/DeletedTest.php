@@ -48,8 +48,8 @@ class DeletedTest extends TestCase
     public function testSetWhenUsesGivenUnixTimestamp(): void
     {
         $entry = new Writer\Deleted();
-        $entry->setWhen(1234567890);
-        $myDate = new DateTime('@' . 1234567890);
+        $entry->setWhen(1_234_567_890);
+        $myDate = new DateTime('@' . 1_234_567_890);
         $this->assertEquals($myDate, $entry->getWhen());
     }
 
@@ -59,8 +59,8 @@ class DeletedTest extends TestCase
     public function testSetWhenUsesGivenUnixTimestampWhenItIsLessThanTenDigits(): void
     {
         $entry = new Writer\Deleted();
-        $entry->setWhen(123456789);
-        $myDate = new DateTime('@' . 123456789);
+        $entry->setWhen(123_456_789);
+        $myDate = new DateTime('@' . 123_456_789);
         $this->assertEquals($myDate, $entry->getWhen());
     }
 
@@ -77,7 +77,7 @@ class DeletedTest extends TestCase
 
     public function testSetWhenUsesDateTimeObject(): void
     {
-        $myDate = new DateTime('@' . 1234567890);
+        $myDate = new DateTime('@' . 1_234_567_890);
         $entry  = new Writer\Deleted();
         $entry->setWhen($myDate);
         $this->assertEquals($myDate, $entry->getWhen());
@@ -85,7 +85,7 @@ class DeletedTest extends TestCase
 
     public function testSetWhenUsesDateTimeImmutableObject(): void
     {
-        $myDate = new DateTimeImmutable('@' . 1234567890);
+        $myDate = new DateTimeImmutable('@' . 1_234_567_890);
         $entry  = new Writer\Deleted();
         $entry->setWhen($myDate);
         $this->assertEquals($myDate, $entry->getWhen());

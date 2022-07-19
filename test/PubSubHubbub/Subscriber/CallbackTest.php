@@ -369,7 +369,7 @@ class CallbackTest extends TestCase
                     'id'                 => 'verifytokenkey',
                     'verify_token'       => hash('sha256', 'cba'),
                     'created_time'       => $t->getTimestamp(),
-                    'lease_seconds'      => 1234567,
+                    'lease_seconds'      => 1_234_567,
                     'subscription_state' => 'verified',
                     'expiration_time'    => $t->add(new DateInterval('PT1234567S'))->format('Y-m-d H:i:s'),
                 ]),

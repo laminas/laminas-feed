@@ -20,7 +20,7 @@ class GooglePlayPodcastRss2Test extends TestCase
     protected function setUp(): void
     {
         Reader\Reader::reset();
-        $this->feedSamplePath = dirname(__FILE__) . '/_files/google-podcast.xml';
+        $this->feedSamplePath = __DIR__ . '/_files/google-podcast.xml';
     }
 
     /**
@@ -294,7 +294,7 @@ class GooglePlayPodcastRss2Test extends TestCase
 
     public function testPodcastTypeIsEpisodicWhenNoTagPresent(): void
     {
-        $feedSamplePath = dirname(__FILE__) . '/_files/google-podcast-no-type.xml';
+        $feedSamplePath = __DIR__ . '/_files/google-podcast-no-type.xml';
         $feed           = Reader\Reader::importString(
             file_get_contents($feedSamplePath)
         );
@@ -311,7 +311,7 @@ class GooglePlayPodcastRss2Test extends TestCase
 
     public function testIsCompleteReturnsTrueWhenTagValueIsYes(): void
     {
-        $feedSamplePath = dirname(__FILE__) . '/_files/google-podcast-complete.xml';
+        $feedSamplePath = __DIR__ . '/_files/google-podcast-complete.xml';
         $feed           = Reader\Reader::importString(
             file_get_contents($feedSamplePath)
         );
@@ -320,7 +320,7 @@ class GooglePlayPodcastRss2Test extends TestCase
 
     public function testIsCompleteReturnsFalseWhenTagValueIsSomethingOtherThanYes(): void
     {
-        $feedSamplePath = dirname(__FILE__) . '/_files/google-podcast-incomplete.xml';
+        $feedSamplePath = __DIR__ . '/_files/google-podcast-incomplete.xml';
         $feed           = Reader\Reader::importString(
             file_get_contents($feedSamplePath)
         );
@@ -348,7 +348,7 @@ class GooglePlayPodcastRss2Test extends TestCase
 
     public function testGetEpisodeReturnsValueWhenTagPresent(): void
     {
-        $feedSamplePath = dirname(__FILE__) . '/_files/google-podcast-episode.xml';
+        $feedSamplePath = __DIR__ . '/_files/google-podcast-episode.xml';
         $feed           = Reader\Reader::importString(
             file_get_contents($feedSamplePath)
         );
@@ -358,7 +358,7 @@ class GooglePlayPodcastRss2Test extends TestCase
 
     public function testGetEpisodeTypeReturnsValueWhenTagPresent(): void
     {
-        $feedSamplePath = dirname(__FILE__) . '/_files/google-podcast-episode.xml';
+        $feedSamplePath = __DIR__ . '/_files/google-podcast-episode.xml';
         $feed           = Reader\Reader::importString(
             file_get_contents($feedSamplePath)
         );
