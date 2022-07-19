@@ -232,7 +232,8 @@ class FeedTest extends TestCase
         ];
 
         /** @psalm-suppress UnusedClosureParam */
-        set_error_handler(static fn(int $errno, string $errstr): bool => (bool) preg_match('/itunes:keywords/', $errstr), E_USER_DEPRECATED);
+        set_error_handler(static fn(int $errno, string $errstr): bool =>
+            (bool) preg_match('/itunes:keywords/', $errstr), E_USER_DEPRECATED);
         $feed->setItunesKeywords($words);
         restore_error_handler();
 
@@ -259,7 +260,8 @@ class FeedTest extends TestCase
         ];
 
         /** @psalm-suppress UnusedClosureParam */
-        set_error_handler(static fn(int $errno, string $errstr): bool => (bool) preg_match('/itunes:keywords/', $errstr), E_USER_DEPRECATED);
+        set_error_handler(static fn(int $errno, string $errstr): bool =>
+            (bool) preg_match('/itunes:keywords/', $errstr), E_USER_DEPRECATED);
 
         try {
             $this->expectException(ExceptionInterface::class);
@@ -278,7 +280,8 @@ class FeedTest extends TestCase
         ];
 
         /** @psalm-suppress UnusedClosureParam */
-        set_error_handler(static fn(int $errno, string $errstr): bool => (bool) preg_match('/itunes:keywords/', $errstr), E_USER_DEPRECATED);
+        set_error_handler(static fn(int $errno, string $errstr): bool =>
+            (bool) preg_match('/itunes:keywords/', $errstr), E_USER_DEPRECATED);
 
         try {
             $this->expectException(ExceptionInterface::class);

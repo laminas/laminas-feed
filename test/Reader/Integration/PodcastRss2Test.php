@@ -250,7 +250,8 @@ class PodcastRss2Test extends TestCase
         $expected = str_replace("\r\n", "\n", $expected);
 
         /** @psalm-suppress UnusedClosureParam */
-        set_error_handler(static fn(int $errno, string $errstr): bool => (bool) preg_match('/itunes:keywords/', $errstr), E_USER_DEPRECATED);
+        set_error_handler(static fn(int $errno, string $errstr): bool =>
+            (bool) preg_match('/itunes:keywords/', $errstr), E_USER_DEPRECATED);
         $keywords = $entry->getKeywords();
         restore_error_handler();
 
