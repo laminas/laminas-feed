@@ -10,7 +10,6 @@ use PHPUnit\Framework\TestCase;
 use stdClass;
 
 use function array_values;
-use function dirname;
 use function file_get_contents;
 
 /**

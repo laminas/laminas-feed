@@ -7,7 +7,6 @@ namespace LaminasTest\Feed\Reader\Integration;
 use Laminas\Feed\Reader;
 use PHPUnit\Framework\TestCase;
 
-use function dirname;
 use function file_get_contents;
 use function str_replace;
 

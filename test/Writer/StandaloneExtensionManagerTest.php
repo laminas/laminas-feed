@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 
 class StandaloneExtensionManagerTest extends TestCase
 {
-    private \Laminas\Feed\Writer\StandaloneExtensionManager $extensions;
+    private StandaloneExtensionManager $extensions;
 
     protected function setUp(): void
     {

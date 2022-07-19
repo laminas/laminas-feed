@@ -20,7 +20,6 @@ use Psr\Container\ContainerInterface;
 use stdClass;
 
 use function array_reduce;
-use function dirname;
 use function file_get_contents;
 use function getenv;
 use function restore_error_handler;

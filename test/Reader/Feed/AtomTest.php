@@ -9,7 +9,6 @@ use Laminas\Feed\Reader;
 use PHPUnit\Framework\TestCase;
 
 use function array_values;
-use function dirname;
 use function file_get_contents;
 
 /**

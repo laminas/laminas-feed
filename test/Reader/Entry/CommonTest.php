@@ -12,7 +12,6 @@ use Laminas\Feed\Reader\Entry\AbstractEntry;
 use Laminas\Feed\Reader\Extension\Atom\Entry;
 use PHPUnit\Framework\TestCase;
 
-use function dirname;
 use function file_get_contents;
 use function str_replace;
 

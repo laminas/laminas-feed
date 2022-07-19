@@ -10,7 +10,6 @@ use stdClass;
 
 use function array_values;
 use function assert;
-use function dirname;
 use function file_get_contents;
 
 /**

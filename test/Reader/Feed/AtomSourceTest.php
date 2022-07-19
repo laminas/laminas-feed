@@ -10,7 +10,6 @@ use Laminas\Feed\Reader\Feed\Atom\Source;
 use PHPUnit\Framework\TestCase;
 
 use function array_values;
-use function dirname;
 use function file_get_contents;
 
 /**

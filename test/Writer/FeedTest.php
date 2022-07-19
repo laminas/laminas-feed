@@ -14,7 +14,6 @@ use Laminas\Feed\Writer\Version;
 use PHPUnit\Framework\TestCase;
 
 use function array_reduce;
-use function dirname;
 use function restore_error_handler;
 use function set_error_handler;
 use function str_replace;

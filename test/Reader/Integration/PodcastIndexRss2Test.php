@@ -8,7 +8,6 @@ use Laminas\Feed\Reader;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-use function dirname;
 use function file_get_contents;
 
 /**

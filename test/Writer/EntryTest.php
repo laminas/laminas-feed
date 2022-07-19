@@ -14,7 +14,6 @@ use PHPUnit\Framework\TestCase;
 use stdClass;
 
 use function array_reduce;
-use function dirname;
 use function restore_error_handler;
 use function set_error_handler;
 use function strstr;
