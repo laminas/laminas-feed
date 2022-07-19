@@ -24,6 +24,8 @@ use function sprintf;
  * Extension\AbstractFeed.
  *
  * @psalm-import-type FactoriesConfigurationType from ConfigInterface
+ * @final this class wasn't designed to be inherited from, but we can't assume that consumers haven't already
+ *        extended it, therefore we cannot add the final marker without a new major release.
  */
 class ExtensionPluginManager extends AbstractPluginManager implements ExtensionManagerInterface
 {

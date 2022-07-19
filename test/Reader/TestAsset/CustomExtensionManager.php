@@ -12,7 +12,7 @@ use function array_key_exists;
 /**
  * Standalone extension manager that omits any extensions added after the 2.9 series.
  */
-class CustomExtensionManager implements ExtensionManagerInterface
+final class CustomExtensionManager implements ExtensionManagerInterface
 {
     /** @var array<string, class-string> */
     private $extensions = [
@@ -35,9 +35,8 @@ class CustomExtensionManager implements ExtensionManagerInterface
      * Do we have the extension?
      *
      * @param  string $extension
-     * @return bool
      */
-    public function has($extension)
+    public function has($extension): bool
     {
         return array_key_exists($extension, $this->extensions);
     }

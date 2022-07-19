@@ -1359,12 +1359,20 @@
     </MixedReturnStatement>
   </file>
   <file src="src/Reader/ExtensionManager.php">
+    <DeprecatedInterface occurrences="1">
+      <code>ExtensionManager</code>
+    </DeprecatedInterface>
     <MixedInferredReturnType occurrences="1">
       <code>Extension\AbstractEntry|Extension\AbstractFeed</code>
     </MixedInferredReturnType>
     <MixedReturnStatement occurrences="1">
       <code>$this-&gt;pluginManager-&gt;get($extension)</code>
     </MixedReturnStatement>
+  </file>
+  <file src="src/Reader/ExtensionPluginManager.php">
+    <DeprecatedInterface occurrences="1">
+      <code>ExtensionPluginManager</code>
+    </DeprecatedInterface>
   </file>
   <file src="src/Reader/Feed/AbstractFeed.php">
     <InvalidScalarArgument occurrences="1">
@@ -1842,6 +1850,11 @@
       <code>trim($responseHtml)</code>
       <code>trim($string)</code>
     </ArgumentTypeCoercion>
+    <DeprecatedClass occurrences="3">
+      <code>ExtensionManagerInterface</code>
+      <code>ExtensionManagerInterface</code>
+      <code>null|ExtensionManagerInterface</code>
+    </DeprecatedClass>
     <DocblockTypeContradiction occurrences="3">
       <code>! static::$httpClient</code>
       <code>gettype($response)</code>
@@ -1900,6 +1913,9 @@
     </UndefinedVariable>
   </file>
   <file src="src/Reader/StandaloneExtensionManager.php">
+    <DeprecatedInterface occurrences="1">
+      <code>StandaloneExtensionManager</code>
+    </DeprecatedInterface>
     <LessSpecificReturnStatement occurrences="1">
       <code>new $class()</code>
     </LessSpecificReturnStatement>
@@ -2627,12 +2643,24 @@
     </TypeDoesNotContainType>
   </file>
   <file src="src/Writer/ExtensionManager.php">
+    <DeprecatedClass occurrences="2">
+      <code>?ExtensionManagerInterface</code>
+      <code>ExtensionManagerInterface</code>
+    </DeprecatedClass>
+    <DeprecatedInterface occurrences="1">
+      <code>ExtensionManager</code>
+    </DeprecatedInterface>
     <MixedInferredReturnType occurrences="1">
       <code>Extension\AbstractRenderer</code>
     </MixedInferredReturnType>
     <MixedReturnStatement occurrences="1">
       <code>$this-&gt;pluginManager-&gt;get($extension)</code>
     </MixedReturnStatement>
+  </file>
+  <file src="src/Writer/ExtensionPluginManager.php">
+    <DeprecatedInterface occurrences="1">
+      <code>ExtensionPluginManager</code>
+    </DeprecatedInterface>
   </file>
   <file src="src/Writer/Feed.php">
     <InvalidStringClass occurrences="1">
@@ -2769,15 +2797,18 @@
       <code>$data['type']</code>
       <code>$data['uri']</code>
     </MixedArrayAccess>
-    <MixedAssignment occurrences="6">
+    <MixedAssignment occurrences="7">
       <code>$cat</code>
       <code>$content</code>
       <code>$data</code>
       <code>$data</code>
       <code>$ext</code>
       <code>$source</code>
+      <code>$tidy</code>
     </MixedAssignment>
-    <MixedMethodCall occurrences="4">
+    <MixedMethodCall occurrences="6">
+      <code>cleanRepair</code>
+      <code>parseString</code>
       <code>render</code>
       <code>setDomDocument</code>
       <code>setRootElement</code>
@@ -3292,6 +3323,9 @@
     </PropertyNotSetInConstructor>
   </file>
   <file src="src/Writer/StandaloneExtensionManager.php">
+    <DeprecatedInterface occurrences="1">
+      <code>StandaloneExtensionManager</code>
+    </DeprecatedInterface>
     <MixedMethodCall occurrences="1">
       <code>new $class()</code>
     </MixedMethodCall>
@@ -3300,6 +3334,11 @@
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Writer/Writer.php">
+    <DeprecatedClass occurrences="3">
+      <code>ExtensionManagerInterface</code>
+      <code>ExtensionManagerInterface</code>
+      <code>ExtensionManagerInterface</code>
+    </DeprecatedClass>
     <MixedArgument occurrences="4">
       <code>static::$extensions['entry']</code>
       <code>static::$extensions['entryRenderer']</code>
@@ -4843,6 +4882,9 @@
     </UndefinedInterfaceMethod>
   </file>
   <file src="test/Reader/TestAsset/CustomExtensionManager.php">
+    <DeprecatedInterface occurrences="1">
+      <code>CustomExtensionManager</code>
+    </DeprecatedInterface>
     <LessSpecificReturnStatement occurrences="1">
       <code>new $class()</code>
     </LessSpecificReturnStatement>
@@ -5277,6 +5319,9 @@
     </MixedAssignment>
   </file>
   <file src="test/Writer/TestAsset/CustomExtensionManager.php">
+    <DeprecatedInterface occurrences="1">
+      <code>CustomExtensionManager</code>
+    </DeprecatedInterface>
     <MixedMethodCall occurrences="1">
       <code>new $class()</code>
     </MixedMethodCall>
