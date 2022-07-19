@@ -10,7 +10,6 @@ use PHPUnit\Framework\TestCase;
 use stdClass;
 
 use function array_values;
-use function dirname;
 use function file_get_contents;
 
 /**
@@ -31,7 +30,7 @@ class AtomTest extends TestCase
     protected function setUp(): void
     {
         Reader\Reader::reset();
-        $this->feedSamplePath = dirname(__FILE__) . '/_files/Atom';
+        $this->feedSamplePath = __DIR__ . '/_files/Atom';
         $this->expectedCats   = [
             [
                 'term'   => 'topic1',

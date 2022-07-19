@@ -166,9 +166,8 @@ class EntryTest extends TestCase
         $words = ['a1', 'a2', 'a3', 'a4', 'a5', 'a6', 'a7', 'a8', 'a9', 'a10', 'a11', 'a12'];
 
         /** @psalm-suppress UnusedClosureParam */
-        set_error_handler(static function (int $errno, string $errstr): bool {
-            return (bool) preg_match('/itunes:keywords/', $errstr);
-        }, E_USER_DEPRECATED);
+        set_error_handler(static fn(int $errno, string $errstr): bool =>
+            (bool) preg_match('/itunes:keywords/', $errstr), E_USER_DEPRECATED);
         $entry->setItunesKeywords($words);
         restore_error_handler();
 
@@ -181,9 +180,8 @@ class EntryTest extends TestCase
         $words = ['a1', 'a2', 'a3', 'a4', 'a5', 'a6', 'a7', 'a8', 'a9', 'a10', 'a11', 'a12', 'a13'];
 
         /** @psalm-suppress UnusedClosureParam */
-        set_error_handler(static function (int $errno, string $errstr): bool {
-            return (bool) preg_match('/itunes:keywords/', $errstr);
-        }, E_USER_DEPRECATED);
+        set_error_handler(static fn(int $errno, string $errstr): bool =>
+            (bool) preg_match('/itunes:keywords/', $errstr), E_USER_DEPRECATED);
 
         try {
             $this->expectException(ExceptionInterface::class);
@@ -202,9 +200,8 @@ class EntryTest extends TestCase
         ];
 
         /** @psalm-suppress UnusedClosureParam */
-        set_error_handler(static function (int $errno, string $errstr): bool {
-            return (bool) preg_match('/itunes:keywords/', $errstr);
-        }, E_USER_DEPRECATED);
+        set_error_handler(static fn(int $errno, string $errstr): bool =>
+            (bool) preg_match('/itunes:keywords/', $errstr), E_USER_DEPRECATED);
 
         try {
             $this->expectException(ExceptionInterface::class);

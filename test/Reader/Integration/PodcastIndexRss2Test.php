@@ -8,7 +8,6 @@ use Laminas\Feed\Reader;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-use function dirname;
 use function file_get_contents;
 
 /**
@@ -23,7 +22,7 @@ class PodcastIndexRss2Test extends TestCase
     protected function setUp(): void
     {
         Reader\Reader::reset();
-        $this->feedSamplePath = dirname(__FILE__) . '/_files/podcastindex.xml';
+        $this->feedSamplePath = __DIR__ . '/_files/podcastindex.xml';
     }
 
     /**

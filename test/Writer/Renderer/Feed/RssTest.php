@@ -140,11 +140,11 @@ class RssTest extends TestCase
 
     public function testFeedUpdatedDateHasBeenSet(): void
     {
-        $this->validWriter->setDateModified(1234567890);
+        $this->validWriter->setDateModified(1_234_567_890);
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $rssFeed->render();
         $feed = Reader\Reader::importString($rssFeed->saveXml());
-        $this->assertEquals(1234567890, $feed->getDateModified()->getTimestamp());
+        $this->assertEquals(1_234_567_890, $feed->getDateModified()->getTimestamp());
     }
 
     /**
@@ -159,11 +159,11 @@ class RssTest extends TestCase
 
     public function testFeedLastBuildDateHasBeenSet(): void
     {
-        $this->validWriter->setLastBuildDate(1234567890);
+        $this->validWriter->setLastBuildDate(1_234_567_890);
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $rssFeed->render();
         $feed = Reader\Reader::importString($rssFeed->saveXml());
-        $this->assertEquals(1234567890, $feed->getLastBuildDate()->getTimestamp());
+        $this->assertEquals(1_234_567_890, $feed->getLastBuildDate()->getTimestamp());
     }
 
     public function testFeedGeneratorHasBeenSet(): void
@@ -605,11 +605,11 @@ class RssTest extends TestCase
 
     public function testFeedSetDateCreated(): void
     {
-        $this->validWriter->setDateCreated(1234567890);
+        $this->validWriter->setDateCreated(1_234_567_890);
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $rssFeed->render();
         $feed   = Reader\Reader::importString($rssFeed->saveXml());
-        $myDate = new DateTime('@' . 1234567890);
+        $myDate = new DateTime('@' . 1_234_567_890);
         $this->assertEquals($myDate, $feed->getDateCreated());
     }
 

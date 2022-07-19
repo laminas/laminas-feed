@@ -19,14 +19,11 @@ use function trim;
 
 class Response implements HeaderAwareResponseInterface
 {
-    /** @var string */
-    private $body;
+    private string $body;
 
-    /** @var array */
-    private $headers;
+    private array $headers;
 
-    /** @var int */
-    private $statusCode;
+    private int $statusCode;
 
     /**
      * @param  int $statusCode

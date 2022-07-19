@@ -8,7 +8,6 @@ use Laminas\Feed\Reader;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-use function dirname;
 use function file_get_contents;
 use function preg_match;
 use function restore_error_handler;
@@ -29,7 +28,7 @@ class PodcastRss2Test extends TestCase
     protected function setUp(): void
     {
         Reader\Reader::reset();
-        $this->feedSamplePath = dirname(__FILE__) . '/_files/podcast.xml';
+        $this->feedSamplePath = __DIR__ . '/_files/podcast.xml';
     }
 
     /**
@@ -251,9 +250,8 @@ class PodcastRss2Test extends TestCase
         $expected = str_replace("\r\n", "\n", $expected);
 
         /** @psalm-suppress UnusedClosureParam */
-        set_error_handler(static function (int $errno, string $errstr): bool {
-            return (bool) preg_match('/itunes:keywords/', $errstr);
-        }, E_USER_DEPRECATED);
+        set_error_handler(static fn(int $errno, string $errstr): bool =>
+            (bool) preg_match('/itunes:keywords/', $errstr), E_USER_DEPRECATED);
         $keywords = $entry->getKeywords();
         restore_error_handler();
 
@@ -307,7 +305,7 @@ class PodcastRss2Test extends TestCase
 
     public function testPodcastTypeIsEpisodicWhenNoTagPresent(): void
     {
-        $feedSamplePath = dirname(__FILE__) . '/_files/podcast-no-type.xml';
+        $feedSamplePath = __DIR__ . '/_files/podcast-no-type.xml';
         $feed           = Reader\Reader::importString(
             file_get_contents($feedSamplePath)
         );
@@ -324,7 +322,7 @@ class PodcastRss2Test extends TestCase
 
     public function testIsCompleteReturnsTrueWhenTagValueIsYes(): void
     {
-        $feedSamplePath = dirname(__FILE__) . '/_files/podcast-complete.xml';
+        $feedSamplePath = __DIR__ . '/_files/podcast-complete.xml';
         $feed           = Reader\Reader::importString(
             file_get_contents($feedSamplePath)
         );
@@ -333,7 +331,7 @@ class PodcastRss2Test extends TestCase
 
     public function testIsCompleteReturnsFalseWhenTagValueIsSomethingOtherThanYes(): void
     {
-        $feedSamplePath = dirname(__FILE__) . '/_files/podcast-incomplete.xml';
+        $feedSamplePath = __DIR__ . '/_files/podcast-incomplete.xml';
         $feed           = Reader\Reader::importString(
             file_get_contents($feedSamplePath)
         );
@@ -361,7 +359,7 @@ class PodcastRss2Test extends TestCase
 
     public function testGetEpisodeReturnsValueWhenTagPresent(): void
     {
-        $feedSamplePath = dirname(__FILE__) . '/_files/podcast-episode.xml';
+        $feedSamplePath = __DIR__ . '/_files/podcast-episode.xml';
         $feed           = Reader\Reader::importString(
             file_get_contents($feedSamplePath)
         );
@@ -371,7 +369,7 @@ class PodcastRss2Test extends TestCase
 
     public function testGetEpisodeTypeReturnsValueWhenTagPresent(): void
     {
-        $feedSamplePath = dirname(__FILE__) . '/_files/podcast-episode.xml';
+        $feedSamplePath = __DIR__ . '/_files/podcast-episode.xml';
         $feed           = Reader\Reader::importString(
             file_get_contents($feedSamplePath)
         );

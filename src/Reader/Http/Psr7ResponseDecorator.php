@@ -11,8 +11,7 @@ use Psr\Http\Message\ResponseInterface as Psr7ResponseInterface;
  */
 class Psr7ResponseDecorator implements HeaderAwareResponseInterface
 {
-    /** @var Psr7ResponseInterface */
-    private $decoratedResponse;
+    private Psr7ResponseInterface $decoratedResponse;
 
     public function __construct(Psr7ResponseInterface $response)
     {

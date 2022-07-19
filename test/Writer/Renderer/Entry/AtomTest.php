@@ -39,7 +39,7 @@ class AtomTest extends TestCase
         $this->validWriter->setType('atom');
         $this->validWriter->setTitle('This is a test feed.');
         $this->validWriter->setDescription('This is a test description.');
-        $this->validWriter->setDateModified(1234567890);
+        $this->validWriter->setDateModified(1_234_567_890);
         $this->validWriter->setLink('http://www.example.com');
         $this->validWriter->setFeedLink('http://www.example.com/atom', 'atom');
         $this->validWriter->addAuthor([
@@ -51,8 +51,8 @@ class AtomTest extends TestCase
         $this->validEntry = $this->validWriter->createEntry();
         $this->validEntry->setTitle('This is a test entry.');
         $this->validEntry->setDescription('This is a test entry description.');
-        $this->validEntry->setDateModified(1234567890);
-        $this->validEntry->setDateCreated(1234567000);
+        $this->validEntry->setDateModified(1_234_567_890);
+        $this->validEntry->setDateCreated(1_234_567_000);
         $this->validEntry->setLink('http://www.example.com/1');
         $this->validEntry->addAuthor([
             'name'  => 'Jane',
@@ -146,7 +146,7 @@ class AtomTest extends TestCase
         $renderer = new Renderer\Feed\Atom($this->validWriter);
         $feed     = Reader\Reader::importString($renderer->render()->saveXml());
         $entry    = $feed->current();
-        $this->assertEquals(1234567890, $entry->getDateModified()->getTimestamp());
+        $this->assertEquals(1_234_567_890, $entry->getDateModified()->getTimestamp());
     }
 
     public function testFeedUpdatedDateIfMissingThrowsException(): void
@@ -163,7 +163,7 @@ class AtomTest extends TestCase
         $renderer = new Renderer\Feed\Atom($this->validWriter);
         $feed     = Reader\Reader::importString($renderer->render()->saveXml());
         $entry    = $feed->current();
-        $this->assertEquals(1234567000, $entry->getDateCreated()->getTimestamp());
+        $this->assertEquals(1_234_567_000, $entry->getDateCreated()->getTimestamp());
     }
 
     public function testEntryIncludesLinkToHtmlVersionOfFeed(): void

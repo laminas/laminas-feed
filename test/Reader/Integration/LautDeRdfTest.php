@@ -7,7 +7,6 @@ namespace LaminasTest\Feed\Reader\Integration;
 use Laminas\Feed\Reader;
 use PHPUnit\Framework\TestCase;
 
-use function dirname;
 use function file_get_contents;
 
 /**
@@ -22,7 +21,7 @@ class LautDeRdfTest extends TestCase
     protected function setUp(): void
     {
         Reader\Reader::reset();
-        $this->feedSamplePath = dirname(__FILE__) . '/_files/laut.de-rdf.xml';
+        $this->feedSamplePath = __DIR__ . '/_files/laut.de-rdf.xml';
     }
 
     /**

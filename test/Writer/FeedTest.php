@@ -14,7 +14,6 @@ use Laminas\Feed\Writer\Version;
 use PHPUnit\Framework\TestCase;
 
 use function array_reduce;
-use function dirname;
 use function restore_error_handler;
 use function set_error_handler;
 use function str_replace;
@@ -33,7 +32,7 @@ class FeedTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->feedSamplePath = dirname(__FILE__) . '/Writer/_files';
+        $this->feedSamplePath = __DIR__ . '/Writer/_files';
         Writer\Writer::reset();
     }
 
@@ -160,8 +159,8 @@ class FeedTest extends TestCase
     public function testSetDateCreatedUsesGivenUnixTimestamp(): void
     {
         $writer = new Writer\Feed();
-        $writer->setDateCreated(1234567890);
-        $myDate = new DateTime('@' . 1234567890);
+        $writer->setDateCreated(1_234_567_890);
+        $myDate = new DateTime('@' . 1_234_567_890);
         $this->assertEquals($myDate, $writer->getDateCreated());
     }
 
@@ -171,8 +170,8 @@ class FeedTest extends TestCase
     public function testSetDateCreatedUsesGivenUnixTimestampThatIsLessThanTenDigits(): void
     {
         $writer = new Writer\Feed();
-        $writer->setDateCreated(123456789);
-        $myDate = new DateTime('@' . 123456789);
+        $writer->setDateCreated(123_456_789);
+        $myDate = new DateTime('@' . 123_456_789);
         $this->assertEquals($myDate, $writer->getDateCreated());
     }
 
@@ -189,7 +188,7 @@ class FeedTest extends TestCase
 
     public function testSetDateCreatedUsesDateTimeObject(): void
     {
-        $myDate = new DateTime('@' . 1234567890);
+        $myDate = new DateTime('@' . 1_234_567_890);
         $writer = new Writer\Feed();
         $writer->setDateCreated($myDate);
         $this->assertEquals($myDate, $writer->getDateCreated());
@@ -197,7 +196,7 @@ class FeedTest extends TestCase
 
     public function testSetDateCreatedUsesDateTimeImmutableObject(): void
     {
-        $myDate = new DateTimeImmutable('@' . 1234567890);
+        $myDate = new DateTimeImmutable('@' . 1_234_567_890);
         $writer = new Writer\Feed();
         $writer->setDateCreated($myDate);
         $this->assertEquals($myDate, $writer->getDateCreated());
@@ -214,8 +213,8 @@ class FeedTest extends TestCase
     public function testSetDateModifiedUsesGivenUnixTimestamp(): void
     {
         $writer = new Writer\Feed();
-        $writer->setDateModified(1234567890);
-        $myDate = new DateTime('@' . 1234567890);
+        $writer->setDateModified(1_234_567_890);
+        $myDate = new DateTime('@' . 1_234_567_890);
         $this->assertEquals($myDate, $writer->getDateModified());
     }
 
@@ -225,8 +224,8 @@ class FeedTest extends TestCase
     public function testSetDateModifiedUsesGivenUnixTimestampThatIsLessThanTenDigits(): void
     {
         $writer = new Writer\Feed();
-        $writer->setDateModified(123456789);
-        $myDate = new DateTime('@' . 123456789);
+        $writer->setDateModified(123_456_789);
+        $myDate = new DateTime('@' . 123_456_789);
         $this->assertEquals($myDate, $writer->getDateModified());
     }
 
@@ -243,7 +242,7 @@ class FeedTest extends TestCase
 
     public function testSetDateModifiedUsesDateTimeObject(): void
     {
-        $myDate = new DateTime('@' . 1234567890);
+        $myDate = new DateTime('@' . 1_234_567_890);
         $writer = new Writer\Feed();
         $writer->setDateModified($myDate);
         $this->assertEquals($myDate, $writer->getDateModified());
@@ -251,7 +250,7 @@ class FeedTest extends TestCase
 
     public function testSetDateModifiedUsesDateTimeImmutableObject(): void
     {
-        $myDate = new DateTimeImmutable('@' . 1234567890);
+        $myDate = new DateTimeImmutable('@' . 1_234_567_890);
         $writer = new Writer\Feed();
         $writer->setDateModified($myDate);
         $this->assertEquals($myDate, $writer->getDateModified());
@@ -296,8 +295,8 @@ class FeedTest extends TestCase
     public function testSetLastBuildDateUsesGivenUnixTimestamp(): void
     {
         $writer = new Writer\Feed();
-        $writer->setLastBuildDate(1234567890);
-        $myDate = new DateTime('@' . 1234567890);
+        $writer->setLastBuildDate(1_234_567_890);
+        $myDate = new DateTime('@' . 1_234_567_890);
         $this->assertEquals($myDate, $writer->getLastBuildDate());
     }
 
@@ -307,8 +306,8 @@ class FeedTest extends TestCase
     public function testSetLastBuildDateUsesGivenUnixTimestampThatIsLessThanTenDigits(): void
     {
         $writer = new Writer\Feed();
-        $writer->setLastBuildDate(123456789);
-        $myDate = new DateTime('@' . 123456789);
+        $writer->setLastBuildDate(123_456_789);
+        $myDate = new DateTime('@' . 123_456_789);
         $this->assertEquals($myDate, $writer->getLastBuildDate());
     }
 
@@ -325,7 +324,7 @@ class FeedTest extends TestCase
 
     public function testSetLastBuildDateUsesDateTimeObject(): void
     {
-        $myDate = new DateTime('@' . 1234567890);
+        $myDate = new DateTime('@' . 1_234_567_890);
         $writer = new Writer\Feed();
         $writer->setLastBuildDate($myDate);
         $this->assertEquals($myDate, $writer->getLastBuildDate());
@@ -333,7 +332,7 @@ class FeedTest extends TestCase
 
     public function testSetLastBuildDateUsesDateTimeImmutableObject(): void
     {
-        $myDate = new DateTimeImmutable('@' . 1234567890);
+        $myDate = new DateTimeImmutable('@' . 1_234_567_890);
         $writer = new Writer\Feed();
         $writer->setLastBuildDate($myDate);
         $this->assertEquals($myDate, $writer->getLastBuildDate());
@@ -905,13 +904,13 @@ class FeedTest extends TestCase
     {
         $writer = new Writer\Feed();
         $entry  = $writer->createEntry();
-        $entry->setDateCreated(1234567890);
+        $entry->setDateCreated(1_234_567_890);
         $entry2 = $writer->createEntry();
-        $entry2->setDateCreated(1230000000);
+        $entry2->setDateCreated(1_230_000_000);
         $writer->addEntry($entry);
         $writer->addEntry($entry2);
         $writer->orderByDate();
-        $this->assertEquals(1230000000, $writer->getEntry(1)->getDateCreated()->getTimestamp());
+        $this->assertEquals(1_230_000_000, $writer->getEntry(1)->getDateCreated()->getTimestamp());
     }
 
     /**
@@ -921,13 +920,13 @@ class FeedTest extends TestCase
     {
         $writer = new Writer\Feed();
         $entry  = $writer->createEntry();
-        $entry->setDateModified(1234567890);
+        $entry->setDateModified(1_234_567_890);
         $entry2 = $writer->createEntry();
-        $entry2->setDateModified(1230000000);
+        $entry2->setDateModified(1_230_000_000);
         $writer->addEntry($entry);
         $writer->addEntry($entry2);
         $writer->orderByDate();
-        $this->assertEquals(1230000000, $writer->getEntry(1)->getDateModified()->getTimestamp());
+        $this->assertEquals(1_230_000_000, $writer->getEntry(1)->getDateModified()->getTimestamp());
     }
 
     /**
@@ -960,11 +959,11 @@ class FeedTest extends TestCase
     {
         $writer = new Writer\Feed();
         $entry  = $writer->createEntry();
-        $entry->setDateCreated(1234567890);
+        $entry->setDateCreated(1_234_567_890);
         $entry2 = $writer->createEntry();
-        $entry2->setDateCreated(1230000000);
+        $entry2->setDateCreated(1_230_000_000);
         $entry3 = $writer->createEntry();
-        $entry3->setDateCreated(1239999999);
+        $entry3->setDateCreated(1_239_999_999);
 
         $writer->addEntry($entry);
         $writer->addEntry($entry2);

@@ -36,7 +36,7 @@ class AtomTest extends TestCase
         $this->validWriter = new Writer\Feed();
         $this->validWriter->setTitle('This is a test feed.');
         $this->validWriter->setDescription('This is a test description.');
-        $this->validWriter->setDateModified(1234567890);
+        $this->validWriter->setDateModified(1_234_567_890);
         $this->validWriter->setLink('http://www.example.com');
         $this->validWriter->setFeedLink('http://www.example.com/atom', 'atom');
         $this->validWriter->addAuthor([
@@ -85,7 +85,7 @@ class AtomTest extends TestCase
     public function testDateModifiedHasTheCorrectFormat(): void
     {
         $date = new DateTime();
-        $date->setTimestamp(1071336602);
+        $date->setTimestamp(1_071_336_602);
         $date->setTimezone(new DateTimeZone('GMT'));
         $this->validWriter->setDateModified($date);
         $atomFeed = new Renderer\Feed\Atom($this->validWriter);
@@ -168,7 +168,7 @@ class AtomTest extends TestCase
         $atomFeed = new Renderer\Feed\Atom($this->validWriter);
         $atomFeed->render();
         $feed = Reader\Reader::importString($atomFeed->saveXml());
-        $this->assertEquals(1234567890, $feed->getDateModified()->getTimestamp());
+        $this->assertEquals(1_234_567_890, $feed->getDateModified()->getTimestamp());
     }
 
     public function testFeedUpdatedDateIfMissingThrowsException(): void

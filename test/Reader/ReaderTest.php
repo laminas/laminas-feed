@@ -20,7 +20,6 @@ use Psr\Container\ContainerInterface;
 use stdClass;
 
 use function array_reduce;
-use function dirname;
 use function file_get_contents;
 use function getenv;
 use function restore_error_handler;
@@ -41,7 +40,7 @@ class ReaderTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->feedSamplePath = dirname(__FILE__) . '/_files';
+        $this->feedSamplePath = __DIR__ . '/_files';
     }
 
     protected function tearDown(): void
@@ -153,7 +152,7 @@ class ReaderTest extends TestCase
     public function testGetEncoding(): void
     {
         $feed = Reader\Reader::importString(
-            file_get_contents(dirname(__FILE__) . '/Entry/_files/Atom/title/plain/atom10.xml')
+            file_get_contents(__DIR__ . '/Entry/_files/Atom/title/plain/atom10.xml')
         );
 
         $this->assertEquals('utf-8', $feed->getEncoding());
@@ -163,7 +162,7 @@ class ReaderTest extends TestCase
     public function testImportsFile(): void
     {
         $feed = Reader\Reader::importFile(
-            dirname(__FILE__) . '/Entry/_files/Atom/title/plain/atom10.xml'
+            __DIR__ . '/Entry/_files/Atom/title/plain/atom10.xml'
         );
         $this->assertInstanceOf(FeedInterface::class, $feed);
     }
@@ -378,7 +377,7 @@ class ReaderTest extends TestCase
             $notices->messages[] = $errstr;
         }, E_USER_NOTICE);
         Reader\Reader::importFile(
-            dirname(__FILE__) . '/Entry/_files/Atom/title/plain/atom10.xml'
+            __DIR__ . '/Entry/_files/Atom/title/plain/atom10.xml'
         );
         restore_error_handler();
 

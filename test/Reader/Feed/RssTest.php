@@ -9,7 +9,6 @@ use PHPUnit\Framework\TestCase;
 
 use function array_values;
 use function assert;
-use function dirname;
 use function file_get_contents;
 
 /**
@@ -33,7 +32,7 @@ class RssTest extends TestCase
     protected function setUp(): void
     {
         Reader\Reader::reset();
-        $this->feedSamplePath = dirname(__FILE__) . '/_files/Rss';
+        $this->feedSamplePath = __DIR__ . '/_files/Rss';
 
         $this->expectedCats     = [
             [

@@ -14,7 +14,6 @@ use PHPUnit\Framework\TestCase;
 use stdClass;
 
 use function array_reduce;
-use function dirname;
 use function restore_error_handler;
 use function set_error_handler;
 use function strstr;
@@ -33,7 +32,7 @@ class EntryTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->feedSamplePath = dirname(__FILE__) . '/_files';
+        $this->feedSamplePath = __DIR__ . '/_files';
         Writer\Writer::reset();
     }
 
@@ -225,8 +224,8 @@ class EntryTest extends TestCase
     public function testSetDateCreatedUsesGivenUnixTimestamp(): void
     {
         $entry = new Writer\Entry();
-        $entry->setDateCreated(1234567890);
-        $myDate = new DateTime('@' . 1234567890);
+        $entry->setDateCreated(1_234_567_890);
+        $myDate = new DateTime('@' . 1_234_567_890);
         $this->assertEquals($myDate, $entry->getDateCreated());
     }
 
@@ -236,8 +235,8 @@ class EntryTest extends TestCase
     public function testSetDateCreatedUsesGivenUnixTimestampWhenItIsLessThanTenDigits(): void
     {
         $entry = new Writer\Entry();
-        $entry->setDateCreated(123456789);
-        $myDate = new DateTime('@' . 123456789);
+        $entry->setDateCreated(123_456_789);
+        $myDate = new DateTime('@' . 123_456_789);
         $this->assertEquals($myDate, $entry->getDateCreated());
     }
 
@@ -254,7 +253,7 @@ class EntryTest extends TestCase
 
     public function testSetDateCreatedUsesDateTimeObject(): void
     {
-        $myDate = new DateTime('@' . 1234567890);
+        $myDate = new DateTime('@' . 1_234_567_890);
         $entry  = new Writer\Entry();
         $entry->setDateCreated($myDate);
         $this->assertEquals($myDate, $entry->getDateCreated());
@@ -262,7 +261,7 @@ class EntryTest extends TestCase
 
     public function testSetDateCreatedUsesDateTimeImmutableObject(): void
     {
-        $myDate = new DateTimeImmutable('@' . 1234567890);
+        $myDate = new DateTimeImmutable('@' . 1_234_567_890);
         $entry  = new Writer\Entry();
         $entry->setDateCreated($myDate);
         $this->assertEquals($myDate, $entry->getDateCreated());
@@ -279,8 +278,8 @@ class EntryTest extends TestCase
     public function testSetDateModifiedUsesGivenUnixTimestamp(): void
     {
         $entry = new Writer\Entry();
-        $entry->setDateModified(1234567890);
-        $myDate = new DateTime('@' . 1234567890);
+        $entry->setDateModified(1_234_567_890);
+        $myDate = new DateTime('@' . 1_234_567_890);
         $this->assertEquals($myDate, $entry->getDateModified());
     }
 
@@ -290,8 +289,8 @@ class EntryTest extends TestCase
     public function testSetDateModifiedUsesGivenUnixTimestampWhenItIsLessThanTenDigits(): void
     {
         $entry = new Writer\Entry();
-        $entry->setDateModified(123456789);
-        $myDate = new DateTime('@' . 123456789);
+        $entry->setDateModified(123_456_789);
+        $myDate = new DateTime('@' . 123_456_789);
         $this->assertEquals($myDate, $entry->getDateModified());
     }
 
@@ -308,7 +307,7 @@ class EntryTest extends TestCase
 
     public function testSetDateModifiedUsesDateTimeObject(): void
     {
-        $myDate = new DateTime('@' . 1234567890);
+        $myDate = new DateTime('@' . 1_234_567_890);
         $entry  = new Writer\Entry();
         $entry->setDateModified($myDate);
         $this->assertEquals($myDate, $entry->getDateModified());
@@ -316,7 +315,7 @@ class EntryTest extends TestCase
 
     public function testSetDateModifiedUsesDateTimeImmutableObject(): void
     {
-        $myDate = new DateTimeImmutable('@' . 1234567890);
+        $myDate = new DateTimeImmutable('@' . 1_234_567_890);
         $entry  = new Writer\Entry();
         $entry->setDateModified($myDate);
         $this->assertEquals($myDate, $entry->getDateModified());

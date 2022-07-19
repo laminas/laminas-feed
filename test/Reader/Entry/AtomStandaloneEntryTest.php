@@ -11,7 +11,6 @@ use PHPUnit\Framework\TestCase;
 use stdClass;
 
 use function array_values;
-use function dirname;
 use function file_get_contents;
 
 /**
@@ -32,7 +31,7 @@ class AtomStandaloneEntryTest extends TestCase
     protected function setUp(): void
     {
         Reader\Reader::reset();
-        $this->feedSamplePath = dirname(__FILE__) . '/_files/AtomStandaloneEntry';
+        $this->feedSamplePath = __DIR__ . '/_files/AtomStandaloneEntry';
 
         $this->expectedCats   = [
             [

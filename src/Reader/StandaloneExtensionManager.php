@@ -18,7 +18,7 @@ use function sprintf;
 class StandaloneExtensionManager implements ExtensionManagerInterface
 {
     /** @var array<string, class-string> */
-    private $extensions = [
+    private array $extensions = [
         'Atom\Entry'              => Extension\Atom\Entry::class,
         'Atom\Feed'               => Extension\Atom\Feed::class,
         'Content\Entry'           => Extension\Content\Entry::class,
