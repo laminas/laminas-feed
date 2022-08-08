@@ -123,7 +123,7 @@ class Rss extends Renderer\AbstractRenderer implements Renderer\RendererInterfac
 
         $title = $dom->createElement('title');
         $root->appendChild($title);
-        $text = $dom->createTextNode($this->getDataContainer()->getTitle());
+        $text = $dom->createTextNode((string) $this->getDataContainer()->getTitle());
         $title->appendChild($text);
     }
 
@@ -148,7 +148,7 @@ class Rss extends Renderer\AbstractRenderer implements Renderer\RendererInterfac
         }
         $subtitle = $dom->createElement('description');
         $root->appendChild($subtitle);
-        $text = $dom->createTextNode($this->getDataContainer()->getDescription());
+        $text = $dom->createTextNode((string) $this->getDataContainer()->getDescription());
         $subtitle->appendChild($text);
     }
 
@@ -196,7 +196,7 @@ class Rss extends Renderer\AbstractRenderer implements Renderer\RendererInterfac
         if (array_key_exists('uri', $gdata)) {
             $name .= ' (' . $gdata['uri'] . ')';
         }
-        $text = $dom->createTextNode($name);
+        $text = $dom->createTextNode((string) $name);
         $generator->appendChild($text);
     }
 
@@ -246,7 +246,7 @@ class Rss extends Renderer\AbstractRenderer implements Renderer\RendererInterfac
             if (array_key_exists('email', $data)) {
                 $name = $data['email'] . ' (' . $data['name'] . ')';
             }
-            $text = $dom->createTextNode($name);
+            $text = $dom->createTextNode((string) $name);
             $author->appendChild($text);
             $root->appendChild($author);
         }
@@ -315,7 +315,7 @@ class Rss extends Renderer\AbstractRenderer implements Renderer\RendererInterfac
         $root->appendChild($img);
 
         $url  = $dom->createElement('url');
-        $text = $dom->createTextNode($image['uri']);
+        $text = $dom->createTextNode((string) $image['uri']);
         $url->appendChild($text);
 
         $title = $dom->createElement('title');
@@ -343,7 +343,7 @@ class Rss extends Renderer\AbstractRenderer implements Renderer\RendererInterfac
                 }
             }
             $height = $dom->createElement('height');
-            $text   = $dom->createTextNode($image['height']);
+            $text   = $dom->createTextNode((string) $image['height']);
             $height->appendChild($text);
             $img->appendChild($height);
         }
@@ -360,7 +360,7 @@ class Rss extends Renderer\AbstractRenderer implements Renderer\RendererInterfac
                 }
             }
             $width = $dom->createElement('width');
-            $text  = $dom->createTextNode($image['width']);
+            $text  = $dom->createTextNode((string) $image['width']);
             $width->appendChild($text);
             $img->appendChild($width);
         }
@@ -449,7 +449,7 @@ class Rss extends Renderer\AbstractRenderer implements Renderer\RendererInterfac
             if (isset($cat['scheme'])) {
                 $category->setAttribute('domain', $cat['scheme']);
             }
-            $text = $dom->createTextNode($cat['term']);
+            $text = $dom->createTextNode((string) $cat['term']);
             $category->appendChild($text);
             $root->appendChild($category);
         }

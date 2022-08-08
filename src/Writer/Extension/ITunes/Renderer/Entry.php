@@ -74,7 +74,7 @@ class Entry extends Extension\AbstractRenderer
         }
         foreach ($authors as $author) {
             $el   = $dom->createElement('itunes:author');
-            $text = $dom->createTextNode($author);
+            $text = $dom->createTextNode((string) $author);
             $el->appendChild($text);
             $root->appendChild($el);
             $this->called = true;
@@ -93,7 +93,7 @@ class Entry extends Extension\AbstractRenderer
             return;
         }
         $el   = $dom->createElement('itunes:block');
-        $text = $dom->createTextNode($block);
+        $text = $dom->createTextNode((string) $block);
         $el->appendChild($text);
         $root->appendChild($el);
         $this->called = true;
@@ -111,7 +111,7 @@ class Entry extends Extension\AbstractRenderer
             return;
         }
         $el   = $dom->createElement('itunes:duration');
-        $text = $dom->createTextNode($duration);
+        $text = $dom->createTextNode((string) $duration);
         $el->appendChild($text);
         $root->appendChild($el);
         $this->called = true;
@@ -146,7 +146,7 @@ class Entry extends Extension\AbstractRenderer
             return;
         }
         $el   = $dom->createElement('itunes:explicit');
-        $text = $dom->createTextNode($explicit);
+        $text = $dom->createTextNode((string) $explicit);
         $el->appendChild($text);
         $root->appendChild($el);
         $this->called = true;
@@ -182,7 +182,7 @@ class Entry extends Extension\AbstractRenderer
             return;
         }
         $el   = $dom->createElement('itunes:title');
-        $text = $dom->createTextNode($title);
+        $text = $dom->createTextNode((string) $title);
         $el->appendChild($text);
         $root->appendChild($el);
         $this->called = true;
@@ -200,7 +200,7 @@ class Entry extends Extension\AbstractRenderer
             return;
         }
         $el   = $dom->createElement('itunes:subtitle');
-        $text = $dom->createTextNode($subtitle);
+        $text = $dom->createTextNode((string) $subtitle);
         $el->appendChild($text);
         $root->appendChild($el);
         $this->called = true;
@@ -218,7 +218,7 @@ class Entry extends Extension\AbstractRenderer
             return;
         }
         $el   = $dom->createElement('itunes:summary');
-        $text = $dom->createTextNode($summary);
+        $text = $dom->createTextNode((string) $summary);
         $el->appendChild($text);
         $root->appendChild($el);
         $this->called = true;
@@ -236,7 +236,7 @@ class Entry extends Extension\AbstractRenderer
             return;
         }
         $el   = $dom->createElement('itunes:episode');
-        $text = $dom->createTextNode($episode);
+        $text = $dom->createTextNode((string) $episode);
         $el->appendChild($text);
         $root->appendChild($el);
         $this->called = true;
@@ -254,7 +254,7 @@ class Entry extends Extension\AbstractRenderer
             return;
         }
         $el   = $dom->createElement('itunes:episodeType');
-        $text = $dom->createTextNode($type);
+        $text = $dom->createTextNode((string) $type);
         $el->appendChild($text);
         $root->appendChild($el);
         $this->called = true;
@@ -290,7 +290,7 @@ class Entry extends Extension\AbstractRenderer
             return;
         }
         $el   = $dom->createElement('itunes:season');
-        $text = $dom->createTextNode($season);
+        $text = $dom->createTextNode((string) $season);
         $el->appendChild($text);
         $root->appendChild($el);
         $this->called = true;
