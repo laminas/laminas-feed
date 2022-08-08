@@ -74,18 +74,18 @@ class AtomDeleted extends Renderer\AbstractRenderer implements Renderer\Renderer
         $name   = $this->dom->createElement('name');
         $author->appendChild($name);
         $root->appendChild($author);
-        $text = $dom->createTextNode($data['name']);
+        $text = $dom->createTextNode((string) $data['name']);
         $name->appendChild($text);
         if (array_key_exists('email', $data)) {
             $email = $this->dom->createElement('email');
             $author->appendChild($email);
-            $text = $dom->createTextNode($data['email']);
+            $text = $dom->createTextNode((string) $data['email']);
             $email->appendChild($text);
         }
         if (array_key_exists('uri', $data)) {
             $uri = $this->dom->createElement('uri');
             $author->appendChild($uri);
-            $text = $dom->createTextNode($data['uri']);
+            $text = $dom->createTextNode((string) $data['uri']);
             $uri->appendChild($text);
         }
     }

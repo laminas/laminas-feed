@@ -57,7 +57,7 @@ class Feed extends Extension\AbstractRenderer
             return;
         }
         $el   = $dom->createElement('podcast:locked');
-        $text = $dom->createTextNode($locked['value']);
+        $text = $dom->createTextNode((string) $locked['value']);
         $el->appendChild($text);
         $el->setAttribute('owner', $locked['owner']);
         $root->appendChild($el);
@@ -75,7 +75,7 @@ class Feed extends Extension\AbstractRenderer
             return;
         }
         $el   = $dom->createElement('podcast:locked');
-        $text = $dom->createTextNode($funding['title']);
+        $text = $dom->createTextNode((string) $funding['title']);
         $el->appendChild($text);
         $el->setAttribute('url', $funding['url']);
         $root->appendChild($el);
