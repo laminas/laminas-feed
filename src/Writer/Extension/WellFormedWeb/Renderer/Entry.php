@@ -66,7 +66,7 @@ class Entry extends Extension\AbstractRenderer
         foreach ($links as $link) {
             if ($link['type'] === 'rss') {
                 $flink = $this->dom->createElement('wfw:commentRss');
-                $text  = $dom->createTextNode($link['uri']);
+                $text  = $dom->createTextNode((string) $link['uri']);
                 $flink->appendChild($text);
                 $root->appendChild($flink);
             }

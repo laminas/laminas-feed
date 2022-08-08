@@ -2239,9 +2239,8 @@
     </MixedMethodCall>
   </file>
   <file src="src/Writer/Extension/DublinCore/Renderer/Entry.php">
-    <MixedArgument occurrences="2">
+    <MixedArgument occurrences="1">
       <code>$data</code>
-      <code>$data['name']</code>
     </MixedArgument>
     <MixedAssignment occurrences="2">
       <code>$authors</code>
@@ -2255,9 +2254,8 @@
     </TypeDoesNotContainType>
   </file>
   <file src="src/Writer/Extension/DublinCore/Renderer/Feed.php">
-    <MixedArgument occurrences="2">
+    <MixedArgument occurrences="1">
       <code>$data</code>
-      <code>$data['name']</code>
     </MixedArgument>
     <MixedAssignment occurrences="2">
       <code>$authors</code>
@@ -2309,11 +2307,6 @@
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Writer/Extension/GooglePlayPodcast/Renderer/Entry.php">
-    <MixedArgument occurrences="3">
-      <code>$block</code>
-      <code>$description</code>
-      <code>$explicit</code>
-    </MixedArgument>
     <MixedAssignment occurrences="3">
       <code>$block</code>
       <code>$description</code>
@@ -2326,12 +2319,8 @@
     </MixedMethodCall>
   </file>
   <file src="src/Writer/Extension/GooglePlayPodcast/Renderer/Feed.php">
-    <MixedArgument occurrences="8">
-      <code>$author</code>
-      <code>$block</code>
+    <MixedArgument occurrences="4">
       <code>$cat</code>
-      <code>$description</code>
-      <code>$explicit</code>
       <code>$image</code>
       <code>$key</code>
       <code>$subcat</code>
@@ -2442,19 +2431,9 @@
     </TypeDoesNotContainType>
   </file>
   <file src="src/Writer/Extension/ITunes/Renderer/Entry.php">
-    <MixedArgument occurrences="12">
-      <code>$author</code>
-      <code>$block</code>
-      <code>$duration</code>
-      <code>$episode</code>
-      <code>$explicit</code>
+    <MixedArgument occurrences="2">
       <code>$image</code>
       <code>$keywords</code>
-      <code>$season</code>
-      <code>$subtitle</code>
-      <code>$summary</code>
-      <code>$title</code>
-      <code>$type</code>
     </MixedArgument>
     <MixedAssignment occurrences="14">
       <code>$author</code>
@@ -2493,22 +2472,12 @@
     </TypeDoesNotContainType>
   </file>
   <file src="src/Writer/Extension/ITunes/Renderer/Feed.php">
-    <MixedArgument occurrences="15">
-      <code>$author</code>
-      <code>$block</code>
+    <MixedArgument occurrences="5">
       <code>$cat</code>
-      <code>$duration</code>
-      <code>$explicit</code>
       <code>$image</code>
       <code>$key</code>
       <code>$keywords</code>
-      <code>$owner['email']</code>
-      <code>$owner['name']</code>
       <code>$subcat</code>
-      <code>$subtitle</code>
-      <code>$summary</code>
-      <code>$type</code>
-      <code>$url</code>
     </MixedArgument>
     <MixedArrayAccess occurrences="2">
       <code>$owner['email']</code>
@@ -2576,12 +2545,19 @@
       <code>getPodcastIndexSoundbites</code>
       <code>getPodcastIndexTranscript</code>
     </MixedMethodCall>
+    <RedundantCastGivenDocblockType occurrences="1">
+      <code>(string) $soundbite['title']</code>
+    </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Writer/Extension/PodcastIndex/Renderer/Feed.php">
     <MixedMethodCall occurrences="2">
       <code>getPodcastIndexFunding</code>
       <code>getPodcastIndexLocked</code>
     </MixedMethodCall>
+    <RedundantCastGivenDocblockType occurrences="2">
+      <code>(string) $funding['title']</code>
+      <code>(string) $locked['value']</code>
+    </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Writer/Extension/Slash/Renderer/Entry.php">
     <MixedAssignment occurrences="1">
@@ -2624,9 +2600,6 @@
     </TypeDoesNotContainType>
   </file>
   <file src="src/Writer/Extension/WellFormedWeb/Renderer/Entry.php">
-    <MixedArgument occurrences="1">
-      <code>$link['uri']</code>
-    </MixedArgument>
     <MixedArrayAccess occurrences="2">
       <code>$link['type']</code>
       <code>$link['uri']</code>
@@ -2770,18 +2743,15 @@
       <code>format</code>
       <code>format</code>
     </InvalidMethodCall>
-    <MixedArgument occurrences="15">
+    <MixedArgument occurrences="12">
       <code>$cat['label']</code>
       <code>$cat['scheme']</code>
       <code>$cat['term']</code>
       <code>$cat['term']</code>
       <code>$content</code>
       <code>$data</code>
-      <code>$data['email']</code>
       <code>$data['length']</code>
-      <code>$data['name']</code>
       <code>$data['type']</code>
-      <code>$data['uri']</code>
       <code>$data['uri']</code>
       <code>$source</code>
       <code>$this-&gt;getDataContainer()-&gt;getDateCreated()-&gt;format(DateTime::ATOM)</code>
@@ -2817,10 +2787,9 @@
     <ParadoxicalCondition occurrences="1">
       <code>! $authors || empty($authors)</code>
     </ParadoxicalCondition>
-    <PossiblyNullArgument occurrences="9">
+    <PossiblyNullArgument occurrences="8">
       <code>$this-&gt;container-&gt;getEncoding()</code>
       <code>$this-&gt;getDataContainer()-&gt;getDescription()</code>
-      <code>$this-&gt;getDataContainer()-&gt;getId()</code>
       <code>$this-&gt;getDataContainer()-&gt;getId()</code>
       <code>$this-&gt;getDataContainer()-&gt;getId()</code>
       <code>$this-&gt;getDataContainer()-&gt;getId()</code>
@@ -2847,11 +2816,8 @@
     <InvalidArgument occurrences="1">
       <code>$container</code>
     </InvalidArgument>
-    <MixedArgument occurrences="7">
+    <MixedArgument occurrences="4">
       <code>$data</code>
-      <code>$data['email']</code>
-      <code>$data['name']</code>
-      <code>$data['uri']</code>
       <code>$this-&gt;container-&gt;getReference()</code>
       <code>$this-&gt;container-&gt;getWhen()-&gt;format(DateTime::ATOM)</code>
       <code>$this-&gt;getDataContainer()-&gt;getComment()</code>
@@ -2883,11 +2849,8 @@
     <InvalidArgument occurrences="1">
       <code>$container</code>
     </InvalidArgument>
-    <MixedArgument occurrences="7">
+    <MixedArgument occurrences="4">
       <code>$data</code>
-      <code>$data['email']</code>
-      <code>$data['name']</code>
-      <code>$data['uri']</code>
       <code>$this-&gt;container-&gt;getReference()</code>
       <code>$this-&gt;container-&gt;getWhen()-&gt;format(DateTime::ATOM)</code>
       <code>$this-&gt;getDataContainer()-&gt;getComment()</code>
@@ -2925,14 +2888,12 @@
     <InvalidMethodCall occurrences="1">
       <code>format</code>
     </InvalidMethodCall>
-    <MixedArgument occurrences="8">
+    <MixedArgument occurrences="6">
       <code>$cat['scheme']</code>
       <code>$cat['term']</code>
       <code>$data</code>
       <code>$data['type']</code>
       <code>$data['uri']</code>
-      <code>$link</code>
-      <code>$name</code>
       <code>$this-&gt;getDataContainer()-&gt;getDateModified()-&gt;format(DateTime::RSS)</code>
     </MixedArgument>
     <MixedArrayAccess occurrences="8">
@@ -2966,14 +2927,11 @@
     <ParadoxicalCondition occurrences="1">
       <code>! $authors || empty($authors)</code>
     </ParadoxicalCondition>
-    <PossiblyNullArgument occurrences="7">
+    <PossiblyNullArgument occurrences="4">
       <code>$this-&gt;container-&gt;getEncoding()</code>
       <code>$this-&gt;getDataContainer()-&gt;getDescription()</code>
       <code>$this-&gt;getDataContainer()-&gt;getId()</code>
-      <code>$this-&gt;getDataContainer()-&gt;getId()</code>
       <code>$this-&gt;getDataContainer()-&gt;getLink()</code>
-      <code>$this-&gt;getDataContainer()-&gt;getLink()</code>
-      <code>$this-&gt;getDataContainer()-&gt;getTitle()</code>
     </PossiblyNullArgument>
     <PossiblyNullReference occurrences="1">
       <code>format</code>
@@ -3000,19 +2958,14 @@
     <InvalidMethodCall occurrences="1">
       <code>format</code>
     </InvalidMethodCall>
-    <MixedArgument occurrences="14">
+    <MixedArgument occurrences="9">
       <code>$cat['label']</code>
       <code>$cat['scheme']</code>
       <code>$cat['term']</code>
       <code>$cat['term']</code>
       <code>$data</code>
-      <code>$data['email']</code>
-      <code>$data['name']</code>
-      <code>$data['uri']</code>
-      <code>$gdata['name']</code>
       <code>$href</code>
       <code>$hubUrl</code>
-      <code>$image['uri']</code>
       <code>$this-&gt;getDataContainer()-&gt;getDateModified()-&gt;format(DateTime::ATOM)</code>
       <code>$type</code>
     </MixedArgument>
@@ -3033,15 +2986,12 @@
     <ParadoxicalCondition occurrences="1">
       <code>! $authors || empty($authors)</code>
     </ParadoxicalCondition>
-    <PossiblyNullArgument occurrences="8">
+    <PossiblyNullArgument occurrences="5">
       <code>$gdata['uri']</code>
       <code>$gdata['version']</code>
-      <code>$this-&gt;getDataContainer()-&gt;getDescription()</code>
-      <code>$this-&gt;getDataContainer()-&gt;getId()</code>
       <code>$this-&gt;getDataContainer()-&gt;getLanguage()</code>
       <code>$this-&gt;getDataContainer()-&gt;getLink()</code>
       <code>$this-&gt;getDataContainer()-&gt;getLink()</code>
-      <code>$this-&gt;getDataContainer()-&gt;getTitle()</code>
     </PossiblyNullArgument>
     <PossiblyNullArrayAccess occurrences="1">
       <code>$gdata['name']</code>
@@ -3100,19 +3050,14 @@
     <InvalidMethodCall occurrences="1">
       <code>format</code>
     </InvalidMethodCall>
-    <MixedArgument occurrences="14">
+    <MixedArgument occurrences="9">
       <code>$cat['label']</code>
       <code>$cat['scheme']</code>
       <code>$cat['term']</code>
       <code>$cat['term']</code>
       <code>$data</code>
-      <code>$data['email']</code>
-      <code>$data['name']</code>
-      <code>$data['uri']</code>
-      <code>$gdata['name']</code>
       <code>$href</code>
       <code>$hubUrl</code>
-      <code>$image['uri']</code>
       <code>$this-&gt;getDataContainer()-&gt;getDateModified()-&gt;format(DateTime::ATOM)</code>
       <code>$type</code>
     </MixedArgument>
@@ -3133,15 +3078,12 @@
     <ParadoxicalCondition occurrences="1">
       <code>! $authors || empty($authors)</code>
     </ParadoxicalCondition>
-    <PossiblyNullArgument occurrences="8">
+    <PossiblyNullArgument occurrences="5">
       <code>$gdata['uri']</code>
       <code>$gdata['version']</code>
-      <code>$this-&gt;getDataContainer()-&gt;getDescription()</code>
-      <code>$this-&gt;getDataContainer()-&gt;getId()</code>
       <code>$this-&gt;getDataContainer()-&gt;getLanguage()</code>
       <code>$this-&gt;getDataContainer()-&gt;getLink()</code>
       <code>$this-&gt;getDataContainer()-&gt;getLink()</code>
-      <code>$this-&gt;getDataContainer()-&gt;getTitle()</code>
     </PossiblyNullArgument>
     <PossiblyNullArrayAccess occurrences="1">
       <code>$gdata['name']</code>
@@ -3166,9 +3108,6 @@
     <InvalidArrayOffset occurrences="1">
       <code>$gdata['name']</code>
     </InvalidArrayOffset>
-    <MixedArgument occurrences="1">
-      <code>$gdata['name']</code>
-    </MixedArgument>
     <MixedAssignment occurrences="1">
       <code>$ext</code>
     </MixedAssignment>
@@ -3202,9 +3141,6 @@
     <InvalidArrayOffset occurrences="1">
       <code>$gdata['name']</code>
     </InvalidArrayOffset>
-    <MixedArgument occurrences="1">
-      <code>$gdata['name']</code>
-    </MixedArgument>
     <MixedAssignment occurrences="1">
       <code>$ext</code>
     </MixedAssignment>
@@ -3245,15 +3181,9 @@
       <code>format</code>
       <code>format</code>
     </InvalidMethodCall>
-    <MixedArgument occurrences="10">
+    <MixedArgument occurrences="4">
       <code>$cat['scheme']</code>
-      <code>$cat['term']</code>
       <code>$data</code>
-      <code>$image['height']</code>
-      <code>$image['uri']</code>
-      <code>$image['width']</code>
-      <code>$name</code>
-      <code>$name</code>
       <code>$this-&gt;getDataContainer()-&gt;getDateModified()-&gt;format(DateTime::RSS)</code>
       <code>$this-&gt;getDataContainer()-&gt;getLastBuildDate()-&gt;format(DateTime::RSS)</code>
     </MixedArgument>
@@ -3286,10 +3216,8 @@
     <ParadoxicalCondition occurrences="1">
       <code>! $authors || empty($authors)</code>
     </ParadoxicalCondition>
-    <PossiblyNullArgument occurrences="3">
+    <PossiblyNullArgument occurrences="1">
       <code>$this-&gt;container-&gt;getEncoding()</code>
-      <code>$this-&gt;getDataContainer()-&gt;getDescription()</code>
-      <code>$this-&gt;getDataContainer()-&gt;getTitle()</code>
     </PossiblyNullArgument>
     <PossiblyNullArrayAccess occurrences="1">
       <code>$gdata['name']</code>

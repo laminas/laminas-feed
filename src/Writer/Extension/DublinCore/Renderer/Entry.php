@@ -67,7 +67,7 @@ class Entry extends Extension\AbstractRenderer
         foreach ($authors as $data) {
             $author = $this->dom->createElement('dc:creator');
             if (array_key_exists('name', $data)) {
-                $text = $dom->createTextNode($data['name']);
+                $text = $dom->createTextNode((string) $data['name']);
                 $author->appendChild($text);
                 $root->appendChild($author);
             }
