@@ -222,7 +222,7 @@ class Rss extends Renderer\AbstractRenderer implements Renderer\RendererInterfac
         }
         $link = $dom->createElement('link');
         $root->appendChild($link);
-        $text = $dom->createTextNode((string) $value);
+        $text = $dom->createTextNode($value);
         $link->appendChild($text);
         if (! Uri::factory($value)->isValid()) {
             $link->setAttribute('isPermaLink', 'false');
