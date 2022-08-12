@@ -1010,26 +1010,27 @@
         },
         {
             "name": "laminas/laminas-cache",
-            "version": "3.2.0",
+            "version": "3.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-cache.git",
-                "reference": "8c5f5f43dbab6c74801dfe75852275d9f52d1b02"
+                "reference": "f3745657cf54e162cb39f8348967ff25bf10eb77"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-cache/zipball/8c5f5f43dbab6c74801dfe75852275d9f52d1b02",
-                "reference": "8c5f5f43dbab6c74801dfe75852275d9f52d1b02",
+                "url": "https://api.github.com/repos/laminas/laminas-cache/zipball/f3745657cf54e162cb39f8348967ff25bf10eb77",
+                "reference": "f3745657cf54e162cb39f8348967ff25bf10eb77",
                 "shasum": ""
             },
             "require": {
                 "laminas/laminas-cache-storage-implementation": "1.0",
                 "laminas/laminas-eventmanager": "^3.4",
-                "laminas/laminas-servicemanager": "^3.7",
+                "laminas/laminas-servicemanager": "^3.11",
                 "laminas/laminas-stdlib": "^3.6",
-                "php": "^7.4 || ~8.0.0 || ~8.1.0",
+                "php": "~7.4.0 || ~8.0.0 || ~8.1.0",
                 "psr/cache": "^1.0",
                 "psr/simple-cache": "^1.0",
+                "stella-maris/clock": "^0.1.5",
                 "webmozart/assert": "^1.9"
             },
             "conflict": {
@@ -1105,7 +1106,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2022-08-10T14:24:21+00:00"
+            "time": "2022-08-11T21:03:06+00:00"
         },
         {
             "name": "laminas/laminas-cache-storage-adapter-memory",
@@ -3993,6 +3994,49 @@
                 "wiki": "https://github.com/squizlabs/PHP_CodeSniffer/wiki"
             },
             "time": "2022-06-18T07:21:10+00:00"
+        },
+        {
+            "name": "stella-maris/clock",
+            "version": "0.1.5",
+            "source": {
+                "type": "git",
+                "url": "git@gitlab.com:stella-maris/clock.git",
+                "reference": "447879c53ca0b2a762cdbfba5e76ccf4deca9158"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://gitlab.com/api/v4/projects/stella-maris%2Fclock/repository/archive.zip?sha=447879c53ca0b2a762cdbfba5e76ccf4deca9158",
+                "reference": "447879c53ca0b2a762cdbfba5e76ccf4deca9158",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0|^8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "StellaMaris\\Clock\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andreas Heigl",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "A pre-release of the proposed PSR-20 Clock-Interface",
+            "homepage": "https://gitlab.com/stella-maris/clock",
+            "keywords": [
+                "clock",
+                "datetime",
+                "point in time",
+                "psr20"
+            ],
+            "time": "2022-08-05T07:21:25+00:00"
         },
         {
             "name": "symfony/console",
