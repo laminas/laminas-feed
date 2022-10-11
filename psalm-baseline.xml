@@ -1,47 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.24.0@06dd975cb55d36af80f242561738f16c5f58264f">
+<files psalm-version="4.28.0@52e96bea381e6cb07a672aefec791a5817694a26">
   <file src="src/PubSubHubbub/AbstractCallback.php">
     <DocblockTypeContradiction occurrences="3">
       <code>$this-&gt;httpResponse === null</code>
       <code>$this-&gt;storage === null</code>
       <code>is_array($options)</code>
     </DocblockTypeContradiction>
-    <MixedArgument occurrences="4">
-      <code>$callbackUrl</code>
-      <code>$callbackUrl</code>
-      <code>$name</code>
+    <InvalidReturnStatement occurrences="2">
+      <code>$_SERVER[$temp]</code>
+      <code>$_SERVER[$temp]</code>
+    </InvalidReturnStatement>
+    <MixedArgument occurrences="1">
       <code>$options['storage']</code>
     </MixedArgument>
-    <MixedAssignment occurrences="7">
-      <code>$callbackUrl</code>
-      <code>$callbackUrl</code>
-      <code>$https</code>
-      <code>$https</code>
-      <code>$iisUrlRewritten</code>
-      <code>$name</code>
-      <code>$unencodedUrl</code>
-    </MixedAssignment>
-    <MixedInferredReturnType occurrences="5">
+    <MixedInferredReturnType occurrences="1">
       <code>bool|string</code>
-      <code>string</code>
-      <code>string</code>
-      <code>string</code>
-      <code>string</code>
     </MixedInferredReturnType>
-    <MixedOperand occurrences="2">
-      <code>$_SERVER['QUERY_STRING']</code>
-      <code>$callbackUrl</code>
-    </MixedOperand>
-    <MixedReturnStatement occurrences="8">
-      <code>$_SERVER[$temp]</code>
-      <code>$_SERVER[$temp]</code>
-      <code>$_SERVER['HTTP_HOST']</code>
-      <code>$callbackUrl</code>
-      <code>$callbackUrl</code>
+    <MixedReturnStatement occurrences="1">
       <code>$headers[$header]</code>
-      <code>$name</code>
-      <code>$unencodedUrl</code>
     </MixedReturnStatement>
+    <PossiblyUndefinedArrayOffset occurrences="2">
+      <code>$_SERVER['ORIG_PATH_INFO']</code>
+      <code>$_SERVER['REQUEST_URI']</code>
+    </PossiblyUndefinedArrayOffset>
     <PropertyNotSetInConstructor occurrences="2">
       <code>$httpResponse</code>
       <code>$storage</code>
@@ -292,20 +273,16 @@
     <InvalidScalarArgument occurrences="1">
       <code>$this-&gt;getSubscriberCount()</code>
     </InvalidScalarArgument>
-    <MixedArgument occurrences="9">
-      <code>$_SERVER['REQUEST_METHOD']</code>
-      <code>$_SERVER['REQUEST_METHOD']</code>
+    <MixedArgument occurrences="6">
       <code>$httpGetData['hub_challenge']</code>
       <code>$httpGetData['hub_mode']</code>
       <code>$httpGetData['hub_mode']</code>
       <code>$httpGetData['hub_topic']</code>
       <code>$httpGetData['hub_verify_token']</code>
       <code>$params['xhub.subscription']</code>
-      <code>$queryString</code>
     </MixedArgument>
-    <MixedAssignment occurrences="3">
+    <MixedAssignment occurrences="2">
       <code>$data['lease_seconds']</code>
-      <code>$queryString</code>
       <code>$verifyToken</code>
     </MixedAssignment>
     <MixedInferredReturnType occurrences="1">
@@ -321,19 +298,29 @@
       <code>$this-&gt;_getRawBody()</code>
       <code>$verifyTokenKey</code>
     </PossiblyFalseArgument>
-    <PossiblyInvalidArgument occurrences="5">
+    <PossiblyInvalidArgument occurrences="8">
       <code>$contentType</code>
       <code>$contentType</code>
       <code>$contentType</code>
       <code>$contentType</code>
       <code>$contentType</code>
+      <code>$httpGetData['hub_challenge']</code>
+      <code>$httpGetData['hub_mode']</code>
+      <code>$httpGetData['hub_mode']</code>
     </PossiblyInvalidArgument>
+    <PossiblyInvalidCast occurrences="1">
+      <code>$httpGetData['hub_challenge']</code>
+    </PossiblyInvalidCast>
     <PossiblyNullArgument occurrences="1">
       <code>$httpGetData['hub_verify_token']</code>
     </PossiblyNullArgument>
     <PossiblyNullArrayAccess occurrences="1">
       <code>$httpGetData['hub_verify_token']</code>
     </PossiblyNullArrayAccess>
+    <PossiblyUndefinedArrayOffset occurrences="2">
+      <code>$_SERVER['REQUEST_METHOD']</code>
+      <code>$_SERVER['REQUEST_METHOD']</code>
+    </PossiblyUndefinedArrayOffset>
     <PossiblyUndefinedMethod occurrences="1">
       <code>setHeader</code>
     </PossiblyUndefinedMethod>
@@ -2767,18 +2754,15 @@
       <code>$data['type']</code>
       <code>$data['uri']</code>
     </MixedArrayAccess>
-    <MixedAssignment occurrences="7">
+    <MixedAssignment occurrences="6">
       <code>$cat</code>
       <code>$content</code>
       <code>$data</code>
       <code>$data</code>
       <code>$ext</code>
       <code>$source</code>
-      <code>$tidy</code>
     </MixedAssignment>
-    <MixedMethodCall occurrences="6">
-      <code>cleanRepair</code>
-      <code>parseString</code>
+    <MixedMethodCall occurrences="4">
       <code>render</code>
       <code>setDomDocument</code>
       <code>setRootElement</code>
