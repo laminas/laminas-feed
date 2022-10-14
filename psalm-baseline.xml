@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.28.0@52e96bea381e6cb07a672aefec791a5817694a26">
+<files psalm-version="4.29.0@7ec5ffbd5f68ae03782d7fd33fff0c45a69f95b3">
   <file src="src/PubSubHubbub/AbstractCallback.php">
     <DocblockTypeContradiction occurrences="3">
       <code>$this-&gt;httpResponse === null</code>
@@ -1802,8 +1802,7 @@
       <code>is_object($statusCode)</code>
       <code>is_string($statusCode)</code>
     </DocblockTypeContradiction>
-    <MixedArgument occurrences="2">
-      <code>$statusCode</code>
+    <MixedArgument occurrences="1">
       <code>$statusCode</code>
     </MixedArgument>
     <MixedArgumentTypeCoercion occurrences="1">
@@ -2350,10 +2349,7 @@
       <code>is_object($number)</code>
       <code>is_object($type)</code>
     </DocblockTypeContradiction>
-    <MixedArgument occurrences="4">
-      <code>$number</code>
-      <code>$number</code>
-      <code>$type</code>
+    <MixedArgument occurrences="1">
       <code>$value</code>
     </MixedArgument>
     <MixedArrayAssignment occurrences="1">
@@ -2382,8 +2378,7 @@
       <code>is_bool($status)</code>
       <code>is_object($type)</code>
     </DocblockTypeContradiction>
-    <MixedArgument occurrences="7">
-      <code>$type</code>
+    <MixedArgument occurrences="6">
       <code>$val</code>
       <code>$value</code>
       <code>$value</code>
