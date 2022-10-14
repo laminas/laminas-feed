@@ -13,7 +13,6 @@ use function array_key_exists;
 use function count;
 use function ctype_alpha;
 use function ctype_digit;
-use function get_class;
 use function implode;
 use function in_array;
 use function is_array;
@@ -405,7 +404,7 @@ class Feed
             throw new Writer\Exception\InvalidArgumentException(sprintf(
                 'invalid parameter: "type" MUST be one of [%s]; received %s',
                 implode(', ', $validTypes),
-                is_object($type) ? get_class($type) : var_export($type, true)
+                is_object($type) ? $type::class : var_export($type, true)
             ));
         }
         $this->data['type'] = $type;
@@ -424,7 +423,7 @@ class Feed
         if (! is_bool($status)) {
             throw new Writer\Exception\InvalidArgumentException(sprintf(
                 'invalid parameter: "complete" MUST be boolean; received %s',
-                is_object($status) ? get_class($status) : var_export($status, true)
+                is_object($status) ? $status::class : var_export($status, true)
             ));
         }
 
