@@ -41,7 +41,7 @@
         "laminas/laminas-cache-storage-adapter-memory": "^1.1.0 || ^2.1",
         "laminas/laminas-coding-standard": "~2.4.0",
         "laminas/laminas-db": "^2.15",
-        "laminas/laminas-http": "^2.16",
+        "laminas/laminas-http": "^2.17.0",
         "laminas/laminas-validator": "^2.26",
         "phpunit/phpunit": "^9.5.25",
         "psalm/plugin-phpunit": "^0.17.0",
