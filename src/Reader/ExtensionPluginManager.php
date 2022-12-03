@@ -204,7 +204,7 @@ class ExtensionPluginManager extends AbstractPluginManager implements ExtensionM
     protected $sharedByDefault = false;
 
     /** @inheritDoc */
-    public function validate($instance)
+    public function validate(mixed $instance)
     {
         if (
             $instance instanceof AbstractEntry
