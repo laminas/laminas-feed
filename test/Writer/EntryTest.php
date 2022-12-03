@@ -767,11 +767,13 @@ class EntryTest extends TestCase
             'messages' => [],
         ];
 
+        // phpcs:disable WebimpressCodingStandard.NamingConventions.ValidVariableName.NotCamelCaps
         set_error_handler(static function (int $_errno, string $errstr) use ($notices): ?bool {
             $notices->messages[] = $errstr;
 
             return null;
         }, E_USER_NOTICE);
+        // phpcs:enable WebimpressCodingStandard.NamingConventions.ValidVariableName.NotCamelCaps
         new Writer\Entry();
         restore_error_handler();
 
