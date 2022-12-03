@@ -8,6 +8,7 @@ use DOMDocument;
 use DOMElement;
 use DOMXPath;
 use Laminas\Feed\Reader;
+use Laminas\Feed\Reader\Entry\EntryInterface;
 use Laminas\Feed\Reader\Exception;
 // phpcs:ignore SlevomatCodingStandard.Namespaces.UnusedUses.UnusedUse
 use ReturnTypeWillChange;
@@ -20,6 +21,10 @@ use function method_exists;
 use function sprintf;
 use function strpos;
 
+/**
+ * @template TItem of Reader\Entry\Rss|Reader\Entry\Atom
+ * @template-implements FeedInterface<TItem>
+ */
 abstract class AbstractFeed implements FeedInterface
 {
     /**

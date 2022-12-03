@@ -183,7 +183,7 @@ class Feed extends AbstractFeed implements Iterator, Countable
     /**
      * Return the current feed key
      *
-     * @return mixed
+     * @return int
      */
     #[ReturnTypeWillChange]
     public function key()
