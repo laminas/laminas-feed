@@ -25,6 +25,8 @@ use function sprintf;
  * @psalm-import-type FactoriesConfigurationType from ConfigInterface
  * @final this class wasn't designed to be inherited from, but we can't assume that consumers haven't already
  *        extended it, therefore we cannot add the final marker without a new major release.
+ * @template InstanceType of AbstractEntry|AbstractFeed
+ * @template-extends AbstractPluginManager<InstanceType>
  */
 class ExtensionPluginManager extends AbstractPluginManager implements ExtensionManagerInterface
 {
@@ -200,16 +202,8 @@ class ExtensionPluginManager extends AbstractPluginManager implements ExtensionM
      */
     protected $sharedByDefault = false;
 
-    /**
-     * Validate the plugin
-     *
-     * Checks that the extension loaded is of a valid type.
-     *
-     * @param  mixed $instance
-     * @return void
-     * @throws Exception\InvalidArgumentException If invalid.
-     */
-    public function validate($instance)
+    /** @inheritDoc */
+    public function validate(mixed $instance)
     {
         if (
             $instance instanceof AbstractEntry

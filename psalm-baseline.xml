@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.29.0@7ec5ffbd5f68ae03782d7fd33fff0c45a69f95b3">
+<files psalm-version="5.1.0@4defa177c89397c5e14737a80fe4896584130674">
   <file src="src/PubSubHubbub/AbstractCallback.php">
     <DocblockTypeContradiction occurrences="3">
       <code>$this-&gt;httpResponse === null</code>
@@ -41,9 +41,9 @@
     <DocblockTypeContradiction occurrences="1">
       <code>! is_int($code)</code>
     </DocblockTypeContradiction>
-    <InvalidScalarArgument occurrences="1">
+    <InvalidArgument occurrences="1">
       <code>strlen($content)</code>
-    </InvalidScalarArgument>
+    </InvalidArgument>
     <MixedArgument occurrences="2">
       <code>$header['replace']</code>
       <code>$header['replace']</code>
@@ -88,9 +88,7 @@
     </NullArgument>
   </file>
   <file src="src/PubSubHubbub/Model/Subscription.php">
-    <DocblockTypeContradiction occurrences="3">
-      <code>! is_string($key)</code>
-      <code>! is_string($key)</code>
+    <DocblockTypeContradiction occurrences="1">
       <code>null === $this-&gt;now</code>
     </DocblockTypeContradiction>
     <FalsableReturnStatement occurrences="1">
@@ -118,6 +116,10 @@
     <PropertyNotSetInConstructor occurrences="1">
       <code>$now</code>
     </PropertyNotSetInConstructor>
+    <TypeDoesNotContainType occurrences="2">
+      <code>! is_string($key)</code>
+      <code>! is_string($key)</code>
+    </TypeDoesNotContainType>
   </file>
   <file src="src/PubSubHubbub/PubSubHubbub.php">
     <DocblockTypeContradiction occurrences="1">
@@ -129,24 +131,15 @@
     <MixedReturnStatement occurrences="1">
       <code>$feed-&gt;getHubs()</code>
     </MixedReturnStatement>
+    <PossiblyUndefinedMethod occurrences="1">
+      <code>getHubs</code>
+    </PossiblyUndefinedMethod>
     <RedundantConditionGivenDocblockType occurrences="1">
       <code>$source instanceof Reader\Feed\AbstractFeed</code>
     </RedundantConditionGivenDocblockType>
-    <UndefinedInterfaceMethod occurrences="1">
-      <code>getHubs</code>
-    </UndefinedInterfaceMethod>
   </file>
   <file src="src/PubSubHubbub/Publisher.php">
-    <DocblockTypeContradiction occurrences="10">
-      <code>! is_string($name)</code>
-      <code>! is_string($name)</code>
-      <code>! is_string($url)</code>
-      <code>! is_string($url)</code>
-      <code>! is_string($url)</code>
-      <code>! is_string($value)</code>
-      <code>empty($url) || ! is_string($url)</code>
-      <code>empty($url) || ! is_string($url)</code>
-      <code>empty($url) || ! is_string($url)</code>
+    <DocblockTypeContradiction occurrences="1">
       <code>is_array($options)</code>
     </DocblockTypeContradiction>
     <MixedArgument occurrences="9">
@@ -175,21 +168,24 @@
     <MixedOperand occurrences="1">
       <code>$response-&gt;getContent()</code>
     </MixedOperand>
-  </file>
-  <file src="src/PubSubHubbub/Subscriber.php">
-    <DocblockTypeContradiction occurrences="13">
+    <RedundantCondition occurrences="1">
+      <code>! is_string($value) &amp;&amp; $value !== null</code>
+    </RedundantCondition>
+    <TypeDoesNotContainType occurrences="9">
       <code>! is_string($name)</code>
       <code>! is_string($name)</code>
-      <code>! is_string($url)</code>
       <code>! is_string($url)</code>
       <code>! is_string($url)</code>
       <code>! is_string($url)</code>
       <code>! is_string($value)</code>
+      <code>empty($url) || ! is_string($url)</code>
+      <code>empty($url) || ! is_string($url)</code>
+      <code>empty($url) || ! is_string($url)</code>
+    </TypeDoesNotContainType>
+  </file>
+  <file src="src/PubSubHubbub/Subscriber.php">
+    <DocblockTypeContradiction occurrences="2">
       <code>$this-&gt;storage === null</code>
-      <code>empty($url) || ! is_string($url)</code>
-      <code>empty($url) || ! is_string($url)</code>
-      <code>empty($url) || ! is_string($url)</code>
-      <code>empty($url) || ! is_string($url)</code>
       <code>is_array($options)</code>
     </DocblockTypeContradiction>
     <InvalidPropertyAssignmentValue occurrences="1">
@@ -262,17 +258,33 @@
     <RedundantCast occurrences="1">
       <code>(string) $token</code>
     </RedundantCast>
+    <RedundantCondition occurrences="1">
+      <code>! is_string($value) &amp;&amp; $value !== null</code>
+    </RedundantCondition>
     <RedundantConditionGivenDocblockType occurrences="1">
       <code>$this-&gt;getLeaseSeconds() !== null</code>
     </RedundantConditionGivenDocblockType>
+    <TypeDoesNotContainType occurrences="11">
+      <code>! is_string($name)</code>
+      <code>! is_string($name)</code>
+      <code>! is_string($url)</code>
+      <code>! is_string($url)</code>
+      <code>! is_string($url)</code>
+      <code>! is_string($url)</code>
+      <code>! is_string($value)</code>
+      <code>empty($url) || ! is_string($url)</code>
+      <code>empty($url) || ! is_string($url)</code>
+      <code>empty($url) || ! is_string($url)</code>
+      <code>empty($url) || ! is_string($url)</code>
+    </TypeDoesNotContainType>
   </file>
   <file src="src/PubSubHubbub/Subscriber/Callback.php">
     <DocblockTypeContradiction occurrences="1">
       <code>$this-&gt;feedUpdate === null</code>
     </DocblockTypeContradiction>
-    <InvalidScalarArgument occurrences="1">
+    <InvalidArgument occurrences="1">
       <code>$this-&gt;getSubscriberCount()</code>
-    </InvalidScalarArgument>
+    </InvalidArgument>
     <MixedArgument occurrences="6">
       <code>$httpGetData['hub_challenge']</code>
       <code>$httpGetData['hub_mode']</code>
@@ -374,9 +386,15 @@
     </UndefinedMethod>
   </file>
   <file src="src/Reader/AbstractFeed.php">
-    <InvalidScalarArgument occurrences="1">
+    <ImplementedReturnTypeMismatch occurrences="1">
+      <code>Entry\AbstractEntry</code>
+    </ImplementedReturnTypeMismatch>
+    <InvalidArgument occurrences="1">
       <code>$this-&gt;key()</code>
-    </InvalidScalarArgument>
+    </InvalidArgument>
+    <InvalidTemplateParam occurrences="1">
+      <code>Feed\FeedInterface</code>
+    </InvalidTemplateParam>
     <MissingReturnType occurrences="3">
       <code>indexEntries</code>
       <code>loadExtensions</code>
@@ -412,25 +430,9 @@
     <PropertyNotSetInConstructor occurrences="1">
       <code>$originalSourceUri</code>
     </PropertyNotSetInConstructor>
-  </file>
-  <file src="src/Reader/Collection/Author.php">
-    <MixedArrayAccess occurrences="1">
-      <code>$element['name']</code>
-    </MixedArrayAccess>
-    <MixedAssignment occurrences="2">
-      <code>$authors[]</code>
-      <code>$element</code>
-    </MixedAssignment>
-  </file>
-  <file src="src/Reader/Collection/Category.php">
-    <MixedArrayAccess occurrences="1">
-      <code>$element['term']</code>
-    </MixedArrayAccess>
-    <MixedAssignment occurrences="3">
-      <code>$categories[]</code>
-      <code>$categories[]</code>
-      <code>$element</code>
-    </MixedAssignment>
+    <TooManyTemplateParams occurrences="1">
+      <code>Feed\FeedInterface</code>
+    </TooManyTemplateParams>
   </file>
   <file src="src/Reader/Entry/AbstractEntry.php">
     <DocblockTypeContradiction occurrences="2">
@@ -504,7 +506,7 @@
       <code>setType</code>
       <code>setXpath</code>
     </MixedMethodCall>
-    <MixedReturnStatement occurrences="15">
+    <MixedReturnStatement occurrences="16">
       <code>$this-&gt;data['authors']</code>
       <code>$this-&gt;data['categories']</code>
       <code>$this-&gt;data['commentcount']</code>
@@ -531,20 +533,23 @@
     </PropertyNotSetInConstructor>
   </file>
   <file src="src/Reader/Entry/Rss.php">
+    <ArgumentTypeCoercion occurrences="2">
+      <code>Reader\Reader::arrayUnique($authors)</code>
+    </ArgumentTypeCoercion>
     <ImplementedReturnTypeMismatch occurrences="3">
       <code>null|string</code>
       <code>null|string</code>
       <code>void</code>
     </ImplementedReturnTypeMismatch>
+    <InvalidArgument occurrences="1">
+      <code>$entryKey</code>
+    </InvalidArgument>
     <InvalidNullableReturnType occurrences="1">
       <code>string</code>
     </InvalidNullableReturnType>
     <InvalidReturnStatement occurrences="1">
       <code>$this-&gt;data['authors']</code>
     </InvalidReturnStatement>
-    <InvalidScalarArgument occurrences="1">
-      <code>$entryKey</code>
-    </InvalidScalarArgument>
     <MixedArgument occurrences="2">
       <code>$dateModified</code>
       <code>$dateModified</code>
@@ -583,11 +588,12 @@
       <code>setType</code>
       <code>setXpath</code>
     </MixedMethodCall>
-    <MixedReturnStatement occurrences="15">
+    <MixedReturnStatement occurrences="18">
       <code>$this-&gt;data['authors']</code>
       <code>$this-&gt;data['categories']</code>
       <code>$this-&gt;data['commentcount']</code>
       <code>$this-&gt;data['commentfeedlink']</code>
+      <code>$this-&gt;data['commentlink']</code>
       <code>$this-&gt;data['commentlink']</code>
       <code>$this-&gt;data['commentlink']</code>
       <code>$this-&gt;data['content']</code>
@@ -596,12 +602,16 @@
       <code>$this-&gt;data['enclosure']</code>
       <code>$this-&gt;data['id']</code>
       <code>$this-&gt;data['id']</code>
+      <code>$this-&gt;data['id']</code>
       <code>$this-&gt;data['links']</code>
       <code>$this-&gt;data['title']</code>
     </MixedReturnStatement>
     <MixedReturnTypeCoercion occurrences="2">
       <code>null|array&lt;string, string&gt;</code>
     </MixedReturnTypeCoercion>
+    <NullArgument occurrences="1">
+      <code>$categoryCollection</code>
+    </NullArgument>
     <NullableReturnStatement occurrences="5">
       <code>$this-&gt;data['commentfeedlink']</code>
       <code>$this-&gt;data['commentlink']</code>
@@ -616,6 +626,12 @@
     <PropertyNotSetInConstructor occurrences="1">
       <code>Rss</code>
     </PropertyNotSetInConstructor>
+    <RedundantCondition occurrences="4">
+      <code>$list instanceof DOMNodeList</code>
+      <code>$list instanceof DOMNodeList</code>
+      <code>$list instanceof DOMNodeList</code>
+      <code>$nodeList instanceof DOMNodeList</code>
+    </RedundantCondition>
     <UndefinedMethod occurrences="1">
       <code>getAttribute</code>
     </UndefinedMethod>
@@ -629,6 +645,9 @@
     <InvalidArgument occurrences="1">
       <code>$this-&gt;getEntryElement()</code>
     </InvalidArgument>
+    <InvalidNullableReturnType occurrences="1">
+      <code>string</code>
+    </InvalidNullableReturnType>
     <InvalidPropertyAssignmentValue occurrences="1">
       <code>$entryKey</code>
     </InvalidPropertyAssignmentValue>
@@ -673,9 +692,13 @@
     <MixedInferredReturnType occurrences="1">
       <code>string</code>
     </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="1">
+    <MixedReturnStatement occurrences="2">
+      <code>$type</code>
       <code>$type</code>
     </MixedReturnStatement>
+    <NullableReturnStatement occurrences="1">
+      <code>$this-&gt;getDomDocument()-&gt;encoding</code>
+    </NullableReturnStatement>
     <PossiblyNullPropertyAssignmentValue occurrences="1">
       <code>$entry-&gt;ownerDocument</code>
     </PossiblyNullPropertyAssignmentValue>
@@ -689,6 +712,9 @@
     <DocblockTypeContradiction occurrences="1">
       <code>null === $this-&gt;xpath</code>
     </DocblockTypeContradiction>
+    <InvalidNullableReturnType occurrences="1">
+      <code>string</code>
+    </InvalidNullableReturnType>
     <MissingConstructor occurrences="16">
       <code>$domDocument</code>
       <code>$domDocument</code>
@@ -716,17 +742,22 @@
     <MixedInferredReturnType occurrences="1">
       <code>string</code>
     </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="1">
+    <MixedReturnStatement occurrences="2">
+      <code>$type</code>
       <code>$type</code>
     </MixedReturnStatement>
+    <NullableReturnStatement occurrences="1">
+      <code>$this-&gt;getDomDocument()-&gt;encoding</code>
+    </NullableReturnStatement>
     <PossiblyNullPropertyAssignmentValue occurrences="1">
       <code>null</code>
     </PossiblyNullPropertyAssignmentValue>
   </file>
   <file src="src/Reader/Extension/Atom/Entry.php">
-    <ArgumentTypeCoercion occurrences="2">
+    <ArgumentTypeCoercion occurrences="4">
       <code>$author</code>
       <code>$element</code>
+      <code>Reader\Reader::arrayUnique($authors)</code>
     </ArgumentTypeCoercion>
     <MixedArgument occurrences="6">
       <code>$content ?? ''</code>
@@ -769,11 +800,13 @@
       <code>string</code>
       <code>string</code>
     </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="19">
+    <MixedReturnStatement occurrences="23">
       <code>$this-&gt;data['authors']</code>
       <code>$this-&gt;data['baseUrl']</code>
       <code>$this-&gt;data['baseUrl']</code>
+      <code>$this-&gt;data['baseUrl']</code>
       <code>$this-&gt;data['categories']</code>
+      <code>$this-&gt;data['commentcount']</code>
       <code>$this-&gt;data['commentcount']</code>
       <code>$this-&gt;data['commentcount']</code>
       <code>$this-&gt;data['commentfeedlink']</code>
@@ -783,13 +816,18 @@
       <code>$this-&gt;data['datemodified']</code>
       <code>$this-&gt;data['description']</code>
       <code>$this-&gt;data['description']</code>
+      <code>$this-&gt;data['description']</code>
       <code>$this-&gt;data['enclosure']</code>
+      <code>$this-&gt;data['id']</code>
       <code>$this-&gt;data['id']</code>
       <code>$this-&gt;data['id']</code>
       <code>$this-&gt;data['links']</code>
       <code>$this-&gt;data['source']</code>
       <code>$this-&gt;data['title']</code>
     </MixedReturnStatement>
+    <NullArgument occurrences="1">
+      <code>$categoryCollection</code>
+    </NullArgument>
     <NullableReturnStatement occurrences="5">
       <code>$this-&gt;data['commentfeedlink']</code>
       <code>$this-&gt;data['commentlink']</code>
@@ -797,9 +835,25 @@
       <code>$this-&gt;data['id']</code>
       <code>$this-&gt;data['title']</code>
     </NullableReturnStatement>
+    <PossiblyNullArgument occurrences="1">
+      <code>$d-&gt;lookupPrefix('http://www.w3.org/1999/xhtml')</code>
+    </PossiblyNullArgument>
     <PossiblyNullOperand occurrences="1">
       <code>$this-&gt;getBaseUrl()</code>
     </PossiblyNullOperand>
+    <RedundantCondition occurrences="8">
+      <code>$list instanceof DOMNodeList</code>
+      <code>$list instanceof DOMNodeList</code>
+      <code>$list instanceof DOMNodeList</code>
+      <code>$list instanceof DOMNodeList</code>
+      <code>$list instanceof DOMNodeList</code>
+      <code>$list instanceof DOMNodeList</code>
+      <code>$list instanceof DOMNodeList</code>
+      <code>$nodeList instanceof DOMNodeList</code>
+    </RedundantCondition>
+    <TypeDoesNotContainType occurrences="1">
+      <code>! $list instanceof DOMNodeList</code>
+    </TypeDoesNotContainType>
     <UndefinedMethod occurrences="4">
       <code>getAttribute</code>
       <code>getAttribute</code>
@@ -814,8 +868,9 @@
     </UndefinedPropertyFetch>
   </file>
   <file src="src/Reader/Extension/Atom/Feed.php">
-    <ArgumentTypeCoercion occurrences="1">
+    <ArgumentTypeCoercion occurrences="3">
       <code>$author</code>
+      <code>Reader\Reader::arrayUnique($authors)</code>
     </ArgumentTypeCoercion>
     <MixedArgument occurrences="3">
       <code>$dateCreated</code>
@@ -855,8 +910,9 @@
       <code>null|string</code>
       <code>null|string</code>
     </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="20">
+    <MixedReturnStatement occurrences="25">
       <code>$this-&gt;data['authors']</code>
+      <code>$this-&gt;data['baseUrl']</code>
       <code>$this-&gt;data['baseUrl']</code>
       <code>$this-&gt;data['baseUrl']</code>
       <code>$this-&gt;data['categories']</code>
@@ -867,16 +923,23 @@
       <code>$this-&gt;data['feedlink']</code>
       <code>$this-&gt;data['generator']</code>
       <code>$this-&gt;data['generator']</code>
+      <code>$this-&gt;data['generator']</code>
       <code>$this-&gt;data['hubs']</code>
+      <code>$this-&gt;data['id']</code>
       <code>$this-&gt;data['id']</code>
       <code>$this-&gt;data['id']</code>
       <code>$this-&gt;data['image']</code>
       <code>$this-&gt;data['language']</code>
       <code>$this-&gt;data['language']</code>
+      <code>$this-&gt;data['language']</code>
       <code>$this-&gt;data['link']</code>
       <code>$this-&gt;data['title']</code>
       <code>$this-&gt;data['title']</code>
+      <code>$this-&gt;data['title']</code>
     </MixedReturnStatement>
+    <NullArgument occurrences="1">
+      <code>$categoryCollection</code>
+    </NullArgument>
     <PossiblyNullArgument occurrences="1">
       <code>$uri-&gt;nodeValue</code>
     </PossiblyNullArgument>
@@ -927,6 +990,9 @@
     </MixedReturnStatement>
   </file>
   <file src="src/Reader/Extension/DublinCore/Entry.php">
+    <ArgumentTypeCoercion occurrences="2">
+      <code>Reader\Reader::arrayUnique($authors)</code>
+    </ArgumentTypeCoercion>
     <InvalidReturnStatement occurrences="1">
       <code>$this-&gt;data['authors']</code>
     </InvalidReturnStatement>
@@ -957,20 +1023,25 @@
       <code>string</code>
       <code>string</code>
     </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="9">
+    <MixedReturnStatement occurrences="11">
       <code>$this-&gt;data['authors']</code>
       <code>$this-&gt;data['categories']</code>
       <code>$this-&gt;data['date']</code>
       <code>$this-&gt;data['description']</code>
       <code>$this-&gt;data['description']</code>
+      <code>$this-&gt;data['description']</code>
       <code>$this-&gt;data['id']</code>
       <code>$this-&gt;data['id']</code>
+      <code>$this-&gt;data['title']</code>
       <code>$this-&gt;data['title']</code>
       <code>$this-&gt;data['title']</code>
     </MixedReturnStatement>
     <MixedReturnTypeCoercion occurrences="2">
       <code>null|array&lt;string, string&gt;</code>
     </MixedReturnTypeCoercion>
+    <NullArgument occurrences="1">
+      <code>$categoryCollection</code>
+    </NullArgument>
     <NullableReturnStatement occurrences="3">
       <code>$this-&gt;data['authors']</code>
       <code>$this-&gt;data['description']</code>
@@ -978,6 +1049,9 @@
     </NullableReturnStatement>
   </file>
   <file src="src/Reader/Extension/DublinCore/Feed.php">
+    <ArgumentTypeCoercion occurrences="2">
+      <code>Reader\Reader::arrayUnique($authors)</code>
+    </ArgumentTypeCoercion>
     <InvalidReturnStatement occurrences="1">
       <code>$this-&gt;data['authors']</code>
     </InvalidReturnStatement>
@@ -1010,21 +1084,28 @@
       <code>null|string</code>
       <code>null|string</code>
     </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="13">
+    <MixedReturnStatement occurrences="17">
       <code>$this-&gt;data['authors']</code>
       <code>$this-&gt;data['categories']</code>
+      <code>$this-&gt;data['copyright']</code>
       <code>$this-&gt;data['copyright']</code>
       <code>$this-&gt;data['copyright']</code>
       <code>$this-&gt;data['date']</code>
       <code>$this-&gt;data['description']</code>
       <code>$this-&gt;data['description']</code>
+      <code>$this-&gt;data['description']</code>
       <code>$this-&gt;data['id']</code>
       <code>$this-&gt;data['id']</code>
       <code>$this-&gt;data['language']</code>
       <code>$this-&gt;data['language']</code>
+      <code>$this-&gt;data['language']</code>
+      <code>$this-&gt;data['title']</code>
       <code>$this-&gt;data['title']</code>
       <code>$this-&gt;data['title']</code>
     </MixedReturnStatement>
+    <NullArgument occurrences="1">
+      <code>$categoryCollection</code>
+    </NullArgument>
     <NullableReturnStatement occurrences="1">
       <code>$this-&gt;data['authors']</code>
     </NullableReturnStatement>
@@ -1040,11 +1121,14 @@
       <code>string</code>
       <code>string</code>
     </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="6">
+    <MixedReturnStatement occurrences="9">
+      <code>$this-&gt;data['block']</code>
       <code>$this-&gt;data['block']</code>
       <code>$this-&gt;data['block']</code>
       <code>$this-&gt;data['description']</code>
       <code>$this-&gt;data['description']</code>
+      <code>$this-&gt;data['description']</code>
+      <code>$this-&gt;data['explicit']</code>
       <code>$this-&gt;data['explicit']</code>
       <code>$this-&gt;data['explicit']</code>
     </MixedReturnStatement>
@@ -1070,16 +1154,21 @@
       <code>string</code>
       <code>string</code>
     </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="11">
+    <MixedReturnStatement occurrences="16">
       <code>$this-&gt;data['author']</code>
       <code>$this-&gt;data['author']</code>
+      <code>$this-&gt;data['author']</code>
+      <code>$this-&gt;data['block']</code>
       <code>$this-&gt;data['block']</code>
       <code>$this-&gt;data['block']</code>
       <code>$this-&gt;data['categories']</code>
       <code>$this-&gt;data['description']</code>
       <code>$this-&gt;data['description']</code>
+      <code>$this-&gt;data['description']</code>
       <code>$this-&gt;data['explicit']</code>
       <code>$this-&gt;data['explicit']</code>
+      <code>$this-&gt;data['explicit']</code>
+      <code>$this-&gt;data['image']</code>
       <code>$this-&gt;data['image']</code>
       <code>$this-&gt;data['image']</code>
     </MixedReturnStatement>
@@ -1126,27 +1215,36 @@
       <code>string</code>
       <code>string</code>
     </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="22">
+    <MixedReturnStatement occurrences="31">
+      <code>$this-&gt;data['author']</code>
       <code>$this-&gt;data['author']</code>
       <code>$this-&gt;data['author']</code>
       <code>$this-&gt;data['block']</code>
       <code>$this-&gt;data['block']</code>
+      <code>$this-&gt;data['block']</code>
+      <code>$this-&gt;data['duration']</code>
       <code>$this-&gt;data['duration']</code>
       <code>$this-&gt;data['duration']</code>
       <code>$this-&gt;data['episode']</code>
       <code>$this-&gt;data['episodeType']</code>
       <code>$this-&gt;data['explicit']</code>
       <code>$this-&gt;data['explicit']</code>
+      <code>$this-&gt;data['explicit']</code>
+      <code>$this-&gt;data['image']</code>
       <code>$this-&gt;data['image']</code>
       <code>$this-&gt;data['image']</code>
       <code>$this-&gt;data['isClosedCaptioned']</code>
       <code>$this-&gt;data['keywords']</code>
       <code>$this-&gt;data['keywords']</code>
+      <code>$this-&gt;data['keywords']</code>
       <code>$this-&gt;data['season']</code>
       <code>$this-&gt;data['subtitle']</code>
       <code>$this-&gt;data['subtitle']</code>
+      <code>$this-&gt;data['subtitle']</code>
       <code>$this-&gt;data['summary']</code>
       <code>$this-&gt;data['summary']</code>
+      <code>$this-&gt;data['summary']</code>
+      <code>$this-&gt;data['title']</code>
       <code>$this-&gt;data['title']</code>
       <code>$this-&gt;data['title']</code>
     </MixedReturnStatement>
@@ -1196,26 +1294,35 @@
       <code>$email</code>
       <code>$name</code>
     </MixedOperand>
-    <MixedReturnStatement occurrences="21">
+    <MixedReturnStatement occurrences="30">
       <code>$this-&gt;data['author']</code>
       <code>$this-&gt;data['author']</code>
+      <code>$this-&gt;data['author']</code>
+      <code>$this-&gt;data['block']</code>
       <code>$this-&gt;data['block']</code>
       <code>$this-&gt;data['block']</code>
       <code>$this-&gt;data['categories']</code>
       <code>$this-&gt;data['complete']</code>
       <code>$this-&gt;data['explicit']</code>
       <code>$this-&gt;data['explicit']</code>
+      <code>$this-&gt;data['explicit']</code>
+      <code>$this-&gt;data['image']</code>
       <code>$this-&gt;data['image']</code>
       <code>$this-&gt;data['image']</code>
       <code>$this-&gt;data['keywords']</code>
       <code>$this-&gt;data['keywords']</code>
+      <code>$this-&gt;data['keywords']</code>
       <code>$this-&gt;data['new-feed-url']</code>
       <code>$this-&gt;data['new-feed-url']</code>
+      <code>$this-&gt;data['new-feed-url']</code>
+      <code>$this-&gt;data['owner']</code>
       <code>$this-&gt;data['owner']</code>
       <code>$this-&gt;data['owner']</code>
       <code>$this-&gt;data['podcastType']</code>
       <code>$this-&gt;data['subtitle']</code>
       <code>$this-&gt;data['subtitle']</code>
+      <code>$this-&gt;data['subtitle']</code>
+      <code>$this-&gt;data['summary']</code>
       <code>$this-&gt;data['summary']</code>
       <code>$this-&gt;data['summary']</code>
     </MixedReturnStatement>
@@ -1262,8 +1369,9 @@
       <code>bool</code>
       <code>null|object{url: string, title: string}</code>
     </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="3">
+    <MixedReturnStatement occurrences="4">
       <code>$this-&gt;data['locked']</code>
+      <code>$this-&gt;data['owner']</code>
       <code>$this-&gt;data['owner']</code>
       <code>$this-&gt;data['owner']</code>
     </MixedReturnStatement>
@@ -1286,11 +1394,13 @@
       <code>null|string</code>
       <code>null|string</code>
     </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="5">
+    <MixedReturnStatement occurrences="7">
       <code>$comments</code>
       <code>$this-&gt;data[$name]</code>
       <code>$this-&gt;data[$name]</code>
       <code>$this-&gt;getData('department')</code>
+      <code>$this-&gt;getData('department')</code>
+      <code>$this-&gt;getData('section')</code>
       <code>$this-&gt;getData('section')</code>
     </MixedReturnStatement>
     <NullableReturnStatement occurrences="1">
@@ -1329,7 +1439,8 @@
     <MixedInferredReturnType occurrences="1">
       <code>null|int</code>
     </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="1">
+    <MixedReturnStatement occurrences="2">
+      <code>$this-&gt;getData('total')</code>
       <code>$this-&gt;getData('total')</code>
     </MixedReturnStatement>
   </file>
@@ -1340,7 +1451,8 @@
     <MixedInferredReturnType occurrences="1">
       <code>null|string</code>
     </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="2">
+    <MixedReturnStatement occurrences="3">
+      <code>$data</code>
       <code>$data</code>
       <code>$this-&gt;data[$name]</code>
     </MixedReturnStatement>
@@ -1352,7 +1464,8 @@
     <MixedInferredReturnType occurrences="1">
       <code>Extension\AbstractEntry|Extension\AbstractFeed</code>
     </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="1">
+    <MixedReturnStatement occurrences="2">
+      <code>$this-&gt;pluginManager-&gt;get($extension)</code>
       <code>$this-&gt;pluginManager-&gt;get($extension)</code>
     </MixedReturnStatement>
   </file>
@@ -1362,9 +1475,12 @@
     </DeprecatedInterface>
   </file>
   <file src="src/Reader/Feed/AbstractFeed.php">
-    <InvalidScalarArgument occurrences="1">
+    <InvalidArgument occurrences="1">
       <code>$this-&gt;key()</code>
-    </InvalidScalarArgument>
+    </InvalidArgument>
+    <LessSpecificImplementedReturnType occurrences="1">
+      <code>Reader\Entry\EntryInterface</code>
+    </LessSpecificImplementedReturnType>
     <MissingReturnType occurrences="3">
       <code>indexEntries</code>
       <code>loadExtensions</code>
@@ -1466,7 +1582,7 @@
       <code>setXpath</code>
       <code>setXpathPrefix</code>
     </MixedMethodCall>
-    <MixedReturnStatement occurrences="30">
+    <MixedReturnStatement occurrences="36">
       <code>$this-&gt;data['authors']</code>
       <code>$this-&gt;data['authors']</code>
       <code>$this-&gt;data['baseUrl']</code>
@@ -1475,12 +1591,17 @@
       <code>$this-&gt;data['categories']</code>
       <code>$this-&gt;data['copyright']</code>
       <code>$this-&gt;data['copyright']</code>
+      <code>$this-&gt;data['copyright']</code>
+      <code>$this-&gt;data['datecreated']</code>
       <code>$this-&gt;data['datecreated']</code>
       <code>$this-&gt;data['datecreated']</code>
       <code>$this-&gt;data['datemodified']</code>
       <code>$this-&gt;data['datemodified']</code>
+      <code>$this-&gt;data['datemodified']</code>
       <code>$this-&gt;data['description']</code>
       <code>$this-&gt;data['description']</code>
+      <code>$this-&gt;data['description']</code>
+      <code>$this-&gt;data['feedlink']</code>
       <code>$this-&gt;data['feedlink']</code>
       <code>$this-&gt;data['feedlink']</code>
       <code>$this-&gt;data['generator']</code>
@@ -1491,6 +1612,7 @@
       <code>$this-&gt;data['id']</code>
       <code>$this-&gt;data['image']</code>
       <code>$this-&gt;data['image']</code>
+      <code>$this-&gt;data['language']</code>
       <code>$this-&gt;data['language']</code>
       <code>$this-&gt;data['language']</code>
       <code>$this-&gt;data['link']</code>
@@ -1542,7 +1664,9 @@
     </UndefinedMethod>
   </file>
   <file src="src/Reader/Feed/Atom/Source.php">
-    <ImplementedReturnTypeMismatch occurrences="4">
+    <ImplementedReturnTypeMismatch occurrences="6">
+      <code>void</code>
+      <code>void</code>
       <code>void</code>
       <code>void</code>
       <code>void</code>
@@ -1569,6 +1693,9 @@
     </PropertyNotSetInConstructor>
   </file>
   <file src="src/Reader/Feed/Rss.php">
+    <ArgumentTypeCoercion occurrences="2">
+      <code>Reader\Reader::arrayUnique($authors)</code>
+    </ArgumentTypeCoercion>
     <ImplementedReturnTypeMismatch occurrences="1">
       <code>null|array&lt;string, string&gt;</code>
     </ImplementedReturnTypeMismatch>
@@ -1672,36 +1799,50 @@
       <code>setXpath</code>
       <code>setXpathPrefix</code>
     </MixedMethodCall>
-    <MixedReturnStatement occurrences="25">
+    <MixedReturnStatement occurrences="36">
+      <code>$this-&gt;data['authors']</code>
       <code>$this-&gt;data['authors']</code>
       <code>$this-&gt;data['authors']</code>
       <code>$this-&gt;data['categories']</code>
       <code>$this-&gt;data['categories']</code>
+      <code>$this-&gt;data['categories']</code>
+      <code>$this-&gt;data['copyright']</code>
       <code>$this-&gt;data['copyright']</code>
       <code>$this-&gt;data['copyright']</code>
       <code>$this-&gt;data['datemodified']</code>
       <code>$this-&gt;data['datemodified']</code>
+      <code>$this-&gt;data['datemodified']</code>
+      <code>$this-&gt;data['description']</code>
       <code>$this-&gt;data['description']</code>
       <code>$this-&gt;data['description']</code>
       <code>$this-&gt;data['feedlink']</code>
       <code>$this-&gt;data['feedlink']</code>
+      <code>$this-&gt;data['feedlink']</code>
+      <code>$this-&gt;data['generator']</code>
       <code>$this-&gt;data['generator']</code>
       <code>$this-&gt;data['generator']</code>
       <code>$this-&gt;data['hubs']</code>
       <code>$this-&gt;data['id']</code>
       <code>$this-&gt;data['id']</code>
+      <code>$this-&gt;data['id']</code>
       <code>$this-&gt;data['image']</code>
+      <code>$this-&gt;data['language']</code>
       <code>$this-&gt;data['language']</code>
       <code>$this-&gt;data['language']</code>
       <code>$this-&gt;data['lastBuildDate']</code>
       <code>$this-&gt;data['link']</code>
       <code>$this-&gt;data['link']</code>
+      <code>$this-&gt;data['link']</code>
+      <code>$this-&gt;data['title']</code>
       <code>$this-&gt;data['title']</code>
       <code>$this-&gt;data['title']</code>
     </MixedReturnStatement>
     <MixedReturnTypeCoercion occurrences="2">
       <code>null|array&lt;string, string&gt;</code>
     </MixedReturnTypeCoercion>
+    <NullArgument occurrences="1">
+      <code>$categoryCollection</code>
+    </NullArgument>
     <NullableReturnStatement occurrences="3">
       <code>$this-&gt;data['authors']</code>
       <code>$this-&gt;data['datemodified']</code>
@@ -1761,15 +1902,18 @@
     </UndefinedMethod>
   </file>
   <file src="src/Reader/FeedSet.php">
-    <MixedArgument occurrences="1">
+    <NullArgument occurrences="1">
+      <code>$this</code>
+    </NullArgument>
+    <PossiblyInvalidArgument occurrences="1">
       <code>$this-&gt;offsetGet('href')</code>
-    </MixedArgument>
+    </PossiblyInvalidArgument>
+    <PossiblyInvalidCast occurrences="1">
+      <code>$this-&gt;offsetGet('href')</code>
+    </PossiblyInvalidCast>
     <UnsafeInstantiation occurrences="1"/>
   </file>
   <file src="src/Reader/Http/LaminasHttpClientDecorator.php">
-    <InvalidScalarArgument occurrences="1">
-      <code>$value</code>
-    </InvalidScalarArgument>
     <MixedArgumentTypeCoercion occurrences="1">
       <code>$value</code>
     </MixedArgumentTypeCoercion>
@@ -1778,6 +1922,9 @@
       <code>$value</code>
       <code>$value</code>
     </MixedAssignment>
+    <PossiblyInvalidArgument occurrences="1">
+      <code>$value</code>
+    </PossiblyInvalidArgument>
     <PossiblyInvalidMethodCall occurrences="1">
       <code>addHeaderLine</code>
     </PossiblyInvalidMethodCall>
@@ -1789,7 +1936,8 @@
     <MixedInferredReturnType occurrences="1">
       <code>getHeaderLine</code>
     </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="1">
+    <MixedReturnStatement occurrences="2">
+      <code>$default</code>
       <code>$default</code>
     </MixedReturnStatement>
     <NullableReturnStatement occurrences="1">
@@ -1815,7 +1963,8 @@
     <MixedInferredReturnType occurrences="1">
       <code>getHeaderLine</code>
     </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="1">
+    <MixedReturnStatement occurrences="2">
+      <code>$this-&gt;headers[$normalizedName] ?? $default</code>
       <code>$this-&gt;headers[$normalizedName] ?? $default</code>
     </MixedReturnStatement>
     <NullableReturnStatement occurrences="1">
@@ -1832,28 +1981,23 @@
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Reader/Reader.php">
-    <ArgumentTypeCoercion occurrences="2">
-      <code>trim($responseHtml)</code>
-      <code>trim($string)</code>
-    </ArgumentTypeCoercion>
-    <DeprecatedClass occurrences="3">
+    <DeprecatedInterface occurrences="3">
       <code>ExtensionManagerInterface</code>
       <code>ExtensionManagerInterface</code>
       <code>null|ExtensionManagerInterface</code>
-    </DeprecatedClass>
+    </DeprecatedInterface>
     <DocblockTypeContradiction occurrences="3">
       <code>! static::$httpClient</code>
       <code>gettype($response)</code>
       <code>static::$httpClient</code>
     </DocblockTypeContradiction>
-    <ImplementedReturnTypeMismatch occurrences="1">
-      <code>Feed\FeedInterface</code>
-    </ImplementedReturnTypeMismatch>
-    <InvalidReturnStatement occurrences="1">
+    <InvalidReturnStatement occurrences="2">
+      <code>$array</code>
       <code>$reader</code>
     </InvalidReturnStatement>
-    <InvalidReturnType occurrences="1">
+    <InvalidReturnType occurrences="2">
       <code>Feed\FeedInterface</code>
+      <code>TInput</code>
     </InvalidReturnType>
     <MixedArgument occurrences="4">
       <code>$data</code>
@@ -1931,27 +2075,6 @@
     </UnsafeInstantiation>
   </file>
   <file src="src/Writer/AbstractFeed.php">
-    <DocblockTypeContradiction occurrences="19">
-      <code>! is_string($copyright)</code>
-      <code>! is_string($description)</code>
-      <code>! is_string($encoding)</code>
-      <code>! is_string($id)</code>
-      <code>! is_string($language)</code>
-      <code>! is_string($link)</code>
-      <code>! is_string($link)</code>
-      <code>! is_string($name)</code>
-      <code>! is_string($title)</code>
-      <code>! is_string($uri)</code>
-      <code>! is_string($url)</code>
-      <code>! is_string($url)</code>
-      <code>! is_string($version)</code>
-      <code>empty($id) || ! is_string($id)</code>
-      <code>empty($link) || ! is_string($link)</code>
-      <code>empty($link) || ! is_string($link)</code>
-      <code>empty($uri) || ! is_string($uri)</code>
-      <code>empty($url) || ! is_string($url)</code>
-      <code>empty($url) || ! is_string($url)</code>
-    </DocblockTypeContradiction>
     <MixedArgument occurrences="6">
       <code>$author</code>
       <code>$category</code>
@@ -2026,11 +2149,28 @@
       <code>$extensions</code>
       <code>$type</code>
     </PropertyNotSetInConstructor>
+    <TypeDoesNotContainType occurrences="18">
+      <code>! is_string($copyright)</code>
+      <code>! is_string($description)</code>
+      <code>! is_string($encoding)</code>
+      <code>! is_string($id)</code>
+      <code>! is_string($language)</code>
+      <code>! is_string($link)</code>
+      <code>! is_string($link)</code>
+      <code>! is_string($name)</code>
+      <code>! is_string($uri)</code>
+      <code>! is_string($url)</code>
+      <code>! is_string($url)</code>
+      <code>! is_string($version)</code>
+      <code>empty($id) || ! is_string($id)</code>
+      <code>empty($link) || ! is_string($link)</code>
+      <code>empty($link) || ! is_string($link)</code>
+      <code>empty($uri) || ! is_string($uri)</code>
+      <code>empty($url) || ! is_string($url)</code>
+      <code>empty($url) || ! is_string($url)</code>
+    </TypeDoesNotContainType>
   </file>
   <file src="src/Writer/Deleted.php">
-    <DocblockTypeContradiction occurrences="1">
-      <code>! is_string($reference)</code>
-    </DocblockTypeContradiction>
     <MissingConstructor occurrences="1">
       <code>$type</code>
     </MissingConstructor>
@@ -2048,20 +2188,11 @@
       <code>$this-&gt;data['reference']</code>
       <code>$this-&gt;data['when']</code>
     </MixedReturnStatement>
+    <TypeDoesNotContainType occurrences="1">
+      <code>! is_string($reference)</code>
+    </TypeDoesNotContainType>
   </file>
   <file src="src/Writer/Entry.php">
-    <DocblockTypeContradiction occurrences="10">
-      <code>! is_string($content)</code>
-      <code>! is_string($copyright)</code>
-      <code>! is_string($description)</code>
-      <code>! is_string($encoding)</code>
-      <code>! is_string($id)</code>
-      <code>! is_string($link)</code>
-      <code>! is_string($link)</code>
-      <code>! is_string($title)</code>
-      <code>empty($link) || ! is_string($link)</code>
-      <code>empty($link) || ! is_string($link)</code>
-    </DocblockTypeContradiction>
     <MixedArgument occurrences="5">
       <code>$author</code>
       <code>$category</code>
@@ -2130,9 +2261,46 @@
     <PropertyNotSetInConstructor occurrences="1">
       <code>$type</code>
     </PropertyNotSetInConstructor>
+    <TypeDoesNotContainType occurrences="9">
+      <code>! is_string($content)</code>
+      <code>! is_string($copyright)</code>
+      <code>! is_string($description)</code>
+      <code>! is_string($encoding)</code>
+      <code>! is_string($id)</code>
+      <code>! is_string($link)</code>
+      <code>! is_string($link)</code>
+      <code>empty($link) || ! is_string($link)</code>
+      <code>empty($link) || ! is_string($link)</code>
+    </TypeDoesNotContainType>
   </file>
   <file src="src/Writer/Extension/AbstractRenderer.php">
-    <ImplementedReturnTypeMismatch occurrences="2">
+    <ImplementedReturnTypeMismatch occurrences="28">
+      <code>$this</code>
+      <code>$this</code>
+      <code>$this</code>
+      <code>$this</code>
+      <code>$this</code>
+      <code>$this</code>
+      <code>$this</code>
+      <code>$this</code>
+      <code>$this</code>
+      <code>$this</code>
+      <code>$this</code>
+      <code>$this</code>
+      <code>$this</code>
+      <code>$this</code>
+      <code>$this</code>
+      <code>$this</code>
+      <code>$this</code>
+      <code>$this</code>
+      <code>$this</code>
+      <code>$this</code>
+      <code>$this</code>
+      <code>$this</code>
+      <code>$this</code>
+      <code>$this</code>
+      <code>$this</code>
+      <code>$this</code>
       <code>$this</code>
       <code>$this</code>
     </ImplementedReturnTypeMismatch>
@@ -2358,6 +2526,10 @@
     <MixedAssignment occurrences="1">
       <code>$value</code>
     </MixedAssignment>
+    <NoValue occurrences="2">
+      <code>$value</code>
+      <code>$value</code>
+    </NoValue>
     <RedundantCastGivenDocblockType occurrences="2">
       <code>(int) $number</code>
       <code>(int) $number</code>
@@ -2598,12 +2770,10 @@
     </TypeDoesNotContainType>
   </file>
   <file src="src/Writer/ExtensionManager.php">
-    <DeprecatedClass occurrences="2">
+    <DeprecatedInterface occurrences="3">
       <code>?ExtensionManagerInterface</code>
-      <code>ExtensionManagerInterface</code>
-    </DeprecatedClass>
-    <DeprecatedInterface occurrences="1">
       <code>ExtensionManager</code>
+      <code>ExtensionManagerInterface</code>
     </DeprecatedInterface>
     <MixedInferredReturnType occurrences="1">
       <code>Extension\AbstractRenderer</code>
@@ -2618,36 +2788,26 @@
     </DeprecatedInterface>
   </file>
   <file src="src/Writer/Feed.php">
+    <InvalidMethodCall occurrences="2">
+      <code>getTimestamp</code>
+      <code>getTimestamp</code>
+    </InvalidMethodCall>
+    <InvalidPropertyAssignmentValue occurrences="1">
+      <code>$this-&gt;entries</code>
+    </InvalidPropertyAssignmentValue>
     <InvalidStringClass occurrences="1">
       <code>new $renderClass($this)</code>
     </InvalidStringClass>
-    <MixedArrayOffset occurrences="1">
-      <code>$this-&gt;entries[$this-&gt;key()]</code>
-    </MixedArrayOffset>
-    <MixedAssignment occurrences="2">
-      <code>$entries[$timestamp]</code>
-      <code>$entry</code>
-    </MixedAssignment>
-    <MixedInferredReturnType occurrences="3">
-      <code>Entry</code>
-      <code>Entry</code>
+    <MixedInferredReturnType occurrences="1">
       <code>string</code>
     </MixedInferredReturnType>
-    <MixedMethodCall occurrences="9">
-      <code>getDateCreated</code>
-      <code>getDateCreated</code>
-      <code>getDateModified</code>
-      <code>getDateModified</code>
-      <code>getTimestamp</code>
-      <code>getTimestamp</code>
+    <MixedMethodCall occurrences="3">
       <code>ignoreExceptions</code>
       <code>render</code>
       <code>saveXml</code>
     </MixedMethodCall>
-    <MixedReturnStatement occurrences="3">
+    <MixedReturnStatement occurrences="1">
       <code>$renderer-&gt;render()-&gt;saveXml()</code>
-      <code>$this-&gt;entries[$index]</code>
-      <code>$this-&gt;entries[$this-&gt;key()]</code>
     </MixedReturnStatement>
     <PossiblyNullArgument occurrences="1">
       <code>$this-&gt;getEncoding()</code>
@@ -2659,8 +2819,8 @@
   </file>
   <file src="src/Writer/FeedFactory.php">
     <DocblockTypeContradiction occurrences="2">
-      <code>gettype($data)</code>
-      <code>gettype($entries)</code>
+      <code>! is_array($data) &amp;&amp; ! $data instanceof Traversable</code>
+      <code>! is_array($entries) &amp;&amp; ! $entries instanceof Traversable</code>
     </DocblockTypeContradiction>
     <MixedArgument occurrences="4">
       <code>$key</code>
@@ -2671,15 +2831,10 @@
     <MixedArgumentTypeCoercion occurrences="1">
       <code>$key</code>
     </MixedArgumentTypeCoercion>
-    <MixedAssignment occurrences="3">
+    <MixedAssignment occurrences="2">
       <code>$key</code>
       <code>$value</code>
-      <code>$value</code>
     </MixedAssignment>
-    <RedundantConditionGivenDocblockType occurrences="2">
-      <code>is_object($data)</code>
-      <code>is_object($entries)</code>
-    </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Writer/Renderer/AbstractRenderer.php">
     <DocblockTypeContradiction occurrences="1">
@@ -2706,9 +2861,6 @@
     </PropertyNotSetInConstructor>
   </file>
   <file src="src/Writer/Renderer/Entry/Atom.php">
-    <DocblockTypeContradiction occurrences="1">
-      <code>empty($data)</code>
-    </DocblockTypeContradiction>
     <ImplementedReturnTypeMismatch occurrences="1">
       <code>$this</code>
     </ImplementedReturnTypeMismatch>
@@ -2763,9 +2915,6 @@
       <code>setRootElement</code>
       <code>setType</code>
     </MixedMethodCall>
-    <ParadoxicalCondition occurrences="1">
-      <code>! $authors || empty($authors)</code>
-    </ParadoxicalCondition>
     <PossiblyNullArgument occurrences="8">
       <code>$this-&gt;container-&gt;getEncoding()</code>
       <code>$this-&gt;getDataContainer()-&gt;getDescription()</code>
@@ -2784,11 +2933,11 @@
       <code>Atom</code>
       <code>Atom</code>
     </PropertyNotSetInConstructor>
+    <TypeDoesNotContainType occurrences="1">
+      <code>empty($data)</code>
+    </TypeDoesNotContainType>
   </file>
   <file src="src/Writer/Renderer/Entry/Atom/Deleted.php">
-    <DocblockTypeContradiction occurrences="1">
-      <code>empty($data)</code>
-    </DocblockTypeContradiction>
     <ImplementedReturnTypeMismatch occurrences="1">
       <code>$this</code>
     </ImplementedReturnTypeMismatch>
@@ -2817,11 +2966,11 @@
       <code>Deleted</code>
       <code>Deleted</code>
     </PropertyNotSetInConstructor>
+    <TypeDoesNotContainType occurrences="1">
+      <code>empty($data)</code>
+    </TypeDoesNotContainType>
   </file>
   <file src="src/Writer/Renderer/Entry/AtomDeleted.php">
-    <DocblockTypeContradiction occurrences="1">
-      <code>empty($data)</code>
-    </DocblockTypeContradiction>
     <ImplementedReturnTypeMismatch occurrences="1">
       <code>$this</code>
     </ImplementedReturnTypeMismatch>
@@ -2850,11 +2999,11 @@
       <code>AtomDeleted</code>
       <code>AtomDeleted</code>
     </PropertyNotSetInConstructor>
+    <TypeDoesNotContainType occurrences="1">
+      <code>empty($data)</code>
+    </TypeDoesNotContainType>
   </file>
   <file src="src/Writer/Renderer/Entry/Rss.php">
-    <DocblockTypeContradiction occurrences="1">
-      <code>empty($data)</code>
-    </DocblockTypeContradiction>
     <ImplementedReturnTypeMismatch occurrences="1">
       <code>$this</code>
     </ImplementedReturnTypeMismatch>
@@ -2903,9 +3052,6 @@
       <code>$data['email']</code>
       <code>$data['name']</code>
     </MixedOperand>
-    <ParadoxicalCondition occurrences="1">
-      <code>! $authors || empty($authors)</code>
-    </ParadoxicalCondition>
     <PossiblyNullArgument occurrences="4">
       <code>$this-&gt;container-&gt;getEncoding()</code>
       <code>$this-&gt;getDataContainer()-&gt;getDescription()</code>
@@ -2919,6 +3065,9 @@
       <code>Rss</code>
       <code>Rss</code>
     </PropertyNotSetInConstructor>
+    <TypeDoesNotContainType occurrences="1">
+      <code>empty($data)</code>
+    </TypeDoesNotContainType>
   </file>
   <file src="src/Writer/Renderer/Feed/AbstractAtom.php">
     <InvalidArgument occurrences="3">
@@ -2962,9 +3111,6 @@
       <code>$hubUrl</code>
       <code>$type</code>
     </MixedAssignment>
-    <ParadoxicalCondition occurrences="1">
-      <code>! $authors || empty($authors)</code>
-    </ParadoxicalCondition>
     <PossiblyNullArgument occurrences="5">
       <code>$gdata['uri']</code>
       <code>$gdata['version']</code>
@@ -3054,9 +3200,6 @@
       <code>$hubUrl</code>
       <code>$type</code>
     </MixedAssignment>
-    <ParadoxicalCondition occurrences="1">
-      <code>! $authors || empty($authors)</code>
-    </ParadoxicalCondition>
     <PossiblyNullArgument occurrences="5">
       <code>$gdata['uri']</code>
       <code>$gdata['version']</code>
@@ -3192,9 +3335,6 @@
       <code>$name</code>
       <code>$name</code>
     </MixedOperand>
-    <ParadoxicalCondition occurrences="1">
-      <code>! $authors || empty($authors)</code>
-    </ParadoxicalCondition>
     <PossiblyNullArgument occurrences="1">
       <code>$this-&gt;container-&gt;getEncoding()</code>
     </PossiblyNullArgument>
@@ -3241,11 +3381,11 @@
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Writer/Writer.php">
-    <DeprecatedClass occurrences="3">
+    <DeprecatedInterface occurrences="3">
       <code>ExtensionManagerInterface</code>
       <code>ExtensionManagerInterface</code>
       <code>ExtensionManagerInterface</code>
-    </DeprecatedClass>
+    </DeprecatedInterface>
     <MixedArgument occurrences="4">
       <code>static::$extensions['entry']</code>
       <code>static::$extensions['entryRenderer']</code>
@@ -3289,18 +3429,10 @@
     </ArgumentTypeCoercion>
   </file>
   <file src="test/PubSubHubbub/PublisherTest.php">
-    <InvalidArgument occurrences="6">
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
+    <InvalidArgument occurrences="2">
+      <code>123</code>
+      <code>123</code>
     </InvalidArgument>
-    <InvalidScalarArgument occurrences="2">
-      <code>123</code>
-      <code>123</code>
-    </InvalidScalarArgument>
   </file>
   <file src="test/PubSubHubbub/Subscriber/CallbackTest.php">
     <ArgumentTypeCoercion occurrences="4">
@@ -3314,14 +3446,9 @@
       <code>setMethods</code>
       <code>setMethods</code>
     </DeprecatedMethod>
-    <InvalidArgument occurrences="8">
+    <InvalidArgument occurrences="3">
       <code>$this-&gt;tableGateway</code>
       <code>''</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
       <code>new stdClass()</code>
     </InvalidArgument>
     <InvalidPropertyAssignmentValue occurrences="3"/>
@@ -3356,7 +3483,8 @@
     <PossiblyFalsePropertyAssignmentValue occurrences="1">
       <code>getenv('TESTS_LAMINAS_FEED_PUBSUBHUBBUB_BASEURI')</code>
     </PossiblyFalsePropertyAssignmentValue>
-    <TooFewArguments occurrences="1">
+    <TooFewArguments occurrences="2">
+      <code>getSubscription</code>
       <code>getSubscription</code>
     </TooFewArguments>
   </file>
@@ -3368,31 +3496,13 @@
     <DeprecatedMethod occurrences="1">
       <code>setMethods</code>
     </DeprecatedMethod>
-    <InvalidArgument occurrences="16">
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-    </InvalidArgument>
-    <InvalidScalarArgument occurrences="5">
+    <InvalidArgument occurrences="5">
       <code>'0aa'</code>
       <code>'10000'</code>
       <code>123</code>
       <code>123</code>
       <code>123</code>
-    </InvalidScalarArgument>
+    </InvalidArgument>
   </file>
   <file src="test/PubSubHubbub/TestAsset/Callback.php">
     <MissingParamType occurrences="1">
@@ -3417,127 +3527,16 @@
     </UndefinedInterfaceMethod>
   </file>
   <file src="test/Reader/Entry/AtomTest.php">
-    <MixedArgument occurrences="6">
-      <code>$entry-&gt;getCategories()-&gt;getValues()</code>
-      <code>$entry-&gt;getCategories()-&gt;getValues()</code>
-      <code>$entry-&gt;getCategories()-&gt;getValues()</code>
-      <code>$entry-&gt;getCategories()-&gt;getValues()</code>
-      <code>$entry-&gt;getCategories()-&gt;getValues()</code>
-      <code>$entry-&gt;getCategories()-&gt;getValues()</code>
-    </MixedArgument>
-    <MixedAssignment occurrences="39">
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-    </MixedAssignment>
-    <MixedMethodCall occurrences="51">
-      <code>getAuthor</code>
-      <code>getAuthor</code>
-      <code>getAuthors</code>
-      <code>getAuthors</code>
+    <PossiblyUndefinedMethod occurrences="2">
       <code>getBaseUrl</code>
       <code>getBaseUrl</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCommentLink</code>
-      <code>getCommentLink</code>
-      <code>getCommentLink</code>
-      <code>getContent</code>
-      <code>getContent</code>
-      <code>getContent</code>
-      <code>getContent</code>
-      <code>getContent</code>
-      <code>getContent</code>
-      <code>getDateCreated</code>
-      <code>getDateCreated</code>
-      <code>getDateCreated</code>
-      <code>getDateModified</code>
-      <code>getDateModified</code>
-      <code>getDateModified</code>
-      <code>getDescription</code>
-      <code>getDescription</code>
-      <code>getEnclosure</code>
-      <code>getEnclosure</code>
-      <code>getId</code>
-      <code>getId</code>
-      <code>getLink</code>
-      <code>getLink</code>
-      <code>getLink</code>
-      <code>getLink</code>
-      <code>getTitle</code>
-      <code>getTitle</code>
-      <code>getValues</code>
-      <code>getValues</code>
-      <code>getValues</code>
-      <code>getValues</code>
-      <code>getValues</code>
-      <code>getValues</code>
-    </MixedMethodCall>
+    </PossiblyUndefinedMethod>
   </file>
   <file src="test/Reader/Entry/CommonTest.php">
     <MixedArgument occurrences="1">
       <code>$entry-&gt;getElement()-&gt;tagName</code>
     </MixedArgument>
-    <MixedAssignment occurrences="11">
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-    </MixedAssignment>
-    <MixedMethodCall occurrences="14">
+    <PossiblyUndefinedMethod occurrences="12">
       <code>getDomDocument</code>
       <code>getElement</code>
       <code>getElement</code>
@@ -3546,654 +3545,37 @@
       <code>getEncoding</code>
       <code>getExtension</code>
       <code>getExtension</code>
-      <code>getId</code>
-      <code>getId</code>
       <code>getType</code>
       <code>getXpath</code>
       <code>getXpathPrefix</code>
       <code>saveXml</code>
-    </MixedMethodCall>
-    <MixedPropertyFetch occurrences="1">
-      <code>$entry-&gt;getElement()-&gt;tagName</code>
-    </MixedPropertyFetch>
+    </PossiblyUndefinedMethod>
   </file>
   <file src="test/Reader/Entry/RssTest.php">
     <InvalidDocblock occurrences="1">
       <code>public function dateModifiedProvider(): array</code>
     </InvalidDocblock>
-    <MixedArgument occurrences="26">
-      <code>$entry-&gt;getCategories()-&gt;getValues()</code>
-      <code>$entry-&gt;getCategories()-&gt;getValues()</code>
-      <code>$entry-&gt;getCategories()-&gt;getValues()</code>
-      <code>$entry-&gt;getCategories()-&gt;getValues()</code>
-      <code>$entry-&gt;getCategories()-&gt;getValues()</code>
-      <code>$entry-&gt;getCategories()-&gt;getValues()</code>
-      <code>$entry-&gt;getCategories()-&gt;getValues()</code>
-      <code>$entry-&gt;getCategories()-&gt;getValues()</code>
-      <code>$entry-&gt;getCategories()-&gt;getValues()</code>
-      <code>$entry-&gt;getCategories()-&gt;getValues()</code>
-      <code>$entry-&gt;getCategories()-&gt;getValues()</code>
-      <code>$entry-&gt;getCategories()-&gt;getValues()</code>
-      <code>$entry-&gt;getCategories()-&gt;getValues()</code>
-      <code>$entry-&gt;getCategories()-&gt;getValues()</code>
-      <code>$entry-&gt;getCategories()-&gt;getValues()</code>
-      <code>$entry-&gt;getCategories()-&gt;getValues()</code>
-      <code>$entry-&gt;getCategories()-&gt;getValues()</code>
-      <code>$entry-&gt;getCategories()-&gt;getValues()</code>
-      <code>$entry-&gt;getCategories()-&gt;getValues()</code>
-      <code>$entry-&gt;getCategories()-&gt;getValues()</code>
-      <code>$entry-&gt;getCategories()-&gt;getValues()</code>
-      <code>$entry-&gt;getCategories()-&gt;getValues()</code>
-      <code>$entry-&gt;getCategories()-&gt;getValues()</code>
-      <code>$entry-&gt;getCategories()-&gt;getValues()</code>
-      <code>$entry-&gt;getCategories()-&gt;getValues()</code>
-      <code>$entry-&gt;getCategories()-&gt;getValues()</code>
-    </MixedArgument>
-    <MixedAssignment occurrences="279">
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-    </MixedAssignment>
+    <InvalidMethodCall occurrences="15">
+      <code>getValues</code>
+      <code>getValues</code>
+      <code>getValues</code>
+      <code>getValues</code>
+      <code>getValues</code>
+      <code>getValues</code>
+      <code>getValues</code>
+      <code>getValues</code>
+      <code>getValues</code>
+      <code>getValues</code>
+      <code>getValues</code>
+      <code>getValues</code>
+      <code>getValues</code>
+      <code>getValues</code>
+      <code>getValues</code>
+    </InvalidMethodCall>
     <MixedInferredReturnType occurrences="1">
       <code>array&lt;int,&lt;array{0:string,1:DateTimeInterface|null}&gt;&gt;</code>
     </MixedInferredReturnType>
-    <MixedMethodCall occurrences="361">
-      <code>getAuthor</code>
-      <code>getAuthor</code>
-      <code>getAuthor</code>
-      <code>getAuthor</code>
-      <code>getAuthor</code>
-      <code>getAuthor</code>
-      <code>getAuthor</code>
-      <code>getAuthor</code>
-      <code>getAuthor</code>
-      <code>getAuthor</code>
-      <code>getAuthor</code>
-      <code>getAuthor</code>
-      <code>getAuthor</code>
-      <code>getAuthor</code>
-      <code>getAuthor</code>
-      <code>getAuthor</code>
-      <code>getAuthor</code>
-      <code>getAuthor</code>
-      <code>getAuthor</code>
-      <code>getAuthor</code>
-      <code>getAuthor</code>
-      <code>getAuthor</code>
-      <code>getAuthor</code>
-      <code>getAuthor</code>
-      <code>getAuthor</code>
-      <code>getAuthor</code>
-      <code>getAuthor</code>
-      <code>getAuthor</code>
-      <code>getAuthors</code>
-      <code>getAuthors</code>
-      <code>getAuthors</code>
-      <code>getAuthors</code>
-      <code>getAuthors</code>
-      <code>getAuthors</code>
-      <code>getAuthors</code>
-      <code>getAuthors</code>
-      <code>getAuthors</code>
-      <code>getAuthors</code>
-      <code>getAuthors</code>
-      <code>getAuthors</code>
-      <code>getAuthors</code>
-      <code>getAuthors</code>
-      <code>getAuthors</code>
-      <code>getAuthors</code>
-      <code>getAuthors</code>
-      <code>getAuthors</code>
-      <code>getAuthors</code>
-      <code>getAuthors</code>
-      <code>getAuthors</code>
-      <code>getAuthors</code>
-      <code>getAuthors</code>
-      <code>getAuthors</code>
-      <code>getAuthors</code>
-      <code>getAuthors</code>
-      <code>getAuthors</code>
-      <code>getAuthors</code>
-      <code>getAuthors</code>
-      <code>getAuthors</code>
-      <code>getAuthors</code>
-      <code>getAuthors</code>
-      <code>getAuthors</code>
-      <code>getAuthors</code>
-      <code>getAuthors</code>
-      <code>getAuthors</code>
-      <code>getAuthors</code>
-      <code>getAuthors</code>
-      <code>getAuthors</code>
-      <code>getAuthors</code>
-      <code>getAuthors</code>
-      <code>getAuthors</code>
-      <code>getAuthors</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCommentCount</code>
-      <code>getCommentCount</code>
-      <code>getCommentCount</code>
-      <code>getCommentCount</code>
-      <code>getCommentCount</code>
-      <code>getCommentCount</code>
-      <code>getCommentCount</code>
-      <code>getCommentCount</code>
-      <code>getCommentCount</code>
-      <code>getCommentCount</code>
-      <code>getCommentCount</code>
-      <code>getCommentCount</code>
-      <code>getCommentCount</code>
-      <code>getCommentCount</code>
-      <code>getCommentCount</code>
-      <code>getCommentCount</code>
-      <code>getCommentCount</code>
-      <code>getCommentCount</code>
-      <code>getCommentCount</code>
-      <code>getCommentCount</code>
-      <code>getCommentCount</code>
-      <code>getCommentCount</code>
-      <code>getCommentCount</code>
-      <code>getCommentCount</code>
-      <code>getCommentCount</code>
-      <code>getCommentCount</code>
-      <code>getCommentCount</code>
-      <code>getCommentCount</code>
-      <code>getCommentFeedLink</code>
-      <code>getCommentFeedLink</code>
-      <code>getCommentFeedLink</code>
-      <code>getCommentFeedLink</code>
-      <code>getCommentFeedLink</code>
-      <code>getCommentFeedLink</code>
-      <code>getCommentFeedLink</code>
-      <code>getCommentFeedLink</code>
-      <code>getCommentFeedLink</code>
-      <code>getCommentFeedLink</code>
-      <code>getCommentFeedLink</code>
-      <code>getCommentFeedLink</code>
-      <code>getCommentFeedLink</code>
-      <code>getCommentFeedLink</code>
-      <code>getCommentFeedLink</code>
-      <code>getCommentFeedLink</code>
-      <code>getCommentFeedLink</code>
-      <code>getCommentFeedLink</code>
-      <code>getCommentFeedLink</code>
-      <code>getCommentFeedLink</code>
-      <code>getCommentFeedLink</code>
-      <code>getCommentLink</code>
-      <code>getCommentLink</code>
-      <code>getCommentLink</code>
-      <code>getCommentLink</code>
-      <code>getCommentLink</code>
-      <code>getCommentLink</code>
-      <code>getCommentLink</code>
-      <code>getCommentLink</code>
-      <code>getCommentLink</code>
-      <code>getCommentLink</code>
-      <code>getCommentLink</code>
-      <code>getCommentLink</code>
-      <code>getCommentLink</code>
-      <code>getCommentLink</code>
-      <code>getCommentLink</code>
-      <code>getCommentLink</code>
-      <code>getCommentLink</code>
-      <code>getCommentLink</code>
-      <code>getCommentLink</code>
-      <code>getContent</code>
-      <code>getContent</code>
-      <code>getContent</code>
-      <code>getContent</code>
-      <code>getContent</code>
-      <code>getContent</code>
-      <code>getContent</code>
-      <code>getContent</code>
-      <code>getContent</code>
-      <code>getContent</code>
-      <code>getContent</code>
-      <code>getContent</code>
-      <code>getContent</code>
-      <code>getContent</code>
-      <code>getContent</code>
-      <code>getContent</code>
-      <code>getContent</code>
-      <code>getContent</code>
-      <code>getContent</code>
-      <code>getContent</code>
-      <code>getContent</code>
-      <code>getDateModified</code>
-      <code>getDescription</code>
-      <code>getDescription</code>
-      <code>getDescription</code>
-      <code>getDescription</code>
-      <code>getDescription</code>
-      <code>getDescription</code>
-      <code>getDescription</code>
-      <code>getDescription</code>
-      <code>getDescription</code>
-      <code>getDescription</code>
-      <code>getDescription</code>
-      <code>getDescription</code>
-      <code>getDescription</code>
-      <code>getDescription</code>
-      <code>getDescription</code>
-      <code>getDescription</code>
-      <code>getDescription</code>
-      <code>getDescription</code>
-      <code>getDescription</code>
-      <code>getDescription</code>
-      <code>getDescription</code>
-      <code>getDescription</code>
-      <code>getDescription</code>
-      <code>getDescription</code>
-      <code>getDescription</code>
-      <code>getDescription</code>
-      <code>getDescription</code>
-      <code>getDescription</code>
-      <code>getEnclosure</code>
-      <code>getEnclosure</code>
-      <code>getId</code>
-      <code>getId</code>
-      <code>getId</code>
-      <code>getId</code>
-      <code>getId</code>
-      <code>getId</code>
-      <code>getId</code>
-      <code>getId</code>
-      <code>getId</code>
-      <code>getId</code>
-      <code>getId</code>
-      <code>getId</code>
-      <code>getId</code>
-      <code>getId</code>
-      <code>getId</code>
-      <code>getId</code>
-      <code>getId</code>
-      <code>getId</code>
-      <code>getId</code>
-      <code>getId</code>
-      <code>getId</code>
-      <code>getId</code>
-      <code>getId</code>
-      <code>getId</code>
-      <code>getId</code>
-      <code>getId</code>
-      <code>getId</code>
-      <code>getId</code>
-      <code>getId</code>
-      <code>getId</code>
-      <code>getId</code>
-      <code>getId</code>
-      <code>getId</code>
-      <code>getId</code>
-      <code>getId</code>
-      <code>getLink</code>
-      <code>getLink</code>
-      <code>getLink</code>
-      <code>getLink</code>
-      <code>getLink</code>
-      <code>getLink</code>
-      <code>getLink</code>
-      <code>getLink</code>
-      <code>getLink</code>
-      <code>getLink</code>
-      <code>getLink</code>
-      <code>getLink</code>
-      <code>getLink</code>
-      <code>getLink</code>
-      <code>getTitle</code>
-      <code>getTitle</code>
-      <code>getTitle</code>
-      <code>getTitle</code>
-      <code>getTitle</code>
-      <code>getTitle</code>
-      <code>getTitle</code>
-      <code>getTitle</code>
-      <code>getTitle</code>
-      <code>getTitle</code>
-      <code>getTitle</code>
-      <code>getTitle</code>
-      <code>getTitle</code>
-      <code>getTitle</code>
-      <code>getTitle</code>
-      <code>getTitle</code>
-      <code>getTitle</code>
-      <code>getTitle</code>
-      <code>getTitle</code>
-      <code>getTitle</code>
-      <code>getTitle</code>
-      <code>getTitle</code>
-      <code>getTitle</code>
-      <code>getTitle</code>
-      <code>getTitle</code>
-      <code>getTitle</code>
-      <code>getTitle</code>
-      <code>getTitle</code>
+    <PossiblyNullReference occurrences="15">
       <code>getValues</code>
       <code>getValues</code>
       <code>getValues</code>
@@ -4209,33 +3591,7 @@
       <code>getValues</code>
       <code>getValues</code>
       <code>getValues</code>
-      <code>getValues</code>
-      <code>getValues</code>
-      <code>getValues</code>
-      <code>getValues</code>
-      <code>getValues</code>
-      <code>getValues</code>
-      <code>getValues</code>
-      <code>getValues</code>
-      <code>getValues</code>
-      <code>getValues</code>
-      <code>getValues</code>
-      <code>getValues</code>
-      <code>getValues</code>
-      <code>getValues</code>
-      <code>getValues</code>
-      <code>getValues</code>
-      <code>getValues</code>
-      <code>getValues</code>
-      <code>getValues</code>
-      <code>getValues</code>
-      <code>getValues</code>
-      <code>getValues</code>
-      <code>getValues</code>
-      <code>getValues</code>
-      <code>getValues</code>
-      <code>getValues</code>
-    </MixedMethodCall>
+    </PossiblyNullReference>
   </file>
   <file src="test/Reader/ExtensionPluginManagerCompatibilityTest.php">
     <InvalidReturnType occurrences="1">
@@ -4261,7 +3617,7 @@
       <code>$source</code>
       <code>$source</code>
     </MixedAssignment>
-    <MixedMethodCall occurrences="30">
+    <MixedMethodCall occurrences="15">
       <code>getAuthors</code>
       <code>getCategories</code>
       <code>getCategories</code>
@@ -4275,24 +3631,26 @@
       <code>getId</code>
       <code>getLanguage</code>
       <code>getLink</code>
-      <code>getSource</code>
-      <code>getSource</code>
-      <code>getSource</code>
-      <code>getSource</code>
-      <code>getSource</code>
-      <code>getSource</code>
-      <code>getSource</code>
-      <code>getSource</code>
-      <code>getSource</code>
-      <code>getSource</code>
-      <code>getSource</code>
-      <code>getSource</code>
-      <code>getSource</code>
-      <code>getSource</code>
-      <code>getSource</code>
       <code>getTitle</code>
       <code>getValues</code>
     </MixedMethodCall>
+    <PossiblyUndefinedMethod occurrences="15">
+      <code>getSource</code>
+      <code>getSource</code>
+      <code>getSource</code>
+      <code>getSource</code>
+      <code>getSource</code>
+      <code>getSource</code>
+      <code>getSource</code>
+      <code>getSource</code>
+      <code>getSource</code>
+      <code>getSource</code>
+      <code>getSource</code>
+      <code>getSource</code>
+      <code>getSource</code>
+      <code>getSource</code>
+      <code>getSource</code>
+    </PossiblyUndefinedMethod>
   </file>
   <file src="test/Reader/Feed/AtomTest.php">
     <RedundantCastGivenDocblockType occurrences="2">
@@ -4496,38 +3854,14 @@
     </MixedArgument>
   </file>
   <file src="test/Reader/Integration/GooglePlayPodcastRss2Test.php">
-    <MixedAssignment occurrences="20">
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-    </MixedAssignment>
-    <MixedMethodCall occurrences="20">
+    <PossiblyUndefinedMethod occurrences="17">
       <code>getCastAuthor</code>
       <code>getDuration</code>
-      <code>getEnclosure</code>
       <code>getEncoding</code>
       <code>getEpisode</code>
       <code>getEpisode</code>
       <code>getEpisodeType</code>
       <code>getEpisodeType</code>
-      <code>getId</code>
       <code>getItunesImage</code>
       <code>getPlayPodcastBlock</code>
       <code>getPlayPodcastDescription</code>
@@ -4535,11 +3869,10 @@
       <code>getSeason</code>
       <code>getSeason</code>
       <code>getSubtitle</code>
-      <code>getTitle</code>
       <code>isClosedCaptioned</code>
       <code>isClosedCaptioned</code>
       <code>isClosedCaptioned</code>
-    </MixedMethodCall>
+    </PossiblyUndefinedMethod>
     <UndefinedInterfaceMethod occurrences="14">
       <code>getEncoding</code>
       <code>getNewFeedUrl</code>
@@ -4558,30 +3891,9 @@
     </UndefinedInterfaceMethod>
   </file>
   <file src="test/Reader/Integration/HOnlineComAtom10Test.php">
-    <MixedAssignment occurrences="10">
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-    </MixedAssignment>
-    <MixedMethodCall occurrences="10">
-      <code>getAuthor</code>
-      <code>getAuthors</code>
-      <code>getContent</code>
-      <code>getDescription</code>
+    <PossiblyUndefinedMethod occurrences="1">
       <code>getEncoding</code>
-      <code>getId</code>
-      <code>getLink</code>
-      <code>getLinks</code>
-      <code>getPermaLink</code>
-      <code>getTitle</code>
-    </MixedMethodCall>
+    </PossiblyUndefinedMethod>
     <RedundantCastGivenDocblockType occurrences="1">
       <code>(array) $feed-&gt;getAuthors()</code>
     </RedundantCastGivenDocblockType>
@@ -4590,30 +3902,9 @@
     </UndefinedInterfaceMethod>
   </file>
   <file src="test/Reader/Integration/LautDeRdfTest.php">
-    <MixedAssignment occurrences="10">
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-    </MixedAssignment>
-    <MixedMethodCall occurrences="10">
-      <code>getAuthor</code>
-      <code>getAuthors</code>
-      <code>getContent</code>
-      <code>getDescription</code>
+    <PossiblyUndefinedMethod occurrences="1">
       <code>getEncoding</code>
-      <code>getId</code>
-      <code>getLink</code>
-      <code>getLinks</code>
-      <code>getPermaLink</code>
-      <code>getTitle</code>
-    </MixedMethodCall>
+    </PossiblyUndefinedMethod>
     <RedundantCastGivenDocblockType occurrences="1">
       <code>(array) $feed-&gt;getAuthors()</code>
     </RedundantCastGivenDocblockType>
@@ -4622,53 +3913,29 @@
     </UndefinedInterfaceMethod>
   </file>
   <file src="test/Reader/Integration/PodcastRss2Test.php">
-    <MixedAssignment occurrences="22">
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
+    <MixedAssignment occurrences="1">
       <code>$keywords</code>
     </MixedAssignment>
-    <MixedMethodCall occurrences="21">
+    <PossiblyUndefinedMethod occurrences="18">
       <code>getBlock</code>
       <code>getCastAuthor</code>
       <code>getDuration</code>
-      <code>getEnclosure</code>
       <code>getEncoding</code>
       <code>getEpisode</code>
       <code>getEpisode</code>
       <code>getEpisodeType</code>
       <code>getEpisodeType</code>
       <code>getExplicit</code>
-      <code>getId</code>
       <code>getItunesImage</code>
       <code>getKeywords</code>
       <code>getSeason</code>
       <code>getSeason</code>
       <code>getSubtitle</code>
       <code>getSummary</code>
-      <code>getTitle</code>
       <code>isClosedCaptioned</code>
       <code>isClosedCaptioned</code>
       <code>isClosedCaptioned</code>
-    </MixedMethodCall>
+    </PossiblyUndefinedMethod>
     <UndefinedInterfaceMethod occurrences="13">
       <code>getBlock</code>
       <code>getCastAuthor</code>
@@ -4686,33 +3953,9 @@
     </UndefinedInterfaceMethod>
   </file>
   <file src="test/Reader/Integration/WordpressAtom10Test.php">
-    <MixedArgument occurrences="1">
-      <code>$entry-&gt;getContent()</code>
-    </MixedArgument>
-    <MixedAssignment occurrences="10">
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-    </MixedAssignment>
-    <MixedMethodCall occurrences="10">
-      <code>getAuthor</code>
-      <code>getAuthors</code>
-      <code>getContent</code>
-      <code>getDescription</code>
+    <PossiblyUndefinedMethod occurrences="1">
       <code>getEncoding</code>
-      <code>getId</code>
-      <code>getLink</code>
-      <code>getLinks</code>
-      <code>getPermaLink</code>
-      <code>getTitle</code>
-    </MixedMethodCall>
+    </PossiblyUndefinedMethod>
     <RedundantCastGivenDocblockType occurrences="1">
       <code>(array) $feed-&gt;getAuthors()</code>
     </RedundantCastGivenDocblockType>
@@ -4721,30 +3964,9 @@
     </UndefinedInterfaceMethod>
   </file>
   <file src="test/Reader/Integration/WordpressRss2DcAtomTest.php">
-    <MixedAssignment occurrences="10">
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-    </MixedAssignment>
-    <MixedMethodCall occurrences="10">
-      <code>getAuthor</code>
-      <code>getAuthors</code>
-      <code>getContent</code>
-      <code>getDescription</code>
+    <PossiblyUndefinedMethod occurrences="1">
       <code>getEncoding</code>
-      <code>getId</code>
-      <code>getLink</code>
-      <code>getLinks</code>
-      <code>getPermaLink</code>
-      <code>getTitle</code>
-    </MixedMethodCall>
+    </PossiblyUndefinedMethod>
     <RedundantCastGivenDocblockType occurrences="1">
       <code>(array) $feed-&gt;getAuthors()</code>
     </RedundantCastGivenDocblockType>
@@ -4772,18 +3994,16 @@
     <InvalidArgument occurrences="2">
       <code>new stdClass()</code>
     </InvalidArgument>
+    <InvalidArrayOffset occurrences="1">
+      <code>$link['feed']</code>
+    </InvalidArrayOffset>
     <MixedArgument occurrences="1">
       <code>$message</code>
     </MixedArgument>
-    <MixedArrayAccess occurrences="1">
-      <code>$link['feed']</code>
-    </MixedArrayAccess>
-    <MixedAssignment occurrences="1">
+    <PossiblyUndefinedMethod occurrences="2">
       <code>$link</code>
-    </MixedAssignment>
-    <MixedMethodCall occurrences="1">
       <code>getEncoding</code>
-    </MixedMethodCall>
+    </PossiblyUndefinedMethod>
     <UndefinedInterfaceMethod occurrences="1">
       <code>getEncoding</code>
     </UndefinedInterfaceMethod>
@@ -4822,16 +4042,9 @@
     <DocblockTypeContradiction occurrences="1">
       <code>assertNull</code>
     </DocblockTypeContradiction>
-    <InvalidArgument occurrences="5">
-      <code>Writer\Exception\ExceptionInterface::class</code>
-      <code>Writer\Exception\ExceptionInterface::class</code>
-      <code>Writer\Exception\ExceptionInterface::class</code>
-      <code>Writer\Exception\ExceptionInterface::class</code>
-      <code>Writer\Exception\ExceptionInterface::class</code>
-    </InvalidArgument>
-    <InvalidScalarArgument occurrences="1">
+    <InvalidArgument occurrences="1">
       <code>'abc'</code>
-    </InvalidScalarArgument>
+    </InvalidArgument>
     <UnevaluatedCode occurrences="3">
       <code>$entry = new Writer\Deleted();</code>
       <code>$entry-&gt;setBy(['name' =&gt; 'Joe', 'uri' =&gt; 'notauri']);</code>
@@ -4839,28 +4052,10 @@
     </UnevaluatedCode>
   </file>
   <file src="test/Writer/EntryTest.php">
-    <InvalidArgument occurrences="17">
-      <code>ExceptionInterface::class</code>
-      <code>Writer\Exception\ExceptionInterface::class</code>
-      <code>Writer\Exception\ExceptionInterface::class</code>
-      <code>Writer\Exception\ExceptionInterface::class</code>
-      <code>Writer\Exception\ExceptionInterface::class</code>
-      <code>Writer\Exception\ExceptionInterface::class</code>
-      <code>Writer\Exception\ExceptionInterface::class</code>
-      <code>Writer\Exception\ExceptionInterface::class</code>
-      <code>Writer\Exception\ExceptionInterface::class</code>
-      <code>Writer\Exception\ExceptionInterface::class</code>
-      <code>Writer\Exception\ExceptionInterface::class</code>
-      <code>Writer\Exception\ExceptionInterface::class</code>
-      <code>Writer\Exception\ExceptionInterface::class</code>
-      <code>Writer\Exception\ExceptionInterface::class</code>
-      <code>Writer\Exception\ExceptionInterface::class</code>
-      <code>Writer\Exception\ExceptionInterface::class</code>
+    <InvalidArgument occurrences="3">
+      <code>'abc'</code>
+      <code>'abc'</code>
     </InvalidArgument>
-    <InvalidScalarArgument occurrences="2">
-      <code>'abc'</code>
-      <code>'abc'</code>
-    </InvalidScalarArgument>
     <MixedArgument occurrences="2">
       <code>$count</code>
       <code>$message</code>
@@ -4877,50 +4072,13 @@
       <code>$this-&gt;expectException(ExceptionInterface::class);</code>
     </UnevaluatedCode>
   </file>
-  <file src="test/Writer/Extension/GooglePlayPodcast/EntryTest.php">
-    <InvalidArgument occurrences="4">
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-    </InvalidArgument>
-  </file>
   <file src="test/Writer/Extension/GooglePlayPodcast/FeedTest.php">
-    <InvalidArgument occurrences="8">
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-    </InvalidArgument>
     <MissingReturnType occurrences="2">
       <code>testSetPlayPodcastImageRaisesExceptionForInvalidUrl</code>
       <code>testSetPlayPodcastImageSetsInternalDataWithValidUrl</code>
     </MissingReturnType>
   </file>
   <file src="test/Writer/Extension/ITunes/EntryTest.php">
-    <InvalidArgument occurrences="17">
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-    </InvalidArgument>
     <MissingReturnType occurrences="8">
       <code>testEpisodeTypeMaybeMutatedWithAcceptedValues</code>
       <code>testSetEpisodeRaisesExceptionForNonNumericEpisodeNumbers</code>
@@ -4933,26 +4091,6 @@
     </MissingReturnType>
   </file>
   <file src="test/Writer/Extension/ITunes/FeedTest.php">
-    <InvalidArgument occurrences="18">
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-    </InvalidArgument>
     <MissingReturnType occurrences="6">
       <code>testSetExplicit</code>
       <code>testSetItunesCompleteRaisesExceptionForInvalidStatus</code>
@@ -4974,33 +4112,7 @@
     </PossiblyNullReference>
   </file>
   <file src="test/Writer/FeedTest.php">
-    <InvalidArgument occurrences="26">
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>Writer\Exception\ExceptionInterface::class</code>
-      <code>Writer\Exception\ExceptionInterface::class</code>
-      <code>Writer\Exception\ExceptionInterface::class</code>
-      <code>Writer\Exception\ExceptionInterface::class</code>
-      <code>Writer\Exception\ExceptionInterface::class</code>
-      <code>Writer\Exception\ExceptionInterface::class</code>
-      <code>Writer\Exception\ExceptionInterface::class</code>
-      <code>Writer\Exception\ExceptionInterface::class</code>
-      <code>Writer\Exception\ExceptionInterface::class</code>
-      <code>Writer\Exception\ExceptionInterface::class</code>
-      <code>Writer\Exception\ExceptionInterface::class</code>
-      <code>Writer\Exception\ExceptionInterface::class</code>
-      <code>Writer\Exception\ExceptionInterface::class</code>
-      <code>Writer\Exception\ExceptionInterface::class</code>
-      <code>Writer\Exception\ExceptionInterface::class</code>
-      <code>Writer\Exception\ExceptionInterface::class</code>
-      <code>Writer\Exception\ExceptionInterface::class</code>
-      <code>Writer\Exception\ExceptionInterface::class</code>
-      <code>Writer\Exception\ExceptionInterface::class</code>
-      <code>Writer\Exception\ExceptionInterface::class</code>
-      <code>Writer\Exception\ExceptionInterface::class</code>
-      <code>Writer\Exception\ExceptionInterface::class</code>
-    </InvalidArgument>
+    <InvalidArgument occurrences="1"/>
     <InvalidMethodCall occurrences="4">
       <code>getTimestamp</code>
       <code>getTimestamp</code>
@@ -5021,64 +4133,26 @@
     </UnevaluatedCode>
   </file>
   <file src="test/Writer/Renderer/Entry/AtomTest.php">
-    <InvalidArgument occurrences="5">
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-    </InvalidArgument>
+    <InvalidArgument occurrences="1"/>
     <MixedArgument occurrences="1">
       <code>$message</code>
     </MixedArgument>
-    <MixedAssignment occurrences="19">
-      <code>$enc</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-    </MixedAssignment>
-    <MixedMethodCall occurrences="21">
-      <code>getAuthor</code>
-      <code>getCategories</code>
-      <code>getCommentCount</code>
-      <code>getCommentFeedLink</code>
-      <code>getCommentLink</code>
-      <code>getContent</code>
-      <code>getDateCreated</code>
-      <code>getDateModified</code>
-      <code>getDescription</code>
-      <code>getEnclosure</code>
-      <code>getEncoding</code>
-      <code>getEncoding</code>
-      <code>getId</code>
-      <code>getId</code>
-      <code>getId</code>
-      <code>getId</code>
-      <code>getLink</code>
-      <code>getLink</code>
-      <code>getTimestamp</code>
-      <code>getTimestamp</code>
-      <code>getTitle</code>
-    </MixedMethodCall>
-    <MixedPropertyFetch occurrences="3">
+    <PossiblyNullPropertyFetch occurrences="3">
       <code>$enc-&gt;length</code>
       <code>$enc-&gt;type</code>
       <code>$enc-&gt;url</code>
-    </MixedPropertyFetch>
+    </PossiblyNullPropertyFetch>
+    <PossiblyNullReference occurrences="2">
+      <code>getTimestamp</code>
+      <code>getTimestamp</code>
+    </PossiblyNullReference>
+    <PossiblyUndefinedMethod occurrences="2">
+      <code>getEncoding</code>
+      <code>getEncoding</code>
+    </PossiblyUndefinedMethod>
+    <TooManyArguments occurrences="1">
+      <code>getCommentFeedLink</code>
+    </TooManyArguments>
     <UnevaluatedCode occurrences="6">
       <code>$atomFeed = new Renderer\Feed\Atom($this-&gt;validWriter);</code>
       <code>$atomFeed-&gt;render();</code>
@@ -5089,80 +4163,29 @@
     </UnevaluatedCode>
   </file>
   <file src="test/Writer/Renderer/Entry/RssTest.php">
-    <InvalidArgument occurrences="7">
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-    </InvalidArgument>
+    <InvalidArgument occurrences="1"/>
     <MixedArgument occurrences="1">
       <code>$message</code>
     </MixedArgument>
-    <MixedAssignment occurrences="22">
-      <code>$enc</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-      <code>$entry</code>
-    </MixedAssignment>
-    <MixedMethodCall occurrences="24">
-      <code>getAuthor</code>
-      <code>getAuthor</code>
-      <code>getCategories</code>
-      <code>getCategories</code>
-      <code>getCommentCount</code>
-      <code>getCommentFeedLink</code>
-      <code>getCommentLink</code>
-      <code>getContent</code>
-      <code>getContent</code>
-      <code>getDateCreated</code>
-      <code>getDateModified</code>
-      <code>getDescription</code>
-      <code>getDescription</code>
-      <code>getEnclosure</code>
-      <code>getEncoding</code>
-      <code>getEncoding</code>
-      <code>getId</code>
-      <code>getId</code>
-      <code>getLink</code>
-      <code>getLink</code>
-      <code>getTimestamp</code>
-      <code>getTimestamp</code>
-      <code>getTitle</code>
-      <code>getTitle</code>
-    </MixedMethodCall>
-    <MixedPropertyFetch occurrences="3">
+    <PossiblyNullPropertyFetch occurrences="3">
       <code>$enc-&gt;length</code>
       <code>$enc-&gt;type</code>
       <code>$enc-&gt;url</code>
-    </MixedPropertyFetch>
+    </PossiblyNullPropertyFetch>
+    <PossiblyNullReference occurrences="2">
+      <code>getTimestamp</code>
+      <code>getTimestamp</code>
+    </PossiblyNullReference>
+    <PossiblyUndefinedMethod occurrences="2">
+      <code>getEncoding</code>
+      <code>getEncoding</code>
+    </PossiblyUndefinedMethod>
+    <TooManyArguments occurrences="1">
+      <code>getCommentFeedLink</code>
+    </TooManyArguments>
   </file>
   <file src="test/Writer/Renderer/Feed/AtomTest.php">
-    <InvalidArgument occurrences="5">
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-    </InvalidArgument>
+    <InvalidArgument occurrences="1"/>
     <MixedArgument occurrences="1">
       <code>$message</code>
     </MixedArgument>
@@ -5178,22 +4201,7 @@
     </UndefinedInterfaceMethod>
   </file>
   <file src="test/Writer/Renderer/Feed/RssTest.php">
-    <InvalidArgument occurrences="15">
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-      <code>ExceptionInterface::class</code>
-    </InvalidArgument>
+    <InvalidArgument occurrences="1"/>
     <MixedArgument occurrences="2">
       <code>$feed-&gt;getDomDocument()</code>
       <code>$message</code>

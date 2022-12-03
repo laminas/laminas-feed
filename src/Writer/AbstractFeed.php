@@ -138,7 +138,7 @@ class AbstractFeed
      * Set the feed creation date
      *
      * @param DateTime|DateTimeImmutable|int|null|string $date
-     * @return self
+     * @return $this
      * @throws Exception\InvalidArgumentException
      */
     public function setDateCreated($date = null)
@@ -163,7 +163,7 @@ class AbstractFeed
      * Set the feed modification date
      *
      * @param DateTime|DateTimeImmutable|int|null|string $date
-     * @return self
+     * @return $this
      * @throws Exception\InvalidArgumentException
      */
     public function setDateModified($date = null)
@@ -188,7 +188,7 @@ class AbstractFeed
      * Set the feed last-build date. Ignored for Atom 1.0.
      *
      * @param DateTime|DateTimeImmutable|int|null|string $date
-     * @return self
+     * @return $this
      * @throws Exception\InvalidArgumentException
      */
     public function setLastBuildDate($date = null)

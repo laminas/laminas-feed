@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laminas\Feed\Writer;
 
+use Laminas\Feed\Writer\Extension\GooglePlayPodcast\Feed;
+use Laminas\Feed\Writer\Extension\ITunes\Entry;
 use Laminas\ServiceManager\AbstractPluginManager;
 use Laminas\ServiceManager\ConfigInterface;
 use Laminas\ServiceManager\Exception\InvalidServiceException;
@@ -14,12 +16,15 @@ use function is_object;
 use function sprintf;
 use function substr;
 
+// phpcs:disable Generic.Files.LineLength.TooLong
 /**
  * Plugin manager implementation for feed writer extensions
  *
  * Validation checks that we have an Entry, Feed, or Extension\AbstractRenderer.
  *
  * @psalm-import-type FactoriesConfigurationType from ConfigInterface
+ * @template InstanceType of Extension\AbstractRenderer|Entry|Feed|Entry|\Laminas\Feed\Writer\Extension\ITunes\Feed|\Laminas\Feed\Writer\Extension\PodcastIndex\Entry|\Laminas\Feed\Writer\Extension\PodcastIndex\Feed
+ * @template-extends AbstractPluginManager<InstanceType>
  */
 class ExtensionPluginManager extends AbstractPluginManager implements ExtensionManagerInterface
 {
@@ -56,12 +61,12 @@ class ExtensionPluginManager extends AbstractPluginManager implements ExtensionM
         'GooglePlayPodcastEntry'           => Extension\GooglePlayPodcast\Entry::class,
         'Googleplaypodcast\Entry'          => Extension\GooglePlayPodcast\Entry::class,
         'GooglePlayPodcast\Entry'          => Extension\GooglePlayPodcast\Entry::class,
-        'googleplaypodcastfeed'            => Extension\GooglePlayPodcast\Feed::class,
-        'googleplaypodcastFeed'            => Extension\GooglePlayPodcast\Feed::class,
-        'googlePlayPodcastFeed'            => Extension\GooglePlayPodcast\Feed::class,
-        'GooglePlayPodcastFeed'            => Extension\GooglePlayPodcast\Feed::class,
-        'Googleplaypodcast\Feed'           => Extension\GooglePlayPodcast\Feed::class,
-        'GooglePlayPodcast\Feed'           => Extension\GooglePlayPodcast\Feed::class,
+        'googleplaypodcastfeed'            => Feed::class,
+        'googleplaypodcastFeed'            => Feed::class,
+        'googlePlayPodcastFeed'            => Feed::class,
+        'GooglePlayPodcastFeed'            => Feed::class,
+        'Googleplaypodcast\Feed'           => Feed::class,
+        'GooglePlayPodcast\Feed'           => Feed::class,
         'googleplaypodcastrendererentry'   => Extension\GooglePlayPodcast\Renderer\Entry::class,
         'googleplaypodcastRendererEntry'   => Extension\GooglePlayPodcast\Renderer\Entry::class,
         'googlePlayPodcastRendererEntry'   => Extension\GooglePlayPodcast\Renderer\Entry::class,
@@ -74,12 +79,12 @@ class ExtensionPluginManager extends AbstractPluginManager implements ExtensionM
         'GooglePlayPodcastRendererFeed'    => Extension\GooglePlayPodcast\Renderer\Feed::class,
         'GoogleplaypodcastRenderer\Feed'   => Extension\GooglePlayPodcast\Renderer\Feed::class,
         'GooglePlayPodcast\Renderer\Feed'  => Extension\GooglePlayPodcast\Renderer\Feed::class,
-        'itunesentry'                      => Extension\ITunes\Entry::class,
-        'itunesEntry'                      => Extension\ITunes\Entry::class,
-        'iTunesEntry'                      => Extension\ITunes\Entry::class,
-        'ItunesEntry'                      => Extension\ITunes\Entry::class,
-        'Itunes\Entry'                     => Extension\ITunes\Entry::class,
-        'ITunes\Entry'                     => Extension\ITunes\Entry::class,
+        'itunesentry'                      => Entry::class,
+        'itunesEntry'                      => Entry::class,
+        'iTunesEntry'                      => Entry::class,
+        'ItunesEntry'                      => Entry::class,
+        'Itunes\Entry'                     => Entry::class,
+        'ITunes\Entry'                     => Entry::class,
         'itunesfeed'                       => Extension\ITunes\Feed::class,
         'itunesFeed'                       => Extension\ITunes\Feed::class,
         'iTunesFeed'                       => Extension\ITunes\Feed::class,
@@ -138,10 +143,10 @@ class ExtensionPluginManager extends AbstractPluginManager implements ExtensionM
         'Zend\Feed\Writer\Extension\DublinCore\Renderer\Entry'        => Extension\DublinCore\Renderer\Entry::class,
         'Zend\Feed\Writer\Extension\DublinCore\Renderer\Feed'         => Extension\DublinCore\Renderer\Feed::class,
         'Zend\Feed\Writer\Extension\GooglePlayPodcast\Entry'          => Extension\GooglePlayPodcast\Entry::class,
-        'Zend\Feed\Writer\Extension\GooglePlayPodcast\Feed'           => Extension\GooglePlayPodcast\Feed::class,
+        'Zend\Feed\Writer\Extension\GooglePlayPodcast\Feed'           => Feed::class,
         'Zend\Feed\Writer\Extension\GooglePlayPodcast\Renderer\Entry' => Extension\GooglePlayPodcast\Renderer\Entry::class,
         'Zend\Feed\Writer\Extension\GooglePlayPodcast\Renderer\Feed'  => Extension\GooglePlayPodcast\Renderer\Feed::class,
-        'Zend\Feed\Writer\Extension\ITunes\Entry'                     => Extension\ITunes\Entry::class,
+        'Zend\Feed\Writer\Extension\ITunes\Entry'                     => Entry::class,
         'Zend\Feed\Writer\Extension\ITunes\Feed'                      => Extension\ITunes\Feed::class,
         'Zend\Feed\Writer\Extension\ITunes\Renderer\Entry'            => Extension\ITunes\Renderer\Entry::class,
         'Zend\Feed\Writer\Extension\ITunes\Renderer\Feed'             => Extension\ITunes\Renderer\Feed::class,
@@ -155,10 +160,10 @@ class ExtensionPluginManager extends AbstractPluginManager implements ExtensionM
         'zendfeedwriterextensiondublincorerendererentry'        => Extension\DublinCore\Renderer\Entry::class,
         'zendfeedwriterextensiondublincorerendererfeed'         => Extension\DublinCore\Renderer\Feed::class,
         'zendfeedwriterextensiongoogleplaypodcastentry'         => Extension\GooglePlayPodcast\Entry::class,
-        'zendfeedwriterextensiongoogleplaypodcastfeed'          => Extension\GooglePlayPodcast\Feed::class,
+        'zendfeedwriterextensiongoogleplaypodcastfeed'          => Feed::class,
         'zendfeedwriterextensiongoogleplaypodcastrendererentry' => Extension\GooglePlayPodcast\Renderer\Entry::class,
         'zendfeedwriterextensiongoogleplaypodcastrendererfeed'  => Extension\GooglePlayPodcast\Renderer\Feed::class,
-        'zendfeedwriterextensionitunesentry'                    => Extension\ITunes\Entry::class,
+        'zendfeedwriterextensionitunesentry'                    => Entry::class,
         'zendfeedwriterextensionitunesfeed'                     => Extension\ITunes\Feed::class,
         'zendfeedwriterextensionitunesrendererentry'            => Extension\ITunes\Renderer\Entry::class,
         'zendfeedwriterextensionitunesrendererfeed'             => Extension\ITunes\Renderer\Feed::class,
@@ -179,10 +184,10 @@ class ExtensionPluginManager extends AbstractPluginManager implements ExtensionM
         Extension\DublinCore\Renderer\Entry::class        => InvokableFactory::class,
         Extension\DublinCore\Renderer\Feed::class         => InvokableFactory::class,
         Extension\GooglePlayPodcast\Entry::class          => InvokableFactory::class,
-        Extension\GooglePlayPodcast\Feed::class           => InvokableFactory::class,
+        Feed::class                                       => InvokableFactory::class,
         Extension\GooglePlayPodcast\Renderer\Entry::class => InvokableFactory::class,
         Extension\GooglePlayPodcast\Renderer\Feed::class  => InvokableFactory::class,
-        Extension\ITunes\Entry::class                     => InvokableFactory::class,
+        Entry::class                                      => InvokableFactory::class,
         Extension\ITunes\Feed::class                      => InvokableFactory::class,
         Extension\ITunes\Renderer\Entry::class            => InvokableFactory::class,
         Extension\ITunes\Renderer\Feed::class             => InvokableFactory::class,
@@ -231,16 +236,8 @@ class ExtensionPluginManager extends AbstractPluginManager implements ExtensionM
      */
     protected $sharedByDefault = false;
 
-    /**
-     * Validate the plugin (v3)
-     *
-     * Checks that the extension loaded is of a valid type.
-     *
-     * @param  mixed $instance
-     * @return void
-     * @throws InvalidServiceException If invalid.
-     */
-    public function validate($instance)
+    /** @inheritDoc */
+    public function validate(mixed $instance)
     {
         if ($instance instanceof Extension\AbstractRenderer) {
             // we're okay

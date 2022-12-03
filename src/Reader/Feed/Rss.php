@@ -18,6 +18,7 @@ use function preg_match;
 use function strtotime;
 use function trim;
 
+/** @template-extends AbstractFeed<Reader\Entry\Rss> */
 class Rss extends AbstractFeed
 {
     /**

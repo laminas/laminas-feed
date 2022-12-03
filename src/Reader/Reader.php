@@ -754,7 +754,9 @@ class Reader implements ReaderImportInterface
      * Utility method to apply array_unique operation to a multidimensional
      * array.
      *
-     * @return array
+     * @template TInput of array
+     * @param TInput $array
+     * @return TInput
      */
     public static function arrayUnique(array $array)
     {

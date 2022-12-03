@@ -8,7 +8,12 @@ use Countable;
 use DateTime;
 use Iterator;
 use Laminas\Feed\Reader\Collection\Category;
+use Laminas\Feed\Reader\Entry\EntryInterface;
 
+/**
+ * @template TItem of EntryInterface
+ * @template-extends Iterator<int, TItem>
+ */
 interface FeedInterface extends Iterator, Countable
 {
     /**

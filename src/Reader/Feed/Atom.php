@@ -12,6 +12,7 @@ use function array_key_exists;
 use function count;
 use function is_array;
 
+/** @template-extends AbstractFeed<Reader\Entry\Atom> */
 class Atom extends AbstractFeed
 {
     /**
