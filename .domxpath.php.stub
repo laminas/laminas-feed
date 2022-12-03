@@ -1,0 +1,11 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {
+    class DOMXPath
+    {
+        /** @param non-empty-string $query */
+        public function query(string $query): DOMNodeList {}
+    }
+}
