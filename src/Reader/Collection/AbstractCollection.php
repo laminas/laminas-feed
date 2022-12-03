@@ -6,6 +6,11 @@ namespace Laminas\Feed\Reader\Collection;
 
 use ArrayObject;
 
+/**
+ * @template TKey
+ * @template TValue
+ * @template-extends ArrayObject<TKey, TValue>
+ */
 abstract class AbstractCollection extends ArrayObject
 {
     /**
@@ -14,7 +19,7 @@ abstract class AbstractCollection extends ArrayObject
      * the category name, domain/URI, and other data. This method would
      * merely return the most useful data - i.e. the category names.
      *
-     * @return array
+     * @return array<int, string>
      */
     abstract public function getValues();
 }
