@@ -256,7 +256,7 @@ class EntryTest extends TestCase
         $entry->setItunesSummary(str_repeat('a', 4001));
     }
 
-    /** @psalm-return array<string, array{0: mixed}> */
+    /** @psalm-return array<string, array{0: mixed, 1?: string}> */
     public function invalidImageUrls(): array
     {
         return [
