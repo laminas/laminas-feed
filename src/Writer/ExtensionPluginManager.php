@@ -14,12 +14,17 @@ use function is_object;
 use function sprintf;
 use function substr;
 
+// phpcs:disable Generic.Files.LineLength.TooLong
 /**
  * Plugin manager implementation for feed writer extensions
  *
  * Validation checks that we have an Entry, Feed, or Extension\AbstractRenderer.
  *
  * @psalm-import-type FactoriesConfigurationType from ConfigInterface
+ *
+ * @template InstanceType of Extension\AbstractRenderer|\Laminas\Feed\Writer\Extension\GooglePlayPodcast\Entry|\Laminas\Feed\Writer\Extension\GooglePlayPodcast\Feed|\Laminas\Feed\Writer\Extension\ITunes\Entry|\Laminas\Feed\Writer\Extension\ITunes\Feed|\Laminas\Feed\Writer\Extension\PodcastIndex\Entry|\Laminas\Feed\Writer\Extension\PodcastIndex\Feed
+ *
+ * @template-extends AbstractPluginManager<InstanceType>
  */
 class ExtensionPluginManager extends AbstractPluginManager implements ExtensionManagerInterface
 {
@@ -231,16 +236,8 @@ class ExtensionPluginManager extends AbstractPluginManager implements ExtensionM
      */
     protected $sharedByDefault = false;
 
-    /**
-     * Validate the plugin (v3)
-     *
-     * Checks that the extension loaded is of a valid type.
-     *
-     * @param  mixed $instance
-     * @return void
-     * @throws InvalidServiceException If invalid.
-     */
-    public function validate($instance)
+    /** @inheritDoc */
+    public function validate(mixed $instance)
     {
         if ($instance instanceof Extension\AbstractRenderer) {
             // we're okay
