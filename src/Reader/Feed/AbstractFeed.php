@@ -8,7 +8,6 @@ use DOMDocument;
 use DOMElement;
 use DOMXPath;
 use Laminas\Feed\Reader;
-use Laminas\Feed\Reader\Entry\EntryInterface;
 use Laminas\Feed\Reader\Exception;
 // phpcs:ignore SlevomatCodingStandard.Namespaces.UnusedUses.UnusedUse
 use ReturnTypeWillChange;
