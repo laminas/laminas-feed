@@ -767,9 +767,10 @@ class EntryTest extends TestCase
             'messages' => [],
         ];
 
-        /** @psalm-suppress UnusedClosureParam */
-        set_error_handler(static function (int $errno, string $errstr) use ($notices): void {
+        set_error_handler(static function (int $_errno, string $errstr) use ($notices): ?bool {
             $notices->messages[] = $errstr;
+
+            return null;
         }, E_USER_NOTICE);
         new Writer\Entry();
         restore_error_handler();
