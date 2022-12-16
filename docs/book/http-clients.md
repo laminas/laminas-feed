@@ -105,6 +105,7 @@ class HeaderAwareResponseInterface extends ResponseInterface
      * @param string $name
      * @param null|string $default
      * @return string
+     */
     public function getHeaderLine($name, $default = null);
 }
 ```
