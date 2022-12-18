@@ -1293,16 +1293,16 @@
         },
         {
             "name": "laminas/laminas-db",
-            "version": "2.16.2",
+            "version": "2.16.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-db.git",
-                "reference": "f382589868928e628118d80144321223944625ca"
+                "reference": "dadd9a19d2f9e89aa59205572b928892b91ff1da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-db/zipball/f382589868928e628118d80144321223944625ca",
-                "reference": "f382589868928e628118d80144321223944625ca",
+                "url": "https://api.github.com/repos/laminas/laminas-db/zipball/dadd9a19d2f9e89aa59205572b928892b91ff1da",
+                "reference": "dadd9a19d2f9e89aa59205572b928892b91ff1da",
                 "shasum": ""
             },
             "require": {
@@ -1360,7 +1360,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2022-12-11T12:56:04+00:00"
+            "time": "2022-12-17T16:31:58+00:00"
         },
         {
             "name": "laminas/laminas-eventmanager",
