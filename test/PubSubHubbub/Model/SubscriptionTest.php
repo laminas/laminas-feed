@@ -8,10 +8,8 @@ use DateTime;
 use Laminas\Db\Adapter\Adapter as DbAdapter;
 use Laminas\Db\TableGateway\TableGateway;
 use Laminas\Feed\PubSubHubbub\Model\Subscription;
-use Laminas\Feed\PubSubHubbub\Model\SubscriptionPersistenceInterface;
 use PDO;
 use PHPUnit\Framework\TestCase;
-use ReflectionClass;
 
 use function array_keys;
 use function extension_loaded;
@@ -58,15 +56,6 @@ class SubscriptionTest extends TestCase
         $this->assertSame($keys, array_keys($dataSubscription));
         $this->assertFalse($subscription->setSubscription(['id' => $id]));
         $this->assertTrue($subscription->deleteSubscription($id));
-    }
-
-    public function testImpemetsSubscriptionInterface(): void
-    {
-        $reflection = new ReflectionClass(Subscription::class);
-        $this->assertTrue(
-            $reflection->implementsInterface(SubscriptionPersistenceInterface::class)
-        );
-        unset($reflection);
     }
 
     public function testCurrentTimeSetterAndGetter(): void
