@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.1.0@4defa177c89397c5e14737a80fe4896584130674">
+<files psalm-version="5.4.0@62db5d4f6a7ae0a20f7cc5a4952d730272fc0863">
   <file src="src/PubSubHubbub/AbstractCallback.php">
     <DocblockTypeContradiction occurrences="3">
       <code>$this-&gt;httpResponse === null</code>
@@ -533,16 +533,15 @@
     </PropertyNotSetInConstructor>
   </file>
   <file src="src/Reader/Entry/Rss.php">
-    <ArgumentTypeCoercion occurrences="2">
-      <code>Reader\Reader::arrayUnique($authors)</code>
-    </ArgumentTypeCoercion>
+    <ArgumentTypeCoercion occurrences="1"/>
     <ImplementedReturnTypeMismatch occurrences="3">
       <code>null|string</code>
       <code>null|string</code>
       <code>void</code>
     </ImplementedReturnTypeMismatch>
-    <InvalidArgument occurrences="1">
+    <InvalidArgument occurrences="2">
       <code>$entryKey</code>
+      <code>Reader\Reader::arrayUnique($authors)</code>
     </InvalidArgument>
     <InvalidNullableReturnType occurrences="1">
       <code>string</code>
@@ -754,11 +753,13 @@
     </PossiblyNullPropertyAssignmentValue>
   </file>
   <file src="src/Reader/Extension/Atom/Entry.php">
-    <ArgumentTypeCoercion occurrences="4">
+    <ArgumentTypeCoercion occurrences="3">
       <code>$author</code>
       <code>$element</code>
-      <code>Reader\Reader::arrayUnique($authors)</code>
     </ArgumentTypeCoercion>
+    <InvalidArgument occurrences="1">
+      <code>Reader\Reader::arrayUnique($authors)</code>
+    </InvalidArgument>
     <MixedArgument occurrences="6">
       <code>$content ?? ''</code>
       <code>$dateCreated</code>
@@ -868,10 +869,12 @@
     </UndefinedPropertyFetch>
   </file>
   <file src="src/Reader/Extension/Atom/Feed.php">
-    <ArgumentTypeCoercion occurrences="3">
+    <ArgumentTypeCoercion occurrences="2">
       <code>$author</code>
-      <code>Reader\Reader::arrayUnique($authors)</code>
     </ArgumentTypeCoercion>
+    <InvalidArgument occurrences="1">
+      <code>Reader\Reader::arrayUnique($authors)</code>
+    </InvalidArgument>
     <MixedArgument occurrences="3">
       <code>$dateCreated</code>
       <code>$dateModified</code>
@@ -1693,14 +1696,13 @@
     </PropertyNotSetInConstructor>
   </file>
   <file src="src/Reader/Feed/Rss.php">
-    <ArgumentTypeCoercion occurrences="2">
-      <code>Reader\Reader::arrayUnique($authors)</code>
-    </ArgumentTypeCoercion>
+    <ArgumentTypeCoercion occurrences="1"/>
     <ImplementedReturnTypeMismatch occurrences="1">
       <code>null|array&lt;string, string&gt;</code>
     </ImplementedReturnTypeMismatch>
-    <InvalidArgument occurrences="1">
+    <InvalidArgument occurrences="2">
       <code>$lastBuildDateParsed</code>
+      <code>Reader\Reader::arrayUnique($authors)</code>
     </InvalidArgument>
     <MixedArgument occurrences="6">
       <code>$authors</code>
