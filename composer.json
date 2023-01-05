@@ -39,7 +39,7 @@
     "require-dev": {
         "laminas/laminas-cache": "^2.13.2 || ^3.6",
         "laminas/laminas-cache-storage-adapter-memory": "^1.1.0 || ^2.1",
-        "laminas/laminas-coding-standard": "~2.4.0",
+        "laminas/laminas-coding-standard": "~2.5.0",
         "laminas/laminas-db": "^2.15",
         "laminas/laminas-http": "^2.17.0",
         "laminas/laminas-validator": "^2.26",
