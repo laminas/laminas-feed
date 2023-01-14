@@ -1364,16 +1364,16 @@
         },
         {
             "name": "laminas/laminas-eventmanager",
-            "version": "3.9.2",
+            "version": "3.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-eventmanager.git",
-                "reference": "55f7c337f4e49baf6dca87220619d40d9518e6b6"
+                "reference": "5a5114ab2d3fa4424faa46a2fb0a4e49a61f6eba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-eventmanager/zipball/55f7c337f4e49baf6dca87220619d40d9518e6b6",
-                "reference": "55f7c337f4e49baf6dca87220619d40d9518e6b6",
+                "url": "https://api.github.com/repos/laminas/laminas-eventmanager/zipball/5a5114ab2d3fa4424faa46a2fb0a4e49a61f6eba",
+                "reference": "5a5114ab2d3fa4424faa46a2fb0a4e49a61f6eba",
                 "shasum": ""
             },
             "require": {
@@ -1384,7 +1384,7 @@
                 "zendframework/zend-eventmanager": "*"
             },
             "require-dev": {
-                "laminas/laminas-coding-standard": "~2.4.0",
+                "laminas/laminas-coding-standard": "~2.5.0",
                 "laminas/laminas-stdlib": "^3.15",
                 "phpbench/phpbench": "^1.2.7",
                 "phpunit/phpunit": "^9.5.26",
@@ -1428,7 +1428,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2022-12-20T19:45:38+00:00"
+            "time": "2023-01-11T19:52:45+00:00"
         },
         {
             "name": "laminas/laminas-http",
