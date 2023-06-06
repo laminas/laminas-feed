@@ -33,7 +33,7 @@
         "ext-dom": "*",
         "ext-libxml": "*",
         "laminas/laminas-escaper": "^2.9",
-        "laminas/laminas-servicemanager": "^3.14.0",
+        "laminas/laminas-servicemanager": "^3.14",
         "laminas/laminas-stdlib": "^3.6"
     },
     "require-dev": {
