@@ -11,7 +11,7 @@
       <code>$_SERVER[$temp]</code>
     </InvalidReturnStatement>
     <MixedArgument>
-      <code>$options['storage']</code>
+      <code><![CDATA[$options['storage']]]></code>
     </MixedArgument>
     <MixedInferredReturnType>
       <code>bool|string</code>
@@ -20,8 +20,8 @@
       <code>$headers[$header]</code>
     </MixedReturnStatement>
     <PossiblyUndefinedArrayOffset>
-      <code>$_SERVER['ORIG_PATH_INFO']</code>
-      <code>$_SERVER['REQUEST_URI']</code>
+      <code><![CDATA[$_SERVER['ORIG_PATH_INFO']]]></code>
+      <code><![CDATA[$_SERVER['REQUEST_URI']]]></code>
     </PossiblyUndefinedArrayOffset>
     <PropertyNotSetInConstructor>
       <code>$httpResponse</code>
@@ -45,19 +45,19 @@
       <code>strlen($content)</code>
     </InvalidArgument>
     <MixedArgument>
-      <code>$header['replace']</code>
-      <code>$header['replace']</code>
+      <code><![CDATA[$header['replace']]]></code>
+      <code><![CDATA[$header['replace']]]></code>
     </MixedArgument>
     <MixedArrayAccess>
-      <code>$header['name']</code>
-      <code>$header['name']</code>
-      <code>$header['name']</code>
-      <code>$header['name']</code>
-      <code>$header['replace']</code>
-      <code>$header['replace']</code>
-      <code>$header['value']</code>
-      <code>$header['value']</code>
-      <code>$header['value']</code>
+      <code><![CDATA[$header['name']]]></code>
+      <code><![CDATA[$header['name']]]></code>
+      <code><![CDATA[$header['name']]]></code>
+      <code><![CDATA[$header['name']]]></code>
+      <code><![CDATA[$header['replace']]]></code>
+      <code><![CDATA[$header['replace']]]></code>
+      <code><![CDATA[$header['value']]]></code>
+      <code><![CDATA[$header['value']]]></code>
+      <code><![CDATA[$header['value']]]></code>
     </MixedArrayAccess>
     <MixedAssignment>
       <code>$header</code>
@@ -69,13 +69,13 @@
     </MixedInferredReturnType>
     <MixedOperand>
       <code>$code</code>
-      <code>$header['name']</code>
-      <code>$header['name']</code>
-      <code>$header['value']</code>
-      <code>$header['value']</code>
+      <code><![CDATA[$header['name']]]></code>
+      <code><![CDATA[$header['name']]]></code>
+      <code><![CDATA[$header['value']]]></code>
+      <code><![CDATA[$header['value']]]></code>
     </MixedOperand>
     <MixedReturnStatement>
-      <code>$header['value']</code>
+      <code><![CDATA[$header['value']]]></code>
     </MixedReturnStatement>
     <RedundantCastGivenDocblockType>
       <code>(string) $content</code>
@@ -102,7 +102,7 @@
       <code>$data</code>
     </MixedArgumentTypeCoercion>
     <MixedAssignment>
-      <code>$data['created_time']</code>
+      <code><![CDATA[$data['created_time']]]></code>
     </MixedAssignment>
     <MixedInferredReturnType>
       <code>array</code>
@@ -111,7 +111,7 @@
       <code>getArrayCopy</code>
     </MixedMethodCall>
     <MixedOperand>
-      <code>$data['lease_seconds']</code>
+      <code><![CDATA[$data['lease_seconds']]]></code>
       <code>$key</code>
       <code>$key</code>
     </MixedOperand>
@@ -150,9 +150,9 @@
       <code>is_array($options)</code>
     </DocblockTypeContradiction>
     <MixedArgument>
-      <code>$options['hubUrls']</code>
-      <code>$options['parameters']</code>
-      <code>$options['updatedTopicUrls']</code>
+      <code><![CDATA[$options['hubUrls']]]></code>
+      <code><![CDATA[$options['parameters']]]></code>
+      <code><![CDATA[$options['updatedTopicUrls']]]></code>
       <code>$topicUrl</code>
       <code>$url</code>
       <code>$url</code>
@@ -210,15 +210,15 @@
       <code>$auth[1]</code>
       <code>$authentication</code>
       <code>$duplicateKey</code>
-      <code>$options['authentications']</code>
-      <code>$options['callbackUrl']</code>
-      <code>$options['hubUrls']</code>
-      <code>$options['leaseSeconds']</code>
-      <code>$options['parameters']</code>
-      <code>$options['preferredVerificationMode']</code>
-      <code>$options['storage']</code>
-      <code>$options['topicUrl']</code>
-      <code>$options['usePathParameter']</code>
+      <code><![CDATA[$options['authentications']]]></code>
+      <code><![CDATA[$options['callbackUrl']]]></code>
+      <code><![CDATA[$options['hubUrls']]]></code>
+      <code><![CDATA[$options['leaseSeconds']]]></code>
+      <code><![CDATA[$options['parameters']]]></code>
+      <code><![CDATA[$options['preferredVerificationMode']]]></code>
+      <code><![CDATA[$options['storage']]]></code>
+      <code><![CDATA[$options['topicUrl']]]></code>
+      <code><![CDATA[$options['usePathParameter']]]></code>
       <code>$url</code>
       <code>$url</code>
       <code>$url</code>
@@ -231,7 +231,7 @@
       <code>$key</code>
       <code>$name</code>
       <code>$url</code>
-      <code>uksort($params, 'strnatcmp')</code>
+      <code><![CDATA[uksort($params, 'strnatcmp')]]></code>
     </MixedArgumentTypeCoercion>
     <MixedArrayAccess>
       <code>$auth[0]</code>
@@ -254,15 +254,15 @@
       <code>$keyduplicate</code>
       <code>$name</code>
       <code>$name</code>
-      <code>$params['hub.lease_seconds']</code>
-      <code>$params['hub.topic']</code>
+      <code><![CDATA[$params['hub.lease_seconds']]]></code>
+      <code><![CDATA[$params['hub.topic']]]></code>
       <code>$value</code>
     </MixedOperand>
     <PossiblyFalsePropertyAssignmentValue>
       <code>false</code>
     </PossiblyFalsePropertyAssignmentValue>
     <PossiblyInvalidCast>
-      <code>$params['hub.verify_token']</code>
+      <code><![CDATA[$params['hub.verify_token']]]></code>
     </PossiblyInvalidCast>
     <PropertyNotSetInConstructor>
       <code>$leaseSeconds</code>
@@ -299,22 +299,22 @@
       <code><![CDATA[$this->getSubscriberCount()]]></code>
     </InvalidArgument>
     <MixedArgument>
-      <code>$httpGetData['hub_challenge']</code>
-      <code>$httpGetData['hub_mode']</code>
-      <code>$httpGetData['hub_mode']</code>
-      <code>$httpGetData['hub_topic']</code>
-      <code>$httpGetData['hub_verify_token']</code>
-      <code>$params['xhub.subscription']</code>
+      <code><![CDATA[$httpGetData['hub_challenge']]]></code>
+      <code><![CDATA[$httpGetData['hub_mode']]]></code>
+      <code><![CDATA[$httpGetData['hub_mode']]]></code>
+      <code><![CDATA[$httpGetData['hub_topic']]]></code>
+      <code><![CDATA[$httpGetData['hub_verify_token']]]></code>
+      <code><![CDATA[$params['xhub.subscription']]]></code>
     </MixedArgument>
     <MixedAssignment>
-      <code>$data['lease_seconds']</code>
+      <code><![CDATA[$data['lease_seconds']]]></code>
       <code>$verifyToken</code>
     </MixedAssignment>
     <MixedInferredReturnType>
       <code>false|string</code>
     </MixedInferredReturnType>
     <MixedReturnStatement>
-      <code>$httpGetData['xhub_subscription']</code>
+      <code><![CDATA[$httpGetData['xhub_subscription']]]></code>
     </MixedReturnStatement>
     <ParamNameMismatch>
       <code>$httpGetData</code>
@@ -329,22 +329,22 @@
       <code>$contentType</code>
       <code>$contentType</code>
       <code>$contentType</code>
-      <code>$httpGetData['hub_challenge']</code>
-      <code>$httpGetData['hub_mode']</code>
-      <code>$httpGetData['hub_mode']</code>
+      <code><![CDATA[$httpGetData['hub_challenge']]]></code>
+      <code><![CDATA[$httpGetData['hub_mode']]]></code>
+      <code><![CDATA[$httpGetData['hub_mode']]]></code>
     </PossiblyInvalidArgument>
     <PossiblyInvalidCast>
-      <code>$httpGetData['hub_challenge']</code>
+      <code><![CDATA[$httpGetData['hub_challenge']]]></code>
     </PossiblyInvalidCast>
     <PossiblyNullArgument>
-      <code>$httpGetData['hub_verify_token']</code>
+      <code><![CDATA[$httpGetData['hub_verify_token']]]></code>
     </PossiblyNullArgument>
     <PossiblyNullArrayAccess>
-      <code>$httpGetData['hub_verify_token']</code>
+      <code><![CDATA[$httpGetData['hub_verify_token']]]></code>
     </PossiblyNullArrayAccess>
     <PossiblyUndefinedArrayOffset>
-      <code>$_SERVER['REQUEST_METHOD']</code>
-      <code>$_SERVER['REQUEST_METHOD']</code>
+      <code><![CDATA[$_SERVER['REQUEST_METHOD']]]></code>
+      <code><![CDATA[$_SERVER['REQUEST_METHOD']]]></code>
     </PossiblyUndefinedArrayOffset>
     <PossiblyUndefinedMethod>
       <code>setHeader</code>
@@ -365,7 +365,7 @@
       <code>$entry</code>
     </InvalidArgument>
     <MixedArgument>
-      <code>$all['core']</code>
+      <code><![CDATA[$all['core']]]></code>
       <code>$extension</code>
     </MixedArgument>
     <MixedArrayOffset>
@@ -419,7 +419,7 @@
       <code>registerNamespaces</code>
     </MissingReturnType>
     <MixedArgument>
-      <code>$all['core']</code>
+      <code><![CDATA[$all['core']]]></code>
       <code>$extension</code>
       <code>$extension</code>
       <code><![CDATA[$this->entries[$this->key()]]]></code>
@@ -458,7 +458,7 @@
       <code><![CDATA[$this->xpath]]></code>
     </DocblockTypeContradiction>
     <MixedArgument>
-      <code>$all['core']</code>
+      <code><![CDATA[$all['core']]]></code>
       <code>$extension</code>
       <code>$extension</code>
     </MixedArgument>
@@ -587,7 +587,7 @@
       <code>$dateModified</code>
     </MixedArgument>
     <MixedArrayAccess>
-      <code>$author['name']</code>
+      <code><![CDATA[$author['name']]]></code>
     </MixedArrayAccess>
     <MixedAssignment>
       <code>$author</code>
@@ -803,7 +803,7 @@
       <code>Reader\Reader::arrayUnique($authors)</code>
     </InvalidArgument>
     <MixedArgument>
-      <code>$content ?? ''</code>
+      <code><![CDATA[$content ?? '']]></code>
       <code>$dateCreated</code>
       <code>$dateModified</code>
       <code>$link</code>
@@ -1559,7 +1559,7 @@
       <code>registerNamespaces</code>
     </MissingReturnType>
     <MixedArgument>
-      <code>$all['core']</code>
+      <code><![CDATA[$all['core']]]></code>
       <code>$extension</code>
       <code>$extension</code>
       <code>$extension</code>
@@ -1747,6 +1747,14 @@
       <code>void</code>
       <code>void</code>
     </ImplementedReturnTypeMismatch>
+    <MethodSignatureMustProvideReturnType>
+      <code>count</code>
+      <code>current</code>
+      <code>key</code>
+      <code>next</code>
+      <code>rewind</code>
+      <code>valid</code>
+    </MethodSignatureMustProvideReturnType>
     <MixedAssignment>
       <code>$extension</code>
       <code>$extension</code>
@@ -1791,7 +1799,7 @@
       <code>$lastBuildDate</code>
     </MixedArgument>
     <MixedArrayAccess>
-      <code>$author['name']</code>
+      <code><![CDATA[$author['name']]]></code>
     </MixedArrayAccess>
     <MixedArrayOffset>
       <code><![CDATA[$this->entries[$index]]]></code>
@@ -1827,12 +1835,12 @@
       <code>$id</code>
       <code>$id</code>
       <code>$id</code>
-      <code>$image['description']</code>
-      <code>$image['height']</code>
-      <code>$image['link']</code>
-      <code>$image['title']</code>
-      <code>$image['uri']</code>
-      <code>$image['width']</code>
+      <code><![CDATA[$image['description']]]></code>
+      <code><![CDATA[$image['height']]]></code>
+      <code><![CDATA[$image['link']]]></code>
+      <code><![CDATA[$image['title']]]></code>
+      <code><![CDATA[$image['uri']]]></code>
+      <code><![CDATA[$image['width']]]></code>
       <code>$index</code>
       <code>$language</code>
       <code>$language</code>
@@ -2303,7 +2311,7 @@
     <MixedArgument>
       <code>$author</code>
       <code>$category</code>
-      <code>$enclosure['uri']</code>
+      <code><![CDATA[$enclosure['uri']]]></code>
       <code>$ext</code>
       <code>$link</code>
     </MixedArgument>
@@ -2531,10 +2539,10 @@
   </file>
   <file src="src/Writer/Extension/GooglePlayPodcast/Entry.php">
     <RedundantConditionGivenDocblockType>
-      <code>! in_array($value, ['yes', 'no', 'clean'], true)</code>
-      <code>in_array($value, ['yes', 'no', 'clean'], true)</code>
-      <code>in_array($value, ['yes', 'no', 'clean'], true)</code>
-      <code>in_array($value, ['yes', 'no', 'clean'], true)</code>
+      <code><![CDATA[! in_array($value, ['yes', 'no', 'clean'], true)]]></code>
+      <code><![CDATA[in_array($value, ['yes', 'no', 'clean'], true)]]></code>
+      <code><![CDATA[in_array($value, ['yes', 'no', 'clean'], true)]]></code>
+      <code><![CDATA[in_array($value, ['yes', 'no', 'clean'], true)]]></code>
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Writer/Extension/GooglePlayPodcast/Feed.php">
@@ -2561,10 +2569,10 @@
       <code>$value</code>
     </MixedAssignment>
     <RedundantConditionGivenDocblockType>
-      <code>! in_array($value, ['yes', 'no', 'clean'], true)</code>
-      <code>in_array($value, ['yes', 'no', 'clean'], true)</code>
-      <code>in_array($value, ['yes', 'no', 'clean'], true)</code>
-      <code>in_array($value, ['yes', 'no', 'clean'], true)</code>
+      <code><![CDATA[! in_array($value, ['yes', 'no', 'clean'], true)]]></code>
+      <code><![CDATA[in_array($value, ['yes', 'no', 'clean'], true)]]></code>
+      <code><![CDATA[in_array($value, ['yes', 'no', 'clean'], true)]]></code>
+      <code><![CDATA[in_array($value, ['yes', 'no', 'clean'], true)]]></code>
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Writer/Extension/GooglePlayPodcast/Renderer/Entry.php">
@@ -2641,7 +2649,7 @@
       <code>var_export($type, true)</code>
     </RedundantConditionGivenDocblockType>
     <TypeDoesNotContainType>
-      <code>'no'</code>
+      <code><![CDATA['no']]></code>
     </TypeDoesNotContainType>
   </file>
   <file src="src/Writer/Extension/ITunes/Feed.php">
@@ -2656,8 +2664,8 @@
       <code>$value</code>
       <code>$value</code>
       <code>$value</code>
-      <code>$value['email']</code>
-      <code>$value['name']</code>
+      <code><![CDATA[$value['email']]]></code>
+      <code><![CDATA[$value['name']]]></code>
     </MixedArgument>
     <MixedArgumentTypeCoercion>
       <code>$key</code>
@@ -2682,7 +2690,7 @@
       <code>var_export($type, true)</code>
     </RedundantConditionGivenDocblockType>
     <TypeDoesNotContainType>
-      <code>'no'</code>
+      <code><![CDATA['no']]></code>
     </TypeDoesNotContainType>
   </file>
   <file src="src/Writer/Extension/ITunes/Renderer/Entry.php">
@@ -2735,8 +2743,8 @@
       <code>$subcat</code>
     </MixedArgument>
     <MixedArrayAccess>
-      <code>$owner['email']</code>
-      <code>$owner['name']</code>
+      <code><![CDATA[$owner['email']]]></code>
+      <code><![CDATA[$owner['name']]]></code>
     </MixedArrayAccess>
     <MixedAssignment>
       <code>$author</code>
@@ -2801,7 +2809,7 @@
       <code>getPodcastIndexTranscript</code>
     </MixedMethodCall>
     <RedundantCastGivenDocblockType>
-      <code>(string) $soundbite['title']</code>
+      <code><![CDATA[(string) $soundbite['title']]]></code>
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Writer/Extension/PodcastIndex/Renderer/Feed.php">
@@ -2810,8 +2818,8 @@
       <code>getPodcastIndexLocked</code>
     </MixedMethodCall>
     <RedundantCastGivenDocblockType>
-      <code>(string) $funding['title']</code>
-      <code>(string) $locked['value']</code>
+      <code><![CDATA[(string) $funding['title']]]></code>
+      <code><![CDATA[(string) $locked['value']]]></code>
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Writer/Extension/Slash/Renderer/Entry.php">
@@ -2827,11 +2835,11 @@
       <code>$count</code>
       <code>$count</code>
       <code>$link</code>
-      <code>$link['uri']</code>
+      <code><![CDATA[$link['uri']]]></code>
     </MixedArgument>
     <MixedArrayAccess>
-      <code>$link['type']</code>
-      <code>$link['uri']</code>
+      <code><![CDATA[$link['type']]]></code>
+      <code><![CDATA[$link['uri']]]></code>
     </MixedArrayAccess>
     <MixedAssignment>
       <code>$count</code>
@@ -2848,7 +2856,7 @@
       <code>getCommentLink</code>
     </MixedMethodCall>
     <MixedOperand>
-      <code>$link['type']</code>
+      <code><![CDATA[$link['type']]]></code>
     </MixedOperand>
     <TypeDoesNotContainType>
       <code>empty($links)</code>
@@ -2856,8 +2864,8 @@
   </file>
   <file src="src/Writer/Extension/WellFormedWeb/Renderer/Entry.php">
     <MixedArrayAccess>
-      <code>$link['type']</code>
-      <code>$link['uri']</code>
+      <code><![CDATA[$link['type']]]></code>
+      <code><![CDATA[$link['uri']]]></code>
     </MixedArrayAccess>
     <MixedAssignment>
       <code>$link</code>
@@ -2926,8 +2934,8 @@
     <MixedArgument>
       <code>$key</code>
       <code>$value</code>
-      <code>$value['link']</code>
-      <code>$value['type']</code>
+      <code><![CDATA[$value['link']]]></code>
+      <code><![CDATA[$value['type']]]></code>
     </MixedArgument>
     <MixedArgumentTypeCoercion>
       <code>$key</code>
@@ -2979,28 +2987,28 @@
       <code>format</code>
     </InvalidMethodCall>
     <MixedArgument>
-      <code>$cat['label']</code>
-      <code>$cat['scheme']</code>
-      <code>$cat['term']</code>
-      <code>$cat['term']</code>
+      <code><![CDATA[$cat['label']]]></code>
+      <code><![CDATA[$cat['scheme']]]></code>
+      <code><![CDATA[$cat['term']]]></code>
+      <code><![CDATA[$cat['term']]]></code>
       <code>$content</code>
       <code>$data</code>
-      <code>$data['length']</code>
-      <code>$data['type']</code>
-      <code>$data['uri']</code>
+      <code><![CDATA[$data['length']]]></code>
+      <code><![CDATA[$data['type']]]></code>
+      <code><![CDATA[$data['uri']]]></code>
       <code>$source</code>
       <code><![CDATA[$this->getDataContainer()->getDateCreated()->format(DateTime::ATOM)]]></code>
       <code><![CDATA[$this->getDataContainer()->getDateModified()->format(DateTime::ATOM)]]></code>
     </MixedArgument>
     <MixedArrayAccess>
-      <code>$cat['label']</code>
-      <code>$cat['scheme']</code>
-      <code>$cat['term']</code>
-      <code>$cat['term']</code>
-      <code>$data['length']</code>
-      <code>$data['name']</code>
-      <code>$data['type']</code>
-      <code>$data['uri']</code>
+      <code><![CDATA[$cat['label']]]></code>
+      <code><![CDATA[$cat['scheme']]]></code>
+      <code><![CDATA[$cat['term']]]></code>
+      <code><![CDATA[$cat['term']]]></code>
+      <code><![CDATA[$data['length']]]></code>
+      <code><![CDATA[$data['name']]]></code>
+      <code><![CDATA[$data['type']]]></code>
+      <code><![CDATA[$data['uri']]]></code>
     </MixedArrayAccess>
     <MixedAssignment>
       <code>$cat</code>
@@ -3052,7 +3060,7 @@
       <code><![CDATA[$this->getDataContainer()->getComment()]]></code>
     </MixedArgument>
     <MixedArrayAccess>
-      <code>$data['name']</code>
+      <code><![CDATA[$data['name']]]></code>
     </MixedArrayAccess>
     <MixedAssignment>
       <code>$data</code>
@@ -3085,7 +3093,7 @@
       <code><![CDATA[$this->getDataContainer()->getComment()]]></code>
     </MixedArgument>
     <MixedArrayAccess>
-      <code>$data['name']</code>
+      <code><![CDATA[$data['name']]]></code>
     </MixedArrayAccess>
     <MixedAssignment>
       <code>$data</code>
@@ -3118,22 +3126,22 @@
       <code>format</code>
     </InvalidMethodCall>
     <MixedArgument>
-      <code>$cat['scheme']</code>
-      <code>$cat['term']</code>
+      <code><![CDATA[$cat['scheme']]]></code>
+      <code><![CDATA[$cat['term']]]></code>
       <code>$data</code>
-      <code>$data['type']</code>
-      <code>$data['uri']</code>
+      <code><![CDATA[$data['type']]]></code>
+      <code><![CDATA[$data['uri']]]></code>
       <code><![CDATA[$this->getDataContainer()->getDateModified()->format(DateTime::RSS)]]></code>
     </MixedArgument>
     <MixedArrayAccess>
-      <code>$cat['scheme']</code>
-      <code>$cat['term']</code>
-      <code>$data['length']</code>
-      <code>$data['length']</code>
-      <code>$data['length']</code>
-      <code>$data['name']</code>
-      <code>$data['type']</code>
-      <code>$data['uri']</code>
+      <code><![CDATA[$cat['scheme']]]></code>
+      <code><![CDATA[$cat['term']]]></code>
+      <code><![CDATA[$data['length']]]></code>
+      <code><![CDATA[$data['length']]]></code>
+      <code><![CDATA[$data['length']]]></code>
+      <code><![CDATA[$data['name']]]></code>
+      <code><![CDATA[$data['type']]]></code>
+      <code><![CDATA[$data['uri']]]></code>
     </MixedArrayAccess>
     <MixedAssignment>
       <code>$cat</code>
@@ -3150,8 +3158,8 @@
       <code>setType</code>
     </MixedMethodCall>
     <MixedOperand>
-      <code>$data['email']</code>
-      <code>$data['name']</code>
+      <code><![CDATA[$data['email']]]></code>
+      <code><![CDATA[$data['name']]]></code>
     </MixedOperand>
     <PossiblyNullArgument>
       <code><![CDATA[$this->container->getEncoding()]]></code>
@@ -3177,7 +3185,7 @@
       <code>$gdata</code>
     </InvalidArgument>
     <InvalidArrayOffset>
-      <code>$gdata['name']</code>
+      <code><![CDATA[$gdata['name']]]></code>
     </InvalidArrayOffset>
     <InvalidIterator>
       <code>$categories</code>
@@ -3188,10 +3196,10 @@
       <code>format</code>
     </InvalidMethodCall>
     <MixedArgument>
-      <code>$cat['label']</code>
-      <code>$cat['scheme']</code>
-      <code>$cat['term']</code>
-      <code>$cat['term']</code>
+      <code><![CDATA[$cat['label']]]></code>
+      <code><![CDATA[$cat['scheme']]]></code>
+      <code><![CDATA[$cat['term']]]></code>
+      <code><![CDATA[$cat['term']]]></code>
       <code>$data</code>
       <code>$href</code>
       <code>$hubUrl</code>
@@ -3199,11 +3207,11 @@
       <code>$type</code>
     </MixedArgument>
     <MixedArrayAccess>
-      <code>$cat['label']</code>
-      <code>$cat['scheme']</code>
-      <code>$cat['term']</code>
-      <code>$cat['term']</code>
-      <code>$data['name']</code>
+      <code><![CDATA[$cat['label']]]></code>
+      <code><![CDATA[$cat['scheme']]]></code>
+      <code><![CDATA[$cat['term']]]></code>
+      <code><![CDATA[$cat['term']]]></code>
+      <code><![CDATA[$data['name']]]></code>
     </MixedArrayAccess>
     <MixedAssignment>
       <code>$cat</code>
@@ -3213,14 +3221,14 @@
       <code>$type</code>
     </MixedAssignment>
     <PossiblyNullArgument>
-      <code>$gdata['uri']</code>
-      <code>$gdata['version']</code>
+      <code><![CDATA[$gdata['uri']]]></code>
+      <code><![CDATA[$gdata['version']]]></code>
       <code><![CDATA[$this->getDataContainer()->getLanguage()]]></code>
       <code><![CDATA[$this->getDataContainer()->getLink()]]></code>
       <code><![CDATA[$this->getDataContainer()->getLink()]]></code>
     </PossiblyNullArgument>
     <PossiblyNullArrayAccess>
-      <code>$gdata['name']</code>
+      <code><![CDATA[$gdata['name']]]></code>
     </PossiblyNullArrayAccess>
     <PossiblyNullReference>
       <code>format</code>
@@ -3266,7 +3274,7 @@
       <code>$gdata</code>
     </InvalidArgument>
     <InvalidArrayOffset>
-      <code>$gdata['name']</code>
+      <code><![CDATA[$gdata['name']]]></code>
     </InvalidArrayOffset>
     <InvalidIterator>
       <code>$categories</code>
@@ -3277,10 +3285,10 @@
       <code>format</code>
     </InvalidMethodCall>
     <MixedArgument>
-      <code>$cat['label']</code>
-      <code>$cat['scheme']</code>
-      <code>$cat['term']</code>
-      <code>$cat['term']</code>
+      <code><![CDATA[$cat['label']]]></code>
+      <code><![CDATA[$cat['scheme']]]></code>
+      <code><![CDATA[$cat['term']]]></code>
+      <code><![CDATA[$cat['term']]]></code>
       <code>$data</code>
       <code>$href</code>
       <code>$hubUrl</code>
@@ -3288,11 +3296,11 @@
       <code>$type</code>
     </MixedArgument>
     <MixedArrayAccess>
-      <code>$cat['label']</code>
-      <code>$cat['scheme']</code>
-      <code>$cat['term']</code>
-      <code>$cat['term']</code>
-      <code>$data['name']</code>
+      <code><![CDATA[$cat['label']]]></code>
+      <code><![CDATA[$cat['scheme']]]></code>
+      <code><![CDATA[$cat['term']]]></code>
+      <code><![CDATA[$cat['term']]]></code>
+      <code><![CDATA[$data['name']]]></code>
     </MixedArrayAccess>
     <MixedAssignment>
       <code>$cat</code>
@@ -3302,14 +3310,14 @@
       <code>$type</code>
     </MixedAssignment>
     <PossiblyNullArgument>
-      <code>$gdata['uri']</code>
-      <code>$gdata['version']</code>
+      <code><![CDATA[$gdata['uri']]]></code>
+      <code><![CDATA[$gdata['version']]]></code>
       <code><![CDATA[$this->getDataContainer()->getLanguage()]]></code>
       <code><![CDATA[$this->getDataContainer()->getLink()]]></code>
       <code><![CDATA[$this->getDataContainer()->getLink()]]></code>
     </PossiblyNullArgument>
     <PossiblyNullArrayAccess>
-      <code>$gdata['name']</code>
+      <code><![CDATA[$gdata['name']]]></code>
     </PossiblyNullArrayAccess>
     <PossiblyNullReference>
       <code>format</code>
@@ -3329,7 +3337,7 @@
       <code>$gdata</code>
     </InvalidArgument>
     <InvalidArrayOffset>
-      <code>$gdata['name']</code>
+      <code><![CDATA[$gdata['name']]]></code>
     </InvalidArrayOffset>
     <MixedAssignment>
       <code>$ext</code>
@@ -3341,12 +3349,12 @@
       <code>setType</code>
     </MixedMethodCall>
     <PossiblyNullArgument>
-      <code>$gdata['uri']</code>
-      <code>$gdata['version']</code>
+      <code><![CDATA[$gdata['uri']]]></code>
+      <code><![CDATA[$gdata['version']]]></code>
       <code><![CDATA[$this->container->getEncoding()]]></code>
     </PossiblyNullArgument>
     <PossiblyNullArrayAccess>
-      <code>$gdata['name']</code>
+      <code><![CDATA[$gdata['name']]]></code>
     </PossiblyNullArrayAccess>
     <PropertyNotSetInConstructor>
       <code>Source</code>
@@ -3362,7 +3370,7 @@
       <code>$gdata</code>
     </InvalidArgument>
     <InvalidArrayOffset>
-      <code>$gdata['name']</code>
+      <code><![CDATA[$gdata['name']]]></code>
     </InvalidArrayOffset>
     <MixedAssignment>
       <code>$ext</code>
@@ -3374,12 +3382,12 @@
       <code>setType</code>
     </MixedMethodCall>
     <PossiblyNullArgument>
-      <code>$gdata['uri']</code>
-      <code>$gdata['version']</code>
+      <code><![CDATA[$gdata['uri']]]></code>
+      <code><![CDATA[$gdata['version']]]></code>
       <code><![CDATA[$this->container->getEncoding()]]></code>
     </PossiblyNullArgument>
     <PossiblyNullArrayAccess>
-      <code>$gdata['name']</code>
+      <code><![CDATA[$gdata['name']]]></code>
     </PossiblyNullArrayAccess>
     <PropertyNotSetInConstructor>
       <code>AtomSource</code>
@@ -3395,7 +3403,7 @@
       <code>$gdata</code>
     </InvalidArgument>
     <InvalidArrayOffset>
-      <code>$gdata['name']</code>
+      <code><![CDATA[$gdata['name']]]></code>
     </InvalidArrayOffset>
     <InvalidIterator>
       <code>$categories</code>
@@ -3405,15 +3413,15 @@
       <code>format</code>
     </InvalidMethodCall>
     <MixedArgument>
-      <code>$cat['scheme']</code>
+      <code><![CDATA[$cat['scheme']]]></code>
       <code>$data</code>
       <code><![CDATA[$this->getDataContainer()->getDateModified()->format(DateTime::RSS)]]></code>
       <code><![CDATA[$this->getDataContainer()->getLastBuildDate()->format(DateTime::RSS)]]></code>
     </MixedArgument>
     <MixedArrayAccess>
-      <code>$cat['scheme']</code>
-      <code>$cat['term']</code>
-      <code>$data['name']</code>
+      <code><![CDATA[$cat['scheme']]]></code>
+      <code><![CDATA[$cat['term']]]></code>
+      <code><![CDATA[$data['name']]]></code>
     </MixedArrayAccess>
     <MixedAssignment>
       <code>$cat</code>
@@ -3431,8 +3439,8 @@
       <code>setType</code>
     </MixedMethodCall>
     <MixedOperand>
-      <code>$data['email']</code>
-      <code>$data['name']</code>
+      <code><![CDATA[$data['email']]]></code>
+      <code><![CDATA[$data['name']]]></code>
       <code>$name</code>
       <code>$name</code>
     </MixedOperand>
@@ -3440,11 +3448,11 @@
       <code><![CDATA[$this->container->getEncoding()]]></code>
     </PossiblyNullArgument>
     <PossiblyNullArrayAccess>
-      <code>$gdata['name']</code>
+      <code><![CDATA[$gdata['name']]]></code>
     </PossiblyNullArrayAccess>
     <PossiblyNullOperand>
-      <code>$gdata['uri']</code>
-      <code>$gdata['version']</code>
+      <code><![CDATA[$gdata['uri']]]></code>
+      <code><![CDATA[$gdata['version']]]></code>
     </PossiblyNullOperand>
     <PossiblyNullReference>
       <code>format</code>
@@ -3491,16 +3499,16 @@
       <code>ExtensionManagerInterface</code>
     </DeprecatedInterface>
     <MixedArgument>
-      <code>static::$extensions['entry']</code>
-      <code>static::$extensions['entryRenderer']</code>
-      <code>static::$extensions['feed']</code>
-      <code>static::$extensions['feedRenderer']</code>
+      <code><![CDATA[static::$extensions['entry']]]></code>
+      <code><![CDATA[static::$extensions['entryRenderer']]]></code>
+      <code><![CDATA[static::$extensions['feed']]]></code>
+      <code><![CDATA[static::$extensions['feedRenderer']]]></code>
     </MixedArgument>
     <MixedArrayAssignment>
-      <code>static::$extensions['entry'][]</code>
-      <code>static::$extensions['entryRenderer'][]</code>
-      <code>static::$extensions['feed'][]</code>
-      <code>static::$extensions['feedRenderer'][]</code>
+      <code><![CDATA[static::$extensions['entry'][]]]></code>
+      <code><![CDATA[static::$extensions['entryRenderer'][]]]></code>
+      <code><![CDATA[static::$extensions['feed'][]]]></code>
+      <code><![CDATA[static::$extensions['feedRenderer'][]]]></code>
     </MixedArrayAssignment>
     <RedundantPropertyInitializationCheck>
       <code>isset(static::$extensionManager)</code>
@@ -3542,8 +3550,8 @@
     <ArgumentTypeCoercion>
       <code>$className</code>
       <code>$className</code>
-      <code>'Result'</code>
-      <code>'Result'</code>
+      <code><![CDATA['Result']]></code>
+      <code><![CDATA['Result']]></code>
     </ArgumentTypeCoercion>
     <DeprecatedMethod>
       <code>setMethods</code>
@@ -3552,7 +3560,7 @@
     </DeprecatedMethod>
     <InvalidArgument>
       <code><![CDATA[$this->tableGateway]]></code>
-      <code>''</code>
+      <code><![CDATA['']]></code>
       <code>new stdClass()</code>
     </InvalidArgument>
     <InvalidPropertyAssignmentValue>
@@ -3573,8 +3581,8 @@
       <code>getHeader</code>
     </PossiblyUndefinedMethod>
     <UndefinedClass>
-      <code>'Result'</code>
-      <code>'Result'</code>
+      <code><![CDATA['Result']]></code>
+      <code><![CDATA['Result']]></code>
     </UndefinedClass>
     <UnevaluatedCode>
       <code><![CDATA[$this->assertFalse($this->callback->isValidHubVerification($this->get));]]></code>
@@ -3595,7 +3603,7 @@
       <code><![CDATA[$this->storage]]></code>
     </InvalidArgument>
     <PossiblyFalsePropertyAssignmentValue>
-      <code>getenv('TESTS_LAMINAS_FEED_PUBSUBHUBBUB_BASEURI')</code>
+      <code><![CDATA[getenv('TESTS_LAMINAS_FEED_PUBSUBHUBBUB_BASEURI')]]></code>
     </PossiblyFalsePropertyAssignmentValue>
     <TooFewArguments>
       <code>getSubscription</code>
@@ -3611,8 +3619,8 @@
       <code>setMethods</code>
     </DeprecatedMethod>
     <InvalidArgument>
-      <code>'0aa'</code>
-      <code>'10000'</code>
+      <code><![CDATA['0aa']]></code>
+      <code><![CDATA['10000']]></code>
       <code>123</code>
       <code>123</code>
       <code>123</code>
@@ -4112,7 +4120,7 @@
         }]]></code>
     </InvalidArgument>
     <InvalidArrayOffset>
-      <code>$link['feed']</code>
+      <code><![CDATA[$link['feed']]]></code>
     </InvalidArrayOffset>
     <MixedArgument>
       <code>$message</code>
@@ -4139,6 +4147,11 @@
       <code>Extension\AbstractEntry|Extension\AbstractFeed</code>
     </MoreSpecificReturnType>
   </file>
+  <file src="test/Reader/TestAsset/Psr7Stream.php">
+    <MethodSignatureMustProvideReturnType>
+      <code>__toString</code>
+    </MethodSignatureMustProvideReturnType>
+  </file>
   <file src="test/Reader/_files/My/Extension/JungleBooks/Entry.php">
     <MixedAssignment>
       <code>$isbn</code>
@@ -4160,7 +4173,7 @@
       <code>assertNull</code>
     </DocblockTypeContradiction>
     <InvalidArgument>
-      <code>'abc'</code>
+      <code><![CDATA['abc']]></code>
     </InvalidArgument>
     <UnevaluatedCode>
       <code>$entry = new Writer\Deleted();</code>
@@ -4170,8 +4183,8 @@
   </file>
   <file src="test/Writer/EntryTest.php">
     <InvalidArgument>
-      <code>'abc'</code>
-      <code>'abc'</code>
+      <code><![CDATA['abc']]></code>
+      <code><![CDATA['abc']]></code>
       <code><![CDATA[static function (int $_errno, string $errstr) use ($notices): ?bool {
             $notices->messages[] = $errstr;
 
@@ -4237,7 +4250,7 @@
   </file>
   <file src="test/Writer/FeedFactoryTest.php">
     <InvalidArgument>
-      <code>'string'</code>
+      <code><![CDATA['string']]></code>
     </InvalidArgument>
     <InvalidMethodCall>
       <code>format</code>
