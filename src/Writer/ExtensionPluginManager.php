@@ -7,7 +7,6 @@ namespace Laminas\Feed\Writer;
 use Laminas\Feed\Writer\Extension\GooglePlayPodcast\Feed;
 use Laminas\Feed\Writer\Extension\ITunes\Entry;
 use Laminas\ServiceManager\AbstractPluginManager;
-use Laminas\ServiceManager\ConfigInterface;
 use Laminas\ServiceManager\Exception\InvalidServiceException;
 use Laminas\ServiceManager\Factory\InvokableFactory;
 
@@ -22,7 +21,6 @@ use function substr;
  *
  * Validation checks that we have an Entry, Feed, or Extension\AbstractRenderer.
  *
- * @psalm-import-type FactoriesConfigurationType from ConfigInterface
  * @template InstanceType of Extension\AbstractRenderer|Entry|Feed|Entry|\Laminas\Feed\Writer\Extension\ITunes\Feed|\Laminas\Feed\Writer\Extension\PodcastIndex\Entry|\Laminas\Feed\Writer\Extension\PodcastIndex\Feed
  * @template-extends AbstractPluginManager<InstanceType>
  */
@@ -31,7 +29,7 @@ class ExtensionPluginManager extends AbstractPluginManager implements ExtensionM
     /**
      * Aliases for default set of extension classes
      *
-     * @var array<array-key, string>
+     * @inheritDoc
      */
     protected $aliases = [
         // phpcs:disable Generic.Files.LineLength.TooLong
@@ -176,7 +174,7 @@ class ExtensionPluginManager extends AbstractPluginManager implements ExtensionM
     /**
      * Factories for default set of extension classes
      *
-     * @var FactoriesConfigurationType
+     * @inheritDoc
      */
     protected $factories = [
         Extension\Atom\Renderer\Feed::class               => InvokableFactory::class,
