@@ -20,7 +20,7 @@ class ExtensionPluginManagerCompatibilityTest extends TestCase
      * @psalm-suppress ImplementedReturnTypeMismatch
      * @return ExtensionPluginManager
      */
-    protected function getPluginManager()
+    protected static function getPluginManager()
     {
         return new ExtensionPluginManager(new ServiceManager());
     }
