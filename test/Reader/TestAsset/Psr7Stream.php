@@ -12,18 +12,12 @@ namespace LaminasTest\Feed\Reader\TestAsset;
  */
 class Psr7Stream
 {
-    /** @var mixed */
-    private $streamValue;
-
-    /** @param mixed $streamValue */
-    public function __construct($streamValue)
+    public function __construct(private string $streamValue)
     {
-        $this->streamValue = $streamValue;
     }
 
-    /** @return string */
-    public function __toString()
+    public function __toString(): string
     {
-        return (string) $this->streamValue;
+        return $this->streamValue;
     }
 }

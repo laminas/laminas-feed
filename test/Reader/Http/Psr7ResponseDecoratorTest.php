@@ -7,9 +7,9 @@ namespace LaminasTest\Feed\Reader\Http;
 use Laminas\Feed\Reader\Http\HeaderAwareResponseInterface;
 use Laminas\Feed\Reader\Http\Psr7ResponseDecorator;
 use Laminas\Feed\Reader\Http\ResponseInterface;
-use LaminasTest\Feed\Reader\TestAsset\Psr7Stream;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface as Psr7ResponseInterface;
+use Psr\Http\Message\StreamInterface;
 
 /**
  * @covers \Laminas\Feed\Reader\Http\Psr7ResponseDecorator
@@ -56,21 +56,13 @@ class Psr7ResponseDecoratorTest extends TestCase
 
     public function testProxiesToDecoratedResponseToRetrieveBody(): void
     {
-        $originalResponse = $this->createMock(Psr7ResponseInterface::class);
-        $originalResponse
-            ->method('getBody')
+        $body = $this->createMock(StreamInterface::class);
+        $body->method('__toString')
             ->willReturn('BODY');
-        $decorator = new Psr7ResponseDecorator($originalResponse);
-        $this->assertSame('BODY', $decorator->getBody());
-    }
-
-    public function testCastsStreamToStringWhenReturningPsr7Body(): void
-    {
-        $stream           = new Psr7Stream('BODY');
         $originalResponse = $this->createMock(Psr7ResponseInterface::class);
         $originalResponse
             ->method('getBody')
-            ->willReturn($stream);
+            ->willReturn($body);
         $decorator = new Psr7ResponseDecorator($originalResponse);
         $this->assertSame('BODY', $decorator->getBody());
     }
