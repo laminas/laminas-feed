@@ -13,10 +13,6 @@ use Laminas\Feed\PubSubHubbub\Subscriber;
 use Laminas\Http\Client as HttpClient;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use ReflectionClass;
-
-use function str_replace;
-use function uniqid;
 
 /**
  * @group Laminas_Feed
@@ -39,15 +35,8 @@ class SubscriberTest extends TestCase
         PubSubHubbub::setHttpClient($client);
         $this->subscriber = new Subscriber();
 
-        /** @psalm-suppress InvalidPropertyAssignmentValue */
-        $this->adapter = $this->getCleanMock(
-            Adapter::class
-        );
-
-        /** @psalm-suppress InvalidPropertyAssignmentValue */
-        $this->tableGateway = $this->getCleanMock(
-            TableGateway::class
-        );
+        $this->adapter      = $this->createMock(Adapter::class);
+        $this->tableGateway = $this->createMock(TableGateway::class);
         $this->tableGateway
             ->expects($this->any())
             ->method('getAdapter')
@@ -309,27 +298,5 @@ class SubscriberTest extends TestCase
     {
         $this->expectException(ExceptionInterface::class);
         $this->subscriber->getStorage();
-    }
-
-    protected function getCleanMock(string $className): MockObject
-    {
-        $class       = new ReflectionClass($className);
-        $methods     = $class->getMethods();
-        $stubMethods = [];
-        foreach ($methods as $method) {
-            if (
-                $method->isPublic()
-                || ($method->isProtected() && $method->isAbstract())
-            ) {
-                $stubMethods[] = $method->getName();
-            }
-        }
-
-        return $this->getMockBuilder($className)
-            ->setMethods($stubMethods)
-            ->setConstructorArgs([])
-            ->setMockClassName(str_replace('\\', '_', $className . '_PubsubSubscriberMock_' . uniqid()))
-            ->disableOriginalConstructor()
-            ->getMock();
     }
 }

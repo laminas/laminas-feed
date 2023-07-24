@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace LaminasTest\Feed\PubSubHubbub;
 
+use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\TestCase;
 use ReflectionMethod;
 
 use function array_merge;
 
+#[BackupGlobals(true)]
 class AbstractCallbackTest extends TestCase
 {
     public function testDetectCallbackUrlIgnoresXOriginalUrlHeaderWhenXRewriteUrlHeaderIsNotPresent(): void

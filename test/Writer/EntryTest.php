@@ -560,7 +560,7 @@ class EntryTest extends TestCase
     }
 
     /** @psalm-return array<array-key, array{0: int|float, 1: int}> */
-    public function allowedCommentCounts(): array
+    public static function allowedCommentCounts(): array
     {
         return [
             [0, 0],
@@ -582,7 +582,7 @@ class EntryTest extends TestCase
     }
 
     /** @psalm-return array<array-key, array{0:mixed}> */
-    public function disallowedCommentCounts(): array
+    public static function disallowedCommentCounts(): array
     {
         return [
             [1.1],

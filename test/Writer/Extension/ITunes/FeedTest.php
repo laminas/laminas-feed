@@ -177,7 +177,7 @@ class FeedTest extends TestCase
     }
 
     /** @psalm-return array<array-key, array{0: bool|string, 1: string}> */
-    public function dataProviderForSetExplicit(): array
+    public static function dataProviderForSetExplicit(): array
     {
         return [
             // Current behaviour
@@ -351,7 +351,7 @@ class FeedTest extends TestCase
     }
 
     /** @psalm-return array<string, array{0: mixed, 1: string}> */
-    public function invalidImageUrls(): array
+    public static function invalidImageUrls(): array
     {
         $defaultExpectedMessage = 'valid URI';
         return [
@@ -384,7 +384,7 @@ class FeedTest extends TestCase
     }
 
     /** @psalm-return array<string, array{0: string}> */
-    public function validImageUrls(): array
+    public static function validImageUrls(): array
     {
         return [
             'jpg' => ['https://example.com/image.jpg'],
@@ -404,7 +404,7 @@ class FeedTest extends TestCase
     }
 
     /** @psalm-return array<string, array{0: mixed}> */
-    public function invalidPodcastTypes(): array
+    public static function invalidPodcastTypes(): array
     {
         return [
             'null'       => [null],
@@ -434,7 +434,7 @@ class FeedTest extends TestCase
     }
 
     /** @psalm-return array<string, array{0: string}> */
-    public function validPodcastTypes(): array
+    public static function validPodcastTypes(): array
     {
         return [
             'episodic' => ['episodic'],
@@ -454,7 +454,7 @@ class FeedTest extends TestCase
     }
 
     /** @psalm-return array<string, array{0: mixed}> */
-    public function invalidCompleteStatuses(): array
+    public static function invalidCompleteStatuses(): array
     {
         return [
             'null'       => [null],

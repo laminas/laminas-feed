@@ -35,7 +35,7 @@ class FeedTest extends TestCase
     /**
      * @psalm-return array<string, array{0: mixed}>
      */
-    public function nonAlphaValues(): array
+    public static function nonAlphaValues(): array
     {
         return [
             'null'       => [null],

@@ -11,7 +11,6 @@ use Laminas\Http\Client as HttpClient;
 use Laminas\Http\Client\Adapter\Socket;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use ReflectionClass;
 
 use function getenv;
 use function strpos;
@@ -50,7 +49,7 @@ class SubscriberHttpTest extends TestCase
             if (substr($this->baseuri, -1) !== '/') {
                 $this->baseuri .= '/';
             }
-            $name = $this->getName();
+            $name = $this->nameWithDataSet();
             if (($pos = strpos($name, ' ')) !== false) {
                 $name = substr($name, 0, $pos);
             }
@@ -60,8 +59,7 @@ class SubscriberHttpTest extends TestCase
             PubSubHubbub::setHttpClient($this->client);
             $this->subscriber = new Subscriber();
 
-            /** @psalm-suppress InvalidPropertyAssignmentValue */
-            $this->storage = $this->getCleanMock(Subscription::class);
+            $this->storage = $this->createMock(Subscription::class);
             $this->subscriber->setStorage($this->storage);
         } else {
             // Skip tests
@@ -104,21 +102,5 @@ class SubscriberHttpTest extends TestCase
 
         $subscriptionRecord = $this->subscriber->getStorage()->getSubscription();
         $this->assertEquals($subscriptionRecord['subscription_state'], PubSubHubbub::SUBSCRIPTION_TODELETE);
-    }
-
-    protected function getCleanMock(string $className): MockObject
-    {
-        $class       = new ReflectionClass($className);
-        $methods     = $class->getMethods();
-        $stubMethods = [];
-        foreach ($methods as $method) {
-            if (
-                $method->isPublic()
-                || ($method->isProtected() && $method->isAbstract())
-            ) {
-                $stubMethods[] = $method->getName();
-            }
-        }
-        return $this->getMockBuilder($className)->setMethods($stubMethods)->getMock();
     }
 }

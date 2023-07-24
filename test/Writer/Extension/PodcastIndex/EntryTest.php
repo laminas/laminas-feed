@@ -74,7 +74,7 @@ class EntryTest extends TestCase
     /**
      * @psalm-return array<string, array{0: mixed}>
      */
-    public function invalidTimeValues(): array
+    public static function invalidTimeValues(): array
     {
         return [
             'null'       => [null],
