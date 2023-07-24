@@ -23,6 +23,9 @@
       <code><![CDATA[$_SERVER['ORIG_PATH_INFO']]]></code>
       <code><![CDATA[$_SERVER['REQUEST_URI']]]></code>
     </PossiblyUndefinedArrayOffset>
+    <PossiblyUnusedMethod>
+      <code>_detectCallbackUrl</code>
+    </PossiblyUnusedMethod>
     <PropertyNotSetInConstructor>
       <code>$httpResponse</code>
       <code>$storage</code>
@@ -77,6 +80,12 @@
     <MixedReturnStatement>
       <code><![CDATA[$header['value']]]></code>
     </MixedReturnStatement>
+    <PossiblyUnusedMethod>
+      <code>getHeaders</code>
+    </PossiblyUnusedMethod>
+    <PossiblyUnusedReturnValue>
+      <code>bool</code>
+    </PossiblyUnusedReturnValue>
     <RedundantCastGivenDocblockType>
       <code>(string) $content</code>
       <code>(string) $name</code>
@@ -139,6 +148,9 @@
     <PossiblyUndefinedMethod>
       <code>getHubs</code>
     </PossiblyUndefinedMethod>
+    <PossiblyUnusedMethod>
+      <code>clearHttpClient</code>
+    </PossiblyUnusedMethod>
     <RedundantConditionGivenDocblockType>
       <code>$source instanceof Reader\Feed\AbstractFeed</code>
     </RedundantConditionGivenDocblockType>
@@ -177,6 +189,10 @@
       <code>$name</code>
       <code><![CDATA[$response->getContent()]]></code>
     </MixedOperand>
+    <PossiblyUnusedMethod>
+      <code>getErrors</code>
+      <code>notifyHub</code>
+    </PossiblyUnusedMethod>
     <RedundantCondition>
       <code><![CDATA[! is_string($value) && $value !== null]]></code>
     </RedundantCondition>
@@ -264,6 +280,12 @@
     <PossiblyInvalidCast>
       <code><![CDATA[$params['hub.verify_token']]]></code>
     </PossiblyInvalidCast>
+    <PossiblyUnusedMethod>
+      <code>getAsyncHubs</code>
+      <code>getAuthentications</code>
+      <code>getErrors</code>
+      <code>isSuccess</code>
+    </PossiblyUnusedMethod>
     <PropertyNotSetInConstructor>
       <code>$leaseSeconds</code>
       <code>$storage</code>
@@ -349,6 +371,11 @@
     <PossiblyUndefinedMethod>
       <code>setHeader</code>
     </PossiblyUndefinedMethod>
+    <PossiblyUnusedMethod>
+      <code>getFeedUpdate</code>
+      <code>hasFeedUpdate</code>
+      <code>setSubscriptionKey</code>
+    </PossiblyUnusedMethod>
     <PropertyNotSetInConstructor>
       <code>$currentSubscriptionData</code>
       <code>$feedUpdate</code>
@@ -396,6 +423,15 @@
     <PossiblyNullPropertyAssignmentValue>
       <code><![CDATA[$entry->ownerDocument]]></code>
     </PossiblyNullPropertyAssignmentValue>
+    <PossiblyUnusedMethod>
+      <code>__call</code>
+      <code>__construct</code>
+      <code>getExtension</code>
+      <code>getExtensions</code>
+      <code>getType</code>
+      <code>getXpath</code>
+      <code>saveXml</code>
+    </PossiblyUnusedMethod>
     <PropertyNotSetInConstructor>
       <code>$xpath</code>
     </PropertyNotSetInConstructor>
@@ -451,6 +487,19 @@
     <TooManyTemplateParams>
       <code>Feed\FeedInterface</code>
     </TooManyTemplateParams>
+    <UnusedClass>
+      <code>AbstractFeed</code>
+    </UnusedClass>
+  </file>
+  <file src="src/Reader/Collection.php">
+    <UnusedClass>
+      <code>Collection</code>
+    </UnusedClass>
+  </file>
+  <file src="src/Reader/Collection/Collection.php">
+    <UnusedClass>
+      <code>Collection</code>
+    </UnusedClass>
   </file>
   <file src="src/Reader/Entry/AbstractEntry.php">
     <DocblockTypeContradiction>
@@ -485,6 +534,12 @@
     <PossiblyNullPropertyAssignmentValue>
       <code><![CDATA[$entry->ownerDocument]]></code>
     </PossiblyNullPropertyAssignmentValue>
+    <PossiblyUnusedMethod>
+      <code>__call</code>
+      <code>getExtensions</code>
+      <code>getXpath</code>
+      <code>saveXml</code>
+    </PossiblyUnusedMethod>
     <PropertyNotSetInConstructor>
       <code>$xpath</code>
     </PropertyNotSetInConstructor>
@@ -555,6 +610,15 @@
     <NullableReturnStatement>
       <code><![CDATA[$this->getLink(0)]]></code>
     </NullableReturnStatement>
+    <PossiblyUnusedMethod>
+      <code>getSource</code>
+    </PossiblyUnusedMethod>
+    <PossiblyUnusedProperty>
+      <code>$xpathQuery</code>
+    </PossiblyUnusedProperty>
+    <PossiblyUnusedReturnValue>
+      <code>array</code>
+    </PossiblyUnusedReturnValue>
     <PropertyNotSetInConstructor>
       <code>Atom</code>
     </PropertyNotSetInConstructor>
@@ -664,6 +728,9 @@
       <code><![CDATA[$author->nodeValue]]></code>
       <code>$standard</code>
     </PossiblyNullArgument>
+    <PossiblyUnusedReturnValue>
+      <code>array</code>
+    </PossiblyUnusedReturnValue>
     <PropertyNotSetInConstructor>
       <code>Rss</code>
     </PropertyNotSetInConstructor>
@@ -743,6 +810,11 @@
     <PossiblyNullPropertyAssignmentValue>
       <code><![CDATA[$entry->ownerDocument]]></code>
     </PossiblyNullPropertyAssignmentValue>
+    <PossiblyUnusedMethod>
+      <code>setEntryElement</code>
+      <code>setEntryKey</code>
+      <code>toArray</code>
+    </PossiblyUnusedMethod>
     <RedundantCastGivenDocblockType>
       <code><![CDATA[(int) $this->entryKey]]></code>
       <code><![CDATA[(int) $this->entryKey]]></code>
@@ -793,6 +865,12 @@
     <PossiblyNullPropertyAssignmentValue>
       <code>null</code>
     </PossiblyNullPropertyAssignmentValue>
+    <PossiblyUnusedMethod>
+      <code>getEncoding</code>
+      <code>setDomDocument</code>
+      <code>setXpathPrefix</code>
+      <code>toArray</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="src/Reader/Extension/Atom/Entry.php">
     <ArgumentTypeCoercion>
@@ -891,6 +969,12 @@
     <PossiblyNullOperand>
       <code><![CDATA[$this->getBaseUrl()]]></code>
     </PossiblyNullOperand>
+    <PossiblyUnusedMethod>
+      <code>getAuthor</code>
+    </PossiblyUnusedMethod>
+    <PossiblyUnusedParam>
+      <code>$index</code>
+    </PossiblyUnusedParam>
     <RedundantCondition>
       <code>$list instanceof DOMNodeList</code>
       <code>$list instanceof DOMNodeList</code>
@@ -1005,6 +1089,20 @@
     <PossiblyNullOperand>
       <code><![CDATA[$this->getBaseUrl()]]></code>
     </PossiblyNullOperand>
+    <PossiblyUnusedMethod>
+      <code>getAuthor</code>
+      <code>getCategories</code>
+      <code>getCopyright</code>
+      <code>getDateCreated</code>
+      <code>getDateModified</code>
+      <code>getDescription</code>
+      <code>getFeedLink</code>
+      <code>getGenerator</code>
+      <code>getHubs</code>
+      <code>getId</code>
+      <code>getImage</code>
+      <code>getLanguage</code>
+    </PossiblyUnusedMethod>
     <UndefinedMethod>
       <code>getAttribute</code>
       <code>getAttribute</code>
@@ -1030,6 +1128,9 @@
     <MixedReturnStatement>
       <code><![CDATA[$this->data[$name]]]></code>
     </MixedReturnStatement>
+    <PossiblyUnusedMethod>
+      <code>getLicense</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="src/Reader/Extension/CreativeCommons/Feed.php">
     <MixedAssignment>
@@ -1047,6 +1148,9 @@
     <MixedReturnStatement>
       <code><![CDATA[$this->data[$name]]]></code>
     </MixedReturnStatement>
+    <PossiblyUnusedMethod>
+      <code>getLicense</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="src/Reader/Extension/DublinCore/Entry.php">
     <ArgumentTypeCoercion>
@@ -1114,6 +1218,10 @@
       <code><![CDATA[$this->data['description']]]></code>
       <code><![CDATA[$this->data['title']]]></code>
     </NullableReturnStatement>
+    <PossiblyUnusedMethod>
+      <code>getAuthor</code>
+      <code>getContent</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="src/Reader/Extension/DublinCore/Feed.php">
     <ArgumentTypeCoercion>
@@ -1181,6 +1289,16 @@
     <NullableReturnStatement>
       <code><![CDATA[$this->data['authors']]]></code>
     </NullableReturnStatement>
+    <PossiblyUnusedMethod>
+      <code>getAuthor</code>
+      <code>getCategories</code>
+      <code>getCopyright</code>
+      <code>getDate</code>
+      <code>getDescription</code>
+      <code>getId</code>
+      <code>getLanguage</code>
+      <code>getTitle</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="src/Reader/Extension/GooglePlayPodcast/Entry.php">
     <MixedAssignment>
@@ -1209,6 +1327,11 @@
       <code><![CDATA[$this->data['description']]]></code>
       <code><![CDATA[$this->data['explicit']]]></code>
     </NullableReturnStatement>
+    <PossiblyUnusedMethod>
+      <code>getPlayPodcastBlock</code>
+      <code>getPlayPodcastDescription</code>
+      <code>getPlayPodcastExplicit</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="src/Reader/Extension/GooglePlayPodcast/Feed.php">
     <MixedAssignment>
@@ -1251,6 +1374,14 @@
       <code><![CDATA[$this->data['explicit']]]></code>
       <code><![CDATA[$this->data['image']]]></code>
     </NullableReturnStatement>
+    <PossiblyUnusedMethod>
+      <code>getPlayPodcastAuthor</code>
+      <code>getPlayPodcastBlock</code>
+      <code>getPlayPodcastCategories</code>
+      <code>getPlayPodcastDescription</code>
+      <code>getPlayPodcastExplicit</code>
+      <code>getPlayPodcastImage</code>
+    </PossiblyUnusedMethod>
     <UndefinedMethod>
       <code>getAttribute</code>
       <code>getAttribute</code>
@@ -1331,6 +1462,21 @@
       <code><![CDATA[$this->data['summary']]]></code>
       <code><![CDATA[$this->data['title']]]></code>
     </NullableReturnStatement>
+    <PossiblyUnusedMethod>
+      <code>getBlock</code>
+      <code>getCastAuthor</code>
+      <code>getDuration</code>
+      <code>getEpisode</code>
+      <code>getEpisodeType</code>
+      <code>getExplicit</code>
+      <code>getItunesImage</code>
+      <code>getKeywords</code>
+      <code>getSeason</code>
+      <code>getSubtitle</code>
+      <code>getSummary</code>
+      <code>getTitle</code>
+      <code>isClosedCaptioned</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="src/Reader/Extension/Podcast/Feed.php">
     <MixedAssignment>
@@ -1409,6 +1555,20 @@
       <code><![CDATA[$this->data['subtitle']]]></code>
       <code><![CDATA[$this->data['summary']]]></code>
     </NullableReturnStatement>
+    <PossiblyUnusedMethod>
+      <code>getBlock</code>
+      <code>getCastAuthor</code>
+      <code>getExplicit</code>
+      <code>getItunesCategories</code>
+      <code>getItunesImage</code>
+      <code>getKeywords</code>
+      <code>getNewFeedUrl</code>
+      <code>getOwner</code>
+      <code>getPodcastType</code>
+      <code>getSubtitle</code>
+      <code>getSummary</code>
+      <code>isComplete</code>
+    </PossiblyUnusedMethod>
     <UndefinedMethod>
       <code>getAttribute</code>
       <code>getAttribute</code>
@@ -1478,6 +1638,11 @@
     <NullableReturnStatement>
       <code><![CDATA[$this->data[$name]]]></code>
     </NullableReturnStatement>
+    <PossiblyUnusedMethod>
+      <code>getDepartment</code>
+      <code>getHitParade</code>
+      <code>getSection</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="src/Reader/Extension/Syndication/Feed.php">
     <MixedArgument>
@@ -1503,6 +1668,11 @@
       <code>$period</code>
       <code>$ticks / $freq</code>
     </MixedReturnStatement>
+    <PossiblyUnusedMethod>
+      <code>getUpdateBase</code>
+      <code>getUpdateFrequency</code>
+      <code>getUpdateFrequencyAsTicks</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="src/Reader/Extension/Thread/Entry.php">
     <MixedAssignment>
@@ -1515,6 +1685,9 @@
       <code><![CDATA[$this->getData('total')]]></code>
       <code><![CDATA[$this->getData('total')]]></code>
     </MixedReturnStatement>
+    <PossiblyUnusedMethod>
+      <code>getInReplyTo</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="src/Reader/Extension/WellFormedWeb/Entry.php">
     <MixedAssignment>
@@ -1540,11 +1713,24 @@
       <code><![CDATA[$this->pluginManager->get($extension)]]></code>
       <code><![CDATA[$this->pluginManager->get($extension)]]></code>
     </MixedReturnStatement>
+    <PossiblyUnusedMethod>
+      <code>get</code>
+      <code>has</code>
+    </PossiblyUnusedMethod>
+    <PossiblyUnusedReturnValue>
+      <code>mixed</code>
+    </PossiblyUnusedReturnValue>
   </file>
   <file src="src/Reader/ExtensionPluginManager.php">
     <DeprecatedInterface>
       <code>ExtensionPluginManager</code>
     </DeprecatedInterface>
+    <PossiblyUnusedMethod>
+      <code>validatePlugin</code>
+    </PossiblyUnusedMethod>
+    <PossiblyUnusedProperty>
+      <code>$shareByDefault</code>
+    </PossiblyUnusedProperty>
   </file>
   <file src="src/Reader/Feed/AbstractFeed.php">
     <InvalidArgument>
@@ -1589,6 +1775,14 @@
       <code><![CDATA[$this->data['type']]]></code>
       <code><![CDATA[$this->extensions[$name . '\\Feed']]]></code>
     </MixedReturnStatement>
+    <PossiblyUnusedMethod>
+      <code>getElement</code>
+      <code>getEncoding</code>
+      <code>getExtensions</code>
+      <code>getXpath</code>
+      <code>saveXml</code>
+      <code>setOriginalSourceUri</code>
+    </PossiblyUnusedMethod>
     <PropertyNotSetInConstructor>
       <code>$originalSourceUri</code>
     </PropertyNotSetInConstructor>
@@ -1716,6 +1910,12 @@
       <code>getLink</code>
       <code>getTitle</code>
     </PossiblyNullReference>
+    <PossiblyUnusedMethod>
+      <code>getBaseUrl</code>
+      <code>getHubs</code>
+      <code>getImage</code>
+      <code>getLastBuildDate</code>
+    </PossiblyUnusedMethod>
     <PropertyNotSetInConstructor>
       <code>Atom</code>
     </PropertyNotSetInConstructor>
@@ -1965,6 +2165,11 @@
       <code>getTitle</code>
       <code>getTitle</code>
     </PossiblyNullReference>
+    <PossiblyUnusedMethod>
+      <code>getHubs</code>
+      <code>getImage</code>
+      <code>getLastBuildDate</code>
+    </PossiblyUnusedMethod>
     <PropertyNotSetInConstructor>
       <code>Rss</code>
     </PropertyNotSetInConstructor>
@@ -2110,6 +2315,12 @@
       <code>$value</code>
       <code>$version</code>
     </MixedAssignment>
+    <PossiblyUnusedMethod>
+      <code>getHttpMethodOverride</code>
+      <code>setCache</code>
+      <code>setHttpMethodOverride</code>
+      <code>useHttpConditionalGet</code>
+    </PossiblyUnusedMethod>
     <RedundantCastGivenDocblockType>
       <code><![CDATA[(int) $response->getStatusCode()]]></code>
       <code><![CDATA[(int) $response->getStatusCode()]]></code>
@@ -2167,6 +2378,9 @@
       <code><![CDATA[$this->path]]></code>
       <code><![CDATA[$this->scheme]]></code>
     </NullableReturnStatement>
+    <PossiblyUnusedProperty>
+      <code>$pass</code>
+    </PossiblyUnusedProperty>
     <UnsafeInstantiation>
       <code>new static($uri)</code>
     </UnsafeInstantiation>
@@ -2250,6 +2464,9 @@
       <code><![CDATA[$this->data['link']]]></code>
       <code><![CDATA[$this->data['title']]]></code>
     </MixedReturnStatement>
+    <PossiblyUnusedMethod>
+      <code>reset</code>
+    </PossiblyUnusedMethod>
     <PropertyNotSetInConstructor>
       <code>$extensions</code>
       <code>$type</code>
@@ -2373,6 +2590,9 @@
     <PossiblyNullArgument>
       <code><![CDATA[$this->getEncoding()]]></code>
     </PossiblyNullArgument>
+    <PossiblyUnusedMethod>
+      <code>getCategories</code>
+    </PossiblyUnusedMethod>
     <PropertyNotSetInConstructor>
       <code>$type</code>
     </PropertyNotSetInConstructor>
@@ -2473,6 +2693,15 @@
       <code>$type</code>
       <code>$type</code>
     </MissingConstructor>
+    <PossiblyUnusedMethod>
+      <code>getEncoding</code>
+      <code>setEncoding</code>
+      <code>setRootElement</code>
+      <code>setType</code>
+    </PossiblyUnusedMethod>
+    <PossiblyUnusedProperty>
+      <code>$entry</code>
+    </PossiblyUnusedProperty>
   </file>
   <file src="src/Writer/Extension/Atom/Renderer/Feed.php">
     <MixedArgument>
@@ -2538,6 +2767,18 @@
     </TypeDoesNotContainType>
   </file>
   <file src="src/Writer/Extension/GooglePlayPodcast/Entry.php">
+    <PossiblyUnusedMethod>
+      <code>__call</code>
+      <code>__construct</code>
+      <code>getEncoding</code>
+      <code>setEncoding</code>
+      <code>setPlayPodcastBlock</code>
+      <code>setPlayPodcastDescription</code>
+      <code>setPlayPodcastExplicit</code>
+    </PossiblyUnusedMethod>
+    <PossiblyUnusedParam>
+      <code>$params</code>
+    </PossiblyUnusedParam>
     <RedundantConditionGivenDocblockType>
       <code><![CDATA[! in_array($value, ['yes', 'no', 'clean'], true)]]></code>
       <code><![CDATA[in_array($value, ['yes', 'no', 'clean'], true)]]></code>
@@ -2568,6 +2809,21 @@
       <code>$value</code>
       <code>$value</code>
     </MixedAssignment>
+    <PossiblyUnusedMethod>
+      <code>__call</code>
+      <code>__construct</code>
+      <code>addPlayPodcastAuthors</code>
+      <code>getEncoding</code>
+      <code>setEncoding</code>
+      <code>setPlayPodcastBlock</code>
+      <code>setPlayPodcastCategories</code>
+      <code>setPlayPodcastDescription</code>
+      <code>setPlayPodcastExplicit</code>
+      <code>setPlayPodcastImage</code>
+    </PossiblyUnusedMethod>
+    <PossiblyUnusedParam>
+      <code>$params</code>
+    </PossiblyUnusedParam>
     <RedundantConditionGivenDocblockType>
       <code><![CDATA[! in_array($value, ['yes', 'no', 'clean'], true)]]></code>
       <code><![CDATA[in_array($value, ['yes', 'no', 'clean'], true)]]></code>
@@ -2641,6 +2897,28 @@
     <MixedAssignment>
       <code>$value</code>
     </MixedAssignment>
+    <PossiblyUnusedMethod>
+      <code>__call</code>
+      <code>__construct</code>
+      <code>addItunesAuthors</code>
+      <code>getEncoding</code>
+      <code>setEncoding</code>
+      <code>setItunesBlock</code>
+      <code>setItunesDuration</code>
+      <code>setItunesEpisode</code>
+      <code>setItunesEpisodeType</code>
+      <code>setItunesExplicit</code>
+      <code>setItunesImage</code>
+      <code>setItunesIsClosedCaptioned</code>
+      <code>setItunesKeywords</code>
+      <code>setItunesSeason</code>
+      <code>setItunesSubtitle</code>
+      <code>setItunesSummary</code>
+      <code>setItunesTitle</code>
+    </PossiblyUnusedMethod>
+    <PossiblyUnusedParam>
+      <code>$params</code>
+    </PossiblyUnusedParam>
     <RedundantCastGivenDocblockType>
       <code>(int) $number</code>
       <code>(int) $number</code>
@@ -2683,6 +2961,28 @@
       <code>$value</code>
       <code>$value</code>
     </MixedAssignment>
+    <PossiblyUnusedMethod>
+      <code>__call</code>
+      <code>__construct</code>
+      <code>addItunesAuthors</code>
+      <code>addItunesOwners</code>
+      <code>getEncoding</code>
+      <code>setEncoding</code>
+      <code>setItunesBlock</code>
+      <code>setItunesCategories</code>
+      <code>setItunesComplete</code>
+      <code>setItunesDuration</code>
+      <code>setItunesExplicit</code>
+      <code>setItunesImage</code>
+      <code>setItunesKeywords</code>
+      <code>setItunesNewFeedUrl</code>
+      <code>setItunesSubtitle</code>
+      <code>setItunesSummary</code>
+      <code>setItunesType</code>
+    </PossiblyUnusedMethod>
+    <PossiblyUnusedParam>
+      <code>$params</code>
+    </PossiblyUnusedParam>
     <RedundantCastGivenDocblockType>
       <code>(string) $value</code>
     </RedundantCastGivenDocblockType>
@@ -2798,6 +3098,37 @@
     <MixedAssignment>
       <code>$value</code>
     </MixedAssignment>
+    <PossiblyUnusedMethod>
+      <code>__call</code>
+      <code>__construct</code>
+      <code>addPodcastIndexSoundbites</code>
+      <code>getEncoding</code>
+      <code>setEncoding</code>
+      <code>setPodcastIndexChapters</code>
+      <code>setPodcastIndexTranscript</code>
+    </PossiblyUnusedMethod>
+    <PossiblyUnusedParam>
+      <code>$params</code>
+    </PossiblyUnusedParam>
+    <PossiblyUnusedProperty>
+      <code>$stringWrapper</code>
+    </PossiblyUnusedProperty>
+  </file>
+  <file src="src/Writer/Extension/PodcastIndex/Feed.php">
+    <PossiblyUnusedMethod>
+      <code>__call</code>
+      <code>__construct</code>
+      <code>getEncoding</code>
+      <code>setEncoding</code>
+      <code>setPodcastIndexFunding</code>
+      <code>setPodcastIndexLocked</code>
+    </PossiblyUnusedMethod>
+    <PossiblyUnusedParam>
+      <code>$params</code>
+    </PossiblyUnusedParam>
+    <PossiblyUnusedProperty>
+      <code>$stringWrapper</code>
+    </PossiblyUnusedProperty>
   </file>
   <file src="src/Writer/Extension/PodcastIndex/Renderer/Entry.php">
     <MixedAssignment>
@@ -2822,6 +3153,13 @@
       <code><![CDATA[(string) $locked['value']]]></code>
     </RedundantCastGivenDocblockType>
   </file>
+  <file src="src/Writer/Extension/RendererInterface.php">
+    <PossiblyUnusedMethod>
+      <code>render</code>
+      <code>setDataContainer</code>
+      <code>setDomDocument</code>
+    </PossiblyUnusedMethod>
+  </file>
   <file src="src/Writer/Extension/Slash/Renderer/Entry.php">
     <MixedAssignment>
       <code>$count</code>
@@ -2829,6 +3167,9 @@
     <MixedMethodCall>
       <code>getCommentCount</code>
     </MixedMethodCall>
+    <PossiblyUnusedParam>
+      <code>$dom</code>
+    </PossiblyUnusedParam>
   </file>
   <file src="src/Writer/Extension/Threading/Renderer/Entry.php">
     <MixedArgument>
@@ -2858,6 +3199,11 @@
     <MixedOperand>
       <code><![CDATA[$link['type']]]></code>
     </MixedOperand>
+    <PossiblyUnusedParam>
+      <code>$dom</code>
+      <code>$dom</code>
+      <code>$dom</code>
+    </PossiblyUnusedParam>
     <TypeDoesNotContainType>
       <code>empty($links)</code>
     </TypeDoesNotContainType>
@@ -2890,11 +3236,22 @@
     <MixedReturnStatement>
       <code><![CDATA[$this->pluginManager->get($extension)]]></code>
     </MixedReturnStatement>
+    <PossiblyUnusedMethod>
+      <code>__call</code>
+      <code>get</code>
+      <code>has</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="src/Writer/ExtensionPluginManager.php">
     <DeprecatedInterface>
       <code>ExtensionPluginManager</code>
     </DeprecatedInterface>
+    <PossiblyUnusedMethod>
+      <code>validatePlugin</code>
+    </PossiblyUnusedMethod>
+    <PossiblyUnusedProperty>
+      <code>$shareByDefault</code>
+    </PossiblyUnusedProperty>
   </file>
   <file src="src/Writer/Feed.php">
     <InvalidMethodCall>
@@ -2964,6 +3321,10 @@
       <code>setDataContainer</code>
       <code>setEncoding</code>
     </MixedMethodCall>
+    <PossiblyUnusedMethod>
+      <code>getExceptions</code>
+      <code>setEncoding</code>
+    </PossiblyUnusedMethod>
     <PropertyNotSetInConstructor>
       <code>$dom</code>
       <code>$rootElement</code>
@@ -3038,6 +3399,9 @@
       <code>format</code>
       <code>format</code>
     </PossiblyNullReference>
+    <PossiblyUnusedParam>
+      <code>$dom</code>
+    </PossiblyUnusedParam>
     <PropertyNotSetInConstructor>
       <code>Atom</code>
       <code>Atom</code>
@@ -3071,6 +3435,9 @@
     <PossiblyNullArgument>
       <code><![CDATA[$this->container->getEncoding()]]></code>
     </PossiblyNullArgument>
+    <PossiblyUnusedMethod>
+      <code>__construct</code>
+    </PossiblyUnusedMethod>
     <PropertyNotSetInConstructor>
       <code>Deleted</code>
       <code>Deleted</code>
@@ -3170,6 +3537,11 @@
     <PossiblyNullReference>
       <code>format</code>
     </PossiblyNullReference>
+    <PossiblyUnusedParam>
+      <code>$dom</code>
+      <code>$dom</code>
+      <code>$root</code>
+    </PossiblyUnusedParam>
     <PropertyNotSetInConstructor>
       <code>Rss</code>
       <code>Rss</code>
@@ -3233,6 +3605,12 @@
     <PossiblyNullReference>
       <code>format</code>
     </PossiblyNullReference>
+    <PossiblyUnusedParam>
+      <code>$dom</code>
+      <code>$dom</code>
+      <code>$dom</code>
+      <code>$root</code>
+    </PossiblyUnusedParam>
     <PropertyNotSetInConstructor>
       <code>AbstractAtom</code>
       <code>AbstractAtom</code>
@@ -3322,6 +3700,16 @@
     <PossiblyNullReference>
       <code>format</code>
     </PossiblyNullReference>
+    <PossiblyUnusedMethod>
+      <code>_setHubs</code>
+      <code>_setImage</code>
+    </PossiblyUnusedMethod>
+    <PossiblyUnusedParam>
+      <code>$dom</code>
+      <code>$dom</code>
+      <code>$dom</code>
+      <code>$root</code>
+    </PossiblyUnusedParam>
     <PropertyNotSetInConstructor>
       <code>AbstractAtom</code>
       <code>AbstractAtom</code>
@@ -3356,6 +3744,9 @@
     <PossiblyNullArrayAccess>
       <code><![CDATA[$gdata['name']]]></code>
     </PossiblyNullArrayAccess>
+    <PossiblyUnusedMethod>
+      <code>__construct</code>
+    </PossiblyUnusedMethod>
     <PropertyNotSetInConstructor>
       <code>Source</code>
       <code>Source</code>
@@ -3458,6 +3849,11 @@
       <code>format</code>
       <code>format</code>
     </PossiblyNullReference>
+    <PossiblyUnusedParam>
+      <code>$dom</code>
+      <code>$dom</code>
+      <code>$root</code>
+    </PossiblyUnusedParam>
     <PropertyNotSetInConstructor>
       <code>Rss</code>
       <code>Rss</code>
@@ -3471,6 +3867,12 @@
       <code>setRootElement</code>
       <code>setType</code>
     </MissingReturnType>
+    <PossiblyUnusedMethod>
+      <code>getExceptions</code>
+    </PossiblyUnusedMethod>
+    <PossiblyUnusedReturnValue>
+      <code>mixed</code>
+    </PossiblyUnusedReturnValue>
   </file>
   <file src="src/Writer/Source.php">
     <PropertyNotSetInConstructor>
@@ -3510,6 +3912,9 @@
       <code><![CDATA[static::$extensions['feed'][]]]></code>
       <code><![CDATA[static::$extensions['feedRenderer'][]]]></code>
     </MixedArrayAssignment>
+    <PossiblyUnusedMethod>
+      <code>lcfirst</code>
+    </PossiblyUnusedMethod>
     <RedundantPropertyInitializationCheck>
       <code>isset(static::$extensionManager)</code>
     </RedundantPropertyInitializationCheck>
@@ -3547,61 +3952,24 @@
     </InvalidArgument>
   </file>
   <file src="test/PubSubHubbub/Subscriber/CallbackTest.php">
-    <ArgumentTypeCoercion>
-      <code>$className</code>
-      <code>$className</code>
-      <code><![CDATA['Result']]></code>
-      <code><![CDATA['Result']]></code>
-    </ArgumentTypeCoercion>
-    <DeprecatedMethod>
-      <code>setMethods</code>
-      <code>setMethods</code>
-      <code>setMethods</code>
-    </DeprecatedMethod>
     <InvalidArgument>
-      <code><![CDATA[$this->tableGateway]]></code>
       <code><![CDATA['']]></code>
       <code>new stdClass()</code>
     </InvalidArgument>
-    <InvalidPropertyAssignmentValue>
-      <code><![CDATA[$this->getCleanMock(
-            Adapter::class
-        )]]></code>
-      <code><![CDATA[$this->getCleanMock(
-            ResultSet::class
-        )]]></code>
-      <code><![CDATA[$this->getCleanMock(
-            TableGateway::class
-        )]]></code>
-    </InvalidPropertyAssignmentValue>
     <MissingReturnType>
       <code>mockInputStream</code>
     </MissingReturnType>
     <PossiblyUndefinedMethod>
       <code>getHeader</code>
     </PossiblyUndefinedMethod>
-    <UndefinedClass>
-      <code><![CDATA['Result']]></code>
-      <code><![CDATA['Result']]></code>
-    </UndefinedClass>
     <UnevaluatedCode>
       <code><![CDATA[$this->assertFalse($this->callback->isValidHubVerification($this->get));]]></code>
     </UnevaluatedCode>
   </file>
   <file src="test/PubSubHubbub/SubscriberHttpTest.php">
-    <ArgumentTypeCoercion>
-      <code>$className</code>
-      <code>$className</code>
-    </ArgumentTypeCoercion>
-    <DeprecatedMethod>
-      <code>setMethods</code>
-    </DeprecatedMethod>
     <InternalMethod>
-      <code>getName</code>
+      <code>nameWithDataSet</code>
     </InternalMethod>
-    <InvalidArgument>
-      <code><![CDATA[$this->storage]]></code>
-    </InvalidArgument>
     <PossiblyFalsePropertyAssignmentValue>
       <code><![CDATA[getenv('TESTS_LAMINAS_FEED_PUBSUBHUBBUB_BASEURI')]]></code>
     </PossiblyFalsePropertyAssignmentValue>
@@ -3611,13 +3979,6 @@
     </TooFewArguments>
   </file>
   <file src="test/PubSubHubbub/SubscriberTest.php">
-    <ArgumentTypeCoercion>
-      <code>$className</code>
-      <code>$className</code>
-    </ArgumentTypeCoercion>
-    <DeprecatedMethod>
-      <code>setMethods</code>
-    </DeprecatedMethod>
     <InvalidArgument>
       <code><![CDATA['0aa']]></code>
       <code><![CDATA['10000']]></code>
@@ -3636,6 +3997,9 @@
     </PropertyNotSetInConstructor>
   </file>
   <file src="test/Reader/Entry/AtomStandaloneEntryTest.php">
+    <PossiblyUnusedProperty>
+      <code>$expectedCatsDc</code>
+    </PossiblyUnusedProperty>
     <RedundantCastGivenDocblockType>
       <code><![CDATA[(array) $entry->getAuthors()]]></code>
     </RedundantCastGivenDocblockType>
@@ -3655,6 +4019,10 @@
     </PossiblyUndefinedMethod>
   </file>
   <file src="test/Reader/Entry/CommonTest.php">
+    <DeprecatedMethod>
+      <code>getMockForAbstractClass</code>
+      <code>getMockForAbstractClass</code>
+    </DeprecatedMethod>
     <MixedArgument>
       <code><![CDATA[$entry->getElement()->tagName]]></code>
     </MixedArgument>
@@ -3674,9 +4042,6 @@
     </PossiblyUndefinedMethod>
   </file>
   <file src="test/Reader/Entry/RssTest.php">
-    <InvalidDocblock>
-      <code>public function dateModifiedProvider(): array</code>
-    </InvalidDocblock>
     <InvalidMethodCall>
       <code>getValues</code>
       <code>getValues</code>
@@ -3694,9 +4059,6 @@
       <code>getValues</code>
       <code>getValues</code>
     </InvalidMethodCall>
-    <MixedInferredReturnType>
-      <code><![CDATA[array<int,<array{0:string,1:DateTimeInterface|null}>>]]></code>
-    </MixedInferredReturnType>
     <PossiblyNullReference>
       <code>getValues</code>
       <code>getValues</code>
@@ -3773,8 +4135,15 @@
       <code>getSource</code>
       <code>getSource</code>
     </PossiblyUndefinedMethod>
+    <PossiblyUnusedProperty>
+      <code>$expectedCatsDc</code>
+      <code>$options</code>
+    </PossiblyUnusedProperty>
   </file>
   <file src="test/Reader/Feed/AtomTest.php">
+    <PossiblyUnusedProperty>
+      <code>$options</code>
+    </PossiblyUnusedProperty>
     <RedundantCastGivenDocblockType>
       <code><![CDATA[(array) $feed->getAuthors()]]></code>
       <code><![CDATA[(array) $feed->getAuthors()]]></code>
@@ -3959,6 +4328,9 @@
       <code>expects</code>
       <code>expects</code>
     </PossiblyUndefinedMethod>
+    <PossiblyUnusedParam>
+      <code>$headers</code>
+    </PossiblyUnusedParam>
     <TooManyTemplateParams>
       <code><![CDATA[MockObject<Headers>]]></code>
       <code><![CDATA[MockObject<HttpResponse>]]></code>
@@ -4109,10 +4481,6 @@
       <code>$feed</code>
       <code>$feed</code>
     </ArgumentTypeCoercion>
-    <DeprecatedMethod>
-      <code>setMethods</code>
-      <code>setMethods</code>
-    </DeprecatedMethod>
     <InvalidArgument>
       <code>new stdClass()</code>
       <code><![CDATA[static function (int $errno, string $errstr) use ($notices): void {
@@ -4146,16 +4514,18 @@
     <MoreSpecificReturnType>
       <code>Extension\AbstractEntry|Extension\AbstractFeed</code>
     </MoreSpecificReturnType>
-  </file>
-  <file src="test/Reader/TestAsset/Psr7Stream.php">
-    <MethodSignatureMustProvideReturnType>
-      <code>__toString</code>
-    </MethodSignatureMustProvideReturnType>
+    <PossiblyUnusedMethod>
+      <code>get</code>
+      <code>has</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/Reader/_files/My/Extension/JungleBooks/Entry.php">
     <MixedAssignment>
       <code>$isbn</code>
     </MixedAssignment>
+    <PossiblyUnusedMethod>
+      <code>getIsbn</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/Reader/_files/My/Extension/JungleBooks/Feed.php">
     <MixedAssignment>
@@ -4167,6 +4537,9 @@
     <MixedReturnStatement>
       <code><![CDATA[$this->data['dayPopular']]]></code>
     </MixedReturnStatement>
+    <PossiblyUnusedMethod>
+      <code>getDaysPopularBookLink</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/Writer/DeletedTest.php">
     <DocblockTypeContradiction>
@@ -4198,6 +4571,9 @@
     <NullArgument>
       <code>null</code>
     </NullArgument>
+    <PossiblyUnusedProperty>
+      <code>$feedSamplePath</code>
+    </PossiblyUnusedProperty>
     <UnevaluatedCode>
       <code>$entry = new Writer\Entry();</code>
       <code>$entry = new Writer\Entry();</code>
@@ -4274,6 +4650,9 @@
     <MixedArgument>
       <code>$message</code>
     </MixedArgument>
+    <PossiblyUnusedProperty>
+      <code>$feedSamplePath</code>
+    </PossiblyUnusedProperty>
     <UnevaluatedCode>
       <code><![CDATA[$this->expectException(ExceptionInterface::class);]]></code>
       <code><![CDATA[$this->expectException(ExceptionInterface::class);]]></code>
@@ -4416,5 +4795,8 @@
     <MixedMethodCall>
       <code>new $class()</code>
     </MixedMethodCall>
+    <PossiblyUnusedMethod>
+      <code>get</code>
+    </PossiblyUnusedMethod>
   </file>
 </files>
