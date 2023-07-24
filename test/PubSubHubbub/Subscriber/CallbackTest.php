@@ -103,7 +103,6 @@ class CallbackTest extends TestCase
         rewind($inputStream);
 
         $r = new ReflectionProperty($callback, 'inputStream');
-        $r->setAccessible(true);
         $r->setValue($callback, $inputStream);
     }
 

@@ -27,7 +27,6 @@ class FeedSetTest extends TestCase
     public function testAbsolutiseUri($link, $uri, $result): void
     {
         $method = new ReflectionMethod(FeedSet::class, 'absolutiseUri');
-        $method->setAccessible(true);
 
         $this->assertEquals($result, $method->invoke($this->feedSet, $link, $uri));
     }

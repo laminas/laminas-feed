@@ -7,7 +7,6 @@ namespace Laminas\Feed\Reader;
 use Laminas\Feed\Reader\Extension\AbstractEntry;
 use Laminas\Feed\Reader\Extension\AbstractFeed;
 use Laminas\ServiceManager\AbstractPluginManager;
-use Laminas\ServiceManager\ConfigInterface;
 use Laminas\ServiceManager\Exception\InvalidServiceException;
 use Laminas\ServiceManager\Factory\InvokableFactory;
 
@@ -22,7 +21,6 @@ use function sprintf;
  * Validation checks that we have an Extension\AbstractEntry or
  * Extension\AbstractFeed.
  *
- * @psalm-import-type FactoriesConfigurationType from ConfigInterface
  * @final this class wasn't designed to be inherited from, but we can't assume that consumers haven't already
  *        extended it, therefore we cannot add the final marker without a new major release.
  * @template InstanceType of AbstractEntry|AbstractFeed
@@ -33,7 +31,7 @@ class ExtensionPluginManager extends AbstractPluginManager implements ExtensionM
     /**
      * Aliases for default set of extension classes
      *
-     * @var array<array-key, string>
+     * @inheritDoc
      */
     protected $aliases = [
         'atomentry'               => Extension\Atom\Entry::class,
@@ -143,8 +141,7 @@ class ExtensionPluginManager extends AbstractPluginManager implements ExtensionM
     /**
      * Factories for default set of extension classes
      *
-     * @var array<array-key, callable|string>
-     * @psalm-var FactoriesConfigurationType
+     * @inheritDoc
      */
     protected $factories = [
         Extension\Atom\Entry::class              => InvokableFactory::class,

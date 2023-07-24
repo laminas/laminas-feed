@@ -23,7 +23,6 @@ class AbstractCallbackTest extends TestCase
         $callback = new TestAsset\Callback();
 
         $r = new ReflectionMethod($callback, '_detectCallbackUrl');
-        $r->setAccessible(true);
 
         $this->assertSame('/requested/path', $r->invoke($callback));
     }
@@ -38,7 +37,6 @@ class AbstractCallbackTest extends TestCase
         $callback = new TestAsset\Callback();
 
         $r = new ReflectionMethod($callback, '_detectCallbackUrl');
-        $r->setAccessible(true);
 
         $this->assertSame('/requested/path', $r->invoke($callback));
     }
@@ -52,7 +50,6 @@ class AbstractCallbackTest extends TestCase
         $callback = new TestAsset\Callback();
 
         $r = new ReflectionMethod($callback, '_detectCallbackUrl');
-        $r->setAccessible(true);
 
         $this->assertSame('/expected/path', $r->invoke($callback));
     }
@@ -66,7 +63,6 @@ class AbstractCallbackTest extends TestCase
         $callback = new TestAsset\Callback();
 
         $r = new ReflectionMethod($callback, '_detectCallbackUrl');
-        $r->setAccessible(true);
 
         $this->assertSame('/expected/path', $r->invoke($callback));
     }
@@ -76,7 +72,6 @@ class AbstractCallbackTest extends TestCase
         $callback = new TestAsset\Callback();
 
         $r = new ReflectionMethod($callback, '_detectCallbackUrl');
-        $r->setAccessible(true);
 
         $this->assertSame('', $r->invoke($callback));
     }
