@@ -34,7 +34,7 @@ class FeedSetTest extends TestCase
     /**
      * @psalm-return array<string,array{0:string,1:string|null,2:string|null}>
      */
-    public function linkAndUriProvider(): array
+    public static function linkAndUriProvider(): array
     {
         return [
             'fully-qualified'         => ['feed', 'http://example.com', 'http://example.com/feed'],

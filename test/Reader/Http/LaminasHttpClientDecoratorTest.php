@@ -162,7 +162,7 @@ class LaminasHttpClientDecoratorTest extends TestCase
      *     1: string
      * }>
      */
-    public function invalidHeaders(): iterable
+    public static function invalidHeaders(): iterable
     {
         $basicTests = [
             'zero-name'        => [

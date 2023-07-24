@@ -124,7 +124,7 @@ class EntryTest extends TestCase
     }
 
     /** @psalm-return array<array-key, array{0: bool|string, 1: string}> */
-    public function dataProviderForSetExplicit(): array
+    public static function dataProviderForSetExplicit(): array
     {
         return [
             // Current behaviour
@@ -257,7 +257,7 @@ class EntryTest extends TestCase
     }
 
     /** @psalm-return array<string, array{0: mixed, 1?: string}> */
-    public function invalidImageUrls(): array
+    public static function invalidImageUrls(): array
     {
         return [
             'null'                  => [null],
@@ -290,7 +290,7 @@ class EntryTest extends TestCase
     }
 
     /** @psalm-return array<string, array{0: string}> */
-    public function validImageUrls(): array
+    public static function validImageUrls(): array
     {
         return [
             'jpg' => ['https://example.com/image.jpg'],
@@ -310,7 +310,7 @@ class EntryTest extends TestCase
     }
 
     /** @psalm-return array<string, array{0: mixed}> */
-    public function nonNumericEpisodeNumbers(): array
+    public static function nonNumericEpisodeNumbers(): array
     {
         return [
             'null'       => [null],
@@ -345,7 +345,7 @@ class EntryTest extends TestCase
     }
 
     /** @psalm-return array<string, array{0: mixed}> */
-    public function invalidEpisodeTypes(): array
+    public static function invalidEpisodeTypes(): array
     {
         return [
             'null'       => [null],
@@ -375,7 +375,7 @@ class EntryTest extends TestCase
     }
 
     /** @psalm-return array<string, array{0: string}> */
-    public function validEpisodeTypes(): array
+    public static function validEpisodeTypes(): array
     {
         return [
             'full'    => ['full'],
@@ -396,7 +396,7 @@ class EntryTest extends TestCase
     }
 
     /** @psalm-return array<string, array{0: mixed}> */
-    public function invalidClosedCaptioningFlags(): array
+    public static function invalidClosedCaptioningFlags(): array
     {
         return [
             'null'       => [null],

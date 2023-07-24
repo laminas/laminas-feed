@@ -16,9 +16,9 @@ use Laminas\Feed\PubSubHubbub\Exception\ExceptionInterface;
 use Laminas\Feed\PubSubHubbub\HttpResponse;
 use Laminas\Feed\PubSubHubbub\Model;
 use Laminas\Feed\PubSubHubbub\Subscriber\Callback as CallbackSubscriber;
+use PHPUnit\Framework\Attributes\BackupGlobals;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use ReflectionClass;
 use ReflectionProperty;
 use stdClass;
 
@@ -28,14 +28,9 @@ use function fwrite;
 use function hash;
 use function rewind;
 use function sprintf;
-use function str_replace;
 use function time;
-use function uniqid;
 
-/**
- * @group Laminas_Feed
- * @group Laminas_Feed_Subsubhubbub
- */
+#[BackupGlobals(true)]
 class CallbackTest extends TestCase
 {
     /** @var CallbackSubscriber */
@@ -56,15 +51,9 @@ class CallbackTest extends TestCase
     {
         $this->callback = new CallbackSubscriber();
 
-        $this->adapter      = $this->getCleanMock(
-            Adapter::class
-        );
-        $this->tableGateway = $this->getCleanMock(
-            TableGateway::class
-        );
-        $this->rowset       = $this->getCleanMock(
-            ResultSet::class
-        );
+        $this->adapter      = $this->createMock(Adapter::class);
+        $this->tableGateway = $this->createMock(TableGateway::class);
+        $this->rowset       = $this->createMock(ResultSet::class);
 
         $this->tableGateway->expects($this->any())
             ->method('getAdapter')
@@ -170,12 +159,12 @@ class CallbackTest extends TestCase
      */
     public function testValidatesValidHttpGetData(): void
     {
-        $mockReturnValue = $this->getMockBuilder('Result')->setMethods(['getArrayCopy'])->getMock();
-        $mockReturnValue->expects($this->any())
-            ->method('getArrayCopy')
-            ->will($this->returnValue([
-                'verify_token' => hash('sha256', 'cba'),
-            ]));
+        $mockReturnValue = new class {
+            public function getArrayCopy(): array
+            {
+                return ['verify_token' => hash('sha256', 'cba')];
+            }
+        };
 
         $this->tableGateway->expects($this->any())
             ->method('select')
@@ -223,12 +212,12 @@ class CallbackTest extends TestCase
 
     public function testReturnsTrueIfModeSetAsUnsubscribeFromHttpGetData(): void
     {
-        $mockReturnValue = $this->getMockBuilder('Result')->setMethods(['getArrayCopy'])->getMock();
-        $mockReturnValue->expects($this->any())
-            ->method('getArrayCopy')
-            ->will($this->returnValue([
-                'verify_token' => hash('sha256', 'cba'),
-            ]));
+        $mockReturnValue = new class {
+            public function getArrayCopy(): array
+            {
+                return ['verify_token' => hash('sha256', 'cba')];
+            }
+        };
 
         $this->get['hub_mode'] = 'unsubscribe';
         $this->tableGateway->expects($this->any())
@@ -526,26 +515,5 @@ class CallbackTest extends TestCase
 
         $this->callback->handle([]);
         $this->assertEquals(1, $this->callback->getHttpResponse()->getHeader('X-Hub-On-Behalf-Of'));
-    }
-
-    protected function getCleanMock(string $className): MockObject
-    {
-        $class       = new ReflectionClass($className);
-        $methods     = $class->getMethods();
-        $stubMethods = [];
-        foreach ($methods as $method) {
-            if (
-                $method->isPublic()
-                || ($method->isProtected() && $method->isAbstract())
-            ) {
-                $stubMethods[] = $method->getName();
-            }
-        }
-        return $this->getMockBuilder($className)
-            ->setMethods($stubMethods)
-            ->setConstructorArgs([])
-            ->setMockClassName(str_replace('\\', '_', $className . '_PubsubSubscriberMock_' . uniqid()))
-            ->disableOriginalConstructor()
-            ->getMock();
     }
 }

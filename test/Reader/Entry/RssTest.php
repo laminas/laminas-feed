@@ -1882,10 +1882,8 @@ class RssTest extends TestCase
         $this->assertEquals($edate, $entry->getDateModified());
     }
 
-    /**
-     * @psalm-return array<int,<array{0:string,1:DateTimeInterface|null}>>
-     */
-    public function dateModifiedProvider(): array
+    /** @return non-empty-list<array{0:string,1:DateTimeInterface|null}> */
+    public static function dateModifiedProvider(): array
     {
         $iso = DateTime::createFromFormat(DateTimeInterface::ISO8601, '2009-03-07T08:03:50Z');
         assert($iso instanceof DateTimeInterface);

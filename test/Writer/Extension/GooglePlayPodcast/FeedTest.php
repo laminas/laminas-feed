@@ -147,7 +147,7 @@ class FeedTest extends TestCase
     }
 
     /** @psalm-return array<string, array{0: mixed}> */
-    public function invalidImageUrls(): array
+    public static function invalidImageUrls(): array
     {
         return [
             'null'       => [null],
@@ -176,7 +176,7 @@ class FeedTest extends TestCase
     }
 
     /** @psalm-return array<string, array{0: string}> */
-    public function validImageUrls(): array
+    public static function validImageUrls(): array
     {
         return [
             'jpg' => ['https://example.com/image.jpg'],

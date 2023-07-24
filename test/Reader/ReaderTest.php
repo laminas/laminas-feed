@@ -311,9 +311,7 @@ class ReaderTest extends TestCase
     {
         $uri          = 'http://example.com/feeds/reader.xml';
         $feedContents = file_get_contents($this->feedSamplePath . '/Reader/rss20.xml');
-        $response     = $this->getMockBuilder(ResponseInterface::class)
-            ->setMethods(['getStatusCode', 'getBody'])
-            ->getMock();
+        $response     = $this->createMock(ResponseInterface::class);
         $response->expects($this->once())
             ->method('getStatusCode')
             ->will($this->returnValue(200));
@@ -321,9 +319,7 @@ class ReaderTest extends TestCase
             ->method('getBody')
             ->will($this->returnValue($feedContents));
 
-        $client = $this->getMockBuilder(ClientInterface::class)
-            ->setMethods(['get'])
-            ->getMock();
+        $client = $this->createMock(ClientInterface::class);
         $client->expects($this->once())
             ->method('get')
             ->with($this->equalTo($uri))

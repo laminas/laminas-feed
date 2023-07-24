@@ -52,7 +52,7 @@ class ResponseTest extends TestCase
     }
 
     /** @psalm-return iterable<int|string, array{0: mixed, 1: string}> */
-    public function invalidStatusCodes(): iterable
+    public static function invalidStatusCodes(): iterable
     {
         foreach ([-100, 0, 1, 99] as $statusCode) {
             yield $statusCode => [$statusCode, 'between 100 and 599'];
@@ -91,7 +91,7 @@ class ResponseTest extends TestCase
     }
 
     /** @psalm-return array<string, array{0: mixed}> */
-    public function invalidBodies(): array
+    public static function invalidBodies(): array
     {
         return [
             'null'       => [null],
@@ -117,7 +117,7 @@ class ResponseTest extends TestCase
     }
 
     /** @psalm-return array<string, array{0: array<array-key, mixed>, 1: string}> */
-    public function invalidHeaders(): array
+    public static function invalidHeaders(): array
     {
         return [
             'empty-name'   => [
