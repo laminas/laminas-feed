@@ -314,16 +314,16 @@ class ReaderTest extends TestCase
         $response     = $this->createMock(ResponseInterface::class);
         $response->expects($this->once())
             ->method('getStatusCode')
-            ->will($this->returnValue(200));
+            ->willReturn(200);
         $response->expects($this->once())
             ->method('getBody')
-            ->will($this->returnValue($feedContents));
+            ->willReturn($feedContents);
 
         $client = $this->createMock(ClientInterface::class);
         $client->expects($this->once())
             ->method('get')
             ->with($this->equalTo($uri))
-            ->will($this->returnValue($response));
+            ->willReturn($response);
 
         $feed = Reader\Reader::importRemoteFeed($uri, $client);
         $this->assertInstanceOf(FeedInterface::class, $feed);
