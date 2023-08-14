@@ -40,7 +40,7 @@ class SubscriberTest extends TestCase
         $this->tableGateway
             ->expects($this->any())
             ->method('getAdapter')
-            ->will($this->returnValue($this->adapter));
+            ->willReturn($this->adapter);
     }
 
     public function testAddsHubServerUrl(): void

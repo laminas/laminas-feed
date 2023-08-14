@@ -57,7 +57,7 @@ class CallbackTest extends TestCase
 
         $this->tableGateway->expects($this->any())
             ->method('getAdapter')
-            ->will($this->returnValue($this->adapter));
+            ->willReturn($this->adapter);
         $storage = new Model\Subscription($this->tableGateway);
 
         $this->now = new DateTime();
@@ -169,13 +169,13 @@ class CallbackTest extends TestCase
         $this->tableGateway->expects($this->any())
             ->method('select')
             ->with($this->equalTo(['id' => 'verifytokenkey']))
-            ->will($this->returnValue($this->rowset));
+            ->willReturn($this->rowset);
         $this->rowset->expects($this->any())
             ->method('current')
-            ->will($this->returnValue($mockReturnValue));
+            ->willReturn($mockReturnValue);
         $this->rowset->expects($this->any())
             ->method('count')
-            ->will($this->returnValue(1));
+            ->willReturn(1);
 
         $this->assertTrue($this->callback->isValidHubVerification($this->get));
     }
@@ -223,14 +223,14 @@ class CallbackTest extends TestCase
         $this->tableGateway->expects($this->any())
             ->method('select')
             ->with($this->equalTo(['id' => 'verifytokenkey']))
-            ->will($this->returnValue($this->rowset));
+            ->willReturn($this->rowset);
         $this->rowset->expects($this->any())
             ->method('current')
-            ->will($this->returnValue($mockReturnValue));
+            ->willReturn($mockReturnValue);
         // require for the count call on the rowset in Model/Subscription
         $this->rowset->expects($this->any())
             ->method('count')
-            ->will($this->returnValue(1));
+            ->willReturn(1);
 
         $this->assertTrue($this->callback->isValidHubVerification($this->get));
     }
@@ -296,7 +296,7 @@ class CallbackTest extends TestCase
         $this->tableGateway->expects($this->any())
             ->method('select')
             ->with($this->equalTo(['id' => 'verifytokenkey']))
-            ->will($this->returnValue($this->rowset));
+            ->willReturn($this->rowset);
 
         $t       = clone $this->now;
         $rowdata = [
@@ -310,16 +310,16 @@ class CallbackTest extends TestCase
 
         $this->rowset->expects($this->any())
             ->method('current')
-            ->will($this->returnValue($row));
+            ->willReturn($row);
         // require for the count call on the rowset in Model/Subscription
         $this->rowset->expects($this->any())
             ->method('count')
-            ->will($this->returnValue(1));
+            ->willReturn(1);
 
         $this->tableGateway->expects($this->once())
             ->method('delete')
             ->with($this->equalTo(['id' => 'verifytokenkey']))
-            ->will($this->returnValue(true));
+            ->willReturn(true);
 
         $this->callback->handle($this->get);
         $this->assertEquals(200, $this->callback->getHttpResponse()->getStatusCode());
@@ -330,7 +330,7 @@ class CallbackTest extends TestCase
         $this->tableGateway->expects($this->any())
             ->method('select')
             ->with($this->equalTo(['id' => 'verifytokenkey']))
-            ->will($this->returnValue($this->rowset));
+            ->willReturn($this->rowset);
 
         $t       = clone $this->now;
         $rowdata = [
@@ -344,11 +344,11 @@ class CallbackTest extends TestCase
 
         $this->rowset->expects($this->any())
             ->method('current')
-            ->will($this->returnValue($row));
+            ->willReturn($row);
         // require for the count call on the rowset in Model/Subscription
         $this->rowset->expects($this->any())
             ->method('count')
-            ->will($this->returnValue(1));
+            ->willReturn(1);
 
         $this->tableGateway->expects($this->once())
             ->method('update')
@@ -380,7 +380,7 @@ class CallbackTest extends TestCase
         $this->tableGateway->expects($this->any())
             ->method('select')
             ->with($this->equalTo(['id' => 'verifytokenkey']))
-            ->will($this->returnValue($this->rowset));
+            ->willReturn($this->rowset);
 
         $rowdata = [
             'id'           => 'verifytokenkey',
@@ -392,11 +392,11 @@ class CallbackTest extends TestCase
 
         $this->rowset->expects($this->any())
             ->method('current')
-            ->will($this->returnValue($row));
+            ->willReturn($row);
         // require for the count call on the rowset in Model/Subscription
         $this->rowset->expects($this->any())
             ->method('count')
-            ->will($this->returnValue(1));
+            ->willReturn(1);
 
         $this->callback->handle([]);
         $this->assertEquals(200, $this->callback->getHttpResponse()->getStatusCode());
@@ -459,7 +459,7 @@ class CallbackTest extends TestCase
         $this->tableGateway->expects($this->any())
             ->method('select')
             ->with($this->equalTo(['id' => 'verifytokenkey']))
-            ->will($this->returnValue($this->rowset));
+            ->willReturn($this->rowset);
 
         $rowdata = [
             'id'            => 'verifytokenkey',
@@ -472,11 +472,11 @@ class CallbackTest extends TestCase
 
         $this->rowset->expects($this->any())
             ->method('current')
-            ->will($this->returnValue($row));
+            ->willReturn($row);
         // require for the count call on the rowset in Model/Subscription
         $this->rowset->expects($this->any())
             ->method('count')
-            ->will($this->returnValue(1));
+            ->willReturn(1);
 
         $this->callback->handle([]);
         $this->assertEquals(200, $this->callback->getHttpResponse()->getStatusCode());
@@ -494,7 +494,7 @@ class CallbackTest extends TestCase
         $this->tableGateway->expects($this->any())
             ->method('select')
             ->with($this->equalTo(['id' => 'verifytokenkey']))
-            ->will($this->returnValue($this->rowset));
+            ->willReturn($this->rowset);
 
         $rowdata = [
             'id'            => 'verifytokenkey',
@@ -507,11 +507,11 @@ class CallbackTest extends TestCase
 
         $this->rowset->expects($this->any())
             ->method('current')
-            ->will($this->returnValue($row));
+            ->willReturn($row);
         // require for the count call on the rowset in Model/Subscription
         $this->rowset->expects($this->any())
             ->method('count')
-            ->will($this->returnValue(1));
+            ->willReturn(1);
 
         $this->callback->handle([]);
         $this->assertEquals(1, $this->callback->getHttpResponse()->getHeader('X-Hub-On-Behalf-Of'));
