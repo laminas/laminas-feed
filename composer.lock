@@ -963,21 +963,21 @@
         },
         {
             "name": "laminas/laminas-cache-storage-adapter-memory",
-            "version": "2.2.0",
+            "version": "2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-cache-storage-adapter-memory.git",
-                "reference": "e002c7d3fa0d4723589b550d7ab4586befa72366"
+                "reference": "d2c357a8b839ceb0e0781d5e9aebe46642dbf0b2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-cache-storage-adapter-memory/zipball/e002c7d3fa0d4723589b550d7ab4586befa72366",
-                "reference": "e002c7d3fa0d4723589b550d7ab4586befa72366",
+                "url": "https://api.github.com/repos/laminas/laminas-cache-storage-adapter-memory/zipball/d2c357a8b839ceb0e0781d5e9aebe46642dbf0b2",
+                "reference": "d2c357a8b839ceb0e0781d5e9aebe46642dbf0b2",
                 "shasum": ""
             },
             "require": {
                 "laminas/laminas-cache": "^3.0",
-                "php": "~8.0.0 || ~8.1.0  || ~8.2.0"
+                "php": "~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0"
             },
             "conflict": {
                 "laminas/laminas-servicemanager": "<3.11"
@@ -986,11 +986,11 @@
                 "laminas/laminas-cache-storage-implementation": "1.0"
             },
             "require-dev": {
-                "laminas/laminas-cache-storage-adapter-benchmark": "^1.0",
-                "laminas/laminas-cache-storage-adapter-test": "^2.0",
-                "laminas/laminas-coding-standard": "~2.4.0",
-                "psalm/plugin-phpunit": "^0.17.0",
-                "vimeo/psalm": "^4.9"
+                "laminas/laminas-cache-storage-adapter-benchmark": "^1.1.0",
+                "laminas/laminas-cache-storage-adapter-test": "^2.3.0",
+                "laminas/laminas-coding-standard": "~2.5.0",
+                "psalm/plugin-phpunit": "^0.18.0",
+                "vimeo/psalm": "^4.29.0"
             },
             "type": "library",
             "extra": {
@@ -1026,7 +1026,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2022-10-22T14:38:52+00:00"
+            "time": "2023-10-18T09:43:33+00:00"
         },
         {
             "name": "laminas/laminas-coding-standard",
@@ -1157,20 +1157,20 @@
         },
         {
             "name": "laminas/laminas-eventmanager",
-            "version": "3.11.0",
+            "version": "3.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-eventmanager.git",
-                "reference": "9cfa79ce247c567f05ce4b7c975c6bdf9698c5dd"
+                "reference": "4a576922c00cc7838d60d004a7bd6f5a02c23b57"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-eventmanager/zipball/9cfa79ce247c567f05ce4b7c975c6bdf9698c5dd",
-                "reference": "9cfa79ce247c567f05ce4b7c975c6bdf9698c5dd",
+                "url": "https://api.github.com/repos/laminas/laminas-eventmanager/zipball/4a576922c00cc7838d60d004a7bd6f5a02c23b57",
+                "reference": "4a576922c00cc7838d60d004a7bd6f5a02c23b57",
                 "shasum": ""
             },
             "require": {
-                "php": "~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0"
+                "php": "~8.1.0 || ~8.2.0 || ~8.3.0"
             },
             "conflict": {
                 "container-interop/container-interop": "<1.2",
@@ -1178,12 +1178,12 @@
             },
             "require-dev": {
                 "laminas/laminas-coding-standard": "~2.5.0",
-                "laminas/laminas-stdlib": "^3.15",
-                "phpbench/phpbench": "^1.2.7",
-                "phpunit/phpunit": "^9.5.26",
-                "psalm/plugin-phpunit": "^0.18.0",
+                "laminas/laminas-stdlib": "^3.17",
+                "phpbench/phpbench": "^1.2.10",
+                "phpunit/phpunit": "^10.4.1",
+                "psalm/plugin-phpunit": "^0.18.4",
                 "psr/container": "^1.1.2 || ^2.0.2",
-                "vimeo/psalm": "^5.0.0"
+                "vimeo/psalm": "^5.11"
             },
             "suggest": {
                 "laminas/laminas-stdlib": "^2.7.3 || ^3.0, to use the FilterChain feature",
@@ -1221,7 +1221,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2023-10-10T08:29:58+00:00"
+            "time": "2023-10-18T16:36:45+00:00"
         },
         {
             "name": "laminas/laminas-http",
@@ -1290,20 +1290,20 @@
         },
         {
             "name": "laminas/laminas-loader",
-            "version": "2.9.0",
+            "version": "2.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-loader.git",
-                "reference": "51ed9c3fa42d1098a9997571730c0cbf42d078d3"
+                "reference": "e6fe952304ef40ce45cd814751ab35d42afdad12"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-loader/zipball/51ed9c3fa42d1098a9997571730c0cbf42d078d3",
-                "reference": "51ed9c3fa42d1098a9997571730c0cbf42d078d3",
+                "url": "https://api.github.com/repos/laminas/laminas-loader/zipball/e6fe952304ef40ce45cd814751ab35d42afdad12",
+                "reference": "e6fe952304ef40ce45cd814751ab35d42afdad12",
                 "shasum": ""
             },
             "require": {
-                "php": "~8.0.0 || ~8.1.0 || ~8.2.0"
+                "php": "~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0"
             },
             "conflict": {
                 "zendframework/zend-loader": "*"
@@ -1342,7 +1342,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2022-10-16T12:50:49+00:00"
+            "time": "2023-10-18T09:58:51+00:00"
         },
         {
             "name": "laminas/laminas-servicemanager",
@@ -1436,22 +1436,22 @@
         },
         {
             "name": "laminas/laminas-uri",
-            "version": "2.10.0",
+            "version": "2.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-uri.git",
-                "reference": "663b050294945c7345cc3a61f3ca661d5f9e1f80"
+                "reference": "e662c685125061d3115906e5eb30f966842cc226"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-uri/zipball/663b050294945c7345cc3a61f3ca661d5f9e1f80",
-                "reference": "663b050294945c7345cc3a61f3ca661d5f9e1f80",
+                "url": "https://api.github.com/repos/laminas/laminas-uri/zipball/e662c685125061d3115906e5eb30f966842cc226",
+                "reference": "e662c685125061d3115906e5eb30f966842cc226",
                 "shasum": ""
             },
             "require": {
                 "laminas/laminas-escaper": "^2.9",
-                "laminas/laminas-validator": "^2.15",
-                "php": "~8.0.0 || ~8.1.0 || ~8.2.0"
+                "laminas/laminas-validator": "^2.39",
+                "php": "~8.1.0 || ~8.2.0 || ~8.3.0"
             },
             "conflict": {
                 "zendframework/zend-uri": "*"
@@ -1490,7 +1490,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2022-10-16T15:02:45+00:00"
+            "time": "2023-10-18T09:56:55+00:00"
         },
         {
             "name": "laminas/laminas-validator",
