@@ -7,7 +7,9 @@ namespace Laminas\Feed\Reader\Http;
 use Laminas\Feed\Reader\Exception;
 
 use function gettype;
+use function implode;
 use function intval;
+use function is_array;
 use function is_numeric;
 use function is_object;
 use function is_string;
@@ -155,6 +157,8 @@ class Response implements HeaderAwareResponseInterface
 
     /**
      * Normalize header names to lowercase.
+     * Also ensures multi-value headers are represented as a single string, via
+     * comma concatenation.
      *
      * @return array
      */
@@ -162,7 +166,7 @@ class Response implements HeaderAwareResponseInterface
     {
         $normalized = [];
         foreach ($headers as $name => $value) {
-            $normalized[strtolower($name)] = $value;
+            $normalized[strtolower($name)] = is_array($value) ? implode(', ', $value) : $value;
         }
         return $normalized;
     }

@@ -9,7 +9,6 @@ use Laminas\Http\Client as LaminasHttpClient;
 use Laminas\Http\Headers;
 
 use function gettype;
-use function implode;
 use function is_array;
 use function is_numeric;
 use function is_object;
@@ -47,10 +46,12 @@ class LaminasHttpClientDecorator implements HeaderAwareClientInterface
         }
         $response = $this->client->send();
 
+        $headers = $response->getHeaders()->toArray();
+
         return new Response(
             $response->getStatusCode(),
             $response->getBody(),
-            $this->prepareResponseHeaders($response->getHeaders())
+            $headers
         );
     }
 
@@ -93,22 +94,5 @@ class LaminasHttpClientDecorator implements HeaderAwareClientInterface
                 $headers->addHeaderLine($name, $value);
             }
         }
-    }
-
-    /**
-     * Normalize headers to use with HeaderAwareResponseInterface.
-     *
-     * Ensures multi-value headers are represented as a single string, via
-     * comma concatenation.
-     *
-     * @return array
-     */
-    private function prepareResponseHeaders(Headers $headers)
-    {
-        $normalized = [];
-        foreach ($headers->toArray() as $name => $value) {
-            $normalized[$name] = is_array($value) ? implode(', ', $value) : $value;
-        }
-        return $normalized;
     }
 }
