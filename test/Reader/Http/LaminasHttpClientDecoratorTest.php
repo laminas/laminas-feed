@@ -234,6 +234,8 @@ class LaminasHttpClientDecoratorTest extends TestCase
         foreach ($invalidIndividualValues as $key => $value) {
             yield $key => [['X-Test' => [$value]], 'strings or numbers'];
         }
+
+        // todo: expand here with multi values.
     }
 
     /**
