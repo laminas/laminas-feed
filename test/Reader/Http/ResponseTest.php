@@ -43,6 +43,8 @@ class ResponseTest extends TestCase
             'Location'         => 'http://example.org/foo',
             'Content-Length'   => 1234,
             'X-Content-Length' => 1234.56,
+            'MultiValue'       => ['one', 'two']
+
         ]);
         $this->assertEquals(204, $response->getStatusCode());
         $this->assertEquals('', $response->getBody());
@@ -148,12 +150,24 @@ class ResponseTest extends TestCase
                 ['X-Test' => false],
                 'must be a string or numeric',
             ],
-            'array-value'  => [
-                ['X-Test' => ['BODY']],
-                'must be a string or numeric',
-            ],
             'object-value' => [
                 ['X-Test' => (object) ['body' => 'BODY']],
+                'must be a string or numeric',
+            ],
+            'null-value-in-array'   => [
+                ['X-Test' => [null]],
+                'must be a string or numeric',
+            ],
+            'true-value-in-array'   => [
+                ['X-Test' => [true]],
+                'must be a string or numeric',
+            ],
+            'false-value-in-array'  => [
+                ['X-Test' => [false]],
+                'must be a string or numeric',
+            ],
+            'object-value-in-array' => [
+                ['X-Test' => [(object) ['body' => 'BODY']]],
                 'must be a string or numeric',
             ],
         ];

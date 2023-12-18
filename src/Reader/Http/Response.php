@@ -144,13 +144,26 @@ class Response implements HeaderAwareResponseInterface
                 ));
             }
 
-            if (! is_string($value) && ! is_numeric($value)) {
+            if (! is_string($value) && ! is_numeric($value) && ! is_array($value)) {
                 throw new Exception\InvalidArgumentException(sprintf(
                     'Individual header values provided to %s must be a string or numeric; received %s for header %s',
                     self::class,
                     is_object($value) ? $value::class : gettype($value),
                     $name
                 ));
+            }
+
+            if (is_array($value)) {
+                foreach ($value as $key => $multiValue) {
+                    if (! is_string($multiValue) && ! is_numeric($multiValue)) {
+                        throw new Exception\InvalidArgumentException(sprintf(
+                            'Individual header values provided to %s must be a string or numeric; received %s for header %s',
+                            self::class,
+                            is_object($multiValue) ? $multiValue::class : gettype($multiValue),
+                            $name . "[$key]"
+                        ));
+                    }
+                }
             }
         }
     }
