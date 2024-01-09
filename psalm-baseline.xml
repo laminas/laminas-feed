@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.14.1@b9d355e0829c397b9b3b47d0c0ed042a8a70284d">
+<files psalm-version="5.18.0@b113f3ed0259fd6e212d87c3df80eec95a6abf19">
   <file src="src/PubSubHubbub/AbstractCallback.php">
     <DocblockTypeContradiction>
       <code><![CDATA[$this->httpResponse === null]]></code>
@@ -71,7 +71,6 @@
       <code>string|null</code>
     </MixedInferredReturnType>
     <MixedOperand>
-      <code>$code</code>
       <code><![CDATA[$header['name']]]></code>
       <code><![CDATA[$header['name']]]></code>
       <code><![CDATA[$header['value']]]></code>
@@ -121,8 +120,6 @@
     </MixedMethodCall>
     <MixedOperand>
       <code><![CDATA[$data['lease_seconds']]]></code>
-      <code>$key</code>
-      <code>$key</code>
     </MixedOperand>
     <MixedReturnStatement>
       <code><![CDATA[$result->current()->getArrayCopy()]]></code>
@@ -185,8 +182,6 @@
       <code>$value</code>
     </MixedAssignment>
     <MixedOperand>
-      <code>$name</code>
-      <code>$name</code>
       <code><![CDATA[$response->getContent()]]></code>
     </MixedOperand>
     <PossiblyUnusedMethod>
@@ -268,8 +263,6 @@
     </MixedAssignment>
     <MixedOperand>
       <code>$keyduplicate</code>
-      <code>$name</code>
-      <code>$name</code>
       <code><![CDATA[$params['hub.lease_seconds']]]></code>
       <code><![CDATA[$params['hub.topic']]]></code>
       <code>$value</code>
@@ -2252,9 +2245,6 @@
       <code>! is_numeric($statusCode)</code>
       <code>is_string($statusCode)</code>
     </DocblockTypeContradiction>
-    <MixedArgument>
-      <code>$statusCode</code>
-    </MixedArgument>
     <MixedArgumentTypeCoercion>
       <code>$name</code>
     </MixedArgumentTypeCoercion>
@@ -2269,6 +2259,9 @@
       <code><![CDATA[$this->headers[$normalizedName] ?? $default]]></code>
       <code><![CDATA[$this->headers[$normalizedName] ?? $default]]></code>
     </MixedReturnStatement>
+    <NoValue>
+      <code>$statusCode</code>
+    </NoValue>
     <NullableReturnStatement>
       <code><![CDATA[$this->headers[$normalizedName] ?? $default]]></code>
     </NullableReturnStatement>
@@ -2278,6 +2271,9 @@
     <RedundantCastGivenDocblockType>
       <code>(int) $statusCode</code>
     </RedundantCastGivenDocblockType>
+    <RedundantCondition>
+      <code><![CDATA[is_string($statusCode) && trim($statusCode) !== $statusCode]]></code>
+    </RedundantCondition>
   </file>
   <file src="src/Reader/Reader.php">
     <DeprecatedInterface>
@@ -2354,9 +2350,6 @@
     <LessSpecificReturnStatement>
       <code>new $class()</code>
     </LessSpecificReturnStatement>
-    <MixedArgument>
-      <code>$class</code>
-    </MixedArgument>
     <MixedMethodCall>
       <code>new $class()</code>
     </MixedMethodCall>
@@ -2886,7 +2879,6 @@
       <code>is_bool($status)</code>
       <code>is_float($number)</code>
       <code>is_float($number)</code>
-      <code>is_object($type)</code>
     </DocblockTypeContradiction>
     <MixedArgument>
       <code>$value</code>
@@ -2923,9 +2915,6 @@
       <code>(int) $number</code>
       <code>(int) $number</code>
     </RedundantCastGivenDocblockType>
-    <RedundantConditionGivenDocblockType>
-      <code>var_export($type, true)</code>
-    </RedundantConditionGivenDocblockType>
     <TypeDoesNotContainType>
       <code><![CDATA['no']]></code>
     </TypeDoesNotContainType>
@@ -2935,7 +2924,6 @@
       <code>! is_bool($value)</code>
       <code>! is_string($value)</code>
       <code>is_bool($status)</code>
-      <code>is_object($type)</code>
     </DocblockTypeContradiction>
     <MixedArgument>
       <code>$val</code>
@@ -2986,9 +2974,6 @@
     <RedundantCastGivenDocblockType>
       <code>(string) $value</code>
     </RedundantCastGivenDocblockType>
-    <RedundantConditionGivenDocblockType>
-      <code>var_export($type, true)</code>
-    </RedundantConditionGivenDocblockType>
     <TypeDoesNotContainType>
       <code><![CDATA['no']]></code>
     </TypeDoesNotContainType>
@@ -3884,9 +3869,6 @@
     <DeprecatedInterface>
       <code>StandaloneExtensionManager</code>
     </DeprecatedInterface>
-    <MixedArgument>
-      <code>$class</code>
-    </MixedArgument>
     <MixedMethodCall>
       <code>new $class()</code>
     </MixedMethodCall>
