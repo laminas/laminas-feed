@@ -7,9 +7,8 @@ namespace Laminas\Feed\Writer;
 use Traversable;
 
 use function array_key_exists;
-use function gettype;
+use function get_debug_type;
 use function is_array;
-use function is_object;
 use function method_exists;
 use function sprintf;
 use function str_replace;
@@ -31,7 +30,7 @@ abstract class FeedFactory
             throw new Exception\InvalidArgumentException(sprintf(
                 '%s expects an array or Traversable argument; received "%s"',
                 __METHOD__,
-                is_object($data) ? $data::class : gettype($data)
+                get_debug_type($data),
             ));
         }
 
@@ -96,7 +95,7 @@ abstract class FeedFactory
             throw new Exception\InvalidArgumentException(sprintf(
                 '%s::factory expects the "entries" value to be an array or Traversable; received "%s"',
                 static::class,
-                is_object($entries) ? $entries::class : gettype($entries)
+                get_debug_type($entries),
             ));
         }
 
@@ -105,7 +104,7 @@ abstract class FeedFactory
                 throw new Exception\InvalidArgumentException(sprintf(
                     '%s expects an array, Traversable, or Laminas\Feed\Writer\Entry argument; received "%s"',
                     __METHOD__,
-                    is_object($data) ? $data::class : gettype($data)
+                    get_debug_type($data),
                 ));
             }
 

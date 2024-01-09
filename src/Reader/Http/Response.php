@@ -6,7 +6,7 @@ namespace Laminas\Feed\Reader\Http;
 
 use Laminas\Feed\Reader\Exception;
 
-use function gettype;
+use function get_debug_type;
 use function intval;
 use function is_numeric;
 use function is_object;
@@ -79,7 +79,7 @@ class Response implements HeaderAwareResponseInterface
             throw new Exception\InvalidArgumentException(sprintf(
                 '%s expects a numeric status code; received %s',
                 self::class,
-                is_object($statusCode) ? $statusCode::class : gettype($statusCode)
+                get_debug_type($statusCode),
             ));
         }
 
@@ -121,7 +121,7 @@ class Response implements HeaderAwareResponseInterface
         throw new Exception\InvalidArgumentException(sprintf(
             '%s expects a string body, or an object that can cast to string; received %s',
             self::class,
-            is_object($body) ? $body::class : gettype($body)
+            get_debug_type($body),
         ));
     }
 
@@ -146,7 +146,7 @@ class Response implements HeaderAwareResponseInterface
                 throw new Exception\InvalidArgumentException(sprintf(
                     'Individual header values provided to %s must be a string or numeric; received %s for header %s',
                     self::class,
-                    is_object($value) ? $value::class : gettype($value),
+                    get_debug_type($value),
                     $name
                 ));
             }
