@@ -461,7 +461,7 @@ Method | Description
 `getEnclosure()` | Returns class object (stdClass) containing the value of all attributes from a multi-media `<enclosure>` element including as class attributes: url, length, type. In accordance with the RSS Best Practices Profile of the RSS Advisory Board, no support is offers for multiple enclosures since such support forms no part of the RSS specification.
 `getCommentCount()` | Returns the number of comments made on this entry at the time the feed was last generated.
 `getCommentLink()` | Returns a URI pointing to the HTML page where comments can be made on this entry.
-`getCommentFeedLink([string $type = ‘atom'|'rss'])` | Returns a URI pointing to a feed of the provided type containing all comments for this entry (type defaults to Atom/RSS depending on current feed type).
+`getCommentFeedLink([string $type = 'atom'|'rss'])` | Returns a URI pointing to a feed of the provided type containing all comments for this entry (type defaults to Atom/RSS depending on current feed type).
 `getCategories()` | Returns a `Laminas\Feed\Reader\Collection\Category` object containing the details of any categories associated with the entry. The supported fields include "term" (the machine readable category name), "scheme" (the categorisation scheme and domain for this category), and "label" (an HTML-decoded human readable category name). Where any of the three fields are absent from the field, they are either set to the closest available alternative or, in the case of "scheme", set to `NULL`.
 
 The extended API for entries is identical to that for feeds with the exception
