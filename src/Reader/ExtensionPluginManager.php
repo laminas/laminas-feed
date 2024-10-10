@@ -33,7 +33,7 @@ class ExtensionPluginManager extends AbstractPluginManager implements ExtensionM
      *
      * @inheritDoc
      */
-    protected $aliases = [
+    protected array $aliases = [
         'atomentry'               => Extension\Atom\Entry::class,
         'atomEntry'               => Extension\Atom\Entry::class,
         'AtomEntry'               => Extension\Atom\Entry::class,
@@ -143,7 +143,7 @@ class ExtensionPluginManager extends AbstractPluginManager implements ExtensionM
      *
      * @inheritDoc
      */
-    protected $factories = [
+    protected array $factories = [
         Extension\Atom\Entry::class              => InvokableFactory::class,
         Extension\Atom\Feed::class               => InvokableFactory::class,
         Extension\Content\Entry::class           => InvokableFactory::class,
@@ -197,10 +197,10 @@ class ExtensionPluginManager extends AbstractPluginManager implements ExtensionM
      *
      * @var bool
      */
-    protected $sharedByDefault = false;
+    protected bool $sharedByDefault = false;
 
     /** @inheritDoc */
-    public function validate(mixed $instance)
+    public function validate(mixed $instance) : void
     {
         if (
             $instance instanceof AbstractEntry
