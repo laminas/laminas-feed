@@ -46,6 +46,7 @@ class Uri
         'http',
         'https',
         'file',
+        'magnet',
     ];
 
     /**
