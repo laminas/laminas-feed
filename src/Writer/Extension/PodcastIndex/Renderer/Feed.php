@@ -74,7 +74,7 @@ class Feed extends Extension\AbstractRenderer
         if ($funding === null) {
             return;
         }
-        $el   = $dom->createElement('podcast:locked');
+        $el   = $dom->createElement('podcast:funding');
         $text = $dom->createTextNode((string) $funding['title']);
         $el->appendChild($text);
         $el->setAttribute('url', $funding['url']);
