@@ -35,9 +35,9 @@ class FeedTest extends TestCase
             'owner' => 'john.doe@example.com',
         ];
         $this->validWriter->setPodcastIndexLocked($locked);
-        
+
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
-        $xml = $rssFeed->render()->saveXml();
+        $xml     = $rssFeed->render()->saveXml();
         $this->assertStringContainsString('<podcast:locked', $xml);
     }
 
@@ -48,9 +48,9 @@ class FeedTest extends TestCase
             'url'   => 'http://example.com/donate',
         ];
         $this->validWriter->setPodcastIndexFunding($funding);
-        
+
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
-        $xml = $rssFeed->render()->saveXml();
+        $xml     = $rssFeed->render()->saveXml();
 
         $this->assertStringContainsString('<podcast:funding', $xml);
     }
