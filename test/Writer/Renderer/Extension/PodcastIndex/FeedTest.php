@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace LaminasTest\Feed\Writer\Renderer\Extension\PodcastIndex;
 
 use Laminas\Feed\Writer;
-use Laminas\Feed\Reader;
-use PHPUnit\Framework\TestCase;
 use Laminas\Feed\Writer\Renderer;
+use PHPUnit\Framework\TestCase;
+
 class FeedTest extends TestCase
 {
-    protected $validWriter;
+    protected Writer\Feed $validWriter;
 
     protected function setUp(): void
     {
@@ -35,12 +35,10 @@ class FeedTest extends TestCase
             'owner' => 'john.doe@example.com',
         ];
         $this->validWriter->setPodcastIndexLocked($locked);
-        
-        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
-        $rssFeed->render();
-        $feed = Reader\Reader::importString($rssFeed->saveXml());
-        $xml = $feed->getDomDocument()->saveXml();
 
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        /** @var string $xml */
+        $xml = $rssFeed->render()->saveXml();
         $this->assertStringContainsString('<podcast:locked', $xml);
     }
 
@@ -48,14 +46,13 @@ class FeedTest extends TestCase
     {
         $funding = [
             'title' => 'Support the show!',
-            'url'   => 'http://example.com/donate',
+            'url' => 'http://example.com/donate',
         ];
         $this->validWriter->setPodcastIndexFunding($funding);
-        
+
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
-        $rssFeed->render();
-        $feed = Reader\Reader::importString($rssFeed->saveXml());
-        $xml = $feed->getDomDocument()->saveXml();
+        /** @var string $xml */
+        $xml = $rssFeed->render()->saveXml();
 
         $this->assertStringContainsString('<podcast:funding', $xml);
     }
