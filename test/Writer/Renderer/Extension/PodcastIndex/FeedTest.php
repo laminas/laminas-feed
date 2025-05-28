@@ -28,7 +28,7 @@ class FeedTest extends TestCase
         Writer\Writer::reset();
     }
 
-    public function testRendersLockedTag(): void
+    public function testRendersRssLockedTag(): void
     {
         $locked = [
             'value' => 'yes',
@@ -41,7 +41,7 @@ class FeedTest extends TestCase
         $this->assertStringContainsString('<podcast:locked', $xml);
     }
 
-    public function testRendersFundingTag(): void
+    public function testRendersRssFundingTag(): void
     {
         $funding = [
             'title' => 'Support the show!',
@@ -53,5 +53,24 @@ class FeedTest extends TestCase
         $xml     = $rssFeed->render()->saveXml();
 
         $this->assertStringContainsString('<podcast:funding', $xml);
+    }
+
+    public function testRendersRssLicenseTag(): void
+    {
+        $identifier = 'cc-by-4.0';
+        $url        = 'https://spdx.org/licenses/CC-BY-4.0.html';
+
+        $license = [
+            'identifier' => $identifier,
+            'url'        => $url,
+        ];
+        $this->validWriter->setPodcastIndexLicense($license);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $this->assertStringContainsString('<podcast:license', $xml);
+        $this->assertStringContainsString($url, $xml);
+        $this->assertStringContainsString($identifier, $xml);
     }
 }

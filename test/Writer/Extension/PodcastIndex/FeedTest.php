@@ -87,4 +87,27 @@ class FeedTest extends TestCase
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $feed->setPodcastIndexFunding($locked);
     }
+
+    public function testSetLicense(): void
+    {
+        $feed = new Writer\Feed();
+
+        $license = [
+            'identifier' => 'cc-by-4.0',
+            'url'        => 'https://spdx.org/licenses/CC-BY-4.0.html',
+        ];
+        $feed->setPodcastIndexLicense($license);
+        $this->assertEquals($license, $feed->getPodcastIndexLicense());
+    }
+
+    public function testSetLicenseThrowsExceptionOnInvalidArguments(): void
+    {
+        $feed = new Writer\Feed();
+
+        $license = [
+            'abc' => 'def',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->setPodcastIndexLicense($license);
+    }
 }

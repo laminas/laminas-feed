@@ -81,6 +81,32 @@ class Feed extends Extension\AbstractFeed
     }
 
     /**
+     * Get the podcast license
+     *
+     * @psalm-return null|object{identifier: string, url: string}
+     */
+    public function getLicense(): ?stdClass
+    {
+        if (array_key_exists('license', $this->data)) {
+            return $this->data['license'];
+        }
+
+        $license = null;
+
+        $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:license');
+
+        if ($nodeList->length > 0) {
+            $license             = new stdClass();
+            $license->identifier = $nodeList->item(0)->nodeValue;
+            $license->url        = $nodeList->item(0)->getAttribute('url');
+        }
+
+        $this->data['license'] = $license;
+
+        return $this->data['license'];
+    }
+
+    /**
      * Register PodcastIndex namespace
      */
     protected function registerNamespaces(): void

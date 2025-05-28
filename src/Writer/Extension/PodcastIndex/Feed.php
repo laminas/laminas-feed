@@ -107,6 +107,24 @@ class Feed
     }
 
     /**
+     * Set feed license
+     *
+     * @param array $value
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function setPodcastIndexLicense(array $value)
+    {
+        if (! isset($value['identifier']) || ! isset($value['url'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "license" must be an array containing keys "identifier" and "url"'
+            );
+        }
+        $this->data['license'] = $value;
+        return $this;
+    }
+
+    /**
      * Overloading: proxy to internal setters
      *
      * @return mixed

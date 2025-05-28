@@ -29,6 +29,7 @@ class Feed extends Extension\AbstractRenderer
     {
         $this->setLocked($this->dom, $this->base);
         $this->setFunding($this->dom, $this->base);
+        $this->setLicense($this->dom, $this->base);
         if ($this->called) {
             $this->_appendNamespaces();
         }
@@ -78,6 +79,24 @@ class Feed extends Extension\AbstractRenderer
         $text = $dom->createTextNode((string) $funding['title']);
         $el->appendChild($text);
         $el->setAttribute('url', $funding['url']);
+        $root->appendChild($el);
+        $this->called = true;
+    }
+
+    /**
+     * Set feed license
+     */
+    protected function setLicense(DOMDocument $dom, DOMElement $root): void
+    {
+        /** @psalm-var null|array<string, string> $license */
+        $license = $this->getDataContainer()->getPodcastIndexLicense();
+        if ($license === null) {
+            return;
+        }
+        $el   = $dom->createElement('podcast:license');
+        $text = $dom->createTextNode((string) $license['identifier']);
+        $el->appendChild($text);
+        $el->setAttribute('url', $license['url']);
         $root->appendChild($el);
         $this->called = true;
     }
