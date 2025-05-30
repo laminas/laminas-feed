@@ -7,6 +7,7 @@ namespace LaminasTest\Feed\Writer\Extension\PodcastIndex;
 use Laminas\Feed\Writer;
 use PHPUnit\Framework\TestCase;
 
+use function in_array;
 use function time;
 
 class FeedTest extends TestCase
@@ -231,5 +232,83 @@ class FeedTest extends TestCase
         ];
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $feed->setPodcastIndexUpdateFrequency($updateFrequency);
+    }
+
+    public function testAddPerson(): void
+    {
+        $feed = new Writer\Feed();
+
+        $person = [
+            'name'  => 'Hercules Poirot',
+            'role'  => 'guest',
+            'group' => 'writing',
+            'img'   => 'https://poirot.com/about/my-moustage.jpg',
+            'href'  => 'https://poirot.com/my-cases',
+        ];
+        $feed->addPodcastIndexPerson($person);
+        $this->assertTrue(in_array($person, $feed->getPodcastIndexPersons()));
+    }
+
+    public function testSetPersons(): void
+    {
+        $feed = new Writer\Feed();
+
+        $persons = [
+            [
+                'name'  => 'Hercules Poirot',
+                'role'  => 'guest',
+                'group' => 'writing',
+                'img'   => 'https://poirot.com/about/my-moustage.jpg',
+                'href'  => 'https://poirot.com/my-cases',
+            ],
+            [
+                'name' => 'Agatha Christie',
+                'role' => 'guest',
+            ],
+        ];
+        // set
+        $feed->setPodcastIndexPersons($persons);
+        foreach ($persons as $person) {
+            $this->assertTrue(in_array($person, $feed->getPodcastIndexPersons()));
+        }
+        // delete
+        $feed->setPodcastIndexPersons();
+        $this->assertNull($feed->getPodcastIndexPersons());
+    }
+
+    public function testSetPersonWithOneArgument(): void
+    {
+        $feed = new Writer\Feed();
+
+        $person = [
+            'name' => 'Hercules Poirot',
+        ];
+        $feed->addPodcastIndexPerson($person);
+        $this->assertTrue(in_array($person, $feed->getPodcastIndexPersons()));
+    }
+
+    public function testSetPersonThrowsExceptionOnInvalidArguments(): void
+    {
+        $feed = new Writer\Feed();
+
+        $person = [
+            'abc' => 'def',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->addPodcastIndexPerson($person);
+    }
+
+    public function testSetPersonThrowsExceptionOnInvalidImageUrl(): void
+    {
+        $feed = new Writer\Feed();
+
+        $person = [
+            'name'  => 'Hercules Poirot',
+            'role'  => 'guest',
+            'group' => 'writing',
+            'img'   => 'poirot.com/my-moustage.jpg',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->addPodcastIndexPerson($person);
     }
 }

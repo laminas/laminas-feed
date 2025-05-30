@@ -16,13 +16,16 @@ GET |
 `getLocation()` | Returns funding information. The output is an object with "description", "geo" and "osm" properties.
 `getImages()` | Returns information on responsive images. The output is an object with a "srcset" property.
 `getUpdateFrequency()` | Returns information on the intended release schedule. The output is an object with "description", "complete", "dtstart" and "rrule" properties.
+`getPersons()` | Returns credits for hosts and guests. The output is an array of objects with "name", "role", "group", "img" and "href" properties.
 SET |
 `setPodcastIndexLocked()` | Expects an array with the required keys "value" and "owner".
 `setPodcastIndexFunding()` | Expects an array with the required keys "title" and "url".
 `setPodcastIndexLicense()` | Expects an array with the required keys "identifier" and "url".
 `setPodcastIndexLocation()` | Expects an array with the required key "description" and the optional keys "geo" and "osm".
 `setPodcastIndexImages()` | Expects an array with the required key "srcset".
-`setPodcastIndexUpdateFrequency()` | Expects an array with the required key "description" and the optional keys "complete" (bool), "dtstart" (ISO8601 string) and "rrule" properties.
+`setPodcastIndexUpdateFrequency()` | Expects an array with the required key "description" and the optional keys "complete" (bool), "dtstart" (ISO8601 string) and "rrule".
+`addPodcastIndexPerson()` | Expects an array with the required key "name" and the optional keys "role", "group", "img" and "href".
+`setPodcastIndexPersons()` | Expects an array of objects with each the required key "name" and the optional keys "role", "group", "img" and "href".
 
 ### Episode API methods:
 

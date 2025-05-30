@@ -109,7 +109,7 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get the podcast location
      *
-     * @psalm-return null|object{text: string, geo: string, osm: string}
+     * @psalm-return null|object{description: string, geo: string|null, osm: string|null}
      */
     public function getLocation(): ?stdClass
     {
@@ -161,7 +161,7 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get the podcast update frequency
      *
-     * @psalm-return null|object{description: string, complete: bool, dtstart: string, rrule: string}
+     * @psalm-return null|object{description: string, complete: bool|null, dtstart: string|null, rrule: string|null}
      */
     public function getUpdateFrequency(): ?stdClass
     {
@@ -184,6 +184,39 @@ class Feed extends Extension\AbstractFeed
         $this->data['updateFrequency'] = $updateFrequency;
 
         return $this->data['updateFrequency'];
+    }
+
+    /**
+     * Get the podcast person
+     *
+     * @psalm-return array<object{name: string, role: string, group: string, img: string, href: string}>|null
+     */
+    public function getPersons()
+    {
+        if (array_key_exists('persons', $this->data)) {
+            return $this->data['persons'];
+        }
+
+        $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:person');
+
+        $personCollection = [];
+
+        if ($nodeList->length) {
+            foreach ($nodeList as $entry) {
+                $person        = new stdClass();
+                $person->name  = $entry->nodeValue;
+                $person->role  = $entry->getAttribute('role');
+                $person->group = $entry->getAttribute('group');
+                $person->img   = $entry->getAttribute('img');
+                $person->href  = $entry->getAttribute('href');
+
+                $personCollection[] = $person;
+            }
+        }
+
+        $this->data['persons'] = $personCollection;
+
+        return $this->data['persons'];
     }
 
     /**

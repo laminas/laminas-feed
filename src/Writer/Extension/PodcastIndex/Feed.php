@@ -10,6 +10,7 @@ use Laminas\Stdlib\StringWrapper\StringWrapperInterface;
 
 use function array_key_exists;
 use function ctype_alpha;
+use function filter_var;
 use function is_bool;
 use function is_string;
 use function lcfirst;
@@ -17,6 +18,8 @@ use function method_exists;
 use function strlen;
 use function substr;
 use function ucfirst;
+
+use const FILTER_VALIDATE_URL;
 
 /**
  * Describes PodcastIndex data of a RSS Feed
@@ -110,7 +113,7 @@ class Feed
     /**
      * Set feed license
      *
-     * @param array $value
+     * @param array $value [identifier: string, url: string]
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
@@ -128,7 +131,7 @@ class Feed
     /**
      * Set feed location
      *
-     * @param array $value
+     * @param array $value [description: string, geo: string|null, osm: string|null]
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
@@ -146,7 +149,7 @@ class Feed
     /**
      * Set feed images
      *
-     * @param array $value
+     * @param array $value [scrset: string]
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
@@ -164,7 +167,7 @@ class Feed
     /**
      * Set feed update frequency
      *
-     * @param array $value
+     * @param array $value [description: string, complete: bool|null, dtstart: string|null, rrule: string|null]
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
@@ -192,6 +195,69 @@ class Feed
         }
         $this->data['updateFrequency'] = $value;
         return $this;
+    }
+
+    /**
+     * Add feed person
+     *
+     * @param array $value [name: string, role: string|null, group: string|null, img: url|null, href: url|null]
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function addPodcastIndexPerson(array $value)
+    {
+        if (empty($value['name'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "person" must be an array containing at least the key "name"'
+            );
+        }
+        if (! empty($value['img']) && ! filter_var($value['img'], FILTER_VALIDATE_URL)) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter for "person": "img" must be a url, starting with "http://" or "https://"'
+            );
+        }
+        if (! empty($value['href']) && ! filter_var($value['href'], FILTER_VALIDATE_URL)) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter for "person": "href" must be a url, starting with "http://" or "https://"'
+            );
+        }
+        if (! isset($this->data['persons'])) {
+            $this->data['persons'] = [];
+        }
+        $this->data['persons'][] = $value;
+        return $this;
+    }
+
+    /**
+     * Set a new array of persons.
+     * If no argument is passed, it will just remove all existing persons.
+     *
+     * @param array $value [name: string, role: string|null, group: string|null, img: url|null, href: url|null]
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function setPodcastIndexPersons(?array $values = null)
+    {
+        // delete existing persons before setting new ones
+        $this->data['persons'] = null;
+        if (null === $values) {
+            return $this;
+        }
+
+        foreach ($values as $value) {
+            $this->addPodcastIndexPerson($value);
+        }
+        return $this;
+    }
+
+    /**
+     * Get feed persons
+     *
+     * @return array|null
+     */
+    public function getPodcastIndexPersons()
+    {
+        return $this->data['persons'] ?? null;
     }
 
     /**

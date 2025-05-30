@@ -33,6 +33,8 @@ class Feed extends Extension\AbstractRenderer
         $this->setLocation($this->dom, $this->base);
         $this->setImages($this->dom, $this->base);
         $this->setUpdateFrequency($this->dom, $this->base);
+        $this->addPerson($this->dom, $this->base);
+        $this->setPersons($this->dom, $this->base);
         if ($this->called) {
             $this->_appendNamespaces();
         }
@@ -167,5 +169,42 @@ class Feed extends Extension\AbstractRenderer
         }
         $root->appendChild($el);
         $this->called = true;
+    }
+
+    /**
+     * Add feed person
+     */
+    protected function addPerson(DOMDocument $dom, DOMElement $root): void
+    {
+        /** @psalm-var null|array<string, mixed> $person */
+        $persons = $this->getDataContainer()->getPodcastIndexPersons();
+        if ($persons === null) {
+            return;
+        }
+        foreach ($persons as $person) {
+            $el   = $dom->createElement('podcast:person');
+            $text = $dom->createTextNode((string) $person['name']);
+            $el->appendChild($text);
+
+            if (! empty($person['role'])) {
+                $el->setAttribute('role', $person['role']);
+            }
+            if (! empty($person['group'])) {
+                $el->setAttribute('group', $person['group']);
+            }
+            if (! empty($person['img'])) {
+                $el->setAttribute('img', $person['img']);
+            }
+            if (! empty($person['href'])) {
+                $el->setAttribute('href', $person['href']);
+            }
+            $root->appendChild($el);
+        }
+        $this->called = true;
+    }
+
+    protected function setPersons(DOMDocument $dom, DOMElement $root): void
+    {
+        $this->addPerson($dom, $root);
     }
 }
