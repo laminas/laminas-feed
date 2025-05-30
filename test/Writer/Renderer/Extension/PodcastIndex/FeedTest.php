@@ -73,4 +73,22 @@ class FeedTest extends TestCase
         $this->assertStringContainsString($url, $xml);
         $this->assertStringContainsString($identifier, $xml);
     }
+
+    public function testRendersRssLocationTag(): void
+    {
+        $location = [
+            'description' => 'London, Baker Street',
+            'geo'         => 'geo:-27.86159,153.3169',
+            'osm'         => 'W43678282',
+        ];
+        $this->validWriter->setPodcastIndexLocation($location);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $this->assertStringContainsString('<podcast:location', $xml);
+        $this->assertStringContainsString($location['description'], $xml);
+        $this->assertStringContainsString($location['geo'], $xml);
+        $this->assertStringContainsString($location['osm'], $xml);
+    }
 }

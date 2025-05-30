@@ -30,6 +30,7 @@ class Feed extends Extension\AbstractRenderer
         $this->setLocked($this->dom, $this->base);
         $this->setFunding($this->dom, $this->base);
         $this->setLicense($this->dom, $this->base);
+        $this->setLocation($this->dom, $this->base);
         if ($this->called) {
             $this->_appendNamespaces();
         }
@@ -97,6 +98,29 @@ class Feed extends Extension\AbstractRenderer
         $text = $dom->createTextNode((string) $license['identifier']);
         $el->appendChild($text);
         $el->setAttribute('url', $license['url']);
+        $root->appendChild($el);
+        $this->called = true;
+    }
+
+    /**
+     * Set feed location
+     */
+    protected function setLocation(DOMDocument $dom, DOMElement $root): void
+    {
+        /** @psalm-var null|array<string, string> $location */
+        $location = $this->getDataContainer()->getPodcastIndexLocation();
+        if ($location === null) {
+            return;
+        }
+        $el   = $dom->createElement('podcast:location');
+        $text = $dom->createTextNode((string) $location['description']);
+        $el->appendChild($text);
+        if (! empty($location['geo'])) {
+            $el->setAttribute('geo', $location['geo']);
+        }
+        if (! empty($location['osm'])) {
+            $el->setAttribute('osm', $location['osm']);
+        }
         $root->appendChild($el);
         $this->called = true;
     }

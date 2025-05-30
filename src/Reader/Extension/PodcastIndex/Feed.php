@@ -107,6 +107,33 @@ class Feed extends Extension\AbstractFeed
     }
 
     /**
+     * Get the podcast location
+     *
+     * @psalm-return null|object{text: string, geo: string, osm: string}
+     */
+    public function getLocation(): ?stdClass
+    {
+        if (array_key_exists('location', $this->data)) {
+            return $this->data['location'];
+        }
+
+        $location = null;
+
+        $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:location');
+
+        if ($nodeList->length > 0) {
+            $location              = new stdClass();
+            $location->description = $nodeList->item(0)->nodeValue;
+            $location->geo         = $nodeList->item(0)->getAttribute('geo');
+            $location->osm         = $nodeList->item(0)->getAttribute('osm');
+        }
+
+        $this->data['location'] = $location;
+
+        return $this->data['location'];
+    }
+
+    /**
      * Register PodcastIndex namespace
      */
     protected function registerNamespaces(): void

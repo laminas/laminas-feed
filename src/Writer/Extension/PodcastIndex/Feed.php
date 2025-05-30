@@ -115,12 +115,30 @@ class Feed
      */
     public function setPodcastIndexLicense(array $value)
     {
-        if (! isset($value['identifier']) || ! isset($value['url'])) {
+        if (empty($value['identifier']) || empty($value['url'])) {
             throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: "license" must be an array containing keys "identifier" and "url"'
+                'invalid parameter: "license" must be an array containing the keys "identifier" (node value) and "url"'
             );
         }
         $this->data['license'] = $value;
+        return $this;
+    }
+
+    /**
+     * Set feed location
+     *
+     * @param array $value
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function setPodcastIndexLocation(array $value)
+    {
+        if (empty($value['description'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "location" must be an array containing at least the key "description" (node value)'
+            );
+        }
+        $this->data['location'] = $value;
         return $this;
     }
 

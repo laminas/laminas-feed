@@ -110,4 +110,39 @@ class FeedTest extends TestCase
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $feed->setPodcastIndexLicense($license);
     }
+
+    public function testSetLocation(): void
+    {
+        $feed = new Writer\Feed();
+
+        $location = [
+            'description' => 'London, Baker Street',
+            'geo'         => 'geo:-27.86159,153.3169',
+            'osm'         => 'W43678282',
+        ];
+        $feed->setPodcastIndexLocation($location);
+        $this->assertEquals($location, $feed->getPodcastIndexLocation());
+    }
+
+    public function testSetLocationWithOneArgument(): void
+    {
+        $feed = new Writer\Feed();
+
+        $location = [
+            'description' => 'Dreamworld (Queensland)',
+        ];
+        $feed->setPodcastIndexLocation($location);
+        $this->assertEquals($location, $feed->getPodcastIndexLocation());
+    }
+
+    public function testSetLocationThrowsExceptionOnInvalidArguments(): void
+    {
+        $feed = new Writer\Feed();
+
+        $location = [
+            'abc' => 'def',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->setPodcastIndexLocation($location);
+    }
 }
