@@ -10,6 +10,7 @@ use Laminas\Stdlib\StringWrapper\StringWrapperInterface;
 
 use function array_key_exists;
 use function ctype_alpha;
+use function is_bool;
 use function is_string;
 use function lcfirst;
 use function method_exists;
@@ -157,6 +158,39 @@ class Feed
             );
         }
         $this->data['images'] = $value;
+        return $this;
+    }
+
+    /**
+     * Set feed update frequency
+     *
+     * @param array $value
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function setPodcastIndexUpdateFrequency(array $value)
+    {
+        if (empty($value['description'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "updateFrequency" must be an array containing the key "description" (node value)'
+            );
+        }
+        if (! empty($value['complete']) && ! is_bool($value['complete'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter for "updateFrequency": key "complete" must be of type boolean'
+            );
+        }
+        if (! empty($value['dtstart']) && ! is_string($value['dtstart'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter for "updateFrequency": key "dtstart" must be an ISO8601-formatted string'
+            );
+        }
+        if (! empty($value['rrule']) && ! is_string($value['rrule'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter for "updateFrequency": key "rrule" must be of type string'
+            );
+        }
+        $this->data['updateFrequency'] = $value;
         return $this;
     }
 

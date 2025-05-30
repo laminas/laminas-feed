@@ -105,4 +105,28 @@ class FeedTest extends TestCase
         $this->assertStringContainsString('<podcast:images', $xml);
         $this->assertStringContainsString($images['srcset'], $xml);
     }
+
+    public function testRendersRssUpdateFrequencyTag(): void
+    {
+        $description = 'Daily';
+        $complete    = false;
+
+        $updateFrequency = [
+            'description' => $description,
+            'complete'    => $complete,
+            'dtstart'     => '2023-08-28T00:00:00.000Z',
+            'rrule'       => 'FREQ=DAILY',
+        ];
+
+        $this->validWriter->setPodcastIndexUpdateFrequency($updateFrequency);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $this->assertStringContainsString('<podcast:updateFrequency', $xml);
+        $this->assertStringContainsString(">$description<", $xml);
+        $this->assertStringContainsString((string) $complete, $xml);
+        $this->assertStringContainsString($updateFrequency['dtstart'], $xml);
+        $this->assertStringContainsString($updateFrequency['rrule'], $xml);
+    }
 }

@@ -7,6 +7,8 @@ namespace LaminasTest\Feed\Writer\Extension\PodcastIndex;
 use Laminas\Feed\Writer;
 use PHPUnit\Framework\TestCase;
 
+use function time;
+
 class FeedTest extends TestCase
 {
     public function testSetLocked(): void
@@ -169,5 +171,65 @@ class FeedTest extends TestCase
         ];
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $feed->setPodcastIndexImages($images);
+    }
+
+    public function testSetUpdateFrequency(): void
+    {
+        $feed = new Writer\Feed();
+
+        $updateFrequency = [
+            'description' => 'Daily',
+            'complete'    => false,
+            'dtstart'     => '2023-08-28T00:00:00.000Z',
+            'rrule'       => 'FREQ=DAILY',
+        ];
+        $feed->setPodcastIndexUpdateFrequency($updateFrequency);
+        $this->assertEquals($updateFrequency, $feed->getPodcastIndexUpdateFrequency());
+    }
+
+    public function testSetUpdateFrequencyWithOneArgument(): void
+    {
+        $feed = new Writer\Feed();
+
+        $updateFrequency = [
+            'description' => 'Daily',
+        ];
+        $feed->setPodcastIndexUpdateFrequency($updateFrequency);
+        $this->assertEquals($updateFrequency, $feed->getPodcastIndexUpdateFrequency());
+    }
+
+    public function testSetUpdateFrequencyThrowsExceptionOnInvalidArguments(): void
+    {
+        $feed = new Writer\Feed();
+
+        $updateFrequency = [
+            'abc' => 'def',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->setPodcastIndexUpdateFrequency($updateFrequency);
+    }
+
+    public function testSetUpdateFrequencyThrowsExceptionOnInvalidCompleteValue(): void
+    {
+        $feed = new Writer\Feed();
+
+        $updateFrequency = [
+            'description' => 'Daily',
+            'complete'    => 'yes',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->setPodcastIndexUpdateFrequency($updateFrequency);
+    }
+
+    public function testSetUpdateFrequencyThrowsExceptionOnInvalidDateValue(): void
+    {
+        $feed = new Writer\Feed();
+
+        $updateFrequency = [
+            'description' => 'Daily',
+            'dtstart'     => time(),
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->setPodcastIndexUpdateFrequency($updateFrequency);
     }
 }

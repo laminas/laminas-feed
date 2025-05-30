@@ -32,6 +32,7 @@ class Feed extends Extension\AbstractRenderer
         $this->setLicense($this->dom, $this->base);
         $this->setLocation($this->dom, $this->base);
         $this->setImages($this->dom, $this->base);
+        $this->setUpdateFrequency($this->dom, $this->base);
         if ($this->called) {
             $this->_appendNamespaces();
         }
@@ -138,6 +139,32 @@ class Feed extends Extension\AbstractRenderer
         }
         $el = $dom->createElement('podcast:images');
         $el->setAttribute('srcset', $images['srcset']);
+        $root->appendChild($el);
+        $this->called = true;
+    }
+
+    /**
+     * Set feed update frequency
+     */
+    protected function setUpdateFrequency(DOMDocument $dom, DOMElement $root): void
+    {
+        /** @psalm-var null|array<string, mixed> $updateFrequency */
+        $updateFrequency = $this->getDataContainer()->getPodcastIndexUpdateFrequency();
+        if ($updateFrequency === null) {
+            return;
+        }
+        $el   = $dom->createElement('podcast:updateFrequency');
+        $text = $dom->createTextNode((string) $updateFrequency['description']);
+        $el->appendChild($text);
+        if (! empty($updateFrequency['complete'])) {
+            $el->setAttribute('complete', $updateFrequency['complete']);
+        }
+        if (! empty($updateFrequency['dtstart'])) {
+            $el->setAttribute('dtstart', $updateFrequency['dtstart']);
+        }
+        if (! empty($updateFrequency['rrule'])) {
+            $el->setAttribute('rrule', $updateFrequency['rrule']);
+        }
         $root->appendChild($el);
         $this->called = true;
     }

@@ -159,6 +159,34 @@ class Feed extends Extension\AbstractFeed
     }
 
     /**
+     * Get the podcast update frequency
+     *
+     * @psalm-return null|object{description: string, complete: bool, dtstart: string, rrule: string}
+     */
+    public function getUpdateFrequency(): ?stdClass
+    {
+        if (array_key_exists('updateFrequency', $this->data)) {
+            return $this->data['updateFrequency'];
+        }
+
+        $updateFrequency = null;
+
+        $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:updateFrequency');
+
+        if ($nodeList->length > 0) {
+            $updateFrequency              = new stdClass();
+            $updateFrequency->description = $nodeList->item(0)->nodeValue;
+            $updateFrequency->complete    = $nodeList->item(0)->getAttribute('complete');
+            $updateFrequency->dtstart     = $nodeList->item(0)->getAttribute('dtstart');
+            $updateFrequency->rrule       = $nodeList->item(0)->getAttribute('rrule');
+        }
+
+        $this->data['updateFrequency'] = $updateFrequency;
+
+        return $this->data['updateFrequency'];
+    }
+
+    /**
      * Register PodcastIndex namespace
      */
     protected function registerNamespaces(): void
