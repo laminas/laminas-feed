@@ -145,4 +145,29 @@ class FeedTest extends TestCase
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $feed->setPodcastIndexLocation($location);
     }
+
+    public function testSetImages(): void
+    {
+        $feed = new Writer\Feed();
+
+        $images = [
+            'srcset' => "https://example.com/images/ep1/pci_avatar-massive.jpg 1500w, 
+    https://example.com/images/ep1/pci_avatar-middle.jpg 600w, 
+    https://example.com/images/ep1/pci_avatar-small.jpg 300w, 
+    https://example.com/images/ep1/pci_avatar-tiny.jpg 150w",
+        ];
+        $feed->setPodcastIndexImages($images);
+        $this->assertEquals($images, $feed->getPodcastIndexImages());
+    }
+
+    public function testSetImagesThrowsExceptionOnInvalidArguments(): void
+    {
+        $feed = new Writer\Feed();
+
+        $images = [
+            'abc' => 'def',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->setPodcastIndexImages($images);
+    }
 }

@@ -134,6 +134,31 @@ class Feed extends Extension\AbstractFeed
     }
 
     /**
+     * Get the podcast images
+     *
+     * @psalm-return null|object{scrset: string}
+     */
+    public function getImages(): ?stdClass
+    {
+        if (array_key_exists('images', $this->data)) {
+            return $this->data['images'];
+        }
+
+        $images = null;
+
+        $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:images');
+
+        if ($nodeList->length > 0) {
+            $images         = new stdClass();
+            $images->srcset = $nodeList->item(0)->getAttribute('srcset');
+        }
+
+        $this->data['images'] = $images;
+
+        return $this->data['images'];
+    }
+
+    /**
      * Register PodcastIndex namespace
      */
     protected function registerNamespaces(): void

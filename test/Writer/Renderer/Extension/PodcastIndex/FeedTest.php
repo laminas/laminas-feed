@@ -91,4 +91,18 @@ class FeedTest extends TestCase
         $this->assertStringContainsString($location['geo'], $xml);
         $this->assertStringContainsString($location['osm'], $xml);
     }
+
+    public function testRendersRssImagesTag(): void
+    {
+        $images = [
+            'srcset' => 'London, Baker Street',
+        ];
+        $this->validWriter->setPodcastIndexImages($images);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $this->assertStringContainsString('<podcast:images', $xml);
+        $this->assertStringContainsString($images['srcset'], $xml);
+    }
 }

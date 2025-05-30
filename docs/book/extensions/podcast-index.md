@@ -14,11 +14,13 @@ GET |
 `getFunding()` | Returns funding information. The output is an object with "url" and "value" properties.
 `getLicense()` | Returns license information. The output is an object with "identifier" and "url" properties.
 `getLocation()` | Returns funding information. The output is an object with "description", "geo" and "osm" properties.
+`getImages()` | Returns information on responsive images. The output is an object with a "srcset" property.
 SET |
 `setPodcastIndexLocked()` | Expects an array with the required keys "value" and "owner".
 `setPodcastIndexFunding()` | Expects an array with the required keys "title" and "url".
 `setPodcastIndexLicense()` | Expects an array with the required keys "identifier" and "url".
 `setPodcastIndexLocation()` | Expects an array with the required key "description" and the optional keys "geo" and "osm".
+`setPodcastIndexImages()` | Expects an array with the required key "srcset".
 
 ### Episode API methods:
 

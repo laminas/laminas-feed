@@ -143,6 +143,24 @@ class Feed
     }
 
     /**
+     * Set feed images
+     *
+     * @param array $value
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function setPodcastIndexImages(array $value)
+    {
+        if (empty($value['srcset'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "images" must be an array containing the key "srcset"'
+            );
+        }
+        $this->data['srcset'] = $value;
+        return $this;
+    }
+
+    /**
      * Overloading: proxy to internal setters
      *
      * @return mixed

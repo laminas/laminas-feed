@@ -31,6 +31,7 @@ class Feed extends Extension\AbstractRenderer
         $this->setFunding($this->dom, $this->base);
         $this->setLicense($this->dom, $this->base);
         $this->setLocation($this->dom, $this->base);
+        $this->setImages($this->dom, $this->base);
         if ($this->called) {
             $this->_appendNamespaces();
         }
@@ -121,6 +122,22 @@ class Feed extends Extension\AbstractRenderer
         if (! empty($location['osm'])) {
             $el->setAttribute('osm', $location['osm']);
         }
+        $root->appendChild($el);
+        $this->called = true;
+    }
+
+    /**
+     * Set feed images
+     */
+    protected function setImages(DOMDocument $dom, DOMElement $root): void
+    {
+        /** @psalm-var null|array<string, string> $images */
+        $images = $this->getDataContainer()->getPodcastIndexImages();
+        if ($images === null) {
+            return;
+        }
+        $el = $dom->createElement('podcast:images');
+        $el->setAttribute('srcset', $images['srcset']);
         $root->appendChild($el);
         $this->called = true;
     }
