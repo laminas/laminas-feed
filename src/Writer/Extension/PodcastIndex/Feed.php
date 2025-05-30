@@ -156,7 +156,7 @@ class Feed
                 'invalid parameter: "images" must be an array containing the key "srcset"'
             );
         }
-        $this->data['srcset'] = $value;
+        $this->data['images'] = $value;
         return $this;
     }
 
