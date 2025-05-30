@@ -4,21 +4,34 @@ The Podcast Index Extension adds support for the [Podcast Index RSS namespace](h
 an open source project which consolidates new features for podcasts into a
 single namespace.
 
-Channel API methods:
+### Channel API methods:
 
 Method | Description
 ------ | -----------
+GET |
 `isLocked()` | Returns whether the feed is open for importing to new platforms.
 `getLockOwner()` | Returns the email address for owner verification.
 `getFunding()` | Returns funding information. The output is an object with "url" and "value" properties.
+`getLicense()` | Returns license information. The output is an object with "identifier" and "url" properties.
+`getLocation()` | Returns funding information. The output is an object with "description", "geo" and "osm" properties.
+SET |
+`setPodcastIndexLocked()` | Expects an array with the required keys "value" and "owner".
+`setPodcastIndexFunding()` | Expects an array with the required keys "title" and "url".
+`setPodcastIndexLicense()` | Expects an array with the required keys "identifier" and "url".
+`setPodcastIndexLocation()` | Expects an array with the required key "description" and the optional keys "geo" and "osm".
 
-Item API methods:
+### Episode API methods:
 
 Method | Description
 ------ | -----------
-`getTranscript()` | Returns transcript information for the entry. The output is an object with "url", "type", "language" and "rel" properties/
+GET |
+`getTranscript()` | Returns transcript information for the entry. The output is an object with "url", "type", "language" and "rel" properties.
 `getChapters()` | Returns chapter information for the entry. The output is an object with "url" and "type" properties.
 `getSoundbites()` | Returns soundbites for the entry. The output is an array of objects with "title", "startTime" and "duration" properties.
+SET |
+`setPodcastIndexTranscript()` | Expects an array with the required keys "url" and "type", and with the optional keys "language" and "rel".
+`setPodcastIndexChapters()` | Expects an array with the required keys "url" and "type".
+`addPodcastIndexSoundbites()` | Expects an array of soundbite entries, each itself an array with the required keys "title" and "startTime", and with the optional key "duration".
 
 See the [Podcast Index website](https://podcastindex.org) for more information
 about the project.
