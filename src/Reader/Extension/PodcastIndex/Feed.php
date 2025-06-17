@@ -191,7 +191,7 @@ class Feed extends Extension\AbstractFeed
      *
      * @psalm-return array<object{name: string, role: string, group: string, img: string, href: string}>|null
      */
-    public function getPersons()
+    public function getPersons(): array
     {
         if (array_key_exists('persons', $this->data)) {
             return $this->data['persons'];

@@ -7,6 +7,7 @@ namespace LaminasTest\Feed\Writer\Extension\PodcastIndex;
 use Laminas\Feed\Writer;
 use PHPUnit\Framework\TestCase;
 
+use function implode;
 use function in_array;
 use function time;
 
@@ -153,12 +154,16 @@ class FeedTest extends TestCase
     {
         $feed = new Writer\Feed();
 
-        $images = [
-            'srcset' => "https://example.com/images/ep1/pci_avatar-massive.jpg 1500w, 
-    https://example.com/images/ep1/pci_avatar-middle.jpg 600w, 
-    https://example.com/images/ep1/pci_avatar-small.jpg 300w, 
-    https://example.com/images/ep1/pci_avatar-tiny.jpg 150w",
+        $srcset = [
+            "https://example.com/images/ep1/pci_avatar-massive.jpg 1500w",
+            "https://example.com/images/ep1/pci_avatar-middle.jpg 600w",
+            "https://example.com/images/ep1/pci_avatar-small.jpg 300w",
+            "https://example.com/images/ep1/pci_avatar-tiny.jpg 150w",
         ];
+        $images = [
+            'srcset' => implode(", ", $srcset), // cast to string
+        ];
+
         $feed->setPodcastIndexImages($images);
         $this->assertEquals($images, $feed->getPodcastIndexImages());
     }
@@ -170,6 +175,24 @@ class FeedTest extends TestCase
         $images = [
             'abc' => 'def',
         ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->setPodcastIndexImages($images);
+    }
+
+    public function testSetImagesThrowsExceptionOnInvalidSrcsetType(): void
+    {
+        $feed = new Writer\Feed();
+
+        $srcset = [
+            "https://example.com/images/ep1/pci_avatar-massive.jpg 1500w",
+            "https://example.com/images/ep1/pci_avatar-middle.jpg 600w",
+            "https://example.com/images/ep1/pci_avatar-small.jpg 300w",
+            "https://example.com/images/ep1/pci_avatar-tiny.jpg 150w",
+        ];
+        $images = [
+            'srcset' => $srcset, // plain array, not allowed
+        ];
+
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $feed->setPodcastIndexImages($images);
     }

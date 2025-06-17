@@ -8,6 +8,8 @@ use Laminas\Feed\Writer;
 use Laminas\Feed\Writer\Renderer;
 use PHPUnit\Framework\TestCase;
 
+use function implode;
+
 class FeedTest extends TestCase
 {
     protected Writer\Feed $validWriter;
@@ -94,9 +96,16 @@ class FeedTest extends TestCase
 
     public function testRendersRssImagesTag(): void
     {
-        $images = [
-            'srcset' => 'London, Baker Street',
+        $srcset = [
+            "https://example.com/images/ep1/pci_avatar-massive.jpg 1500w",
+            "https://example.com/images/ep1/pci_avatar-middle.jpg 600w",
+            "https://example.com/images/ep1/pci_avatar-small.jpg 300w",
+            "https://example.com/images/ep1/pci_avatar-tiny.jpg 150w",
         ];
+        $images = [
+            'srcset' => implode(", ", $srcset), // cast to string
+        ];
+
         $this->validWriter->setPodcastIndexImages($images);
 
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);

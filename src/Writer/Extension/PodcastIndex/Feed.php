@@ -160,6 +160,11 @@ class Feed
                 'invalid parameter: "images" must be an array containing the key "srcset"'
             );
         }
+        if (! is_string($value['srcset'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "srcset" must be of type string, containing comma-seperated urls'
+            );
+        }
         $this->data['images'] = $value;
         return $this;
     }
