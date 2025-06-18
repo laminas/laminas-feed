@@ -40,6 +40,14 @@ class Feed extends Extension\AbstractFeed
      */
     public function getLockOwner(): ?string
     {
+        return $this->getPodcastIndexLockOwner();
+    }
+
+    /**
+     * Get the owner of the podcast (for verification)
+     */
+    public function getPodcastIndexLockOwner(): ?string
+    {
         if (isset($this->data['owner'])) {
             return $this->data['owner'];
         }
@@ -59,6 +67,14 @@ class Feed extends Extension\AbstractFeed
      * Get the entry funding link
      */
     public function getFunding(): ?stdClass
+    {
+        return $this->getPodcastIndexFunding();
+    }
+
+    /**
+     * Get the entry funding link
+     */
+    public function getPodcastIndexFunding(): ?stdClass
     {
         if (array_key_exists('funding', $this->data)) {
             /** @var stdClass $object */
@@ -86,7 +102,7 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get the podcast license
      */
-    public function getLicense(): ?stdClass
+    public function getPodcastIndexLicense(): ?stdClass
     {
         if (array_key_exists('license', $this->data)) {
             /** @var stdClass $object */
@@ -114,7 +130,7 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get the podcast location
      */
-    public function getLocation(): ?stdClass
+    public function getPodcastIndexLocation(): ?stdClass
     {
         if (array_key_exists('location', $this->data)) {
             /** @var stdClass $object */
@@ -143,7 +159,7 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get the podcast images
      */
-    public function getImages(): ?stdClass
+    public function getPodcastIndexImages(): ?stdClass
     {
         if (array_key_exists('images', $this->data)) {
             /** @var stdClass $object */
@@ -170,7 +186,7 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get the podcast update frequency
      */
-    public function getUpdateFrequency(): ?stdClass
+    public function getPodcastIndexUpdateFrequency(): ?stdClass
     {
         if (array_key_exists('updateFrequency', $this->data)) {
             /** @var stdClass $object */
@@ -200,7 +216,7 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get the podcast person
      */
-    public function getPersons(): array
+    public function getPodcastIndexPersons(): array
     {
         if (array_key_exists('persons', $this->data)) {
             /** @var array $persons */

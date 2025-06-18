@@ -9,16 +9,16 @@ single namespace.
 
 ### GET methods
 
-| Method                 | Description                                                                                                                                        |
-|------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------|
-| `isLocked()`           | Returns whether the feed is open for importing to new platforms.                                                                                   |
-| `getLockOwner()`       | Returns the email address for owner verification.                                                                                                  |
-| `getFunding()`         | Returns funding information. The output is an object with "url" and "value" properties.                                                            |
-| `getLicense()`         | Returns license information. The output is an object with "identifier" and "url" properties.                                                       |
-| `getLocation()`        | Returns funding information. The output is an object with "description", "geo" and "osm" properties.                                               |
-| `getImages()`          | Returns information on responsive images. The output is an object with a "srcset" property.                                                        |
-| `getUpdateFrequency()` | Returns information on the intended release schedule. The output is an object with "description", "complete", "dtstart" and "rrule" properties.    |
-| `getPersons()`         | Returns information on the involved people. The output is an array of objects, each with the properties "name", "role", "group", "img" and "href". |
+| Method                                        | Description                                                                                                                                        |
+|-----------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------|
+| `isLocked()`                                  | Returns whether the feed is open for importing to new platforms.                                                                                   |
+| `getLockOwner()` `getPodcastIndexLockOwner()` | Returns the email address for owner verification.                                                                                                  |
+| `getFunding()` `getPodcastIndexFunding()`     | Returns funding information. The output is an object with "url" and "value" properties.                                                            |
+| `getPodcastIndexLicense()`                    | Returns license information. The output is an object with "identifier" and "url" properties.                                                       |
+| `getPodcastIndexLocation()`                   | Returns funding information. The output is an object with "description", "geo" and "osm" properties.                                               |
+| `getPodcastIndexImages()`                     | Returns information on responsive images. The output is an object with a "srcset" property.                                                        |
+| `getPodcastIndexUpdateFrequency()`            | Returns information on the intended release schedule. The output is an object with "description", "complete", "dtstart" and "rrule" properties.    |
+| `getPodcastIndexPersons()`                    | Returns information on the involved people. The output is an array of objects, each with the properties "name", "role", "group", "img" and "href". |
 
 ### SET methods
 

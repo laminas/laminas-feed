@@ -45,6 +45,7 @@ class PodcastIndexRss2Test extends TestCase
             file_get_contents($this->feedSamplePath)
         );
         $this->assertEquals('john.doe@example.com', $feed->getLockOwner());
+        $this->assertEquals('john.doe@example.com', $feed->getPodcastIndexLockOwner());
     }
 
     public function testGetsFunding(): void
@@ -59,6 +60,7 @@ class PodcastIndexRss2Test extends TestCase
         $expected->title = 'Support the show!';
 
         $this->assertEquals($expected, $feed->getFunding());
+        $this->assertEquals($expected, $feed->getPodcastIndexFunding());
     }
 
     public function testGetsLicense(): void
@@ -72,7 +74,7 @@ class PodcastIndexRss2Test extends TestCase
         $expected->identifier = 'my-podcast-license-v1';
         $expected->url        = 'https://example.org/mypodcastlicense/full.pdf';
 
-        $this->assertEquals($expected, $feed->getLicense());
+        $this->assertEquals($expected, $feed->getPodcastIndexLicense());
     }
 
     public function testGetsLocation(): void
@@ -87,7 +89,7 @@ class PodcastIndexRss2Test extends TestCase
         $expected->geo         = 'geo:30.2711286,-97.7436995';
         $expected->osm         = 'R113314';
 
-        $this->assertEquals($expected, $feed->getLocation());
+        $this->assertEquals($expected, $feed->getPodcastIndexLocation());
     }
 
     public function testGetsImages(): void
@@ -107,7 +109,7 @@ class PodcastIndexRss2Test extends TestCase
         $expected         = new stdClass();
         $expected->srcset = implode(', ', $srcset);
 
-        $this->assertEquals($expected, $feed->getImages());
+        $this->assertEquals($expected, $feed->getPodcastIndexImages());
     }
 
     public function testGetsUpdateFrequency(): void
@@ -123,7 +125,7 @@ class PodcastIndexRss2Test extends TestCase
         $expected->dtstart     = '2023-08-28T00:00:00.000Z';
         $expected->rrule       = 'FREQ=WEEKLY';
 
-        $this->assertEquals($expected, $feed->getUpdateFrequency());
+        $this->assertEquals($expected, $feed->getPodcastIndexUpdateFrequency());
     }
 
     public function testGetsPersons(): void
@@ -140,7 +142,7 @@ class PodcastIndexRss2Test extends TestCase
         $expected->img   = 'http://example.com/images/alicebrown.jpg';
         $expected->href  = 'https://www.wikipedia/alicebrown';
 
-        $persons = $feed->getPersons();
+        $persons = $feed->getPodcastIndexPersons();
         $this->assertEquals($expected, $persons[0]);
     }
 
