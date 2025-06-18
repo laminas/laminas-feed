@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Feed\Reader\Extension\PodcastIndex;
 
+use DOMElement;
 use Laminas\Feed\Reader\Extension;
 use stdClass;
 
@@ -60,7 +61,9 @@ class Feed extends Extension\AbstractFeed
     public function getFunding(): ?stdClass
     {
         if (array_key_exists('funding', $this->data)) {
-            return $this->data['funding'];
+            /** @var stdClass $object */
+            $object = $this->data['funding'];
+            return $object;
         }
 
         $funding = null;
@@ -68,9 +71,11 @@ class Feed extends Extension\AbstractFeed
         $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:funding');
 
         if ($nodeList->length > 0) {
+            /** @var DOMElement $item */
+            $item           = $nodeList->item(0);
             $funding        = new stdClass();
-            $funding->url   = $nodeList->item(0)->getAttribute('url');
-            $funding->title = $nodeList->item(0)->nodeValue;
+            $funding->url   = $item->getAttribute('url');
+            $funding->title = $item->nodeValue;
         }
 
         $this->data['funding'] = $funding;
@@ -84,7 +89,9 @@ class Feed extends Extension\AbstractFeed
     public function getLicense(): ?stdClass
     {
         if (array_key_exists('license', $this->data)) {
-            return $this->data['license'];
+            /** @var stdClass $object */
+            $object = $this->data['license'];
+            return $object;
         }
 
         $license = null;
@@ -92,9 +99,11 @@ class Feed extends Extension\AbstractFeed
         $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:license');
 
         if ($nodeList->length > 0) {
+            /** @var DOMElement $item */
+            $item                = $nodeList->item(0);
             $license             = new stdClass();
-            $license->identifier = $nodeList->item(0)->nodeValue;
-            $license->url        = $nodeList->item(0)->getAttribute('url');
+            $license->identifier = $item->nodeValue;
+            $license->url        = $item->getAttribute('url');
         }
 
         $this->data['license'] = $license;
@@ -108,7 +117,9 @@ class Feed extends Extension\AbstractFeed
     public function getLocation(): ?stdClass
     {
         if (array_key_exists('location', $this->data)) {
-            return $this->data['location'];
+            /** @var stdClass $object */
+            $object = $this->data['location'];
+            return $object;
         }
 
         $location = null;
@@ -116,10 +127,12 @@ class Feed extends Extension\AbstractFeed
         $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:location');
 
         if ($nodeList->length > 0) {
+            /** @var DOMElement $item */
+            $item                  = $nodeList->item(0);
             $location              = new stdClass();
-            $location->description = $nodeList->item(0)->nodeValue;
-            $location->geo         = $nodeList->item(0)->getAttribute('geo');
-            $location->osm         = $nodeList->item(0)->getAttribute('osm');
+            $location->description = $item->nodeValue;
+            $location->geo         = $item->getAttribute('geo');
+            $location->osm         = $item->getAttribute('osm');
         }
 
         $this->data['location'] = $location;
@@ -133,7 +146,9 @@ class Feed extends Extension\AbstractFeed
     public function getImages(): ?stdClass
     {
         if (array_key_exists('images', $this->data)) {
-            return $this->data['images'];
+            /** @var stdClass $object */
+            $object = $this->data['images'];
+            return $object;
         }
 
         $images = null;
@@ -141,8 +156,10 @@ class Feed extends Extension\AbstractFeed
         $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:images');
 
         if ($nodeList->length > 0) {
+            /** @var DOMElement $item */
+            $item           = $nodeList->item(0);
             $images         = new stdClass();
-            $images->srcset = $nodeList->item(0)->getAttribute('srcset');
+            $images->srcset = $item->getAttribute('srcset');
         }
 
         $this->data['images'] = $images;
@@ -156,7 +173,9 @@ class Feed extends Extension\AbstractFeed
     public function getUpdateFrequency(): ?stdClass
     {
         if (array_key_exists('updateFrequency', $this->data)) {
-            return $this->data['updateFrequency'];
+            /** @var stdClass $object */
+            $object = $this->data['updateFrequency'];
+            return $object;
         }
 
         $updateFrequency = null;
@@ -164,11 +183,13 @@ class Feed extends Extension\AbstractFeed
         $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:updateFrequency');
 
         if ($nodeList->length > 0) {
+            /** @var DOMElement $item */
+            $item                         = $nodeList->item(0);
             $updateFrequency              = new stdClass();
-            $updateFrequency->description = $nodeList->item(0)->nodeValue;
-            $updateFrequency->complete    = $nodeList->item(0)->getAttribute('complete');
-            $updateFrequency->dtstart     = $nodeList->item(0)->getAttribute('dtstart');
-            $updateFrequency->rrule       = $nodeList->item(0)->getAttribute('rrule');
+            $updateFrequency->description = $item->nodeValue;
+            $updateFrequency->complete    = $item->getAttribute('complete');
+            $updateFrequency->dtstart     = $item->getAttribute('dtstart');
+            $updateFrequency->rrule       = $item->getAttribute('rrule');
         }
 
         $this->data['updateFrequency'] = $updateFrequency;
@@ -182,7 +203,9 @@ class Feed extends Extension\AbstractFeed
     public function getPersons(): array
     {
         if (array_key_exists('persons', $this->data)) {
-            return $this->data['persons'];
+            /** @var array $persons */
+            $persons = $this->data['updateFrequency'];
+            return $persons;
         }
 
         $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:person');
@@ -190,6 +213,7 @@ class Feed extends Extension\AbstractFeed
         $personCollection = [];
 
         if ($nodeList->length) {
+            /** @var DOMElement $entry */
             foreach ($nodeList as $entry) {
                 $person        = new stdClass();
                 $person->name  = $entry->nodeValue;

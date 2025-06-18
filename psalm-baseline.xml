@@ -1582,9 +1582,6 @@
     </MixedReturnStatement>
   </file>
   <file src="src/Reader/Extension/PodcastIndex/Feed.php">
-    <MismatchingDocblockReturnType>
-      <code>null|object{url: string, title: string}</code>
-    </MismatchingDocblockReturnType>
     <MixedAssignment>
       <code>$locked</code>
       <code>$owner</code>
@@ -1592,7 +1589,6 @@
     <MixedInferredReturnType>
       <code>?string</code>
       <code>bool</code>
-      <code>null|object{url: string, title: string}</code>
     </MixedInferredReturnType>
     <MixedReturnStatement>
       <code><![CDATA[$this->data['locked']]]></code>
@@ -3111,7 +3107,6 @@
       <code>setPodcastIndexLocation</code>
       <code>setPodcastIndexImages</code>
       <code>setPodcastIndexUpdateFrequency</code>
-      <code>addPodcastIndexPerson</code>
       <code>setPodcastIndexPersons</code>
     </PossiblyUnusedMethod>
     <PossiblyUnusedParam>
@@ -3138,6 +3133,11 @@
     <MixedMethodCall>
       <code>getPodcastIndexFunding</code>
       <code>getPodcastIndexLocked</code>
+      <code>getPodcastIndexLicense</code>
+      <code>getPodcastIndexLocation</code>
+      <code>getPodcastIndexImages</code>
+      <code>getPodcastIndexUpdateFrequency</code>
+      <code>getPodcastIndexPersons</code>
     </MixedMethodCall>
     <RedundantCastGivenDocblockType>
       <code><![CDATA[(string) $funding['title']]]></code>

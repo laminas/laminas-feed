@@ -330,7 +330,10 @@ class FeedTest extends TestCase
             'href'  => 'https://poirot.com/my-cases',
         ];
         $feed->addPodcastIndexPerson($person);
-        $this->assertTrue(in_array($person, $feed->getPodcastIndexPersons()));
+
+        /** @var array<array> $persons */
+        $persons = $feed->getPodcastIndexPersons();
+        $this->assertTrue(in_array($person, $persons));
     }
 
     public function testSetPersons(): void
@@ -353,8 +356,12 @@ class FeedTest extends TestCase
         ];
         // set
         $feed->setPodcastIndexPersons($persons);
+
+        /** @var array<array> $personsSaved */
+        $personsSaved = $feed->getPodcastIndexPersons();
+
         foreach ($persons as $person) {
-            $this->assertTrue(in_array($person, $feed->getPodcastIndexPersons()));
+            $this->assertTrue(in_array($person, $personsSaved));
         }
         // delete
         $feed->setPodcastIndexPersons();
@@ -369,7 +376,10 @@ class FeedTest extends TestCase
             'name' => 'Hercules Poirot',
         ];
         $feed->addPodcastIndexPerson($person);
-        $this->assertTrue(in_array($person, $feed->getPodcastIndexPersons()));
+
+        /** @var array<array> $persons */
+        $persons = $feed->getPodcastIndexPersons();
+        $this->assertTrue(in_array($person, $persons));
     }
 
     public function testSetPersonThrowsExceptionOnInvalidArguments(): void

@@ -235,7 +235,7 @@ class Feed
     /**
      * Add feed person
      *
-     * @param array $value [name: string, role: string|null, group: string|null, img: url|null, href: url|null]
+     * @param array<string,mixed> $value [name: str, role: str|null, group: str|null, img: url|null, href: url|null]
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
@@ -253,17 +253,19 @@ class Feed
         }
         if (isset($value['img']) && ! filter_var($value['img'], FILTER_VALIDATE_URL)) {
             throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter for "person": "img" must be a url, starting with "http://" or "https://"'
+                'invalid parameter: key "img" of "person" must be a url, starting with "http://" or "https://"'
             );
         }
         if (isset($value['href']) && ! filter_var($value['href'], FILTER_VALIDATE_URL)) {
             throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter for "person": "href" must be a url, starting with "http://" or "https://"'
+                'invalid parameter: key "href" of "person" must be a url, starting with "http://" or "https://"'
             );
         }
         if (! isset($this->data['persons'])) {
             $this->data['persons'] = [];
         }
+
+        /** @var array<array<string, mixed>> $this->data['persons'] */
         $this->data['persons'][] = $value;
         return $this;
     }
@@ -272,7 +274,7 @@ class Feed
      * Set a new array of persons.
      * If no argument is passed, it will just remove all existing persons.
      *
-     * @param null|array $values
+     * @param null|array<array> $values
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
@@ -284,20 +286,11 @@ class Feed
             return $this;
         }
 
+        /** @var array<string,string> $value */
         foreach ($values as $value) {
             $this->addPodcastIndexPerson($value);
         }
         return $this;
-    }
-
-    /**
-     * Get feed persons
-     *
-     * @return array|null
-     */
-    public function getPodcastIndexPersons()
-    {
-        return $this->data['persons'] ?? null;
     }
 
     /**

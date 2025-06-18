@@ -93,13 +93,13 @@ class Feed extends Extension\AbstractRenderer
      */
     protected function setLicense(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var null|array<string, string> $license */
+        /** @psalm-var null|array<string,string> $license */
         $license = $this->getDataContainer()->getPodcastIndexLicense();
         if ($license === null) {
             return;
         }
         $el   = $dom->createElement('podcast:license');
-        $text = $dom->createTextNode((string) $license['identifier']);
+        $text = $dom->createTextNode($license['identifier']);
         $el->appendChild($text);
         $el->setAttribute('url', $license['url']);
         $root->appendChild($el);
@@ -111,13 +111,13 @@ class Feed extends Extension\AbstractRenderer
      */
     protected function setLocation(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var null|array<string, string> $location */
+        /** @psalm-var null|array<string,string> $location */
         $location = $this->getDataContainer()->getPodcastIndexLocation();
         if ($location === null) {
             return;
         }
         $el   = $dom->createElement('podcast:location');
-        $text = $dom->createTextNode((string) $location['description']);
+        $text = $dom->createTextNode($location['description']);
         $el->appendChild($text);
         if (! empty($location['geo'])) {
             $el->setAttribute('geo', $location['geo']);
@@ -159,13 +159,13 @@ class Feed extends Extension\AbstractRenderer
         $text = $dom->createTextNode((string) $updateFrequency['description']);
         $el->appendChild($text);
         if (! empty($updateFrequency['complete'])) {
-            $el->setAttribute('complete', $updateFrequency['complete']);
+            $el->setAttribute('complete', (string) $updateFrequency['complete']);
         }
         if (! empty($updateFrequency['dtstart'])) {
-            $el->setAttribute('dtstart', $updateFrequency['dtstart']);
+            $el->setAttribute('dtstart', (string) $updateFrequency['dtstart']);
         }
         if (! empty($updateFrequency['rrule'])) {
-            $el->setAttribute('rrule', $updateFrequency['rrule']);
+            $el->setAttribute('rrule', (string) $updateFrequency['rrule']);
         }
         $root->appendChild($el);
         $this->called = true;
@@ -187,16 +187,16 @@ class Feed extends Extension\AbstractRenderer
             $el->appendChild($text);
 
             if (! empty($person['role'])) {
-                $el->setAttribute('role', $person['role']);
+                $el->setAttribute('role', (string) $person['role']);
             }
             if (! empty($person['group'])) {
-                $el->setAttribute('group', $person['group']);
+                $el->setAttribute('group', (string) $person['group']);
             }
             if (! empty($person['img'])) {
-                $el->setAttribute('img', $person['img']);
+                $el->setAttribute('img', (string) $person['img']);
             }
             if (! empty($person['href'])) {
-                $el->setAttribute('href', $person['href']);
+                $el->setAttribute('href', (string) $person['href']);
             }
             $root->appendChild($el);
         }
