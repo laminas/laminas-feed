@@ -56,8 +56,6 @@ class Feed extends Extension\AbstractFeed
 
     /**
      * Get the entry funding link
-     *
-     * @psalm-return null|object{url: string, title: string}
      */
     public function getFunding(): ?stdClass
     {
@@ -82,8 +80,6 @@ class Feed extends Extension\AbstractFeed
 
     /**
      * Get the podcast license
-     *
-     * @psalm-return null|object{identifier: string, url: string}
      */
     public function getLicense(): ?stdClass
     {
@@ -108,8 +104,6 @@ class Feed extends Extension\AbstractFeed
 
     /**
      * Get the podcast location
-     *
-     * @psalm-return null|object{description: string, geo: string|null, osm: string|null}
      */
     public function getLocation(): ?stdClass
     {
@@ -135,8 +129,6 @@ class Feed extends Extension\AbstractFeed
 
     /**
      * Get the podcast images
-     *
-     * @psalm-return null|object{scrset: string}
      */
     public function getImages(): ?stdClass
     {
@@ -160,8 +152,6 @@ class Feed extends Extension\AbstractFeed
 
     /**
      * Get the podcast update frequency
-     *
-     * @psalm-return null|object{description: string, complete: bool|null, dtstart: string|null, rrule: string|null}
      */
     public function getUpdateFrequency(): ?stdClass
     {
@@ -188,8 +178,6 @@ class Feed extends Extension\AbstractFeed
 
     /**
      * Get the podcast person
-     *
-     * @psalm-return array<object{name: string, role: string, group: string, img: string, href: string}>|null
      */
     public function getPersons(): array
     {

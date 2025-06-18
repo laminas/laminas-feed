@@ -176,9 +176,9 @@ class Feed extends Extension\AbstractRenderer
      */
     protected function addPerson(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var null|array<string, mixed> $person */
+        /** @psalm-var array<array> $persons */
         $persons = $this->getDataContainer()->getPodcastIndexPersons();
-        if ($persons === null) {
+        if (empty($persons)) {
             return;
         }
         foreach ($persons as $person) {

@@ -115,6 +115,41 @@ class FeedTest extends TestCase
         $feed->setPodcastIndexLicense($license);
     }
 
+    public function testSetLicenseThrowsExceptionOnInvalidIdentifier(): void
+    {
+        $feed = new Writer\Feed();
+
+        $license = [
+            'identifier' => 1234,
+            'url'        => 'https://spdx.org/licenses/CC-BY-4.0.html',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->setPodcastIndexLicense($license);
+    }
+
+    public function testSetLicenseThrowsExceptionOnInvalidUrl(): void
+    {
+        $feed = new Writer\Feed();
+
+        $license = [
+            'identifier' => 'cc-by-4.0',
+            'url'        => 'spdx.org/licenses/CC-BY-4.0.html',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->setPodcastIndexLicense($license);
+    }
+
+    public function testSetLicenseThrowsExceptionOnMissingUrl(): void
+    {
+        $feed = new Writer\Feed();
+
+        $license = [
+            'identifier' => 'cc-by-4.0',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->setPodcastIndexLicense($license);
+    }
+
     public function testSetLocation(): void
     {
         $feed = new Writer\Feed();
@@ -133,7 +168,7 @@ class FeedTest extends TestCase
         $feed = new Writer\Feed();
 
         $location = [
-            'description' => 'Dreamworld (Queensland)',
+            'description' => 'London, Baker Street',
         ];
         $feed->setPodcastIndexLocation($location);
         $this->assertEquals($location, $feed->getPodcastIndexLocation());
@@ -145,6 +180,32 @@ class FeedTest extends TestCase
 
         $location = [
             'abc' => 'def',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->setPodcastIndexLocation($location);
+    }
+
+    public function testSetLocationThrowsExceptionOnInvalidGeo(): void
+    {
+        $feed = new Writer\Feed();
+
+        $location = [
+            'description' => 'London, Baker Street',
+            'geo'         => [-27.86159, 153.3169],
+            'osm'         => 'W43678282',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->setPodcastIndexLocation($location);
+    }
+
+    public function testSetLocationThrowsExceptionOnInvalidOsm(): void
+    {
+        $feed = new Writer\Feed();
+
+        $location = [
+            'description' => 'London, Baker Street',
+            'geo'         => 'geo:-27.86159,153.3169',
+            'osm'         => false,
         ];
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $feed->setPodcastIndexLocation($location);
@@ -264,7 +325,7 @@ class FeedTest extends TestCase
         $person = [
             'name'  => 'Hercules Poirot',
             'role'  => 'guest',
-            'group' => 'writing',
+            'group' => 'starring',
             'img'   => 'https://poirot.com/about/my-moustage.jpg',
             'href'  => 'https://poirot.com/my-cases',
         ];
@@ -280,13 +341,14 @@ class FeedTest extends TestCase
             [
                 'name'  => 'Hercules Poirot',
                 'role'  => 'guest',
-                'group' => 'writing',
+                'group' => 'starring',
                 'img'   => 'https://poirot.com/about/my-moustage.jpg',
                 'href'  => 'https://poirot.com/my-cases',
             ],
             [
-                'name' => 'Agatha Christie',
-                'role' => 'guest',
+                'name'  => 'Agatha Christie',
+                'role'  => 'guest',
+                'group' => 'writing',
             ],
         ];
         // set

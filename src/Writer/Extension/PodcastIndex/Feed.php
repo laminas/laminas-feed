@@ -119,9 +119,19 @@ class Feed
      */
     public function setPodcastIndexLicense(array $value)
     {
-        if (empty($value['identifier']) || empty($value['url'])) {
+        if (! isset($value['identifier'], $value['url'])) {
             throw new Writer\Exception\InvalidArgumentException(
                 'invalid parameter: "license" must be an array containing the keys "identifier" (node value) and "url"'
+            );
+        }
+        if (! is_string($value['identifier'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "identifier" of "license" must be of type string.'
+            );
+        }
+        if (! is_string($value['url']) || ! filter_var($value['url'], FILTER_VALIDATE_URL)) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "url" of "license": must be a url starting with "http://" or "https://"'
             );
         }
         $this->data['license'] = $value;
@@ -137,9 +147,24 @@ class Feed
      */
     public function setPodcastIndexLocation(array $value)
     {
-        if (empty($value['description'])) {
+        if (! isset($value['description'])) {
             throw new Writer\Exception\InvalidArgumentException(
                 'invalid parameter: "location" must be an array containing at least the key "description" (node value)'
+            );
+        }
+        if (! is_string($value['description'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "description" of "location" must be of type string.'
+            );
+        }
+        if (isset($value['geo']) && ! is_string($value['geo'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "geo" of "location" must be of type string. example: "geo:-27.86159,153.3169"'
+            );
+        }
+        if (isset($value['osm']) && ! is_string($value['osm'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "osm" of "location" must be of type string. example: "W43678282"'
             );
         }
         $this->data['location'] = $value;
@@ -155,14 +180,14 @@ class Feed
      */
     public function setPodcastIndexImages(array $value)
     {
-        if (empty($value['srcset'])) {
+        if (! isset($value['srcset'])) {
             throw new Writer\Exception\InvalidArgumentException(
                 'invalid parameter: "images" must be an array containing the key "srcset"'
             );
         }
         if (! is_string($value['srcset'])) {
             throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: "srcset" must be of type string, containing comma-seperated urls'
+                'invalid parameter: key "srcset" of "images" must be of type string containing comma-seperated urls'
             );
         }
         $this->data['images'] = $value;
@@ -178,24 +203,29 @@ class Feed
      */
     public function setPodcastIndexUpdateFrequency(array $value)
     {
-        if (empty($value['description'])) {
+        if (! isset($value['description'])) {
             throw new Writer\Exception\InvalidArgumentException(
                 'invalid parameter: "updateFrequency" must be an array containing the key "description" (node value)'
             );
         }
-        if (! empty($value['complete']) && ! is_bool($value['complete'])) {
+        if (! is_string($value['description'])) {
             throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter for "updateFrequency": key "complete" must be of type boolean'
+                'invalid parameter: key "description" of "updateFrequency" must be of type string'
             );
         }
-        if (! empty($value['dtstart']) && ! is_string($value['dtstart'])) {
+        if (isset($value['complete']) && ! is_bool($value['complete'])) {
             throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter for "updateFrequency": key "dtstart" must be an ISO8601-formatted string'
+                'invalid parameter: key "complete" of "updateFrequency": must be of type boolean'
             );
         }
-        if (! empty($value['rrule']) && ! is_string($value['rrule'])) {
+        if (isset($value['dtstart']) && ! is_string($value['dtstart'])) {
             throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter for "updateFrequency": key "rrule" must be of type string'
+                'invalid parameter: key "dtstart" of "updateFrequency" must be an ISO8601-formatted string'
+            );
+        }
+        if (isset($value['rrule']) && ! is_string($value['rrule'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "rrule" of "updateFrequency" must be of type string'
             );
         }
         $this->data['updateFrequency'] = $value;
@@ -211,17 +241,22 @@ class Feed
      */
     public function addPodcastIndexPerson(array $value)
     {
-        if (empty($value['name'])) {
+        if (! isset($value['name'])) {
             throw new Writer\Exception\InvalidArgumentException(
                 'invalid parameter: "person" must be an array containing at least the key "name"'
             );
         }
-        if (! empty($value['img']) && ! filter_var($value['img'], FILTER_VALIDATE_URL)) {
+        if (! is_string($value['name'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "name" of "person" must be of type string'
+            );
+        }
+        if (isset($value['img']) && ! filter_var($value['img'], FILTER_VALIDATE_URL)) {
             throw new Writer\Exception\InvalidArgumentException(
                 'invalid parameter for "person": "img" must be a url, starting with "http://" or "https://"'
             );
         }
-        if (! empty($value['href']) && ! filter_var($value['href'], FILTER_VALIDATE_URL)) {
+        if (isset($value['href']) && ! filter_var($value['href'], FILTER_VALIDATE_URL)) {
             throw new Writer\Exception\InvalidArgumentException(
                 'invalid parameter for "person": "href" must be a url, starting with "http://" or "https://"'
             );
@@ -237,7 +272,7 @@ class Feed
      * Set a new array of persons.
      * If no argument is passed, it will just remove all existing persons.
      *
-     * @param array $value [name: string, role: string|null, group: string|null, img: url|null, href: url|null]
+     * @param null|array $values
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
