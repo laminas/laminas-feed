@@ -3107,6 +3107,12 @@
       <code>setEncoding</code>
       <code>setPodcastIndexFunding</code>
       <code>setPodcastIndexLocked</code>
+      <code>setPodcastIndexLicense</code>
+      <code>setPodcastIndexLocation</code>
+      <code>setPodcastIndexImages</code>
+      <code>setPodcastIndexUpdateFrequency</code>
+      <code>addPodcastIndexPerson</code>
+      <code>setPodcastIndexPersons</code>
     </PossiblyUnusedMethod>
     <PossiblyUnusedParam>
       <code>$params</code>
