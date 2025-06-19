@@ -288,6 +288,33 @@ class Feed extends Extension\AbstractFeed
     }
 
     /**
+     * Get the podcast guid
+     */
+    public function getPodcastIndexGuid(): ?stdClass
+    {
+        if (array_key_exists('guid', $this->data)) {
+            /** @var stdClass $object */
+            $object = $this->data['guid'];
+            return $object;
+        }
+
+        $object = null;
+
+        $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:guid');
+
+        if ($nodeList->length > 0) {
+            /** @var DOMElement $item */
+            $item          = $nodeList->item(0);
+            $object        = new stdClass();
+            $object->value = $item->nodeValue;
+        }
+
+        $this->data['guid'] = $object;
+
+        return $this->data['guid'];
+    }
+
+    /**
      * Register PodcastIndex namespace
      */
     protected function registerNamespaces(): void

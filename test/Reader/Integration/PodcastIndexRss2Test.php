@@ -164,6 +164,19 @@ class PodcastIndexRss2Test extends TestCase
         $this->assertEquals($expected, $feed->getPodcastIndexTrailer());
     }
 
+    public function testGetsGuid(): void
+    {
+        /** @var Reader\Extension\PodcastIndex\Feed $feed */
+        $feed = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath)
+        );
+
+        $expected        = new stdClass();
+        $expected->value = '917393e3-1b1e-5cef-ace4-edaa54e1f810';
+
+        $this->assertEquals($expected, $feed->getPodcastIndexGuid());
+    }
+
     /**
      * Entry level testing
      */

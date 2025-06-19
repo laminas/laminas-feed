@@ -198,4 +198,18 @@ class FeedTest extends TestCase
         $this->assertStringContainsString($trailer['pubdate'], $xml);
         $this->assertStringContainsString($trailer['url'], $xml);
     }
+
+    public function testRendersRssGuidTag(): void
+    {
+        $data = [
+            'value' => '917393e3-1b1e-5cef-ace4-edaa54e1f810',
+        ];
+        $this->validWriter->setPodcastIndexGuid($data);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $this->assertStringContainsString('<podcast:guid', $xml);
+        $this->assertStringContainsString($data['value'], $xml);
+    }
 }

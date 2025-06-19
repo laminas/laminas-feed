@@ -343,6 +343,29 @@ class Feed
     }
 
     /**
+     * Set feed guid
+     *
+     * @param array $value [value: string]
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function setPodcastIndexGuid(array $value)
+    {
+        if (! isset($value['value'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "guid" must be an array containing the key "value"'
+            );
+        }
+        if (! is_string($value['value'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "value" of "guid" must be a UUIDv5 string'
+            );
+        }
+        $this->data['guid'] = $value;
+        return $this;
+    }
+
+    /**
      * Overloading: proxy to internal setters
      *
      * @return mixed

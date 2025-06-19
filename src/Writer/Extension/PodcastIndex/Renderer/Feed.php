@@ -36,6 +36,7 @@ class Feed extends Extension\AbstractRenderer
         $this->addPerson($this->dom, $this->base);
         $this->setPersons($this->dom, $this->base);
         $this->setTrailer($this->dom, $this->base);
+        $this->setGuid($this->dom, $this->base);
         if ($this->called) {
             $this->_appendNamespaces();
         }
@@ -233,6 +234,23 @@ class Feed extends Extension\AbstractRenderer
         if (! empty($trailer['season'])) {
             $el->setAttribute('season', (string) $trailer['season']);
         }
+        $root->appendChild($el);
+        $this->called = true;
+    }
+
+    /**
+     * Set feed guid
+     */
+    protected function setGuid(DOMDocument $dom, DOMElement $root): void
+    {
+        /** @psalm-var null|array<string, string> $guid */
+        $guid = $this->getDataContainer()->getPodcastIndexGuid();
+        if ($guid === null) {
+            return;
+        }
+        $el   = $dom->createElement('podcast:guid');
+        $text = $dom->createTextNode($guid['value']);
+        $el->appendChild($text);
         $root->appendChild($el);
         $this->called = true;
     }
