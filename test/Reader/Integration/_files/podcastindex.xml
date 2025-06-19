@@ -33,6 +33,7 @@
             <itunes:category text="Gadgets" />
         </itunes:category>
         <itunes:category text="TV &amp; Film" />
+
         <podcast:locked owner="john.doe@example.com">yes</podcast:locked>
         <podcast:funding url="http://example.com/donate">Support the show!</podcast:funding>
         <podcast:license url="https://example.org/mypodcastlicense/full.pdf">my-podcast-license-v1</podcast:license>
@@ -40,6 +41,7 @@
         <podcast:images srcset="https://example.com/images/ep1/pci_avatar-massive.jpg 1500w, https://example.com/images/ep1/pci_avatar-middle.jpg 600w, https://example.com/images/ep1/pci_avatar-small.jpg 300w, https://example.com/images/ep1/pci_avatar-tiny.jpg 150w"/>
         <podcast:updateFrequency rrule="FREQ=WEEKLY" dtstart="2023-08-28T00:00:00.000Z" complete="false">Every other Monday</podcast:updateFrequency>
         <podcast:person group="writing" role="guest" href="https://www.wikipedia/alicebrown" img="http://example.com/images/alicebrown.jpg">Alice Brown</podcast:person>
+        <podcast:trailer pubdate="Thu, 01 Apr 2021 08:00:00 EST" url="https://example.org/season4teaser.mp4" length="12345678" type="video/mp4" season="4" >Season 4: Race for the Clouds</podcast:trailer>
 
         <item>
             <title>Shake Shake Shake Your Spices</title>

@@ -3108,6 +3108,7 @@
       <code>setPodcastIndexImages</code>
       <code>setPodcastIndexUpdateFrequency</code>
       <code>setPodcastIndexPersons</code>
+      <code>setPodcastIndexTrailer</code>
     </PossiblyUnusedMethod>
     <PossiblyUnusedParam>
       <code>$params</code>
@@ -3138,6 +3139,7 @@
       <code>getPodcastIndexImages</code>
       <code>getPodcastIndexUpdateFrequency</code>
       <code>getPodcastIndexPersons</code>
+      <code>getPodcastIndexTrailer</code>
     </MixedMethodCall>
     <RedundantCastGivenDocblockType>
       <code><![CDATA[(string) $funding['title']]]></code>

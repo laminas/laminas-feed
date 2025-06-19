@@ -180,4 +180,22 @@ class FeedTest extends TestCase
         $this->assertStringContainsString(">$fName</podcast:person>", $xml);
         $this->assertStringContainsString(">$sName</podcast:person>", $xml);
     }
+
+    public function testRendersRssTrailerTag(): void
+    {
+        $trailer = [
+            'title'   => 'Season 4: Race for the Clouds',
+            'pubdate' => "Thu, 01 Apr 2021 08:00:00 EST",
+            'url'     => "https://example.org/season4teaser.mp4",
+        ];
+        $this->validWriter->setPodcastIndexTrailer($trailer);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $this->assertStringContainsString('<podcast:trailer', $xml);
+        $this->assertStringContainsString($trailer['title'], $xml);
+        $this->assertStringContainsString($trailer['pubdate'], $xml);
+        $this->assertStringContainsString($trailer['url'], $xml);
+    }
 }

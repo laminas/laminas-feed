@@ -406,4 +406,59 @@ class FeedTest extends TestCase
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $feed->addPodcastIndexPerson($person);
     }
+
+    public function testSetTrailer(): void
+    {
+        $feed = new Writer\Feed();
+
+        $trailer = [
+            'title'   => 'Season 4: Race for the Clouds',
+            'pubdate' => "Thu, 01 Apr 2021 08:00:00 EST",
+            'url'     => "https://example.org/season4teaser.mp4",
+            'length'  => 12345678,
+            'type'    => "video/mp4",
+            'season'  => 4,
+        ];
+
+        $feed->setPodcastIndexTrailer($trailer);
+        $this->assertEquals($trailer, $feed->getPodcastIndexTrailer());
+    }
+
+    public function testSetTrailerWithRequiredArguments(): void
+    {
+        $feed = new Writer\Feed();
+
+        $trailer = [
+            'title'   => 'Season 4: Race for the Clouds',
+            'pubdate' => "Thu, 01 Apr 2021 08:00:00 EST",
+            'url'     => "https://example.org/season4teaser.mp4",
+        ];
+
+        $feed->setPodcastIndexTrailer($trailer);
+        $this->assertEquals($trailer, $feed->getPodcastIndexTrailer());
+    }
+
+    public function testSetTrailerThrowsExceptionOnInvalidArguments(): void
+    {
+        $feed = new Writer\Feed();
+
+        $trailer = [
+            'abc' => 'def',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->setPodcastIndexTrailer($trailer);
+    }
+
+    public function testSetLocationThrowsExceptionOnInvalidUrl(): void
+    {
+        $feed = new Writer\Feed();
+
+        $trailer = [
+            'title'   => 'Season 4: Race for the Clouds',
+            'pubdate' => "Thu, 01 Apr 2021 08:00:00 EST",
+            'url'     => "example.org/season4teaser.mp4",
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->setPodcastIndexTrailer($trailer);
+    }
 }

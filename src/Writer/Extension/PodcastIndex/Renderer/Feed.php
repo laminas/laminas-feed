@@ -35,6 +35,7 @@ class Feed extends Extension\AbstractRenderer
         $this->setUpdateFrequency($this->dom, $this->base);
         $this->addPerson($this->dom, $this->base);
         $this->setPersons($this->dom, $this->base);
+        $this->setTrailer($this->dom, $this->base);
         if ($this->called) {
             $this->_appendNamespaces();
         }
@@ -206,5 +207,33 @@ class Feed extends Extension\AbstractRenderer
     protected function setPersons(DOMDocument $dom, DOMElement $root): void
     {
         $this->addPerson($dom, $root);
+    }
+
+    /**
+     * Set feed trailer
+     */
+    protected function setTrailer(DOMDocument $dom, DOMElement $root): void
+    {
+        /** @psalm-var null|array<string, mixed> $trailer */
+        $trailer = $this->getDataContainer()->getPodcastIndexTrailer();
+        if ($trailer === null) {
+            return;
+        }
+        $el   = $dom->createElement('podcast:trailer');
+        $text = $dom->createTextNode((string) $trailer['title']);
+        $el->appendChild($text);
+        $el->setAttribute('pubdate', (string) $trailer['pubdate']);
+        $el->setAttribute('url', (string) $trailer['url']);
+        if (! empty($trailer['length'])) {
+            $el->setAttribute('length', (string) $trailer['length']);
+        }
+        if (! empty($trailer['type'])) {
+            $el->setAttribute('type', (string) $trailer['type']);
+        }
+        if (! empty($trailer['season'])) {
+            $el->setAttribute('season', (string) $trailer['season']);
+        }
+        $root->appendChild($el);
+        $this->called = true;
     }
 }

@@ -20,6 +20,14 @@ class Feed extends Extension\AbstractFeed
      */
     public function isLocked(): bool
     {
+        return $this->isPodcastIndexLocked();
+    }
+
+    /**
+     * Is the podcast locked (not available for indexing)?
+     */
+    public function isPodcastIndexLocked(): bool
+    {
         if (isset($this->data['locked'])) {
             return $this->data['locked'];
         }
@@ -245,6 +253,38 @@ class Feed extends Extension\AbstractFeed
         $this->data['persons'] = $personCollection;
 
         return $this->data['persons'];
+    }
+
+    /**
+     * Get the podcast trailer
+     */
+    public function getPodcastIndexTrailer(): ?stdClass
+    {
+        if (array_key_exists('trailer', $this->data)) {
+            /** @var stdClass $object */
+            $object = $this->data['trailer'];
+            return $object;
+        }
+
+        $object = null;
+
+        $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:trailer');
+
+        if ($nodeList->length > 0) {
+            /** @var DOMElement $item */
+            $item            = $nodeList->item(0);
+            $object          = new stdClass();
+            $object->title   = $item->nodeValue;
+            $object->pubdate = $item->getAttribute('pubdate');
+            $object->url     = $item->getAttribute('url');
+            $object->length  = $item->getAttribute('length');
+            $object->type    = $item->getAttribute('type');
+            $object->season  = $item->getAttribute('season');
+        }
+
+        $this->data['trailer'] = $object;
+
+        return $this->data['trailer'];
     }
 
     /**

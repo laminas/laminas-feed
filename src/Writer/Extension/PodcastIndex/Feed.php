@@ -12,6 +12,7 @@ use function array_key_exists;
 use function ctype_alpha;
 use function filter_var;
 use function is_bool;
+use function is_int;
 use function is_string;
 use function lcfirst;
 use function method_exists;
@@ -290,6 +291,54 @@ class Feed
         foreach ($values as $value) {
             $this->addPodcastIndexPerson($value);
         }
+        return $this;
+    }
+
+    /**
+     * Set feed trailer
+     *
+     * @param array $value [title: str, pubdate: str, url: str, length: int|null, type: str|null, season: int|null]
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function setPodcastIndexTrailer(array $value)
+    {
+        if (! isset($value['title']) || ! isset($value['pubdate']) || ! isset($value['url'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "trailer" must be an array containing the keys "title", "pubdate" and "url"'
+            );
+        }
+        if (! is_string($value['title'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "title" of "trailer" must be of type string'
+            );
+        }
+        if (! is_string($value['pubdate'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "pubdate" of "trailer" must be an RFC2822 formatted date string'
+            );
+        }
+        if (! is_string($value['url']) || ! filter_var($value['url'], FILTER_VALIDATE_URL)) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "url" of "trailer" must be a url, starting with "http://" or "https://'
+            );
+        }
+        if (isset($value['length']) && ! is_int($value['length'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "length" of "trailer": must be of type integer'
+            );
+        }
+        if (isset($value['type']) && ! is_string($value['type'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "type" of "trailer" must be of type string'
+            );
+        }
+        if (isset($value['season']) && ! is_int($value['season'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "season" of "trailer" must be of type integer'
+            );
+        }
+        $this->data['trailer'] = $value;
         return $this;
     }
 
