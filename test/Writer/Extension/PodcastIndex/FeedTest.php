@@ -7,6 +7,7 @@ namespace LaminasTest\Feed\Writer\Extension\PodcastIndex;
 use Laminas\Feed\Writer;
 use PHPUnit\Framework\TestCase;
 
+use function count;
 use function implode;
 use function in_array;
 use function time;
@@ -356,13 +357,27 @@ class FeedTest extends TestCase
         ];
         // set
         $feed->setPodcastIndexPersons($persons);
-
         /** @var array<array> $personsSaved */
         $personsSaved = $feed->getPodcastIndexPersons();
-
         foreach ($persons as $person) {
             $this->assertTrue(in_array($person, $personsSaved));
         }
+        // update
+        $newPersons = [
+            [
+                'name'  => 'Alice Brown',
+                'role'  => 'guest',
+                'group' => 'writing',
+                'img'   => 'http://example.com/images/alicebrown.jpg',
+                'href'  => 'https://www.wikipedia/alicebrown',
+            ],
+        ];
+        $feed->setPodcastIndexPersons($newPersons);
+        /** @var array<array> $updated */
+        $updated = $feed->getPodcastIndexPersons();
+        $this->assertEquals(1, count($updated));
+        $this->assertEquals($newPersons, $updated);
+
         // delete
         $feed->setPodcastIndexPersons();
         $this->assertNull($feed->getPodcastIndexPersons());

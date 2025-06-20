@@ -113,7 +113,7 @@ class Feed
     /**
      * Set feed license
      *
-     * @param array $value [identifier: string, url: string]
+     * @param array{identifier: string, url: string} $value
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
@@ -141,7 +141,7 @@ class Feed
     /**
      * Set feed location
      *
-     * @param array $value [description: string, geo: string|null, osm: string|null]
+     * @param array{description: string, geo?: string|null, osm?: string|null} $value
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
@@ -174,7 +174,7 @@ class Feed
     /**
      * Set feed images
      *
-     * @param array $value [scrset: string]
+     * @param array{srcset: string} $value
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
@@ -197,7 +197,7 @@ class Feed
     /**
      * Set feed update frequency
      *
-     * @param array $value [description: string, complete: bool|null, dtstart: string|null, rrule: string|null]
+     * @param array{description: string, complete?: bool|null, dtstart?: string|null, rrule?: string|null} $value
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
@@ -235,7 +235,7 @@ class Feed
     /**
      * Add feed person
      *
-     * @param array<string,mixed> $value [name: str, role: str|null, group: str|null, img: url|null, href: url|null]
+     * @param array{name: string, role?: string, group?: string, img?: string, href?: string} $value
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
@@ -286,7 +286,6 @@ class Feed
             return $this;
         }
 
-        /** @var array<string,string> $value */
         foreach ($values as $value) {
             $this->addPodcastIndexPerson($value);
         }
