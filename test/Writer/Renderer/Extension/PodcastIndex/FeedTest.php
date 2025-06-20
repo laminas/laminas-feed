@@ -167,12 +167,12 @@ class FeedTest extends TestCase
         $fName = 'Hercules Poirot';
         $sName = 'Agatha Christie';
 
-        $persons = [
+        $people = [
             ['name' => $fName],
             ['name' => $sName],
         ];
 
-        $this->validWriter->setPodcastIndexPersons($persons);
+        $this->validWriter->setPodcastIndexPeople($people);
 
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $xml     = $rssFeed->render()->saveXml();

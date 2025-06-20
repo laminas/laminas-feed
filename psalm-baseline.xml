@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.18.0@b113f3ed0259fd6e212d87c3df80eec95a6abf19">
+<files psalm-version="5.19.0@06b71be009a6bd6d81b9811855d6629b9fe90e1b">
   <file src="src/PubSubHubbub/AbstractCallback.php">
     <DocblockTypeContradiction>
       <code><![CDATA[$this->httpResponse === null]]></code>
@@ -3096,18 +3096,34 @@
     </PossiblyUnusedProperty>
   </file>
   <file src="src/Writer/Extension/PodcastIndex/Feed.php">
+    <DocblockTypeContradiction>
+      <code><![CDATA[! is_string($value['url'])]]></code>
+      <code><![CDATA[is_string($value['description'])]]></code>
+      <code><![CDATA[is_string($value['description'])]]></code>
+      <code><![CDATA[is_string($value['identifier'])]]></code>
+      <code><![CDATA[is_string($value['name'])]]></code>
+      <code><![CDATA[is_string($value['srcset'])]]></code>
+      <code><![CDATA[isset($value['complete']) && ! is_bool($value['complete'])]]></code>
+      <code><![CDATA[isset($value['dtstart']) && ! is_string($value['dtstart'])]]></code>
+      <code><![CDATA[isset($value['geo']) && ! is_string($value['geo'])]]></code>
+      <code><![CDATA[isset($value['osm']) && ! is_string($value['osm'])]]></code>
+      <code><![CDATA[isset($value['rrule']) && ! is_string($value['rrule'])]]></code>
+    </DocblockTypeContradiction>
+    <MixedArgumentTypeCoercion>
+      <code>$value</code>
+    </MixedArgumentTypeCoercion>
     <PossiblyUnusedMethod>
       <code>__call</code>
       <code>__construct</code>
       <code>getEncoding</code>
       <code>setEncoding</code>
       <code>setPodcastIndexFunding</code>
-      <code>setPodcastIndexLocked</code>
+      <code>setPodcastIndexImages</code>
       <code>setPodcastIndexLicense</code>
       <code>setPodcastIndexLocation</code>
-      <code>setPodcastIndexImages</code>
+      <code>setPodcastIndexLocked</code>
+      <code>setPodcastIndexPeople</code>
       <code>setPodcastIndexUpdateFrequency</code>
-      <code>setPodcastIndexPersons</code>
       <code>setPodcastIndexTrailer</code>
       <code>setPodcastIndexGuid</code>
       <code>setPodcastIndexMedium</code>
@@ -3135,12 +3151,12 @@
   <file src="src/Writer/Extension/PodcastIndex/Renderer/Feed.php">
     <MixedMethodCall>
       <code>getPodcastIndexFunding</code>
-      <code>getPodcastIndexLocked</code>
+      <code>getPodcastIndexImages</code>
       <code>getPodcastIndexLicense</code>
       <code>getPodcastIndexLocation</code>
-      <code>getPodcastIndexImages</code>
+      <code>getPodcastIndexLocked</code>
+      <code>getPodcastIndexPeople</code>
       <code>getPodcastIndexUpdateFrequency</code>
-      <code>getPodcastIndexPersons</code>
       <code>getPodcastIndexTrailer</code>
       <code>getPodcastIndexGuid</code>
       <code>getPodcastIndexMedium</code>

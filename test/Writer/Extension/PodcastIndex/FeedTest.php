@@ -7,6 +7,7 @@ namespace LaminasTest\Feed\Writer\Extension\PodcastIndex;
 use Laminas\Feed\Writer;
 use PHPUnit\Framework\TestCase;
 
+use function count;
 use function implode;
 use function in_array;
 use function time;
@@ -331,16 +332,16 @@ class FeedTest extends TestCase
         ];
         $feed->addPodcastIndexPerson($person);
 
-        /** @var array<array> $persons */
-        $persons = $feed->getPodcastIndexPersons();
-        $this->assertTrue(in_array($person, $persons));
+        /** @var array<array> $people */
+        $people = $feed->getPodcastIndexPeople();
+        $this->assertTrue(in_array($person, $people));
     }
 
-    public function testSetPersons(): void
+    public function testSetPeople(): void
     {
         $feed = new Writer\Feed();
 
-        $persons = [
+        $people = [
             [
                 'name'  => 'Hercules Poirot',
                 'role'  => 'guest',
@@ -355,17 +356,31 @@ class FeedTest extends TestCase
             ],
         ];
         // set
-        $feed->setPodcastIndexPersons($persons);
-
-        /** @var array<array> $personsSaved */
-        $personsSaved = $feed->getPodcastIndexPersons();
-
-        foreach ($persons as $person) {
-            $this->assertTrue(in_array($person, $personsSaved));
+        $feed->setPodcastIndexPeople($people);
+        /** @var array<array> $peopleSaved */
+        $peopleSaved = $feed->getPodcastIndexPeople();
+        foreach ($people as $person) {
+            $this->assertTrue(in_array($person, $peopleSaved));
         }
+        // update
+        $newPersons = [
+            [
+                'name'  => 'Alice Brown',
+                'role'  => 'guest',
+                'group' => 'writing',
+                'img'   => 'http://example.com/images/alicebrown.jpg',
+                'href'  => 'https://www.wikipedia/alicebrown',
+            ],
+        ];
+        $feed->setPodcastIndexPeople($newPersons);
+        /** @var array<array> $updated */
+        $updated = $feed->getPodcastIndexPeople();
+        $this->assertEquals(1, count($updated));
+        $this->assertEquals($newPersons, $updated);
+
         // delete
-        $feed->setPodcastIndexPersons();
-        $this->assertNull($feed->getPodcastIndexPersons());
+        $feed->setPodcastIndexPeople();
+        $this->assertNull($feed->getPodcastIndexPeople());
     }
 
     public function testSetPersonWithOneArgument(): void
@@ -377,9 +392,9 @@ class FeedTest extends TestCase
         ];
         $feed->addPodcastIndexPerson($person);
 
-        /** @var array<array> $persons */
-        $persons = $feed->getPodcastIndexPersons();
-        $this->assertTrue(in_array($person, $persons));
+        /** @var array<array> $people */
+        $people = $feed->getPodcastIndexPeople();
+        $this->assertTrue(in_array($person, $people));
     }
 
     public function testSetPersonThrowsExceptionOnInvalidArguments(): void

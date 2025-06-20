@@ -128,7 +128,7 @@ class PodcastIndexRss2Test extends TestCase
         $this->assertEquals($expected, $feed->getPodcastIndexUpdateFrequency());
     }
 
-    public function testGetsPersons(): void
+    public function testGetsPeople(): void
     {
         /** @var Reader\Extension\PodcastIndex\Feed $feed */
         $feed = Reader\Reader::importString(
@@ -142,8 +142,8 @@ class PodcastIndexRss2Test extends TestCase
         $expected->img   = 'http://example.com/images/alicebrown.jpg';
         $expected->href  = 'https://www.wikipedia/alicebrown';
 
-        $persons = $feed->getPodcastIndexPersons();
-        $this->assertEquals($expected, $persons[0]);
+        $people = $feed->getPodcastIndexPeople();
+        $this->assertEquals($expected, $people[0]);
     }
 
     public function testGetsTrailer(): void

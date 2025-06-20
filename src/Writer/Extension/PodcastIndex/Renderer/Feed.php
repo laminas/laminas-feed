@@ -34,7 +34,7 @@ class Feed extends Extension\AbstractRenderer
         $this->setImages($this->dom, $this->base);
         $this->setUpdateFrequency($this->dom, $this->base);
         $this->addPerson($this->dom, $this->base);
-        $this->setPersons($this->dom, $this->base);
+        $this->setPeople($this->dom, $this->base);
         $this->setTrailer($this->dom, $this->base);
         $this->setGuid($this->dom, $this->base);
         $this->setMedium($this->dom, $this->base);
@@ -179,12 +179,12 @@ class Feed extends Extension\AbstractRenderer
      */
     protected function addPerson(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var array<array> $persons */
-        $persons = $this->getDataContainer()->getPodcastIndexPersons();
-        if (empty($persons)) {
+        /** @psalm-var array<array> $people */
+        $people = $this->getDataContainer()->getPodcastIndexPeople();
+        if (empty($people)) {
             return;
         }
-        foreach ($persons as $person) {
+        foreach ($people as $person) {
             $el   = $dom->createElement('podcast:person');
             $text = $dom->createTextNode((string) $person['name']);
             $el->appendChild($text);
@@ -206,7 +206,7 @@ class Feed extends Extension\AbstractRenderer
         $this->called = true;
     }
 
-    protected function setPersons(DOMDocument $dom, DOMElement $root): void
+    protected function setPeople(DOMDocument $dom, DOMElement $root): void
     {
         $this->addPerson($dom, $root);
     }

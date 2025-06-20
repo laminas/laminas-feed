@@ -109,11 +109,13 @@ class Feed extends Extension\AbstractFeed
 
     /**
      * Get the podcast license
+     *
+     * @return null|object{identifier: string, url: string}
      */
-    public function getPodcastIndexLicense(): ?stdClass
+    public function getPodcastIndexLicense(): object|null
     {
         if (array_key_exists('license', $this->data)) {
-            /** @var stdClass $object */
+            /** @var null|object{identifier: string, url: string} $object */
             $object = $this->data['license'];
             return $object;
         }
@@ -137,11 +139,13 @@ class Feed extends Extension\AbstractFeed
 
     /**
      * Get the podcast location
+     *
+     * @return null|object{description: string, geo?: string, osm?: string}
      */
-    public function getPodcastIndexLocation(): ?stdClass
+    public function getPodcastIndexLocation(): object|null
     {
         if (array_key_exists('location', $this->data)) {
-            /** @var stdClass $object */
+            /** @var null|object{description: string, geo?: string, osm?: string} $object */
             $object = $this->data['location'];
             return $object;
         }
@@ -166,11 +170,13 @@ class Feed extends Extension\AbstractFeed
 
     /**
      * Get the podcast images
+     *
+     * @return null|object{srcset: string}
      */
-    public function getPodcastIndexImages(): ?stdClass
+    public function getPodcastIndexImages(): object|null
     {
         if (array_key_exists('images', $this->data)) {
-            /** @var stdClass $object */
+            /** @var null|object{srcset: string} $object */
             $object = $this->data['images'];
             return $object;
         }
@@ -193,11 +199,13 @@ class Feed extends Extension\AbstractFeed
 
     /**
      * Get the podcast update frequency
+     *
+     * @return null|object{description: string, complete?: bool, dtstart?: string, rrule?: string}
      */
-    public function getPodcastIndexUpdateFrequency(): ?stdClass
+    public function getPodcastIndexUpdateFrequency(): object|null
     {
         if (array_key_exists('updateFrequency', $this->data)) {
-            /** @var stdClass $object */
+            /** @var null|object{description: string, complete?: bool, dtstart?: string, rrule?: string} $object */
             $object = $this->data['updateFrequency'];
             return $object;
         }
@@ -222,14 +230,16 @@ class Feed extends Extension\AbstractFeed
     }
 
     /**
-     * Get the podcast person
+     * Get the podcast people
+     *
+     * @return list<stdClass|null>
      */
-    public function getPodcastIndexPersons(): array
+    public function getPodcastIndexPeople(): array
     {
-        if (array_key_exists('persons', $this->data)) {
-            /** @var array $persons */
-            $persons = $this->data['updateFrequency'];
-            return $persons;
+        if (array_key_exists('people', $this->data)) {
+            /** @var list<stdClass|null> $people */
+            $people = $this->data['updateFrequency'];
+            return $people;
         }
 
         $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:person');
@@ -250,9 +260,9 @@ class Feed extends Extension\AbstractFeed
             }
         }
 
-        $this->data['persons'] = $personCollection;
+        $this->data['people'] = $personCollection;
 
-        return $this->data['persons'];
+        return $this->data['people'];
     }
 
     /**

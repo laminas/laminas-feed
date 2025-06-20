@@ -114,11 +114,11 @@ class Feed
     /**
      * Set feed license
      *
-     * @param array $value [identifier: string, url: string]
+     * @param array{identifier: string, url: string} $value
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public function setPodcastIndexLicense(array $value)
+    public function setPodcastIndexLicense(array $value): self
     {
         if (! isset($value['identifier'], $value['url'])) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -142,11 +142,11 @@ class Feed
     /**
      * Set feed location
      *
-     * @param array $value [description: string, geo: string|null, osm: string|null]
+     * @param array{description: string, geo?: string, osm?: string} $value
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public function setPodcastIndexLocation(array $value)
+    public function setPodcastIndexLocation(array $value): self
     {
         if (! isset($value['description'])) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -175,11 +175,11 @@ class Feed
     /**
      * Set feed images
      *
-     * @param array $value [scrset: string]
+     * @param array{srcset: string} $value
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public function setPodcastIndexImages(array $value)
+    public function setPodcastIndexImages(array $value): self
     {
         if (! isset($value['srcset'])) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -198,11 +198,11 @@ class Feed
     /**
      * Set feed update frequency
      *
-     * @param array $value [description: string, complete: bool|null, dtstart: string|null, rrule: string|null]
+     * @param array{description: string, complete?: bool, dtstart?: string, rrule?: string} $value
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public function setPodcastIndexUpdateFrequency(array $value)
+    public function setPodcastIndexUpdateFrequency(array $value): self
     {
         if (! isset($value['description'])) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -236,11 +236,11 @@ class Feed
     /**
      * Add feed person
      *
-     * @param array<string,mixed> $value [name: str, role: str|null, group: str|null, img: url|null, href: url|null]
+     * @param array{name: string, role?: string, group?: string, img?: string, href?: string} $value
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public function addPodcastIndexPerson(array $value)
+    public function addPodcastIndexPerson(array $value): self
     {
         if (! isset($value['name'])) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -262,32 +262,28 @@ class Feed
                 'invalid parameter: key "href" of "person" must be a url, starting with "http://" or "https://"'
             );
         }
-        if (! isset($this->data['persons'])) {
-            $this->data['persons'] = [];
+        if (! isset($this->data['people'])) {
+            $this->data['people'] = [];
         }
 
-        /** @var array<array<string, mixed>> $this->data['persons'] */
-        $this->data['persons'][] = $value;
+        /** @var array<array<string, mixed>> $this->data['people'] */
+        $this->data['people'][] = $value;
         return $this;
     }
 
     /**
-     * Set a new array of persons.
-     * If no argument is passed, it will just remove all existing persons.
+     * Set a new array of people.
+     * If no argument is passed, it will just remove all existing people.
      *
-     * @param null|array<array> $values
+     * @param array<array> $values
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public function setPodcastIndexPersons(?array $values = null)
+    public function setPodcastIndexPeople(array $values = []): self
     {
-        // delete existing persons before setting new ones
-        $this->data['persons'] = null;
-        if (null === $values) {
-            return $this;
-        }
+        // delete existing people before setting new ones
+        $this->data['people'] = [];
 
-        /** @var array<string,string> $value */
         foreach ($values as $value) {
             $this->addPodcastIndexPerson($value);
         }
