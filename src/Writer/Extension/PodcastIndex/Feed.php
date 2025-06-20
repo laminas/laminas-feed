@@ -293,11 +293,11 @@ class Feed
     /**
      * Set feed trailer
      *
-     * @param array $value [title: str, pubdate: str, url: str, length: int|null, type: str|null, season: int|null]
+     * @param array{title: string, pubdate: string, url: string, length?: int, type?: string, season?: int} $value
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public function setPodcastIndexTrailer(array $value)
+    public function setPodcastIndexTrailer(array $value): self
     {
         if (! isset($value['title']) || ! isset($value['pubdate']) || ! isset($value['url'])) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -314,6 +314,7 @@ class Feed
                 'invalid parameter: key "pubdate" of "trailer" must be an RFC2822 formatted date string'
             );
         }
+        /** @psalm-suppress DocblockTypeContradiction */
         if (! is_string($value['url']) || ! filter_var($value['url'], FILTER_VALIDATE_URL)) {
             throw new Writer\Exception\InvalidArgumentException(
                 'invalid parameter: key "url" of "trailer" must be a url, starting with "http://" or "https://'
@@ -341,11 +342,11 @@ class Feed
     /**
      * Set feed guid
      *
-     * @param array $value [value: string]
+     * @param array{value: string} $value
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public function setPodcastIndexGuid(array $value)
+    public function setPodcastIndexGuid(array $value): self
     {
         if (! isset($value['value'])) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -364,17 +365,18 @@ class Feed
     /**
      * Set feed medium
      *
-     * @param array $value [value: string]
+     * @param array{value: string} $value
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public function setPodcastIndexMedium(array $value)
+    public function setPodcastIndexMedium(array $value): self
     {
         if (! isset($value['value'])) {
             throw new Writer\Exception\InvalidArgumentException(
                 'invalid parameter: "medium" must be an array containing the key "value"'
             );
         }
+        /** @psalm-suppress DocblockTypeContradiction */
         if (! is_string($value['value'])) {
             throw new Writer\Exception\InvalidArgumentException(
                 'invalid parameter: key "value" of "medium" must be a UUIDv5 string'

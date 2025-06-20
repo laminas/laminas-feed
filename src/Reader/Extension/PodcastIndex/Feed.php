@@ -267,11 +267,13 @@ class Feed extends Extension\AbstractFeed
 
     /**
      * Get the podcast trailer
+     *
+     * @return null|object{title: string, pubdate: string, url: string, length?: int, type?: string, season?: int}
      */
-    public function getPodcastIndexTrailer(): ?stdClass
+    public function getPodcastIndexTrailer(): object|null
     {
         if (array_key_exists('trailer', $this->data)) {
-            /** @var stdClass $object */
+            /** @var null|object{title: string, pubdate: string, url: string, length?: int, type?: string, season?: int} $object */
             $object = $this->data['trailer'];
             return $object;
         }
@@ -299,11 +301,13 @@ class Feed extends Extension\AbstractFeed
 
     /**
      * Get the podcast guid
+     *
+     * @return null|object{value: string}
      */
-    public function getPodcastIndexGuid(): ?stdClass
+    public function getPodcastIndexGuid(): object|null
     {
         if (array_key_exists('guid', $this->data)) {
-            /** @var stdClass $object */
+            /** @var null|object{value: string} $object */
             $object = $this->data['guid'];
             return $object;
         }
@@ -326,11 +330,13 @@ class Feed extends Extension\AbstractFeed
 
     /**
      * Get the podcast medium
+     *
+     * @return null|object{value: string}
      */
-    public function getPodcastIndexMedium(): ?stdClass
+    public function getPodcastIndexMedium(): object|null
     {
         if (array_key_exists('medium', $this->data)) {
-            /** @var stdClass $object */
+            /** @var null|object{value: string} $object */
             $object = $this->data['medium'];
             return $object;
         }

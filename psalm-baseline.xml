@@ -3102,12 +3102,18 @@
       <code><![CDATA[is_string($value['description'])]]></code>
       <code><![CDATA[is_string($value['identifier'])]]></code>
       <code><![CDATA[is_string($value['name'])]]></code>
+      <code><![CDATA[is_string($value['pubdate'])]]></code>
       <code><![CDATA[is_string($value['srcset'])]]></code>
+      <code><![CDATA[is_string($value['title'])]]></code>
+      <code><![CDATA[is_string($value['value'])]]></code>
       <code><![CDATA[isset($value['complete']) && ! is_bool($value['complete'])]]></code>
       <code><![CDATA[isset($value['dtstart']) && ! is_string($value['dtstart'])]]></code>
       <code><![CDATA[isset($value['geo']) && ! is_string($value['geo'])]]></code>
+      <code><![CDATA[isset($value['length']) && ! is_int($value['length'])]]></code>
       <code><![CDATA[isset($value['osm']) && ! is_string($value['osm'])]]></code>
       <code><![CDATA[isset($value['rrule']) && ! is_string($value['rrule'])]]></code>
+      <code><![CDATA[isset($value['season']) && ! is_int($value['season'])]]></code>
+      <code><![CDATA[isset($value['type']) && ! is_string($value['type'])]]></code>
     </DocblockTypeContradiction>
     <MixedArgumentTypeCoercion>
       <code>$value</code>
@@ -3118,15 +3124,15 @@
       <code>getEncoding</code>
       <code>setEncoding</code>
       <code>setPodcastIndexFunding</code>
+      <code>setPodcastIndexGuid</code>
       <code>setPodcastIndexImages</code>
       <code>setPodcastIndexLicense</code>
       <code>setPodcastIndexLocation</code>
       <code>setPodcastIndexLocked</code>
-      <code>setPodcastIndexPeople</code>
-      <code>setPodcastIndexUpdateFrequency</code>
-      <code>setPodcastIndexTrailer</code>
-      <code>setPodcastIndexGuid</code>
       <code>setPodcastIndexMedium</code>
+      <code>setPodcastIndexPeople</code>
+      <code>setPodcastIndexTrailer</code>
+      <code>setPodcastIndexUpdateFrequency</code>
     </PossiblyUnusedMethod>
     <PossiblyUnusedParam>
       <code>$params</code>
@@ -3151,15 +3157,15 @@
   <file src="src/Writer/Extension/PodcastIndex/Renderer/Feed.php">
     <MixedMethodCall>
       <code>getPodcastIndexFunding</code>
+      <code>getPodcastIndexGuid</code>
       <code>getPodcastIndexImages</code>
       <code>getPodcastIndexLicense</code>
       <code>getPodcastIndexLocation</code>
       <code>getPodcastIndexLocked</code>
-      <code>getPodcastIndexPeople</code>
-      <code>getPodcastIndexUpdateFrequency</code>
-      <code>getPodcastIndexTrailer</code>
-      <code>getPodcastIndexGuid</code>
       <code>getPodcastIndexMedium</code>
+      <code>getPodcastIndexPeople</code>
+      <code>getPodcastIndexTrailer</code>
+      <code>getPodcastIndexUpdateFrequency</code>
     </MixedMethodCall>
     <RedundantCastGivenDocblockType>
       <code><![CDATA[(string) $funding['title']]]></code>
