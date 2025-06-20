@@ -366,6 +366,29 @@ class Feed
     }
 
     /**
+     * Set feed medium
+     *
+     * @param array $value [value: string]
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function setPodcastIndexMedium(array $value)
+    {
+        if (! isset($value['value'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "medium" must be an array containing the key "value"'
+            );
+        }
+        if (! is_string($value['value'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "value" of "medium" must be a UUIDv5 string'
+            );
+        }
+        $this->data['medium'] = $value;
+        return $this;
+    }
+
+    /**
      * Overloading: proxy to internal setters
      *
      * @return mixed

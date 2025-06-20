@@ -212,4 +212,18 @@ class FeedTest extends TestCase
         $this->assertStringContainsString('<podcast:guid', $xml);
         $this->assertStringContainsString($data['value'], $xml);
     }
+
+    public function testRendersRssMediumTag(): void
+    {
+        $data = [
+            'value' => 'audiobook',
+        ];
+        $this->validWriter->setPodcastIndexMedium($data);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $this->assertStringContainsString('<podcast:medium', $xml);
+        $this->assertStringContainsString($data['value'], $xml);
+    }
 }

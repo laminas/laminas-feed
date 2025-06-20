@@ -37,6 +37,7 @@ class Feed extends Extension\AbstractRenderer
         $this->setPersons($this->dom, $this->base);
         $this->setTrailer($this->dom, $this->base);
         $this->setGuid($this->dom, $this->base);
+        $this->setMedium($this->dom, $this->base);
         if ($this->called) {
             $this->_appendNamespaces();
         }
@@ -250,6 +251,23 @@ class Feed extends Extension\AbstractRenderer
         }
         $el   = $dom->createElement('podcast:guid');
         $text = $dom->createTextNode($guid['value']);
+        $el->appendChild($text);
+        $root->appendChild($el);
+        $this->called = true;
+    }
+
+    /**
+     * Set feed medium
+     */
+    protected function setMedium(DOMDocument $dom, DOMElement $root): void
+    {
+        /** @psalm-var null|array<string, string> $medium */
+        $medium = $this->getDataContainer()->getPodcastIndexMedium();
+        if ($medium === null) {
+            return;
+        }
+        $el   = $dom->createElement('podcast:medium');
+        $text = $dom->createTextNode($medium['value']);
         $el->appendChild($text);
         $root->appendChild($el);
         $this->called = true;

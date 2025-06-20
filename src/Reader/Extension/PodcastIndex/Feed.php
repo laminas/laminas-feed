@@ -315,6 +315,33 @@ class Feed extends Extension\AbstractFeed
     }
 
     /**
+     * Get the podcast medium
+     */
+    public function getPodcastIndexMedium(): ?stdClass
+    {
+        if (array_key_exists('medium', $this->data)) {
+            /** @var stdClass $object */
+            $object = $this->data['medium'];
+            return $object;
+        }
+
+        $object = null;
+
+        $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:medium');
+
+        if ($nodeList->length > 0) {
+            /** @var DOMElement $item */
+            $item          = $nodeList->item(0);
+            $object        = new stdClass();
+            $object->value = $item->nodeValue;
+        }
+
+        $this->data['medium'] = $object;
+
+        return $this->data['medium'];
+    }
+
+    /**
      * Register PodcastIndex namespace
      */
     protected function registerNamespaces(): void

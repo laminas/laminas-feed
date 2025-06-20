@@ -43,6 +43,7 @@
         <podcast:person group="writing" role="guest" href="https://www.wikipedia/alicebrown" img="http://example.com/images/alicebrown.jpg">Alice Brown</podcast:person>
         <podcast:trailer pubdate="Thu, 01 Apr 2021 08:00:00 EST" url="https://example.org/season4teaser.mp4" length="12345678" type="video/mp4" season="4" >Season 4: Race for the Clouds</podcast:trailer>
         <podcast:guid>917393e3-1b1e-5cef-ace4-edaa54e1f810</podcast:guid>
+        <podcast:medium>audiobook</podcast:medium>
 
         <item>
             <title>Shake Shake Shake Your Spices</title>

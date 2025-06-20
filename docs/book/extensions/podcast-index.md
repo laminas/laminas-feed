@@ -21,6 +21,7 @@ single namespace.
 | `getPodcastIndexPersons()`                    | Returns information on the involved people. The output is an array of objects, each with the properties "name", "role", "group", "img" and "href". |
 | `getPodcastIndexTrailer()`                    | Returns information on the podcast trailer. The output is an object with the properties "title", "pubdate", "url", "length", "type" and "season".  |
 | `getPodcastIndexGuid()`                       | Returns the podcast guid. The output is an object with the property "value".                                                                       |
+| `getPodcastIndexMedium()`                     | Returns the podcast medium. The output is an object with the property "value".                                                                     |
 
 ### SET methods
 
@@ -36,6 +37,7 @@ single namespace.
 | `setPodcastIndexPersons()`         | Expects an array of objects with each the required key "name" and the optional keys "role", "group", "img" and "href".                |
 | `setPodcastIndexTrailer()`         | Expects an array with the required keys "title", "pubdate" and "url" and the optional keys "length", "type" and "season".             |
 | `setPodcastIndexGuid()`            | Expects an array with the required key "value".                                                                                       |
+| `setPodcastIndexMedium()`          | Expects an array with the required key "value".                                                                                       |
 
 ## Episode API
 

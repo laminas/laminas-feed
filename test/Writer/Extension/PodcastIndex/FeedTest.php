@@ -484,4 +484,27 @@ class FeedTest extends TestCase
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $feed->setPodcastIndexGuid($data);
     }
+
+    public function testSetMedium(): void
+    {
+        $feed = new Writer\Feed();
+
+        $data = [
+            'value' => 'audiobook',
+        ];
+
+        $feed->setPodcastIndexMedium($data);
+        $this->assertEquals($data, $feed->getPodcastIndexMedium());
+    }
+
+    public function testSetMediumThrowsExceptionOnInvalidArgument(): void
+    {
+        $feed = new Writer\Feed();
+
+        $data = [
+            'abc' => 'def',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->setPodcastIndexMedium($data);
+    }
 }

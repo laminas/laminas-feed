@@ -3110,6 +3110,7 @@
       <code>setPodcastIndexPersons</code>
       <code>setPodcastIndexTrailer</code>
       <code>setPodcastIndexGuid</code>
+      <code>setPodcastIndexMedium</code>
     </PossiblyUnusedMethod>
     <PossiblyUnusedParam>
       <code>$params</code>
@@ -3142,6 +3143,7 @@
       <code>getPodcastIndexPersons</code>
       <code>getPodcastIndexTrailer</code>
       <code>getPodcastIndexGuid</code>
+      <code>getPodcastIndexMedium</code>
     </MixedMethodCall>
     <RedundantCastGivenDocblockType>
       <code><![CDATA[(string) $funding['title']]]></code>

@@ -177,6 +177,19 @@ class PodcastIndexRss2Test extends TestCase
         $this->assertEquals($expected, $feed->getPodcastIndexGuid());
     }
 
+    public function testGetsMedium(): void
+    {
+        /** @var Reader\Extension\PodcastIndex\Feed $feed */
+        $feed = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath)
+        );
+
+        $expected        = new stdClass();
+        $expected->value = 'audiobook';
+
+        $this->assertEquals($expected, $feed->getPodcastIndexMedium());
+    }
+
     /**
      * Entry level testing
      */
