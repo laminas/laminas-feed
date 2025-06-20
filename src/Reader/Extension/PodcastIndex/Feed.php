@@ -132,12 +132,12 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get the podcast location
      *
-     * @return null|object{description: string, geo?: string|null, osm?: string|null}
+     * @return null|object{description: string, geo?: string, osm?: string}
      */
     public function getPodcastIndexLocation(): object|null
     {
         if (array_key_exists('location', $this->data)) {
-            /** @var null|object{description: string, geo?: string|null, osm?: string|null} $object */
+            /** @var null|object{description: string, geo?: string, osm?: string} $object */
             $object = $this->data['location'];
             return $object;
         }
@@ -192,12 +192,12 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get the podcast update frequency
      *
-     * @return null|object{description: string, complete?: bool|null, dtstart?: string|null, rrule?: string|null}
+     * @return null|object{description: string, complete?: bool, dtstart?: string, rrule?: string}
      */
     public function getPodcastIndexUpdateFrequency(): object|null
     {
         if (array_key_exists('updateFrequency', $this->data)) {
-            /** @var null|object{description: string, complete?: bool|null, dtstart?: string|null, rrule?: string|null} $object */
+            /** @var null|object{description: string, complete?: bool, dtstart?: string, rrule?: string} $object */
             $object = $this->data['updateFrequency'];
             return $object;
         }
