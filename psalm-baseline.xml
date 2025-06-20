@@ -3122,7 +3122,7 @@
       <code>setPodcastIndexLicense</code>
       <code>setPodcastIndexLocation</code>
       <code>setPodcastIndexLocked</code>
-      <code>setPodcastIndexPersons</code>
+      <code>setPodcastIndexPeople</code>
       <code>setPodcastIndexUpdateFrequency</code>
     </PossiblyUnusedMethod>
     <PossiblyUnusedParam>
@@ -3152,7 +3152,7 @@
       <code>getPodcastIndexLicense</code>
       <code>getPodcastIndexLocation</code>
       <code>getPodcastIndexLocked</code>
-      <code>getPodcastIndexPersons</code>
+      <code>getPodcastIndexPeople</code>
       <code>getPodcastIndexUpdateFrequency</code>
     </MixedMethodCall>
     <RedundantCastGivenDocblockType>

@@ -261,27 +261,27 @@ class Feed
                 'invalid parameter: key "href" of "person" must be a url, starting with "http://" or "https://"'
             );
         }
-        if (! isset($this->data['persons'])) {
-            $this->data['persons'] = [];
+        if (! isset($this->data['people'])) {
+            $this->data['people'] = [];
         }
 
-        /** @var array<array<string, mixed>> $this->data['persons'] */
-        $this->data['persons'][] = $value;
+        /** @var array<array<string, mixed>> $this->data['people'] */
+        $this->data['people'][] = $value;
         return $this;
     }
 
     /**
-     * Set a new array of persons.
-     * If no argument is passed, it will just remove all existing persons.
+     * Set a new array of people.
+     * If no argument is passed, it will just remove all existing people.
      *
      * @param array<array> $values
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public function setPodcastIndexPersons(array $values = []): self
+    public function setPodcastIndexPeople(array $values = []): self
     {
-        // delete existing persons before setting new ones
-        $this->data['persons'] = [];
+        // delete existing people before setting new ones
+        $this->data['people'] = [];
 
         foreach ($values as $value) {
             $this->addPodcastIndexPerson($value);

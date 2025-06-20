@@ -18,7 +18,7 @@ single namespace.
 | `getPodcastIndexLocation()`                   | Returns funding information. The output is an object with "description", "geo" and "osm" properties.                                               |
 | `getPodcastIndexImages()`                     | Returns information on responsive images. The output is an object with a "srcset" property.                                                        |
 | `getPodcastIndexUpdateFrequency()`            | Returns information on the intended release schedule. The output is an object with "description", "complete", "dtstart" and "rrule" properties.    |
-| `getPodcastIndexPersons()`                    | Returns information on the involved people. The output is an array of objects, each with the properties "name", "role", "group", "img" and "href". |
+| `getPodcastIndexPeople()`                    | Returns information on the involved people. The output is an array of objects, each with the properties "name", "role", "group", "img" and "href". |
 
 ### SET methods
 
@@ -31,7 +31,7 @@ single namespace.
 | `setPodcastIndexImages()`          | Expects an array with the required key "srcset".                                                                                      |
 | `setPodcastIndexUpdateFrequency()` | Expects an array with the required key "description" and the optional keys "complete" (bool), "dtstart" (ISO8601 string) and "rrule". |
 | `addPodcastIndexPerson()`          | Expects an array with the required key "name" and the optional keys "role", "group", "img" and "href".                                |
-| `setPodcastIndexPersons()`         | Expects an array of objects with each the required key "name" and the optional keys "role", "group", "img" and "href".                |
+| `setPodcastIndexPeople()`         | Expects an array of objects with each the required key "name" and the optional keys "role", "group", "img" and "href".                |
 
 ## Episode API
 

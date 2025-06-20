@@ -222,16 +222,16 @@ class Feed extends Extension\AbstractFeed
     }
 
     /**
-     * Get the podcast persons
+     * Get the podcast people
      *
      * @return list<stdClass|null>
      */
-    public function getPodcastIndexPersons(): array
+    public function getPodcastIndexPeople(): array
     {
-        if (array_key_exists('persons', $this->data)) {
-            /** @var list<stdClass|null> $persons */
-            $persons = $this->data['updateFrequency'];
-            return $persons;
+        if (array_key_exists('people', $this->data)) {
+            /** @var list<stdClass|null> $people */
+            $people = $this->data['updateFrequency'];
+            return $people;
         }
 
         $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:person');
@@ -252,9 +252,9 @@ class Feed extends Extension\AbstractFeed
             }
         }
 
-        $this->data['persons'] = $personCollection;
+        $this->data['people'] = $personCollection;
 
-        return $this->data['persons'];
+        return $this->data['people'];
     }
 
     /**
