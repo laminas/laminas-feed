@@ -205,7 +205,7 @@ class Feed
     {
         if (! isset($value['description'])) {
             throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: "updateFrequency" must be an array containing the key "description" (node value)'
+                'invalid parameter: "updateFrequency" must be an array containing at least the key "description"'
             );
         }
         if (! is_string($value['description'])) {
@@ -249,6 +249,16 @@ class Feed
         if (! is_string($value['name'])) {
             throw new Writer\Exception\InvalidArgumentException(
                 'invalid parameter: key "name" of "person" must be of type string'
+            );
+        }
+        if (isset($value['role']) && ! is_string($value['role'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "role" of "person" must be of type string'
+            );
+        }
+        if (isset($value['group']) && ! is_string($value['group'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "group" of "person" must be of type string'
             );
         }
         if (isset($value['img']) && ! filter_var($value['img'], FILTER_VALIDATE_URL)) {

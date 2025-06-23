@@ -3108,6 +3108,8 @@
       <code><![CDATA[isset($value['geo']) && ! is_string($value['geo'])]]></code>
       <code><![CDATA[isset($value['osm']) && ! is_string($value['osm'])]]></code>
       <code><![CDATA[isset($value['rrule']) && ! is_string($value['rrule'])]]></code>
+      <code><![CDATA[isset($value['role']) && ! is_string($value['role'])]]></code>
+      <code><![CDATA[isset($value['group']) && ! is_string($value['group'])]]></code>
     </DocblockTypeContradiction>
     <MixedArgumentTypeCoercion>
       <code>$value</code>
