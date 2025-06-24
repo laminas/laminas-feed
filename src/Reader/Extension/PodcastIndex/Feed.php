@@ -12,12 +12,18 @@ use function array_key_exists;
 use function assert;
 
 /**
+ * @psalm-type UpdateFrequencyObject = object{
+ *    description: string,
+ *    complete?: bool,
+ *    dtstart?: DateTimeInterface,
+ *    rrule?: string
+ *    }
  * @psalm-type PersonObject = object{
- *     name: string,
- *     role: string|null,
- *     group: string|null,
- *     img: string|null,
- *     href: string|null
+ *        name: string,
+ *        role?: string,
+ *        group?: string,
+ *        img?: string,
+ *        href?: string
  * }
  */
 
@@ -203,12 +209,12 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get the podcast update frequency
      *
-     * @return null|object{description: string, complete?: bool, dtstart?: string, rrule?: string}
+     * @psalm-return null|UpdateFrequencyObject
      */
     public function getPodcastIndexUpdateFrequency(): object|null
     {
         if (array_key_exists('updateFrequency', $this->data)) {
-            /** @var null|object{description: string, complete?: bool, dtstart?: string, rrule?: string} $object */
+            /** @var null|UpdateFrequencyObject $object */
             $object = $this->data['updateFrequency'];
             return $object;
         }

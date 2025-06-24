@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace Laminas\Feed\Writer\Extension\PodcastIndex\Renderer;
 
+use DateTimeInterface;
 use DOMDocument;
 use DOMElement;
 use Laminas\Feed\Writer\Extension;
 
 /**
  * Renders PodcastIndex data of a RSS Feed
+ *
+ * @psalm-import-type PersonArray from \Laminas\Feed\Writer\Extension\PodcastIndex\Feed
+ * @psalm-import-type UpdateFrequencyArray from \Laminas\Feed\Writer\Extension\PodcastIndex\Feed
  */
 class Feed extends Extension\AbstractRenderer
 {
@@ -150,22 +154,22 @@ class Feed extends Extension\AbstractRenderer
      */
     private function setUpdateFrequency(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var null|array<string, mixed> $updateFrequency */
+        /** @psalm-var null|UpdateFrequencyArray $updateFrequency */
         $updateFrequency = $this->getDataContainer()->getPodcastIndexUpdateFrequency();
         if ($updateFrequency === null) {
             return;
         }
         $el   = $dom->createElement('podcast:updateFrequency');
-        $text = $dom->createTextNode((string) $updateFrequency['description']);
+        $text = $dom->createTextNode($updateFrequency['description']);
         $el->appendChild($text);
         if (! empty($updateFrequency['complete'])) {
             $el->setAttribute('complete', (string) $updateFrequency['complete']);
         }
         if (! empty($updateFrequency['dtstart'])) {
-            $el->setAttribute('dtstart', (string) $updateFrequency['dtstart']);
+            $el->setAttribute('dtstart', $updateFrequency['dtstart']->format(DateTimeInterface::ATOM));
         }
         if (! empty($updateFrequency['rrule'])) {
-            $el->setAttribute('rrule', (string) $updateFrequency['rrule']);
+            $el->setAttribute('rrule', $updateFrequency['rrule']);
         }
         $root->appendChild($el);
         $this->called = true;
@@ -176,27 +180,27 @@ class Feed extends Extension\AbstractRenderer
      */
     private function addPerson(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var array<array> $people */
+        /** @psalm-var list<PersonArray|> $people */
         $people = $this->getDataContainer()->getPodcastIndexPeople();
         if (empty($people)) {
             return;
         }
         foreach ($people as $person) {
             $el   = $dom->createElement('podcast:person');
-            $text = $dom->createTextNode((string) $person['name']);
+            $text = $dom->createTextNode($person['name']);
             $el->appendChild($text);
 
             if (! empty($person['role'])) {
-                $el->setAttribute('role', (string) $person['role']);
+                $el->setAttribute('role', $person['role']);
             }
             if (! empty($person['group'])) {
-                $el->setAttribute('group', (string) $person['group']);
+                $el->setAttribute('group', $person['group']);
             }
             if (! empty($person['img'])) {
-                $el->setAttribute('img', (string) $person['img']);
+                $el->setAttribute('img', $person['img']);
             }
             if (! empty($person['href'])) {
-                $el->setAttribute('href', (string) $person['href']);
+                $el->setAttribute('href', $person['href']);
             }
             $root->appendChild($el);
         }
