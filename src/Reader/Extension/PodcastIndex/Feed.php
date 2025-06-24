@@ -247,7 +247,7 @@ class Feed extends Extension\AbstractFeed
     {
         if (array_key_exists('people', $this->data)) {
             /** @var list<PersonObject> $people */
-            $people = $this->data['updateFrequency'];
+            $people = $this->data['people'];
             return $people;
         }
 
