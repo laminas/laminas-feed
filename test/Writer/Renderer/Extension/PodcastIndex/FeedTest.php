@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace LaminasTest\Feed\Writer\Renderer\Extension\PodcastIndex;
 
+use DateTime;
+use DateTimeInterface;
 use Laminas\Feed\Writer;
 use Laminas\Feed\Writer\Renderer;
 use PHPUnit\Framework\TestCase;
@@ -117,13 +119,14 @@ class FeedTest extends TestCase
 
     public function testRendersRssUpdateFrequencyTag(): void
     {
+        $date        = new DateTime();
         $description = 'Daily';
         $complete    = false;
 
         $updateFrequency = [
             'description' => $description,
             'complete'    => $complete,
-            'dtstart'     => '2023-08-28T00:00:00.000Z',
+            'dtstart'     => $date,
             'rrule'       => 'FREQ=DAILY',
         ];
 
@@ -135,8 +138,8 @@ class FeedTest extends TestCase
         $this->assertStringContainsString('<podcast:updateFrequency', $xml);
         $this->assertStringContainsString(">$description<", $xml);
         $this->assertStringContainsString((string) $complete, $xml);
-        $this->assertStringContainsString($updateFrequency['dtstart'], $xml);
         $this->assertStringContainsString($updateFrequency['rrule'], $xml);
+        $this->assertStringContainsString($date->format(DateTimeInterface::ATOM), $xml);
     }
 
     public function testRendersRssPersonTag(): void

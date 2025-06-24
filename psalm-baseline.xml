@@ -3104,7 +3104,6 @@
       <code><![CDATA[is_string($value['name'])]]></code>
       <code><![CDATA[is_string($value['srcset'])]]></code>
       <code><![CDATA[isset($value['complete']) && ! is_bool($value['complete'])]]></code>
-      <code><![CDATA[isset($value['dtstart']) && ! is_string($value['dtstart'])]]></code>
       <code><![CDATA[isset($value['geo']) && ! is_string($value['geo'])]]></code>
       <code><![CDATA[isset($value['group']) && ! is_string($value['group'])]]></code>
       <code><![CDATA[isset($value['osm']) && ! is_string($value['osm'])]]></code>

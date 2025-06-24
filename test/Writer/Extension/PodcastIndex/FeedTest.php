@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace LaminasTest\Feed\Writer\Extension\PodcastIndex;
 
+use DateTime;
+use DateTimeInterface;
 use Laminas\Feed\Writer;
 use PHPUnit\Framework\TestCase;
 
@@ -261,16 +263,23 @@ class FeedTest extends TestCase
 
     public function testSetUpdateFrequency(): void
     {
+        $date = new DateTime();
         $feed = new Writer\Feed();
 
         $updateFrequency = [
             'description' => 'Daily',
             'complete'    => false,
-            'dtstart'     => '2023-08-28T00:00:00.000Z',
+            'dtstart'     => $date,
             'rrule'       => 'FREQ=DAILY',
         ];
         $feed->setPodcastIndexUpdateFrequency($updateFrequency);
-        $this->assertEquals($updateFrequency, $feed->getPodcastIndexUpdateFrequency());
+
+        /** @var array $response */
+        $response = $feed->getPodcastIndexUpdateFrequency();
+        $this->assertEquals($updateFrequency['description'], $response['description']);
+        $this->assertEquals($updateFrequency['complete'], $response['complete']);
+        $this->assertEquals($updateFrequency['rrule'], $response['rrule']);
+        $this->assertEquals($date->format(DateTimeInterface::ATOM), $response['dtstart']);
     }
 
     public function testSetUpdateFrequencyWithOneArgument(): void

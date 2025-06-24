@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laminas\Feed\Writer\Extension\PodcastIndex;
 
+use DateTime;
+use DateTimeInterface;
 use Laminas\Feed\Writer;
 use Laminas\Stdlib\StringUtils;
 use Laminas\Stdlib\StringWrapper\StringWrapperInterface;
@@ -207,7 +209,7 @@ class Feed
     /**
      * Set feed update frequency
      *
-     * @param array{description: string, complete?: bool, dtstart?: string, rrule?: string} $value
+     * @param array{description: string, complete?: bool, dtstart?: DateTime, rrule?: string} $value
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
@@ -228,10 +230,14 @@ class Feed
                 'invalid parameter: key "complete" of "updateFrequency": must be of type boolean'
             );
         }
-        if (isset($value['dtstart']) && ! is_string($value['dtstart'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "dtstart" of "updateFrequency" must be an ISO8601-formatted string'
-            );
+        if (isset($value['dtstart'])) {
+            if (! $value['dtstart'] instanceof DateTime) {
+                throw new Writer\Exception\InvalidArgumentException(
+                    'invalid parameter: key "dtstart" of "updateFrequency" must be of type DateTime'
+                );
+            }
+            // cast to ISO8601 string
+            $value['dtstart'] = $value['dtstart']->format(DateTimeInterface::ATOM);
         }
         if (isset($value['rrule']) && ! is_string($value['rrule'])) {
             throw new Writer\Exception\InvalidArgumentException(
