@@ -3107,17 +3107,15 @@
       <code><![CDATA[is_string($value['title'])]]></code>
       <code><![CDATA[is_string($value['value'])]]></code>
       <code><![CDATA[isset($value['complete']) && ! is_bool($value['complete'])]]></code>
-      <code><![CDATA[isset($value['dtstart']) && ! is_string($value['dtstart'])]]></code>
       <code><![CDATA[isset($value['geo']) && ! is_string($value['geo'])]]></code>
+      <code><![CDATA[isset($value['group']) && ! is_string($value['group'])]]></code>
       <code><![CDATA[isset($value['length']) && ! is_int($value['length'])]]></code>
       <code><![CDATA[isset($value['osm']) && ! is_string($value['osm'])]]></code>
+      <code><![CDATA[isset($value['role']) && ! is_string($value['role'])]]></code>
       <code><![CDATA[isset($value['rrule']) && ! is_string($value['rrule'])]]></code>
       <code><![CDATA[isset($value['season']) && ! is_int($value['season'])]]></code>
       <code><![CDATA[isset($value['type']) && ! is_string($value['type'])]]></code>
     </DocblockTypeContradiction>
-    <MixedArgumentTypeCoercion>
-      <code>$value</code>
-    </MixedArgumentTypeCoercion>
     <PossiblyUnusedMethod>
       <code>__call</code>
       <code>__construct</code>

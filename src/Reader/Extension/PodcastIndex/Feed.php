@@ -9,6 +9,17 @@ use Laminas\Feed\Reader\Extension;
 use stdClass;
 
 use function array_key_exists;
+use function assert;
+
+/**
+ * @psalm-type PersonObject = object{
+ *     name: string,
+ *     role: string|null,
+ *     group: string|null,
+ *     img: string|null,
+ *     href: string|null
+ * }
+ */
 
 /**
  * Describes PodcastIndex data of a RSS Feed
@@ -95,8 +106,8 @@ class Feed extends Extension\AbstractFeed
         $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:funding');
 
         if ($nodeList->length > 0) {
-            /** @var DOMElement $item */
-            $item           = $nodeList->item(0);
+            $item = $nodeList->item(0);
+            assert($item instanceof DOMElement);
             $funding        = new stdClass();
             $funding->url   = $item->getAttribute('url');
             $funding->title = $item->nodeValue;
@@ -125,8 +136,8 @@ class Feed extends Extension\AbstractFeed
         $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:license');
 
         if ($nodeList->length > 0) {
-            /** @var DOMElement $item */
-            $item                = $nodeList->item(0);
+            $item = $nodeList->item(0);
+            assert($item instanceof DOMElement);
             $license             = new stdClass();
             $license->identifier = $item->nodeValue;
             $license->url        = $item->getAttribute('url');
@@ -155,8 +166,8 @@ class Feed extends Extension\AbstractFeed
         $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:location');
 
         if ($nodeList->length > 0) {
-            /** @var DOMElement $item */
-            $item                  = $nodeList->item(0);
+            $item = $nodeList->item(0);
+            assert($item instanceof DOMElement);
             $location              = new stdClass();
             $location->description = $item->nodeValue;
             $location->geo         = $item->getAttribute('geo');
@@ -186,8 +197,8 @@ class Feed extends Extension\AbstractFeed
         $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:images');
 
         if ($nodeList->length > 0) {
-            /** @var DOMElement $item */
-            $item           = $nodeList->item(0);
+            $item = $nodeList->item(0);
+            assert($item instanceof DOMElement);
             $images         = new stdClass();
             $images->srcset = $item->getAttribute('srcset');
         }
@@ -215,8 +226,8 @@ class Feed extends Extension\AbstractFeed
         $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:updateFrequency');
 
         if ($nodeList->length > 0) {
-            /** @var DOMElement $item */
-            $item                         = $nodeList->item(0);
+            $item = $nodeList->item(0);
+            assert($item instanceof DOMElement);
             $updateFrequency              = new stdClass();
             $updateFrequency->description = $item->nodeValue;
             $updateFrequency->complete    = $item->getAttribute('complete');
@@ -232,12 +243,12 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get the podcast people
      *
-     * @return list<stdClass|null>
+     * @psalm-return list<PersonObject>
      */
     public function getPodcastIndexPeople(): array
     {
         if (array_key_exists('people', $this->data)) {
-            /** @var list<stdClass|null> $people */
+            /** @var list<PersonObject> $people */
             $people = $this->data['updateFrequency'];
             return $people;
         }
@@ -247,8 +258,8 @@ class Feed extends Extension\AbstractFeed
         $personCollection = [];
 
         if ($nodeList->length) {
-            /** @var DOMElement $entry */
             foreach ($nodeList as $entry) {
+                assert($entry instanceof DOMElement);
                 $person        = new stdClass();
                 $person->name  = $entry->nodeValue;
                 $person->role  = $entry->getAttribute('role');

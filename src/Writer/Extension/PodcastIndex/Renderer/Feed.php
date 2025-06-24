@@ -58,7 +58,7 @@ class Feed extends Extension\AbstractRenderer
     /**
      * Set feed lock
      */
-    protected function setLocked(DOMDocument $dom, DOMElement $root): void
+    private function setLocked(DOMDocument $dom, DOMElement $root): void
     {
         /** @psalm-var null|array<string, string> $locked */
         $locked = $this->getDataContainer()->getPodcastIndexLocked();
@@ -76,7 +76,7 @@ class Feed extends Extension\AbstractRenderer
     /**
      * Set feed funding
      */
-    protected function setFunding(DOMDocument $dom, DOMElement $root): void
+    private function setFunding(DOMDocument $dom, DOMElement $root): void
     {
         /** @psalm-var null|array<string, string> $funding */
         $funding = $this->getDataContainer()->getPodcastIndexFunding();
@@ -94,7 +94,7 @@ class Feed extends Extension\AbstractRenderer
     /**
      * Set feed license
      */
-    protected function setLicense(DOMDocument $dom, DOMElement $root): void
+    private function setLicense(DOMDocument $dom, DOMElement $root): void
     {
         /** @psalm-var null|array<string,string> $license */
         $license = $this->getDataContainer()->getPodcastIndexLicense();
@@ -112,7 +112,7 @@ class Feed extends Extension\AbstractRenderer
     /**
      * Set feed location
      */
-    protected function setLocation(DOMDocument $dom, DOMElement $root): void
+    private function setLocation(DOMDocument $dom, DOMElement $root): void
     {
         /** @psalm-var null|array<string,string> $location */
         $location = $this->getDataContainer()->getPodcastIndexLocation();
@@ -135,7 +135,7 @@ class Feed extends Extension\AbstractRenderer
     /**
      * Set feed images
      */
-    protected function setImages(DOMDocument $dom, DOMElement $root): void
+    private function setImages(DOMDocument $dom, DOMElement $root): void
     {
         /** @psalm-var null|array<string, string> $images */
         $images = $this->getDataContainer()->getPodcastIndexImages();
@@ -151,7 +151,7 @@ class Feed extends Extension\AbstractRenderer
     /**
      * Set feed update frequency
      */
-    protected function setUpdateFrequency(DOMDocument $dom, DOMElement $root): void
+    private function setUpdateFrequency(DOMDocument $dom, DOMElement $root): void
     {
         /** @psalm-var null|array<string, mixed> $updateFrequency */
         $updateFrequency = $this->getDataContainer()->getPodcastIndexUpdateFrequency();
@@ -177,7 +177,7 @@ class Feed extends Extension\AbstractRenderer
     /**
      * Add feed person
      */
-    protected function addPerson(DOMDocument $dom, DOMElement $root): void
+    private function addPerson(DOMDocument $dom, DOMElement $root): void
     {
         /** @psalm-var array<array> $people */
         $people = $this->getDataContainer()->getPodcastIndexPeople();
@@ -206,7 +206,7 @@ class Feed extends Extension\AbstractRenderer
         $this->called = true;
     }
 
-    protected function setPeople(DOMDocument $dom, DOMElement $root): void
+    private function setPeople(DOMDocument $dom, DOMElement $root): void
     {
         $this->addPerson($dom, $root);
     }

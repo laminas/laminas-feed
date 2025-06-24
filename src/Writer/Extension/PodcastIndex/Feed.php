@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laminas\Feed\Writer\Extension\PodcastIndex;
 
+use DateTime;
+use DateTimeInterface;
 use Laminas\Feed\Writer;
 use Laminas\Stdlib\StringUtils;
 use Laminas\Stdlib\StringWrapper\StringWrapperInterface;
@@ -21,6 +23,16 @@ use function substr;
 use function ucfirst;
 
 use const FILTER_VALIDATE_URL;
+
+/**
+ * @psalm-type PersonArray = array{
+ *     name: string,
+ *     role?: string,
+ *     group?: string,
+ *     img?: string,
+ *     href?: string
+ * }
+ */
 
 /**
  * Describes PodcastIndex data of a RSS Feed
@@ -198,7 +210,7 @@ class Feed
     /**
      * Set feed update frequency
      *
-     * @param array{description: string, complete?: bool, dtstart?: string, rrule?: string} $value
+     * @param array{description: string, complete?: bool, dtstart?: DateTime, rrule?: string} $value
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
@@ -206,7 +218,7 @@ class Feed
     {
         if (! isset($value['description'])) {
             throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: "updateFrequency" must be an array containing the key "description" (node value)'
+                'invalid parameter: "updateFrequency" must be an array containing at least the key "description"'
             );
         }
         if (! is_string($value['description'])) {
@@ -219,10 +231,14 @@ class Feed
                 'invalid parameter: key "complete" of "updateFrequency": must be of type boolean'
             );
         }
-        if (isset($value['dtstart']) && ! is_string($value['dtstart'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "dtstart" of "updateFrequency" must be an ISO8601-formatted string'
-            );
+        if (isset($value['dtstart'])) {
+            if (! $value['dtstart'] instanceof DateTime) {
+                throw new Writer\Exception\InvalidArgumentException(
+                    'invalid parameter: key "dtstart" of "updateFrequency" must be of type DateTime'
+                );
+            }
+            // cast to ISO8601 string
+            $value['dtstart'] = $value['dtstart']->format(DateTimeInterface::ATOM);
         }
         if (isset($value['rrule']) && ! is_string($value['rrule'])) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -236,7 +252,7 @@ class Feed
     /**
      * Add feed person
      *
-     * @param array{name: string, role?: string, group?: string, img?: string, href?: string} $value
+     * @psalm-param PersonArray $value
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
@@ -250,6 +266,16 @@ class Feed
         if (! is_string($value['name'])) {
             throw new Writer\Exception\InvalidArgumentException(
                 'invalid parameter: key "name" of "person" must be of type string'
+            );
+        }
+        if (isset($value['role']) && ! is_string($value['role'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "role" of "person" must be of type string'
+            );
+        }
+        if (isset($value['group']) && ! is_string($value['group'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "group" of "person" must be of type string'
             );
         }
         if (isset($value['img']) && ! filter_var($value['img'], FILTER_VALIDATE_URL)) {
@@ -266,7 +292,7 @@ class Feed
             $this->data['people'] = [];
         }
 
-        /** @var array<array<string, mixed>> $this->data['people'] */
+        /** @var PersonArray $this->data['people'] */
         $this->data['people'][] = $value;
         return $this;
     }
@@ -275,7 +301,7 @@ class Feed
      * Set a new array of people.
      * If no argument is passed, it will just remove all existing people.
      *
-     * @param array<array> $values
+     * @psalm-param array<PersonArray> $values
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
