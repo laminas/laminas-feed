@@ -3106,14 +3106,11 @@
       <code><![CDATA[isset($value['complete']) && ! is_bool($value['complete'])]]></code>
       <code><![CDATA[isset($value['dtstart']) && ! is_string($value['dtstart'])]]></code>
       <code><![CDATA[isset($value['geo']) && ! is_string($value['geo'])]]></code>
-      <code><![CDATA[isset($value['osm']) && ! is_string($value['osm'])]]></code>
-      <code><![CDATA[isset($value['rrule']) && ! is_string($value['rrule'])]]></code>
-      <code><![CDATA[isset($value['role']) && ! is_string($value['role'])]]></code>
       <code><![CDATA[isset($value['group']) && ! is_string($value['group'])]]></code>
+      <code><![CDATA[isset($value['osm']) && ! is_string($value['osm'])]]></code>
+      <code><![CDATA[isset($value['role']) && ! is_string($value['role'])]]></code>
+      <code><![CDATA[isset($value['rrule']) && ! is_string($value['rrule'])]]></code>
     </DocblockTypeContradiction>
-    <MixedArgumentTypeCoercion>
-      <code>$value</code>
-    </MixedArgumentTypeCoercion>
     <PossiblyUnusedMethod>
       <code>__call</code>
       <code>__construct</code>

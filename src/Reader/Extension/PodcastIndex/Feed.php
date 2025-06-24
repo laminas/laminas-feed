@@ -12,7 +12,7 @@ use function array_key_exists;
 use function assert;
 
 /**
- * @psalm-type PersonType = object{
+ * @psalm-type PersonObject = object{
  *     name: string,
  *     role: string|null,
  *     group: string|null,
@@ -235,12 +235,12 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get the podcast people
      *
-     * @psalm-return list<PersonType>
+     * @psalm-return list<PersonObject>
      */
     public function getPodcastIndexPeople(): array
     {
         if (array_key_exists('people', $this->data)) {
-            /** @var list<PersonType> $people */
+            /** @var list<PersonObject> $people */
             $people = $this->data['updateFrequency'];
             return $people;
         }

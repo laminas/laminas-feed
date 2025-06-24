@@ -22,6 +22,16 @@ use function ucfirst;
 use const FILTER_VALIDATE_URL;
 
 /**
+ * @psalm-type PersonArray = array{
+ *     name: string,
+ *     role?: string,
+ *     group?: string,
+ *     img?: string,
+ *     href?: string
+ * }
+ */
+
+/**
  * Describes PodcastIndex data of a RSS Feed
  */
 class Feed
@@ -235,7 +245,7 @@ class Feed
     /**
      * Add feed person
      *
-     * @param array{name: string, role?: string, group?: string, img?: string, href?: string} $value
+     * @psalm-param PersonArray $value
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
@@ -275,7 +285,7 @@ class Feed
             $this->data['people'] = [];
         }
 
-        /** @var array<array<string, mixed>> $this->data['people'] */
+        /** @var PersonArray $this->data['people'] */
         $this->data['people'][] = $value;
         return $this;
     }
@@ -284,7 +294,7 @@ class Feed
      * Set a new array of people.
      * If no argument is passed, it will just remove all existing people.
      *
-     * @param array<array> $values
+     * @psalm-param array<PersonArray> $values
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
