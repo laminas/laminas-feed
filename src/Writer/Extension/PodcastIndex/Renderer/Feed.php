@@ -8,6 +8,7 @@ use DateTimeInterface;
 use DOMDocument;
 use DOMElement;
 use Laminas\Feed\Writer\Extension;
+use Laminas\Feed\Writer\Feed as FeedWriter;
 
 /**
  * Renders PodcastIndex data of a RSS Feed
@@ -60,8 +61,11 @@ class Feed extends Extension\AbstractRenderer
      */
     protected function setLocked(DOMDocument $dom, DOMElement $root): void
     {
+        /** @psalm-var FeedWriter $container */
+        $container = $this->getDataContainer();
+
         /** @psalm-var null|array<string, string> $locked */
-        $locked = $this->getDataContainer()->getPodcastIndexLocked();
+        $locked = $container->getPodcastIndexLocked();
         if ($locked === null) {
             return;
         }
@@ -78,8 +82,11 @@ class Feed extends Extension\AbstractRenderer
      */
     protected function setFunding(DOMDocument $dom, DOMElement $root): void
     {
+        /** @psalm-var FeedWriter $container */
+        $container = $this->getDataContainer();
+
         /** @psalm-var null|array<string, string> $funding */
-        $funding = $this->getDataContainer()->getPodcastIndexFunding();
+        $funding = $container->getPodcastIndexFunding();
         if ($funding === null) {
             return;
         }
@@ -96,8 +103,11 @@ class Feed extends Extension\AbstractRenderer
      */
     private function setLicense(DOMDocument $dom, DOMElement $root): void
     {
+        /** @psalm-var FeedWriter $container */
+        $container = $this->getDataContainer();
+
         /** @psalm-var null|array<string,string> $license */
-        $license = $this->getDataContainer()->getPodcastIndexLicense();
+        $license = $container->getPodcastIndexLicense();
         if ($license === null) {
             return;
         }
@@ -114,8 +124,11 @@ class Feed extends Extension\AbstractRenderer
      */
     private function setLocation(DOMDocument $dom, DOMElement $root): void
     {
+        /** @psalm-var FeedWriter $container */
+        $container = $this->getDataContainer();
+
         /** @psalm-var null|array<string,string> $location */
-        $location = $this->getDataContainer()->getPodcastIndexLocation();
+        $location = $container->getPodcastIndexLocation();
         if ($location === null) {
             return;
         }
@@ -137,8 +150,11 @@ class Feed extends Extension\AbstractRenderer
      */
     private function setImages(DOMDocument $dom, DOMElement $root): void
     {
+        /** @psalm-var FeedWriter $container */
+        $container = $this->getDataContainer();
+
         /** @psalm-var null|array<string, string> $images */
-        $images = $this->getDataContainer()->getPodcastIndexImages();
+        $images = $container->getPodcastIndexImages();
         if ($images === null) {
             return;
         }
@@ -153,8 +169,11 @@ class Feed extends Extension\AbstractRenderer
      */
     private function setUpdateFrequency(DOMDocument $dom, DOMElement $root): void
     {
+        /** @psalm-var FeedWriter $container */
+        $container = $this->getDataContainer();
+
         /** @psalm-var null|UpdateFrequencyArray $updateFrequency */
-        $updateFrequency = $this->getDataContainer()->getPodcastIndexUpdateFrequency();
+        $updateFrequency = $container->getPodcastIndexUpdateFrequency();
         if ($updateFrequency === null) {
             return;
         }
@@ -179,9 +198,12 @@ class Feed extends Extension\AbstractRenderer
      */
     private function setPeople(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var list<PersonArray> $people */
-        $people = $this->getDataContainer()->getPodcastIndexPeople();
-        if (empty($people)) {
+        /** @psalm-var FeedWriter $container */
+        $container = $this->getDataContainer();
+
+        /** @psalm-var list<PersonArray>|null $people */
+        $people = $container->getPodcastIndexPeople();
+        if ($people === null || $people === []) {
             return;
         }
         foreach ($people as $person) {
