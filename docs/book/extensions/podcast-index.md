@@ -18,7 +18,7 @@ single namespace.
 | `getPodcastIndexLocation()`                   | Returns location information. The output is an object with "description", "geo" and "osm" properties.                                              |
 | `getPodcastIndexImages()`                     | Returns information on responsive images. The output is an object with a "srcset" property.                                                        |
 | `getPodcastIndexUpdateFrequency()`            | Returns information on the intended release schedule. The output is an object with "description", "complete", "dtstart" and "rrule" properties.    |
-| `getPodcastIndexPeople()`                    | Returns information on the involved people. The output is an array of objects, each with the properties "name", "role", "group", "img" and "href". |
+| `getPodcastIndexPeople()`                     | Returns information on the involved people. The output is an array of objects, each with the properties "name", "role", "group", "img" and "href". |
 | `getPodcastIndexTrailer()`                    | Returns information on the podcast trailer. The output is an object with the properties "title", "pubdate", "url", "length", "type" and "season".  |
 | `getPodcastIndexGuid()`                       | Returns the podcast guid. The output is an object with the property "value".                                                                       |
 | `getPodcastIndexMedium()`                     | Returns the podcast medium. The output is an object with the property "value".                                                                     |

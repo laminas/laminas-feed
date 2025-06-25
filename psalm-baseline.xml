@@ -3153,18 +3153,6 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Writer/Extension/PodcastIndex/Renderer/Feed.php">
-    <MixedMethodCall>
-      <code>getPodcastIndexFunding</code>
-      <code>getPodcastIndexGuid</code>
-      <code>getPodcastIndexImages</code>
-      <code>getPodcastIndexLicense</code>
-      <code>getPodcastIndexLocation</code>
-      <code>getPodcastIndexLocked</code>
-      <code>getPodcastIndexMedium</code>
-      <code>getPodcastIndexPeople</code>
-      <code>getPodcastIndexTrailer</code>
-      <code>getPodcastIndexUpdateFrequency</code>
-    </MixedMethodCall>
     <RedundantCastGivenDocblockType>
       <code><![CDATA[(string) $funding['title']]]></code>
       <code><![CDATA[(string) $locked['value']]]></code>

@@ -4,12 +4,17 @@ declare(strict_types=1);
 
 namespace Laminas\Feed\Writer\Extension\PodcastIndex\Renderer;
 
+use DateTimeInterface;
 use DOMDocument;
 use DOMElement;
 use Laminas\Feed\Writer\Extension;
+use Laminas\Feed\Writer\Feed as FeedWriter;
 
 /**
  * Renders PodcastIndex data of a RSS Feed
+ *
+ * @psalm-import-type PersonArray from \Laminas\Feed\Writer\Extension\PodcastIndex\Feed
+ * @psalm-import-type UpdateFrequencyArray from \Laminas\Feed\Writer\Extension\PodcastIndex\Feed
  */
 class Feed extends Extension\AbstractRenderer
 {
@@ -33,7 +38,6 @@ class Feed extends Extension\AbstractRenderer
         $this->setLocation($this->dom, $this->base);
         $this->setImages($this->dom, $this->base);
         $this->setUpdateFrequency($this->dom, $this->base);
-        $this->addPerson($this->dom, $this->base);
         $this->setPeople($this->dom, $this->base);
         $this->setTrailer($this->dom, $this->base);
         $this->setGuid($this->dom, $this->base);
@@ -58,10 +62,13 @@ class Feed extends Extension\AbstractRenderer
     /**
      * Set feed lock
      */
-    private function setLocked(DOMDocument $dom, DOMElement $root): void
+    protected function setLocked(DOMDocument $dom, DOMElement $root): void
     {
+        /** @psalm-var FeedWriter $container */
+        $container = $this->getDataContainer();
+
         /** @psalm-var null|array<string, string> $locked */
-        $locked = $this->getDataContainer()->getPodcastIndexLocked();
+        $locked = $container->getPodcastIndexLocked();
         if ($locked === null) {
             return;
         }
@@ -76,10 +83,13 @@ class Feed extends Extension\AbstractRenderer
     /**
      * Set feed funding
      */
-    private function setFunding(DOMDocument $dom, DOMElement $root): void
+    protected function setFunding(DOMDocument $dom, DOMElement $root): void
     {
+        /** @psalm-var FeedWriter $container */
+        $container = $this->getDataContainer();
+
         /** @psalm-var null|array<string, string> $funding */
-        $funding = $this->getDataContainer()->getPodcastIndexFunding();
+        $funding = $container->getPodcastIndexFunding();
         if ($funding === null) {
             return;
         }
@@ -96,8 +106,11 @@ class Feed extends Extension\AbstractRenderer
      */
     private function setLicense(DOMDocument $dom, DOMElement $root): void
     {
+        /** @psalm-var FeedWriter $container */
+        $container = $this->getDataContainer();
+
         /** @psalm-var null|array<string,string> $license */
-        $license = $this->getDataContainer()->getPodcastIndexLicense();
+        $license = $container->getPodcastIndexLicense();
         if ($license === null) {
             return;
         }
@@ -114,18 +127,21 @@ class Feed extends Extension\AbstractRenderer
      */
     private function setLocation(DOMDocument $dom, DOMElement $root): void
     {
+        /** @psalm-var FeedWriter $container */
+        $container = $this->getDataContainer();
+
         /** @psalm-var null|array<string,string> $location */
-        $location = $this->getDataContainer()->getPodcastIndexLocation();
+        $location = $container->getPodcastIndexLocation();
         if ($location === null) {
             return;
         }
         $el   = $dom->createElement('podcast:location');
         $text = $dom->createTextNode($location['description']);
         $el->appendChild($text);
-        if (! empty($location['geo'])) {
+        if (isset($location['geo']) && $location['geo'] !== '') {
             $el->setAttribute('geo', $location['geo']);
         }
-        if (! empty($location['osm'])) {
+        if (isset($location['osm']) && $location['osm'] !== '') {
             $el->setAttribute('osm', $location['osm']);
         }
         $root->appendChild($el);
@@ -137,8 +153,11 @@ class Feed extends Extension\AbstractRenderer
      */
     private function setImages(DOMDocument $dom, DOMElement $root): void
     {
+        /** @psalm-var FeedWriter $container */
+        $container = $this->getDataContainer();
+
         /** @psalm-var null|array<string, string> $images */
-        $images = $this->getDataContainer()->getPodcastIndexImages();
+        $images = $container->getPodcastIndexImages();
         if ($images === null) {
             return;
         }
@@ -153,62 +172,63 @@ class Feed extends Extension\AbstractRenderer
      */
     private function setUpdateFrequency(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var null|array<string, mixed> $updateFrequency */
-        $updateFrequency = $this->getDataContainer()->getPodcastIndexUpdateFrequency();
+        /** @psalm-var FeedWriter $container */
+        $container = $this->getDataContainer();
+
+        /** @psalm-var null|UpdateFrequencyArray $updateFrequency */
+        $updateFrequency = $container->getPodcastIndexUpdateFrequency();
         if ($updateFrequency === null) {
             return;
         }
         $el   = $dom->createElement('podcast:updateFrequency');
-        $text = $dom->createTextNode((string) $updateFrequency['description']);
+        $text = $dom->createTextNode($updateFrequency['description']);
         $el->appendChild($text);
-        if (! empty($updateFrequency['complete'])) {
-            $el->setAttribute('complete', (string) $updateFrequency['complete']);
+        if (($updateFrequency['complete'] ?? null) === true) {
+            $el->setAttribute('complete', 'true');
         }
-        if (! empty($updateFrequency['dtstart'])) {
-            $el->setAttribute('dtstart', (string) $updateFrequency['dtstart']);
+        if (isset($updateFrequency['dtstart'])) {
+            $el->setAttribute('dtstart', $updateFrequency['dtstart']->format(DateTimeInterface::ATOM));
         }
-        if (! empty($updateFrequency['rrule'])) {
-            $el->setAttribute('rrule', (string) $updateFrequency['rrule']);
+        if (isset($updateFrequency['rrule']) && $updateFrequency['rrule'] !== '') {
+            $el->setAttribute('rrule', $updateFrequency['rrule']);
         }
         $root->appendChild($el);
         $this->called = true;
     }
 
     /**
-     * Add feed person
+     * Set feed people
      */
-    private function addPerson(DOMDocument $dom, DOMElement $root): void
+    private function setPeople(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var array<array> $people */
-        $people = $this->getDataContainer()->getPodcastIndexPeople();
-        if (empty($people)) {
+        /** @psalm-var FeedWriter $container */
+        $container = $this->getDataContainer();
+
+        /** @psalm-var list<PersonArray>|null $people */
+        $people = $container->getPodcastIndexPeople();
+        if ($people === null || $people === []) {
             return;
         }
         foreach ($people as $person) {
             $el   = $dom->createElement('podcast:person');
-            $text = $dom->createTextNode((string) $person['name']);
+            $text = $dom->createTextNode($person['name']);
             $el->appendChild($text);
 
-            if (! empty($person['role'])) {
-                $el->setAttribute('role', (string) $person['role']);
+            if (isset($person['role']) && $person['role'] !== '') {
+                $el->setAttribute('role', $person['role']);
             }
-            if (! empty($person['group'])) {
-                $el->setAttribute('group', (string) $person['group']);
+            if (isset($person['group']) && $person['group'] !== '') {
+                $el->setAttribute('group', $person['group']);
             }
-            if (! empty($person['img'])) {
-                $el->setAttribute('img', (string) $person['img']);
+            if (isset($person['img']) && $person['img'] !== '') {
+                $el->setAttribute('img', $person['img']);
             }
-            if (! empty($person['href'])) {
-                $el->setAttribute('href', (string) $person['href']);
+            if (isset($person['href']) && $person['href'] !== '') {
+                $el->setAttribute('href', $person['href']);
             }
             $root->appendChild($el);
         }
         $this->called = true;
-    }
-
-    private function setPeople(DOMDocument $dom, DOMElement $root): void
-    {
-        $this->addPerson($dom, $root);
     }
 
     /**

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Laminas\Feed\Writer\Extension\PodcastIndex;
 
-use DateTime;
 use DateTimeInterface;
 use Laminas\Feed\Writer;
 use Laminas\Stdlib\StringUtils;
@@ -25,17 +24,21 @@ use function ucfirst;
 use const FILTER_VALIDATE_URL;
 
 /**
- * @psalm-type PersonArray = array{
- *     name: string,
- *     role?: string,
- *     group?: string,
- *     img?: string,
- *     href?: string
- * }
- */
-
-/**
  * Describes PodcastIndex data of a RSS Feed
+ *
+ * @psalm-type UpdateFrequencyArray = array{
+ *   description: string,
+ *   complete?: bool,
+ *   dtstart?: DateTimeInterface,
+ *   rrule?: string
+ *   }
+ * @psalm-type PersonArray = array{
+ *       name: string,
+ *       role?: string,
+ *       group?: string,
+ *       img?: string,
+ *       href?: string
+ *   }
  */
 class Feed
 {
@@ -210,7 +213,7 @@ class Feed
     /**
      * Set feed update frequency
      *
-     * @param array{description: string, complete?: bool, dtstart?: DateTime, rrule?: string} $value
+     * @param UpdateFrequencyArray $value
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
@@ -231,14 +234,10 @@ class Feed
                 'invalid parameter: key "complete" of "updateFrequency": must be of type boolean'
             );
         }
-        if (isset($value['dtstart'])) {
-            if (! $value['dtstart'] instanceof DateTime) {
-                throw new Writer\Exception\InvalidArgumentException(
-                    'invalid parameter: key "dtstart" of "updateFrequency" must be of type DateTime'
-                );
-            }
-            // cast to ISO8601 string
-            $value['dtstart'] = $value['dtstart']->format(DateTimeInterface::ATOM);
+        if (isset($value['dtstart']) && ! $value['dtstart'] instanceof DateTimeInterface) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "dtstart" of "updateFrequency" must be of type DateTimeInterface'
+            );
         }
         if (isset($value['rrule']) && ! is_string($value['rrule'])) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -292,7 +291,7 @@ class Feed
             $this->data['people'] = [];
         }
 
-        /** @var PersonArray $this->data['people'] */
+        /** @var list<PersonArray> $this->data['people'] */
         $this->data['people'][] = $value;
         return $this;
     }
@@ -301,13 +300,12 @@ class Feed
      * Set a new array of people.
      * If no argument is passed, it will just remove all existing people.
      *
-     * @psalm-param array<PersonArray> $values
+     * @psalm-param list<PersonArray> $values
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
     public function setPodcastIndexPeople(array $values = []): self
     {
-        // delete existing people before setting new ones
         $this->data['people'] = [];
 
         foreach ($values as $value) {
