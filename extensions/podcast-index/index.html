@@ -329,6 +329,21 @@
 
     
     
+        <div class="toc">
+            <h6 class="toc__headline">On this page</h6>
+            <ul class="toc__list">
+                
+                    <li class="toc__entry">
+                        <a href="#channel-api" class="toc__link nav-link">Channel API</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#episode-api" class="toc__link nav-link">Episode API</a>
+                    </li>
+                
+            </ul>
+        </div>
+    
 
                 
 
@@ -374,10 +389,12 @@
     
 
     <h1 id="podcast-index">Podcast Index</h1>
-<p>The Podcast Index Extension adds support for the <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/1.0.md">Podcast Index RSS namespace</a>,
+<p>The Podcast Index Extension adds support for
+the <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/1.0.md">Podcast Index RSS namespace</a>,
 an open source project which consolidates new features for podcasts into a
 single namespace.</p>
-<p>Channel API methods:</p>
+<h2 id="channel-api">Channel API</h2>
+<h3 id="get-methods">GET methods</h3>
 <div class="table-responsive"><table>
 <thead>
 <tr>
@@ -391,16 +408,80 @@ single namespace.</p>
 <td>Returns whether the feed is open for importing to new platforms.</td>
 </tr>
 <tr>
-<td><code>getLockOwner()</code></td>
+<td><code>getLockOwner()</code> <code>getPodcastIndexLockOwner()</code></td>
 <td>Returns the email address for owner verification.</td>
 </tr>
 <tr>
-<td><code>getFunding()</code></td>
+<td><code>getFunding()</code> <code>getPodcastIndexFunding()</code></td>
 <td>Returns funding information. The output is an object with "url" and "value" properties.</td>
+</tr>
+<tr>
+<td><code>getPodcastIndexLicense()</code></td>
+<td>Returns license information. The output is an object with "identifier" and "url" properties.</td>
+</tr>
+<tr>
+<td><code>getPodcastIndexLocation()</code></td>
+<td>Returns funding information. The output is an object with "description", "geo" and "osm" properties.</td>
+</tr>
+<tr>
+<td><code>getPodcastIndexImages()</code></td>
+<td>Returns information on responsive images. The output is an object with a "srcset" property.</td>
+</tr>
+<tr>
+<td><code>getPodcastIndexUpdateFrequency()</code></td>
+<td>Returns information on the intended release schedule. The output is an object with "description", "complete", "dtstart" and "rrule" properties.</td>
+</tr>
+<tr>
+<td><code>getPodcastIndexPeople()</code></td>
+<td>Returns information on the involved people. The output is an array of objects, each with the properties "name", "role", "group", "img" and "href".</td>
 </tr>
 </tbody>
 </table></div>
-<p>Item API methods:</p>
+<h3 id="set-methods">SET methods</h3>
+<div class="table-responsive"><table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>setPodcastIndexLocked()</code></td>
+<td>Expects an array with the required keys "value" and "owner".</td>
+</tr>
+<tr>
+<td><code>setPodcastIndexFunding()</code></td>
+<td>Expects an array with the required keys "title" and "url".</td>
+</tr>
+<tr>
+<td><code>setPodcastIndexLicense()</code></td>
+<td>Expects an array with the required keys "identifier" and "url".</td>
+</tr>
+<tr>
+<td><code>setPodcastIndexLocation()</code></td>
+<td>Expects an array with the required key "description" and the optional keys "geo" and "osm".</td>
+</tr>
+<tr>
+<td><code>setPodcastIndexImages()</code></td>
+<td>Expects an array with the required key "srcset".</td>
+</tr>
+<tr>
+<td><code>setPodcastIndexUpdateFrequency()</code></td>
+<td>Expects an array with the required key "description" and the optional keys "complete" (bool), "dtstart" (ISO8601 string) and "rrule".</td>
+</tr>
+<tr>
+<td><code>addPodcastIndexPerson()</code></td>
+<td>Expects an array with the required key "name" and the optional keys "role", "group", "img" and "href".</td>
+</tr>
+<tr>
+<td><code>setPodcastIndexPeople()</code></td>
+<td>Expects an array of objects with each the required key "name" and the optional keys "role", "group", "img" and "href".</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="episode-api">Episode API</h2>
+<h3 id="get-methods_1">GET methods</h3>
 <div class="table-responsive"><table>
 <thead>
 <tr>
@@ -411,7 +492,7 @@ single namespace.</p>
 <tbody>
 <tr>
 <td><code>getTranscript()</code></td>
-<td>Returns transcript information for the entry. The output is an object with "url", "type", "language" and "rel" properties/</td>
+<td>Returns transcript information for the entry. The output is an object with "url", "type", "language" and "rel" properties.</td>
 </tr>
 <tr>
 <td><code>getChapters()</code></td>
@@ -420,6 +501,29 @@ single namespace.</p>
 <tr>
 <td><code>getSoundbites()</code></td>
 <td>Returns soundbites for the entry. The output is an array of objects with "title", "startTime" and "duration" properties.</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="set-methods_1">SET methods</h3>
+<div class="table-responsive"><table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>setPodcastIndexTranscript()</code></td>
+<td>Expects an array with the required keys "url" and "type", and with the optional keys "language" and "rel".</td>
+</tr>
+<tr>
+<td><code>setPodcastIndexChapters()</code></td>
+<td>Expects an array with the required keys "url" and "type".</td>
+</tr>
+<tr>
+<td><code>addPodcastIndexSoundbites()</code></td>
+<td>Expects an array of soundbite entries, each itself an array with the required keys "title" and "startTime", and with the optional key "duration".</td>
 </tr>
 </tbody>
 </table></div>
