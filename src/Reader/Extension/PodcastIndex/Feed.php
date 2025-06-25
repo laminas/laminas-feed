@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Laminas\Feed\Reader\Extension\PodcastIndex;
 
+// phpcs:disable SlevomatCodingStandard.Namespaces.UnusedUses.UnusedUse
+use DateTimeInterface;
+// phpcs:enable SlevomatCodingStandard.Namespaces.UnusedUses.UnusedUse
 use DOMElement;
 use Laminas\Feed\Reader\Extension;
 use stdClass;
@@ -12,23 +15,21 @@ use function array_key_exists;
 use function assert;
 
 /**
- * @psalm-type UpdateFrequencyObject = object{
- *    description: string,
- *    complete?: bool,
- *    dtstart?: DateTimeInterface,
- *    rrule?: string
- *    }
- * @psalm-type PersonObject = object{
- *        name: string,
- *        role?: string,
- *        group?: string,
- *        img?: string,
- *        href?: string
- * }
- */
-
-/**
  * Describes PodcastIndex data of a RSS Feed
+ *
+ * @psalm-type UpdateFrequencyObject = object{
+ *     description: string,
+ *     complete?: bool,
+ *     dtstart?: DateTimeInterface,
+ *     rrule?: string
+ *     }
+ * @psalm-type PersonObject = object{
+ *         name: string,
+ *         role?: string,
+ *         group?: string,
+ *         img?: string,
+ *         href?: string
+ *  }
  */
 class Feed extends Extension\AbstractFeed
 {

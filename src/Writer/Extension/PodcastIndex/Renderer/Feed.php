@@ -37,7 +37,6 @@ class Feed extends Extension\AbstractRenderer
         $this->setLocation($this->dom, $this->base);
         $this->setImages($this->dom, $this->base);
         $this->setUpdateFrequency($this->dom, $this->base);
-        $this->addPerson($this->dom, $this->base);
         $this->setPeople($this->dom, $this->base);
         if ($this->called) {
             $this->_appendNamespaces();
@@ -59,7 +58,7 @@ class Feed extends Extension\AbstractRenderer
     /**
      * Set feed lock
      */
-    private function setLocked(DOMDocument $dom, DOMElement $root): void
+    protected function setLocked(DOMDocument $dom, DOMElement $root): void
     {
         /** @psalm-var null|array<string, string> $locked */
         $locked = $this->getDataContainer()->getPodcastIndexLocked();
@@ -77,7 +76,7 @@ class Feed extends Extension\AbstractRenderer
     /**
      * Set feed funding
      */
-    private function setFunding(DOMDocument $dom, DOMElement $root): void
+    protected function setFunding(DOMDocument $dom, DOMElement $root): void
     {
         /** @psalm-var null|array<string, string> $funding */
         $funding = $this->getDataContainer()->getPodcastIndexFunding();
@@ -123,10 +122,10 @@ class Feed extends Extension\AbstractRenderer
         $el   = $dom->createElement('podcast:location');
         $text = $dom->createTextNode($location['description']);
         $el->appendChild($text);
-        if (! empty($location['geo'])) {
+        if (isset($location['geo']) && $location['geo'] !== '') {
             $el->setAttribute('geo', $location['geo']);
         }
-        if (! empty($location['osm'])) {
+        if (isset($location['osm']) && $location['osm'] !== '') {
             $el->setAttribute('osm', $location['osm']);
         }
         $root->appendChild($el);
@@ -162,13 +161,13 @@ class Feed extends Extension\AbstractRenderer
         $el   = $dom->createElement('podcast:updateFrequency');
         $text = $dom->createTextNode($updateFrequency['description']);
         $el->appendChild($text);
-        if (! empty($updateFrequency['complete'])) {
-            $el->setAttribute('complete', (string) $updateFrequency['complete']);
+        if (($updateFrequency['complete'] ?? null) === true) {
+            $el->setAttribute('complete', 'true');
         }
-        if (! empty($updateFrequency['dtstart'])) {
+        if (isset($updateFrequency['dtstart'])) {
             $el->setAttribute('dtstart', $updateFrequency['dtstart']->format(DateTimeInterface::ATOM));
         }
-        if (! empty($updateFrequency['rrule'])) {
+        if (isset($updateFrequency['rrule']) && $updateFrequency['rrule'] !== '') {
             $el->setAttribute('rrule', $updateFrequency['rrule']);
         }
         $root->appendChild($el);
@@ -176,11 +175,11 @@ class Feed extends Extension\AbstractRenderer
     }
 
     /**
-     * Add feed person
+     * Set feed people
      */
-    private function addPerson(DOMDocument $dom, DOMElement $root): void
+    private function setPeople(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var list<PersonArray|> $people */
+        /** @psalm-var list<PersonArray> $people */
         $people = $this->getDataContainer()->getPodcastIndexPeople();
         if (empty($people)) {
             return;
@@ -190,25 +189,20 @@ class Feed extends Extension\AbstractRenderer
             $text = $dom->createTextNode($person['name']);
             $el->appendChild($text);
 
-            if (! empty($person['role'])) {
+            if (isset($person['role']) && $person['role'] !== '') {
                 $el->setAttribute('role', $person['role']);
             }
-            if (! empty($person['group'])) {
+            if (isset($person['group']) && $person['group'] !== '') {
                 $el->setAttribute('group', $person['group']);
             }
-            if (! empty($person['img'])) {
+            if (isset($person['img']) && $person['img'] !== '') {
                 $el->setAttribute('img', $person['img']);
             }
-            if (! empty($person['href'])) {
+            if (isset($person['href']) && $person['href'] !== '') {
                 $el->setAttribute('href', $person['href']);
             }
             $root->appendChild($el);
         }
         $this->called = true;
-    }
-
-    private function setPeople(DOMDocument $dom, DOMElement $root): void
-    {
-        $this->addPerson($dom, $root);
     }
 }

@@ -290,7 +290,7 @@ class Feed
             $this->data['people'] = [];
         }
 
-        /** @var PersonArray $this->data['people'] */
+        /** @var list<PersonArray> $this->data['people'] */
         $this->data['people'][] = $value;
         return $this;
     }
@@ -299,13 +299,12 @@ class Feed
      * Set a new array of people.
      * If no argument is passed, it will just remove all existing people.
      *
-     * @psalm-param array<PersonArray> $values
+     * @psalm-param list<PersonArray> $values
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
     public function setPodcastIndexPeople(array $values = []): self
     {
-        // delete existing people before setting new ones
         $this->data['people'] = [];
 
         foreach ($values as $value) {

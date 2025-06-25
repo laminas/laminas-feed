@@ -11,6 +11,7 @@ use Laminas\Feed\Writer\Renderer;
 use PHPUnit\Framework\TestCase;
 
 use function implode;
+use function substr_count;
 
 class FeedTest extends TestCase
 {
@@ -159,6 +160,7 @@ class FeedTest extends TestCase
 
         $this->assertStringContainsString('<podcast:person', $xml);
         $this->assertStringContainsString($person['name'], $xml);
+        $this->assertSame(1, substr_count($xml, $person['name']));
         $this->assertStringContainsString($person['role'], $xml);
         $this->assertStringContainsString($person['group'], $xml);
         $this->assertStringContainsString($person['img'], $xml);
