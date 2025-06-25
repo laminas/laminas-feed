@@ -27,17 +27,25 @@ use const FILTER_VALIDATE_URL;
  * Describes PodcastIndex data of a RSS Feed
  *
  * @psalm-type UpdateFrequencyArray = array{
- *   description: string,
- *   complete?: bool,
- *   dtstart?: DateTimeInterface,
- *   rrule?: string
+ *     description: string,
+ *     complete?: bool,
+ *     dtstart?: DateTimeInterface,
+ *     rrule?: string
  *   }
  * @psalm-type PersonArray = array{
- *       name: string,
- *       role?: string,
- *       group?: string,
- *       img?: string,
- *       href?: string
+ *     name: string,
+ *     role?: string,
+ *     group?: string,
+ *     img?: string,
+ *     href?: string
+ *   }
+ * @psalm-type TrailerArray = array{
+ *     title: string,
+ *     pubdate: string,
+ *     url: string,
+ *     length?: int,
+ *     type?: string,
+ *     season?: int
  *   }
  */
 class Feed
@@ -317,7 +325,7 @@ class Feed
     /**
      * Set feed trailer
      *
-     * @param array{title: string, pubdate: string, url: string, length?: int, type?: string, season?: int} $value
+     * @param TrailerArray $value
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */

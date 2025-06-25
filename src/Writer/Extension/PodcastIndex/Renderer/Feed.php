@@ -15,6 +15,7 @@ use Laminas\Feed\Writer\Feed as FeedWriter;
  *
  * @psalm-import-type PersonArray from \Laminas\Feed\Writer\Extension\PodcastIndex\Feed
  * @psalm-import-type UpdateFrequencyArray from \Laminas\Feed\Writer\Extension\PodcastIndex\Feed
+ * @psalm-import-type TrailerArray from \Laminas\Feed\Writer\Extension\PodcastIndex\Feed
  */
 class Feed extends Extension\AbstractRenderer
 {
@@ -236,23 +237,26 @@ class Feed extends Extension\AbstractRenderer
      */
     protected function setTrailer(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var null|array<string, mixed> $trailer */
-        $trailer = $this->getDataContainer()->getPodcastIndexTrailer();
+        /** @psalm-var FeedWriter $container */
+        $container = $this->getDataContainer();
+
+        /** @psalm-var null|TrailerArray $trailer */
+        $trailer = $container->getPodcastIndexTrailer();
         if ($trailer === null) {
             return;
         }
         $el   = $dom->createElement('podcast:trailer');
-        $text = $dom->createTextNode((string) $trailer['title']);
+        $text = $dom->createTextNode($trailer['title']);
         $el->appendChild($text);
-        $el->setAttribute('pubdate', (string) $trailer['pubdate']);
-        $el->setAttribute('url', (string) $trailer['url']);
-        if (! empty($trailer['length'])) {
+        $el->setAttribute('pubdate', $trailer['pubdate']);
+        $el->setAttribute('url', $trailer['url']);
+        if (isset($trailer['length'])) {
             $el->setAttribute('length', (string) $trailer['length']);
         }
-        if (! empty($trailer['type'])) {
-            $el->setAttribute('type', (string) $trailer['type']);
+        if (isset($trailer['type'])) {
+            $el->setAttribute('type', $trailer['type']);
         }
-        if (! empty($trailer['season'])) {
+        if (isset($trailer['season'])) {
             $el->setAttribute('season', (string) $trailer['season']);
         }
         $root->appendChild($el);
@@ -264,8 +268,11 @@ class Feed extends Extension\AbstractRenderer
      */
     protected function setGuid(DOMDocument $dom, DOMElement $root): void
     {
+        /** @psalm-var FeedWriter $container */
+        $container = $this->getDataContainer();
+
         /** @psalm-var null|array<string, string> $guid */
-        $guid = $this->getDataContainer()->getPodcastIndexGuid();
+        $guid = $container->getPodcastIndexGuid();
         if ($guid === null) {
             return;
         }
@@ -281,8 +288,11 @@ class Feed extends Extension\AbstractRenderer
      */
     protected function setMedium(DOMDocument $dom, DOMElement $root): void
     {
+        /** @psalm-var FeedWriter $container */
+        $container = $this->getDataContainer();
+
         /** @psalm-var null|array<string, string> $medium */
-        $medium = $this->getDataContainer()->getPodcastIndexMedium();
+        $medium = $container->getPodcastIndexMedium();
         if ($medium === null) {
             return;
         }

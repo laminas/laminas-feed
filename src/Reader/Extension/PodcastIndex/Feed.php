@@ -24,12 +24,20 @@ use function assert;
  *     rrule?: string
  *     }
  * @psalm-type PersonObject = object{
- *         name: string,
- *         role?: string,
- *         group?: string,
- *         img?: string,
- *         href?: string
+ *     name: string,
+ *     role?: string,
+ *     group?: string,
+ *     img?: string,
+ *     href?: string
  *  }
+ * @psalm-type TrailerObject = object{
+ *     title: string,
+ *     pubdate: string,
+ *     url: string,
+ *     length?: int,
+ *     type?: string,
+ *     season?: int
+ * }
  */
 class Feed extends Extension\AbstractFeed
 {
@@ -286,12 +294,12 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get the podcast trailer
      *
-     * @return null|object{title: string, pubdate: string, url: string, length?: int, type?: string, season?: int}
+     * @return null|TrailerObject
      */
     public function getPodcastIndexTrailer(): object|null
     {
         if (array_key_exists('trailer', $this->data)) {
-            /** @var null|object{title: string, pubdate: string, url: string, length?: int, type?: string, season?: int} $object */
+            /** @var null|TrailerObject $object */
             $object = $this->data['trailer'];
             return $object;
         }
@@ -301,8 +309,8 @@ class Feed extends Extension\AbstractFeed
         $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:trailer');
 
         if ($nodeList->length > 0) {
-            /** @var DOMElement $item */
-            $item            = $nodeList->item(0);
+            $item = $nodeList->item(0);
+            assert($item instanceof DOMElement);
             $object          = new stdClass();
             $object->title   = $item->nodeValue;
             $object->pubdate = $item->getAttribute('pubdate');
@@ -335,8 +343,8 @@ class Feed extends Extension\AbstractFeed
         $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:guid');
 
         if ($nodeList->length > 0) {
-            /** @var DOMElement $item */
-            $item          = $nodeList->item(0);
+            $item = $nodeList->item(0);
+            assert($item instanceof DOMElement);
             $object        = new stdClass();
             $object->value = $item->nodeValue;
         }
@@ -364,8 +372,8 @@ class Feed extends Extension\AbstractFeed
         $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:medium');
 
         if ($nodeList->length > 0) {
-            /** @var DOMElement $item */
-            $item          = $nodeList->item(0);
+            $item = $nodeList->item(0);
+            assert($item instanceof DOMElement);
             $object        = new stdClass();
             $object->value = $item->nodeValue;
         }
