@@ -4,9 +4,14 @@ declare(strict_types=1);
 
 namespace LaminasTest\Feed\Writer\Renderer\Extension\PodcastIndex;
 
+use DateTime;
+use DateTimeInterface;
 use Laminas\Feed\Writer;
 use Laminas\Feed\Writer\Renderer;
 use PHPUnit\Framework\TestCase;
+
+use function implode;
+use function substr_count;
 
 class FeedTest extends TestCase
 {
@@ -28,7 +33,7 @@ class FeedTest extends TestCase
         Writer\Writer::reset();
     }
 
-    public function testRendersLockedTag(): void
+    public function testRendersRssLockedTag(): void
     {
         $locked = [
             'value' => 'yes',
@@ -41,7 +46,7 @@ class FeedTest extends TestCase
         $this->assertStringContainsString('<podcast:locked', $xml);
     }
 
-    public function testRendersFundingTag(): void
+    public function testRendersRssFundingTag(): void
     {
         $funding = [
             'title' => 'Support the show!',
@@ -53,5 +58,131 @@ class FeedTest extends TestCase
         $xml     = $rssFeed->render()->saveXml();
 
         $this->assertStringContainsString('<podcast:funding', $xml);
+    }
+
+    public function testRendersRssLicenseTag(): void
+    {
+        $identifier = 'cc-by-4.0';
+        $url        = 'https://spdx.org/licenses/CC-BY-4.0.html';
+
+        $license = [
+            'identifier' => $identifier,
+            'url'        => $url,
+        ];
+        $this->validWriter->setPodcastIndexLicense($license);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $this->assertStringContainsString('<podcast:license', $xml);
+        $this->assertStringContainsString($url, $xml);
+        $this->assertStringContainsString($identifier, $xml);
+    }
+
+    public function testRendersRssLocationTag(): void
+    {
+        $location = [
+            'description' => 'London, Baker Street',
+            'geo'         => 'geo:-27.86159,153.3169',
+            'osm'         => 'W43678282',
+        ];
+        $this->validWriter->setPodcastIndexLocation($location);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $this->assertStringContainsString('<podcast:location', $xml);
+        $this->assertStringContainsString($location['description'], $xml);
+        $this->assertStringContainsString($location['geo'], $xml);
+        $this->assertStringContainsString($location['osm'], $xml);
+    }
+
+    public function testRendersRssImagesTag(): void
+    {
+        $srcset = [
+            "https://example.com/images/ep1/pci_avatar-massive.jpg 1500w",
+            "https://example.com/images/ep1/pci_avatar-middle.jpg 600w",
+            "https://example.com/images/ep1/pci_avatar-small.jpg 300w",
+            "https://example.com/images/ep1/pci_avatar-tiny.jpg 150w",
+        ];
+        $images = [
+            'srcset' => implode(", ", $srcset), // cast to string
+        ];
+
+        $this->validWriter->setPodcastIndexImages($images);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $this->assertStringContainsString('<podcast:images', $xml);
+        $this->assertStringContainsString($images['srcset'], $xml);
+    }
+
+    public function testRendersRssUpdateFrequencyTag(): void
+    {
+        $date        = new DateTime();
+        $description = 'Daily';
+        $complete    = false;
+
+        $updateFrequency = [
+            'description' => $description,
+            'complete'    => $complete,
+            'dtstart'     => $date,
+            'rrule'       => 'FREQ=DAILY',
+        ];
+
+        $this->validWriter->setPodcastIndexUpdateFrequency($updateFrequency);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $this->assertStringContainsString('<podcast:updateFrequency', $xml);
+        $this->assertStringContainsString(">$description<", $xml);
+        $this->assertStringContainsString((string) $complete, $xml);
+        $this->assertStringContainsString($updateFrequency['rrule'], $xml);
+        $this->assertStringContainsString($date->format(DateTimeInterface::ATOM), $xml);
+    }
+
+    public function testRendersRssPersonTag(): void
+    {
+        $person = [
+            'name'  => 'Hercules Poirot',
+            'role'  => 'guest',
+            'group' => 'writing',
+            'img'   => 'https://poirot.com/about/my-moustage.jpg',
+            'href'  => 'https://poirot.com/my-cases',
+        ];
+
+        $this->validWriter->addPodcastIndexPerson($person);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $this->assertStringContainsString('<podcast:person', $xml);
+        $this->assertStringContainsString($person['name'], $xml);
+        $this->assertSame(1, substr_count($xml, $person['name']));
+        $this->assertStringContainsString($person['role'], $xml);
+        $this->assertStringContainsString($person['group'], $xml);
+        $this->assertStringContainsString($person['img'], $xml);
+        $this->assertStringContainsString($person['href'], $xml);
+    }
+
+    public function testRendersMultipleRssPersonTags(): void
+    {
+        $fName = 'Hercules Poirot';
+        $sName = 'Agatha Christie';
+
+        $people = [
+            ['name' => $fName],
+            ['name' => $sName],
+        ];
+
+        $this->validWriter->setPodcastIndexPeople($people);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $this->assertStringContainsString(">$fName</podcast:person>", $xml);
+        $this->assertStringContainsString(">$sName</podcast:person>", $xml);
     }
 }

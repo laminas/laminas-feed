@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.18.0@b113f3ed0259fd6e212d87c3df80eec95a6abf19">
+<files psalm-version="5.19.0@06b71be009a6bd6d81b9811855d6629b9fe90e1b">
   <file src="src/PubSubHubbub/AbstractCallback.php">
     <DocblockTypeContradiction>
       <code><![CDATA[$this->httpResponse === null]]></code>
@@ -1582,9 +1582,6 @@
     </MixedReturnStatement>
   </file>
   <file src="src/Reader/Extension/PodcastIndex/Feed.php">
-    <MismatchingDocblockReturnType>
-      <code>null|object{url: string, title: string}</code>
-    </MismatchingDocblockReturnType>
     <MixedAssignment>
       <code>$locked</code>
       <code>$owner</code>
@@ -1592,7 +1589,6 @@
     <MixedInferredReturnType>
       <code>?string</code>
       <code>bool</code>
-      <code>null|object{url: string, title: string}</code>
     </MixedInferredReturnType>
     <MixedReturnStatement>
       <code><![CDATA[$this->data['locked']]]></code>
@@ -3100,13 +3096,32 @@
     </PossiblyUnusedProperty>
   </file>
   <file src="src/Writer/Extension/PodcastIndex/Feed.php">
+    <DocblockTypeContradiction>
+      <code><![CDATA[! is_string($value['url'])]]></code>
+      <code><![CDATA[is_string($value['description'])]]></code>
+      <code><![CDATA[is_string($value['description'])]]></code>
+      <code><![CDATA[is_string($value['identifier'])]]></code>
+      <code><![CDATA[is_string($value['name'])]]></code>
+      <code><![CDATA[is_string($value['srcset'])]]></code>
+      <code><![CDATA[isset($value['complete']) && ! is_bool($value['complete'])]]></code>
+      <code><![CDATA[isset($value['geo']) && ! is_string($value['geo'])]]></code>
+      <code><![CDATA[isset($value['group']) && ! is_string($value['group'])]]></code>
+      <code><![CDATA[isset($value['osm']) && ! is_string($value['osm'])]]></code>
+      <code><![CDATA[isset($value['role']) && ! is_string($value['role'])]]></code>
+      <code><![CDATA[isset($value['rrule']) && ! is_string($value['rrule'])]]></code>
+    </DocblockTypeContradiction>
     <PossiblyUnusedMethod>
       <code>__call</code>
       <code>__construct</code>
       <code>getEncoding</code>
       <code>setEncoding</code>
       <code>setPodcastIndexFunding</code>
+      <code>setPodcastIndexImages</code>
+      <code>setPodcastIndexLicense</code>
+      <code>setPodcastIndexLocation</code>
       <code>setPodcastIndexLocked</code>
+      <code>setPodcastIndexPeople</code>
+      <code>setPodcastIndexUpdateFrequency</code>
     </PossiblyUnusedMethod>
     <PossiblyUnusedParam>
       <code>$params</code>
@@ -3129,10 +3144,6 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Writer/Extension/PodcastIndex/Renderer/Feed.php">
-    <MixedMethodCall>
-      <code>getPodcastIndexFunding</code>
-      <code>getPodcastIndexLocked</code>
-    </MixedMethodCall>
     <RedundantCastGivenDocblockType>
       <code><![CDATA[(string) $funding['title']]]></code>
       <code><![CDATA[(string) $locked['value']]]></code>

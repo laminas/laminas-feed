@@ -4,8 +4,14 @@ declare(strict_types=1);
 
 namespace LaminasTest\Feed\Writer\Extension\PodcastIndex;
 
+use DateTime;
 use Laminas\Feed\Writer;
 use PHPUnit\Framework\TestCase;
+
+use function count;
+use function implode;
+use function in_array;
+use function time;
 
 class FeedTest extends TestCase
 {
@@ -86,5 +92,335 @@ class FeedTest extends TestCase
         ];
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $feed->setPodcastIndexFunding($locked);
+    }
+
+    public function testSetLicense(): void
+    {
+        $feed = new Writer\Feed();
+
+        $license = [
+            'identifier' => 'cc-by-4.0',
+            'url'        => 'https://spdx.org/licenses/CC-BY-4.0.html',
+        ];
+        $feed->setPodcastIndexLicense($license);
+        $this->assertEquals($license, $feed->getPodcastIndexLicense());
+    }
+
+    public function testSetLicenseThrowsExceptionOnInvalidArguments(): void
+    {
+        $feed = new Writer\Feed();
+
+        $license = [
+            'abc' => 'def',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->setPodcastIndexLicense($license);
+    }
+
+    public function testSetLicenseThrowsExceptionOnInvalidIdentifier(): void
+    {
+        $feed = new Writer\Feed();
+
+        $license = [
+            'identifier' => 1234,
+            'url'        => 'https://spdx.org/licenses/CC-BY-4.0.html',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->setPodcastIndexLicense($license);
+    }
+
+    public function testSetLicenseThrowsExceptionOnInvalidUrl(): void
+    {
+        $feed = new Writer\Feed();
+
+        $license = [
+            'identifier' => 'cc-by-4.0',
+            'url'        => 'spdx.org/licenses/CC-BY-4.0.html',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->setPodcastIndexLicense($license);
+    }
+
+    public function testSetLicenseThrowsExceptionOnMissingUrl(): void
+    {
+        $feed = new Writer\Feed();
+
+        $license = [
+            'identifier' => 'cc-by-4.0',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->setPodcastIndexLicense($license);
+    }
+
+    public function testSetLocation(): void
+    {
+        $feed = new Writer\Feed();
+
+        $location = [
+            'description' => 'London, Baker Street',
+            'geo'         => 'geo:-27.86159,153.3169',
+            'osm'         => 'W43678282',
+        ];
+        $feed->setPodcastIndexLocation($location);
+        $this->assertEquals($location, $feed->getPodcastIndexLocation());
+    }
+
+    public function testSetLocationWithOneArgument(): void
+    {
+        $feed = new Writer\Feed();
+
+        $location = [
+            'description' => 'London, Baker Street',
+        ];
+        $feed->setPodcastIndexLocation($location);
+        $this->assertEquals($location, $feed->getPodcastIndexLocation());
+    }
+
+    public function testSetLocationThrowsExceptionOnInvalidArguments(): void
+    {
+        $feed = new Writer\Feed();
+
+        $location = [
+            'abc' => 'def',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->setPodcastIndexLocation($location);
+    }
+
+    public function testSetLocationThrowsExceptionOnInvalidGeo(): void
+    {
+        $feed = new Writer\Feed();
+
+        $location = [
+            'description' => 'London, Baker Street',
+            'geo'         => [-27.86159, 153.3169],
+            'osm'         => 'W43678282',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->setPodcastIndexLocation($location);
+    }
+
+    public function testSetLocationThrowsExceptionOnInvalidOsm(): void
+    {
+        $feed = new Writer\Feed();
+
+        $location = [
+            'description' => 'London, Baker Street',
+            'geo'         => 'geo:-27.86159,153.3169',
+            'osm'         => false,
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->setPodcastIndexLocation($location);
+    }
+
+    public function testSetImages(): void
+    {
+        $feed = new Writer\Feed();
+
+        $srcset = [
+            "https://example.com/images/ep1/pci_avatar-massive.jpg 1500w",
+            "https://example.com/images/ep1/pci_avatar-middle.jpg 600w",
+            "https://example.com/images/ep1/pci_avatar-small.jpg 300w",
+            "https://example.com/images/ep1/pci_avatar-tiny.jpg 150w",
+        ];
+        $images = [
+            'srcset' => implode(", ", $srcset), // cast to string
+        ];
+
+        $feed->setPodcastIndexImages($images);
+        $this->assertEquals($images, $feed->getPodcastIndexImages());
+    }
+
+    public function testSetImagesThrowsExceptionOnInvalidArguments(): void
+    {
+        $feed = new Writer\Feed();
+
+        $images = [
+            'abc' => 'def',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->setPodcastIndexImages($images);
+    }
+
+    public function testSetImagesThrowsExceptionOnInvalidSrcsetType(): void
+    {
+        $feed = new Writer\Feed();
+
+        $srcset = [
+            "https://example.com/images/ep1/pci_avatar-massive.jpg 1500w",
+            "https://example.com/images/ep1/pci_avatar-middle.jpg 600w",
+            "https://example.com/images/ep1/pci_avatar-small.jpg 300w",
+            "https://example.com/images/ep1/pci_avatar-tiny.jpg 150w",
+        ];
+        $images = [
+            'srcset' => $srcset, // plain array, not allowed
+        ];
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->setPodcastIndexImages($images);
+    }
+
+    public function testSetUpdateFrequency(): void
+    {
+        $date = new DateTime();
+        $feed = new Writer\Feed();
+
+        $updateFrequency = [
+            'description' => 'Daily',
+            'complete'    => false,
+            'dtstart'     => $date,
+            'rrule'       => 'FREQ=DAILY',
+        ];
+        $feed->setPodcastIndexUpdateFrequency($updateFrequency);
+        $this->assertEquals($updateFrequency, $feed->getPodcastIndexUpdateFrequency());
+    }
+
+    public function testSetUpdateFrequencyWithOneArgument(): void
+    {
+        $feed = new Writer\Feed();
+
+        $updateFrequency = [
+            'description' => 'Daily',
+        ];
+        $feed->setPodcastIndexUpdateFrequency($updateFrequency);
+        $this->assertEquals($updateFrequency, $feed->getPodcastIndexUpdateFrequency());
+    }
+
+    public function testSetUpdateFrequencyThrowsExceptionOnInvalidArguments(): void
+    {
+        $feed = new Writer\Feed();
+
+        $updateFrequency = [
+            'abc' => 'def',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->setPodcastIndexUpdateFrequency($updateFrequency);
+    }
+
+    public function testSetUpdateFrequencyThrowsExceptionOnInvalidCompleteValue(): void
+    {
+        $feed = new Writer\Feed();
+
+        $updateFrequency = [
+            'description' => 'Daily',
+            'complete'    => 'yes',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->setPodcastIndexUpdateFrequency($updateFrequency);
+    }
+
+    public function testSetUpdateFrequencyThrowsExceptionOnInvalidDateValue(): void
+    {
+        $feed = new Writer\Feed();
+
+        $updateFrequency = [
+            'description' => 'Daily',
+            'dtstart'     => time(),
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->setPodcastIndexUpdateFrequency($updateFrequency);
+    }
+
+    public function testAddPerson(): void
+    {
+        $feed = new Writer\Feed();
+
+        $person = [
+            'name'  => 'Hercules Poirot',
+            'role'  => 'guest',
+            'group' => 'starring',
+            'img'   => 'https://poirot.com/about/my-moustage.jpg',
+            'href'  => 'https://poirot.com/my-cases',
+        ];
+        $feed->addPodcastIndexPerson($person);
+
+        /** @var array<array> $people */
+        $people = $feed->getPodcastIndexPeople();
+        $this->assertTrue(in_array($person, $people));
+    }
+
+    public function testSetPeople(): void
+    {
+        $feed = new Writer\Feed();
+
+        $people = [
+            [
+                'name'  => 'Hercules Poirot',
+                'role'  => 'guest',
+                'group' => 'starring',
+                'img'   => 'https://poirot.com/about/my-moustage.jpg',
+                'href'  => 'https://poirot.com/my-cases',
+            ],
+            [
+                'name'  => 'Agatha Christie',
+                'role'  => 'guest',
+                'group' => 'writing',
+            ],
+        ];
+        // set
+        $feed->setPodcastIndexPeople($people);
+        /** @var array<array> $peopleSaved */
+        $peopleSaved = $feed->getPodcastIndexPeople();
+        foreach ($people as $person) {
+            $this->assertTrue(in_array($person, $peopleSaved));
+        }
+        // update
+        $newPersons = [
+            [
+                'name'  => 'Alice Brown',
+                'role'  => 'guest',
+                'group' => 'writing',
+                'img'   => 'http://example.com/images/alicebrown.jpg',
+                'href'  => 'https://www.wikipedia/alicebrown',
+            ],
+        ];
+        $feed->setPodcastIndexPeople($newPersons);
+        /** @var array<array> $updated */
+        $updated = $feed->getPodcastIndexPeople();
+        $this->assertEquals(1, count($updated));
+        $this->assertEquals($newPersons, $updated);
+
+        // delete
+        $feed->setPodcastIndexPeople();
+        $this->assertNull($feed->getPodcastIndexPeople());
+    }
+
+    public function testSetPersonWithOneArgument(): void
+    {
+        $feed = new Writer\Feed();
+
+        $person = [
+            'name' => 'Hercules Poirot',
+        ];
+        $feed->addPodcastIndexPerson($person);
+
+        /** @var array<array> $people */
+        $people = $feed->getPodcastIndexPeople();
+        $this->assertTrue(in_array($person, $people));
+    }
+
+    public function testSetPersonThrowsExceptionOnInvalidArguments(): void
+    {
+        $feed = new Writer\Feed();
+
+        $person = [
+            'abc' => 'def',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->addPodcastIndexPerson($person);
+    }
+
+    public function testSetPersonThrowsExceptionOnInvalidImageUrl(): void
+    {
+        $feed = new Writer\Feed();
+
+        $person = [
+            'name'  => 'Hercules Poirot',
+            'role'  => 'guest',
+            'group' => 'writing',
+            'img'   => 'poirot.com/my-moustage.jpg',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->addPodcastIndexPerson($person);
     }
 }
