@@ -385,7 +385,7 @@ class FeedTest extends TestCase
         $this->assertNull($feed->getPodcastIndexPeople());
     }
 
-    public function testSetPersonWithOneArgument(): void
+    public function testAddPersonWithOneArgument(): void
     {
         $feed = new Writer\Feed();
 
@@ -523,5 +523,110 @@ class FeedTest extends TestCase
         ];
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $feed->setPodcastIndexMedium($data);
+    }
+
+    public function testAddBlock(): void
+    {
+        $feed = new Writer\Feed();
+
+        $block = [
+            'value' => 'yes',
+            'id'    => 'google',
+        ];
+        $feed->addPodcastIndexBlock($block);
+
+        /** @var list<array{value: string, id?: string}> $blocks */
+        $blocks = $feed->getPodcastIndexBlocks();
+        $this->assertTrue(in_array($block, $blocks));
+    }
+
+    public function testSetBlocks(): void
+    {
+        $feed = new Writer\Feed();
+
+        $blocks = [
+            [
+                'value' => 'no',
+                'id'    => '',
+            ],
+            [
+                'value' => 'yes',
+                'id'    => 'google',
+            ],
+        ];
+
+        // set
+        $feed->setPodcastIndexBlocks($blocks);
+        /** @var list<array{value: string, id?: string}> $blocksSaved */
+        $blocksSaved = $feed->getPodcastIndexBlocks();
+        foreach ($blocks as $block) {
+            $this->assertTrue(in_array($block, $blocksSaved));
+        }
+
+        // add
+        $singleBlock = [
+            'value' => 'yes',
+            'id'    => 'apple',
+        ];
+        $feed->addPodcastIndexBlock($singleBlock);
+        $moreBlocksSaved = $feed->getPodcastIndexBlocks();
+        foreach ($blocks as $block) {
+            $this->assertTrue(in_array($block, $moreBlocksSaved));
+        }
+        $this->assertTrue(in_array($singleBlock, $moreBlocksSaved));
+
+        // update
+        $newBlocks = [
+            [
+                'value' => 'no',
+                'id'    => 'google',
+            ],
+        ];
+        $feed->setPodcastIndexBlocks($newBlocks);
+        /** @var list<array{value: string, id?: string}> $updated */
+        $updated = $feed->getPodcastIndexBlocks();
+        $this->assertEquals(1, count($updated));
+        $this->assertEquals($newBlocks, $updated);
+
+        // delete
+        $feed->setPodcastIndexBlocks();
+        $this->assertNull($feed->getPodcastIndexBlocks());
+    }
+
+    public function testAddBlockWithOneArgument(): void
+    {
+        $feed = new Writer\Feed();
+
+        $block = [
+            'value' => 'yes',
+        ];
+        $feed->addPodcastIndexBlock($block);
+
+        /** @var array<array> $blocks */
+        $blocks = $feed->getPodcastIndexBlocks();
+        $this->assertTrue(in_array($block, $blocks));
+    }
+
+    public function testAddBlockThrowsExceptionOnInvalidArguments(): void
+    {
+        $feed = new Writer\Feed();
+
+        $data = [
+            'abc' => 'def',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->addPodcastIndexBlock($data);
+    }
+
+    public function testAddBlockThrowsExceptionOnInvalidValue(): void
+    {
+        $feed = new Writer\Feed();
+
+        $data = [
+            'value' => true,
+            'id'    => 'google',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->addPodcastIndexBlock($data);
     }
 }

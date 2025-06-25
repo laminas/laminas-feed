@@ -3098,6 +3098,7 @@
   <file src="src/Writer/Extension/PodcastIndex/Feed.php">
     <DocblockTypeContradiction>
       <code><![CDATA[! is_string($value['url'])]]></code>
+      <code><![CDATA[! is_string($value['value'])]]></code>
       <code><![CDATA[is_string($value['description'])]]></code>
       <code><![CDATA[is_string($value['description'])]]></code>
       <code><![CDATA[is_string($value['identifier'])]]></code>
@@ -3115,12 +3116,14 @@
       <code><![CDATA[isset($value['rrule']) && ! is_string($value['rrule'])]]></code>
       <code><![CDATA[isset($value['season']) && ! is_int($value['season'])]]></code>
       <code><![CDATA[isset($value['type']) && ! is_string($value['type'])]]></code>
+      <code><![CDATA[isset($value['id']) && ! is_string($value['id'])]]></code>
     </DocblockTypeContradiction>
     <PossiblyUnusedMethod>
       <code>__call</code>
       <code>__construct</code>
       <code>getEncoding</code>
       <code>setEncoding</code>
+      <code>setPodcastIndexBlocks</code>
       <code>setPodcastIndexFunding</code>
       <code>setPodcastIndexGuid</code>
       <code>setPodcastIndexImages</code>

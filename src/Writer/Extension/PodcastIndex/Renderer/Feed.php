@@ -43,6 +43,7 @@ class Feed extends Extension\AbstractRenderer
         $this->setTrailer($this->dom, $this->base);
         $this->setGuid($this->dom, $this->base);
         $this->setMedium($this->dom, $this->base);
+        $this->setBlocks($this->dom, $this->base);
         if ($this->called) {
             $this->_appendNamespaces();
         }
@@ -300,6 +301,32 @@ class Feed extends Extension\AbstractRenderer
         $text = $dom->createTextNode($medium['value']);
         $el->appendChild($text);
         $root->appendChild($el);
+        $this->called = true;
+    }
+
+    /**
+     * Set feed blocks
+     */
+    protected function setBlocks(DOMDocument $dom, DOMElement $root): void
+    {
+        /** @psalm-var FeedWriter $container */
+        $container = $this->getDataContainer();
+
+        /** @psalm-var list<array{value: string, id?: string}>|null $people */
+        $blocks = $container->getPodcastIndexBlocks();
+        if ($blocks === null || $blocks === []) {
+            return;
+        }
+
+        foreach ($blocks as $block) {
+            $el   = $dom->createElement('podcast:block');
+            $text = $dom->createTextNode($block['value']);
+            $el->appendChild($text);
+            if (isset($block['id']) && $block['id'] !== '') {
+                $el->setAttribute('id', $block['id']);
+            }
+            $root->appendChild($el);
+        }
         $this->called = true;
     }
 }

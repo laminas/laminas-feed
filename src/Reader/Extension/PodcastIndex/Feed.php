@@ -272,7 +272,7 @@ class Feed extends Extension\AbstractFeed
 
         $personCollection = [];
 
-        if ($nodeList->length) {
+        if ($nodeList->length > 0) {
             foreach ($nodeList as $entry) {
                 assert($entry instanceof DOMElement);
                 $person        = new stdClass();
@@ -381,6 +381,39 @@ class Feed extends Extension\AbstractFeed
         $this->data['medium'] = $object;
 
         return $this->data['medium'];
+    }
+
+    /**
+     * Get the podcast blocks
+     *
+     * @return list<object{value: string, id?: string}>
+     */
+    public function getPodcastIndexBlocks(): array
+    {
+        if (array_key_exists('blocks', $this->data)) {
+            /** @var list<object{value: string, id?: string}> $blocks */
+            $blocks = $this->data['blocks'];
+            return $blocks;
+        }
+
+        $blocks = [];
+
+        $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:block');
+
+        if ($nodeList->length > 0) {
+            foreach ($nodeList as $entry) {
+                assert($entry instanceof DOMElement);
+                $object        = new stdClass();
+                $object->value = $entry->nodeValue;
+                $object->id    = $entry->getAttribute('id');
+
+                $blocks[] = $object;
+            }
+        }
+
+        $this->data['blocks'] = $blocks;
+
+        return $this->data['blocks'];
     }
 
     /**

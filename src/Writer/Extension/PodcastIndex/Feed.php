@@ -12,6 +12,7 @@ use Laminas\Stdlib\StringWrapper\StringWrapperInterface;
 use function array_key_exists;
 use function ctype_alpha;
 use function filter_var;
+use function in_array;
 use function is_bool;
 use function is_int;
 use function is_string;
@@ -415,6 +416,58 @@ class Feed
             );
         }
         $this->data['medium'] = $value;
+        return $this;
+    }
+
+    /**
+     * Add feed block
+     *
+     * @param array{value: string, id?: string} $value
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function addPodcastIndexBlock(array $value): self
+    {
+        if (! isset($value['value'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "block" must be an array containing the key "value"'
+            );
+        }
+        if (! is_string($value['value']) || ! in_array($value['value'], ['yes', 'no'], true)) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "value" of "block" must be set to either "yes" or "no"'
+            );
+        }
+        if (isset($value['id']) && ! is_string($value['id'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "id" of "block" must be of type string'
+            );
+        }
+
+        if (! isset($this->data['blocks'])) {
+            $this->data['blocks'] = [];
+        }
+
+        /** @var list<array{value: string, id?: string}> $this->data['blocks'] */
+        $this->data['blocks'][] = $value;
+        return $this;
+    }
+
+    /**
+     * Set a new array of blocks.
+     * If no argument is passed, it will just remove all existing block entries.
+     *
+     * @psalm-param list<array{value: string, id?: string}> $values
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function setPodcastIndexBlocks(array $values = []): self
+    {
+        $this->data['blocks'] = [];
+
+        foreach ($values as $value) {
+            $this->addPodcastIndexBlock($value);
+        }
         return $this;
     }
 

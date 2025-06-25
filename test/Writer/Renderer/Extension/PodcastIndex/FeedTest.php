@@ -231,4 +231,44 @@ class FeedTest extends TestCase
         $this->assertStringContainsString('<podcast:medium', $xml);
         $this->assertStringContainsString($data['value'], $xml);
     }
+
+    public function testRendersRssBlockTag(): void
+    {
+        $data = [
+            'value' => 'no',
+            'id'    => 'google',
+        ];
+
+        $this->validWriter->addPodcastIndexBlock($data);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $this->assertStringContainsString('<podcast:block', $xml);
+        $this->assertStringContainsString($data['value'], $xml);
+        $this->assertStringContainsString($data['id'], $xml);
+        $this->assertSame(1, substr_count($xml, $data['id']));
+    }
+
+    public function testRendersRssBlockTags(): void
+    {
+        $data = [
+            [
+                'value' => 'yes',
+                'id'    => '',
+            ],
+            [
+                'value' => 'no',
+                'id'    => 'google',
+            ],
+        ];
+
+        $this->validWriter->setPodcastIndexBlocks($data);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $this->assertStringContainsString('<podcast:block>yes</podcast:block>', $xml);
+        $this->assertStringContainsString('<podcast:block id="google">no</podcast:block>', $xml);
+    }
 }

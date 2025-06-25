@@ -22,6 +22,7 @@ single namespace.
 | `getPodcastIndexTrailer()`                    | Returns information on the podcast trailer. The output is an object with the properties "title", "pubdate", "url", "length", "type" and "season".  |
 | `getPodcastIndexGuid()`                       | Returns the podcast guid. The output is an object with the property "value".                                                                       |
 | `getPodcastIndexMedium()`                     | Returns the podcast medium. The output is an object with the property "value".                                                                     |
+| `getPodcastIndexBlocks()`                     | Returns whether or which platforms are allowed to publicly display this feed. The output is an object with the properties "value" and "id".        |
 
 ### SET methods
 
@@ -34,10 +35,13 @@ single namespace.
 | `setPodcastIndexImages()`          | Expects an array with the required key "srcset".                                                                                      |
 | `setPodcastIndexUpdateFrequency()` | Expects an array with the required key "description" and the optional keys "complete" (bool), "dtstart" (ISO8601 string) and "rrule". |
 | `addPodcastIndexPerson()`          | Expects an array with the required key "name" and the optional keys "role", "group", "img" and "href".                                |
-| `setPodcastIndexPeople()`         | Expects an array of objects with each the required key "name" and the optional keys "role", "group", "img" and "href".                |
+| `setPodcastIndexPeople()`          | Expects an array of objects with each the required key "name" and the optional keys "role", "group", "img" and "href".                |
 | `setPodcastIndexTrailer()`         | Expects an array with the required keys "title", "pubdate" and "url" and the optional keys "length", "type" and "season".             |
 | `setPodcastIndexGuid()`            | Expects an array with the required key "value".                                                                                       |
 | `setPodcastIndexMedium()`          | Expects an array with the required key "value".                                                                                       |
+| `addPodcastIndexBlock()`           | Expects an array with the required key "value" and the optional key "id".                                                             |
+| `setPodcastIndexBlocks()`          | Expects an array of objects with each the required key "value" and the optional key "id".                                             |
+
 
 ## Episode API
 
