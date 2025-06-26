@@ -113,7 +113,7 @@ class Feed extends Extension\AbstractRenderer
         /** @psalm-var FeedWriter $container */
         $container = $this->getDataContainer();
 
-        /** @psalm-var null|array<string,string> $license */
+        /** @psalm-var null|array{identifier: string, url: string} $license */
         $license = $container->getPodcastIndexLicense();
         if ($license === null) {
             return;
@@ -134,7 +134,7 @@ class Feed extends Extension\AbstractRenderer
         /** @psalm-var FeedWriter $container */
         $container = $this->getDataContainer();
 
-        /** @psalm-var null|array<string,string> $location */
+        /** @psalm-var null|array{description: string, geo?: string, osm?: string} $location */
         $location = $container->getPodcastIndexLocation();
         if ($location === null) {
             return;
@@ -160,7 +160,7 @@ class Feed extends Extension\AbstractRenderer
         /** @psalm-var FeedWriter $container */
         $container = $this->getDataContainer();
 
-        /** @psalm-var null|array<string, string> $images */
+        /** @psalm-var null|array{srcset: string} $images */
         $images = $container->getPodcastIndexImages();
         if ($images === null) {
             return;
@@ -208,7 +208,7 @@ class Feed extends Extension\AbstractRenderer
         /** @psalm-var FeedWriter $container */
         $container = $this->getDataContainer();
 
-        /** @psalm-var list<PersonArray>|null $people */
+        /** @psalm-var null|list<PersonArray> $people */
         $people = $container->getPodcastIndexPeople();
         if ($people === null || $people === []) {
             return;
@@ -274,7 +274,7 @@ class Feed extends Extension\AbstractRenderer
         /** @psalm-var FeedWriter $container */
         $container = $this->getDataContainer();
 
-        /** @psalm-var null|array<string, string> $guid */
+        /** @psalm-var null|array{value: string} $guid */
         $guid = $container->getPodcastIndexGuid();
         if ($guid === null) {
             return;
@@ -294,7 +294,7 @@ class Feed extends Extension\AbstractRenderer
         /** @psalm-var FeedWriter $container */
         $container = $this->getDataContainer();
 
-        /** @psalm-var null|array<string, string> $medium */
+        /** @psalm-var null|array{value: string} $medium */
         $medium = $container->getPodcastIndexMedium();
         if ($medium === null) {
             return;
@@ -371,8 +371,10 @@ class Feed extends Extension\AbstractRenderer
         if ($podping === null) {
             return;
         }
-        $el          = $dom->createElement('podcast:podping');
+
         $usesPodping = $podping['usesPodping'] ? 'true' : 'false';
+
+        $el = $dom->createElement('podcast:podping');
         $el->setAttribute('usesPodping', $usesPodping);
         $root->appendChild($el);
         $this->called = true;
