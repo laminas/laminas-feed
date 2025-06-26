@@ -47,7 +47,6 @@ single namespace.
 | `setPodcastIndexTxts()`            | Expects an array of arrays with each the required key "value" and the optional key "purpose".                                         |
 | `setPodcastIndexPodping()`         | Expects an array with the required key "usesPodping".                                                                                 |
 
-
 ## Episode API
 
 ### GET methods
