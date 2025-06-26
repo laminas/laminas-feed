@@ -312,7 +312,7 @@ class Feed extends Extension\AbstractRenderer
         /** @psalm-var FeedWriter $container */
         $container = $this->getDataContainer();
 
-        /** @psalm-var list<array{value: string, id?: string}>|null $people */
+        /** @psalm-var list<array{value: string, id?: string}>|null $blocks */
         $blocks = $container->getPodcastIndexBlocks();
         if ($blocks === null || $blocks === []) {
             return;

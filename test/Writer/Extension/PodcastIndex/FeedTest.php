@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace LaminasTest\Feed\Writer\Extension\PodcastIndex;
 
 use DateTime;
+use Laminas\Feed\Reader\Extension\PodcastIndex\Feed;
 use Laminas\Feed\Writer;
 use PHPUnit\Framework\TestCase;
 
@@ -13,6 +14,9 @@ use function implode;
 use function in_array;
 use function time;
 
+/**
+ * @psalm-import-type PersonObject from Feed
+ */
 class FeedTest extends TestCase
 {
     public function testSetLocked(): void
@@ -334,7 +338,7 @@ class FeedTest extends TestCase
         ];
         $feed->addPodcastIndexPerson($person);
 
-        /** @var array<array> $people */
+        /** @var list<PersonObject> $people */
         $people = $feed->getPodcastIndexPeople();
         $this->assertTrue(in_array($person, $people));
     }
@@ -359,7 +363,7 @@ class FeedTest extends TestCase
         ];
         // set
         $feed->setPodcastIndexPeople($people);
-        /** @var array<array> $peopleSaved */
+        /** @var list<PersonObject> $peopleSaved */
         $peopleSaved = $feed->getPodcastIndexPeople();
         foreach ($people as $person) {
             $this->assertTrue(in_array($person, $peopleSaved));
@@ -375,7 +379,7 @@ class FeedTest extends TestCase
             ],
         ];
         $feed->setPodcastIndexPeople($newPersons);
-        /** @var array<array> $updated */
+        /** @var list<PersonObject> $updated */
         $updated = $feed->getPodcastIndexPeople();
         $this->assertEquals(1, count($updated));
         $this->assertEquals($newPersons, $updated);
@@ -394,7 +398,7 @@ class FeedTest extends TestCase
         ];
         $feed->addPodcastIndexPerson($person);
 
-        /** @var array<array> $people */
+        /** @var list<PersonObject> $people */
         $people = $feed->getPodcastIndexPeople();
         $this->assertTrue(in_array($person, $people));
     }
@@ -557,7 +561,7 @@ class FeedTest extends TestCase
 
         // set
         $feed->setPodcastIndexBlocks($blocks);
-        /** @var list<array{value: string, id?: string}> $blocksSaved */
+        /** @var list<object{value: string, id?: string}> $blocksSaved */
         $blocksSaved = $feed->getPodcastIndexBlocks();
         foreach ($blocks as $block) {
             $this->assertTrue(in_array($block, $blocksSaved));
@@ -569,6 +573,7 @@ class FeedTest extends TestCase
             'id'    => 'apple',
         ];
         $feed->addPodcastIndexBlock($singleBlock);
+        /** @psalm-var list<object{value: string, id?: string}> $moreBlocksSaved */
         $moreBlocksSaved = $feed->getPodcastIndexBlocks();
         foreach ($blocks as $block) {
             $this->assertTrue(in_array($block, $moreBlocksSaved));
@@ -583,7 +588,7 @@ class FeedTest extends TestCase
             ],
         ];
         $feed->setPodcastIndexBlocks($newBlocks);
-        /** @var list<array{value: string, id?: string}> $updated */
+        /** @var list<object{value: string, id?: string}> $updated */
         $updated = $feed->getPodcastIndexBlocks();
         $this->assertEquals(1, count($updated));
         $this->assertEquals($newBlocks, $updated);
@@ -602,7 +607,7 @@ class FeedTest extends TestCase
         ];
         $feed->addPodcastIndexBlock($block);
 
-        /** @var array<array> $blocks */
+        /** @psalm-var list<object{value: string, id?: string}> $blocks */
         $blocks = $feed->getPodcastIndexBlocks();
         $this->assertTrue(in_array($block, $blocks));
     }
