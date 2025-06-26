@@ -634,4 +634,110 @@ class FeedTest extends TestCase
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $feed->addPodcastIndexBlock($data);
     }
+
+    public function testAddTxt(): void
+    {
+        $feed = new Writer\Feed();
+
+        $txt = [
+            'value'   => 'S6lpp-7ZCn8-dZfGc-OoyaG',
+            'purpose' => 'verify',
+        ];
+        $feed->addPodcastIndexTxt($txt);
+
+        /** @var list<array{value: string, purpose?: string}> $txts */
+        $txts = $feed->getPodcastIndexTxts();
+        $this->assertTrue(in_array($txt, $txts));
+    }
+
+    public function testSetTxts(): void
+    {
+        $feed = new Writer\Feed();
+
+        $txts = [
+            [
+                'value'   => 'S6lpp-7ZCn8-dZfGc-OoyaG',
+                'purpose' => 'verify',
+            ],
+            [
+                'value'   => '2022-10-26T04:45:30.742Z',
+                'purpose' => 'release',
+            ],
+        ];
+
+        // set
+        $feed->setPodcastIndexTxts($txts);
+        /** @var list<object{value: string, purpose?: string}> $txtsSaved */
+        $txtsSaved = $feed->getPodcastIndexTxts();
+        foreach ($txts as $txt) {
+            $this->assertTrue(in_array($txt, $txtsSaved));
+        }
+
+        // add
+        $singleTxt = [
+            'value'   => 'naj3eEZaWVVY9a38uhX8FekACyhtqP4JN',
+            'purpose' => 'verify',
+        ];
+        $feed->addPodcastIndexTxt($singleTxt);
+        /** @psalm-var list<object{value: string, purpose?: string}> $moreTxtsSaved */
+        $moreTxtsSaved = $feed->getPodcastIndexTxts();
+        foreach ($txts as $txt) {
+            $this->assertTrue(in_array($txt, $moreTxtsSaved));
+        }
+        $this->assertTrue(in_array($singleTxt, $moreTxtsSaved));
+
+        // update
+        $newTxts = [
+            [
+                'value'   => '05124',
+                'purpose' => 'applepodcastsverify',
+            ],
+        ];
+        $feed->setPodcastIndexTxts($newTxts);
+        /** @var list<object{value: string, purpose?: string}> $updated */
+        $updated = $feed->getPodcastIndexTxts();
+        $this->assertEquals(1, count($updated));
+        $this->assertEquals($newTxts, $updated);
+
+        // delete
+        $feed->setPodcastIndexTxts();
+        $this->assertNull($feed->getPodcastIndexTxts());
+    }
+
+    public function testAddTxtWithOneArgument(): void
+    {
+        $feed = new Writer\Feed();
+
+        $txt = [
+            'value' => 'naj3eEZaWVVY9a38uhX8FekACyhtqP4JN',
+        ];
+        $feed->addPodcastIndexTxt($txt);
+
+        /** @psalm-var list<object{value: string, purpose?: string}> $txts */
+        $txts = $feed->getPodcastIndexTxts();
+        $this->assertTrue(in_array($txt, $txts));
+    }
+
+    public function testAddTxtThrowsExceptionOnInvalidArguments(): void
+    {
+        $feed = new Writer\Feed();
+
+        $data = [
+            'abc' => 'def',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->addPodcastIndexTxt($data);
+    }
+
+    public function testAddTxtThrowsExceptionOnInvalidValue(): void
+    {
+        $feed = new Writer\Feed();
+
+        $data = [
+            'value'   => true,
+            'purpose' => 'google',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->addPodcastIndexTxt($data);
+    }
 }

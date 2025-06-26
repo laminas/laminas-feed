@@ -210,6 +210,26 @@ class PodcastIndexRss2Test extends TestCase
         $this->assertEquals($expectedB, $blocks[1]);
     }
 
+    public function testGetsTxts(): void
+    {
+        /** @var Reader\Extension\PodcastIndex\Feed $feed */
+        $feed = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath)
+        );
+
+        $expectedA          = new stdClass();
+        $expectedA->value   = 'S6lpp-7ZCn8-dZfGc-OoyaG';
+        $expectedA->purpose = 'verify';
+
+        $expectedB          = new stdClass();
+        $expectedB->value   = '2022-10-26T04:45:30.742Z';
+        $expectedB->purpose = 'release';
+
+        $txts = $feed->getPodcastIndexTxts();
+        $this->assertEquals($expectedA, $txts[0]);
+        $this->assertEquals($expectedB, $txts[1]);
+    }
+
     /**
      * Entry level testing
      */

@@ -400,20 +400,49 @@ class Feed extends Extension\AbstractFeed
 
         $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:block');
 
-        if ($nodeList->length > 0) {
-            foreach ($nodeList as $entry) {
-                assert($entry instanceof DOMElement);
-                $object        = new stdClass();
-                $object->value = $entry->nodeValue;
-                $object->id    = $entry->getAttribute('id');
+        foreach ($nodeList as $entry) {
+            assert($entry instanceof DOMElement);
+            $object        = new stdClass();
+            $object->value = $entry->nodeValue;
+            $object->id    = $entry->getAttribute('id');
 
-                $blocks[] = $object;
-            }
+            $blocks[] = $object;
         }
 
         $this->data['blocks'] = $blocks;
 
         return $this->data['blocks'];
+    }
+
+    /**
+     * Get the podcast txts
+     *
+     * @return list<object{value: string, purpose?: string}>
+     */
+    public function getPodcastIndexTxts(): array
+    {
+        if (array_key_exists('txts', $this->data)) {
+            /** @var list<object{value: string, purpose?: string}> $txts */
+            $txts = $this->data['txts'];
+            return $txts;
+        }
+
+        $txts = [];
+
+        $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:txt');
+
+        foreach ($nodeList as $entry) {
+            assert($entry instanceof DOMElement);
+            $object          = new stdClass();
+            $object->value   = $entry->nodeValue;
+            $object->purpose = $entry->getAttribute('purpose');
+
+            $txts[] = $object;
+        }
+
+        $this->data['txts'] = $txts;
+
+        return $this->data['txts'];
     }
 
     /**

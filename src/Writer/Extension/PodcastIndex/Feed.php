@@ -472,6 +472,59 @@ class Feed
     }
 
     /**
+     * Add feed txt
+     *
+     * @param array{value: string, purpose?: string} $value
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     * @psalm-suppress DocblockTypeContradiction
+     */
+    public function addPodcastIndexTxt(array $value): self
+    {
+        if (! isset($value['value'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "txt" must be an array containing the key "value"'
+            );
+        }
+        if (! is_string($value['value'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "value" of "txt" must be of type string'
+            );
+        }
+        if (isset($value['purpose']) && ! is_string($value['purpose'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "purpose" of "txt" must be of type string'
+            );
+        }
+
+        if (! isset($this->data['txts'])) {
+            $this->data['txts'] = [];
+        }
+
+        /** @var list<array{value: string, purpose?: string}> $this->data['txts'] */
+        $this->data['txts'][] = $value;
+        return $this;
+    }
+
+    /**
+     * Set a new array of txts.
+     * If no argument is passed, it will just remove all existing txt entries.
+     *
+     * @psalm-param list<array{value: string, purpose?: string}> $values
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function setPodcastIndexTxts(array $values = []): self
+    {
+        $this->data['txts'] = [];
+
+        foreach ($values as $value) {
+            $this->addPodcastIndexTxt($value);
+        }
+        return $this;
+    }
+
+    /**
      * Overloading: proxy to internal setters
      *
      * @return mixed
