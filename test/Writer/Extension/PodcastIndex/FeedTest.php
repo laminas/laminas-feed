@@ -740,4 +740,27 @@ class FeedTest extends TestCase
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $feed->addPodcastIndexTxt($data);
     }
+
+    public function testSetPodping(): void
+    {
+        $feed = new Writer\Feed();
+
+        $data = [
+            'usesPodping' => true,
+        ];
+
+        $feed->setPodcastIndexPodping($data);
+        $this->assertEquals($data, $feed->getPodcastIndexPodping());
+    }
+
+    public function testSetPodpingThrowsExceptionOnInvalidArgument(): void
+    {
+        $feed = new Writer\Feed();
+
+        $data = [
+            'abc' => 'def',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->setPodcastIndexPodping($data);
+    }
 }

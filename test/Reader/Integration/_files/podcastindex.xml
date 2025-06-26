@@ -48,6 +48,7 @@
         <podcast:block id="google">no</podcast:block>
         <podcast:txt purpose="verify">S6lpp-7ZCn8-dZfGc-OoyaG</podcast:txt>
         <podcast:txt purpose="release">2022-10-26T04:45:30.742Z</podcast:txt>
+        <podcast:podping usesPodping="true"/>
 
         <item>
             <title>Shake Shake Shake Your Spices</title>

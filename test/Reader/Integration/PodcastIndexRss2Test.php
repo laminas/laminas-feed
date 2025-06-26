@@ -230,6 +230,19 @@ class PodcastIndexRss2Test extends TestCase
         $this->assertEquals($expectedB, $txts[1]);
     }
 
+    public function testGetsPodping(): void
+    {
+        /** @var Reader\Extension\PodcastIndex\Feed $feed */
+        $feed = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath)
+        );
+
+        $expected              = new stdClass();
+        $expected->usesPodping = true;
+
+        $this->assertEquals($expected, $feed->getPodcastIndexPodping());
+    }
+
     /**
      * Entry level testing
      */

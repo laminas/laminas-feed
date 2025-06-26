@@ -525,6 +525,29 @@ class Feed
     }
 
     /**
+     * Set feed podping
+     *
+     * @param array{usesPodping: bool} $value
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function setPodcastIndexPodping(array $value): self
+    {
+        if (! isset($value['usesPodping'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "podping" must be an array containing the key "usesPodping"'
+            );
+        }
+        if (! is_bool($value['usesPodping'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "usesPodping" of "podping" must be of type boolean'
+            );
+        }
+        $this->data['podping'] = $value;
+        return $this;
+    }
+
+    /**
      * Overloading: proxy to internal setters
      *
      * @return mixed

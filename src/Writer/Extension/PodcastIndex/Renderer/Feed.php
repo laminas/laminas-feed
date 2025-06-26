@@ -45,6 +45,7 @@ class Feed extends Extension\AbstractRenderer
         $this->setMedium($this->dom, $this->base);
         $this->setBlocks($this->dom, $this->base);
         $this->setTxts($this->dom, $this->base);
+        $this->setPodping($this->dom, $this->base);
         if ($this->called) {
             $this->_appendNamespaces();
         }
@@ -354,6 +355,26 @@ class Feed extends Extension\AbstractRenderer
             }
             $root->appendChild($el);
         }
+        $this->called = true;
+    }
+
+    /**
+     * Set feed podping
+     */
+    protected function setPodping(DOMDocument $dom, DOMElement $root): void
+    {
+        /** @psalm-var FeedWriter $container */
+        $container = $this->getDataContainer();
+
+        /** @psalm-var null|array{usesPodping: bool} $podping */
+        $podping = $container->getPodcastIndexPodping();
+        if ($podping === null) {
+            return;
+        }
+        $el          = $dom->createElement('podcast:podping');
+        $usesPodping = $podping['usesPodping'] ? 'true' : 'false';
+        $el->setAttribute('usesPodping', $usesPodping);
+        $root->appendChild($el);
         $this->called = true;
     }
 }

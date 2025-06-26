@@ -446,6 +446,41 @@ class Feed extends Extension\AbstractFeed
     }
 
     /**
+     * Get the podcast podping
+     *
+     * @return null|object{usesPodping: bool}
+     */
+    public function getPodcastIndexPodping(): object|null
+    {
+        if (array_key_exists('podping', $this->data)) {
+            /** @var null|object{usesPodping: bool} $object */
+            $object = $this->data['podping'];
+            return $object;
+        }
+
+        $object = null;
+
+        $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:podping');
+
+        if ($nodeList->length > 0) {
+            $item = $nodeList->item(0);
+            assert($item instanceof DOMElement);
+
+            $object = new stdClass();
+
+            if ($item->getAttribute('usesPodping') === 'true') {
+                $object->usesPodping = true;
+            } else {
+                $object->usesPodping = false;
+            }
+        }
+
+        $this->data['podping'] = $object;
+
+        return $this->data['podping'];
+    }
+
+    /**
      * Register PodcastIndex namespace
      */
     protected function registerNamespaces(): void

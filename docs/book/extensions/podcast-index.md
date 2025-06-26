@@ -24,6 +24,7 @@ single namespace.
 | `getPodcastIndexMedium()`                     | Returns the podcast medium. The output is an object with the property "value".                                                                     |
 | `getPodcastIndexBlocks()`                     | Returns whether or which platforms are allowed to publicly display this feed. The output is an object with the properties "value" and "id".        |
 | `getPodcastIndexTxts()`                       | Returns information on topics that do not have their own tags. The output is an object with the properties "value" and "purpose".                  |
+| `getPodcastIndexPodping()`                    | Returns whether the feed sends out Podping notifications when changes are made to it. The output is an object with the property "usesPodping".     |
 
 ### SET methods
 
@@ -44,6 +45,7 @@ single namespace.
 | `setPodcastIndexBlocks()`          | Expects an array of arrays with each the required key "value" and the optional key "id".                                              |
 | `addPodcastIndexTxt()`             | Expects an array with the required key "value" and the optional key "purpose".                                                        |
 | `setPodcastIndexTxts()`            | Expects an array of arrays with each the required key "value" and the optional key "purpose".                                         |
+| `setPodcastIndexPodping()`         | Expects an array with the required key "usesPodping".                                                                                 |
 
 
 ## Episode API

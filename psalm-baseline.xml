@@ -3099,6 +3099,7 @@
     <DocblockTypeContradiction>
       <code><![CDATA[! is_string($value['url'])]]></code>
       <code><![CDATA[! is_string($value['value'])]]></code>
+      <code><![CDATA[is_bool($value['usesPodping'])]]></code>
       <code><![CDATA[is_string($value['description'])]]></code>
       <code><![CDATA[is_string($value['description'])]]></code>
       <code><![CDATA[is_string($value['identifier'])]]></code>
@@ -3132,6 +3133,7 @@
       <code>setPodcastIndexLocked</code>
       <code>setPodcastIndexMedium</code>
       <code>setPodcastIndexPeople</code>
+      <code>setPodcastIndexPodping</code>
       <code>setPodcastIndexTrailer</code>
       <code>setPodcastIndexTxts</code>
       <code>setPodcastIndexUpdateFrequency</code>
