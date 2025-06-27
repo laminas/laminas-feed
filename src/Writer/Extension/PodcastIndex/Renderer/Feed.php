@@ -238,7 +238,7 @@ class Feed extends Extension\AbstractRenderer
     /**
      * Set feed trailer
      */
-    protected function setTrailer(DOMDocument $dom, DOMElement $root): void
+    private function setTrailer(DOMDocument $dom, DOMElement $root): void
     {
         /** @psalm-var FeedWriter $container */
         $container = $this->getDataContainer();
@@ -269,7 +269,7 @@ class Feed extends Extension\AbstractRenderer
     /**
      * Set feed guid
      */
-    protected function setGuid(DOMDocument $dom, DOMElement $root): void
+    private function setGuid(DOMDocument $dom, DOMElement $root): void
     {
         /** @psalm-var FeedWriter $container */
         $container = $this->getDataContainer();
@@ -289,7 +289,7 @@ class Feed extends Extension\AbstractRenderer
     /**
      * Set feed medium
      */
-    protected function setMedium(DOMDocument $dom, DOMElement $root): void
+    private function setMedium(DOMDocument $dom, DOMElement $root): void
     {
         /** @psalm-var FeedWriter $container */
         $container = $this->getDataContainer();
@@ -309,7 +309,7 @@ class Feed extends Extension\AbstractRenderer
     /**
      * Set feed blocks
      */
-    protected function setBlocks(DOMDocument $dom, DOMElement $root): void
+    private function setBlocks(DOMDocument $dom, DOMElement $root): void
     {
         /** @psalm-var FeedWriter $container */
         $container = $this->getDataContainer();
@@ -335,7 +335,7 @@ class Feed extends Extension\AbstractRenderer
     /**
      * Set feed txts
      */
-    protected function setTxts(DOMDocument $dom, DOMElement $root): void
+    private function setTxts(DOMDocument $dom, DOMElement $root): void
     {
         /** @psalm-var FeedWriter $container */
         $container = $this->getDataContainer();
@@ -361,7 +361,7 @@ class Feed extends Extension\AbstractRenderer
     /**
      * Set feed podping
      */
-    protected function setPodping(DOMDocument $dom, DOMElement $root): void
+    private function setPodping(DOMDocument $dom, DOMElement $root): void
     {
         /** @psalm-var FeedWriter $container */
         $container = $this->getDataContainer();
