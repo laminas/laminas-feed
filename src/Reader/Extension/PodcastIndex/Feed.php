@@ -468,11 +468,7 @@ class Feed extends Extension\AbstractFeed
 
             $object = new stdClass();
 
-            if ($item->getAttribute('usesPodping') === 'true') {
-                $object->usesPodping = true;
-            } else {
-                $object->usesPodping = false;
-            }
+            $object->usesPodping = ($item->getAttribute('usesPodping') === 'true');
         }
 
         $this->data['podping'] = $object;
