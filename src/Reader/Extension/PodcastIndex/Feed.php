@@ -111,9 +111,8 @@ class Feed extends Extension\AbstractFeed
     public function getPodcastIndexFunding(): ?stdClass
     {
         if (array_key_exists('funding', $this->data)) {
-            /** @var stdClass $object */
-            $object = $this->data['funding'];
-            return $object;
+            /** @psalm-var stdClass */
+            return $this->data['funding'];
         }
 
         $funding = null;
@@ -141,9 +140,8 @@ class Feed extends Extension\AbstractFeed
     public function getPodcastIndexLicense(): object|null
     {
         if (array_key_exists('license', $this->data)) {
-            /** @var null|object{identifier: string, url: string} $object */
-            $object = $this->data['license'];
-            return $object;
+            /** @psalm-var null|object{identifier: string, url: string} */
+            return $this->data['license'];
         }
 
         $license = null;
@@ -171,9 +169,8 @@ class Feed extends Extension\AbstractFeed
     public function getPodcastIndexLocation(): object|null
     {
         if (array_key_exists('location', $this->data)) {
-            /** @var null|object{description: string, geo?: string, osm?: string} $object */
-            $object = $this->data['location'];
-            return $object;
+            /** @psalm-var null|object{description: string, geo?: string, osm?: string} */
+            return $this->data['location'];
         }
 
         $location = null;
@@ -202,9 +199,8 @@ class Feed extends Extension\AbstractFeed
     public function getPodcastIndexImages(): object|null
     {
         if (array_key_exists('images', $this->data)) {
-            /** @var null|object{srcset: string} $object */
-            $object = $this->data['images'];
-            return $object;
+            /** @psalm-var null|object{srcset: string} */
+            return $this->data['images'];
         }
 
         $images = null;
@@ -231,9 +227,8 @@ class Feed extends Extension\AbstractFeed
     public function getPodcastIndexUpdateFrequency(): object|null
     {
         if (array_key_exists('updateFrequency', $this->data)) {
-            /** @var null|UpdateFrequencyObject $object */
-            $object = $this->data['updateFrequency'];
-            return $object;
+            /** @psalm-var null|UpdateFrequencyObject */
+            return $this->data['updateFrequency'];
         }
 
         $updateFrequency = null;
@@ -263,9 +258,8 @@ class Feed extends Extension\AbstractFeed
     public function getPodcastIndexPeople(): array
     {
         if (array_key_exists('people', $this->data)) {
-            /** @var list<PersonObject> $people */
-            $people = $this->data['people'];
-            return $people;
+            /** @psalm-var list<PersonObject> */
+            return $this->data['people'];
         }
 
         $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:person');
@@ -299,9 +293,8 @@ class Feed extends Extension\AbstractFeed
     public function getPodcastIndexTrailer(): object|null
     {
         if (array_key_exists('trailer', $this->data)) {
-            /** @var null|TrailerObject $object */
-            $object = $this->data['trailer'];
-            return $object;
+            /** @psalm-var null|TrailerObject */
+            return $this->data['trailer'];
         }
 
         $object = null;
@@ -333,9 +326,8 @@ class Feed extends Extension\AbstractFeed
     public function getPodcastIndexGuid(): object|null
     {
         if (array_key_exists('guid', $this->data)) {
-            /** @var null|object{value: string} $object */
-            $object = $this->data['guid'];
-            return $object;
+            /** @psalm-var null|object{value: string} */
+            return $this->data['guid'];
         }
 
         $object = null;
@@ -362,9 +354,8 @@ class Feed extends Extension\AbstractFeed
     public function getPodcastIndexMedium(): object|null
     {
         if (array_key_exists('medium', $this->data)) {
-            /** @var null|object{value: string} $object */
-            $object = $this->data['medium'];
-            return $object;
+            /** @psalm-var null|object{value: string} */
+            return $this->data['medium'];
         }
 
         $object = null;
@@ -391,9 +382,8 @@ class Feed extends Extension\AbstractFeed
     public function getPodcastIndexBlocks(): array
     {
         if (array_key_exists('blocks', $this->data)) {
-            /** @var list<object{value: string, id?: string}> $blocks */
-            $blocks = $this->data['blocks'];
-            return $blocks;
+            /** @psalm-var list<object{value: string, id?: string}> */
+            return $this->data['blocks'];
         }
 
         $blocks = [];
@@ -422,9 +412,8 @@ class Feed extends Extension\AbstractFeed
     public function getPodcastIndexTxts(): array
     {
         if (array_key_exists('txts', $this->data)) {
-            /** @var list<object{value: string, purpose?: string}> $txts */
-            $txts = $this->data['txts'];
-            return $txts;
+            /** @psalm-var list<object{value: string, purpose?: string}> */
+            return $this->data['txts'];
         }
 
         $txts = [];
@@ -453,9 +442,8 @@ class Feed extends Extension\AbstractFeed
     public function getPodcastIndexPodping(): object|null
     {
         if (array_key_exists('podping', $this->data)) {
-            /** @var null|object{usesPodping: bool} $object */
-            $object = $this->data['podping'];
-            return $object;
+            /** @psalm-var null|object{usesPodping: bool} */
+            return $this->data['podping'];
         }
 
         $object = null;
@@ -468,7 +456,7 @@ class Feed extends Extension\AbstractFeed
 
             $object = new stdClass();
 
-            $object->usesPodping = ($item->getAttribute('usesPodping') === 'true');
+            $object->usesPodping = $item->getAttribute('usesPodping') === 'true';
         }
 
         $this->data['podping'] = $object;
