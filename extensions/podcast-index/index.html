@@ -404,7 +404,7 @@ single namespace.</p>
 </thead>
 <tbody>
 <tr>
-<td><code>isLocked()</code></td>
+<td><code>isLocked()</code> <code>isPodcastIndexLocked()</code></td>
 <td>Returns whether the feed is open for importing to new platforms.</td>
 </tr>
 <tr>
@@ -421,7 +421,7 @@ single namespace.</p>
 </tr>
 <tr>
 <td><code>getPodcastIndexLocation()</code></td>
-<td>Returns funding information. The output is an object with "description", "geo" and "osm" properties.</td>
+<td>Returns location information. The output is an object with "description", "geo" and "osm" properties.</td>
 </tr>
 <tr>
 <td><code>getPodcastIndexImages()</code></td>
@@ -434,6 +434,30 @@ single namespace.</p>
 <tr>
 <td><code>getPodcastIndexPeople()</code></td>
 <td>Returns information on the involved people. The output is an array of objects, each with the properties "name", "role", "group", "img" and "href".</td>
+</tr>
+<tr>
+<td><code>getPodcastIndexTrailer()</code></td>
+<td>Returns information on the podcast trailer. The output is an object with the properties "title", "pubdate", "url", "length", "type" and "season".</td>
+</tr>
+<tr>
+<td><code>getPodcastIndexGuid()</code></td>
+<td>Returns the podcast guid. The output is an object with the property "value".</td>
+</tr>
+<tr>
+<td><code>getPodcastIndexMedium()</code></td>
+<td>Returns the podcast medium. The output is an object with the property "value".</td>
+</tr>
+<tr>
+<td><code>getPodcastIndexBlocks()</code></td>
+<td>Returns whether or which platforms are allowed to publicly display this feed. The output is an object with the properties "value" and "id".</td>
+</tr>
+<tr>
+<td><code>getPodcastIndexTxts()</code></td>
+<td>Returns information on topics that do not have their own tags. The output is an object with the properties "value" and "purpose".</td>
+</tr>
+<tr>
+<td><code>getPodcastIndexPodping()</code></td>
+<td>Returns whether the feed sends out Podping notifications when changes are made to it. The output is an object with the property "usesPodping".</td>
 </tr>
 </tbody>
 </table></div>
@@ -476,7 +500,39 @@ single namespace.</p>
 </tr>
 <tr>
 <td><code>setPodcastIndexPeople()</code></td>
-<td>Expects an array of objects with each the required key "name" and the optional keys "role", "group", "img" and "href".</td>
+<td>Expects an array of arrays with each the required key "name" and the optional keys "role", "group", "img" and "href".</td>
+</tr>
+<tr>
+<td><code>setPodcastIndexTrailer()</code></td>
+<td>Expects an array with the required keys "title", "pubdate" and "url" and the optional keys "length", "type" and "season".</td>
+</tr>
+<tr>
+<td><code>setPodcastIndexGuid()</code></td>
+<td>Expects an array with the required key "value".</td>
+</tr>
+<tr>
+<td><code>setPodcastIndexMedium()</code></td>
+<td>Expects an array with the required key "value".</td>
+</tr>
+<tr>
+<td><code>addPodcastIndexBlock()</code></td>
+<td>Expects an array with the required key "value" and the optional key "id".</td>
+</tr>
+<tr>
+<td><code>setPodcastIndexBlocks()</code></td>
+<td>Expects an array of arrays with each the required key "value" and the optional key "id".</td>
+</tr>
+<tr>
+<td><code>addPodcastIndexTxt()</code></td>
+<td>Expects an array with the required key "value" and the optional key "purpose".</td>
+</tr>
+<tr>
+<td><code>setPodcastIndexTxts()</code></td>
+<td>Expects an array of arrays with each the required key "value" and the optional key "purpose".</td>
+</tr>
+<tr>
+<td><code>setPodcastIndexPodping()</code></td>
+<td>Expects an array with the required key "usesPodping".</td>
 </tr>
 </tbody>
 </table></div>
