@@ -12,7 +12,9 @@ use Laminas\Stdlib\StringWrapper\StringWrapperInterface;
 use function array_key_exists;
 use function ctype_alpha;
 use function filter_var;
+use function in_array;
 use function is_bool;
+use function is_int;
 use function is_string;
 use function lcfirst;
 use function method_exists;
@@ -26,17 +28,25 @@ use const FILTER_VALIDATE_URL;
  * Describes PodcastIndex data of a RSS Feed
  *
  * @psalm-type UpdateFrequencyArray = array{
- *   description: string,
- *   complete?: bool,
- *   dtstart?: DateTimeInterface,
- *   rrule?: string
+ *     description: string,
+ *     complete?: bool,
+ *     dtstart?: DateTimeInterface,
+ *     rrule?: string
  *   }
  * @psalm-type PersonArray = array{
- *       name: string,
- *       role?: string,
- *       group?: string,
- *       img?: string,
- *       href?: string
+ *     name: string,
+ *     role?: string,
+ *     group?: string,
+ *     img?: string,
+ *     href?: string
+ *   }
+ * @psalm-type TrailerArray = array{
+ *     title: string,
+ *     pubdate: string,
+ *     url: string,
+ *     length?: int,
+ *     type?: string,
+ *     season?: int
  *   }
  */
 class Feed
@@ -310,6 +320,230 @@ class Feed
         foreach ($values as $value) {
             $this->addPodcastIndexPerson($value);
         }
+        return $this;
+    }
+
+    /**
+     * Set feed trailer
+     *
+     * @param TrailerArray $value
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function setPodcastIndexTrailer(array $value): self
+    {
+        if (! isset($value['title']) || ! isset($value['pubdate']) || ! isset($value['url'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "trailer" must be an array containing the keys "title", "pubdate" and "url"'
+            );
+        }
+        if (! is_string($value['title'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "title" of "trailer" must be of type string'
+            );
+        }
+        if (! is_string($value['pubdate'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "pubdate" of "trailer" must be an RFC2822 formatted date string'
+            );
+        }
+        /** @psalm-suppress DocblockTypeContradiction */
+        if (! is_string($value['url']) || ! filter_var($value['url'], FILTER_VALIDATE_URL)) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "url" of "trailer" must be a url, starting with "http://" or "https://'
+            );
+        }
+        if (isset($value['length']) && ! is_int($value['length'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "length" of "trailer": must be of type integer'
+            );
+        }
+        if (isset($value['type']) && ! is_string($value['type'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "type" of "trailer" must be of type string'
+            );
+        }
+        if (isset($value['season']) && ! is_int($value['season'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "season" of "trailer" must be of type integer'
+            );
+        }
+        $this->data['trailer'] = $value;
+        return $this;
+    }
+
+    /**
+     * Set feed guid
+     *
+     * @param array{value: string} $value
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function setPodcastIndexGuid(array $value): self
+    {
+        if (! isset($value['value'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "guid" must be an array containing the key "value"'
+            );
+        }
+        if (! is_string($value['value'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "value" of "guid" must be a UUIDv5 string'
+            );
+        }
+        $this->data['guid'] = $value;
+        return $this;
+    }
+
+    /**
+     * Set feed medium
+     *
+     * @param array{value: string} $value
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function setPodcastIndexMedium(array $value): self
+    {
+        if (! isset($value['value'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "medium" must be an array containing the key "value"'
+            );
+        }
+        /** @psalm-suppress DocblockTypeContradiction */
+        if (! is_string($value['value'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "value" of "medium" must be a UUIDv5 string'
+            );
+        }
+        $this->data['medium'] = $value;
+        return $this;
+    }
+
+    /**
+     * Add feed block
+     *
+     * @param array{value: string, id?: string} $value
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function addPodcastIndexBlock(array $value): self
+    {
+        if (! isset($value['value'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "block" must be an array containing the key "value"'
+            );
+        }
+        if (! is_string($value['value']) || ! in_array($value['value'], ['yes', 'no'], true)) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "value" of "block" must be set to either "yes" or "no"'
+            );
+        }
+        if (isset($value['id']) && ! is_string($value['id'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "id" of "block" must be of type string'
+            );
+        }
+
+        if (! isset($this->data['blocks'])) {
+            $this->data['blocks'] = [];
+        }
+
+        /** @var list<array{value: string, id?: string}> $this->data['blocks'] */
+        $this->data['blocks'][] = $value;
+        return $this;
+    }
+
+    /**
+     * Set a new array of blocks.
+     * If no argument is passed, it will just remove all existing block entries.
+     *
+     * @psalm-param list<array{value: string, id?: string}> $values
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function setPodcastIndexBlocks(array $values = []): self
+    {
+        $this->data['blocks'] = [];
+
+        foreach ($values as $value) {
+            $this->addPodcastIndexBlock($value);
+        }
+        return $this;
+    }
+
+    /**
+     * Add feed txt
+     *
+     * @param array{value: string, purpose?: string} $value
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     * @psalm-suppress DocblockTypeContradiction
+     */
+    public function addPodcastIndexTxt(array $value): self
+    {
+        if (! isset($value['value'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "txt" must be an array containing the key "value"'
+            );
+        }
+        if (! is_string($value['value'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "value" of "txt" must be of type string'
+            );
+        }
+        if (isset($value['purpose']) && ! is_string($value['purpose'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "purpose" of "txt" must be of type string'
+            );
+        }
+
+        if (! isset($this->data['txts'])) {
+            $this->data['txts'] = [];
+        }
+
+        /** @var list<array{value: string, purpose?: string}> $this->data['txts'] */
+        $this->data['txts'][] = $value;
+        return $this;
+    }
+
+    /**
+     * Set a new array of txts.
+     * If no argument is passed, it will just remove all existing txt entries.
+     *
+     * @psalm-param list<array{value: string, purpose?: string}> $values
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function setPodcastIndexTxts(array $values = []): self
+    {
+        $this->data['txts'] = [];
+
+        foreach ($values as $value) {
+            $this->addPodcastIndexTxt($value);
+        }
+        return $this;
+    }
+
+    /**
+     * Set feed podping
+     *
+     * @param array{usesPodping: bool} $value
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function setPodcastIndexPodping(array $value): self
+    {
+        if (! isset($value['usesPodping'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "podping" must be an array containing the key "usesPodping"'
+            );
+        }
+        if (! is_bool($value['usesPodping'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "usesPodping" of "podping" must be of type boolean'
+            );
+        }
+        $this->data['podping'] = $value;
         return $this;
     }
 

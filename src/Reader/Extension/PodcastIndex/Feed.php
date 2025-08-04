@@ -24,12 +24,20 @@ use function assert;
  *     rrule?: string
  *     }
  * @psalm-type PersonObject = object{
- *         name: string,
- *         role?: string,
- *         group?: string,
- *         img?: string,
- *         href?: string
+ *     name: string,
+ *     role?: string,
+ *     group?: string,
+ *     img?: string,
+ *     href?: string
  *  }
+ * @psalm-type TrailerObject = object{
+ *     title: string,
+ *     pubdate: string,
+ *     url: string,
+ *     length?: int,
+ *     type?: string,
+ *     season?: int
+ * }
  */
 class Feed extends Extension\AbstractFeed
 {
@@ -37,6 +45,14 @@ class Feed extends Extension\AbstractFeed
      * Is the podcast locked (not available for indexing)?
      */
     public function isLocked(): bool
+    {
+        return $this->isPodcastIndexLocked();
+    }
+
+    /**
+     * Is the podcast locked (not available for indexing)?
+     */
+    public function isPodcastIndexLocked(): bool
     {
         if (isset($this->data['locked'])) {
             return $this->data['locked'];
@@ -95,9 +111,8 @@ class Feed extends Extension\AbstractFeed
     public function getPodcastIndexFunding(): ?stdClass
     {
         if (array_key_exists('funding', $this->data)) {
-            /** @var stdClass $object */
-            $object = $this->data['funding'];
-            return $object;
+            /** @psalm-var stdClass */
+            return $this->data['funding'];
         }
 
         $funding = null;
@@ -125,9 +140,8 @@ class Feed extends Extension\AbstractFeed
     public function getPodcastIndexLicense(): object|null
     {
         if (array_key_exists('license', $this->data)) {
-            /** @var null|object{identifier: string, url: string} $object */
-            $object = $this->data['license'];
-            return $object;
+            /** @psalm-var null|object{identifier: string, url: string} */
+            return $this->data['license'];
         }
 
         $license = null;
@@ -155,9 +169,8 @@ class Feed extends Extension\AbstractFeed
     public function getPodcastIndexLocation(): object|null
     {
         if (array_key_exists('location', $this->data)) {
-            /** @var null|object{description: string, geo?: string, osm?: string} $object */
-            $object = $this->data['location'];
-            return $object;
+            /** @psalm-var null|object{description: string, geo?: string, osm?: string} */
+            return $this->data['location'];
         }
 
         $location = null;
@@ -186,9 +199,8 @@ class Feed extends Extension\AbstractFeed
     public function getPodcastIndexImages(): object|null
     {
         if (array_key_exists('images', $this->data)) {
-            /** @var null|object{srcset: string} $object */
-            $object = $this->data['images'];
-            return $object;
+            /** @psalm-var null|object{srcset: string} */
+            return $this->data['images'];
         }
 
         $images = null;
@@ -215,9 +227,8 @@ class Feed extends Extension\AbstractFeed
     public function getPodcastIndexUpdateFrequency(): object|null
     {
         if (array_key_exists('updateFrequency', $this->data)) {
-            /** @var null|UpdateFrequencyObject $object */
-            $object = $this->data['updateFrequency'];
-            return $object;
+            /** @psalm-var null|UpdateFrequencyObject */
+            return $this->data['updateFrequency'];
         }
 
         $updateFrequency = null;
@@ -247,16 +258,15 @@ class Feed extends Extension\AbstractFeed
     public function getPodcastIndexPeople(): array
     {
         if (array_key_exists('people', $this->data)) {
-            /** @var list<PersonObject> $people */
-            $people = $this->data['people'];
-            return $people;
+            /** @psalm-var list<PersonObject> */
+            return $this->data['people'];
         }
 
         $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:person');
 
         $personCollection = [];
 
-        if ($nodeList->length) {
+        if ($nodeList->length > 0) {
             foreach ($nodeList as $entry) {
                 assert($entry instanceof DOMElement);
                 $person        = new stdClass();
@@ -273,6 +283,185 @@ class Feed extends Extension\AbstractFeed
         $this->data['people'] = $personCollection;
 
         return $this->data['people'];
+    }
+
+    /**
+     * Get the podcast trailer
+     *
+     * @return null|TrailerObject
+     */
+    public function getPodcastIndexTrailer(): object|null
+    {
+        if (array_key_exists('trailer', $this->data)) {
+            /** @psalm-var null|TrailerObject */
+            return $this->data['trailer'];
+        }
+
+        $object = null;
+
+        $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:trailer');
+
+        if ($nodeList->length > 0) {
+            $item = $nodeList->item(0);
+            assert($item instanceof DOMElement);
+            $object          = new stdClass();
+            $object->title   = $item->nodeValue;
+            $object->pubdate = $item->getAttribute('pubdate');
+            $object->url     = $item->getAttribute('url');
+            $object->length  = $item->getAttribute('length');
+            $object->type    = $item->getAttribute('type');
+            $object->season  = $item->getAttribute('season');
+        }
+
+        $this->data['trailer'] = $object;
+
+        return $this->data['trailer'];
+    }
+
+    /**
+     * Get the podcast guid
+     *
+     * @return null|object{value: string}
+     */
+    public function getPodcastIndexGuid(): object|null
+    {
+        if (array_key_exists('guid', $this->data)) {
+            /** @psalm-var null|object{value: string} */
+            return $this->data['guid'];
+        }
+
+        $object = null;
+
+        $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:guid');
+
+        if ($nodeList->length > 0) {
+            $item = $nodeList->item(0);
+            assert($item instanceof DOMElement);
+            $object        = new stdClass();
+            $object->value = $item->nodeValue;
+        }
+
+        $this->data['guid'] = $object;
+
+        return $this->data['guid'];
+    }
+
+    /**
+     * Get the podcast medium
+     *
+     * @return null|object{value: string}
+     */
+    public function getPodcastIndexMedium(): object|null
+    {
+        if (array_key_exists('medium', $this->data)) {
+            /** @psalm-var null|object{value: string} */
+            return $this->data['medium'];
+        }
+
+        $object = null;
+
+        $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:medium');
+
+        if ($nodeList->length > 0) {
+            $item = $nodeList->item(0);
+            assert($item instanceof DOMElement);
+            $object        = new stdClass();
+            $object->value = $item->nodeValue;
+        }
+
+        $this->data['medium'] = $object;
+
+        return $this->data['medium'];
+    }
+
+    /**
+     * Get the podcast blocks
+     *
+     * @return list<object{value: string, id?: string}>
+     */
+    public function getPodcastIndexBlocks(): array
+    {
+        if (array_key_exists('blocks', $this->data)) {
+            /** @psalm-var list<object{value: string, id?: string}> */
+            return $this->data['blocks'];
+        }
+
+        $blocks = [];
+
+        $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:block');
+
+        foreach ($nodeList as $entry) {
+            assert($entry instanceof DOMElement);
+            $object        = new stdClass();
+            $object->value = $entry->nodeValue;
+            $object->id    = $entry->getAttribute('id');
+
+            $blocks[] = $object;
+        }
+
+        $this->data['blocks'] = $blocks;
+
+        return $this->data['blocks'];
+    }
+
+    /**
+     * Get the podcast txts
+     *
+     * @return list<object{value: string, purpose?: string}>
+     */
+    public function getPodcastIndexTxts(): array
+    {
+        if (array_key_exists('txts', $this->data)) {
+            /** @psalm-var list<object{value: string, purpose?: string}> */
+            return $this->data['txts'];
+        }
+
+        $txts = [];
+
+        $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:txt');
+
+        foreach ($nodeList as $entry) {
+            assert($entry instanceof DOMElement);
+            $object          = new stdClass();
+            $object->value   = $entry->nodeValue;
+            $object->purpose = $entry->getAttribute('purpose');
+
+            $txts[] = $object;
+        }
+
+        $this->data['txts'] = $txts;
+
+        return $this->data['txts'];
+    }
+
+    /**
+     * Get the podcast podping
+     *
+     * @return null|object{usesPodping: bool}
+     */
+    public function getPodcastIndexPodping(): object|null
+    {
+        if (array_key_exists('podping', $this->data)) {
+            /** @psalm-var null|object{usesPodping: bool} */
+            return $this->data['podping'];
+        }
+
+        $object = null;
+
+        $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:podping');
+
+        if ($nodeList->length > 0) {
+            $item = $nodeList->item(0);
+            assert($item instanceof DOMElement);
+
+            $object = new stdClass();
+
+            $object->usesPodping = $item->getAttribute('usesPodping') === 'true';
+        }
+
+        $this->data['podping'] = $object;
+
+        return $this->data['podping'];
     }
 
     /**

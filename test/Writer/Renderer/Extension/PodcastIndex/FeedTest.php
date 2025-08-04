@@ -185,4 +185,142 @@ class FeedTest extends TestCase
         $this->assertStringContainsString(">$fName</podcast:person>", $xml);
         $this->assertStringContainsString(">$sName</podcast:person>", $xml);
     }
+
+    public function testRendersRssTrailerTag(): void
+    {
+        $trailer = [
+            'title'   => 'Season 4: Race for the Clouds',
+            'pubdate' => "Thu, 01 Apr 2021 08:00:00 EST",
+            'url'     => "https://example.org/season4teaser.mp4",
+        ];
+        $this->validWriter->setPodcastIndexTrailer($trailer);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $this->assertStringContainsString('<podcast:trailer', $xml);
+        $this->assertStringContainsString($trailer['title'], $xml);
+        $this->assertStringContainsString($trailer['pubdate'], $xml);
+        $this->assertStringContainsString($trailer['url'], $xml);
+    }
+
+    public function testRendersRssGuidTag(): void
+    {
+        $data = [
+            'value' => '917393e3-1b1e-5cef-ace4-edaa54e1f810',
+        ];
+        $this->validWriter->setPodcastIndexGuid($data);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $this->assertStringContainsString('<podcast:guid', $xml);
+        $this->assertStringContainsString($data['value'], $xml);
+    }
+
+    public function testRendersRssMediumTag(): void
+    {
+        $data = [
+            'value' => 'audiobook',
+        ];
+        $this->validWriter->setPodcastIndexMedium($data);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $this->assertStringContainsString('<podcast:medium', $xml);
+        $this->assertStringContainsString($data['value'], $xml);
+    }
+
+    public function testRendersRssBlockTag(): void
+    {
+        $data = [
+            'value' => 'no',
+            'id'    => 'google',
+        ];
+
+        $this->validWriter->addPodcastIndexBlock($data);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $this->assertStringContainsString('<podcast:block', $xml);
+        $this->assertStringContainsString($data['value'], $xml);
+        $this->assertStringContainsString($data['id'], $xml);
+        $this->assertSame(1, substr_count($xml, $data['id']));
+    }
+
+    public function testRendersRssBlockTags(): void
+    {
+        $data = [
+            [
+                'value' => 'yes',
+                'id'    => '',
+            ],
+            [
+                'value' => 'no',
+                'id'    => 'google',
+            ],
+        ];
+
+        $this->validWriter->setPodcastIndexBlocks($data);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $this->assertStringContainsString('<podcast:block>yes</podcast:block>', $xml);
+        $this->assertStringContainsString('<podcast:block id="google">no</podcast:block>', $xml);
+    }
+
+    public function testRendersRssTxtTag(): void
+    {
+        $data = [
+            'value'   => 'S6lpp-7ZCn8-dZfGc-OoyaG',
+            'purpose' => 'verify',
+        ];
+
+        $this->validWriter->addPodcastIndexTxt($data);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $this->assertStringContainsString('<podcast:txt', $xml);
+        $this->assertStringContainsString($data['value'], $xml);
+        $this->assertStringContainsString($data['purpose'], $xml);
+        $this->assertSame(1, substr_count($xml, $data['purpose']));
+    }
+
+    public function testRendersRssTxtTags(): void
+    {
+        $data = [
+            [
+                'value'   => 'S6lpp-7ZCn8-dZfGc-OoyaG',
+                'purpose' => 'verify',
+            ],
+            [
+                'value' => '2022-10-26T04:45:30.742Z',
+            ],
+        ];
+
+        $this->validWriter->setPodcastIndexTxts($data);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $this->assertStringContainsString('<podcast:txt purpose="verify">S6lpp-7ZCn8-dZfGc-OoyaG</podcast:txt>', $xml);
+        $this->assertStringContainsString('<podcast:txt>2022-10-26T04:45:30.742Z</podcast:txt>', $xml);
+    }
+
+    public function testRendersRssPodpingTag(): void
+    {
+        $data = [
+            'usesPodping' => true,
+        ];
+        $this->validWriter->setPodcastIndexPodping($data);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $this->assertStringContainsString('<podcast:podping usesPodping="true"/>', $xml);
+    }
 }

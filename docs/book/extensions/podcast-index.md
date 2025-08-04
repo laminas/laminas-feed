@@ -11,14 +11,20 @@ single namespace.
 
 | Method                                        | Description                                                                                                                                        |
 |-----------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------|
-| `isLocked()`                                  | Returns whether the feed is open for importing to new platforms.                                                                                   |
+| `isLocked()` `isPodcastIndexLocked()`         | Returns whether the feed is open for importing to new platforms.                                                                                   |
 | `getLockOwner()` `getPodcastIndexLockOwner()` | Returns the email address for owner verification.                                                                                                  |
 | `getFunding()` `getPodcastIndexFunding()`     | Returns funding information. The output is an object with "url" and "value" properties.                                                            |
 | `getPodcastIndexLicense()`                    | Returns license information. The output is an object with "identifier" and "url" properties.                                                       |
-| `getPodcastIndexLocation()`                   | Returns funding information. The output is an object with "description", "geo" and "osm" properties.                                               |
+| `getPodcastIndexLocation()`                   | Returns location information. The output is an object with "description", "geo" and "osm" properties.                                              |
 | `getPodcastIndexImages()`                     | Returns information on responsive images. The output is an object with a "srcset" property.                                                        |
 | `getPodcastIndexUpdateFrequency()`            | Returns information on the intended release schedule. The output is an object with "description", "complete", "dtstart" and "rrule" properties.    |
 | `getPodcastIndexPeople()`                     | Returns information on the involved people. The output is an array of objects, each with the properties "name", "role", "group", "img" and "href". |
+| `getPodcastIndexTrailer()`                    | Returns information on the podcast trailer. The output is an object with the properties "title", "pubdate", "url", "length", "type" and "season".  |
+| `getPodcastIndexGuid()`                       | Returns the podcast guid. The output is an object with the property "value".                                                                       |
+| `getPodcastIndexMedium()`                     | Returns the podcast medium. The output is an object with the property "value".                                                                     |
+| `getPodcastIndexBlocks()`                     | Returns whether or which platforms are allowed to publicly display this feed. The output is an object with the properties "value" and "id".        |
+| `getPodcastIndexTxts()`                       | Returns information on topics that do not have their own tags. The output is an object with the properties "value" and "purpose".                  |
+| `getPodcastIndexPodping()`                    | Returns whether the feed sends out Podping notifications when changes are made to it. The output is an object with the property "usesPodping".     |
 
 ### SET methods
 
@@ -31,7 +37,15 @@ single namespace.
 | `setPodcastIndexImages()`          | Expects an array with the required key "srcset".                                                                                      |
 | `setPodcastIndexUpdateFrequency()` | Expects an array with the required key "description" and the optional keys "complete" (bool), "dtstart" (ISO8601 string) and "rrule". |
 | `addPodcastIndexPerson()`          | Expects an array with the required key "name" and the optional keys "role", "group", "img" and "href".                                |
-| `setPodcastIndexPeople()`          | Expects an array of objects with each the required key "name" and the optional keys "role", "group", "img" and "href".                |
+| `setPodcastIndexPeople()`          | Expects an array of arrays with each the required key "name" and the optional keys "role", "group", "img" and "href".                 |
+| `setPodcastIndexTrailer()`         | Expects an array with the required keys "title", "pubdate" and "url" and the optional keys "length", "type" and "season".             |
+| `setPodcastIndexGuid()`            | Expects an array with the required key "value".                                                                                       |
+| `setPodcastIndexMedium()`          | Expects an array with the required key "value".                                                                                       |
+| `addPodcastIndexBlock()`           | Expects an array with the required key "value" and the optional key "id".                                                             |
+| `setPodcastIndexBlocks()`          | Expects an array of arrays with each the required key "value" and the optional key "id".                                              |
+| `addPodcastIndexTxt()`             | Expects an array with the required key "value" and the optional key "purpose".                                                        |
+| `setPodcastIndexTxts()`            | Expects an array of arrays with each the required key "value" and the optional key "purpose".                                         |
+| `setPodcastIndexPodping()`         | Expects an array with the required key "usesPodping".                                                                                 |
 
 ## Episode API
 

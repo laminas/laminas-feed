@@ -146,6 +146,103 @@ class PodcastIndexRss2Test extends TestCase
         $this->assertEquals($expected, $people[0]);
     }
 
+    public function testGetsTrailer(): void
+    {
+        /** @var Reader\Extension\PodcastIndex\Feed $feed */
+        $feed = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath)
+        );
+
+        $expected          = new stdClass();
+        $expected->title   = 'Season 4: Race for the Clouds';
+        $expected->pubdate = "Thu, 01 Apr 2021 08:00:00 EST";
+        $expected->url     = "https://example.org/season4teaser.mp4";
+        $expected->length  = 12345678;
+        $expected->type    = "video/mp4";
+        $expected->season  = 4;
+
+        $this->assertEquals($expected, $feed->getPodcastIndexTrailer());
+    }
+
+    public function testGetsGuid(): void
+    {
+        /** @var Reader\Extension\PodcastIndex\Feed $feed */
+        $feed = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath)
+        );
+
+        $expected        = new stdClass();
+        $expected->value = '917393e3-1b1e-5cef-ace4-edaa54e1f810';
+
+        $this->assertEquals($expected, $feed->getPodcastIndexGuid());
+    }
+
+    public function testGetsMedium(): void
+    {
+        /** @var Reader\Extension\PodcastIndex\Feed $feed */
+        $feed = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath)
+        );
+
+        $expected        = new stdClass();
+        $expected->value = 'audiobook';
+
+        $this->assertEquals($expected, $feed->getPodcastIndexMedium());
+    }
+
+    public function testGetsBlocks(): void
+    {
+        /** @var Reader\Extension\PodcastIndex\Feed $feed */
+        $feed = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath)
+        );
+
+        $expectedA        = new stdClass();
+        $expectedA->value = 'yes';
+        $expectedA->id    = '';
+
+        $expectedB        = new stdClass();
+        $expectedB->value = 'no';
+        $expectedB->id    = 'google';
+
+        $blocks = $feed->getPodcastIndexBlocks();
+        $this->assertEquals($expectedA, $blocks[0]);
+        $this->assertEquals($expectedB, $blocks[1]);
+    }
+
+    public function testGetsTxts(): void
+    {
+        /** @var Reader\Extension\PodcastIndex\Feed $feed */
+        $feed = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath)
+        );
+
+        $expectedA          = new stdClass();
+        $expectedA->value   = 'S6lpp-7ZCn8-dZfGc-OoyaG';
+        $expectedA->purpose = 'verify';
+
+        $expectedB          = new stdClass();
+        $expectedB->value   = '2022-10-26T04:45:30.742Z';
+        $expectedB->purpose = 'release';
+
+        $txts = $feed->getPodcastIndexTxts();
+        $this->assertEquals($expectedA, $txts[0]);
+        $this->assertEquals($expectedB, $txts[1]);
+    }
+
+    public function testGetsPodping(): void
+    {
+        /** @var Reader\Extension\PodcastIndex\Feed $feed */
+        $feed = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath)
+        );
+
+        $expected              = new stdClass();
+        $expected->usesPodping = true;
+
+        $this->assertEquals($expected, $feed->getPodcastIndexPodping());
+    }
+
     /**
      * Entry level testing
      */

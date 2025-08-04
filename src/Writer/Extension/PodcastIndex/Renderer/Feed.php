@@ -15,6 +15,7 @@ use Laminas\Feed\Writer\Feed as FeedWriter;
  *
  * @psalm-import-type PersonArray from \Laminas\Feed\Writer\Extension\PodcastIndex\Feed
  * @psalm-import-type UpdateFrequencyArray from \Laminas\Feed\Writer\Extension\PodcastIndex\Feed
+ * @psalm-import-type TrailerArray from \Laminas\Feed\Writer\Extension\PodcastIndex\Feed
  */
 class Feed extends Extension\AbstractRenderer
 {
@@ -39,6 +40,12 @@ class Feed extends Extension\AbstractRenderer
         $this->setImages($this->dom, $this->base);
         $this->setUpdateFrequency($this->dom, $this->base);
         $this->setPeople($this->dom, $this->base);
+        $this->setTrailer($this->dom, $this->base);
+        $this->setGuid($this->dom, $this->base);
+        $this->setMedium($this->dom, $this->base);
+        $this->setBlocks($this->dom, $this->base);
+        $this->setTxts($this->dom, $this->base);
+        $this->setPodping($this->dom, $this->base);
         if ($this->called) {
             $this->_appendNamespaces();
         }
@@ -106,7 +113,7 @@ class Feed extends Extension\AbstractRenderer
         /** @psalm-var FeedWriter $container */
         $container = $this->getDataContainer();
 
-        /** @psalm-var null|array<string,string> $license */
+        /** @psalm-var null|array{identifier: string, url: string} $license */
         $license = $container->getPodcastIndexLicense();
         if ($license === null) {
             return;
@@ -127,7 +134,7 @@ class Feed extends Extension\AbstractRenderer
         /** @psalm-var FeedWriter $container */
         $container = $this->getDataContainer();
 
-        /** @psalm-var null|array<string,string> $location */
+        /** @psalm-var null|array{description: string, geo?: string, osm?: string} $location */
         $location = $container->getPodcastIndexLocation();
         if ($location === null) {
             return;
@@ -153,7 +160,7 @@ class Feed extends Extension\AbstractRenderer
         /** @psalm-var FeedWriter $container */
         $container = $this->getDataContainer();
 
-        /** @psalm-var null|array<string, string> $images */
+        /** @psalm-var null|array{srcset: string} $images */
         $images = $container->getPodcastIndexImages();
         if ($images === null) {
             return;
@@ -201,7 +208,7 @@ class Feed extends Extension\AbstractRenderer
         /** @psalm-var FeedWriter $container */
         $container = $this->getDataContainer();
 
-        /** @psalm-var list<PersonArray>|null $people */
+        /** @psalm-var null|list<PersonArray> $people */
         $people = $container->getPodcastIndexPeople();
         if ($people === null || $people === []) {
             return;
@@ -225,6 +232,151 @@ class Feed extends Extension\AbstractRenderer
             }
             $root->appendChild($el);
         }
+        $this->called = true;
+    }
+
+    /**
+     * Set feed trailer
+     */
+    private function setTrailer(DOMDocument $dom, DOMElement $root): void
+    {
+        /** @psalm-var FeedWriter $container */
+        $container = $this->getDataContainer();
+
+        /** @psalm-var null|TrailerArray $trailer */
+        $trailer = $container->getPodcastIndexTrailer();
+        if ($trailer === null) {
+            return;
+        }
+        $el   = $dom->createElement('podcast:trailer');
+        $text = $dom->createTextNode($trailer['title']);
+        $el->appendChild($text);
+        $el->setAttribute('pubdate', $trailer['pubdate']);
+        $el->setAttribute('url', $trailer['url']);
+        if (isset($trailer['length'])) {
+            $el->setAttribute('length', (string) $trailer['length']);
+        }
+        if (isset($trailer['type'])) {
+            $el->setAttribute('type', $trailer['type']);
+        }
+        if (isset($trailer['season'])) {
+            $el->setAttribute('season', (string) $trailer['season']);
+        }
+        $root->appendChild($el);
+        $this->called = true;
+    }
+
+    /**
+     * Set feed guid
+     */
+    private function setGuid(DOMDocument $dom, DOMElement $root): void
+    {
+        /** @psalm-var FeedWriter $container */
+        $container = $this->getDataContainer();
+
+        /** @psalm-var null|array{value: string} $guid */
+        $guid = $container->getPodcastIndexGuid();
+        if ($guid === null) {
+            return;
+        }
+        $el   = $dom->createElement('podcast:guid');
+        $text = $dom->createTextNode($guid['value']);
+        $el->appendChild($text);
+        $root->appendChild($el);
+        $this->called = true;
+    }
+
+    /**
+     * Set feed medium
+     */
+    private function setMedium(DOMDocument $dom, DOMElement $root): void
+    {
+        /** @psalm-var FeedWriter $container */
+        $container = $this->getDataContainer();
+
+        /** @psalm-var null|array{value: string} $medium */
+        $medium = $container->getPodcastIndexMedium();
+        if ($medium === null) {
+            return;
+        }
+        $el   = $dom->createElement('podcast:medium');
+        $text = $dom->createTextNode($medium['value']);
+        $el->appendChild($text);
+        $root->appendChild($el);
+        $this->called = true;
+    }
+
+    /**
+     * Set feed blocks
+     */
+    private function setBlocks(DOMDocument $dom, DOMElement $root): void
+    {
+        /** @psalm-var FeedWriter $container */
+        $container = $this->getDataContainer();
+
+        /** @psalm-var list<array{value: string, id?: string}>|null $blocks */
+        $blocks = $container->getPodcastIndexBlocks();
+        if ($blocks === null || $blocks === []) {
+            return;
+        }
+
+        foreach ($blocks as $block) {
+            $el   = $dom->createElement('podcast:block');
+            $text = $dom->createTextNode($block['value']);
+            $el->appendChild($text);
+            if (isset($block['id']) && $block['id'] !== '') {
+                $el->setAttribute('id', $block['id']);
+            }
+            $root->appendChild($el);
+        }
+        $this->called = true;
+    }
+
+    /**
+     * Set feed txts
+     */
+    private function setTxts(DOMDocument $dom, DOMElement $root): void
+    {
+        /** @psalm-var FeedWriter $container */
+        $container = $this->getDataContainer();
+
+        /** @psalm-var list<array{value: string, purpose?: string}>|null $txts */
+        $txts = $container->getPodcastIndexTxts();
+        if ($txts === null || $txts === []) {
+            return;
+        }
+
+        foreach ($txts as $txt) {
+            $el   = $dom->createElement('podcast:txt');
+            $text = $dom->createTextNode($txt['value']);
+            $el->appendChild($text);
+            if (isset($txt['purpose']) && $txt['purpose'] !== '') {
+                $el->setAttribute('purpose', $txt['purpose']);
+            }
+            $root->appendChild($el);
+        }
+        $this->called = true;
+    }
+
+    /**
+     * Set feed podping
+     */
+    private function setPodping(DOMDocument $dom, DOMElement $root): void
+    {
+        /** @psalm-var FeedWriter $container */
+        $container = $this->getDataContainer();
+
+        /** @psalm-var null|array{usesPodping: bool} $podping */
+        $podping = $container->getPodcastIndexPodping();
+        if ($podping === null) {
+            return;
+        }
+
+        $usesPodping = $podping['usesPodping'] ? 'true' : 'false';
+
+        $el = $dom->createElement('podcast:podping');
+        $el->setAttribute('usesPodping', $usesPodping);
+        $root->appendChild($el);
         $this->called = true;
     }
 }
