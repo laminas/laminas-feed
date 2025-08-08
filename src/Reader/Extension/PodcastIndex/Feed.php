@@ -38,6 +38,13 @@ use function assert;
  *     type?: string,
  *     season?: int
  * }
+ * @psalm-type RemoteItemObject = object{
+ *      feedGuid: string,
+ *      feedUrl?: string,
+ *      itemGuid?: string,
+ *      medium?: string,
+ *      title?: string
+ * }
  */
 class Feed extends Extension\AbstractFeed
 {
@@ -462,6 +469,85 @@ class Feed extends Extension\AbstractFeed
         $this->data['podping'] = $object;
 
         return $this->data['podping'];
+    }
+
+    /**
+     * Get the podcast remoteItems
+     *
+     * @return list<RemoteItemObject>
+     */
+    public function getPodcastIndexRemoteItems(): array
+    {
+        if (array_key_exists('remoteItems', $this->data)) {
+            /** @var list<RemoteItemObject> $remoteItems */
+            $remoteItems = $this->data['remoteItems'];
+            return $remoteItems;
+        }
+
+        $remoteItems = [];
+
+        $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:remoteItem');
+
+        foreach ($nodeList as $entry) {
+            assert($entry instanceof DOMElement);
+            $object        = $this->readRemoteItem($entry);
+            $remoteItems[] = $object;
+        }
+
+        $this->data['remoteItems'] = $remoteItems;
+
+        return $this->data['remoteItems'];
+    }
+
+    /**
+     * Get the podcast podroll remote items
+     *
+     * @return list<RemoteItemObject>
+     */
+    public function getPodcastIndexPodroll(): array
+    {
+        if (array_key_exists('podroll', $this->data)) {
+            /** @var list<RemoteItemObject> $podrollItems */
+            $podrollItems = $this->data['podroll'];
+            return $podrollItems;
+        }
+
+        $podrollItems    = [];
+        $podrollNodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:podroll');
+
+        if ($podrollNodeList->length > 0) {
+            $podrollNode = $podrollNodeList->item(0);
+            assert($podrollNode instanceof DOMElement);
+
+            /** @psalm-suppress TooManyArguments */
+            $remoteItems = $this->xpath->query('podcast:remoteItem', $podrollNode);
+            foreach ($remoteItems as $entry) {
+                assert($entry instanceof DOMElement);
+                $object         = $this->readRemoteItem($entry);
+                $podrollItems[] = $object;
+            }
+        }
+
+        $this->data['podroll'] = $podrollItems;
+
+        return $this->data['podroll'];
+    }
+
+    /**
+     * Read single remote item
+     *
+     * @return RemoteItemObject
+     */
+    private function readRemoteItem(DOMElement $entry): object
+    {
+        $object           = new stdClass();
+        $object->feedGuid = $entry->getAttribute('feedGuid');
+        $object->feedUrl  = $entry->getAttribute('feedUrl');
+        $object->itemGuid = $entry->getAttribute('itemGuid');
+        $object->medium   = $entry->getAttribute('medium');
+        $object->title    = $entry->getAttribute('title');
+
+        return $object;
     }
 
     /**

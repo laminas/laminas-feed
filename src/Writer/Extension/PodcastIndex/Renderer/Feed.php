@@ -16,6 +16,7 @@ use Laminas\Feed\Writer\Feed as FeedWriter;
  * @psalm-import-type PersonArray from \Laminas\Feed\Writer\Extension\PodcastIndex\Feed
  * @psalm-import-type UpdateFrequencyArray from \Laminas\Feed\Writer\Extension\PodcastIndex\Feed
  * @psalm-import-type TrailerArray from \Laminas\Feed\Writer\Extension\PodcastIndex\Feed
+ * @psalm-import-type RemoteItemArray from \Laminas\Feed\Writer\Extension\PodcastIndex\Feed
  */
 class Feed extends Extension\AbstractRenderer
 {
@@ -46,6 +47,8 @@ class Feed extends Extension\AbstractRenderer
         $this->setBlocks($this->dom, $this->base);
         $this->setTxts($this->dom, $this->base);
         $this->setPodping($this->dom, $this->base);
+        $this->setRemoteItems($this->dom, $this->base);
+        $this->setPodroll($this->dom, $this->base);
         if ($this->called) {
             $this->_appendNamespaces();
         }
@@ -378,5 +381,79 @@ class Feed extends Extension\AbstractRenderer
         $el->setAttribute('usesPodping', $usesPodping);
         $root->appendChild($el);
         $this->called = true;
+    }
+
+    /**
+     * Set feed remote items
+     */
+    private function setRemoteItems(DOMDocument $dom, DOMElement $root): void
+    {
+        /** @psalm-var FeedWriter $container */
+        $container = $this->getDataContainer();
+
+        /** @psalm-var list<RemoteItemArray>|null $remoteItems */
+        $remoteItems = $container->getPodcastIndexRemoteItems();
+        if ($remoteItems === null || $remoteItems === []) {
+            return;
+        }
+
+        foreach ($remoteItems as $remoteItem) {
+            $el = $this->createRemoteItemElement($dom, $remoteItem);
+            $root->appendChild($el);
+        }
+
+        $this->called = true;
+    }
+
+    /**
+     * Set podroll element with remote items
+     */
+    private function setPodroll(DOMDocument $dom, DOMElement $root): void
+    {
+        /** @psalm-var FeedWriter $container */
+        $container = $this->getDataContainer();
+
+        /** @psalm-var list<RemoteItemArray>|null $podrollItems */
+        $podrollItems = $container->getPodcastIndexPodroll();
+        if ($podrollItems === null || $podrollItems === []) {
+            return;
+        }
+
+        $podroll = $dom->createElement('podcast:podroll');
+
+        foreach ($podrollItems as $remoteItem) {
+            $el = $this->createRemoteItemElement($dom, $remoteItem);
+            $podroll->appendChild($el);
+        }
+
+        $root->appendChild($podroll);
+
+        $this->called = true;
+    }
+
+    /**
+     * Create remote item element
+     *
+     * @psalm-param RemoteItemArray $remoteItem
+     */
+    private function createRemoteItemElement(DOMDocument $dom, array $remoteItem): DOMElement
+    {
+        $el = $dom->createElement('podcast:remoteItem');
+        $el->setAttribute('feedGuid', $remoteItem['feedGuid']);
+
+        if (isset($remoteItem['feedUrl']) && $remoteItem['feedUrl'] !== '') {
+            $el->setAttribute('feedUrl', $remoteItem['feedUrl']);
+        }
+        if (isset($remoteItem['itemGuid']) && $remoteItem['itemGuid'] !== '') {
+            $el->setAttribute('itemGuid', $remoteItem['itemGuid']);
+        }
+        if (isset($remoteItem['medium']) && $remoteItem['medium'] !== '') {
+            $el->setAttribute('medium', $remoteItem['medium']);
+        }
+        if (isset($remoteItem['title']) && $remoteItem['title'] !== '') {
+            $el->setAttribute('title', $remoteItem['title']);
+        }
+
+        return $el;
     }
 }

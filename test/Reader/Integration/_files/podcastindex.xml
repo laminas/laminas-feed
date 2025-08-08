@@ -49,6 +49,23 @@
         <podcast:txt purpose="verify">S6lpp-7ZCn8-dZfGc-OoyaG</podcast:txt>
         <podcast:txt purpose="release">2022-10-26T04:45:30.742Z</podcast:txt>
         <podcast:podping usesPodping="true"/>
+        <podcast:remoteItem feedGuid="29cdca4a-xxxx-yyyy-b48b-09a011c5daa9"/>
+        <podcast:remoteItem
+                feedGuid="917393e3-1b1e-5cef-ace4-edaa54e1f810"
+                feedUrl="https://feeds.example.org/917393e3-1b1e-5cef-ace4-edaa54e1f810/rss.xml"
+                medium="podcast"
+                title="Some Example"
+        />
+        <podcast:podroll>
+            <podcast:remoteItem feedGuid="29cdca4a-32d8-56ba-b48b-09a011c5daa9" />
+            <podcast:remoteItem
+                    feedGuid="917393e3-1b1e-5cef-ace4-edaa54e1f810"
+                    feedUrl="https://feeds.example.org/917393e3-1b1e-5cef-ace4-edaa54e1f810/rss.xml"
+                    itemGuid="asdf089j0-ep240-20230510"
+                    medium="music"
+                    title="Here Comes the Sun"
+            />
+        </podcast:podroll>
 
         <item>
             <title>Shake Shake Shake Your Spices</title>

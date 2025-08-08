@@ -16,6 +16,7 @@ use function time;
 
 /**
  * @psalm-import-type PersonObject from Feed
+ * @psalm-import-type RemoteItemObject from Feed
  */
 class FeedTest extends TestCase
 {
@@ -762,5 +763,237 @@ class FeedTest extends TestCase
         ];
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $feed->setPodcastIndexPodping($data);
+    }
+
+    public function testAddRemoteItem(): void
+    {
+        $feed = new Writer\Feed();
+
+        $remoteItem = [
+            'feedGuid' => "917393e3-1b1e-5cef-ace4-edaa54e1f810",
+            'feedUrl'  => "https://feeds.example.org/917393e3-1b1e-5cef-ace4-edaa54e1f810/rss.xml",
+            'medium'   => "podcast",
+            'title'    => "Some Example",
+        ];
+        $feed->addPodcastIndexRemoteItem($remoteItem);
+
+        /** @var list<RemoteItemObject> $remoteItems */
+        $remoteItems = $feed->getPodcastIndexRemoteItems();
+        $this->assertTrue(in_array($remoteItem, $remoteItems));
+    }
+
+    public function testSetRemoteItems(): void
+    {
+        $feed = new Writer\Feed();
+
+        $remoteItems = [
+            [
+                'feedGuid' => "917393e3-1b1e-5cef-ace4-edaa54e1f810",
+                'feedUrl'  => "https://feeds.example.org/917393e3-1b1e-5cef-ace4-edaa54e1f810/rss.xml",
+                'medium'   => "podcast",
+                'title'    => "Some Example",
+            ],
+            [
+                'feedGuid' => "917393e3-xxxx-yyyy-ace4-edaa54e1f810",
+                'feedUrl'  => "https://feeds.other-example.org/917393e3-xxxx-yyyy-ace4-edaa54e1f810/rss.xml",
+                'medium'   => "podcast",
+                'title'    => "Some Other Example",
+            ],
+        ];
+
+        // set
+        $feed->setPodcastIndexRemoteItems($remoteItems);
+        /** @var list<RemoteItemObject> $remoteItemsSaved */
+        $remoteItemsSaved = $feed->getPodcastIndexRemoteItems();
+        foreach ($remoteItems as $remoteItem) {
+            $this->assertTrue(in_array($remoteItem, $remoteItemsSaved));
+        }
+
+        // add
+        $singleRemoteItem = [
+            'feedGuid' => "917393e3-xxxx-very-news-edaa54e1f810",
+            'feedUrl'  => "https://feeds.new-other-example.org/917393e3-xxxx-news-ace4-edaa54e1f810/rss.xml",
+            'medium'   => "podcast",
+            'title'    => "New Other Example",
+        ];
+        $feed->addPodcastIndexRemoteItem($singleRemoteItem);
+        /** @psalm-var list<RemoteItemObject> $moreRemoteItemsSaved */
+        $moreRemoteItemsSaved = $feed->getPodcastIndexRemoteItems();
+        foreach ($remoteItems as $remoteItem) {
+            $this->assertTrue(in_array($remoteItem, $moreRemoteItemsSaved));
+        }
+        $this->assertTrue(in_array($singleRemoteItem, $moreRemoteItemsSaved));
+
+        // update
+        $newRemoteItems = [
+            [
+                'feedGuid' => "917393e3-some-thing-else-edaa54e1f810",
+                'feedUrl'  => "https://feeds.other.org/edaa54e1f810/rss.xml",
+                'medium'   => "podcast",
+                'title'    => "Something Else",
+            ],
+        ];
+        $feed->setPodcastIndexRemoteItems($newRemoteItems);
+        /** @var list<RemoteItemObject> $updated */
+        $updated = $feed->getPodcastIndexRemoteItems();
+        $this->assertEquals(1, count($updated));
+        $this->assertEquals($newRemoteItems, $updated);
+
+        // delete
+        $feed->setPodcastIndexRemoteItems();
+        $this->assertNull($feed->getPodcastIndexRemoteItems());
+    }
+
+    public function testAddRemoteItemWithOneArgument(): void
+    {
+        $feed = new Writer\Feed();
+
+        $data = [
+            'feedGuid' => "917393e3-xxxx-very-news-edaa54e1f810",
+        ];
+        $feed->addPodcastIndexRemoteItem($data);
+
+        /** @psalm-var list<RemoteItemObject> $items */
+        $items = $feed->getPodcastIndexRemoteItems();
+        $this->assertTrue(in_array($data, $items));
+    }
+
+    public function testAddRemoteItemThrowsExceptionOnInvalidArguments(): void
+    {
+        $feed = new Writer\Feed();
+
+        $data = [
+            'abc' => 'def',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->addPodcastIndexRemoteItem($data);
+    }
+
+    public function testAddRemoteItemThrowsExceptionOnInvalidValue(): void
+    {
+        $feed = new Writer\Feed();
+
+        $data = [
+            'feedGuid' => "917393e3-zzzz-yyyy-gggg-edaa54e1f810",
+            'feedUrl'  => 'www.google.com',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->addPodcastIndexRemoteItem($data);
+    }
+
+    public function testAddPodrollRemoteItem(): void
+    {
+        $feed = new Writer\Feed();
+
+        $remoteItem = [
+            'feedGuid' => "917393e3-1b1e-5cef-ace4-edaa54e1f810",
+            'feedUrl'  => "https://feeds.example.org/917393e3-1b1e-5cef-ace4-edaa54e1f810/rss.xml",
+            'medium'   => "podcast",
+            'title'    => "Some Example",
+        ];
+        $feed->addPodcastIndexPodrollRemoteItem($remoteItem);
+
+        /** @var list<RemoteItemObject> $remoteItems */
+        $remoteItems = $feed->getPodcastIndexPodroll();
+        $this->assertTrue(in_array($remoteItem, $remoteItems));
+    }
+
+    public function testSetPodroll(): void
+    {
+        $feed = new Writer\Feed();
+
+        $remoteItems = [
+            [
+                'feedGuid' => "917393e3-1b1e-5cef-ace4-edaa54e1f810",
+                'feedUrl'  => "https://feeds.example.org/917393e3-1b1e-5cef-ace4-edaa54e1f810/rss.xml",
+                'medium'   => "podcast",
+                'title'    => "Some Example",
+            ],
+            [
+                'feedGuid' => "917393e3-xxxx-yyyy-ace4-edaa54e1f810",
+                'feedUrl'  => "https://feeds.other-example.org/917393e3-xxxx-yyyy-ace4-edaa54e1f810/rss.xml",
+                'medium'   => "podcast",
+                'title'    => "Some Other Example",
+            ],
+        ];
+
+        // set
+        $feed->setPodcastIndexPodroll($remoteItems);
+        /** @var list<RemoteItemObject> $remoteItemsSaved */
+        $remoteItemsSaved = $feed->getPodcastIndexPodroll();
+        foreach ($remoteItems as $remoteItem) {
+            $this->assertTrue(in_array($remoteItem, $remoteItemsSaved));
+        }
+
+        // add
+        $singleRemoteItem = [
+            'feedGuid' => "917393e3-xxxx-very-news-edaa54e1f810",
+            'feedUrl'  => "https://feeds.new-other-example.org/917393e3-xxxx-news-ace4-edaa54e1f810/rss.xml",
+            'medium'   => "podcast",
+            'title'    => "New Other Example",
+        ];
+        $feed->addPodcastIndexPodrollRemoteItem($singleRemoteItem);
+        /** @psalm-var list<RemoteItemObject> $moreRemoteItemsSaved */
+        $moreRemoteItemsSaved = $feed->getPodcastIndexPodroll();
+        foreach ($remoteItems as $remoteItem) {
+            $this->assertTrue(in_array($remoteItem, $moreRemoteItemsSaved));
+        }
+        $this->assertTrue(in_array($singleRemoteItem, $moreRemoteItemsSaved));
+
+        // update
+        $newRemoteItems = [
+            [
+                'feedGuid' => "917393e3-some-thing-else-edaa54e1f810",
+                'feedUrl'  => "https://feeds.other.org/edaa54e1f810/rss.xml",
+                'medium'   => "podcast",
+                'title'    => "Something Else",
+            ],
+        ];
+        $feed->setPodcastIndexPodroll($newRemoteItems);
+        /** @var list<RemoteItemObject> $updated */
+        $updated = $feed->getPodcastIndexPodroll();
+        $this->assertEquals(1, count($updated));
+        $this->assertEquals($newRemoteItems, $updated);
+
+        // delete
+        $feed->setPodcastIndexPodroll();
+        $this->assertNull($feed->getPodcastIndexPodroll());
+    }
+
+    public function testAddPodrollRemoteItemWithOneArgument(): void
+    {
+        $feed = new Writer\Feed();
+
+        $data = [
+            'feedGuid' => "917393e3-xxxx-very-news-edaa54e1f810",
+        ];
+        $feed->addPodcastIndexPodrollRemoteItem($data);
+
+        /** @psalm-var list<RemoteItemObject> $items */
+        $items = $feed->getPodcastIndexPodroll();
+        $this->assertTrue(in_array($data, $items));
+    }
+
+    public function testAddPodrollRemoteItemThrowsExceptionOnInvalidArguments(): void
+    {
+        $feed = new Writer\Feed();
+
+        $data = [
+            'abc' => 'def',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->addPodcastIndexPodrollRemoteItem($data);
+    }
+
+    public function testAddPodrollRemoteItemThrowsExceptionOnInvalidValue(): void
+    {
+        $feed = new Writer\Feed();
+
+        $data = [
+            'feedGuid' => "917393e3-zzzz-yyyy-gggg-edaa54e1f810",
+            'feedUrl'  => 'www.google.com',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->addPodcastIndexPodrollRemoteItem($data);
     }
 }

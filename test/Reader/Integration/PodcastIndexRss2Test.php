@@ -243,6 +243,58 @@ class PodcastIndexRss2Test extends TestCase
         $this->assertEquals($expected, $feed->getPodcastIndexPodping());
     }
 
+    public function testGetsRemoteItems(): void
+    {
+        /** @var Reader\Extension\PodcastIndex\Feed $feed */
+        $feed = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath)
+        );
+
+        $expectedA           = new stdClass();
+        $expectedA->feedGuid = '29cdca4a-xxxx-yyyy-b48b-09a011c5daa9';
+        $expectedA->feedUrl  = '';
+        $expectedA->itemGuid = '';
+        $expectedA->medium   = '';
+        $expectedA->title    = '';
+
+        $expectedB           = new stdClass();
+        $expectedB->feedGuid = '917393e3-1b1e-5cef-ace4-edaa54e1f810';
+        $expectedB->feedUrl  = 'https://feeds.example.org/917393e3-1b1e-5cef-ace4-edaa54e1f810/rss.xml';
+        $expectedB->itemGuid = '';
+        $expectedB->medium   = 'podcast';
+        $expectedB->title    = 'Some Example';
+
+        $items = $feed->getPodcastIndexRemoteItems();
+        $this->assertEquals($expectedA, $items[0]);
+        $this->assertEquals($expectedB, $items[1]);
+    }
+
+    public function testGetsPodroll(): void
+    {
+        /** @var Reader\Extension\PodcastIndex\Feed $feed */
+        $feed = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath)
+        );
+
+        $expectedA           = new stdClass();
+        $expectedA->feedGuid = '29cdca4a-32d8-56ba-b48b-09a011c5daa9';
+        $expectedA->feedUrl  = '';
+        $expectedA->itemGuid = '';
+        $expectedA->medium   = '';
+        $expectedA->title    = '';
+
+        $expectedB           = new stdClass();
+        $expectedB->feedGuid = '917393e3-1b1e-5cef-ace4-edaa54e1f810';
+        $expectedB->feedUrl  = 'https://feeds.example.org/917393e3-1b1e-5cef-ace4-edaa54e1f810/rss.xml';
+        $expectedB->itemGuid = 'asdf089j0-ep240-20230510';
+        $expectedB->medium   = 'music';
+        $expectedB->title    = 'Here Comes the Sun';
+
+        $items = $feed->getPodcastIndexPodroll();
+        $this->assertEquals($expectedA, $items[0]);
+        $this->assertEquals($expectedB, $items[1]);
+    }
+
     /**
      * Entry level testing
      */

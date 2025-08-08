@@ -323,4 +323,88 @@ class FeedTest extends TestCase
 
         $this->assertStringContainsString('<podcast:podping usesPodping="true"/>', $xml);
     }
+
+    public function testRendersRssRemoteItemTag(): void
+    {
+        $data = [
+            'feedGuid' => "917393e3-1b1e-5cef-ace4-edaa54e1f810",
+            'feedUrl'  => "https://feeds.example.org/917393e3-1b1e-5cef-ace4-edaa54e1f810/rss.xml",
+            'medium'   => "podcast",
+            'title'    => "Some Example",
+        ];
+
+        $this->validWriter->addPodcastIndexRemoteItem($data);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $this->assertStringContainsString('<podcast:remoteItem', $xml);
+        $this->assertStringContainsString($data['feedGuid'], $xml);
+        $this->assertStringContainsString($data['feedUrl'], $xml);
+        $this->assertStringContainsString($data['medium'], $xml);
+        $this->assertStringContainsString($data['title'], $xml);
+    }
+
+    public function testRendersRssRemoteItemTags(): void
+    {
+        $data = [
+            [
+                'feedGuid' => "917393e3-1b1e-5cef-ace4-edaa54e1f810",
+                'feedUrl'  => "https://feeds.example.org/917393e3-1b1e-5cef-ace4-edaa54e1f810/rss.xml",
+                'medium'   => "podcast",
+                'title'    => "Some Example",
+            ],
+            [
+                'feedGuid' => "29cdca4a-xxxx-yyyy-b48b-09a011c5daa9",
+            ],
+        ];
+
+        $this->validWriter->setPodcastIndexRemoteItems($data);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $this->assertStringContainsString(
+            '<podcast:remoteItem feedGuid="29cdca4a-xxxx-yyyy-b48b-09a011c5daa9"/>',
+            $xml
+        );
+
+        $this->assertStringContainsString('<podcast:remoteItem', $xml);
+        $this->assertStringContainsString($data[0]['feedGuid'], $xml);
+        $this->assertStringContainsString($data[0]['feedUrl'], $xml);
+        $this->assertStringContainsString($data[0]['medium'], $xml);
+        $this->assertStringContainsString($data[0]['title'], $xml);
+    }
+
+    public function testRendersRssPodrollTagWithChildren(): void
+    {
+        $data = [
+            [
+                'feedGuid' => "917393e3-1b1e-5cef-ace4-edaa54e1f810",
+                'feedUrl'  => "https://feeds.example.org/917393e3-1b1e-5cef-ace4-edaa54e1f810/rss.xml",
+                'medium'   => "podcast",
+                'title'    => "Some Example",
+            ],
+            [
+                'feedGuid' => "29cdca4a-xxxx-yyyy-b48b-09a011c5daa9",
+            ],
+        ];
+
+        $this->validWriter->setPodcastIndexPodroll($data);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $this->assertStringContainsString('<podcast:podroll>', $xml);
+        $this->assertStringContainsString(
+            '<podcast:remoteItem feedGuid="29cdca4a-xxxx-yyyy-b48b-09a011c5daa9"/>',
+            $xml
+        );
+
+        $this->assertStringContainsString('<podcast:remoteItem', $xml);
+        $this->assertStringContainsString($data[0]['feedGuid'], $xml);
+        $this->assertStringContainsString($data[0]['feedUrl'], $xml);
+        $this->assertStringContainsString($data[0]['medium'], $xml);
+        $this->assertStringContainsString($data[0]['title'], $xml);
+    }
 }

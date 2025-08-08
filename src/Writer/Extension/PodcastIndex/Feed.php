@@ -10,6 +10,7 @@ use Laminas\Stdlib\StringUtils;
 use Laminas\Stdlib\StringWrapper\StringWrapperInterface;
 
 use function array_key_exists;
+use function count;
 use function ctype_alpha;
 use function filter_var;
 use function in_array;
@@ -47,6 +48,13 @@ use const FILTER_VALIDATE_URL;
  *     length?: int,
  *     type?: string,
  *     season?: int
+ *   }
+ * @psalm-type RemoteItemArray = array{
+ *     feedGuid: string,
+ *     feedUrl?: string,
+ *     itemGuid?: string,
+ *     medium?: string,
+ *     title?: string
  *   }
  */
 class Feed
@@ -545,6 +553,132 @@ class Feed
         }
         $this->data['podping'] = $value;
         return $this;
+    }
+
+    /**
+     * Add a feed remote item.
+     * The remote item will be treated as a direct child of the current channel element.
+     * To create remote items as nested children of other elements, use their respective methods instead.
+     *
+     * @param RemoteItemArray $value
+     * @return $this
+     */
+    public function addPodcastIndexRemoteItem(array $value): self
+    {
+        $this->validateRemoteItem($value);
+
+        if (! isset($this->data['remoteItems'])) {
+            $this->data['remoteItems'] = [];
+        }
+
+        /** @var list<RemoteItemArray> $this->data['remoteItems'] */
+        $this->data['remoteItems'][] = $value;
+
+        return $this;
+    }
+
+    /**
+     * Create a new set of remote items for the feed.
+     * If no argument is passed, it will just remove all existing remote items of this feed.
+     * The remote items will be treated as direct children of the current channel element.
+     * If they should be treated as nested children of other elements, use their respective methods instead.
+     *
+     * @psalm-param list<RemoteItemArray> $values
+     * @return $this
+     */
+    public function setPodcastIndexRemoteItems(array $values = []): self
+    {
+        $this->data['remoteItems'] = [];
+
+        foreach ($values as $value) {
+            $this->addPodcastIndexRemoteItem($value);
+        }
+        return $this;
+    }
+
+    /**
+     * Set a podroll element with and array of remote items
+     * that will be set as the podroll's child elements.
+     * If no argument is passed, it will remove the entire podroll entry and all its nested remote items.
+     *
+     * @psalm-param list<RemoteItemArray> $values
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function setPodcastIndexPodroll(array $values = []): self
+    {
+        $this->data['podroll'] = [];
+
+        foreach ($values as $value) {
+            $this->validateRemoteItem($value);
+            $this->data['podroll'][] = $value;
+        }
+        return $this;
+    }
+
+    /**
+     * Add a remote item to the podroll parent element.
+     *
+     * @psalm-param RemoteItemArray $value
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function addPodcastIndexPodrollRemoteItem(array $value): self
+    {
+        $this->validateRemoteItem($value);
+
+        if (! isset($this->data['podroll'])) {
+            $this->data['podroll'] = [];
+        }
+
+        /** @var list<RemoteItemArray> $this->data['podroll'] */
+        $this->data['podroll'][] = $value;
+
+        return $this;
+    }
+
+    /**
+     * Validate the values of the remote item.
+     *
+     * @param RemoteItemArray $value
+     * @throws Writer\Exception\InvalidArgumentException
+     * @psalm-suppress DocblockTypeContradiction
+     */
+    private function validateRemoteItem(array $value): void
+    {
+        if (! isset($value['feedGuid'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "remoteItem" must be an array containing at least the key "feedGuid"'
+            );
+        }
+        if (! is_string($value['feedGuid'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "feedGuid" of "remoteItem" must be of type string'
+            );
+        }
+        if (
+            isset($value['feedUrl'])
+            && (! is_string($value['feedUrl']) || ! filter_var($value['feedUrl'], FILTER_VALIDATE_URL))
+        ) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "feedUrl" of "remoteItem" must be a url, starting with "http://" or "https://'
+            );
+        }
+        if (isset($value['itemGuid']) && ! is_string($value['itemGuid'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "itemGuid" of "remoteItem" must be of type string'
+            );
+        }
+        if (isset($value['medium']) && ! is_string($value['medium'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "medium" of "remoteItem" must be of type string'
+            );
+        }
+        if (isset($value['title']) && ! is_string($value['title'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "title" of "remoteItem" must be of type string'
+            );
+        }
     }
 
     /**
