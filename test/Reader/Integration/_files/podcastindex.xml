@@ -66,6 +66,9 @@
                     title="Here Comes the Sun"
             />
         </podcast:podroll>
+        <podcast:publisher>
+            <podcast:remoteItem feedGuid="publisher-guid-56ba-b48b-09a011c5daa9" />
+        </podcast:publisher>
 
         <item>
             <title>Shake Shake Shake Your Spices</title>

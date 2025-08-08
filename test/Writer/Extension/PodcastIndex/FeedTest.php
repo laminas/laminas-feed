@@ -779,7 +779,7 @@ class FeedTest extends TestCase
 
         /** @var list<RemoteItemObject> $remoteItems */
         $remoteItems = $feed->getPodcastIndexRemoteItems();
-        $this->assertTrue(in_array($remoteItem, $remoteItems));
+        $this->assertContains($remoteItem, $remoteItems);
     }
 
     public function testSetRemoteItems(): void
@@ -806,7 +806,7 @@ class FeedTest extends TestCase
         /** @var list<RemoteItemObject> $remoteItemsSaved */
         $remoteItemsSaved = $feed->getPodcastIndexRemoteItems();
         foreach ($remoteItems as $remoteItem) {
-            $this->assertTrue(in_array($remoteItem, $remoteItemsSaved));
+            $this->assertContains($remoteItem, $remoteItemsSaved);
         }
 
         // add
@@ -820,9 +820,9 @@ class FeedTest extends TestCase
         /** @psalm-var list<RemoteItemObject> $moreRemoteItemsSaved */
         $moreRemoteItemsSaved = $feed->getPodcastIndexRemoteItems();
         foreach ($remoteItems as $remoteItem) {
-            $this->assertTrue(in_array($remoteItem, $moreRemoteItemsSaved));
+            $this->assertContains($remoteItem, $moreRemoteItemsSaved);
         }
-        $this->assertTrue(in_array($singleRemoteItem, $moreRemoteItemsSaved));
+        $this->assertContains($singleRemoteItem, $moreRemoteItemsSaved);
 
         // update
         $newRemoteItems = [
@@ -855,7 +855,7 @@ class FeedTest extends TestCase
 
         /** @psalm-var list<RemoteItemObject> $items */
         $items = $feed->getPodcastIndexRemoteItems();
-        $this->assertTrue(in_array($data, $items));
+        $this->assertContains($data, $items);
     }
 
     public function testAddRemoteItemThrowsExceptionOnInvalidArguments(): void
@@ -895,7 +895,7 @@ class FeedTest extends TestCase
 
         /** @var list<RemoteItemObject> $remoteItems */
         $remoteItems = $feed->getPodcastIndexPodroll();
-        $this->assertTrue(in_array($remoteItem, $remoteItems));
+        $this->assertContains($remoteItem, $remoteItems);
     }
 
     public function testSetPodroll(): void
@@ -922,7 +922,7 @@ class FeedTest extends TestCase
         /** @var list<RemoteItemObject> $remoteItemsSaved */
         $remoteItemsSaved = $feed->getPodcastIndexPodroll();
         foreach ($remoteItems as $remoteItem) {
-            $this->assertTrue(in_array($remoteItem, $remoteItemsSaved));
+            $this->assertContains($remoteItem, $remoteItemsSaved);
         }
 
         // add
@@ -936,9 +936,9 @@ class FeedTest extends TestCase
         /** @psalm-var list<RemoteItemObject> $moreRemoteItemsSaved */
         $moreRemoteItemsSaved = $feed->getPodcastIndexPodroll();
         foreach ($remoteItems as $remoteItem) {
-            $this->assertTrue(in_array($remoteItem, $moreRemoteItemsSaved));
+            $this->assertContains($remoteItem, $moreRemoteItemsSaved);
         }
-        $this->assertTrue(in_array($singleRemoteItem, $moreRemoteItemsSaved));
+        $this->assertContains($singleRemoteItem, $moreRemoteItemsSaved);
 
         // update
         $newRemoteItems = [
@@ -971,7 +971,7 @@ class FeedTest extends TestCase
 
         /** @psalm-var list<RemoteItemObject> $items */
         $items = $feed->getPodcastIndexPodroll();
-        $this->assertTrue(in_array($data, $items));
+        $this->assertContains($data, $items);
     }
 
     public function testAddPodrollRemoteItemThrowsExceptionOnInvalidArguments(): void
@@ -995,5 +995,75 @@ class FeedTest extends TestCase
         ];
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $feed->addPodcastIndexPodrollRemoteItem($data);
+    }
+
+    public function testSetPublisher(): void
+    {
+        $feed = new Writer\Feed();
+
+        $remoteItem = [
+            'feedGuid' => "917393e3-1b1e-5cef-ace4-edaa54e1f810",
+            'feedUrl'  => "https://feeds.example.org/917393e3-1b1e-5cef-ace4-edaa54e1f810/rss.xml",
+            'medium'   => "podcast",
+            'title'    => "Some Example",
+        ];
+        $feed->setPodcastIndexPublisher($remoteItem);
+        $this->assertEquals($remoteItem, $feed->getPodcastIndexPublisher());
+    }
+
+    public function testRemovePublisher(): void
+    {
+        $feed = new Writer\Feed();
+
+        $remoteItem = [
+            'feedGuid' => "917393e3-1b1e-5cef-ace4-edaa54e1f810",
+            'feedUrl'  => "https://feeds.example.org/917393e3-1b1e-5cef-ace4-edaa54e1f810/rss.xml",
+            'medium'   => "podcast",
+            'title'    => "Some Example",
+        ];
+
+        // set
+        $feed->setPodcastIndexPublisher($remoteItem);
+        $this->assertEquals($remoteItem, $feed->getPodcastIndexPublisher());
+
+        // remove
+        $feed->setPodcastIndexPublisher();
+        $this->assertNull($feed->getPodcastIndexPublisher());
+    }
+
+    public function testSetPublisherWithOneArgument(): void
+    {
+        $feed = new Writer\Feed();
+
+        $remoteItem = [
+            'feedGuid' => "917393e3-1b1e-5cef-ace4-edaa54e1f810",
+        ];
+        $feed->setPodcastIndexPublisher($remoteItem);
+        $this->assertEquals($remoteItem, $feed->getPodcastIndexPublisher());
+    }
+
+    public function testSetPublisherThrowsExceptionOnMissingGuid(): void
+    {
+        $feed = new Writer\Feed();
+
+        $remoteItem = [
+            'feedUrl' => "https://feeds.example.org/917393e3-1b1e-5cef-ace4-edaa54e1f810/rss.xml",
+            'medium'  => "podcast",
+            'title'   => "Some Example",
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->setPodcastIndexPublisher($remoteItem);
+    }
+
+    public function testSetPublisherThrowsExceptionOnInvalidUrl(): void
+    {
+        $feed = new Writer\Feed();
+
+        $remoteItem = [
+            'feedGuid' => "917393e3-1b1e-5cef-ace4-edaa54e1f810",
+            'feedUrl'  => "feeds.example.org",
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->setPodcastIndexPublisher($remoteItem);
     }
 }

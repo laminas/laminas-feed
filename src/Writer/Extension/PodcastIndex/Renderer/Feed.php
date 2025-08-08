@@ -49,6 +49,7 @@ class Feed extends Extension\AbstractRenderer
         $this->setPodping($this->dom, $this->base);
         $this->setRemoteItems($this->dom, $this->base);
         $this->setPodroll($this->dom, $this->base);
+        $this->setPublisher($this->dom, $this->base);
         if ($this->called) {
             $this->_appendNamespaces();
         }
@@ -427,6 +428,28 @@ class Feed extends Extension\AbstractRenderer
         }
 
         $root->appendChild($podroll);
+
+        $this->called = true;
+    }
+
+    /**
+     * Set publisher element with remote items
+     */
+    private function setPublisher(DOMDocument $dom, DOMElement $root): void
+    {
+        /** @psalm-var FeedWriter $container */
+        $container = $this->getDataContainer();
+
+        /** @psalm-var RemoteItemArray|null $publisherItem */
+        $publisherItem = $container->getPodcastIndexPublisher();
+        if ($publisherItem === null) {
+            return;
+        }
+
+        $publisher = $dom->createElement('podcast:publisher');
+        $el        = $this->createRemoteItemElement($dom, $publisherItem);
+        $publisher->appendChild($el);
+        $root->appendChild($publisher);
 
         $this->called = true;
     }

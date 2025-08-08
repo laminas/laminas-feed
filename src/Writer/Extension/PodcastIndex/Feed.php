@@ -10,6 +10,7 @@ use Laminas\Stdlib\StringUtils;
 use Laminas\Stdlib\StringWrapper\StringWrapperInterface;
 
 use function array_key_exists;
+use function count;
 use function ctype_alpha;
 use function filter_var;
 use function in_array;
@@ -632,6 +633,28 @@ class Feed
 
         /** @var list<RemoteItemArray> $this->data['podroll'] */
         $this->data['podroll'][] = $value;
+
+        return $this;
+    }
+
+    /**
+     * Set a publisher element.
+     * It contains exactly one remote item as child element
+     * and expects only an array of the remote item attributes.
+     * If no argument is passed, any existing publisher entry will be removed.
+     *
+     * @psalm-param null|RemoteItemArray $value
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function setPodcastIndexPublisher(?array $value = null): self
+    {
+        $this->data['publisher'] = [];
+
+        if ($value && count($value) > 0) {
+            $this->validateRemoteItem($value);
+            $this->data['publisher'] = $value;
+        }
 
         return $this;
     }

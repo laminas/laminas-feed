@@ -534,6 +534,39 @@ class Feed extends Extension\AbstractFeed
     }
 
     /**
+     * Get the podcast publisher remote items
+     *
+     * @return RemoteItemObject|null
+     */
+    public function getPodcastIndexPublisher(): object|null
+    {
+        if (array_key_exists('publisher', $this->data)) {
+            /** @var RemoteItemObject $publisherItem */
+            $publisherItem = $this->data['publisher'];
+            return $publisherItem;
+        }
+
+        $publisherItem     = null;
+        $publisherNodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:publisher');
+
+        if ($publisherNodeList->length > 0) {
+            $publisherNode = $publisherNodeList->item(0);
+            assert($publisherNode instanceof DOMElement);
+            /** @psalm-suppress TooManyArguments */
+            $remoteItemList = $this->xpath->query('podcast:remoteItem', $publisherNode);
+            if ($remoteItemList->length > 0) {
+                $remoteItem = $remoteItemList->item(0);
+                assert($remoteItem instanceof DOMElement);
+                $publisherItem = $this->readRemoteItem($remoteItem);
+            }
+        }
+
+        $this->data['publisher'] = $publisherItem;
+
+        return $this->data['publisher'];
+    }
+
+    /**
      * Read single remote item
      *
      * @return RemoteItemObject

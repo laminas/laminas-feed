@@ -27,6 +27,7 @@ single namespace.
 | `getPodcastIndexPodping()`                    | Returns whether the feed sends out Podping notifications when changes are made to it. The output is an object with the property "usesPodping".                                                                                                                                                                    |
 | `getPodcastIndexRemoteItems()`                | Returns the remote items assigned as direct children of the feed. The output is an array of objects with each the properties "feedGuid", "feedUrl", "itemGuid", "medium" and "title". <em>Note: Nested remote items that belong to other namespaces need to be managed with the methods of those namespaces.</em> |
 | `getPodcastIndexPodroll()`                    | Returns the remote items assigned to the podroll tag of the feed. The output is an array of objects with each the properties "feedGuid", "feedUrl", "itemGuid", "medium" and "title".                                                                                                                             |
+| `getPodcastIndexPublisher()`                  | Returns one remote item assigned to the publisher tag of the feed. The output is an object with the properties "feedGuid", "feedUrl", "itemGuid", "medium" and "title".                                                                                                                                           |
 
 ### SET methods
 
@@ -52,6 +53,7 @@ single namespace.
 | `setPodcastIndexRemoteItems()`       | Expects an array of arrays with each the required key "feedGuid" and the optional keys "feedUrl", "itemGuid", "medium" and "title". <em>Note: Nested remote items that belong to other namespaces need to be managed with the methods of those namespaces.</em> |
 | `setPodcastIndexPodroll()`           | Expects an array of remote items arrays with each the required key "feedGuid" and the optional keys "feedUrl", "itemGuid", "medium" and "title".                                                                                                                |
 | `addPodcastIndexPodrollRemoteItem()` | Expects an array with the required key "feedGuid" and the optional keys "feedUrl", "itemGuid", "medium" and "title".                                                                                                                                            |
+| `setPodcastIndexPublisher()`         | Expects an array with the required key "feedGuid" and the optional keys "feedUrl", "itemGuid", "medium" and "title".                                                                                                                                            |
 
 ## Episode API
 

@@ -295,6 +295,24 @@ class PodcastIndexRss2Test extends TestCase
         $this->assertEquals($expectedB, $items[1]);
     }
 
+    public function testGetsPublisher(): void
+    {
+        /** @var Reader\Extension\PodcastIndex\Feed $feed */
+        $feed = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath)
+        );
+
+        $expectedA           = new stdClass();
+        $expectedA->feedGuid = 'publisher-guid-56ba-b48b-09a011c5daa9';
+        $expectedA->feedUrl  = '';
+        $expectedA->itemGuid = '';
+        $expectedA->medium   = '';
+        $expectedA->title    = '';
+
+        $publisherItem = $feed->getPodcastIndexPublisher();
+        $this->assertEquals($expectedA, $publisherItem);
+    }
+
     /**
      * Entry level testing
      */

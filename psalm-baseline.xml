@@ -3136,6 +3136,7 @@
       <code>setPodcastIndexPeople</code>
       <code>setPodcastIndexPodping</code>
       <code>setPodcastIndexPodroll</code>
+      <code>setPodcastIndexPublisher</code>
       <code>setPodcastIndexRemoteItems</code>
       <code>setPodcastIndexTrailer</code>
       <code>setPodcastIndexTxts</code>
