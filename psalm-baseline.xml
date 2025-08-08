@@ -3122,6 +3122,7 @@
     <PossiblyUnusedMethod>
       <code>__call</code>
       <code>__construct</code>
+      <code>addPodcastIndexPodrollRemoteItem</code>
       <code>getEncoding</code>
       <code>setEncoding</code>
       <code>setPodcastIndexBlocks</code>
@@ -3134,6 +3135,8 @@
       <code>setPodcastIndexMedium</code>
       <code>setPodcastIndexPeople</code>
       <code>setPodcastIndexPodping</code>
+      <code>setPodcastIndexPodroll</code>
+      <code>setPodcastIndexRemoteItems</code>
       <code>setPodcastIndexTrailer</code>
       <code>setPodcastIndexTxts</code>
       <code>setPodcastIndexUpdateFrequency</code>

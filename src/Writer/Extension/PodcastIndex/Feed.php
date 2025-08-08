@@ -10,7 +10,6 @@ use Laminas\Stdlib\StringUtils;
 use Laminas\Stdlib\StringWrapper\StringWrapperInterface;
 
 use function array_key_exists;
-use function count;
 use function ctype_alpha;
 use function filter_var;
 use function in_array;
