@@ -64,10 +64,10 @@ use const FILTER_VALIDATE_URL;
  *     recipients?: list<ValueRecipientArray>
  *   }
  * @psalm-type ValueRecipientArray = array{
- *      name: string,
  *      type: string,
  *      address: string,
  *      split: int,
+ *      name?: string,
  *      customKey?: string,
  *      customValue?: string,
  *      fee?: bool,
@@ -798,15 +798,10 @@ class Feed
      */
     private function validateValueRecipients(array $value): void
     {
-        if (! isset($value['name'], $value['type'], $value['address'], $value['split'])) {
+        if (! isset($value['type'], $value['address'], $value['split'])) {
             throw new Writer\Exception\InvalidArgumentException(
                 'invalid parameter: each "recipients" entry in "value" must be an array 
-                containing the keys "name", "type", "address" and "split"'
-            );
-        }
-        if (! is_string($value['name'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "name" of "recipients" must be of type string'
+                containing the keys "type", "address" and "split"'
             );
         }
         if (! is_string($value['type'])) {
@@ -822,6 +817,11 @@ class Feed
         if (! is_int($value['split'])) {
             throw new Writer\Exception\InvalidArgumentException(
                 'invalid parameter: key "split" of "recipients" must be of type integer'
+            );
+        }
+        if (isset($value['name']) && ! is_string($value['name'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "name" of "recipients" must be of type string'
             );
         }
         if (isset($value['customKey']) && ! is_string($value['customKey'])) {

@@ -17,6 +17,8 @@ use Laminas\Feed\Writer\Feed as FeedWriter;
  * @psalm-import-type UpdateFrequencyArray from \Laminas\Feed\Writer\Extension\PodcastIndex\Feed
  * @psalm-import-type TrailerArray from \Laminas\Feed\Writer\Extension\PodcastIndex\Feed
  * @psalm-import-type RemoteItemArray from \Laminas\Feed\Writer\Extension\PodcastIndex\Feed
+ * @psalm-import-type ValueArray from \Laminas\Feed\Writer\Extension\PodcastIndex\Feed
+ * @psalm-import-type ValueRecipientArray from \Laminas\Feed\Writer\Extension\PodcastIndex\Feed
  */
 class Feed extends Extension\AbstractRenderer
 {
@@ -475,6 +477,67 @@ class Feed extends Extension\AbstractRenderer
         }
         if (isset($remoteItem['title']) && $remoteItem['title'] !== '') {
             $el->setAttribute('title', $remoteItem['title']);
+        }
+
+        return $el;
+    }
+
+    /**
+     * Set values with the value recipients
+     */
+    private function setValues(DOMDocument $dom, DOMElement $root): void
+    {
+        /** @psalm-var FeedWriter $container */
+        $container = $this->getDataContainer();
+
+        /** @psalm-var list<ValueArray>|null $values */
+        $values = $container->getPodcastIndexValues();
+        if ($values === null || $values === []) {
+            return;
+        }
+
+        foreach ($values as $value) {
+            // set value attributes
+            $valueElement = $dom->createElement('podcast:value');
+            $valueElement->setAttribute('type', $value['type']);
+            $valueElement->setAttribute('method', $value['method']);
+            if (isset($value['suggested']) && $value['suggested'] !== '') {
+                $valueElement->setAttribute('suggested', $value['suggested']);
+            }
+            // set value child nodes: recipients
+            foreach ($value['recipients'] as $valueRecipient) {
+                $recipientElement = $this->createValueRecipientElement($dom, $valueRecipient);
+                $valueElement->appendChild($recipientElement);
+            }
+            $root->appendChild($valueElement);
+        }
+
+        $this->called = true;
+    }
+
+    /**
+     * Create value recipient element
+     *
+     * @psalm-param ValueRecipientArray $valueRecipient
+     */
+    private function createValueRecipientElement(DOMDocument $dom, array $valueRecipient): DOMElement
+    {
+        $el = $dom->createElement('podcast:valueRecipient');
+        if (isset($valueRecipient['name']) && $valueRecipient['name'] !== '') {
+            $el->setAttribute('name', $valueRecipient['name']);
+        }
+        $el->setAttribute('type', $valueRecipient['type']);
+        $el->setAttribute('address', $valueRecipient['address']);
+        $el->setAttribute('split', $valueRecipient['split']);
+
+        if (isset($valueRecipient['customKey']) && $valueRecipient['customKey'] !== '') {
+            $el->setAttribute('customKey', $valueRecipient['customKey']);
+        }
+        if (isset($valueRecipient['customValue']) && $valueRecipient['customValue'] !== '') {
+            $el->setAttribute('customValue', $valueRecipient['customValue']);
+        }
+        if (isset($valueRecipient['fee'])) {
+            $el->setAttribute('fee', $valueRecipient['fee']);
         }
 
         return $el;
