@@ -15,6 +15,7 @@ use function ctype_alpha;
 use function filter_var;
 use function in_array;
 use function is_bool;
+use function is_float;
 use function is_int;
 use function is_string;
 use function lcfirst;
@@ -56,6 +57,21 @@ use const FILTER_VALIDATE_URL;
  *     medium?: string,
  *     title?: string
  *   }
+ * @psalm-type ValueArray = array{
+ *     type: string,
+ *     method: string,
+ *     suggested?: float,
+ *     recipients?: list<ValueRecipientArray>
+ *   }
+ * @psalm-type ValueRecipientArray = array{
+ *      name: string,
+ *      type: string,
+ *      address: string,
+ *      split: int,
+ *      customKey?: string,
+ *      customValue?: string,
+ *      fee?: bool,
+ *    }
  */
 class Feed
 {
@@ -699,6 +715,128 @@ class Feed
         if (isset($value['title']) && ! is_string($value['title'])) {
             throw new Writer\Exception\InvalidArgumentException(
                 'invalid parameter: key "title" of "remoteItem" must be of type string'
+            );
+        }
+    }
+
+    /**
+     * Reset all value elements.
+     * All existing value entries will be removed, including their nested value recipients.
+     *
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function resetPodcastIndexValues(): self
+    {
+        $this->data['values'] = [];
+        return $this;
+    }
+
+    /**
+     * Add a value element.
+     * It contains one or more value recipients as child elements.
+     * The method expects one array with the value attributes and
+     * another array containing the value recipients attributes.
+     *
+     * @psalm-param ValueArray $value
+     * @psalm-param list<ValueRecipientArray> $valueRecipients
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function addPodcastIndexValue(array $value, array $valueRecipients): self
+    {
+        // validate the value attributes
+        if (! isset($value['type'], $value['method'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: the first argument of "value" must an array 
+                containing at least the keys "type" and "method"'
+            );
+        }
+        if (! is_string($value['type'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "type" of "value" must be of type string'
+            );
+        }
+        if (! is_string($value['method'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "method" of "value" must be of type string'
+            );
+        }
+        if (isset($value['suggested']) && ! is_float($value['suggested'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "suggested" of "value" must be of type float'
+            );
+        }
+
+        // validate the value recipients array
+        if (count($valueRecipients) < 1) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: the second argument of "value" must an array containing at least one recipient'
+            );
+        }
+        foreach ($valueRecipients as $recipient) {
+            $this->validateValueRecipients($recipient);
+        }
+
+        // add the values entry
+        if (! isset($this->data['values'])) {
+            $this->data['values'] = [];
+        }
+
+        $value['recipients']    = $valueRecipients;
+        $this->data['values'][] = $value;
+
+        return $this;
+    }
+
+    /**
+     * Validate the values of the remote item.
+     *
+     * @param RemoteItemArray $value
+     * @throws Writer\Exception\InvalidArgumentException
+     * @psalm-suppress DocblockTypeContradiction
+     */
+    private function validateValueRecipients(array $value): void
+    {
+        if (! isset($value['name'], $value['type'], $value['address'], $value['split'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: each "recipients" entry in "value" must be an array 
+                containing the keys "name", "type", "address" and "split"'
+            );
+        }
+        if (! is_string($value['name'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "name" of "recipients" must be of type string'
+            );
+        }
+        if (! is_string($value['type'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "type" of "recipients" must be of type string'
+            );
+        }
+        if (! is_string($value['address'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "address" of "recipients" must be of type string'
+            );
+        }
+        if (! is_int($value['split'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "split" of "recipients" must be of type integer'
+            );
+        }
+        if (isset($value['customKey']) && ! is_string($value['customKey'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "customKey" of "recipients" must be of type string'
+            );
+        }
+        if (isset($value['customValue']) && ! is_string($value['customValue'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "customKey" of "recipients" must be of type string'
+            );
+        }
+        if (isset($value['fee']) && ! is_bool($value['fee'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "fee" of "recipients" must be of type boolean'
             );
         }
     }

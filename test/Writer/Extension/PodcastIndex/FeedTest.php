@@ -1066,4 +1066,34 @@ class FeedTest extends TestCase
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $feed->setPodcastIndexPublisher($remoteItem);
     }
+
+    public function testAddValue(): void
+    {
+        $feed = new Writer\Feed();
+
+        $value      = [
+            'type'      => "lightning",
+            'method'    => "keysend",
+            'suggested' => "0.00000005000",
+        ];
+        $recipients = [
+            [
+                'name'    => "Alice (Podcaster)",
+                'type'    => "node",
+                'address' => "02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52",
+                'split'   => "40",
+            ],
+            [
+                'name'    => "Bob (Podcaster)",
+                'type'    => "node",
+                'address' => "032f4ffbbafffbe51726ad3c164a3d0d37ec27bc67b29a159b0f49ae8ac21b8508",
+                'split'   => "60",
+            ],
+        ];
+        $feed->addPodcastIndexValue($value, $recipients);
+
+        // /** @var list<RemoteItemObject> $remoteItems */
+        /*$remoteItems = $feed->getPodcastIndexPodroll();
+        $this->assertContains($remoteItem, $remoteItems);*/
+    }
 }
