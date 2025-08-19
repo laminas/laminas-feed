@@ -3123,7 +3123,9 @@
       <code>__call</code>
       <code>__construct</code>
       <code>addPodcastIndexPodrollRemoteItem</code>
+      <code>addPodcastIndexValue</code>
       <code>getEncoding</code>
+      <code>resetPodcastIndexValues</code>
       <code>setEncoding</code>
       <code>setPodcastIndexBlocks</code>
       <code>setPodcastIndexFunding</code>

@@ -17,6 +17,8 @@ use function time;
 /**
  * @psalm-import-type PersonObject from Feed
  * @psalm-import-type RemoteItemObject from Feed
+ * @psalm-import-type ValueRecipientObject from Feed
+ * @psalm-import-type ValueObject from Feed
  */
 class FeedTest extends TestCase
 {
@@ -1091,9 +1093,11 @@ class FeedTest extends TestCase
             ],
         ];
         $feed->addPodcastIndexValue($value, $recipients);
-
         $value['recipients'] = $recipients;
-        $this->assertContains($value, $feed->getPodcastIndexValues());
+
+        /** @psalm-var list<ValueObject> $values */
+        $values = $feed->getPodcastIndexValues();
+        $this->assertContains($value, $values);
     }
 
     public function testAddValueWithMinimalArguments(): void
@@ -1112,16 +1116,18 @@ class FeedTest extends TestCase
             ],
         ];
         $feed->addPodcastIndexValue($value, $recipients);
-
         $value['recipients'] = $recipients;
-        $this->assertContains($value, $feed->getPodcastIndexValues());
+
+        /** @psalm-var list<ValueObject> $values */
+        $values = $feed->getPodcastIndexValues();
+        $this->assertContains($value, $values);
     }
 
     public function testAddValueThrowsExceptionOnMissingRecipients(): void
     {
         $feed = new Writer\Feed();
 
-        $value      = [
+        $value = [
             'type'   => "lightning",
             'method' => "keysend",
         ];
@@ -1129,6 +1135,7 @@ class FeedTest extends TestCase
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $feed->addPodcastIndexValue($value, []);
     }
+
     public function testAddValueThrowsExceptionOnMissingRecipientType(): void
     {
         $feed = new Writer\Feed();
@@ -1147,6 +1154,7 @@ class FeedTest extends TestCase
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $feed->addPodcastIndexValue($value, $recipients);
     }
+
     public function testAddValueThrowsExceptionOnInvalidRecipientType(): void
     {
         $feed = new Writer\Feed();
@@ -1165,5 +1173,63 @@ class FeedTest extends TestCase
 
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $feed->addPodcastIndexValue($value, $recipients);
+    }
+
+    public function testAddValueUsingScientificNotation(): void
+    {
+        $feed = new Writer\Feed();
+
+        $value      = [
+            'type'      => "lightning",
+            'method'    => "keysend",
+            'suggested' => 5.0E-8, // scientific notation for 0.00000005000
+        ];
+        $recipients = [
+            [
+                'name'    => "Alice (Podcaster)",
+                'type'    => "node",
+                'address' => "02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52",
+                'split'   => 40,
+            ],
+        ];
+        $feed->addPodcastIndexValue($value, $recipients);
+
+        $value['recipients'] = $recipients;
+
+        /** @psalm-var list<ValueObject> $values */
+        $values = $feed->getPodcastIndexValues();
+        $this->assertContains($value, $values);
+    }
+
+    public function testResetValues(): void
+    {
+        $feed = new Writer\Feed();
+
+        $value      = [
+            'type'   => "lightning",
+            'method' => "keysend",
+        ];
+        $recipients = [
+            [
+                'type'    => "node",
+                'address' => "02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52",
+                'split'   => 40,
+            ],
+        ];
+
+        // set values
+        $feed->addPodcastIndexValue($value, $recipients);
+        $value['recipients'] = $recipients;
+
+        /** @psalm-var list<ValueObject> $values */
+        $values = $feed->getPodcastIndexValues();
+        $this->assertContains($value, $values);
+
+        // remove them again
+        $feed->resetPodcastIndexValues();
+
+        /** @psalm-var list<ValueObject> $empty */
+        $empty = $feed->getPodcastIndexValues();
+        $this->assertEmpty($empty);
     }
 }

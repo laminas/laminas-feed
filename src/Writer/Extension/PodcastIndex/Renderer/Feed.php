@@ -19,8 +19,8 @@ use function number_format;
  * @psalm-import-type UpdateFrequencyArray from \Laminas\Feed\Writer\Extension\PodcastIndex\Feed
  * @psalm-import-type TrailerArray from \Laminas\Feed\Writer\Extension\PodcastIndex\Feed
  * @psalm-import-type RemoteItemArray from \Laminas\Feed\Writer\Extension\PodcastIndex\Feed
- * @psalm-import-type ValueArray from \Laminas\Feed\Writer\Extension\PodcastIndex\Feed
  * @psalm-import-type ValueRecipientArray from \Laminas\Feed\Writer\Extension\PodcastIndex\Feed
+ * @psalm-import-type ValueArray from \Laminas\Feed\Writer\Extension\PodcastIndex\Feed
  */
 class Feed extends Extension\AbstractRenderer
 {
@@ -462,9 +462,10 @@ class Feed extends Extension\AbstractRenderer
     /**
      * Create remote item element
      *
+     * @psalm-param DOMDocument $dom
      * @psalm-param RemoteItemArray $remoteItem
      */
-    private function createRemoteItemElement(DOMDocument $dom, array $remoteItem): DOMElement
+    private function createRemoteItemElement($dom, $remoteItem): DOMElement
     {
         $el = $dom->createElement('podcast:remoteItem');
         $el->setAttribute('feedGuid', $remoteItem['feedGuid']);
@@ -500,11 +501,14 @@ class Feed extends Extension\AbstractRenderer
         }
 
         foreach ($values as $value) {
+            if (! isset($value['recipients'])) {
+                continue;
+            }
             // set value attributes
             $valueElement = $dom->createElement('podcast:value');
             $valueElement->setAttribute('type', $value['type']);
             $valueElement->setAttribute('method', $value['method']);
-            if (isset($value['suggested']) && $value['suggested'] !== '') {
+            if (isset($value['suggested'])) {
                 // ensure float instead of scientific notation
                 $suggested = number_format($value['suggested'], 11);
                 $valueElement->setAttribute('suggested', $suggested);
@@ -523,9 +527,10 @@ class Feed extends Extension\AbstractRenderer
     /**
      * Create value recipient element
      *
+     * @psalm-param DOMDocument $dom
      * @psalm-param ValueRecipientArray $valueRecipient
      */
-    private function createValueRecipientElement(DOMDocument $dom, array $valueRecipient): DOMElement
+    private function createValueRecipientElement($dom, $valueRecipient): DOMElement
     {
         $el = $dom->createElement('podcast:valueRecipient');
         if (isset($valueRecipient['name']) && $valueRecipient['name'] !== '') {

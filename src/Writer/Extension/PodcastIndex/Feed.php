@@ -58,21 +58,21 @@ use const FILTER_VALIDATE_URL;
  *     medium?: string,
  *     title?: string
  *   }
+ * @psalm-type ValueRecipientArray = array{
+ *       type: string,
+ *       address: string,
+ *       split: int,
+ *       name?: string,
+ *       customKey?: string,
+ *       customValue?: string,
+ *       fee?: bool,
+ *     }
  * @psalm-type ValueArray = array{
  *     type: string,
  *     method: string,
  *     suggested?: float,
  *     recipients?: list<ValueRecipientArray>
  *   }
- * @psalm-type ValueRecipientArray = array{
- *      type: string,
- *      address: string,
- *      split: int,
- *      name?: string,
- *      customKey?: string,
- *      customValue?: string,
- *      fee?: bool,
- *    }
  */
 class Feed
 {
@@ -743,6 +743,7 @@ class Feed
      * @psalm-param list<ValueRecipientArray> $valueRecipients
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
+     * @psalm-suppress DocblockTypeContradiction
      */
     public function addPodcastIndexValue(array $value, array $valueRecipients): self
     {
@@ -778,13 +779,14 @@ class Feed
         foreach ($valueRecipients as $recipient) {
             $this->validateValueRecipients($recipient);
         }
+        $value['recipients'] = $valueRecipients;
 
         // add the values entry
         if (! isset($this->data['values'])) {
             $this->data['values'] = [];
         }
 
-        $value['recipients']    = $valueRecipients;
+        /** @var list<ValueArray> $this->data['values'] */
         $this->data['values'][] = $value;
 
         return $this;
@@ -793,7 +795,7 @@ class Feed
     /**
      * Validate the values of the remote item.
      *
-     * @param RemoteItemArray $value
+     * @param ValueRecipientArray $value
      * @throws Writer\Exception\InvalidArgumentException
      * @psalm-suppress DocblockTypeContradiction
      */

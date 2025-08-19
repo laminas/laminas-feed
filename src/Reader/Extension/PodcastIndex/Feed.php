@@ -45,12 +45,6 @@ use function assert;
  *      medium?: string,
  *      title?: string
  * }
- * @psalm-type ValueObject = object{
- *      type: string,
- *      method: string,
- *      suggested?: float,
- *      recipients?: list<ValueRecipientObject>
- *    }
  * @psalm-type ValueRecipientObject = object{
  *       type: string,
  *       address: string,
@@ -59,6 +53,12 @@ use function assert;
  *       customKey?: string,
  *       customValue?: string,
  *       fee?: bool,
+ *     }
+ * @psalm-type ValueObject = object{
+ *       type: string,
+ *       method: string,
+ *       suggested?: float,
+ *       recipients?: list<ValueRecipientObject>
  *     }
  */
 class Feed extends Extension\AbstractFeed
