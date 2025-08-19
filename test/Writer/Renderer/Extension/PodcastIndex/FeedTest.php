@@ -11,6 +11,7 @@ use Laminas\Feed\Writer\Renderer;
 use PHPUnit\Framework\TestCase;
 
 use function implode;
+use function number_format;
 use function substr_count;
 
 class FeedTest extends TestCase
@@ -428,5 +429,72 @@ class FeedTest extends TestCase
         $this->assertStringContainsString($data['feedUrl'], $xml);
         $this->assertStringContainsString($data['medium'], $xml);
         $this->assertStringContainsString($data['title'], $xml);
+    }
+
+    public function testRendersRssValueTagsWithChildren(): void
+    {
+        $value      = [
+            'type'   => "lightning",
+            'method' => "keysend",
+        ];
+        $recipients = [
+            [
+                'name'    => "Alice (Podcaster)",
+                'type'    => "node",
+                'address' => "02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52",
+                'split'   => 40,
+            ],
+            [
+                'name'    => "Bob (Podcaster)",
+                'type'    => "node",
+                'address' => "032f4ffbbafffbe51726ad3c164a3d0d37ec27bc67b29a159b0f49ae8ac21b8508",
+                'split'   => 60,
+            ],
+        ];
+        $this->validWriter->addPodcastIndexValue($value, $recipients);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        /*print_r($xml); // For debugging purposes, remove in production
+        die();*/
+
+        $this->assertStringContainsString('<podcast:value', $xml);
+        $this->assertStringContainsString('<podcast:valueRecipient', $xml);
+        $this->assertStringContainsString($value['type'], $xml);
+        $this->assertStringContainsString($value['method'], $xml);
+        $this->assertStringContainsString($recipients[0]['name'], $xml);
+        $this->assertStringContainsString($recipients[0]['type'], $xml);
+        $this->assertStringContainsString($recipients[1]['address'], $xml);
+        $this->assertStringContainsString((string) $recipients[1]['split'], $xml);
+
+        $newValue      = [
+            'type'      => "lightning",
+            'method'    => "keysend",
+            'suggested' => 0.00000005000,
+        ];
+        $newRecipients = [
+            [
+                'name'    => "Louis (Podcaster)",
+                'type'    => "node",
+                'address' => "0345c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52",
+                'split'   => 50,
+            ],
+            [
+                'name'    => "Edith (Podcaster)",
+                'type'    => "node",
+                'address' => "03454ffbbafffbe51726ad3c164a3d0d37ec27bc67b29a159b0f49ae8ac21b8508",
+                'split'   => 50,
+            ],
+        ];
+
+        $this->validWriter->addPodcastIndexValue($newValue, $newRecipients);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $this->assertStringContainsString(number_format($newValue['suggested'], 11), $xml);
+        $this->assertStringContainsString($newRecipients[0]['name'], $xml);
+        $this->assertStringContainsString((string) $newRecipients[1]['split'], $xml);
     }
 }

@@ -20,6 +20,7 @@ use function is_int;
 use function is_string;
 use function lcfirst;
 use function method_exists;
+use function rtrim;
 use function strlen;
 use function substr;
 use function ucfirst;
@@ -806,37 +807,37 @@ class Feed
         }
         if (! is_string($value['type'])) {
             throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "type" of "recipients" must be of type string'
+                'invalid parameter: key "type" of "value recipient" must be of type string'
             );
         }
         if (! is_string($value['address'])) {
             throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "address" of "recipients" must be of type string'
+                'invalid parameter: key "address" of "value recipient" must be of type string'
             );
         }
         if (! is_int($value['split'])) {
             throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "split" of "recipients" must be of type integer'
+                'invalid parameter: key "split" of "value recipient" must be of type integer'
             );
         }
         if (isset($value['name']) && ! is_string($value['name'])) {
             throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "name" of "recipients" must be of type string'
+                'invalid parameter: key "name" of "value recipient" must be of type string'
             );
         }
         if (isset($value['customKey']) && ! is_string($value['customKey'])) {
             throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "customKey" of "recipients" must be of type string'
+                'invalid parameter: key "customKey" of "value recipient" must be of type string'
             );
         }
         if (isset($value['customValue']) && ! is_string($value['customValue'])) {
             throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "customKey" of "recipients" must be of type string'
+                'invalid parameter: key "customKey" of "value recipient" must be of type string'
             );
         }
         if (isset($value['fee']) && ! is_bool($value['fee'])) {
             throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "fee" of "recipients" must be of type boolean'
+                'invalid parameter: key "fee" of "value recipient" must be of type boolean'
             );
         }
     }
@@ -853,6 +854,7 @@ class Feed
         if (
             ! method_exists($this, 'setPodcastIndex' . ucfirst($point))
             && ! method_exists($this, 'addPodcastIndex' . ucfirst($point))
+            && ! method_exists($this, 'addPodcastIndex' . rtrim(ucfirst($point), 's'))
         ) {
             throw new Writer\Exception\BadMethodCallException(
                 'invalid method: ' . $method

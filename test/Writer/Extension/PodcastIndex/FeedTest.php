@@ -1074,26 +1074,96 @@ class FeedTest extends TestCase
         $value      = [
             'type'      => "lightning",
             'method'    => "keysend",
-            'suggested' => "0.00000005000",
+            'suggested' => 0.00000005000,
         ];
         $recipients = [
             [
                 'name'    => "Alice (Podcaster)",
                 'type'    => "node",
                 'address' => "02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52",
-                'split'   => "40",
+                'split'   => 40,
             ],
             [
                 'name'    => "Bob (Podcaster)",
                 'type'    => "node",
                 'address' => "032f4ffbbafffbe51726ad3c164a3d0d37ec27bc67b29a159b0f49ae8ac21b8508",
-                'split'   => "60",
+                'split'   => 60,
             ],
         ];
         $feed->addPodcastIndexValue($value, $recipients);
 
-        // /** @var list<RemoteItemObject> $remoteItems */
-        /*$remoteItems = $feed->getPodcastIndexPodroll();
-        $this->assertContains($remoteItem, $remoteItems);*/
+        $value['recipients'] = $recipients;
+        $this->assertContains($value, $feed->getPodcastIndexValues());
+    }
+
+    public function testAddValueWithMinimalArguments(): void
+    {
+        $feed = new Writer\Feed();
+
+        $value      = [
+            'type'   => "lightning",
+            'method' => "keysend",
+        ];
+        $recipients = [
+            [
+                'type'    => "node",
+                'address' => "02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52",
+                'split'   => 40,
+            ],
+        ];
+        $feed->addPodcastIndexValue($value, $recipients);
+
+        $value['recipients'] = $recipients;
+        $this->assertContains($value, $feed->getPodcastIndexValues());
+    }
+
+    public function testAddValueThrowsExceptionOnMissingRecipients(): void
+    {
+        $feed = new Writer\Feed();
+
+        $value      = [
+            'type'   => "lightning",
+            'method' => "keysend",
+        ];
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->addPodcastIndexValue($value, []);
+    }
+    public function testAddValueThrowsExceptionOnMissingRecipientType(): void
+    {
+        $feed = new Writer\Feed();
+
+        $value      = [
+            'type'   => "lightning",
+            'method' => "keysend",
+        ];
+        $recipients = [
+            [
+                'address' => "02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52",
+                'split'   => 40,
+            ],
+        ];
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->addPodcastIndexValue($value, $recipients);
+    }
+    public function testAddValueThrowsExceptionOnInvalidRecipientType(): void
+    {
+        $feed = new Writer\Feed();
+
+        $value      = [
+            'type'   => "lightning",
+            'method' => "keysend",
+        ];
+        $recipients = [
+            [
+                'type'    => true,
+                'address' => "02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52",
+                'split'   => 40,
+            ],
+        ];
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->addPodcastIndexValue($value, $recipients);
     }
 }

@@ -45,6 +45,21 @@ use function assert;
  *      medium?: string,
  *      title?: string
  * }
+ * @psalm-type ValueObject = object{
+ *      type: string,
+ *      method: string,
+ *      suggested?: float,
+ *      recipients?: list<ValueRecipientObject>
+ *    }
+ * @psalm-type ValueRecipientObject = object{
+ *       type: string,
+ *       address: string,
+ *       split: int,
+ *       name?: string,
+ *       customKey?: string,
+ *       customValue?: string,
+ *       fee?: bool,
+ *     }
  */
 class Feed extends Extension\AbstractFeed
 {
@@ -567,11 +582,54 @@ class Feed extends Extension\AbstractFeed
     }
 
     /**
+     * Get the podcast podroll remote items
+     *
+     * @return list<ValueObject>
+     */
+    public function getPodcastIndexValues(): array
+    {
+        if (array_key_exists('values', $this->data)) {
+            /** @var list<ValueObject> $values */
+            $values = $this->data['values'];
+            return $values;
+        }
+
+        $values         = [];
+        $valuesNodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:value');
+
+        foreach ($valuesNodeList as $valueNode) {
+            assert($valueNode instanceof DOMElement);
+
+            $valueObject            = new stdClass();
+            $valueObject->type      = $valueNode->getAttribute('type');
+            $valueObject->method    = $valueNode->getAttribute('method');
+            $valueObject->suggested = $valueNode->getAttribute('suggested');
+
+            /** @psalm-suppress TooManyArguments */
+            $recipientsNodeList = $this->xpath->query('podcast:valueRecipient', $valueNode);
+            $recipients         = [];
+
+            foreach ($recipientsNodeList as $entry) {
+                assert($entry instanceof DOMElement);
+                $object       = $this->readValueRecipient($entry);
+                $recipients[] = $object;
+            }
+
+            $valueObject->recipients = $recipients;
+            $values[]                = $valueObject;
+        }
+
+        $this->data['values'] = $values;
+
+        return $this->data['values'];
+    }
+
+    /**
      * Read single remote item
      *
      * @return RemoteItemObject
      */
-    private function readRemoteItem(DOMElement $entry): object
+    protected function readRemoteItem(DOMElement $entry): object
     {
         $object           = new stdClass();
         $object->feedGuid = $entry->getAttribute('feedGuid');
@@ -579,6 +637,25 @@ class Feed extends Extension\AbstractFeed
         $object->itemGuid = $entry->getAttribute('itemGuid');
         $object->medium   = $entry->getAttribute('medium');
         $object->title    = $entry->getAttribute('title');
+
+        return $object;
+    }
+
+    /**
+     * Read single remote item
+     *
+     * @return RemoteItemObject
+     */
+    protected function readValueRecipient(DOMElement $entry): object
+    {
+        $object              = new stdClass();
+        $object->name        = $entry->getAttribute('name');
+        $object->type        = $entry->getAttribute('type');
+        $object->address     = $entry->getAttribute('address');
+        $object->split       = $entry->getAttribute('split');
+        $object->customKey   = $entry->getAttribute('customKey');
+        $object->customValue = $entry->getAttribute('customValue');
+        $object->fee         = $entry->getAttribute('fee');
 
         return $object;
     }

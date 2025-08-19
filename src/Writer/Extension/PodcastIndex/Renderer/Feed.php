@@ -10,6 +10,8 @@ use DOMElement;
 use Laminas\Feed\Writer\Extension;
 use Laminas\Feed\Writer\Feed as FeedWriter;
 
+use function number_format;
+
 /**
  * Renders PodcastIndex data of a RSS Feed
  *
@@ -52,6 +54,7 @@ class Feed extends Extension\AbstractRenderer
         $this->setRemoteItems($this->dom, $this->base);
         $this->setPodroll($this->dom, $this->base);
         $this->setPublisher($this->dom, $this->base);
+        $this->setValues($this->dom, $this->base);
         if ($this->called) {
             $this->_appendNamespaces();
         }
@@ -502,7 +505,9 @@ class Feed extends Extension\AbstractRenderer
             $valueElement->setAttribute('type', $value['type']);
             $valueElement->setAttribute('method', $value['method']);
             if (isset($value['suggested']) && $value['suggested'] !== '') {
-                $valueElement->setAttribute('suggested', $value['suggested']);
+                // ensure float instead of scientific notation
+                $suggested = number_format($value['suggested'], 11);
+                $valueElement->setAttribute('suggested', $suggested);
             }
             // set value child nodes: recipients
             foreach ($value['recipients'] as $valueRecipient) {
@@ -528,7 +533,7 @@ class Feed extends Extension\AbstractRenderer
         }
         $el->setAttribute('type', $valueRecipient['type']);
         $el->setAttribute('address', $valueRecipient['address']);
-        $el->setAttribute('split', $valueRecipient['split']);
+        $el->setAttribute('split', (string) $valueRecipient['split']);
 
         if (isset($valueRecipient['customKey']) && $valueRecipient['customKey'] !== '') {
             $el->setAttribute('customKey', $valueRecipient['customKey']);
@@ -537,7 +542,7 @@ class Feed extends Extension\AbstractRenderer
             $el->setAttribute('customValue', $valueRecipient['customValue']);
         }
         if (isset($valueRecipient['fee'])) {
-            $el->setAttribute('fee', $valueRecipient['fee']);
+            $el->setAttribute('fee', (string) $valueRecipient['fee']);
         }
 
         return $el;
