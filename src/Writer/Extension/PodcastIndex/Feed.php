@@ -722,7 +722,7 @@ class Feed
 
     /**
      * Reset all value elements.
-     * All existing value entries will be removed, including their nested value recipients.
+     * All value entries will be removed, including their nested value recipients.
      *
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
@@ -734,10 +734,9 @@ class Feed
     }
 
     /**
-     * Add a value element.
-     * It contains one or more value recipients as child elements.
-     * The method expects one array with the value attributes and
-     * another array containing the value recipients attributes.
+     * Add a value element with one or more value recipients as children.
+     * The method expects one array with the value attributes as first argument
+     * and an array of arrays with the value recipients' attributes as second argument.
      *
      * @psalm-param ValueArray $value
      * @psalm-param list<ValueRecipientArray> $valueRecipients
