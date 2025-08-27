@@ -27,7 +27,7 @@ See the [Podcast Index website](https://podcastindex.org) for more information a
 | `getPodcastIndexBlocks()`                     | Returns whether or which platforms are allowed to publicly display this feed. The output is an object with the properties "value" and "id".                                                                                                                                                                            |
 | `getPodcastIndexTxts()`                       | Returns information on topics that do not have their own tags. The output is an object with the properties "value" and "purpose".                                                                                                                                                                                      |
 | `getPodcastIndexPodping()`                    | Returns whether the feed sends out Podping notifications when changes are made to it. The output is an object with the property "usesPodping".                                                                                                                                                                         |
-| `getPodcastIndexRemoteItems()`                | Returns the remote items assigned as direct children of the feed. The output is an array of objects with each the properties "feedGuid", "feedUrl", "itemGuid", "medium" and "title". <em>Note: Nested remote items that belong to other namespaces need to be managed with the methods of those namespaces.</em>      |
+| `getPodcastIndexRemoteItems()`                | Returns the remote items assigned as direct children of the feed. The output is an array of objects with each the properties "feedGuid", "feedUrl", "itemGuid", "medium" and "title". Note: Nested remote items that belong to other namespaces need to be managed with the methods of those namespaces.               |
 | `getPodcastIndexPodroll()`                    | Returns the remote items assigned to the podroll tag of the feed. The output is an array of objects with each the properties "feedGuid", "feedUrl", "itemGuid", "medium" and "title".                                                                                                                                  |
 | `getPodcastIndexPublisher()`                  | Returns one remote item assigned to the publisher tag of the feed. The output is an object with the properties "feedGuid", "feedUrl", "itemGuid", "medium" and "title".                                                                                                                                                |
 | `getPodcastIndexValues()`                     | Returns the values and their value recipients. The output is an array of objects, each with the properties "type", "method", "suggested" and "recipients". "recipients" is an array of objects itself, each object containing the attributes "name", "type", "address", "split", "customKey", "customValue" and "fee". |
@@ -77,9 +77,6 @@ See the [Podcast Index website](https://podcastindex.org) for more information a
 | `setPodcastIndexTranscript()` | Expects an array with the required keys "url" and "type", and with the optional keys "language" and "rel".                                        |
 | `setPodcastIndexChapters()`   | Expects an array with the required keys "url" and "type".                                                                                         |
 | `addPodcastIndexSoundbites()` | Expects an array of soundbite entries, each itself an array with the required keys "title" and "startTime", and with the optional key "duration". |
-
-
-
 
 ## Examples
 
