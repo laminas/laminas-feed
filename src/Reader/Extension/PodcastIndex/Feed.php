@@ -308,6 +308,16 @@ class Feed extends Extension\AbstractFeed
     }
 
     /**
+     * Get the podcast persons (alias of getPodcastIndexPeople)
+     *
+     * @psalm-return list<PersonObject>
+     */
+    public function getPodcastIndexPersons(): array
+    {
+        return $this->getPodcastIndexPeople();
+    }
+
+    /**
      * Get the podcast trailer
      *
      * @return null|TrailerObject

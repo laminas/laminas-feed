@@ -349,6 +349,19 @@ class Feed
     }
 
     /**
+     * Set a new array of persons. (alias of setPodcastIndexPeople)
+     * If no argument is passed, it will just remove all existing people.
+     *
+     * @psalm-param list<PersonArray> $values
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function setPodcastIndexPersons(array $values = []): self
+    {
+        return $this->setPodcastIndexPeople($values);
+    }
+
+    /**
      * Set feed trailer
      *
      * @param TrailerArray $value
