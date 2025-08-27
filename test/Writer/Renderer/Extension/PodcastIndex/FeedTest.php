@@ -433,10 +433,12 @@ class FeedTest extends TestCase
 
     public function testRendersRssValueTagsWithChildren(): void
     {
-        $value      = [
-            'type'   => "lightning",
-            'method' => "keysend",
+        $value = [
+            'type'      => "lightning",
+            'method'    => "keysend",
+            'suggested' => 0.00000005000,
         ];
+
         $recipients = [
             [
                 'name'    => "Alice (Podcaster)",
