@@ -8,6 +8,7 @@ use DateTimeInterface;
 use DOMDocument;
 use DOMElement;
 use Laminas\Feed\Writer\Extension;
+use Laminas\Feed\Writer\Extension\PodcastIndex\Validator;
 use Laminas\Feed\Writer\Feed as FeedWriter;
 
 use function number_format;
@@ -15,12 +16,13 @@ use function number_format;
 /**
  * Renders PodcastIndex data of a RSS Feed
  *
- * @psalm-import-type PersonArray from \Laminas\Feed\Writer\Extension\PodcastIndex\Feed
- * @psalm-import-type UpdateFrequencyArray from \Laminas\Feed\Writer\Extension\PodcastIndex\Feed
- * @psalm-import-type TrailerArray from \Laminas\Feed\Writer\Extension\PodcastIndex\Feed
- * @psalm-import-type RemoteItemArray from \Laminas\Feed\Writer\Extension\PodcastIndex\Feed
- * @psalm-import-type ValueRecipientArray from \Laminas\Feed\Writer\Extension\PodcastIndex\Feed
- * @psalm-import-type ValueArray from \Laminas\Feed\Writer\Extension\PodcastIndex\Feed
+ * @psalm-import-type PersonArray from Validator
+ * @psalm-import-type UpdateFrequencyArray from Validator
+ * @psalm-import-type TrailerArray from Validator
+ * @psalm-import-type RemoteItemArray from Validator
+ * @psalm-import-type ValueRecipientArray from Validator
+ * @psalm-import-type ValueArray from Validator
+ * @psalm-import-type ImageArray from Validator
  */
 class Feed extends Extension\AbstractRenderer
 {

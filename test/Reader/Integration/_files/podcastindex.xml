@@ -50,39 +50,34 @@
         <podcast:txt purpose="release">2022-10-26T04:45:30.742Z</podcast:txt>
         <podcast:podping usesPodping="true"/>
         <podcast:remoteItem feedGuid="29cdca4a-xxxx-yyyy-b48b-09a011c5daa9"/>
-        <podcast:remoteItem
-                feedGuid="917393e3-1b1e-5cef-ace4-edaa54e1f810"
-                feedUrl="https://feeds.example.org/917393e3-1b1e-5cef-ace4-edaa54e1f810/rss.xml"
-                medium="podcast"
-                title="Some Example"
-        />
+        <podcast:remoteItem feedGuid="917393e3-1b1e-5cef-ace4-edaa54e1f810" feedUrl="https://feeds.example.org/917393e3-1b1e-5cef-ace4-edaa54e1f810/rss.xml" medium="podcast" title="Some Example"/>
         <podcast:podroll>
             <podcast:remoteItem feedGuid="29cdca4a-32d8-56ba-b48b-09a011c5daa9" />
-            <podcast:remoteItem
-                    feedGuid="917393e3-1b1e-5cef-ace4-edaa54e1f810"
-                    feedUrl="https://feeds.example.org/917393e3-1b1e-5cef-ace4-edaa54e1f810/rss.xml"
-                    itemGuid="asdf089j0-ep240-20230510"
-                    medium="music"
-                    title="Here Comes the Sun"
-            />
+            <podcast:remoteItem feedGuid="917393e3-1b1e-5cef-ace4-edaa54e1f810" feedUrl="https://feeds.example.org/917393e3-1b1e-5cef-ace4-edaa54e1f810/rss.xml" itemGuid="asdf089j0-ep240-20230510" medium="music" title="Here Comes the Sun"/>
         </podcast:podroll>
         <podcast:publisher>
             <podcast:remoteItem feedGuid="publisher-guid-56ba-b48b-09a011c5daa9" />
         </podcast:publisher>
         <podcast:value type="lightning" method="keysend" suggested="0.00000005000">
-            <podcast:valueRecipient
-                    name="Alice (Podcaster)"
-                    type="node"
-                    address="02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52"
-                    split="40"
-            />
-            <podcast:valueRecipient
-                    name="Bob (Podcaster)"
-                    type="node"
-                    address="032f4ffbbafffbe51726ad3c164a3d0d37ec27bc67b29a159b0f49ae8ac21b8508"
-                    split="60"
-            />
+            <podcast:valueRecipient name="Alice (Podcaster)" type="node" address="02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52" split="40"/>
+            <podcast:valueRecipient name="Bob (Podcaster)" type="node" address="032f4ffbbafffbe51726ad3c164a3d0d37ec27bc67b29a159b0f49ae8ac21b8508" split="60"/>
         </podcast:value>
+        <podcast:image
+                alt="An antenna emanating signal waves"
+                purpose="artwork"
+                type="image/jpeg"
+                aspect-ratio="1/1"
+                href="https://example.com/images/ep1/pci_square-massive.jpg"
+                width="1400"
+                height="1400"
+        />
+        <podcast:image
+                alt="An antenna emanating signal waves"
+                purpose="artwork social"
+                type="image/jpeg"
+                aspect-ratio="16/9"
+                href="https://example.com/images/ep1/pci_landscape-massive.jpg"
+        />
 
         <item>
             <title>Shake Shake Shake Your Spices</title>

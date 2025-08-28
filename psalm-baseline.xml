@@ -3095,26 +3095,47 @@
       <code>$stringWrapper</code>
     </PossiblyUnusedProperty>
   </file>
-  <file src="src/Writer/Extension/PodcastIndex/Feed.php">
+  <file src="src/Writer/Extension/PodcastIndex/Validator.php">
     <DocblockTypeContradiction>
       <code><![CDATA[! is_string($value['url'])]]></code>
+      <code><![CDATA[is_int($value['split'])]]></code>
+      <code><![CDATA[is_string($value['address'])]]></code>
+      <code><![CDATA[is_string($value['description'])]]></code>
+      <code><![CDATA[is_string($value['description'])]]></code>
+      <code><![CDATA[is_string($value['identifier'])]]></code>
+      <code><![CDATA[is_string($value['method'])]]></code>
+      <code><![CDATA[is_string($value['name'])]]></code>
+      <code><![CDATA[is_string($value['srcset'])]]></code>
+      <code><![CDATA[is_string($value['type'])]]></code>
+      <code><![CDATA[is_string($value['type'])]]></code>
+      <code><![CDATA[is_string($value['value'])]]></code>
+      <code><![CDATA[isset($value['customKey']) && ! is_string($value['customKey'])]]></code>
+      <code><![CDATA[isset($value['customValue']) && ! is_string($value['customValue'])]]></code>
+      <code><![CDATA[isset($value['fee']) && ! is_bool($value['fee'])]]></code>
+      <code><![CDATA[isset($value['geo']) && ! is_string($value['geo'])]]></code>
+      <code><![CDATA[isset($value['group']) && ! is_string($value['group'])]]></code>
+      <code><![CDATA[isset($value['name']) && ! is_string($value['name'])]]></code>
+      <code><![CDATA[isset($value['osm']) && ! is_string($value['osm'])]]></code>
+      <code><![CDATA[isset($value['purpose']) && ! is_string($value['purpose'])]]></code>
+      <code><![CDATA[isset($value['role']) && ! is_string($value['role'])]]></code>
+      <code><![CDATA[isset($value['suggested']) && ! is_float($value['suggested'])]]></code>
+    </DocblockTypeContradiction>
+    <PossiblyUnusedParam>
+      <code>$value</code>
+    </PossiblyUnusedParam>
+  </file>
+  <file src="src/Writer/Extension/PodcastIndex/Feed.php">
+    <DocblockTypeContradiction>
       <code><![CDATA[! is_string($value['value'])]]></code>
       <code><![CDATA[is_bool($value['usesPodping'])]]></code>
       <code><![CDATA[is_string($value['description'])]]></code>
       <code><![CDATA[is_string($value['description'])]]></code>
-      <code><![CDATA[is_string($value['identifier'])]]></code>
-      <code><![CDATA[is_string($value['name'])]]></code>
       <code><![CDATA[is_string($value['pubdate'])]]></code>
-      <code><![CDATA[is_string($value['srcset'])]]></code>
       <code><![CDATA[is_string($value['title'])]]></code>
       <code><![CDATA[is_string($value['value'])]]></code>
       <code><![CDATA[isset($value['complete']) && ! is_bool($value['complete'])]]></code>
-      <code><![CDATA[isset($value['geo']) && ! is_string($value['geo'])]]></code>
-      <code><![CDATA[isset($value['group']) && ! is_string($value['group'])]]></code>
       <code><![CDATA[isset($value['id']) && ! is_string($value['id'])]]></code>
       <code><![CDATA[isset($value['length']) && ! is_int($value['length'])]]></code>
-      <code><![CDATA[isset($value['osm']) && ! is_string($value['osm'])]]></code>
-      <code><![CDATA[isset($value['role']) && ! is_string($value['role'])]]></code>
       <code><![CDATA[isset($value['rrule']) && ! is_string($value['rrule'])]]></code>
       <code><![CDATA[isset($value['season']) && ! is_int($value['season'])]]></code>
       <code><![CDATA[isset($value['type']) && ! is_string($value['type'])]]></code>
@@ -3135,7 +3156,7 @@
       <code>setPodcastIndexLocation</code>
       <code>setPodcastIndexLocked</code>
       <code>setPodcastIndexMedium</code>
-      <code>setPodcastIndexPeople</code>
+      <code>setPodcastIndexPersons</code>
       <code>setPodcastIndexPodping</code>
       <code>setPodcastIndexPodroll</code>
       <code>setPodcastIndexPublisher</code>

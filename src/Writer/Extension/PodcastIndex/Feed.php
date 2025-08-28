@@ -16,7 +16,6 @@ use function ctype_alpha;
 use function filter_var;
 use function in_array;
 use function is_bool;
-use function is_float;
 use function is_int;
 use function is_string;
 use function lcfirst;
@@ -37,6 +36,7 @@ use const FILTER_VALIDATE_URL;
  * @psalm-import-type RemoteItemArray from Validator
  * @psalm-import-type ValueRecipientArray from Validator
  * @psalm-import-type ValueArray from Validator
+ * @psalm-import-type ImageArray from Validator
  */
 class Feed
 {
@@ -141,7 +141,7 @@ class Feed
      */
     public function setPodcastIndexLicense(array $value): self
     {
-        $this->validator->validatePodcastIndexLicense($value);
+        $this->validator->validateLicense($value);
         $this->data['license'] = $value;
         return $this;
     }
@@ -155,13 +155,16 @@ class Feed
      */
     public function setPodcastIndexLocation(array $value): self
     {
-        $this->validator->validatePodcastIndexLocation($value);
+        $this->validator->validateLocation($value);
         $this->data['location'] = $value;
         return $this;
     }
 
     /**
-     * Set feed images
+     * Set feed images srcset.
+     * This method is deprecated, please use "addPodcastIndexImage" instead.
+     *
+     * @deprecated
      *
      * @param array{srcset: string} $value
      * @return $this
@@ -169,10 +172,29 @@ class Feed
      */
     public function setPodcastIndexImages(array $value): self
     {
-        $this->validator->validatePodcastIndexImages($value);
+        $this->validator->validateImages($value);
         $this->data['images'] = $value;
         return $this;
     }
+
+    /**
+     * Add feed image. Replaces "setPodcastIndexImages" method.
+     *
+     * @param ImageArray $value
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    /*public function addPodcastIndexImage(array $value): self
+    {
+        $this->validator->validateImage($value);
+
+        if (! isset($this->data['images'])) {
+            $this->data['images'] = [];
+        }
+
+        $this->data['images'][] = $value;
+        return $this;
+    }*/
 
     /**
      * Set feed update frequency
@@ -221,13 +243,13 @@ class Feed
      */
     public function addPodcastIndexPerson(array $value): self
     {
-        $this->validator->validatePodcastIndexPerson($value);
+        $this->validator->validatePerson($value);
 
         if (! isset($this->data['people'])) {
             $this->data['people'] = [];
         }
 
-        /** @var list<PersonArray> $this ->data['people'] */
+        /** @var list<PersonArray> $this->data['people'] */
         $this->data['people'][] = $value;
         return $this;
     }
@@ -421,7 +443,7 @@ class Feed
      */
     public function addPodcastIndexTxt(array $value): self
     {
-        $this->validator->validatePodcastIndexTxt($value);
+        $this->validator->validateTxt($value);
 
         if (! isset($this->data['txts'])) {
             $this->data['txts'] = [];
@@ -643,32 +665,11 @@ class Feed
      * @psalm-param list<ValueRecipientArray> $valueRecipients
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
-     * @psalm-suppress DocblockTypeContradiction
      */
     public function addPodcastIndexValue(array $value, array $valueRecipients): self
     {
         // validate the value attributes
-        if (! isset($value['type'], $value['method'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: the first argument of "value" must an array 
-                containing at least the keys "type" and "method"'
-            );
-        }
-        if (! is_string($value['type'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "type" of "value" must be of type string'
-            );
-        }
-        if (! is_string($value['method'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "method" of "value" must be of type string'
-            );
-        }
-        if (isset($value['suggested']) && ! is_float($value['suggested'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "suggested" of "value" must be of type float'
-            );
-        }
+        $this->validator->validateValue($value);
 
         // validate the value recipients array
         if (count($valueRecipients) < 1) {
@@ -677,7 +678,7 @@ class Feed
             );
         }
         foreach ($valueRecipients as $recipient) {
-            $this->validateValueRecipients($recipient);
+            $this->validator->validateValueRecipient($recipient);
         }
         $value['recipients'] = $valueRecipients;
 
@@ -690,58 +691,6 @@ class Feed
         $this->data['values'][] = $value;
 
         return $this;
-    }
-
-    /**
-     * Validate the values of the remote item.
-     *
-     * @param ValueRecipientArray $value
-     * @throws Writer\Exception\InvalidArgumentException
-     * @psalm-suppress DocblockTypeContradiction
-     */
-    private function validateValueRecipients(array $value): void
-    {
-        if (! isset($value['type'], $value['address'], $value['split'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: each "recipients" entry in "value" must be an array 
-                containing the keys "type", "address" and "split"'
-            );
-        }
-        if (! is_string($value['type'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "type" of "value recipient" must be of type string'
-            );
-        }
-        if (! is_string($value['address'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "address" of "value recipient" must be of type string'
-            );
-        }
-        if (! is_int($value['split'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "split" of "value recipient" must be of type integer'
-            );
-        }
-        if (isset($value['name']) && ! is_string($value['name'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "name" of "value recipient" must be of type string'
-            );
-        }
-        if (isset($value['customKey']) && ! is_string($value['customKey'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "customKey" of "value recipient" must be of type string'
-            );
-        }
-        if (isset($value['customValue']) && ! is_string($value['customValue'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "customKey" of "value recipient" must be of type string'
-            );
-        }
-        if (isset($value['fee']) && ! is_bool($value['fee'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "fee" of "value recipient" must be of type boolean'
-            );
-        }
     }
 
     /**
