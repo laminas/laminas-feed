@@ -6,6 +6,7 @@ namespace Laminas\Feed\Writer\Extension\PodcastIndex;
 
 use DateTimeInterface;
 use Laminas\Feed\Writer;
+use Laminas\Feed\Writer\Extension\PodcastIndex\Validator;
 use Laminas\Stdlib\StringUtils;
 use Laminas\Stdlib\StringWrapper\StringWrapperInterface;
 
@@ -30,49 +31,12 @@ use const FILTER_VALIDATE_URL;
 /**
  * Describes PodcastIndex data of a RSS Feed
  *
- * @psalm-type UpdateFrequencyArray = array{
- *     description: string,
- *     complete?: bool,
- *     dtstart?: DateTimeInterface,
- *     rrule?: string
- *   }
- * @psalm-type PersonArray = array{
- *     name: string,
- *     role?: string,
- *     group?: string,
- *     img?: string,
- *     href?: string
- *   }
- * @psalm-type TrailerArray = array{
- *     title: string,
- *     pubdate: string,
- *     url: string,
- *     length?: int,
- *     type?: string,
- *     season?: int
- *   }
- * @psalm-type RemoteItemArray = array{
- *     feedGuid: string,
- *     feedUrl?: string,
- *     itemGuid?: string,
- *     medium?: string,
- *     title?: string
- *   }
- * @psalm-type ValueRecipientArray = array{
- *       type: string,
- *       address: string,
- *       split: int,
- *       name?: string,
- *       customKey?: string,
- *       customValue?: string,
- *       fee?: bool,
- *     }
- * @psalm-type ValueArray = array{
- *     type: string,
- *     method: string,
- *     suggested?: float,
- *     recipients?: list<ValueRecipientArray>
- *   }
+ * @psalm-import-type PersonArray from Validator
+ * @psalm-import-type UpdateFrequencyArray from Validator
+ * @psalm-import-type TrailerArray from Validator
+ * @psalm-import-type RemoteItemArray from Validator
+ * @psalm-import-type ValueRecipientArray from Validator
+ * @psalm-import-type ValueArray from Validator
  */
 class Feed
 {
@@ -97,9 +61,17 @@ class Feed
      */
     protected $stringWrapper;
 
+    /**
+     * The used validation helper
+     *
+     * @var Validator
+     */
+    protected $validator;
+
     public function __construct()
     {
         $this->stringWrapper = StringUtils::getWrapper($this->encoding);
+        $this->validator     = new Validator();
     }
 
     /**
@@ -169,21 +141,7 @@ class Feed
      */
     public function setPodcastIndexLicense(array $value): self
     {
-        if (! isset($value['identifier'], $value['url'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: "license" must be an array containing the keys "identifier" (node value) and "url"'
-            );
-        }
-        if (! is_string($value['identifier'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: "identifier" of "license" must be of type string.'
-            );
-        }
-        if (! is_string($value['url']) || ! filter_var($value['url'], FILTER_VALIDATE_URL)) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: "url" of "license": must be a url starting with "http://" or "https://"'
-            );
-        }
+        $this->validator->validatePodcastIndexLicense($value);
         $this->data['license'] = $value;
         return $this;
     }
@@ -197,26 +155,7 @@ class Feed
      */
     public function setPodcastIndexLocation(array $value): self
     {
-        if (! isset($value['description'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: "location" must be an array containing at least the key "description" (node value)'
-            );
-        }
-        if (! is_string($value['description'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "description" of "location" must be of type string.'
-            );
-        }
-        if (isset($value['geo']) && ! is_string($value['geo'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "geo" of "location" must be of type string. example: "geo:-27.86159,153.3169"'
-            );
-        }
-        if (isset($value['osm']) && ! is_string($value['osm'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "osm" of "location" must be of type string. example: "W43678282"'
-            );
-        }
+        $this->validator->validatePodcastIndexLocation($value);
         $this->data['location'] = $value;
         return $this;
     }
@@ -230,16 +169,7 @@ class Feed
      */
     public function setPodcastIndexImages(array $value): self
     {
-        if (! isset($value['srcset'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: "images" must be an array containing the key "srcset"'
-            );
-        }
-        if (! is_string($value['srcset'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "srcset" of "images" must be of type string containing comma-seperated urls'
-            );
-        }
+        $this->validator->validatePodcastIndexImages($value);
         $this->data['images'] = $value;
         return $this;
     }
@@ -291,41 +221,13 @@ class Feed
      */
     public function addPodcastIndexPerson(array $value): self
     {
-        if (! isset($value['name'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: "person" must be an array containing at least the key "name"'
-            );
-        }
-        if (! is_string($value['name'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "name" of "person" must be of type string'
-            );
-        }
-        if (isset($value['role']) && ! is_string($value['role'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "role" of "person" must be of type string'
-            );
-        }
-        if (isset($value['group']) && ! is_string($value['group'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "group" of "person" must be of type string'
-            );
-        }
-        if (isset($value['img']) && ! filter_var($value['img'], FILTER_VALIDATE_URL)) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "img" of "person" must be a url, starting with "http://" or "https://"'
-            );
-        }
-        if (isset($value['href']) && ! filter_var($value['href'], FILTER_VALIDATE_URL)) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "href" of "person" must be a url, starting with "http://" or "https://"'
-            );
-        }
+        $this->validator->validatePodcastIndexPerson($value);
+
         if (! isset($this->data['people'])) {
             $this->data['people'] = [];
         }
 
-        /** @var list<PersonArray> $this->data['people'] */
+        /** @var list<PersonArray> $this ->data['people'] */
         $this->data['people'][] = $value;
         return $this;
     }
@@ -519,21 +421,7 @@ class Feed
      */
     public function addPodcastIndexTxt(array $value): self
     {
-        if (! isset($value['value'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: "txt" must be an array containing the key "value"'
-            );
-        }
-        if (! is_string($value['value'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "value" of "txt" must be of type string'
-            );
-        }
-        if (isset($value['purpose']) && ! is_string($value['purpose'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "purpose" of "txt" must be of type string'
-            );
-        }
+        $this->validator->validatePodcastIndexTxt($value);
 
         if (! isset($this->data['txts'])) {
             $this->data['txts'] = [];
