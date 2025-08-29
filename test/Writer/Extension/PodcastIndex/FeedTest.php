@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace LaminasTest\Feed\Writer\Extension\PodcastIndex;
 
 use DateTime;
+use Laminas\Feed\Reader\Extension\PodcastIndex\AttributesReader;
 use Laminas\Feed\Reader\Extension\PodcastIndex\Feed;
 use Laminas\Feed\Writer;
 use PHPUnit\Framework\TestCase;
@@ -15,10 +16,18 @@ use function in_array;
 use function time;
 
 /**
- * @psalm-import-type PersonObject from Feed
- * @psalm-import-type RemoteItemObject from Feed
- * @psalm-import-type ValueRecipientObject from Feed
- * @psalm-import-type ValueObject from Feed
+ * @psalm-import-type LicenseObject from AttributesReader
+ * @psalm-import-type LocationObject from AttributesReader
+ * @psalm-import-type BlockObject from AttributesReader
+ * @psalm-import-type TxtObject from AttributesReader
+ * @psalm-import-type PersonObject from AttributesReader
+ * @psalm-import-type UpdateFrequencyObject from AttributesReader
+ * @psalm-import-type TrailerObject from AttributesReader
+ * @psalm-import-type RemoteItemObject from AttributesReader
+ * @psalm-import-type ValueRecipientObject from AttributesReader
+ * @psalm-import-type ValueObject from AttributesReader
+ * @psalm-import-type ImageObject from AttributesReader
+ * @psalm-import-type SocialInteractObject from AttributesReader
  */
 class FeedTest extends TestCase
 {
@@ -1261,5 +1270,50 @@ class FeedTest extends TestCase
         /** @psalm-var list<ValueObject> $empty */
         $empty = $feed->getPodcastIndexValues();
         $this->assertEmpty($empty);
+    }
+
+    public function testSetSocialInteracts(): void
+    {
+        $feed = new Writer\Feed();
+
+        $data = [
+            [
+                'priority'   => 1,
+                'protocol'   => "activitypub",
+                'uri'        => "https://podcastindex.social/web/@dave/108013847520053258",
+                'accountId'  => "@dave",
+                'accountUrl' => "https://podcastindex.social/web/@dave",
+            ],
+            [
+                'priority'   => 2,
+                'protocol'   => "twitter",
+                'uri'        => "https://twitter.com/PodcastindexOrg/status/1507120226361647115",
+                'accountId'  => "@podcastindexorg",
+                'accountUrl' => "https://twitter.com/PodcastindexOrg",
+            ],
+        ];
+        $feed->setPodcastIndexSocialInteracts($data);
+
+        /** @psalm-var list<SocialInteractObject> $response */
+        $response = $feed->getPodcastIndexSocialInteracts();
+        $this->assertEquals($data, $response);
+    }
+
+    public function testAddSocialInteractThrowsExceptionOnInvalidUri(): void
+    {
+        $feed = new Writer\Feed();
+
+        $data = [
+            [
+                'priority'   => 1,
+                'protocol'   => "activitypub",
+                'uri'        => "podcastindex.social/web/@dave/108013847520053258",
+                'accountId'  => "@dave",
+                'accountUrl' => "https://podcastindex.social/web/@dave",
+            ],
+        ];
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->addPodcastIndexSocialInteract($data);
     }
 }

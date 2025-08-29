@@ -63,6 +63,7 @@ class Feed extends Extension\AbstractRenderer
         $this->setPodroll($this->dom, $this->base);
         $this->setPublisher($this->dom, $this->base);
         $this->setValues($this->dom, $this->base);
+        $this->setSocialInteracts($this->dom, $this->base);
         if ($this->called) {
             $this->_appendNamespaces();
         }
@@ -432,6 +433,28 @@ class Feed extends Extension\AbstractRenderer
                 $valueElement->appendChild($recipientElement);
             }
             $root->appendChild($valueElement);
+        }
+
+        $this->called = true;
+    }
+
+    /**
+     * Set feed social interacts
+     */
+    private function setSocialInteracts(DOMDocument $dom, DOMElement $root): void
+    {
+        /** @psalm-var FeedWriter $container */
+        $container = $this->getDataContainer();
+
+        /** @psalm-var list<SocialInteractArray>|null $socialInteracts */
+        $socialInteracts = $container->getPodcastIndexSocialInteracts();
+        if ($socialInteracts === null || $socialInteracts === []) {
+            return;
+        }
+
+        foreach ($socialInteracts as $socialInteract) {
+            $el = ElementGenerator::createSocialInteractElement($dom, $socialInteract);
+            $root->appendChild($el);
         }
 
         $this->called = true;

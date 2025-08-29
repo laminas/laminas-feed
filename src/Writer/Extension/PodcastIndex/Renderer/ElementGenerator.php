@@ -182,8 +182,29 @@ class ElementGenerator
      */
 
     /**
-     * TODO: Create social interact element
+     * Create social interact element
+     *
+     * @psalm-param DOMDocument $dom
+     * @psalm-param SocialInteractArray $socialInteract
      */
+    public static function createSocialInteractElement($dom, $socialInteract): DOMElement
+    {
+        $el = $dom->createElement('podcast:socialInteract');
+        $el->setAttribute('protocol', $socialInteract['protocol']);
+        $el->setAttribute('uri', $socialInteract['uri']);
+
+        if (isset($socialInteract['priority'])) {
+            $el->setAttribute('priority', (string) $socialInteract['priority']);
+        }
+        if (isset($socialInteract['accountId']) && $socialInteract['accountId'] !== '') {
+            $el->setAttribute('accountId', $socialInteract['accountId']);
+        }
+        if (isset($socialInteract['accountUrl']) && $socialInteract['accountUrl'] !== '') {
+            $el->setAttribute('accountUrl', $socialInteract['accountUrl']);
+        }
+
+        return $el;
+    }
 
     /**
      * Create remote item element

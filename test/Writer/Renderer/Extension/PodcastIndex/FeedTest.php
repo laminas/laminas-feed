@@ -518,4 +518,36 @@ class FeedTest extends TestCase
         $this->assertStringContainsString($newRecipients[0]['name'], $xml);
         $this->assertStringContainsString((string) $newRecipients[1]['split'], $xml);
     }
+
+    public function testRendersRssSocialInteractTags(): void
+    {
+        $data = [
+            [
+                'priority'   => 1,
+                'protocol'   => "activitypub",
+                'uri'        => "https://podcastindex.social/web/@dave/108013847520053258",
+                'accountId'  => "@dave",
+                'accountUrl' => "https://podcastindex.social/web/@dave",
+            ],
+            [
+                'priority'   => 2,
+                'protocol'   => "twitter",
+                'uri'        => "https://twitter.com/PodcastindexOrg/status/1507120226361647115",
+                'accountId'  => "@podcastindexorg",
+                'accountUrl' => "https://twitter.com/PodcastindexOrg",
+            ],
+        ];
+
+        $this->validWriter->setPodcastIndexSocialInteracts($data);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $this->assertStringContainsString('<podcast:socialInteract', $xml);
+        $this->assertStringContainsString((string) $data[0]['priority'], $xml);
+        $this->assertStringContainsString($data[0]['protocol'], $xml);
+        $this->assertStringContainsString($data[0]['uri'], $xml);
+        $this->assertStringContainsString($data[1]['accountId'], $xml);
+        $this->assertStringContainsString($data[1]['accountUrl'], $xml);
+    }
 }
