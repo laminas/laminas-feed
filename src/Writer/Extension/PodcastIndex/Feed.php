@@ -30,6 +30,10 @@ use const FILTER_VALIDATE_URL;
 /**
  * Describes PodcastIndex data of a RSS Feed
  *
+ * @psalm-import-type LicenseArray from Validator
+ * @psalm-import-type LocationArray from Validator
+ * @psalm-import-type BlockArray from Validator
+ * @psalm-import-type TxtArray from Validator
  * @psalm-import-type PersonArray from Validator
  * @psalm-import-type UpdateFrequencyArray from Validator
  * @psalm-import-type TrailerArray from Validator
@@ -37,6 +41,7 @@ use const FILTER_VALIDATE_URL;
  * @psalm-import-type ValueRecipientArray from Validator
  * @psalm-import-type ValueArray from Validator
  * @psalm-import-type ImageArray from Validator
+ * @psalm-import-type SocialInteractArray from Validator
  */
 class Feed
 {
@@ -127,7 +132,7 @@ class Feed
     /**
      * Set feed license
      *
-     * @param array{identifier: string, url: string} $value
+     * @param LicenseArray $value
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
@@ -141,7 +146,7 @@ class Feed
     /**
      * Set feed location
      *
-     * @param array{description: string, geo?: string, osm?: string} $value
+     * @param LocationArray $value
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
@@ -376,7 +381,7 @@ class Feed
     /**
      * Add feed block
      *
-     * @param array{value: string, id?: string} $value
+     * @param BlockArray $value
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
@@ -411,7 +416,7 @@ class Feed
      * Set a new array of blocks.
      * If no argument is passed, it will just remove all existing block entries.
      *
-     * @psalm-param list<array{value: string, id?: string}> $values
+     * @psalm-param list<BlockArray> $values
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
@@ -428,7 +433,7 @@ class Feed
     /**
      * Add feed txt
      *
-     * @param array{value: string, purpose?: string} $value
+     * @param TxtArray $value
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      * @psalm-suppress DocblockTypeContradiction
@@ -450,7 +455,7 @@ class Feed
      * Set a new array of txts.
      * If no argument is passed, it will just remove all existing txt entries.
      *
-     * @psalm-param list<array{value: string, purpose?: string}> $values
+     * @psalm-param list<TxtArray> $values
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
@@ -686,6 +691,43 @@ class Feed
     }
 
     /**
+     * Add a social interact for the feed.
+     *
+     * @param SocialInteractArray $value
+     * @return $this
+     */
+    public function addPodcastIndexSocialInteract(array $value): self
+    {
+        Validator::validateSocialInteract($value);
+
+        if (! isset($this->data['socialInteracts'])) {
+            $this->data['socialInteracts'] = [];
+        }
+
+        /** @var list<SocialInteractArray> $this->data['socialInteracts'] */
+        $this->data['socialInteracts'][] = $value;
+
+        return $this;
+    }
+
+    /**
+     * Create a new set of social interacts for the feed.
+     * If no argument is passed, any existing social interact entry will be removed.
+     *
+     * @psalm-param list<SocialInteractArray> $values
+     * @return $this
+     */
+    public function setPodcastIndexSocialInteracts(array $values = []): self
+    {
+        $this->data['socialInteracts'] = [];
+
+        foreach ($values as $value) {
+            $this->addPodcastIndexSocialInteract($value);
+        }
+        return $this;
+    }
+
+    /**
      * Overloading: proxy to internal setters
      *
      * @return mixed
@@ -731,6 +773,7 @@ class Feed
     public function getPodcastIndexLockOwner(): string|null
     {
         if (isset($this->data['locked'], $this->data['locked']['owner'])) {
+            /** @psalm-var string $this->data['locked']['owner'] */
             return $this->data['locked']['owner'];
         }
         return null;
@@ -738,6 +781,8 @@ class Feed
 
     public function getPodcastIndexPersons(): array
     {
-        return $this->getPodcastIndexPeople();
+        /** @var list<PersonArray> $persons */
+        $persons = $this->getPodcastIndexPeople();
+        return $persons;
     }
 }

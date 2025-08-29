@@ -3105,10 +3105,12 @@
       <code><![CDATA[is_string($value['identifier'])]]></code>
       <code><![CDATA[is_string($value['method'])]]></code>
       <code><![CDATA[is_string($value['name'])]]></code>
+      <code><![CDATA[is_string($value['protocol'])]]></code>
       <code><![CDATA[is_string($value['srcset'])]]></code>
       <code><![CDATA[is_string($value['type'])]]></code>
       <code><![CDATA[is_string($value['type'])]]></code>
       <code><![CDATA[is_string($value['value'])]]></code>
+      <code><![CDATA[isset($value['accountId']) && ! is_string($value['accountId'])]]></code>
       <code><![CDATA[isset($value['customKey']) && ! is_string($value['customKey'])]]></code>
       <code><![CDATA[isset($value['customValue']) && ! is_string($value['customValue'])]]></code>
       <code><![CDATA[isset($value['fee']) && ! is_bool($value['fee'])]]></code>
@@ -3116,6 +3118,7 @@
       <code><![CDATA[isset($value['group']) && ! is_string($value['group'])]]></code>
       <code><![CDATA[isset($value['name']) && ! is_string($value['name'])]]></code>
       <code><![CDATA[isset($value['osm']) && ! is_string($value['osm'])]]></code>
+      <code><![CDATA[isset($value['priority']) && ! is_int($value['priority'])]]></code>
       <code><![CDATA[isset($value['purpose']) && ! is_string($value['purpose'])]]></code>
       <code><![CDATA[isset($value['role']) && ! is_string($value['role'])]]></code>
       <code><![CDATA[isset($value['suggested']) && ! is_float($value['suggested'])]]></code>
@@ -3141,11 +3144,13 @@
       <code><![CDATA[isset($value['type']) && ! is_string($value['type'])]]></code>
     </DocblockTypeContradiction>
     <PossiblyUnusedMethod>
-      <code>__call</code>
       <code>__construct</code>
       <code>addPodcastIndexPodrollRemoteItem</code>
       <code>addPodcastIndexValue</code>
       <code>getEncoding</code>
+      <code>getLockOwner</code>
+      <code>getPodcastIndexPersons</code>
+      <code>isLocked</code>
       <code>resetPodcastIndexValues</code>
       <code>setEncoding</code>
       <code>setPodcastIndexBlocks</code>

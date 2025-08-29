@@ -18,12 +18,29 @@ use const FILTER_VALIDATE_URL;
 /**
  * Validates PodcastIndex data that exists for both, Feeds and Entries
  *
+ * @psalm-type LicenseArray = array{
+ *       identifier: string,
+ *       url: string
+ *     }
+ * @psalm-type LocationArray = array{
+ *        description: string,
+ *        geo?: string,
+ *        osm?: string
+ *      }
+ * @psalm-type BlockArray = array{
+ *         value: string,
+ *         id?: string
+ *       }
+ * @psalm-type TxtArray = array{
+ *         value: string,
+ *         purpose?: string
+ *       }
  * @psalm-type UpdateFrequencyArray = array{
- *      description: string,
- *      complete?: bool,
- *      dtstart?: DateTimeInterface,
- *      rrule?: string
- *    }
+ *       description: string,
+ *       complete?: bool,
+ *       dtstart?: DateTimeInterface,
+ *       rrule?: string
+ *     }
  * @psalm-type PersonArray = array{
  *      name: string,
  *      role?: string,
@@ -305,7 +322,8 @@ class Validator
         }
         if (isset($value['accountUrl']) && ! filter_var($value['accountUrl'], FILTER_VALIDATE_URL)) {
             throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "accountUrl" of "socialInteract" must be a url starting with "http://" or "https://"'
+                'invalid parameter: key "accountUrl" of "socialInteract" must be a url 
+                starting with "http://" or "https://"'
             );
         }
     }
