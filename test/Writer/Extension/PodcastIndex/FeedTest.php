@@ -32,6 +32,10 @@ class FeedTest extends TestCase
         ];
         $feed->setPodcastIndexLocked($locked);
         $this->assertEquals($locked, $feed->getPodcastIndexLocked());
+        $this->assertEquals($locked['owner'], $feed->getLockOwner());
+        $this->assertEquals($locked['owner'], $feed->getPodcastIndexLockOwner());
+        $this->assertTrue($feed->isLocked());
+        $this->assertTrue($feed->isPodcastIndexLocked());
     }
 
     public function testSetLockedThrowsExceptionOnInvalidArguments(): void
@@ -390,6 +394,32 @@ class FeedTest extends TestCase
         // delete
         $feed->setPodcastIndexPeople();
         $this->assertNull($feed->getPodcastIndexPeople());
+    }
+
+    public function testSetPersons(): void
+    {
+        $feed = new Writer\Feed();
+
+        $people = [
+            [
+                'name'  => 'Hercules Poirot',
+                'role'  => 'guest',
+                'group' => 'starring',
+                'img'   => 'https://poirot.com/about/my-moustage.jpg',
+                'href'  => 'https://poirot.com/my-cases',
+            ],
+            [
+                'name'  => 'Agatha Christie',
+                'role'  => 'guest',
+                'group' => 'writing',
+            ],
+        ];
+        $feed->setPodcastIndexPersons($people);
+        /** @var list<PersonObject> $peopleSaved */
+        $peopleSaved = $feed->getPodcastIndexPersons();
+        foreach ($people as $person) {
+            $this->assertTrue(in_array($person, $peopleSaved));
+        }
     }
 
     public function testAddPersonWithOneArgument(): void

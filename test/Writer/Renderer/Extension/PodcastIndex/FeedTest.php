@@ -187,6 +187,25 @@ class FeedTest extends TestCase
         $this->assertStringContainsString(">$sName</podcast:person>", $xml);
     }
 
+    public function testRendersMultipleRssPersonTagsUsingAlias(): void
+    {
+        $fName = 'Hercules Poirot';
+        $sName = 'Agatha Christie';
+
+        $people = [
+            ['name' => $fName],
+            ['name' => $sName],
+        ];
+
+        $this->validWriter->setPodcastIndexPersons($people);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $this->assertStringContainsString(">$fName</podcast:person>", $xml);
+        $this->assertStringContainsString(">$sName</podcast:person>", $xml);
+    }
+
     public function testRendersRssTrailerTag(): void
     {
         $trailer = [

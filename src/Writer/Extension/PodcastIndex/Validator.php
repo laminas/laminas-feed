@@ -62,14 +62,21 @@ use const FILTER_VALIDATE_URL;
  *       recipients?: list<ValueRecipientArray>
  *     }
  * @psalm-type ImageArray = array{
- *       href: string,
- *       alt?: string,
- *       purpose?: string,
- *       type?: string,
- *       aspect-ratio?: string,
- *       width?: int,
- *       height?: int,
- *     }
+ *        href: string,
+ *        alt?: string,
+ *        purpose?: string,
+ *        type?: string,
+ *        aspect-ratio?: string,
+ *        width?: int,
+ *        height?: int,
+ *      }
+ * @psalm-type SocialInteractArray = array{
+ *        protocol: string,
+ *        uri: string,
+ *        priority?: int,
+ *        accountId?: string,
+ *        accountUrl?: string,
+ *      }
  */
 class Validator
 {
@@ -79,7 +86,7 @@ class Validator
      * @psalm-param PersonArray $value
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public function validatePerson(array $value): void
+    public static function validatePerson(array $value): void
     {
         if (! isset($value['name'])) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -119,7 +126,7 @@ class Validator
      * @param array{identifier: string, url: string} $value
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public function validateLicense(array $value): void
+    public static function validateLicense(array $value): void
     {
         if (! isset($value['identifier'], $value['url'])) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -144,7 +151,7 @@ class Validator
      * @param array{description: string, geo?: string, osm?: string} $value
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public function validateLocation(array $value): void
+    public static function validateLocation(array $value): void
     {
         if (! isset($value['description'])) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -174,7 +181,7 @@ class Validator
      * @param array{value: string, purpose?: string} $value
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public function validateTxt(array $value): void
+    public static function validateTxt(array $value): void
     {
         if (! isset($value['value'])) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -199,7 +206,7 @@ class Validator
      * @param array{srcset: string} $value
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public function validateImages(array $value): void
+    public static function validateImages(array $value): void
     {
         if (! isset($value['srcset'])) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -219,7 +226,7 @@ class Validator
      * @param ImageArray $value
      * @throws Writer\Exception\InvalidArgumentException
      */
-    /*public function validateImage(array $value): void
+    /*public static function validateImage(array $value): void
     {
         if (! isset($value['href'])) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -264,12 +271,52 @@ class Validator
     }*/
 
     /**
+     * Validates social interact
+     *
+     * @param SocialInteractArray $value
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public static function validateSocialInteract(array $value): void
+    {
+        if (! isset($value['protocol'], $value['uri'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "socialInteract" must be an array containing at least the keys "protocol" and "uri"'
+            );
+        }
+        if (! is_string($value['protocol'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "protocol" of "socialInteract" must be of type string'
+            );
+        }
+        if (! filter_var($value['uri'], FILTER_VALIDATE_URL)) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "uri" of "socialInteract" must be a url starting with "http://" or "https://"'
+            );
+        }
+        if (isset($value['priority']) && ! is_int($value['priority'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "priority" of "socialInteract" must be of type integer'
+            );
+        }
+        if (isset($value['accountId']) && ! is_string($value['accountId'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "accountId" of "socialInteract" must be of type string'
+            );
+        }
+        if (isset($value['accountUrl']) && ! filter_var($value['accountUrl'], FILTER_VALIDATE_URL)) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "accountUrl" of "socialInteract" must be a url starting with "http://" or "https://"'
+            );
+        }
+    }
+
+    /**
      * Validates value
      *
      * @param ValueArray $value
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public function validateValue(array $value): void
+    public static function validateValue(array $value): void
     {
         if (! isset($value['type'], $value['method'])) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -300,7 +347,7 @@ class Validator
      * @param ValueRecipientArray $value
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public function validateValueRecipient(array $value): void
+    public static function validateValueRecipient(array $value): void
     {
         if (! isset($value['type'], $value['address'], $value['split'])) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -348,15 +395,7 @@ class Validator
     /**
      * Validates value time split
      */
-    public function validateValueTimeSplit(array $value): void
-    {
-        // TODO
-    }
-
-    /**
-     * Validates social interact
-     */
-    public function validateSocialInteract(array $value): void
+    public static function validateValueTimeSplit(array $value): void
     {
         // TODO
     }

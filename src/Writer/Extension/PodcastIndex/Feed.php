@@ -61,17 +61,9 @@ class Feed
      */
     protected $stringWrapper;
 
-    /**
-     * The used validation helper
-     *
-     * @var Validator
-     */
-    protected $validator;
-
     public function __construct()
     {
         $this->stringWrapper = StringUtils::getWrapper($this->encoding);
-        $this->validator     = new Validator();
     }
 
     /**
@@ -141,7 +133,7 @@ class Feed
      */
     public function setPodcastIndexLicense(array $value): self
     {
-        $this->validator->validateLicense($value);
+        Validator::validateLicense($value);
         $this->data['license'] = $value;
         return $this;
     }
@@ -155,7 +147,7 @@ class Feed
      */
     public function setPodcastIndexLocation(array $value): self
     {
-        $this->validator->validateLocation($value);
+        Validator::validateLocation($value);
         $this->data['location'] = $value;
         return $this;
     }
@@ -172,7 +164,7 @@ class Feed
      */
     public function setPodcastIndexImages(array $value): self
     {
-        $this->validator->validateImages($value);
+        Validator::validateImages($value);
         $this->data['images'] = $value;
         return $this;
     }
@@ -186,7 +178,7 @@ class Feed
      */
     /*public function addPodcastIndexImage(array $value): self
     {
-        $this->validator->validateImage($value);
+        Validator::validateImage($value);
 
         if (! isset($this->data['images'])) {
             $this->data['images'] = [];
@@ -243,7 +235,7 @@ class Feed
      */
     public function addPodcastIndexPerson(array $value): self
     {
-        $this->validator->validatePerson($value);
+        Validator::validatePerson($value);
 
         if (! isset($this->data['people'])) {
             $this->data['people'] = [];
@@ -274,7 +266,7 @@ class Feed
 
     /**
      * Set a new array of persons. (alias of setPodcastIndexPeople)
-     * If no argument is passed, it will just remove all existing people.
+     * If no argument is passed, it will just remove all existing persons.
      *
      * @psalm-param list<PersonArray> $values
      * @return $this
@@ -443,7 +435,7 @@ class Feed
      */
     public function addPodcastIndexTxt(array $value): self
     {
-        $this->validator->validateTxt($value);
+        Validator::validateTxt($value);
 
         if (! isset($this->data['txts'])) {
             $this->data['txts'] = [];
@@ -669,7 +661,7 @@ class Feed
     public function addPodcastIndexValue(array $value, array $valueRecipients): self
     {
         // validate the value attributes
-        $this->validator->validateValue($value);
+        Validator::validateValue($value);
 
         // validate the value recipients array
         if (count($valueRecipients) < 1) {
@@ -678,7 +670,7 @@ class Feed
             );
         }
         foreach ($valueRecipients as $recipient) {
-            $this->validator->validateValueRecipient($recipient);
+            Validator::validateValueRecipient($recipient);
         }
         $value['recipients'] = $valueRecipients;
 
@@ -716,5 +708,36 @@ class Feed
             return;
         }
         return $this->data[$point];
+    }
+
+    public function isLocked(): bool
+    {
+        return $this->isPodcastIndexLocked();
+    }
+
+    public function isPodcastIndexLocked(): bool
+    {
+        if (isset($this->data['locked'], $this->data['locked']['value'])) {
+            return $this->data['locked']['value'] === 'yes';
+        }
+        return false;
+    }
+
+    public function getLockOwner(): string|null
+    {
+        return $this->getPodcastIndexLockOwner();
+    }
+
+    public function getPodcastIndexLockOwner(): string|null
+    {
+        if (isset($this->data['locked'], $this->data['locked']['owner'])) {
+            return $this->data['locked']['owner'];
+        }
+        return null;
+    }
+
+    public function getPodcastIndexPersons(): array
+    {
+        return $this->getPodcastIndexPeople();
     }
 }

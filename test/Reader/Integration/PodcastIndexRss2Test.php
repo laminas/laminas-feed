@@ -36,6 +36,7 @@ class PodcastIndexRss2Test extends TestCase
             file_get_contents($this->feedSamplePath)
         );
         $this->assertEquals(true, $feed->isLocked());
+        $this->assertEquals(true, $feed->isPodcastIndexLocked());
     }
 
     public function testGetsLockOwner(): void
@@ -143,6 +144,24 @@ class PodcastIndexRss2Test extends TestCase
         $expected->href  = 'https://www.wikipedia/alicebrown';
 
         $people = $feed->getPodcastIndexPeople();
+        $this->assertEquals($expected, $people[0]);
+    }
+
+    public function testGetsPersons(): void
+    {
+        /** @var Reader\Extension\PodcastIndex\Feed $feed */
+        $feed = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath)
+        );
+
+        $expected        = new stdClass();
+        $expected->name  = 'Alice Brown';
+        $expected->role  = 'guest';
+        $expected->group = 'writing';
+        $expected->img   = 'http://example.com/images/alicebrown.jpg';
+        $expected->href  = 'https://www.wikipedia/alicebrown';
+
+        $people = $feed->getPodcastIndexPersons();
         $this->assertEquals($expected, $people[0]);
     }
 
