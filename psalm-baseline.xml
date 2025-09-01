@@ -1567,20 +1567,6 @@
       <code>getAttribute</code>
     </UndefinedMethod>
   </file>
-  <file src="src/Reader/Extension/PodcastIndex/Entry.php">
-    <MismatchingDocblockReturnType>
-      <code>null|object{url: string, type: string, language: string, rel: string}</code>
-      <code>null|object{url: string, type: string}</code>
-    </MismatchingDocblockReturnType>
-    <MixedInferredReturnType>
-      <code><![CDATA[array<int, object{title: string, startTime: string, duration: string}>]]></code>
-      <code>null|object{url: string, type: string, language: string, rel: string}</code>
-      <code>null|object{url: string, type: string}</code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement>
-      <code><![CDATA[$this->data['soundbites']]]></code>
-    </MixedReturnStatement>
-  </file>
   <file src="src/Reader/Extension/PodcastIndex/Feed.php">
     <MixedAssignment>
       <code>$locked</code>
@@ -1595,6 +1581,20 @@
       <code><![CDATA[$this->data['owner']]]></code>
       <code><![CDATA[$this->data['owner']]]></code>
       <code><![CDATA[$this->data['owner']]]></code>
+    </MixedReturnStatement>
+  </file>
+  <file src="src/Reader/Extension/PodcastIndex/Entry.php">
+    <MismatchingDocblockReturnType>
+      <code>null|object{url: string, type: string, language: string, rel: string}</code>
+      <code>null|object{url: string, type: string}</code>
+    </MismatchingDocblockReturnType>
+    <MixedInferredReturnType>
+      <code><![CDATA[array<int, object{title: string, startTime: string, duration: string}>]]></code>
+      <code>null|object{url: string, type: string, language: string, rel: string}</code>
+      <code>null|object{url: string, type: string}</code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement>
+      <code><![CDATA[$this->data['soundbites']]]></code>
     </MixedReturnStatement>
   </file>
   <file src="src/Reader/Extension/Slash/Entry.php">
@@ -3166,6 +3166,7 @@
       <code>setPodcastIndexPodroll</code>
       <code>setPodcastIndexPublisher</code>
       <code>setPodcastIndexRemoteItems</code>
+      <code>setPodcastIndexSocialInteracts</code>
       <code>setPodcastIndexTrailer</code>
       <code>setPodcastIndexTxts</code>
       <code>setPodcastIndexUpdateFrequency</code>

@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Laminas\Feed\Reader\Extension\PodcastIndex;
 
-// phpcs:disable SlevomatCodingStandard.Namespaces.UnusedUses.UnusedUse
-use DateTimeInterface;
-// phpcs:enable SlevomatCodingStandard.Namespaces.UnusedUses.UnusedUse
 use DOMElement;
 use Laminas\Feed\Reader\Extension;
 use Laminas\Feed\Reader\Extension\PodcastIndex\AttributesReader;
@@ -126,8 +123,6 @@ class Feed extends Extension\AbstractFeed
 
     /**
      * Get the podcast license
-     *
-     * @return null|LicenseObject
      */
     public function getPodcastIndexLicense(): object|null
     {
@@ -141,7 +136,9 @@ class Feed extends Extension\AbstractFeed
         $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:license');
 
         if ($nodeList->length > 0) {
-            $license = AttributesReader::readLicense($nodeList->item(0));
+            $item = $nodeList->item(0);
+            assert($item instanceof DOMElement);
+            $license = AttributesReader::readLicense($item);
         }
 
         $this->data['license'] = $license;
@@ -151,8 +148,6 @@ class Feed extends Extension\AbstractFeed
 
     /**
      * Get the podcast location
-     *
-     * @return null|LocationObject
      */
     public function getPodcastIndexLocation(): object|null
     {
@@ -166,7 +161,9 @@ class Feed extends Extension\AbstractFeed
         $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:location');
 
         if ($nodeList->length > 0) {
-            $location = AttributesReader::readLocation($nodeList->item(0));
+            $item = $nodeList->item(0);
+            assert($item instanceof DOMElement);
+            $location = AttributesReader::readLocation($item);
         }
 
         $this->data['location'] = $location;
@@ -177,7 +174,7 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get the podcast images
      *
-     * @return null|object{srcset: string}
+     * @psalm-return null|object{srcset: string}
      */
     public function getPodcastIndexImages(): object|null
     {
@@ -191,7 +188,9 @@ class Feed extends Extension\AbstractFeed
         $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:images');
 
         if ($nodeList->length > 0) {
-            $images = AttributesReader::readImages($nodeList->item(0));
+            $item = $nodeList->item(0);
+            assert($item instanceof DOMElement);
+            $images = AttributesReader::readImages($item);
         }
 
         $this->data['images'] = $images;
@@ -216,7 +215,9 @@ class Feed extends Extension\AbstractFeed
         $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:updateFrequency');
 
         if ($nodeList->length > 0) {
-            $updateFrequency = AttributesReader::readUpdateFrequency($nodeList->item(0));
+            $item = $nodeList->item(0);
+            assert($item instanceof DOMElement);
+            $updateFrequency = AttributesReader::readUpdateFrequency($item);
         }
 
         $this->data['updateFrequency'] = $updateFrequency;
@@ -242,6 +243,7 @@ class Feed extends Extension\AbstractFeed
 
         if ($nodeList->length > 0) {
             foreach ($nodeList as $entry) {
+                assert($entry instanceof DOMElement);
                 $person = AttributesReader::readPerson($entry);
 
                 $personCollection[] = $person;
@@ -280,7 +282,9 @@ class Feed extends Extension\AbstractFeed
         $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:trailer');
 
         if ($nodeList->length > 0) {
-            $object = AttributesReader::readTrailer($nodeList->item(0));
+            $item = $nodeList->item(0);
+            assert($item instanceof DOMElement);
+            $object = AttributesReader::readTrailer($item);
         }
 
         $this->data['trailer'] = $object;
@@ -305,7 +309,9 @@ class Feed extends Extension\AbstractFeed
         $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:guid');
 
         if ($nodeList->length > 0) {
-            $object = AttributesReader::readGuid($nodeList->item(0));
+            $item = $nodeList->item(0);
+            assert($item instanceof DOMElement);
+            $object = AttributesReader::readGuid($item);
         }
 
         $this->data['guid'] = $object;
@@ -330,7 +336,9 @@ class Feed extends Extension\AbstractFeed
         $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:medium');
 
         if ($nodeList->length > 0) {
-            $object = AttributesReader::readMedium($nodeList->item(0));
+            $item = $nodeList->item(0);
+            assert($item instanceof DOMElement);
+            $object = AttributesReader::readMedium($item);
         }
 
         $this->data['medium'] = $object;
@@ -355,6 +363,7 @@ class Feed extends Extension\AbstractFeed
         $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:block');
 
         foreach ($nodeList as $entry) {
+            assert($entry instanceof DOMElement);
             $object   = AttributesReader::readBlock($entry);
             $blocks[] = $object;
         }
@@ -381,6 +390,7 @@ class Feed extends Extension\AbstractFeed
         $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:txt');
 
         foreach ($nodeList as $entry) {
+            assert($entry instanceof DOMElement);
             $object = AttributesReader::readTxt($entry);
             $txts[] = $object;
         }
@@ -436,6 +446,7 @@ class Feed extends Extension\AbstractFeed
         $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:remoteItem');
 
         foreach ($nodeList as $entry) {
+            assert($entry instanceof DOMElement);
             $object        = AttributesReader::readRemoteItem($entry);
             $remoteItems[] = $object;
         }
@@ -529,6 +540,7 @@ class Feed extends Extension\AbstractFeed
         $valuesNodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:value');
 
         foreach ($valuesNodeList as $valueNode) {
+            assert($valueNode instanceof DOMElement);
             $valueObject = AttributesReader::readValue($valueNode);
 
             /** @psalm-suppress TooManyArguments */
@@ -568,6 +580,7 @@ class Feed extends Extension\AbstractFeed
         $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:socialInteract');
 
         foreach ($nodeList as $entry) {
+            assert($entry instanceof DOMElement);
             $object            = AttributesReader::readSocialInteract($entry);
             $socialInteracts[] = $object;
         }

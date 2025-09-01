@@ -6,7 +6,6 @@ namespace LaminasTest\Feed\Writer\Extension\PodcastIndex;
 
 use DateTime;
 use Laminas\Feed\Reader\Extension\PodcastIndex\AttributesReader;
-use Laminas\Feed\Reader\Extension\PodcastIndex\Feed;
 use Laminas\Feed\Writer;
 use PHPUnit\Framework\TestCase;
 
@@ -1310,6 +1309,22 @@ class FeedTest extends TestCase
                 'uri'        => "podcastindex.social/web/@dave/108013847520053258",
                 'accountId'  => "@dave",
                 'accountUrl' => "https://podcastindex.social/web/@dave",
+            ],
+        ];
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->addPodcastIndexSocialInteract($data);
+    }
+
+    public function testAddSocialInteractThrowsExceptionOnMissingProtocol(): void
+    {
+        $feed = new Writer\Feed();
+
+        $data = [
+            [
+                'priority'  => 1,
+                'uri'       => "https://podcastindex.social/web/@dave",
+                'accountId' => "@dave",
             ],
         ];
 
