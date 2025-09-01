@@ -7,7 +7,6 @@ namespace Laminas\Feed\Writer\Extension\PodcastIndex\Renderer;
 use DOMDocument;
 use DOMElement;
 use Laminas\Feed\Writer\Extension;
-use Laminas\Feed\Writer\Extension\PodcastIndex\Renderer\ElementGenerator;
 use Laminas\Feed\Writer\Extension\PodcastIndex\Validator;
 use Laminas\Feed\Writer\Feed as FeedWriter;
 

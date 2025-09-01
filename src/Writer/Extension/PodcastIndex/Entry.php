@@ -169,6 +169,20 @@ class Entry
     }
 
     /**
+     * Set entry location
+     *
+     * @param LocationArray $value
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function setPodcastIndexLocation(array $value): self
+    {
+        Validator::validateLocation($value);
+        $this->data['location'] = $value;
+        return $this;
+    }
+
+    /**
      * Overloading: proxy to internal setters
      *
      * @return mixed

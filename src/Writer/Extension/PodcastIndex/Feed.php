@@ -6,7 +6,6 @@ namespace Laminas\Feed\Writer\Extension\PodcastIndex;
 
 use DateTimeInterface;
 use Laminas\Feed\Writer;
-use Laminas\Feed\Writer\Extension\PodcastIndex\Validator;
 use Laminas\Stdlib\StringUtils;
 use Laminas\Stdlib\StringWrapper\StringWrapperInterface;
 

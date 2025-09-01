@@ -4,9 +4,27 @@ declare(strict_types=1);
 
 namespace LaminasTest\Feed\Writer\Extension\PodcastIndex;
 
+use Laminas\Feed\Reader\Extension\PodcastIndex\AttributesReader;
 use Laminas\Feed\Writer;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @psalm-import-type LicenseObject from AttributesReader
+ * @psalm-import-type LocationObject from AttributesReader
+ * @psalm-import-type BlockObject from AttributesReader
+ * @psalm-import-type TxtObject from AttributesReader
+ * @psalm-import-type PersonObject from AttributesReader
+ * @psalm-import-type UpdateFrequencyObject from AttributesReader
+ * @psalm-import-type TrailerObject from AttributesReader
+ * @psalm-import-type RemoteItemObject from AttributesReader
+ * @psalm-import-type ValueRecipientObject from AttributesReader
+ * @psalm-import-type ValueObject from AttributesReader
+ * @psalm-import-type ImageObject from AttributesReader
+ * @psalm-import-type SocialInteractObject from AttributesReader
+ * @psalm-import-type TranscriptObject from AttributesReader
+ * @psalm-import-type ChaptersObject from AttributesReader
+ * @psalm-import-type SoundbiteObject from AttributesReader
+ */
 class EntryTest extends TestCase
 {
     public function testSetTranscript(): void
@@ -227,5 +245,87 @@ class EntryTest extends TestCase
         ];
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $entry->addPodcastIndexSoundbite($soundbite);
+    }
+
+    public function testSetLocation(): void
+    {
+        $entry = new Writer\Entry();
+
+        $location = [
+            'description' => 'London, Baker Street',
+            'geo'         => 'geo:-27.86159,153.3169',
+            'osm'         => 'W43678282',
+            'rel'         => 'subject',
+            'country'     => 'GB',
+        ];
+        $entry->setPodcastIndexLocation($location);
+        $this->assertEquals($location, $entry->getPodcastIndexLocation());
+    }
+
+    public function testSetLocationWithOneArgument(): void
+    {
+        $entry = new Writer\Entry();
+
+        $location = [
+            'description' => 'London, Baker Street',
+        ];
+        $entry->setPodcastIndexLocation($location);
+        $this->assertEquals($location, $entry->getPodcastIndexLocation());
+    }
+
+    public function testSetLocationThrowsExceptionOnInvalidArguments(): void
+    {
+        $entry = new Writer\Entry();
+
+        $location = [
+            'abc' => 'def',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $entry->setPodcastIndexLocation($location);
+    }
+
+    public function testSetLocationThrowsExceptionOnInvalidGeo(): void
+    {
+        $entry = new Writer\Entry();
+
+        $location = [
+            'description' => 'London, Baker Street',
+            'geo'         => [-27.86159, 153.3169],
+            'osm'         => 'W43678282',
+            'rel'         => 'subject',
+            'country'     => 'GB',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $entry->setPodcastIndexLocation($location);
+    }
+
+    public function testSetLocationThrowsExceptionOnInvalidOsm(): void
+    {
+        $entry = new Writer\Entry();
+
+        $location = [
+            'description' => 'London, Baker Street',
+            'geo'         => 'geo:-27.86159,153.3169',
+            'osm'         => false,
+            'rel'         => 'subject',
+            'country'     => 'GB',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $entry->setPodcastIndexLocation($location);
+    }
+
+    public function testSetLocationThrowsExceptionOnInvalidRel(): void
+    {
+        $entry = new Writer\Entry();
+
+        $location = [
+            'description' => 'London, Baker Street',
+            'geo'         => 'geo:-27.86159,153.3169',
+            'osm'         => 'W43678282',
+            'rel'         => 1234,
+            'country'     => 'GB',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $entry->setPodcastIndexLocation($location);
     }
 }

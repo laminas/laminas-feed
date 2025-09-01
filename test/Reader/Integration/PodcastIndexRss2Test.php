@@ -89,6 +89,8 @@ class PodcastIndexRss2Test extends TestCase
         $expected->description = 'Austin';
         $expected->geo         = 'geo:30.2711286,-97.7436995';
         $expected->osm         = 'R113314';
+        $expected->rel         = 'subject';
+        $expected->country     = 'US';
 
         $this->assertEquals($expected, $feed->getPodcastIndexLocation());
     }
@@ -458,5 +460,24 @@ class PodcastIndexRss2Test extends TestCase
         $this->assertEquals([
             $expected,
         ], $entry->getPodcastIndexSoundbites());
+    }
+
+    public function testGetsEntryLocation(): void
+    {
+        $feed = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath)
+        );
+
+        /** @var Reader\Extension\PodcastIndex\Entry $entry */
+        $entry = $feed->current();
+
+        $expected              = new stdClass();
+        $expected->description = 'Austin';
+        $expected->geo         = 'geo:30.2711286,-97.7436995';
+        $expected->osm         = 'R113314';
+        $expected->rel         = 'subject';
+        $expected->country     = 'US';
+
+        $this->assertEquals($expected, $entry->getPodcastIndexLocation());
     }
 }

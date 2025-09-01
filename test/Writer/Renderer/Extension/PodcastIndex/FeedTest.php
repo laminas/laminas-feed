@@ -86,6 +86,8 @@ class FeedTest extends TestCase
             'description' => 'London, Baker Street',
             'geo'         => 'geo:-27.86159,153.3169',
             'osm'         => 'W43678282',
+            'rel'         => 'creator',
+            'country'     => 'GB',
         ];
         $this->validWriter->setPodcastIndexLocation($location);
 
@@ -96,6 +98,8 @@ class FeedTest extends TestCase
         $this->assertStringContainsString($location['description'], $xml);
         $this->assertStringContainsString($location['geo'], $xml);
         $this->assertStringContainsString($location['osm'], $xml);
+        $this->assertStringContainsString($location['rel'], $xml);
+        $this->assertStringContainsString($location['country'], $xml);
     }
 
     public function testRendersRssImagesTag(): void

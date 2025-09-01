@@ -44,6 +44,7 @@ class Entry extends Extension\AbstractRenderer
         $this->setTranscript($this->dom, $this->base);
         $this->setChapters($this->dom, $this->base);
         $this->setSoundbites($this->dom, $this->base);
+        $this->setLocation($this->dom, $this->base);
         if ($this->called) {
             $this->_appendNamespaces();
         }
@@ -122,5 +123,20 @@ class Entry extends Extension\AbstractRenderer
             $root->appendChild($el);
             $this->called = true;
         }
+    }
+
+    /**
+     * Set entry location
+     */
+    private function setLocation(DOMDocument $dom, DOMElement $root): void
+    {
+        /** @psalm-var null|LocationArray $location */
+        $location = $this->getDataContainer()->getPodcastIndexLocation();
+        if ($location === null) {
+            return;
+        }
+        $el = ElementGenerator::createLocationElement($dom, $location);
+        $root->appendChild($el);
+        $this->called = true;
     }
 }

@@ -25,7 +25,8 @@ use const FILTER_VALIDATE_URL;
  * @psalm-type LocationArray = array{
  *        description: string,
  *        geo?: string,
- *        osm?: string
+ *        osm?: string,
+ *        rel?: string,
  *      }
  * @psalm-type BlockArray = array{
  *         value: string,
@@ -203,6 +204,16 @@ class Validator
         if (isset($value['osm']) && ! is_string($value['osm'])) {
             throw new Writer\Exception\InvalidArgumentException(
                 'invalid parameter: key "osm" of "location" must be of type string. example: "W43678282"'
+            );
+        }
+        if (isset($value['rel']) && ! is_string($value['rel'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "rel" of "location" must be of type string. example: "subject"'
+            );
+        }
+        if (isset($value['country']) && ! is_string($value['country'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "country" of "location" must be of type string. example: "US"'
             );
         }
     }

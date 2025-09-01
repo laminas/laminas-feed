@@ -134,6 +134,8 @@ class AttributesReader
         $location->description = $item->nodeValue;
         $location->geo         = $item->getAttribute('geo');
         $location->osm         = $item->getAttribute('osm');
+        $location->rel         = $item->getAttribute('rel');
+        $location->country         = $item->getAttribute('country');
         return $location;
     }
 

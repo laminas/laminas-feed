@@ -15,7 +15,6 @@ use function in_array;
 use function time;
 
 /**
- * @psalm-import-type LicenseObject from AttributesReader
  * @psalm-import-type LocationObject from AttributesReader
  * @psalm-import-type BlockObject from AttributesReader
  * @psalm-import-type TxtObject from AttributesReader
@@ -179,6 +178,8 @@ class FeedTest extends TestCase
             'description' => 'London, Baker Street',
             'geo'         => 'geo:-27.86159,153.3169',
             'osm'         => 'W43678282',
+            'rel'         => 'subject',
+            'country'     => 'GB',
         ];
         $feed->setPodcastIndexLocation($location);
         $this->assertEquals($location, $feed->getPodcastIndexLocation());
@@ -214,6 +215,8 @@ class FeedTest extends TestCase
             'description' => 'London, Baker Street',
             'geo'         => [-27.86159, 153.3169],
             'osm'         => 'W43678282',
+            'rel'         => 'subject',
+            'country'     => 'GB',
         ];
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $feed->setPodcastIndexLocation($location);
@@ -227,6 +230,8 @@ class FeedTest extends TestCase
             'description' => 'London, Baker Street',
             'geo'         => 'geo:-27.86159,153.3169',
             'osm'         => false,
+            'rel'         => 'subject',
+            'country'     => 'GB',
         ];
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $feed->setPodcastIndexLocation($location);

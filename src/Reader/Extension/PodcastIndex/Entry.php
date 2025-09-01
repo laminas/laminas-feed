@@ -153,6 +153,31 @@ class Entry extends Extension\AbstractEntry
     }
 
     /**
+     * Get the entry location
+     */
+    public function getPodcastIndexLocation(): object|null
+    {
+        if (array_key_exists('location', $this->data)) {
+            /** @psalm-var null|LocationObject */
+            return $this->data['location'];
+        }
+
+        $location = null;
+
+        $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:location');
+
+        if ($nodeList->length > 0) {
+            $item = $nodeList->item(0);
+            assert($item instanceof DOMElement);
+            $location = AttributesReader::readLocation($item);
+        }
+
+        $this->data['location'] = $location;
+
+        return $this->data['location'];
+    }
+
+    /**
      * Register PodcastIndex namespace
      */
     protected function registerNamespaces(): void

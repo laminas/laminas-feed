@@ -61,6 +61,12 @@ class ElementGenerator
         if (isset($location['osm']) && $location['osm'] !== '') {
             $el->setAttribute('osm', $location['osm']);
         }
+        if (isset($location['rel']) && $location['rel'] !== '') {
+            $el->setAttribute('rel', $location['rel']);
+        }
+        if (isset($location['country']) && $location['country'] !== '') {
+            $el->setAttribute('country', $location['country']);
+        }
         return $el;
     }
 
