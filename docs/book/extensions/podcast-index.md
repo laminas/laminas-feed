@@ -80,7 +80,7 @@ See the [Podcast Index website](https://podcastindex.org) for more information a
 
 ## Examples
 
-### Channel: addPodcastIndexValue()
+### Channel: `addPodcastIndexValue()`
 
 Usage:
 
