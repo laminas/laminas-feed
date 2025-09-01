@@ -15,80 +15,82 @@ use stdClass;
  *
  * @psalm-type LicenseObject = object{
  *        identifier: string,
- *        url: string
+ *        url?: string
  *      }
  * @psalm-type LocationObject = object{
- *         description: string,
- *         geo?: string,
- *         osm?: string
- *       }
+ *        description: string,
+ *        geo?: string,
+ *        osm?: string,
+ *        rel?: string,
+ *        country?: string,
+ *      }
  * @psalm-type BlockObject = object{
- *          value: string,
- *          id?: string
- *        }
+ *        value: string,
+ *        id?: string
+ *      }
  * @psalm-type TxtObject = object{
- *          value: string,
- *          purpose?: string
- *        }
+ *        value: string,
+ *        purpose?: string
+ *      }
  * @psalm-type UpdateFrequencyObject = object{
- *      description: string,
- *      complete?: bool,
- *      dtstart?: DateTimeInterface,
- *      rrule?: string
+ *        description: string,
+ *        complete?: bool,
+ *        dtstart?: DateTimeInterface,
+ *        rrule?: string
  *      }
  * @psalm-type PersonObject = object{
- *      name: string,
- *      role?: string,
- *      group?: string,
- *      img?: string,
- *      href?: string
- *   }
+ *       name: string,
+ *       role?: string,
+ *       group?: string,
+ *       img?: string,
+ *       href?: string
+ *     }
  * @psalm-type TrailerObject = object{
- *      title: string,
- *      pubdate: string,
- *      url: string,
- *      length?: int,
- *      type?: string,
- *      season?: int
- *  }
+ *       title: string,
+ *       pubdate: string,
+ *       url: string,
+ *       length?: int,
+ *       type?: string,
+ *       season?: int
+ *     }
  * @psalm-type RemoteItemObject = object{
  *       feedGuid: string,
  *       feedUrl?: string,
  *       itemGuid?: string,
  *       medium?: string,
  *       title?: string
- *  }
+ *     }
  * @psalm-type ValueRecipientObject = object{
- *        type: string,
- *        address: string,
- *        split: int,
- *        name?: string,
- *        customKey?: string,
- *        customValue?: string,
- *        fee?: bool,
- *      }
+ *       type: string,
+ *       address: string,
+ *       split: int,
+ *       name?: string,
+ *       customKey?: string,
+ *       customValue?: string,
+ *       fee?: bool,
+ *     }
  * @psalm-type ValueObject = object{
- *        type: string,
- *        method: string,
- *        suggested?: float,
- *        recipients?: list<ValueRecipientObject>
- *      }
+ *       type: string,
+ *       method: string,
+ *       suggested?: float,
+ *       recipients?: list<ValueRecipientObject>
+ *     }
  * @psalm-type ImageObject = object{
- *         href: string,
- *         alt?: string,
- *         purpose?: string,
- *         type?: string,
- *         aspect-ratio?: string,
- *         width?: int,
- *         height?: int,
- *       }
+ *       href: string,
+ *       alt?: string,
+ *       purpose?: string,
+ *       type?: string,
+ *       aspect-ratio?: string,
+ *       width?: int,
+ *       height?: int,
+ *     }
  * @psalm-type SocialInteractObject = object{
- *         protocol: string,
- *         uri: string,
- *         priority?: int,
- *         accountId?: string,
- *         accountUrl?: string,
- *       }
+ *       protocol: string,
+ *       uri: string,
+ *       priority?: int,
+ *       accountId?: string,
+ *       accountUrl?: string,
+ *     }
  * @psalm-type TranscriptObject = object{
  *       url: string,
  *       type: string,

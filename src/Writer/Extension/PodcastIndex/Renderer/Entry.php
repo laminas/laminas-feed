@@ -7,7 +7,7 @@ namespace Laminas\Feed\Writer\Extension\PodcastIndex\Renderer;
 use DOMDocument;
 use DOMElement;
 use Laminas\Feed\Writer\Extension;
-
+use Laminas\Feed\Writer\Entry as EntryWriter;
 use Laminas\Feed\Writer\Extension\PodcastIndex\Validator;
 use function array_key_exists;
 
@@ -136,6 +136,24 @@ class Entry extends Extension\AbstractRenderer
             return;
         }
         $el = ElementGenerator::createLocationElement($dom, $location);
+        $root->appendChild($el);
+        $this->called = true;
+    }
+    /**
+     * Set feed license
+     */
+    private function setLicense(DOMDocument $dom, DOMElement $root): void
+    {
+        /** @psalm-var EntryWriter $container */
+        $container = $this->getDataContainer();
+
+        /** @psalm-var null|LicenseArray $license */
+        $license = $container->getPodcastIndexLicense();
+        if ($license === null) {
+            return;
+        }
+        $el = ElementGenerator::createLicenseElement($dom, $license);
+
         $root->appendChild($el);
         $this->called = true;
     }

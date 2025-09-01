@@ -17,6 +17,7 @@ use function substr_count;
 class EntryTest extends TestCase
 {
     protected Writer\Feed $validWriter;
+    protected Writer\Entry $validEntry;
 
     protected function setUp(): void
     {

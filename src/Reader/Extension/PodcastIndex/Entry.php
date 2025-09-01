@@ -34,12 +34,11 @@ class Entry extends Extension\AbstractEntry
 {
     /**
      * Get the entry transcript
-     *
-     * @psalm-return null|TranscriptObject
      */
     public function getTranscript(): ?stdClass
     {
         if (array_key_exists('transcript', $this->data)) {
+            /** @psalm-var stdClass */
             return $this->data['transcript'];
         }
 
@@ -47,9 +46,9 @@ class Entry extends Extension\AbstractEntry
 
         $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:transcript');
 
-        if ($nodeList instanceof DOMNodeList && $nodeList->length > 0) {
-            /** @var DOMElement $node */
-            $node                 = $nodeList->item(0);
+        if ($nodeList->length > 0) {
+            $node = $nodeList->item(0);
+            assert($node instanceof DOMElement);
             $transcript           = new stdClass();
             $transcript->url      = $node->getAttribute('url');
             $transcript->type     = $node->getAttribute('type');
@@ -64,22 +63,20 @@ class Entry extends Extension\AbstractEntry
 
     /**
      * Get the entry transcript
-     *
-     * @psalm-return null|TranscriptObject
      */
     public function getPodcastIndexTranscript(): ?stdClass
     {
+        /** @psalm-var stdClass */
         return $this->getTranscript();
     }
 
     /**
      * Get the entry chapters
-     *
-     * @psalm-return null|ChaptersObject
      */
     public function getChapters(): ?stdClass
     {
         if (array_key_exists('chapters', $this->data)) {
+            /** @psalm-var stdClass */
             return $this->data['chapters'];
         }
 
@@ -87,11 +84,11 @@ class Entry extends Extension\AbstractEntry
 
         $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:chapters');
 
-        if ($nodeList instanceof DOMNodeList && $nodeList->length > 0) {
-            /** @var DOMElement $node */
-            $node           = $nodeList->item(0);
-            $chapters       = new stdClass();
-            $chapters->url  = $node->getAttribute('url');
+        if ($nodeList->length > 0) {
+            $node = $nodeList->item(0);
+            assert($node instanceof DOMElement);
+            $chapters = new stdClass();
+            $chapters->url = $node->getAttribute('url');
             $chapters->type = $node->getAttribute('type');
         }
 
@@ -102,22 +99,20 @@ class Entry extends Extension\AbstractEntry
 
     /**
      * Get the entry chapters
-     *
-     * @psalm-return null|ChaptersObject
      */
     public function getPodcastIndexChapters(): ?stdClass
     {
+        /** @psalm-var stdClass */
         return $this->getChapters();
     }
 
     /**
      * Get the entry soundbites
-     *
-     * @psalm-return array<SoundbiteObject>
      */
     public function getSoundbites(): array
     {
         if (array_key_exists('soundbites', $this->data)) {
+            /** @psalm-var array */
             return $this->data['soundbites'];
         }
 
@@ -144,11 +139,10 @@ class Entry extends Extension\AbstractEntry
 
     /**
      * Get the entry soundbites
-     *
-     * @psalm-return array<SoundbiteObject>
      */
     public function getPodcastIndexSoundbites(): array
     {
+        /** @psalm-var array */
         return $this->getSoundbites();
     }
 

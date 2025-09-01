@@ -20,22 +20,23 @@ use const FILTER_VALIDATE_URL;
  *
  * @psalm-type LicenseArray = array{
  *       identifier: string,
- *       url: string
+ *       url?: string
  *     }
  * @psalm-type LocationArray = array{
- *        description: string,
- *        geo?: string,
- *        osm?: string,
- *        rel?: string,
- *      }
+ *       description: string,
+ *       geo?: string,
+ *       osm?: string,
+ *       rel?: string,
+ *       country?: string,
+ *     }
  * @psalm-type BlockArray = array{
- *         value: string,
- *         id?: string
- *       }
+ *       value: string,
+ *       id?: string
+ *     }
  * @psalm-type TxtArray = array{
- *         value: string,
- *         purpose?: string
- *       }
+ *       value: string,
+ *       purpose?: string
+ *     }
  * @psalm-type UpdateFrequencyArray = array{
  *       description: string,
  *       complete?: bool,
@@ -98,15 +99,15 @@ use const FILTER_VALIDATE_URL;
  * @psalm-type TranscriptArray = array{
  *      url: string,
  *      type: string,
- *      language: string,
- *      rel: string
+ *      language?: string,
+ *      rel?: string
  *    }
  * @psalm-type ChaptersArray = array{
  *      url: string,
  *      type: string
  *    }
  * @psalm-type SoundbiteArray = array{
- *      title: string,
+ *      title?: string,
  *      startTime: string,
  *      duration: string
  *    }
@@ -156,7 +157,7 @@ class Validator
     /**
      * Validate license
      *
-     * @param array{identifier: string, url: string} $value
+     * @param LicenseArray $value
      * @throws Writer\Exception\InvalidArgumentException
      */
     public static function validateLicense(array $value): void
@@ -181,7 +182,7 @@ class Validator
     /**
      * Validate location
      *
-     * @param array{description: string, geo?: string, osm?: string} $value
+     * @param LocationArray $value
      * @throws Writer\Exception\InvalidArgumentException
      */
     public static function validateLocation(array $value): void
@@ -221,7 +222,7 @@ class Validator
     /**
      * Validates txt
      *
-     * @param array{value: string, purpose?: string} $value
+     * @param TxtArray $value
      * @throws Writer\Exception\InvalidArgumentException
      */
     public static function validateTxt(array $value): void
@@ -437,10 +438,10 @@ class Validator
     }
 
     /**
-     * Validates value time split
+     * TODO: Validates value time split
      */
-    public static function validateValueTimeSplit(array $value): void
+    /*public static function validateValueTimeSplit(array $value): void
     {
-        // TODO
-    }
+        //
+    }*/
 }

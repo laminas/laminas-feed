@@ -22,7 +22,7 @@ use function ucfirst;
  *
  * @psalm-import-type TranscriptArray from Validator
  * @psalm-import-type ChaptersArray from Validator
- * @psalm-import-type SoundbitesArray from Validator
+ * @psalm-import-type SoundbiteArray from Validator
  * @psalm-import-type LicenseArray from Validator
  * @psalm-import-type LocationArray from Validator
  * @psalm-import-type TxtArray from Validator
@@ -117,7 +117,7 @@ class Entry
     /**
      * Add entry soundbites
      *
-     * @param list<SoundbitesArray> $value
+     * @param list<SoundbiteArray> $values
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
@@ -133,7 +133,7 @@ class Entry
     /**
      * Add entry soundbite
      *
-     * @param SoundbitesArray $value
+     * @param SoundbiteArray $value
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
@@ -179,6 +179,20 @@ class Entry
     {
         Validator::validateLocation($value);
         $this->data['location'] = $value;
+        return $this;
+    }
+
+    /**
+     * Set entry license
+     *
+     * @param LicenseArray $value
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function setPodcastIndexLicense(array $value): self
+    {
+        Validator::validateLicense($value);
+        $this->data['license'] = $value;
         return $this;
     }
 

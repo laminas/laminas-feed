@@ -40,7 +40,9 @@ class ElementGenerator
         $el   = $dom->createElement('podcast:license');
         $text = $dom->createTextNode($license['identifier']);
         $el->appendChild($text);
-        $el->setAttribute('url', $license['url']);
+        if (isset($license['url']) && $license['url'] !== '') {
+            $el->setAttribute('url', $license['url']);
+        }
         return $el;
     }
 
