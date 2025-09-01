@@ -292,6 +292,45 @@ class Entry extends Extension\AbstractEntry
     }
 
     /**
+     * Get the entry values
+     *
+     * @return list<ValueObject>
+     */
+    public function getPodcastIndexValues(): array
+    {
+        if (array_key_exists('values', $this->data)) {
+            /** @var list<ValueObject> $values */
+            $values = $this->data['values'];
+            return $values;
+        }
+
+        $values         = [];
+        $valuesNodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:value');
+
+        foreach ($valuesNodeList as $valueNode) {
+            assert($valueNode instanceof DOMElement);
+            $valueObject = AttributesReader::readValue($valueNode);
+
+            /** @psalm-suppress TooManyArguments */
+            $recipientsNodeList = $this->xpath->query('podcast:valueRecipient', $valueNode);
+            $recipients         = [];
+
+            foreach ($recipientsNodeList as $entry) {
+                assert($entry instanceof DOMElement);
+                $object       = AttributesReader::readValueRecipient($entry);
+                $recipients[] = $object;
+            }
+
+            $valueObject->recipients = $recipients;
+            $values[]                = $valueObject;
+        }
+
+        $this->data['values'] = $values;
+
+        return $this->data['values'];
+    }
+
+    /**
      * Register PodcastIndex namespace
      */
     protected function registerNamespaces(): void

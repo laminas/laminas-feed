@@ -344,6 +344,56 @@ class Entry
     }
 
     /**
+     * Reset all value elements.
+     * All value entries will be removed, including their nested value recipients.
+     *
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function resetPodcastIndexValues(): self
+    {
+        $this->data['values'] = [];
+        return $this;
+    }
+
+    /**
+     * Add a value element with one or more value recipients as children.
+     * The method expects one array with the value attributes as first argument
+     * and an array of arrays with the value recipients' attributes as second argument.
+     *
+     * @psalm-param ValueArray $value
+     * @psalm-param list<ValueRecipientArray> $valueRecipients
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function addPodcastIndexValue(array $value, array $valueRecipients): self
+    {
+        // validate the value attributes
+        Validator::validateValue($value);
+
+        // validate the value recipients array
+        if (count($valueRecipients) < 1) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: the second argument of "value" must be an array containing at least one recipient'
+            );
+        }
+        foreach ($valueRecipients as $recipient) {
+            Validator::validateValueRecipient($recipient);
+        }
+        $value['recipients'] = $valueRecipients;
+
+        // add the values entry
+        if (! isset($this->data['values'])) {
+            $this->data['values'] = [];
+        }
+
+        /** @var list<ValueArray> $this->data['values'] */
+        $this->data['values'][] = $value;
+
+        return $this;
+    }
+
+    /**
      * Overloading: proxy to internal setters
      *
      * @return mixed

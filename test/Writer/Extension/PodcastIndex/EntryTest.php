@@ -580,4 +580,168 @@ class EntryTest extends TestCase
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $entry->addPodcastIndexSocialInteract($data);
     }
+
+    public function testAddValue(): void
+    {
+        $entry = new Writer\Entry();
+
+        $value      = [
+            'type'      => "lightning",
+            'method'    => "keysend",
+            'suggested' => 0.00000005000,
+        ];
+        $recipients = [
+            [
+                'name'    => "Alice (Podcaster)",
+                'type'    => "node",
+                'address' => "02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52",
+                'split'   => 40,
+            ],
+            [
+                'name'    => "Bob (Podcaster)",
+                'type'    => "node",
+                'address' => "032f4ffbbafffbe51726ad3c164a3d0d37ec27bc67b29a159b0f49ae8ac21b8508",
+                'split'   => 60,
+            ],
+        ];
+        $entry->addPodcastIndexValue($value, $recipients);
+        $value['recipients'] = $recipients;
+
+        /** @psalm-var list<ValueObject> $values */
+        $values = $entry->getPodcastIndexValues();
+        $this->assertContains($value, $values);
+    }
+
+    public function testAddValueWithMinimalArguments(): void
+    {
+        $entry = new Writer\Entry();
+
+        $value      = [
+            'type'   => "lightning",
+            'method' => "keysend",
+        ];
+        $recipients = [
+            [
+                'type'    => "node",
+                'address' => "02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52",
+                'split'   => 40,
+            ],
+        ];
+        $entry->addPodcastIndexValue($value, $recipients);
+        $value['recipients'] = $recipients;
+
+        /** @psalm-var list<ValueObject> $values */
+        $values = $entry->getPodcastIndexValues();
+        $this->assertContains($value, $values);
+    }
+
+    public function testAddValueThrowsExceptionOnMissingRecipients(): void
+    {
+        $entry = new Writer\Entry();
+
+        $value = [
+            'type'   => "lightning",
+            'method' => "keysend",
+        ];
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $entry->addPodcastIndexValue($value, []);
+    }
+
+    public function testAddValueThrowsExceptionOnMissingRecipientType(): void
+    {
+        $entry = new Writer\Entry();
+
+        $value      = [
+            'type'   => "lightning",
+            'method' => "keysend",
+        ];
+        $recipients = [
+            [
+                'address' => "02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52",
+                'split'   => 40,
+            ],
+        ];
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $entry->addPodcastIndexValue($value, $recipients);
+    }
+
+    public function testAddValueThrowsExceptionOnInvalidRecipientType(): void
+    {
+        $entry = new Writer\Entry();
+
+        $value      = [
+            'type'   => "lightning",
+            'method' => "keysend",
+        ];
+        $recipients = [
+            [
+                'type'    => true,
+                'address' => "02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52",
+                'split'   => 40,
+            ],
+        ];
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $entry->addPodcastIndexValue($value, $recipients);
+    }
+
+    public function testAddValueUsingScientificNotation(): void
+    {
+        $entry = new Writer\Entry();
+
+        $value      = [
+            'type'      => "lightning",
+            'method'    => "keysend",
+            'suggested' => 5.0E-8, // scientific notation for 0.00000005000
+        ];
+        $recipients = [
+            [
+                'name'    => "Alice (Podcaster)",
+                'type'    => "node",
+                'address' => "02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52",
+                'split'   => 40,
+            ],
+        ];
+        $entry->addPodcastIndexValue($value, $recipients);
+
+        $value['recipients'] = $recipients;
+
+        /** @psalm-var list<ValueObject> $values */
+        $values = $entry->getPodcastIndexValues();
+        $this->assertContains($value, $values);
+    }
+
+    public function testResetValues(): void
+    {
+        $entry = new Writer\Entry();
+
+        $value      = [
+            'type'   => "lightning",
+            'method' => "keysend",
+        ];
+        $recipients = [
+            [
+                'type'    => "node",
+                'address' => "02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52",
+                'split'   => 40,
+            ],
+        ];
+
+        // set values
+        $entry->addPodcastIndexValue($value, $recipients);
+        $value['recipients'] = $recipients;
+
+        /** @psalm-var list<ValueObject> $values */
+        $values = $entry->getPodcastIndexValues();
+        $this->assertContains($value, $values);
+
+        // remove them again
+        $entry->resetPodcastIndexValues();
+
+        /** @psalm-var list<ValueObject> $empty */
+        $empty = $entry->getPodcastIndexValues();
+        $this->assertEmpty($empty);
+    }
 }

@@ -50,6 +50,7 @@ class Entry extends Extension\AbstractRenderer
         $this->setPeople($this->dom, $this->base);
         $this->setTxts($this->dom, $this->base);
         $this->setSocialInteracts($this->dom, $this->base);
+        $this->setValues($this->dom, $this->base);
         if ($this->called) {
             $this->_appendNamespaces();
         }
@@ -234,6 +235,35 @@ class Entry extends Extension\AbstractRenderer
         foreach ($socialInteracts as $socialInteract) {
             $el = ElementGenerator::createSocialInteractElement($dom, $socialInteract);
             $root->appendChild($el);
+        }
+
+        $this->called = true;
+    }
+
+    /**
+     * Set values with the value recipients
+     */
+    private function setValues(DOMDocument $dom, DOMElement $root): void
+    {
+        /** @psalm-var EntryWriter $container */
+        $container = $this->getDataContainer();
+
+        /** @psalm-var list<ValueArray>|null $values */
+        $values = $container->getPodcastIndexValues();
+        if ($values === null || $values === []) {
+            return;
+        }
+
+        foreach ($values as $value) {
+            if (! isset($value['recipients'])) {
+                continue;
+            }
+            $valueElement = ElementGenerator::createValueElement($dom, $value);
+            foreach ($value['recipients'] as $valueRecipient) {
+                $recipientElement = ElementGenerator::createValueRecipientElement($dom, $valueRecipient);
+                $valueElement->appendChild($recipientElement);
+            }
+            $root->appendChild($valueElement);
         }
 
         $this->called = true;

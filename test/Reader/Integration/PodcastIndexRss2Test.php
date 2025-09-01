@@ -571,4 +571,41 @@ class PodcastIndexRss2Test extends TestCase
         $this->assertEquals($expectedA, $response[0]);
         $this->assertEquals($expectedB, $response[1]);
     }
+
+    public function testGetsEntryValues(): void
+    {
+        $feed = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath)
+        );
+
+        /** @var Reader\Extension\PodcastIndex\Entry $entry */
+        $entry = $feed->current();
+
+        $recipA              = new stdClass();
+        $recipA->name        = "Alice (Podcaster)";
+        $recipA->type        = "node";
+        $recipA->address     = "02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52";
+        $recipA->split       = '40';
+        $recipA->customKey   = '';
+        $recipA->customValue = '';
+        $recipA->fee         = '';
+
+        $recipB              = new stdClass();
+        $recipB->name        = "Bob (Podcaster)";
+        $recipB->type        = "node";
+        $recipB->address     = "032f4ffbbafffbe51726ad3c164a3d0d37ec27bc67b29a159b0f49ae8ac21b8508";
+        $recipB->split       = '60';
+        $recipB->customKey   = '';
+        $recipB->customValue = '';
+        $recipB->fee         = '';
+
+        $expected             = new stdClass();
+        $expected->type       = 'lightning';
+        $expected->method     = 'keysend';
+        $expected->suggested  = '0.00000005000';
+        $expected->recipients = [$recipA, $recipB];
+
+        $values = $entry->getPodcastIndexValues();
+        $this->assertEquals($expected, $values[0]);
+    }
 }

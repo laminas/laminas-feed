@@ -524,7 +524,7 @@ class Feed extends Extension\AbstractFeed
     }
 
     /**
-     * Get the podcast podroll remote items
+     * Get the podcast values
      *
      * @return list<ValueObject>
      */

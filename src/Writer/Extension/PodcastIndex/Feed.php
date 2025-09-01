@@ -670,7 +670,7 @@ class Feed
         // validate the value recipients array
         if (count($valueRecipients) < 1) {
             throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: the second argument of "value" must an array containing at least one recipient'
+                'invalid parameter: the second argument of "value" must be an array containing at least one recipient'
             );
         }
         foreach ($valueRecipients as $recipient) {

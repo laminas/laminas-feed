@@ -481,9 +481,6 @@ class FeedTest extends TestCase
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $xml     = $rssFeed->render()->saveXml();
 
-        /*print_r($xml); // For debugging purposes, remove in production
-        die();*/
-
         $this->assertStringContainsString('<podcast:value', $xml);
         $this->assertStringContainsString('<podcast:valueRecipient', $xml);
         $this->assertStringContainsString($value['type'], $xml);
