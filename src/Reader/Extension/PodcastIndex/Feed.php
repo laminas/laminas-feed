@@ -376,12 +376,12 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get the podcast txts
      *
-     * @return list<object{value: string, purpose?: string}>
+     * @return list<TxtObject>
      */
     public function getPodcastIndexTxts(): array
     {
         if (array_key_exists('txts', $this->data)) {
-            /** @psalm-var list<object{value: string, purpose?: string}> */
+            /** @psalm-var list<TxtObject> */
             return $this->data['txts'];
         }
 

@@ -131,6 +131,25 @@ class Entry
     }
 
     /**
+     * Set entry soundbites.
+     * If no argument is passed, the existing soundbite entries get removed.
+     *
+     * @param null|list<SoundbiteArray> $values
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function setPodcastIndexSoundbites(array $values = []): Entry
+    {
+        $this->data['soundbites'] = [];
+
+        foreach ($values as $value) {
+            $this->addPodcastIndexSoundbite($value);
+        }
+
+        return $this;
+    }
+
+    /**
      * Add entry soundbite
      *
      * @param SoundbiteArray $value
@@ -248,6 +267,45 @@ class Entry
     }
 
     /**
+     * Add entry txt
+     *
+     * @param TxtArray $value
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     * @psalm-suppress DocblockTypeContradiction
+     */
+    public function addPodcastIndexTxt(array $value): self
+    {
+        Validator::validateTxt($value);
+
+        if (! isset($this->data['txts'])) {
+            $this->data['txts'] = [];
+        }
+
+        /** @var list<TxtArray> $this->data['txts'] */
+        $this->data['txts'][] = $value;
+        return $this;
+    }
+
+    /**
+     * Set a new array of txts.
+     * If no argument is passed, it will just remove all existing txt entries.
+     *
+     * @psalm-param list<TxtArray> $values
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function setPodcastIndexTxts(array $values = []): self
+    {
+        $this->data['txts'] = [];
+
+        foreach ($values as $value) {
+            $this->addPodcastIndexTxt($value);
+        }
+        return $this;
+    }
+
+    /**
      * Overloading: proxy to internal setters
      *
      * @return mixed
@@ -259,6 +317,7 @@ class Entry
         if (
             ! method_exists($this, 'setPodcastIndex' . ucfirst($point))
             && ! method_exists($this, 'addPodcastIndex' . ucfirst($point))
+            && ! method_exists($this, 'addPodcastIndex' . rtrim(ucfirst($point), 's'))
         ) {
             throw new Writer\Exception\BadMethodCallException(
                 'invalid method: ' . $method
@@ -271,5 +330,12 @@ class Entry
             return;
         }
         return $this->data[$point];
+    }
+
+    public function getPodcastIndexPersons(): array
+    {
+        /** @var list<PersonArray> $persons */
+        $persons = $this->getPodcastIndexPeople();
+        return $persons;
     }
 }

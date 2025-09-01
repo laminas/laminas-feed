@@ -445,7 +445,7 @@ class Feed
             $this->data['txts'] = [];
         }
 
-        /** @var list<array{value: string, purpose?: string}> $this->data['txts'] */
+        /** @var list<TxtArray> $this->data['txts'] */
         $this->data['txts'][] = $value;
         return $this;
     }

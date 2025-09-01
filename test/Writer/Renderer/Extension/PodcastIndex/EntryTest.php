@@ -150,4 +150,43 @@ class EntryTest extends TestCase
         $this->assertStringContainsString(">$fName</podcast:person>", $xml);
         $this->assertStringContainsString(">$sName</podcast:person>", $xml);
     }
+
+    public function testRendersRssTxtTag(): void
+    {
+        $data = [
+            'value'   => 'S6lpp-7ZCn8-dZfGc-OoyaG',
+            'purpose' => 'verify',
+        ];
+
+        $this->validEntry->addPodcastIndexTxt($data);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $this->assertStringContainsString('<podcast:txt', $xml);
+        $this->assertStringContainsString($data['value'], $xml);
+        $this->assertStringContainsString($data['purpose'], $xml);
+        $this->assertSame(1, substr_count($xml, $data['purpose']));
+    }
+
+    public function testRendersMultipleRssTxtTags(): void
+    {
+        $data = [
+            [
+                'value'   => 'S6lpp-7ZCn8-dZfGc-OoyaG',
+                'purpose' => 'verify',
+            ],
+            [
+                'value' => '2022-10-26T04:45:30.742Z',
+            ],
+        ];
+
+        $this->validEntry->setPodcastIndexTxts($data);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $this->assertStringContainsString('<podcast:txt purpose="verify">S6lpp-7ZCn8-dZfGc-OoyaG</podcast:txt>', $xml);
+        $this->assertStringContainsString('<podcast:txt>2022-10-26T04:45:30.742Z</podcast:txt>', $xml);
+    }
 }

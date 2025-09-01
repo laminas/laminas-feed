@@ -75,6 +75,7 @@ See the [Podcast Index website](https://podcastindex.org) for more information a
 | `getPodcastIndexLocation()`                          | Returns location information. The output is an object with "description" (node value), "rel", "country", geo" and "osm" properties.                             |
 | `getPodcastIndexLicense()`                           | Returns license information. The output is an object with "identifier" (node value) and "url" properties.                                                       |
 | `getPodcastIndexPeople()` `getPodcastIndexPersons()` | Returns information on the involved people. The output is an array of objects, each with the properties "name" (node value), "role", "group", "img" and "href". |
+| `getPodcastIndexTxts()`                              | Returns information on topics that do not have their own tags. The output is an object with the properties "value" and "purpose".                                                                                                                                                                                      |
 
 ### SET methods
 
@@ -82,12 +83,15 @@ See the [Podcast Index website](https://podcastindex.org) for more information a
 |------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|
 | `setPodcastIndexTranscript()`                        | Expects an array with the required keys "url" and "type", and with the optional keys "language" and "rel".                                        |
 | `setPodcastIndexChapters()`                          | Expects an array with the required keys "url" and "type".                                                                                         |
-| `addPodcastIndexSoundbites()`                        | Expects an array of soundbite entries, each itself an array with the required keys "duration" and "startTime", and with the optional key "title". |
 | `addPodcastIndexSoundbite()`                         | Expects an array with the required keys "duration" and "startTime", and with the optional key "title" (node value).                               |
+| `addPodcastIndexSoundbites()`                        | Expects an array of soundbite entries, each itself an array with the required keys "duration" and "startTime", and with the optional key "title". |
+| `setPodcastIndexSoundbites()`                        | Same as above, but replaces all existing entries.                                                                                                 |
 | `setPodcastIndexLocation()`                          | Expects an array with the required key "description" (node value) and the optional keys "rel", "country", "geo" and "osm".                        |
 | `setPodcastIndexLicense()`                           | Expects an array with the required keys "identifier" (node value) and "url".                                                                      |
 | `addPodcastIndexPerson()`                            | Expects an array with the required key "name" (node value) and the optional keys "role", "group", "img" and "href".                               |
 | `setPodcastIndexPeople()` `setPodcastIndexPersons()` | Expects an array of arrays with each the required key "name" (node value) and the optional keys "role", "group", "img" and "href".                |
+| `addPodcastIndexTxt()`                               | Expects an array with the required key "value" and the optional key "purpose".                                                                    |
+| `setPodcastIndexTxts()`                              | Expects an array of arrays with each the required key "value" and the optional key "purpose".                                                     |
 
 ## Examples
 

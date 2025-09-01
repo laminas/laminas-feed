@@ -47,6 +47,7 @@ class Entry extends Extension\AbstractRenderer
         $this->setLocation($this->dom, $this->base);
         $this->setLicense($this->dom, $this->base);
         $this->setPeople($this->dom, $this->base);
+        $this->setTxts($this->dom, $this->base);
         if ($this->called) {
             $this->_appendNamespaces();
         }
@@ -188,6 +189,27 @@ class Entry extends Extension\AbstractRenderer
         }
         foreach ($people as $person) {
             $el = ElementGenerator::createPersonElement($dom, $person);
+            $root->appendChild($el);
+        }
+        $this->called = true;
+    }
+
+    /**
+     * Set entry txts
+     */
+    private function setTxts(DOMDocument $dom, DOMElement $root): void
+    {
+        /** @psalm-var EntryWriter $container */
+        $container = $this->getDataContainer();
+
+        /** @psalm-var list<TxtArray>|null $txts */
+        $txts = $container->getPodcastIndexTxts();
+        if ($txts === null || $txts === []) {
+            return;
+        }
+
+        foreach ($txts as $txt) {
+            $el = ElementGenerator::createTxtElement($dom, $txt);
             $root->appendChild($el);
         }
         $this->called = true;

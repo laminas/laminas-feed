@@ -719,19 +719,6 @@ class FeedTest extends TestCase
             $this->assertTrue(in_array($txt, $txtsSaved));
         }
 
-        // add
-        $singleTxt = [
-            'value'   => 'naj3eEZaWVVY9a38uhX8FekACyhtqP4JN',
-            'purpose' => 'verify',
-        ];
-        $feed->addPodcastIndexTxt($singleTxt);
-        /** @psalm-var list<object{value: string, purpose?: string}> $moreTxtsSaved */
-        $moreTxtsSaved = $feed->getPodcastIndexTxts();
-        foreach ($txts as $txt) {
-            $this->assertTrue(in_array($txt, $moreTxtsSaved));
-        }
-        $this->assertTrue(in_array($singleTxt, $moreTxtsSaved));
-
         // update
         $newTxts = [
             [

@@ -105,7 +105,7 @@ class EntryTest extends TestCase
         ];
     }
 
-    public function testAddSoundbites(): void
+    public function testAddSoundbitesAndSetSoundbites(): void
     {
         $entry = new Writer\Entry();
 
@@ -124,6 +124,14 @@ class EntryTest extends TestCase
 
         $entry->addPodcastIndexSoundbites($soundbites);
         $this->assertEquals($soundbites, $entry->getPodcastIndexSoundbites());
+
+        // set new
+        $entry->setPodcastIndexSoundbites($soundbites);
+        $this->assertEquals($soundbites, $entry->getPodcastIndexSoundbites());
+
+        // remove
+        $entry->setPodcastIndexSoundbites();
+        $this->assertNull($entry->getPodcastIndexSoundbites());
     }
 
     public function testAddSoundbitesThrowsExceptionOnInvalidArguments(): void
@@ -331,7 +339,7 @@ class EntryTest extends TestCase
 
     public function testAddPerson(): void
     {
-        $feed = new Writer\Feed();
+        $entry = new Writer\Entry();
 
         $person = [
             'name'  => 'Hercules Poirot',
@@ -340,16 +348,16 @@ class EntryTest extends TestCase
             'img'   => 'https://poirot.com/about/my-moustage.jpg',
             'href'  => 'https://poirot.com/my-cases',
         ];
-        $feed->addPodcastIndexPerson($person);
+        $entry->addPodcastIndexPerson($person);
 
         /** @var list<PersonObject> $people */
-        $people = $feed->getPodcastIndexPeople();
+        $people = $entry->getPodcastIndexPeople();
         $this->assertTrue(in_array($person, $people));
     }
 
     public function testSetPeopleAndSetPersons(): void
     {
-        $feed = new Writer\Feed();
+        $entry = new Writer\Entry();
 
         $people = [
             [
@@ -366,9 +374,9 @@ class EntryTest extends TestCase
             ],
         ];
         // set using "people"
-        $feed->setPodcastIndexPeople($people);
+        $entry->setPodcastIndexPeople($people);
         /** @var list<PersonObject> $peopleSaved */
-        $peopleSaved = $feed->getPodcastIndexPeople();
+        $peopleSaved = $entry->getPodcastIndexPeople();
         foreach ($people as $person) {
             $this->assertTrue(in_array($person, $peopleSaved));
         }
@@ -382,45 +390,45 @@ class EntryTest extends TestCase
                 'href'  => 'https://www.wikipedia/alicebrown',
             ],
         ];
-        $feed->setPodcastIndexPersons($newPersons);
+        $entry->setPodcastIndexPersons($newPersons);
         /** @var list<PersonObject> $updated */
-        $updated = $feed->getPodcastIndexPersons();
+        $updated = $entry->getPodcastIndexPersons();
         $this->assertEquals(1, count($updated));
         $this->assertEquals($newPersons, $updated);
 
         // delete using "people"
-        $feed->setPodcastIndexPeople();
-        $this->assertNull($feed->getPodcastIndexPeople());
+        $entry->setPodcastIndexPeople();
+        $this->assertNull($entry->getPodcastIndexPeople());
     }
 
     public function testAddPersonWithOneArgument(): void
     {
-        $feed = new Writer\Feed();
+        $entry = new Writer\Entry();
 
         $person = [
             'name' => 'Hercules Poirot',
         ];
-        $feed->addPodcastIndexPerson($person);
+        $entry->addPodcastIndexPerson($person);
 
         /** @var list<PersonObject> $people */
-        $people = $feed->getPodcastIndexPeople();
+        $people = $entry->getPodcastIndexPeople();
         $this->assertTrue(in_array($person, $people));
     }
 
     public function testAddPersonThrowsExceptionOnInvalidArguments(): void
     {
-        $feed = new Writer\Feed();
+        $entry = new Writer\Entry();
 
         $person = [
             'abc' => 'def',
         ];
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
-        $feed->addPodcastIndexPerson($person);
+        $entry->addPodcastIndexPerson($person);
     }
 
     public function testAddPersonThrowsExceptionOnInvalidImageUrl(): void
     {
-        $feed = new Writer\Feed();
+        $entry = new Writer\Entry();
 
         $person = [
             'name'  => 'Hercules Poirot',
@@ -429,6 +437,86 @@ class EntryTest extends TestCase
             'img'   => 'poirot.com/my-moustage.jpg',
         ];
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
-        $feed->addPodcastIndexPerson($person);
+        $entry->addPodcastIndexPerson($person);
+    }
+
+    public function testAddTxt(): void
+    {
+        $entry = new Writer\Entry();
+
+        $txt = [
+            'value'   => 'S6lpp-7ZCn8-dZfGc-OoyaG',
+            'purpose' => 'verify',
+        ];
+        $entry->addPodcastIndexTxt($txt);
+
+        /** @var list<array{value: string, purpose?: string}> $txts */
+        $txts = $entry->getPodcastIndexTxts();
+        $this->assertTrue(in_array($txt, $txts));
+    }
+
+    public function testSetTxts(): void
+    {
+        $entry = new Writer\Entry();
+
+        $txts = [
+            [
+                'value'   => 'S6lpp-7ZCn8-dZfGc-OoyaG',
+                'purpose' => 'verify',
+            ],
+            [
+                'value'   => '2022-10-26T04:45:30.742Z',
+                'purpose' => 'release',
+            ],
+        ];
+
+        // set
+        $entry->setPodcastIndexTxts($txts);
+        /** @var list<object{value: string, purpose?: string}> $txtsSaved */
+        $txtsSaved = $entry->getPodcastIndexTxts();
+        foreach ($txts as $txt) {
+            $this->assertTrue(in_array($txt, $txtsSaved));
+        }
+
+        // delete
+        $entry->setPodcastIndexTxts();
+        $this->assertNull($entry->getPodcastIndexTxts());
+    }
+
+    public function testAddTxtWithOneArgument(): void
+    {
+        $entry = new Writer\Entry();
+
+        $txt = [
+            'value' => 'naj3eEZaWVVY9a38uhX8FekACyhtqP4JN',
+        ];
+        $entry->addPodcastIndexTxt($txt);
+
+        /** @psalm-var list<object{value: string, purpose?: string}> $txts */
+        $txts = $entry->getPodcastIndexTxts();
+        $this->assertTrue(in_array($txt, $txts));
+    }
+
+    public function testAddTxtThrowsExceptionOnInvalidArguments(): void
+    {
+        $entry = new Writer\Entry();
+
+        $data = [
+            'abc' => 'def',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $entry->addPodcastIndexTxt($data);
+    }
+
+    public function testAddTxtThrowsExceptionOnInvalidValue(): void
+    {
+        $entry = new Writer\Entry();
+
+        $data = [
+            'value'   => true,
+            'purpose' => 'google',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $entry->addPodcastIndexTxt($data);
     }
 }

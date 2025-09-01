@@ -237,6 +237,33 @@ class Entry extends Extension\AbstractEntry
     }
 
     /**
+     * Get the podcast txts
+     *
+     * @return list<TxtObject>
+     */
+    public function getPodcastIndexTxts(): array
+    {
+        if (array_key_exists('txts', $this->data)) {
+            /** @psalm-var list<TxtObject> */
+            return $this->data['txts'];
+        }
+
+        $txts = [];
+
+        $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:txt');
+
+        foreach ($nodeList as $entry) {
+            assert($entry instanceof DOMElement);
+            $object = AttributesReader::readTxt($entry);
+            $txts[] = $object;
+        }
+
+        $this->data['txts'] = $txts;
+
+        return $this->data['txts'];
+    }
+
+    /**
      * Register PodcastIndex namespace
      */
     protected function registerNamespaces(): void

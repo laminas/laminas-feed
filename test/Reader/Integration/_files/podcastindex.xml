@@ -115,6 +115,8 @@
             </itunes:keywords>
             <itunes:image href="https://www.example.com/podcasts/everything/episode.png" />
             <itunes:isClosedCaptioned>Yes</itunes:isClosedCaptioned>
+            <podcast:txt purpose="verify">S6lpp-7ZCn8-dZfGc-OoyaG</podcast:txt>
+            <podcast:txt purpose="applepodcastsverify">05124</podcast:txt>
             <podcast:license url="https://example.org/mypodcastlicense/full.pdf">my-podcast-license-v1</podcast:license>
             <podcast:person group="writing" role="guest" href="https://www.wikipedia/alicebrown" img="http://example.com/images/alicebrown.jpg">Alice Brown</podcast:person>
             <podcast:transcript

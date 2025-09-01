@@ -314,7 +314,7 @@ class FeedTest extends TestCase
         $this->assertSame(1, substr_count($xml, $data['purpose']));
     }
 
-    public function testRendersRssTxtTags(): void
+    public function testRendersMultipleRssTxtTags(): void
     {
         $data = [
             [
