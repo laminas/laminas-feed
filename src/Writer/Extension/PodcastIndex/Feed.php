@@ -751,11 +751,19 @@ class Feed
         return $this->data[$point];
     }
 
+    /**
+     * Is locked.
+     * Specific get call for non-default naming.
+     */
     public function isLocked(): bool
     {
         return $this->isPodcastIndexLocked();
     }
 
+    /**
+     * Is locked.
+     * Specific get call for non-default naming.
+     */
     public function isPodcastIndexLocked(): bool
     {
         if (isset($this->data['locked'], $this->data['locked']['value'])) {
@@ -764,11 +772,19 @@ class Feed
         return false;
     }
 
+    /**
+     * Get lock owner.
+     * Specific get call for non-default naming.
+     */
     public function getLockOwner(): string|null
     {
         return $this->getPodcastIndexLockOwner();
     }
 
+    /**
+     * Get lock owner.
+     * Specific get call for non-default naming.
+     */
     public function getPodcastIndexLockOwner(): string|null
     {
         if (isset($this->data['locked'], $this->data['locked']['owner'])) {
@@ -778,6 +794,10 @@ class Feed
         return null;
     }
 
+    /**
+     * Get persons.
+     * Specific get call for non-default naming.
+     */
     public function getPodcastIndexPersons(): array
     {
         /** @var list<PersonArray> $persons */

@@ -519,4 +519,65 @@ class EntryTest extends TestCase
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $entry->addPodcastIndexTxt($data);
     }
+
+    public function testSetSocialInteracts(): void
+    {
+        $entry = new Writer\Entry();
+
+        $data = [
+            [
+                'priority'   => 1,
+                'protocol'   => "activitypub",
+                'uri'        => "https://podcastindex.social/web/@dave/108013847520053258",
+                'accountId'  => "@dave",
+                'accountUrl' => "https://podcastindex.social/web/@dave",
+            ],
+            [
+                'priority'   => 2,
+                'protocol'   => "twitter",
+                'uri'        => "https://twitter.com/PodcastindexOrg/status/1507120226361647115",
+                'accountId'  => "@podcastindexorg",
+                'accountUrl' => "https://twitter.com/PodcastindexOrg",
+            ],
+        ];
+        $entry->setPodcastIndexSocialInteracts($data);
+
+        /** @psalm-var list<SocialInteractObject> $response */
+        $response = $entry->getPodcastIndexSocialInteracts();
+        $this->assertEquals($data, $response);
+    }
+
+    public function testAddSocialInteractThrowsExceptionOnInvalidUri(): void
+    {
+        $entry = new Writer\Entry();
+
+        $data = [
+            [
+                'priority'   => 1,
+                'protocol'   => "activitypub",
+                'uri'        => "podcastindex.social/web/@dave/108013847520053258",
+                'accountId'  => "@dave",
+                'accountUrl' => "https://podcastindex.social/web/@dave",
+            ],
+        ];
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $entry->addPodcastIndexSocialInteract($data);
+    }
+
+    public function testAddSocialInteractThrowsExceptionOnMissingProtocol(): void
+    {
+        $entry = new Writer\Entry();
+
+        $data = [
+            [
+                'priority'  => 1,
+                'uri'       => "https://podcastindex.social/web/@dave",
+                'accountId' => "@dave",
+            ],
+        ];
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $entry->addPodcastIndexSocialInteract($data);
+    }
 }

@@ -543,4 +543,32 @@ class PodcastIndexRss2Test extends TestCase
         $this->assertEquals($expectedA, $txts[0]);
         $this->assertEquals($expectedB, $txts[1]);
     }
+
+    public function testGetsEntrySocialInteracts(): void
+    {
+        $feed = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath)
+        );
+
+        /** @var Reader\Extension\PodcastIndex\Entry $entry */
+        $entry = $feed->current();
+
+        $expectedA             = new stdClass();
+        $expectedA->priority   = 1;
+        $expectedA->protocol   = "activitypub";
+        $expectedA->uri        = "https://podcastindex.social/web/@dave/108013847520053258";
+        $expectedA->accountId  = "@dave";
+        $expectedA->accountUrl = "https://podcastindex.social/web/@dave";
+
+        $expectedB             = new stdClass();
+        $expectedB->priority   = 2;
+        $expectedB->protocol   = "twitter";
+        $expectedB->uri        = "https://twitter.com/PodcastindexOrg/status/1507120226361647115";
+        $expectedB->accountId  = "@podcastindexorg";
+        $expectedB->accountUrl = "https://twitter.com/PodcastindexOrg";
+
+        $response = $entry->getPodcastIndexSocialInteracts();
+        $this->assertEquals($expectedA, $response[0]);
+        $this->assertEquals($expectedB, $response[1]);
+    }
 }

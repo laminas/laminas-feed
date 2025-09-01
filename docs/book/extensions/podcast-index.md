@@ -75,7 +75,8 @@ See the [Podcast Index website](https://podcastindex.org) for more information a
 | `getPodcastIndexLocation()`                          | Returns location information. The output is an object with "description" (node value), "rel", "country", geo" and "osm" properties.                             |
 | `getPodcastIndexLicense()`                           | Returns license information. The output is an object with "identifier" (node value) and "url" properties.                                                       |
 | `getPodcastIndexPeople()` `getPodcastIndexPersons()` | Returns information on the involved people. The output is an array of objects, each with the properties "name" (node value), "role", "group", "img" and "href". |
-| `getPodcastIndexTxts()`                              | Returns information on topics that do not have their own tags. The output is an object with the properties "value" and "purpose".                                                                                                                                                                                      |
+| `getPodcastIndexTxts()`                              | Returns information on topics that do not have their own tags. The output is an object with the properties "value" and "purpose".                               |
+| `getPodcastIndexSocialInteracts()`                   | Returns the social interacts. The output is an array of objects, each with the properties "protocol", "uri", "priority", "accountId" and "accountUrl".          |
 
 ### SET methods
 
@@ -92,6 +93,8 @@ See the [Podcast Index website](https://podcastindex.org) for more information a
 | `setPodcastIndexPeople()` `setPodcastIndexPersons()` | Expects an array of arrays with each the required key "name" (node value) and the optional keys "role", "group", "img" and "href".                |
 | `addPodcastIndexTxt()`                               | Expects an array with the required key "value" and the optional key "purpose".                                                                    |
 | `setPodcastIndexTxts()`                              | Expects an array of arrays with each the required key "value" and the optional key "purpose".                                                     |
+| `addPodcastIndexSocialInteract()`                    | Expects an array with the required keys "protocol" and "uri", and the optional keys "priority", "accountId" and "accountUrl".                     |
+| `setPodcastIndexSocialInteracts()`                   | Expects an array of arrays, each with the required keys "protocol" and "uri", and the optional keys "priority", "accountId" and "accountUrl".     |
 
 ## Examples
 

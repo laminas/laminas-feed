@@ -134,6 +134,20 @@
                     osm="R113314"
                     country="US"
             >Austin</podcast:location>
+            <podcast:socialInteract
+                    priority="1"
+                    protocol="activitypub"
+                    uri="https://podcastindex.social/web/@dave/108013847520053258"
+                    accountId="@dave"
+                    accountUrl="https://podcastindex.social/web/@dave"
+            />
+            <podcast:socialInteract
+                    priority="2"
+                    protocol="twitter"
+                    uri="https://twitter.com/PodcastindexOrg/status/1507120226361647115"
+                    accountId="@podcastindexorg"
+                    accountUrl="https://twitter.com/PodcastindexOrg"
+            />
         </item>
 
         <item>

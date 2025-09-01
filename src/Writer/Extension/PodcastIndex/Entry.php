@@ -30,6 +30,7 @@ use function ucfirst;
  * @psalm-import-type ValueRecipientArray from Validator
  * @psalm-import-type ValueArray from Validator
  * @psalm-import-type ImageArray from Validator
+ * @psalm-import-type SocialInteractArray from Validator
  */
 class Entry
 {
@@ -134,7 +135,7 @@ class Entry
      * Set entry soundbites.
      * If no argument is passed, the existing soundbite entries get removed.
      *
-     * @param null|list<SoundbiteArray> $values
+     * @param list<SoundbiteArray> $values
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
@@ -306,6 +307,43 @@ class Entry
     }
 
     /**
+     * Add a social interact for the entry.
+     *
+     * @param SocialInteractArray $value
+     * @return $this
+     */
+    public function addPodcastIndexSocialInteract(array $value): self
+    {
+        Validator::validateSocialInteract($value);
+
+        if (! isset($this->data['socialInteracts'])) {
+            $this->data['socialInteracts'] = [];
+        }
+
+        /** @var list<SocialInteractArray> $this->data['socialInteracts'] */
+        $this->data['socialInteracts'][] = $value;
+
+        return $this;
+    }
+
+    /**
+     * Create a new set of social interacts for the entry.
+     * If no argument is passed, existing social interacts will be removed.
+     *
+     * @psalm-param list<SocialInteractArray> $values
+     * @return $this
+     */
+    public function setPodcastIndexSocialInteracts(array $values = []): self
+    {
+        $this->data['socialInteracts'] = [];
+
+        foreach ($values as $value) {
+            $this->addPodcastIndexSocialInteract($value);
+        }
+        return $this;
+    }
+
+    /**
      * Overloading: proxy to internal setters
      *
      * @return mixed
@@ -332,6 +370,10 @@ class Entry
         return $this->data[$point];
     }
 
+    /**
+     * Get persons.
+     * Specific get call for non-default naming.
+     */
     public function getPodcastIndexPersons(): array
     {
         /** @var list<PersonArray> $persons */

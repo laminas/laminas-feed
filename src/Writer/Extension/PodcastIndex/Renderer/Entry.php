@@ -24,6 +24,7 @@ use function array_key_exists;
  * @psalm-import-type ValueRecipientArray from Validator
  * @psalm-import-type ValueArray from Validator
  * @psalm-import-type ImageArray from Validator
+ * @psalm-import-type SocialInteractArray from Validator
  */
 class Entry extends Extension\AbstractRenderer
 {
@@ -48,6 +49,7 @@ class Entry extends Extension\AbstractRenderer
         $this->setLicense($this->dom, $this->base);
         $this->setPeople($this->dom, $this->base);
         $this->setTxts($this->dom, $this->base);
+        $this->setSocialInteracts($this->dom, $this->base);
         if ($this->called) {
             $this->_appendNamespaces();
         }
@@ -212,6 +214,28 @@ class Entry extends Extension\AbstractRenderer
             $el = ElementGenerator::createTxtElement($dom, $txt);
             $root->appendChild($el);
         }
+        $this->called = true;
+    }
+
+    /**
+     * Set feed social interacts
+     */
+    private function setSocialInteracts(DOMDocument $dom, DOMElement $root): void
+    {
+        /** @psalm-var EntryWriter $container */
+        $container = $this->getDataContainer();
+
+        /** @psalm-var list<SocialInteractArray>|null $socialInteracts */
+        $socialInteracts = $container->getPodcastIndexSocialInteracts();
+        if ($socialInteracts === null || $socialInteracts === []) {
+            return;
+        }
+
+        foreach ($socialInteracts as $socialInteract) {
+            $el = ElementGenerator::createSocialInteractElement($dom, $socialInteract);
+            $root->appendChild($el);
+        }
+
         $this->called = true;
     }
 }

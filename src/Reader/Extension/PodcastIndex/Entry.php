@@ -237,7 +237,7 @@ class Entry extends Extension\AbstractEntry
     }
 
     /**
-     * Get the podcast txts
+     * Get the entry txts
      *
      * @return list<TxtObject>
      */
@@ -261,6 +261,34 @@ class Entry extends Extension\AbstractEntry
         $this->data['txts'] = $txts;
 
         return $this->data['txts'];
+    }
+
+    /**
+     * Get the entry social interacts
+     *
+     * @return list<SocialInteractObject>
+     */
+    public function getPodcastIndexSocialInteracts(): array
+    {
+        if (array_key_exists('socialInteracts', $this->data)) {
+            /** @var list<SocialInteractObject> $socialInteracts */
+            $socialInteracts = $this->data['socialInteracts'];
+            return $socialInteracts;
+        }
+
+        $socialInteracts = [];
+
+        $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:socialInteract');
+
+        foreach ($nodeList as $entry) {
+            assert($entry instanceof DOMElement);
+            $object            = AttributesReader::readSocialInteract($entry);
+            $socialInteracts[] = $object;
+        }
+
+        $this->data['socialInteracts'] = $socialInteracts;
+
+        return $this->data['socialInteracts'];
     }
 
     /**
