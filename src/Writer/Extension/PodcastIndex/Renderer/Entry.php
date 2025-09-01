@@ -45,6 +45,7 @@ class Entry extends Extension\AbstractRenderer
         $this->setChapters($this->dom, $this->base);
         $this->setSoundbites($this->dom, $this->base);
         $this->setLocation($this->dom, $this->base);
+        $this->setLicense($this->dom, $this->base);
         if ($this->called) {
             $this->_appendNamespaces();
         }
@@ -67,8 +68,11 @@ class Entry extends Extension\AbstractRenderer
      */
     protected function setTranscript(DOMDocument $dom, DOMElement $root): void
     {
+        /** @psalm-var EntryWriter $container */
+        $container = $this->getDataContainer();
+
         /** @psalm-var null|TranscriptArray $locked */
-        $locked = $this->getDataContainer()->getPodcastIndexTranscript();
+        $locked = $container->getPodcastIndexTranscript();
         if ($locked === null) {
             return;
         }
@@ -90,8 +94,11 @@ class Entry extends Extension\AbstractRenderer
      */
     protected function setChapters(DOMDocument $dom, DOMElement $root): void
     {
+        /** @psalm-var EntryWriter $container */
+        $container = $this->getDataContainer();
+
         /** @psalm-var null|ChaptersArray $chapters */
-        $chapters = $this->getDataContainer()->getPodcastIndexChapters();
+        $chapters = $container->getPodcastIndexChapters();
         if ($chapters === null) {
             return;
         }
@@ -107,8 +114,11 @@ class Entry extends Extension\AbstractRenderer
      */
     protected function setSoundbites(DOMDocument $dom, DOMElement $root): void
     {
+        /** @psalm-var EntryWriter $container */
+        $container = $this->getDataContainer();
+
         /** @psalm-var null|list<SoundbiteArray> $soundbites */
-        $soundbites = $this->getDataContainer()->getPodcastIndexSoundbites();
+        $soundbites = $container->getPodcastIndexSoundbites();
         if (! $soundbites) {
             return;
         }
@@ -130,8 +140,11 @@ class Entry extends Extension\AbstractRenderer
      */
     private function setLocation(DOMDocument $dom, DOMElement $root): void
     {
+        /** @psalm-var EntryWriter $container */
+        $container = $this->getDataContainer();
+
         /** @psalm-var null|LocationArray $location */
-        $location = $this->getDataContainer()->getPodcastIndexLocation();
+        $location = $container->getPodcastIndexLocation();
         if ($location === null) {
             return;
         }
@@ -139,6 +152,7 @@ class Entry extends Extension\AbstractRenderer
         $root->appendChild($el);
         $this->called = true;
     }
+
     /**
      * Set feed license
      */

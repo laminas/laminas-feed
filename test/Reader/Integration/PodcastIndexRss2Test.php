@@ -480,4 +480,20 @@ class PodcastIndexRss2Test extends TestCase
 
         $this->assertEquals($expected, $entry->getPodcastIndexLocation());
     }
+
+    public function testGetsEntryLicense(): void
+    {
+        $feed = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath)
+        );
+
+        /** @var Reader\Extension\PodcastIndex\Entry $entry */
+        $entry = $feed->current();
+
+        $expected             = new stdClass();
+        $expected->identifier = 'my-podcast-license-v1';
+        $expected->url        = 'https://example.org/mypodcastlicense/full.pdf';
+
+        $this->assertEquals($expected, $entry->getPodcastIndexLicense());
+    }
 }

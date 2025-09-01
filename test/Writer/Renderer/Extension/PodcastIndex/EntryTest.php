@@ -70,4 +70,22 @@ class EntryTest extends TestCase
         $this->assertStringContainsString($location['country'], $xml);
     }
 
+    public function testRendersRssLicenseTag(): void
+    {
+        $identifier = 'cc-by-4.0';
+        $url        = 'https://spdx.org/licenses/CC-BY-4.0.html';
+
+        $license = [
+            'identifier' => $identifier,
+            'url'        => $url,
+        ];
+        $this->validEntry->setPodcastIndexLicense($license);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $this->assertStringContainsString('<podcast:license', $xml);
+        $this->assertStringContainsString($url, $xml);
+        $this->assertStringContainsString($identifier, $xml);
+    }
 }

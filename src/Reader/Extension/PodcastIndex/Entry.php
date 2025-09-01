@@ -172,6 +172,31 @@ class Entry extends Extension\AbstractEntry
     }
 
     /**
+     * Get the entry license
+     */
+    public function getPodcastIndexLicense(): object|null
+    {
+        if (array_key_exists('license', $this->data)) {
+            /** @psalm-var null|LicenseObject */
+            return $this->data['license'];
+        }
+
+        $license = null;
+
+        $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:license');
+
+        if ($nodeList->length > 0) {
+            $item = $nodeList->item(0);
+            assert($item instanceof DOMElement);
+            $license = AttributesReader::readLicense($item);
+        }
+
+        $this->data['license'] = $license;
+
+        return $this->data['license'];
+    }
+
+    /**
      * Register PodcastIndex namespace
      */
     protected function registerNamespaces(): void

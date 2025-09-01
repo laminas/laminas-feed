@@ -115,6 +115,7 @@
             </itunes:keywords>
             <itunes:image href="https://www.example.com/podcasts/everything/episode.png" />
             <itunes:isClosedCaptioned>Yes</itunes:isClosedCaptioned>
+            <podcast:license url="https://example.org/mypodcastlicense/full.pdf">my-podcast-license-v1</podcast:license>
             <podcast:transcript
                     url="https://example.com/podcasts/everything/TranscriptEpisode3.html"
                     type="text/html" />
