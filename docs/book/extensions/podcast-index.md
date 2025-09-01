@@ -79,7 +79,8 @@ See the [Podcast Index website](https://podcastindex.org) for more information a
 |-------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|
 | `setPodcastIndexTranscript()` | Expects an array with the required keys "url" and "type", and with the optional keys "language" and "rel".                                        |
 | `setPodcastIndexChapters()`   | Expects an array with the required keys "url" and "type".                                                                                         |
-| `addPodcastIndexSoundbites()` | Expects an array of soundbite entries, each itself an array with the required keys "title" and "startTime", and with the optional key "duration". |
+| `addPodcastIndexSoundbites()` | Expects an array of soundbite entries, each itself an array with the required keys "duration" and "startTime", and with the optional key "title". |
+| `addPodcastIndexSoundbite()`  | Expects an array with the required keys "duration" and "startTime", and with the optional key "title".                                            |
 
 ## Examples
 

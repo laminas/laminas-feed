@@ -13,13 +13,29 @@ use function array_key_exists;
 
 /**
  * Describes PodcastIndex data of an entry in a RSS Feed
+ *
+ * @psalm-import-type LicenseObject from AttributesReader
+ * @psalm-import-type LocationObject from AttributesReader
+ * @psalm-import-type BlockObject from AttributesReader
+ * @psalm-import-type TxtObject from AttributesReader
+ * @psalm-import-type PersonObject from AttributesReader
+ * @psalm-import-type UpdateFrequencyObject from AttributesReader
+ * @psalm-import-type TrailerObject from AttributesReader
+ * @psalm-import-type RemoteItemObject from AttributesReader
+ * @psalm-import-type ValueRecipientObject from AttributesReader
+ * @psalm-import-type ValueObject from AttributesReader
+ * @psalm-import-type ImageObject from AttributesReader
+ * @psalm-import-type SocialInteractObject from AttributesReader
+ * @psalm-import-type TranscriptObject from AttributesReader
+ * @psalm-import-type ChaptersObject from AttributesReader
+ * @psalm-import-type SoundbiteObject from AttributesReader
  */
 class Entry extends Extension\AbstractEntry
 {
     /**
      * Get the entry transcript
      *
-     * @psalm-return null|object{url: string, type: string, language: string, rel: string}
+     * @psalm-return null|TranscriptObject
      */
     public function getTranscript(): ?stdClass
     {
@@ -49,7 +65,7 @@ class Entry extends Extension\AbstractEntry
     /**
      * Get the entry transcript
      *
-     * @psalm-return null|object{url: string, type: string, language: string, rel: string}
+     * @psalm-return null|TranscriptObject
      */
     public function getPodcastIndexTranscript(): ?stdClass
     {
@@ -59,7 +75,7 @@ class Entry extends Extension\AbstractEntry
     /**
      * Get the entry chapters
      *
-     * @psalm-return null|object{url: string, type: string}
+     * @psalm-return null|ChaptersObject
      */
     public function getChapters(): ?stdClass
     {
@@ -87,7 +103,7 @@ class Entry extends Extension\AbstractEntry
     /**
      * Get the entry chapters
      *
-     * @psalm-return null|object{url: string, type: string}
+     * @psalm-return null|ChaptersObject
      */
     public function getPodcastIndexChapters(): ?stdClass
     {
@@ -97,7 +113,7 @@ class Entry extends Extension\AbstractEntry
     /**
      * Get the entry soundbites
      *
-     * @psalm-return array<int, object{title: string, startTime: string, duration: string}>
+     * @psalm-return array<SoundbiteObject>
      */
     public function getSoundbites(): array
     {
@@ -129,9 +145,9 @@ class Entry extends Extension\AbstractEntry
     /**
      * Get the entry soundbites
      *
-     * @psalm-return array<int, object{title: string, startTime: string, duration: string}>
+     * @psalm-return array<SoundbiteObject>
      */
-    public function getPodcastIndexSoundbites(): ?stdClass
+    public function getPodcastIndexSoundbites(): array
     {
         return $this->getSoundbites();
     }

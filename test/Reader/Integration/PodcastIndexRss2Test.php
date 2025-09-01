@@ -412,6 +412,9 @@ class PodcastIndexRss2Test extends TestCase
         $expected->rel      = '';
 
         $this->assertEquals($expected, $entry->getTranscript());
+
+        // using alias
+        $this->assertEquals($expected, $entry->getPodcastIndexTranscript());
     }
 
     public function testGetsEntryChapters(): void
@@ -428,6 +431,9 @@ class PodcastIndexRss2Test extends TestCase
         $expected->type = 'application/json+chapters';
 
         $this->assertEquals($expected, $entry->getChapters());
+
+        // using alias
+        $this->assertEquals($expected, $entry->getPodcastIndexChapters());
     }
 
     public function testGetsEntrySoundbites(): void
@@ -447,5 +453,10 @@ class PodcastIndexRss2Test extends TestCase
         $this->assertEquals([
             $expected,
         ], $entry->getSoundbites());
+
+        // using alias
+        $this->assertEquals([
+            $expected,
+        ], $entry->getPodcastIndexSoundbites());
     }
 }

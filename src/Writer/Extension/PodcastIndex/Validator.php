@@ -64,36 +64,51 @@ use const FILTER_VALIDATE_URL;
  *      title?: string
  *    }
  * @psalm-type ValueRecipientArray = array{
- *        type: string,
- *        address: string,
- *        split: int,
- *        name?: string,
- *        customKey?: string,
- *        customValue?: string,
- *        fee?: bool,
- *      }
+ *      type: string,
+ *      address: string,
+ *      split: int,
+ *      name?: string,
+ *      customKey?: string,
+ *      customValue?: string,
+ *      fee?: bool,
+ *    }
  * @psalm-type ValueArray = array{
- *       type: string,
- *       method: string,
- *       suggested?: float,
- *       recipients?: list<ValueRecipientArray>
- *     }
+ *      type: string,
+ *      method: string,
+ *      suggested?: float,
+ *      recipients?: list<ValueRecipientArray>
+ *    }
  * @psalm-type ImageArray = array{
- *        href: string,
- *        alt?: string,
- *        purpose?: string,
- *        type?: string,
- *        aspect-ratio?: string,
- *        width?: int,
- *        height?: int,
- *      }
+ *      href: string,
+ *      alt?: string,
+ *      purpose?: string,
+ *      type?: string,
+ *      aspect-ratio?: string,
+ *      width?: int,
+ *      height?: int,
+ *    }
  * @psalm-type SocialInteractArray = array{
- *        protocol: string,
- *        uri: string,
- *        priority?: int,
- *        accountId?: string,
- *        accountUrl?: string,
- *      }
+ *      protocol: string,
+ *      uri: string,
+ *      priority?: int,
+ *      accountId?: string,
+ *      accountUrl?: string,
+ *    }
+ * @psalm-type TranscriptArray = array{
+ *      url: string,
+ *      type: string,
+ *      language: string,
+ *      rel: string
+ *    }
+ * @psalm-type ChaptersArray = array{
+ *      url: string,
+ *      type: string
+ *    }
+ * @psalm-type SoundbiteArray = array{
+ *      title: string,
+ *      startTime: string,
+ *      duration: string
+ *    }
  */
 class Validator
 {

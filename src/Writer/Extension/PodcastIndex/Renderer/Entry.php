@@ -8,10 +8,22 @@ use DOMDocument;
 use DOMElement;
 use Laminas\Feed\Writer\Extension;
 
+use Laminas\Feed\Writer\Extension\PodcastIndex\Validator;
 use function array_key_exists;
 
 /**
  * Renders PodcastIndex data of an entry in a RSS Feed
+ *
+ * @psalm-import-type TranscriptArray from Validator
+ * @psalm-import-type ChaptersArray from Validator
+ * @psalm-import-type SoundbiteArray from Validator
+ * @psalm-import-type LicenseArray from Validator
+ * @psalm-import-type LocationArray from Validator
+ * @psalm-import-type TxtArray from Validator
+ * @psalm-import-type PersonArray from Validator
+ * @psalm-import-type ValueRecipientArray from Validator
+ * @psalm-import-type ValueArray from Validator
+ * @psalm-import-type ImageArray from Validator
  */
 class Entry extends Extension\AbstractRenderer
 {
@@ -54,7 +66,7 @@ class Entry extends Extension\AbstractRenderer
      */
     protected function setTranscript(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var null|array<string, string> $locked */
+        /** @psalm-var null|TranscriptArray $locked */
         $locked = $this->getDataContainer()->getPodcastIndexTranscript();
         if ($locked === null) {
             return;
@@ -77,7 +89,7 @@ class Entry extends Extension\AbstractRenderer
      */
     protected function setChapters(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var null|array<string, string> $chapters */
+        /** @psalm-var null|ChaptersArray $chapters */
         $chapters = $this->getDataContainer()->getPodcastIndexChapters();
         if ($chapters === null) {
             return;
@@ -94,13 +106,12 @@ class Entry extends Extension\AbstractRenderer
      */
     protected function setSoundbites(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var null|list $soundbites */
+        /** @psalm-var null|list<SoundbiteArray> $soundbites */
         $soundbites = $this->getDataContainer()->getPodcastIndexSoundbites();
         if (! $soundbites) {
             return;
         }
         foreach ($soundbites as $soundbite) {
-            /** @psalm-var array<string, string> $soundbite */
             $el = $dom->createElement('podcast:soundbite');
             if (array_key_exists('title', $soundbite)) {
                 $text = $dom->createTextNode((string) $soundbite['title']);

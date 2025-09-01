@@ -89,6 +89,21 @@ use stdClass;
  *         accountId?: string,
  *         accountUrl?: string,
  *       }
+ * @psalm-type TranscriptObject = object{
+ *       url: string,
+ *       type: string,
+ *       language?: string,
+ *       rel?: string
+ *     }
+ * @psalm-type ChaptersObject = object{
+ *       url: string,
+ *       type: string
+ *     }
+ * @psalm-type SoundbiteObject = object{
+ *       title?: string,
+ *       startTime: string,
+ *       duration: string
+ *     }
  */
 class AttributesReader
 {

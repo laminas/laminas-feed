@@ -19,6 +19,17 @@ use function ucfirst;
 
 /**
  * Describes PodcastIndex data of an entry in a RSS Feed
+ *
+ * @psalm-import-type TranscriptArray from Validator
+ * @psalm-import-type ChaptersArray from Validator
+ * @psalm-import-type SoundbitesArray from Validator
+ * @psalm-import-type LicenseArray from Validator
+ * @psalm-import-type LocationArray from Validator
+ * @psalm-import-type TxtArray from Validator
+ * @psalm-import-type PersonArray from Validator
+ * @psalm-import-type ValueRecipientArray from Validator
+ * @psalm-import-type ValueArray from Validator
+ * @psalm-import-type ImageArray from Validator
  */
 class Entry
 {
@@ -69,6 +80,8 @@ class Entry
     /**
      * Set entry transcript
      *
+     * @param TranscriptArray $value
+     * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
     public function setPodcastIndexTranscript(array $value): Entry
@@ -86,6 +99,8 @@ class Entry
     /**
      * Set entry chapters
      *
+     * @param ChaptersArray $value
+     * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
     public function setPodcastIndexChapters(array $value): Entry
@@ -102,6 +117,8 @@ class Entry
     /**
      * Add entry soundbites
      *
+     * @param list<SoundbitesArray> $value
+     * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
     public function addPodcastIndexSoundbites(array $values): Entry
@@ -116,6 +133,8 @@ class Entry
     /**
      * Add entry soundbite
      *
+     * @param SoundbitesArray $value
+     * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
     public function addPodcastIndexSoundbite(array $value): Entry
