@@ -47,6 +47,16 @@ class Entry extends Extension\AbstractEntry
     }
 
     /**
+     * Get the entry transcript
+     *
+     * @psalm-return null|object{url: string, type: string, language: string, rel: string}
+     */
+    public function getPodcastIndexTranscript(): ?stdClass
+    {
+        return $this->getTranscript();
+    }
+
+    /**
      * Get the entry chapters
      *
      * @psalm-return null|object{url: string, type: string}
@@ -75,9 +85,18 @@ class Entry extends Extension\AbstractEntry
     }
 
     /**
+     * Get the entry chapters
+     *
+     * @psalm-return null|object{url: string, type: string}
+     */
+    public function getPodcastIndexChapters(): ?stdClass
+    {
+        return $this->getChapters();
+    }
+
+    /**
      * Get the entry soundbites
      *
-     * @return stdClass[]
      * @psalm-return array<int, object{title: string, startTime: string, duration: string}>
      */
     public function getSoundbites(): array
@@ -105,6 +124,16 @@ class Entry extends Extension\AbstractEntry
         $this->data['soundbites'] = $soundbites;
 
         return $this->data['soundbites'];
+    }
+
+    /**
+     * Get the entry soundbites
+     *
+     * @psalm-return array<int, object{title: string, startTime: string, duration: string}>
+     */
+    public function getPodcastIndexSoundbites(): ?stdClass
+    {
+        return $this->getSoundbites();
     }
 
     /**

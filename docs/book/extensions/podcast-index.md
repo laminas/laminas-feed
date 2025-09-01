@@ -67,11 +67,11 @@ See the [Podcast Index website](https://podcastindex.org) for more information a
 
 ### GET methods
 
-| Method            | Description                                                                                                                |
-|-------------------|----------------------------------------------------------------------------------------------------------------------------|
-| `getTranscript()` | Returns transcript information for the entry. The output is an object with "url", "type", "language" and "rel" properties. |
-| `getChapters()`   | Returns chapter information for the entry. The output is an object with "url" and "type" properties.                       |
-| `getSoundbites()` | Returns soundbites for the entry. The output is an array of objects with "title", "startTime" and "duration" properties.   |
+| Method                                          | Description                                                                                                                |
+|-------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------|
+| `getTranscript()` `getPodcastIndexTranscript()` | Returns transcript information for the entry. The output is an object with "url", "type", "language" and "rel" properties. |
+| `getChapters()` `getPodcastIndexChapters()`     | Returns chapter information for the entry. The output is an object with "url" and "type" properties.                       |
+| `getSoundbites()` `getPodcastIndexSoundbites()` | Returns soundbites for the entry. The output is an array of objects with "title", "startTime" and "duration" properties.   |
 
 ### SET methods
 
