@@ -116,6 +116,7 @@
             <itunes:image href="https://www.example.com/podcasts/everything/episode.png" />
             <itunes:isClosedCaptioned>Yes</itunes:isClosedCaptioned>
             <podcast:license url="https://example.org/mypodcastlicense/full.pdf">my-podcast-license-v1</podcast:license>
+            <podcast:person group="writing" role="guest" href="https://www.wikipedia/alicebrown" img="http://example.com/images/alicebrown.jpg">Alice Brown</podcast:person>
             <podcast:transcript
                     url="https://example.com/podcasts/everything/TranscriptEpisode3.html"
                     type="text/html" />

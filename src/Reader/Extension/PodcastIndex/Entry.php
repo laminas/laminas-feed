@@ -197,6 +197,46 @@ class Entry extends Extension\AbstractEntry
     }
 
     /**
+     * Get the entry people
+     *
+     * @psalm-return list<PersonObject>
+     */
+    public function getPodcastIndexPeople(): array
+    {
+        if (array_key_exists('people', $this->data)) {
+            /** @psalm-var list<PersonObject> */
+            return $this->data['people'];
+        }
+
+        $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:person');
+
+        $personCollection = [];
+
+        if ($nodeList->length > 0) {
+            foreach ($nodeList as $entry) {
+                assert($entry instanceof DOMElement);
+                $person = AttributesReader::readPerson($entry);
+
+                $personCollection[] = $person;
+            }
+        }
+
+        $this->data['people'] = $personCollection;
+
+        return $this->data['people'];
+    }
+
+    /**
+     * Get the entry persons (alias of getPodcastIndexPeople)
+     *
+     * @psalm-return list<PersonObject>
+     */
+    public function getPodcastIndexPersons(): array
+    {
+        return $this->getPodcastIndexPeople();
+    }
+
+    /**
      * Register PodcastIndex namespace
      */
     protected function registerNamespaces(): void

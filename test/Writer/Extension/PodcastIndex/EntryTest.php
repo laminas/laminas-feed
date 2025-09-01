@@ -328,4 +328,107 @@ class EntryTest extends TestCase
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $entry->setPodcastIndexLocation($location);
     }
+
+    public function testAddPerson(): void
+    {
+        $feed = new Writer\Feed();
+
+        $person = [
+            'name'  => 'Hercules Poirot',
+            'role'  => 'guest',
+            'group' => 'starring',
+            'img'   => 'https://poirot.com/about/my-moustage.jpg',
+            'href'  => 'https://poirot.com/my-cases',
+        ];
+        $feed->addPodcastIndexPerson($person);
+
+        /** @var list<PersonObject> $people */
+        $people = $feed->getPodcastIndexPeople();
+        $this->assertTrue(in_array($person, $people));
+    }
+
+    public function testSetPeopleAndSetPersons(): void
+    {
+        $feed = new Writer\Feed();
+
+        $people = [
+            [
+                'name'  => 'Hercules Poirot',
+                'role'  => 'guest',
+                'group' => 'starring',
+                'img'   => 'https://poirot.com/about/my-moustage.jpg',
+                'href'  => 'https://poirot.com/my-cases',
+            ],
+            [
+                'name'  => 'Agatha Christie',
+                'role'  => 'guest',
+                'group' => 'writing',
+            ],
+        ];
+        // set using "people"
+        $feed->setPodcastIndexPeople($people);
+        /** @var list<PersonObject> $peopleSaved */
+        $peopleSaved = $feed->getPodcastIndexPeople();
+        foreach ($people as $person) {
+            $this->assertTrue(in_array($person, $peopleSaved));
+        }
+        // update using "persons"
+        $newPersons = [
+            [
+                'name'  => 'Alice Brown',
+                'role'  => 'guest',
+                'group' => 'writing',
+                'img'   => 'http://example.com/images/alicebrown.jpg',
+                'href'  => 'https://www.wikipedia/alicebrown',
+            ],
+        ];
+        $feed->setPodcastIndexPersons($newPersons);
+        /** @var list<PersonObject> $updated */
+        $updated = $feed->getPodcastIndexPersons();
+        $this->assertEquals(1, count($updated));
+        $this->assertEquals($newPersons, $updated);
+
+        // delete using "people"
+        $feed->setPodcastIndexPeople();
+        $this->assertNull($feed->getPodcastIndexPeople());
+    }
+
+    public function testAddPersonWithOneArgument(): void
+    {
+        $feed = new Writer\Feed();
+
+        $person = [
+            'name' => 'Hercules Poirot',
+        ];
+        $feed->addPodcastIndexPerson($person);
+
+        /** @var list<PersonObject> $people */
+        $people = $feed->getPodcastIndexPeople();
+        $this->assertTrue(in_array($person, $people));
+    }
+
+    public function testAddPersonThrowsExceptionOnInvalidArguments(): void
+    {
+        $feed = new Writer\Feed();
+
+        $person = [
+            'abc' => 'def',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->addPodcastIndexPerson($person);
+    }
+
+    public function testAddPersonThrowsExceptionOnInvalidImageUrl(): void
+    {
+        $feed = new Writer\Feed();
+
+        $person = [
+            'name'  => 'Hercules Poirot',
+            'role'  => 'guest',
+            'group' => 'writing',
+            'img'   => 'poirot.com/my-moustage.jpg',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->addPodcastIndexPerson($person);
+    }
 }

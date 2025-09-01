@@ -88,4 +88,66 @@ class EntryTest extends TestCase
         $this->assertStringContainsString($url, $xml);
         $this->assertStringContainsString($identifier, $xml);
     }
+
+    public function testRendersRssPersonTag(): void
+    {
+        $person = [
+            'name'  => 'Hercules Poirot',
+            'role'  => 'guest',
+            'group' => 'writing',
+            'img'   => 'https://poirot.com/about/my-moustage.jpg',
+            'href'  => 'https://poirot.com/my-cases',
+        ];
+
+        $this->validEntry->addPodcastIndexPerson($person);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $this->assertStringContainsString('<podcast:person', $xml);
+        $this->assertStringContainsString($person['name'], $xml);
+        $this->assertSame(1, substr_count($xml, $person['name']));
+        $this->assertStringContainsString($person['role'], $xml);
+        $this->assertStringContainsString($person['group'], $xml);
+        $this->assertStringContainsString($person['img'], $xml);
+        $this->assertStringContainsString($person['href'], $xml);
+    }
+
+    public function testRendersMultipleRssPersonTags(): void
+    {
+        $fName = 'Hercules Poirot';
+        $sName = 'Agatha Christie';
+
+        $people = [
+            ['name' => $fName],
+            ['name' => $sName],
+        ];
+
+        $this->validEntry->setPodcastIndexPeople($people);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $this->assertStringContainsString(">$fName</podcast:person>", $xml);
+        $this->assertStringContainsString(">$sName</podcast:person>", $xml);
+    }
+
+    public function testRendersMultipleRssPersonTagsUsingAlias(): void
+    {
+        $fName = 'Hercules Poirot';
+        $sName = 'Agatha Christie';
+
+        $people = [
+            ['name' => $fName],
+            ['name' => $sName],
+        ];
+
+        $this->validEntry->setPodcastIndexPersons($people);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $this->assertStringContainsString(">$fName</podcast:person>", $xml);
+        $this->assertStringContainsString(">$sName</podcast:person>", $xml);
+    }
 }

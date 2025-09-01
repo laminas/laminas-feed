@@ -197,6 +197,57 @@ class Entry
     }
 
     /**
+     * Add entry person
+     *
+     * @psalm-param PersonArray $value
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function addPodcastIndexPerson(array $value): self
+    {
+        Validator::validatePerson($value);
+
+        if (! isset($this->data['people'])) {
+            $this->data['people'] = [];
+        }
+
+        /** @var list<PersonArray> $this->data['people'] */
+        $this->data['people'][] = $value;
+        return $this;
+    }
+
+    /**
+     * Set a new array of people.
+     * If no argument is passed, it will just remove all existing people.
+     *
+     * @psalm-param list<PersonArray> $values
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function setPodcastIndexPeople(array $values = []): self
+    {
+        $this->data['people'] = [];
+
+        foreach ($values as $value) {
+            $this->addPodcastIndexPerson($value);
+        }
+        return $this;
+    }
+
+    /**
+     * Set a new array of persons. (alias of setPodcastIndexPeople)
+     * If no argument is passed, it will just remove all existing persons.
+     *
+     * @psalm-param list<PersonArray> $values
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function setPodcastIndexPersons(array $values = []): self
+    {
+        return $this->setPodcastIndexPeople($values);
+    }
+
+    /**
      * Overloading: proxy to internal setters
      *
      * @return mixed

@@ -46,6 +46,7 @@ class Entry extends Extension\AbstractRenderer
         $this->setSoundbites($this->dom, $this->base);
         $this->setLocation($this->dom, $this->base);
         $this->setLicense($this->dom, $this->base);
+        $this->setPeople($this->dom, $this->base);
         if ($this->called) {
             $this->_appendNamespaces();
         }
@@ -169,6 +170,26 @@ class Entry extends Extension\AbstractRenderer
         $el = ElementGenerator::createLicenseElement($dom, $license);
 
         $root->appendChild($el);
+        $this->called = true;
+    }
+
+    /**
+     * Set feed people
+     */
+    private function setPeople(DOMDocument $dom, DOMElement $root): void
+    {
+        /** @psalm-var EntryWriter $container */
+        $container = $this->getDataContainer();
+
+        /** @psalm-var null|list<PersonArray> $people */
+        $people = $container->getPodcastIndexPeople();
+        if ($people === null || $people === []) {
+            return;
+        }
+        foreach ($people as $person) {
+            $el = ElementGenerator::createPersonElement($dom, $person);
+            $root->appendChild($el);
+        }
         $this->called = true;
     }
 }

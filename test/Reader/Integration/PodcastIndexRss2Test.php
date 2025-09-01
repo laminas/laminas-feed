@@ -496,4 +496,29 @@ class PodcastIndexRss2Test extends TestCase
 
         $this->assertEquals($expected, $entry->getPodcastIndexLicense());
     }
+
+    public function testGetsEntryPeople(): void
+    {
+        $feed = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath)
+        );
+
+        /** @var Reader\Extension\PodcastIndex\Entry $entry */
+        $entry = $feed->current();
+
+        $expected        = new stdClass();
+        $expected->name  = 'Alice Brown';
+        $expected->role  = 'guest';
+        $expected->group = 'writing';
+        $expected->img   = 'http://example.com/images/alicebrown.jpg';
+        $expected->href  = 'https://www.wikipedia/alicebrown';
+
+        // using "people"
+        $people = $entry->getPodcastIndexPeople();
+        $this->assertEquals($expected, $people[0]);
+
+        // using "persons"
+        $persons = $entry->getPodcastIndexPersons();
+        $this->assertEquals($expected, $persons[0]);
+    }
 }
