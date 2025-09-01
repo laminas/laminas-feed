@@ -109,7 +109,9 @@ $feedWriter->addPodcastIndexValue($value, $recipients);
 
 Rendered outcome:
 
-    <podcast:value type="lightning" method="keysend" suggested="0.00000005000">
-        <podcast:recipient name="Alice (Podcaster)" type="node" address="02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52" split="40"/>
-        <podcast:recipient name="Bob (Podcaster)" type="node" address="032f4ffbbafffbe51726ad3c164a3d0d37ec27bc67b29a159b0f49ae8ac21b8508" split="60"/>
-    </podcast:value>
+```xml
+<podcast:value type="lightning" method="keysend" suggested="0.00000005000">
+    <podcast:recipient name="Alice (Podcaster)" type="node" address="02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52" split="40"/>
+    <podcast:recipient name="Bob (Podcaster)" type="node" address="032f4ffbbafffbe51726ad3c164a3d0d37ec27bc67b29a159b0f49ae8ac21b8508" split="60"/>
+</podcast:value>
+```
