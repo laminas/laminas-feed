@@ -462,7 +462,7 @@ class FeedTest extends TestCase
             'suggested' => 0.00000005000,
         ];
 
-        $recipients = [
+        $valueRecipients = [
             [
                 'name'    => "Alice (Podcaster)",
                 'type'    => "node",
@@ -476,7 +476,7 @@ class FeedTest extends TestCase
                 'split'   => 60,
             ],
         ];
-        $this->validWriter->addPodcastIndexValue($value, $recipients);
+        $this->validWriter->addPodcastIndexValue($value, $valueRecipients);
 
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $xml     = $rssFeed->render()->saveXml();
@@ -485,10 +485,10 @@ class FeedTest extends TestCase
         $this->assertStringContainsString('<podcast:valueRecipient', $xml);
         $this->assertStringContainsString($value['type'], $xml);
         $this->assertStringContainsString($value['method'], $xml);
-        $this->assertStringContainsString($recipients[0]['name'], $xml);
-        $this->assertStringContainsString($recipients[0]['type'], $xml);
-        $this->assertStringContainsString($recipients[1]['address'], $xml);
-        $this->assertStringContainsString((string) $recipients[1]['split'], $xml);
+        $this->assertStringContainsString($valueRecipients[0]['name'], $xml);
+        $this->assertStringContainsString($valueRecipients[0]['type'], $xml);
+        $this->assertStringContainsString($valueRecipients[1]['address'], $xml);
+        $this->assertStringContainsString((string) $valueRecipients[1]['split'], $xml);
 
         $newValue      = [
             'type'      => "lightning",

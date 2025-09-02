@@ -406,7 +406,7 @@ class Feed extends Extension\AbstractRenderer
     }
 
     /**
-     * Set values with the value recipients
+     * Set values with the valueRecipients
      */
     private function setValues(DOMDocument $dom, DOMElement $root): void
     {
@@ -420,13 +420,13 @@ class Feed extends Extension\AbstractRenderer
         }
 
         foreach ($values as $value) {
-            if (! isset($value['recipients'])) {
+            if (! isset($value['valueRecipients'])) {
                 continue;
             }
             $valueElement = ElementGenerator::createValueElement($dom, $value);
-            foreach ($value['recipients'] as $valueRecipient) {
-                $recipientElement = ElementGenerator::createValueRecipientElement($dom, $valueRecipient);
-                $valueElement->appendChild($recipientElement);
+            foreach ($value['valueRecipients'] as $valueRecipient) {
+                $valueRecipientElement = ElementGenerator::createValueRecipientElement($dom, $valueRecipient);
+                $valueElement->appendChild($valueRecipientElement);
             }
             $root->appendChild($valueElement);
         }

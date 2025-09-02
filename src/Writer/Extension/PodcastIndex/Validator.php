@@ -7,6 +7,7 @@ namespace Laminas\Feed\Writer\Extension\PodcastIndex;
 use DateTimeInterface;
 use Laminas\Feed\Writer;
 
+use function count;
 use function filter_var;
 use function is_bool;
 use function is_float;
@@ -74,11 +75,19 @@ use const FILTER_VALIDATE_URL;
  *      customValue?: string,
  *      fee?: bool,
  *    }
+ * @psalm-type ValueTimeSplitArray = array{
+ *       startTime: int,
+ *       duration: int,
+ *       remoteStartTime?: int,
+ *       remotePercentage?: int,
+ *       valueRecipients: list<ValueRecipientArray>,
+ *       remoteItem?: RemoteItemArray
+ *     }
  * @psalm-type ValueArray = array{
  *      type: string,
  *      method: string,
  *      suggested?: float,
- *      recipients?: list<ValueRecipientArray>
+ *      valueRecipients: list<ValueRecipientArray>
  *    }
  * @psalm-type ImageArray = array{
  *      href: string,
@@ -356,6 +365,50 @@ class Validator
     }
 
     /**
+     * Validate the values of the remote item.
+     *
+     * @param RemoteItemArray $value
+     * @throws Writer\Exception\InvalidArgumentException
+     * @psalm-suppress DocblockTypeContradiction
+     */
+    public static function validateRemoteItem(array $value): void
+    {
+        if (! isset($value['feedGuid'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "remoteItem" must be an array containing at least the key "feedGuid"'
+            );
+        }
+        if (! is_string($value['feedGuid'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "feedGuid" of "remoteItem" must be of type string'
+            );
+        }
+        if (
+            isset($value['feedUrl'])
+            && (! is_string($value['feedUrl']) || ! filter_var($value['feedUrl'], FILTER_VALIDATE_URL))
+        ) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "feedUrl" of "remoteItem" must be a url, starting with "http://" or "https://'
+            );
+        }
+        if (isset($value['itemGuid']) && ! is_string($value['itemGuid'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "itemGuid" of "remoteItem" must be of type string'
+            );
+        }
+        if (isset($value['medium']) && ! is_string($value['medium'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "medium" of "remoteItem" must be of type string'
+            );
+        }
+        if (isset($value['title']) && ! is_string($value['title'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "title" of "remoteItem" must be of type string'
+            );
+        }
+    }
+
+    /**
      * Validates value
      *
      * @param ValueArray $value
@@ -387,7 +440,7 @@ class Validator
     }
 
     /**
-     * Validates value recipient
+     * Validates valueRecipient
      *
      * @param ValueRecipientArray $value
      * @throws Writer\Exception\InvalidArgumentException
@@ -396,52 +449,101 @@ class Validator
     {
         if (! isset($value['type'], $value['address'], $value['split'])) {
             throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: each "recipients" entry in "value" must be an array 
+                'invalid parameter: each "valueRecipients" entry in "value" must be an array 
                 containing the keys "type", "address" and "split"'
             );
         }
         if (! is_string($value['type'])) {
             throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "type" of "value recipient" must be of type string'
+                'invalid parameter: key "type" of "valueRecipient" must be of type string'
             );
         }
         if (! is_string($value['address'])) {
             throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "address" of "value recipient" must be of type string'
+                'invalid parameter: key "address" of "valueRecipient" must be of type string'
             );
         }
         if (! is_int($value['split'])) {
             throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "split" of "value recipient" must be of type integer'
+                'invalid parameter: key "split" of "valueRecipient" must be of type integer'
             );
         }
         if (isset($value['name']) && ! is_string($value['name'])) {
             throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "name" of "value recipient" must be of type string'
+                'invalid parameter: key "name" of "valueRecipient" must be of type string'
             );
         }
         if (isset($value['customKey']) && ! is_string($value['customKey'])) {
             throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "customKey" of "value recipient" must be of type string'
+                'invalid parameter: key "customKey" of "valueRecipient" must be of type string'
             );
         }
         if (isset($value['customValue']) && ! is_string($value['customValue'])) {
             throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "customKey" of "value recipient" must be of type string'
+                'invalid parameter: key "customKey" of "valueRecipient" must be of type string'
             );
         }
         if (isset($value['fee']) && ! is_bool($value['fee'])) {
             throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "fee" of "value recipient" must be of type boolean'
+                'invalid parameter: key "fee" of "valueRecipient" must be of type boolean'
             );
         }
     }
 
     /**
-     * TODO: Validates value time split
+     * Validate the attributes of the value time split.
+     *
+     * @psalm-param ValueTimeSplitArray $value
+     * @throws Writer\Exception\InvalidArgumentException
      */
-    /*public static function validateValueTimeSplit(array $value): void
+    public static function validateValueTimeSplit(array $value): void
     {
-        //
-    }*/
+        if (! isset($value['startTime'], $value['duration'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "valueTimeSplit" must contain the keys "startTime" and "duration"'
+            );
+        }
+        if (! is_int($value['startTime'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "startTime" of "valueTimeSplit" must be of type integer'
+            );
+        }
+        if (! is_int($value['duration'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "duration" of "valueTimeSplit" must be of type integer'
+            );
+        }
+        if (isset($value['remoteStartTime']) && ! is_int($value['remoteStartTime'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "remoteStartTime" of "valueTimeSplit" must be of type integer'
+            );
+        }
+        if (isset($value['remotePercentage']) && ! is_int($value['remotePercentage'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "remotePercentage" of "valueTimeSplit" must be of type integer'
+            );
+        }
+
+        // check that exactly one of valueRecipients or remoteItem is set
+        $usesRecipients = isset($value['valueRecipients']) && count($value['valueRecipients']) > 0;
+        $usesRemoteItem = isset($value['remoteItem']) && count($value['remoteItem']) > 0;
+
+        if (! $usesRecipients && ! $usesRemoteItem) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "valueTimeSplit" must contain either "valueRecipients" or "remoteItem"'
+            );
+        }
+        if ($usesRecipients && $usesRemoteItem) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "valueTimeSplit" must not contain both "valueRecipients" and "remoteItem"'
+            );
+        }
+        if ($usesRecipients) {
+            foreach ($value['valueRecipients'] as $valueRecipient) {
+                self::validateValueRecipient($valueRecipient);
+            }
+        } else {
+            self::validateRemoteItem($value['remoteItem']);
+        }
+    }
 }

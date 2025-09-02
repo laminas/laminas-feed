@@ -501,7 +501,7 @@ class Feed
      */
     public function addPodcastIndexRemoteItem(array $value): self
     {
-        $this->validateRemoteItem($value);
+        Validator::validateRemoteItem($value);
 
         if (! isset($this->data['remoteItems'])) {
             $this->data['remoteItems'] = [];
@@ -546,7 +546,7 @@ class Feed
         $this->data['podroll'] = [];
 
         foreach ($values as $value) {
-            $this->validateRemoteItem($value);
+            Validator::validateRemoteItem($value);
             $this->data['podroll'][] = $value;
         }
         return $this;
@@ -561,7 +561,7 @@ class Feed
      */
     public function addPodcastIndexPodrollRemoteItem(array $value): self
     {
-        $this->validateRemoteItem($value);
+        Validator::validateRemoteItem($value);
 
         if (! isset($this->data['podroll'])) {
             $this->data['podroll'] = [];
@@ -588,7 +588,7 @@ class Feed
         $this->data['publisher'] = [];
 
         if ($value && count($value) > 0) {
-            $this->validateRemoteItem($value);
+            Validator::validateRemoteItem($value);
             $this->data['publisher'] = $value;
         }
 
@@ -596,52 +596,8 @@ class Feed
     }
 
     /**
-     * Validate the values of the remote item.
-     *
-     * @param RemoteItemArray $value
-     * @throws Writer\Exception\InvalidArgumentException
-     * @psalm-suppress DocblockTypeContradiction
-     */
-    private function validateRemoteItem(array $value): void
-    {
-        if (! isset($value['feedGuid'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: "remoteItem" must be an array containing at least the key "feedGuid"'
-            );
-        }
-        if (! is_string($value['feedGuid'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "feedGuid" of "remoteItem" must be of type string'
-            );
-        }
-        if (
-            isset($value['feedUrl'])
-            && (! is_string($value['feedUrl']) || ! filter_var($value['feedUrl'], FILTER_VALIDATE_URL))
-        ) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "feedUrl" of "remoteItem" must be a url, starting with "http://" or "https://'
-            );
-        }
-        if (isset($value['itemGuid']) && ! is_string($value['itemGuid'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "itemGuid" of "remoteItem" must be of type string'
-            );
-        }
-        if (isset($value['medium']) && ! is_string($value['medium'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "medium" of "remoteItem" must be of type string'
-            );
-        }
-        if (isset($value['title']) && ! is_string($value['title'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "title" of "remoteItem" must be of type string'
-            );
-        }
-    }
-
-    /**
      * Reset all value elements.
-     * All value entries will be removed, including their nested value recipients.
+     * All value entries will be removed, including their nested valueRecipients.
      *
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
@@ -653,9 +609,9 @@ class Feed
     }
 
     /**
-     * Add a value element with one or more value recipients as children.
+     * Add a value element with one or more valueRecipients as children.
      * The method expects one array with the value attributes as first argument
-     * and an array of arrays with the value recipients' attributes as second argument.
+     * and an array of arrays with the valueRecipients' attributes as second argument.
      *
      * @psalm-param ValueArray $value
      * @psalm-param list<ValueRecipientArray> $valueRecipients
@@ -667,16 +623,16 @@ class Feed
         // validate the value attributes
         Validator::validateValue($value);
 
-        // validate the value recipients array
+        // validate the valueRecipients array
         if (count($valueRecipients) < 1) {
             throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: the second argument of "value" must be an array containing at least one recipient'
+                'invalid parameter: the second argument of "value" must be an array containing at least one valueRecipient'
             );
         }
-        foreach ($valueRecipients as $recipient) {
-            Validator::validateValueRecipient($recipient);
+        foreach ($valueRecipients as $valueRecipient) {
+            Validator::validateValueRecipient($valueRecipient);
         }
-        $value['recipients'] = $valueRecipients;
+        $value['valueRecipients'] = $valueRecipients;
 
         // add the values entry
         if (! isset($this->data['values'])) {

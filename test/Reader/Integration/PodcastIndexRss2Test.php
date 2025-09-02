@@ -359,11 +359,11 @@ class PodcastIndexRss2Test extends TestCase
         $recipB->customValue = '';
         $recipB->fee         = '';
 
-        $expected             = new stdClass();
-        $expected->type       = 'lightning';
-        $expected->method     = 'keysend';
-        $expected->suggested  = '0.00000005000';
-        $expected->recipients = [$recipA, $recipB];
+        $expected                  = new stdClass();
+        $expected->type            = 'lightning';
+        $expected->method          = 'keysend';
+        $expected->suggested       = '0.00000005000';
+        $expected->valueRecipients = [$recipA, $recipB];
 
         $values = $feed->getPodcastIndexValues();
         $this->assertEquals($expected, $values[0]);
@@ -599,11 +599,11 @@ class PodcastIndexRss2Test extends TestCase
         $recipB->customValue = '';
         $recipB->fee         = '';
 
-        $expected             = new stdClass();
-        $expected->type       = 'lightning';
-        $expected->method     = 'keysend';
-        $expected->suggested  = '0.00000005000';
-        $expected->recipients = [$recipA, $recipB];
+        $expected                  = new stdClass();
+        $expected->type            = 'lightning';
+        $expected->method          = 'keysend';
+        $expected->suggested       = '0.00000005000';
+        $expected->valueRecipients = [$recipA, $recipB];
 
         $values = $entry->getPodcastIndexValues();
         $this->assertEquals($expected, $values[0]);

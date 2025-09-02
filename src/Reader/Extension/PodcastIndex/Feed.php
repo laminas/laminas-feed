@@ -544,16 +544,16 @@ class Feed extends Extension\AbstractFeed
             $valueObject = AttributesReader::readValue($valueNode);
 
             /** @psalm-suppress TooManyArguments */
-            $recipientsNodeList = $this->xpath->query('podcast:valueRecipient', $valueNode);
-            $recipients         = [];
+            $valueRecipientsNodeList = $this->xpath->query('podcast:valueRecipient', $valueNode);
+            $valueRecipients         = [];
 
-            foreach ($recipientsNodeList as $entry) {
+            foreach ($valueRecipientsNodeList as $entry) {
                 assert($entry instanceof DOMElement);
                 $object       = AttributesReader::readValueRecipient($entry);
-                $recipients[] = $object;
+                $valueRecipients[] = $object;
             }
 
-            $valueObject->recipients = $recipients;
+            $valueObject->valueRecipients = $valueRecipients;
             $values[]                = $valueObject;
         }
 

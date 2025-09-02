@@ -9,10 +9,12 @@ use Laminas\Stdlib\StringUtils;
 use Laminas\Stdlib\StringWrapper\StringWrapperInterface;
 
 use function array_key_exists;
+use function count;
 use function is_numeric;
 use function is_string;
 use function lcfirst;
 use function method_exists;
+use function rtrim;
 use function strlen;
 use function substr;
 use function ucfirst;
@@ -28,6 +30,7 @@ use function ucfirst;
  * @psalm-import-type TxtArray from Validator
  * @psalm-import-type PersonArray from Validator
  * @psalm-import-type ValueRecipientArray from Validator
+ * @psalm-import-type ValueTimeSplitArray from Validator
  * @psalm-import-type ValueArray from Validator
  * @psalm-import-type ImageArray from Validator
  * @psalm-import-type SocialInteractArray from Validator
@@ -345,7 +348,7 @@ class Entry
 
     /**
      * Reset all value elements.
-     * All value entries will be removed, including their nested value recipients.
+     * All value entries will be removed, including their nested valueRecipients.
      *
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
@@ -357,30 +360,38 @@ class Entry
     }
 
     /**
-     * Add a value element with one or more value recipients as children.
-     * The method expects one array with the value attributes as first argument
-     * and an array of arrays with the value recipients' attributes as second argument.
+     * Adds a value element with one or more valueRecipients as children.
+     * Optionally, a set of value time splits can also be attached.
      *
      * @psalm-param ValueArray $value
      * @psalm-param list<ValueRecipientArray> $valueRecipients
+     * @psalm-param list<ValueTimeSplitArray> $valueTimeSplits
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public function addPodcastIndexValue(array $value, array $valueRecipients): self
+    public function addPodcastIndexValue(array $value, array $valueRecipients, array $valueTimeSplits = []): self
     {
         // validate the value attributes
         Validator::validateValue($value);
 
-        // validate the value recipients array
+        // validate the valueRecipients array
         if (count($valueRecipients) < 1) {
             throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: the second argument of "value" must be an array containing at least one recipient'
+                'invalid parameter: the second argument of "value" must be an array containing at least one valueRecipient'
             );
         }
-        foreach ($valueRecipients as $recipient) {
-            Validator::validateValueRecipient($recipient);
+        foreach ($valueRecipients as $valueRecipient) {
+            Validator::validateValueRecipient($valueRecipient);
         }
-        $value['recipients'] = $valueRecipients;
+        $value['valueRecipients'] = $valueRecipients;
+
+        // validate and add valueTimeSplits
+        if (isset($valueTimeSplits) && count($valueTimeSplits) > 0) {
+            foreach ($valueTimeSplits as $split) {
+                Validator::validateValueTimeSplit($split);
+            }
+            $value['valueTimeSplits'] = $valueTimeSplits;
+        }
 
         // add the values entry
         if (! isset($this->data['values'])) {

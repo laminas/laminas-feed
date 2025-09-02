@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Laminas\Feed\Reader\Extension\PodcastIndex;
 
 use DOMElement;
-use DOMNodeList;
 use Laminas\Feed\Reader\Extension;
 use stdClass;
 
 use function array_key_exists;
+use function assert;
 
 /**
  * Describes PodcastIndex data of an entry in a RSS Feed
@@ -87,8 +87,8 @@ class Entry extends Extension\AbstractEntry
         if ($nodeList->length > 0) {
             $node = $nodeList->item(0);
             assert($node instanceof DOMElement);
-            $chapters = new stdClass();
-            $chapters->url = $node->getAttribute('url');
+            $chapters       = new stdClass();
+            $chapters->url  = $node->getAttribute('url');
             $chapters->type = $node->getAttribute('type');
         }
 
@@ -312,17 +312,17 @@ class Entry extends Extension\AbstractEntry
             $valueObject = AttributesReader::readValue($valueNode);
 
             /** @psalm-suppress TooManyArguments */
-            $recipientsNodeList = $this->xpath->query('podcast:valueRecipient', $valueNode);
-            $recipients         = [];
+            $valueRecipientsNodeList = $this->xpath->query('podcast:valueRecipient', $valueNode);
+            $valueRecipients         = [];
 
-            foreach ($recipientsNodeList as $entry) {
+            foreach ($valueRecipientsNodeList as $entry) {
                 assert($entry instanceof DOMElement);
-                $object       = AttributesReader::readValueRecipient($entry);
-                $recipients[] = $object;
+                $object            = AttributesReader::readValueRecipient($entry);
+                $valueRecipients[] = $object;
             }
 
-            $valueObject->recipients = $recipients;
-            $values[]                = $valueObject;
+            $valueObject->valueRecipients = $valueRecipients;
+            $values[]                     = $valueObject;
         }
 
         $this->data['values'] = $values;

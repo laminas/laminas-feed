@@ -69,11 +69,19 @@ use stdClass;
  *       customValue?: string,
  *       fee?: bool,
  *     }
+ * @psalm-type ValueTimeSplitObject = object{
+ *        startTime: int,
+ *        duration: int,
+ *        remoteStartTime?: int,
+ *        remotePercentage?: int,
+ *        valueRecipients: list<ValueRecipientObject>,
+ *        remoteItem?: RemoteItemObject
+ *      }
  * @psalm-type ValueObject = object{
  *       type: string,
  *       method: string,
  *       suggested?: float,
- *       recipients?: list<ValueRecipientObject>
+ *       valueRecipients: list<ValueRecipientObject>
  *     }
  * @psalm-type ImageObject = object{
  *       href: string,

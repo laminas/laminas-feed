@@ -23,6 +23,7 @@ use function number_format;
  * @psalm-import-type TrailerArray from Validator
  * @psalm-import-type RemoteItemArray from Validator
  * @psalm-import-type ValueRecipientArray from Validator
+ * @psalm-import-type ValueTimeSplitArray from Validator
  * @psalm-import-type ValueArray from Validator
  * @psalm-import-type ImageArray from Validator
  * @psalm-import-type SocialInteractArray from Validator
@@ -261,7 +262,7 @@ class ElementGenerator
     }
 
     /**
-     * Create value recipient element
+     * Create valueRecipient element
      *
      * @psalm-param DOMDocument $dom
      * @psalm-param ValueRecipientArray $valueRecipient
@@ -290,6 +291,38 @@ class ElementGenerator
     }
 
     /**
-     * TODO: Create value time split element
+     * Create value time split element
+     *
+     * @psalm-param DOMDocument $dom
+     * @psalm-param ValueTimeSplitArray $valueTimeSplit
      */
+    public static function createValueTimeSplitElement($dom, $valueTimeSplit): DOMElement
+    {
+        $el = $dom->createElement('podcast:valueTimeSplit');
+        $el->setAttribute('startTime', (string) $valueTimeSplit['startTime']);
+        $el->setAttribute('duration', (string) $valueTimeSplit['duration']);
+
+        if (isset($valueTimeSplit['remoteStartTime'])) {
+            $el->setAttribute('remoteStartTime', (string) $valueTimeSplit['remoteStartTime']);
+        }
+        if (isset($valueTimeSplit['remotePercentage'])) {
+            $el->setAttribute('remotePercentage', (string) $valueTimeSplit['remotePercentage']);
+        }
+
+        // set 1-n child nodes: valueRecipients
+        if (isset($valueTimeSplit['valueRecipients'])) {
+            foreach ($valueTimeSplit['valueRecipients'] as $valueRecipient) {
+                $element = self::createValueRecipientElement($dom, $valueRecipient);
+                $el->appendChild($element);
+            }
+        }
+
+        // set 1 child node: value remote item
+        if (isset($valueTimeSplit['remoteItem'])) {
+            $element = self::createRemoteItemElement($dom, $valueTimeSplit['remoteItem']);
+            $el->appendChild($element);
+        }
+
+        return $el;
+    }
 }
