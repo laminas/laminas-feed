@@ -71,7 +71,7 @@ use const FILTER_VALIDATE_URL;
  *     type: string,
  *     method: string,
  *     suggested?: float,
- *     recipients?: list<ValueRecipientArray>
+ *     valueRecipients: list<ValueRecipientArray>
  *   }
  */
 class Feed
@@ -171,7 +171,7 @@ class Feed
     {
         if (! isset($value['identifier'], $value['url'])) {
             throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: "license" must be an array containing the keys "identifier" (node value) and "url"'
+                'invalid parameter: "license" must be an array containing the keys "identifier" and "url"'
             );
         }
         if (! is_string($value['identifier'])) {
@@ -181,7 +181,7 @@ class Feed
         }
         if (! is_string($value['url']) || ! filter_var($value['url'], FILTER_VALIDATE_URL)) {
             throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: "url" of "license": must be a url starting with "http://" or "https://"'
+                'invalid parameter: "url" of "license" must be a url starting with "http://" or "https://"'
             );
         }
         $this->data['license'] = $value;
@@ -199,7 +199,7 @@ class Feed
     {
         if (! isset($value['description'])) {
             throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: "location" must be an array containing at least the key "description" (node value)'
+                'invalid parameter: "location" must be an array containing at least the key "description"'
             );
         }
         if (! is_string($value['description'])) {
@@ -634,7 +634,7 @@ class Feed
     }
 
     /**
-     * Add a remote item to the podroll parent element.
+     * Add a remote item to the podroll element.
      *
      * @psalm-param RemoteItemArray $value
      * @return $this
@@ -772,13 +772,14 @@ class Feed
         // validate the value recipients array
         if (count($valueRecipients) < 1) {
             throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: the second argument of "value" must an array containing at least one recipient'
+                'invalid parameter: the second argument of "value" must be an array 
+                containing one or more "valueRecipients"'
             );
         }
         foreach ($valueRecipients as $recipient) {
-            $this->validateValueRecipients($recipient);
+            $this->validateValueRecipient($recipient);
         }
-        $value['recipients'] = $valueRecipients;
+        $value['valueRecipients'] = $valueRecipients;
 
         // add the values entry
         if (! isset($this->data['values'])) {
@@ -792,53 +793,53 @@ class Feed
     }
 
     /**
-     * Validate the values of the remote item.
+     * Validate the value recipient.
      *
      * @param ValueRecipientArray $value
      * @throws Writer\Exception\InvalidArgumentException
      * @psalm-suppress DocblockTypeContradiction
      */
-    private function validateValueRecipients(array $value): void
+    private function validateValueRecipient(array $value): void
     {
         if (! isset($value['type'], $value['address'], $value['split'])) {
             throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: each "recipients" entry in "value" must be an array 
-                containing the keys "type", "address" and "split"'
+                'invalid parameter: "valueRecipient" must be an array containing 
+                at least the keys "type", "address" and "split"'
             );
         }
         if (! is_string($value['type'])) {
             throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "type" of "value recipient" must be of type string'
+                'invalid parameter: key "type" of "valueRecipient" must be of type string'
             );
         }
         if (! is_string($value['address'])) {
             throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "address" of "value recipient" must be of type string'
+                'invalid parameter: key "address" of "valueRecipient" must be of type string'
             );
         }
         if (! is_int($value['split'])) {
             throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "split" of "value recipient" must be of type integer'
+                'invalid parameter: key "split" of "valueRecipient" must be of type integer'
             );
         }
         if (isset($value['name']) && ! is_string($value['name'])) {
             throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "name" of "value recipient" must be of type string'
+                'invalid parameter: key "name" of "valueRecipient" must be of type string'
             );
         }
         if (isset($value['customKey']) && ! is_string($value['customKey'])) {
             throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "customKey" of "value recipient" must be of type string'
+                'invalid parameter: key "customKey" of "valueRecipient" must be of type string'
             );
         }
         if (isset($value['customValue']) && ! is_string($value['customValue'])) {
             throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "customKey" of "value recipient" must be of type string'
+                'invalid parameter: key "customValue" of "valueRecipient" must be of type string'
             );
         }
         if (isset($value['fee']) && ! is_bool($value['fee'])) {
             throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "fee" of "value recipient" must be of type boolean'
+                'invalid parameter: key "fee" of "valueRecipient" must be of type boolean'
             );
         }
     }

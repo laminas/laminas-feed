@@ -501,7 +501,7 @@ class Feed extends Extension\AbstractRenderer
         }
 
         foreach ($values as $value) {
-            if (! isset($value['recipients'])) {
+            if (! isset($value['valueRecipients'])) {
                 continue;
             }
             // set value attributes
@@ -513,8 +513,8 @@ class Feed extends Extension\AbstractRenderer
                 $suggested = number_format($value['suggested'], 11);
                 $valueElement->setAttribute('suggested', $suggested);
             }
-            // set value child nodes: recipients
-            foreach ($value['recipients'] as $valueRecipient) {
+            // set value child nodes: valueRecipients
+            foreach ($value['valueRecipients'] as $valueRecipient) {
                 $recipientElement = $this->createValueRecipientElement($dom, $valueRecipient);
                 $valueElement->appendChild($recipientElement);
             }

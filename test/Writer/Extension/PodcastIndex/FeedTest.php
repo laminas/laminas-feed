@@ -1073,12 +1073,12 @@ class FeedTest extends TestCase
     {
         $feed = new Writer\Feed();
 
-        $value      = [
+        $value           = [
             'type'      => "lightning",
             'method'    => "keysend",
             'suggested' => 0.00000005000,
         ];
-        $recipients = [
+        $valueRecipients = [
             [
                 'name'    => "Alice (Podcaster)",
                 'type'    => "node",
@@ -1092,8 +1092,8 @@ class FeedTest extends TestCase
                 'split'   => 60,
             ],
         ];
-        $feed->addPodcastIndexValue($value, $recipients);
-        $value['recipients'] = $recipients;
+        $feed->addPodcastIndexValue($value, $valueRecipients);
+        $value['valueRecipients'] = $valueRecipients;
 
         /** @psalm-var list<ValueObject> $values */
         $values = $feed->getPodcastIndexValues();
@@ -1104,19 +1104,19 @@ class FeedTest extends TestCase
     {
         $feed = new Writer\Feed();
 
-        $value      = [
+        $value           = [
             'type'   => "lightning",
             'method' => "keysend",
         ];
-        $recipients = [
+        $valueRecipients = [
             [
                 'type'    => "node",
                 'address' => "02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52",
                 'split'   => 40,
             ],
         ];
-        $feed->addPodcastIndexValue($value, $recipients);
-        $value['recipients'] = $recipients;
+        $feed->addPodcastIndexValue($value, $valueRecipients);
+        $value['valueRecipients'] = $valueRecipients;
 
         /** @psalm-var list<ValueObject> $values */
         $values = $feed->getPodcastIndexValues();
@@ -1140,11 +1140,11 @@ class FeedTest extends TestCase
     {
         $feed = new Writer\Feed();
 
-        $value      = [
+        $value           = [
             'type'   => "lightning",
             'method' => "keysend",
         ];
-        $recipients = [
+        $valueRecipients = [
             [
                 'address' => "02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52",
                 'split'   => 40,
@@ -1152,18 +1152,18 @@ class FeedTest extends TestCase
         ];
 
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
-        $feed->addPodcastIndexValue($value, $recipients);
+        $feed->addPodcastIndexValue($value, $valueRecipients);
     }
 
     public function testAddValueThrowsExceptionOnInvalidRecipientType(): void
     {
         $feed = new Writer\Feed();
 
-        $value      = [
+        $value           = [
             'type'   => "lightning",
             'method' => "keysend",
         ];
-        $recipients = [
+        $valueRecipients = [
             [
                 'type'    => true,
                 'address' => "02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52",
@@ -1172,19 +1172,19 @@ class FeedTest extends TestCase
         ];
 
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
-        $feed->addPodcastIndexValue($value, $recipients);
+        $feed->addPodcastIndexValue($value, $valueRecipients);
     }
 
     public function testAddValueUsingScientificNotation(): void
     {
         $feed = new Writer\Feed();
 
-        $value      = [
+        $value           = [
             'type'      => "lightning",
             'method'    => "keysend",
             'suggested' => 5.0E-8, // scientific notation for 0.00000005000
         ];
-        $recipients = [
+        $valueRecipients = [
             [
                 'name'    => "Alice (Podcaster)",
                 'type'    => "node",
@@ -1192,9 +1192,9 @@ class FeedTest extends TestCase
                 'split'   => 40,
             ],
         ];
-        $feed->addPodcastIndexValue($value, $recipients);
+        $feed->addPodcastIndexValue($value, $valueRecipients);
 
-        $value['recipients'] = $recipients;
+        $value['valueRecipients'] = $valueRecipients;
 
         /** @psalm-var list<ValueObject> $values */
         $values = $feed->getPodcastIndexValues();
@@ -1205,11 +1205,11 @@ class FeedTest extends TestCase
     {
         $feed = new Writer\Feed();
 
-        $value      = [
+        $value           = [
             'type'   => "lightning",
             'method' => "keysend",
         ];
-        $recipients = [
+        $valueRecipients = [
             [
                 'type'    => "node",
                 'address' => "02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52",
@@ -1218,8 +1218,8 @@ class FeedTest extends TestCase
         ];
 
         // set values
-        $feed->addPodcastIndexValue($value, $recipients);
-        $value['recipients'] = $recipients;
+        $feed->addPodcastIndexValue($value, $valueRecipients);
+        $value['valueRecipients'] = $valueRecipients;
 
         /** @psalm-var list<ValueObject> $values */
         $values = $feed->getPodcastIndexValues();

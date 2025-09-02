@@ -58,7 +58,7 @@ use function assert;
  *       type: string,
  *       method: string,
  *       suggested?: float,
- *       recipients?: list<ValueRecipientObject>
+ *       valueRecipients: list<ValueRecipientObject>
  *     }
  */
 class Feed extends Extension\AbstractFeed
@@ -582,7 +582,7 @@ class Feed extends Extension\AbstractFeed
     }
 
     /**
-     * Get the podcast podroll remote items
+     * Get the podcast values
      *
      * @return list<ValueObject>
      */
@@ -606,17 +606,17 @@ class Feed extends Extension\AbstractFeed
             $valueObject->suggested = $valueNode->getAttribute('suggested');
 
             /** @psalm-suppress TooManyArguments */
-            $recipientsNodeList = $this->xpath->query('podcast:valueRecipient', $valueNode);
-            $recipients         = [];
+            $valueRecipientsNodeList = $this->xpath->query('podcast:valueRecipient', $valueNode);
+            $valueRecipients         = [];
 
-            foreach ($recipientsNodeList as $entry) {
+            foreach ($valueRecipientsNodeList as $entry) {
                 assert($entry instanceof DOMElement);
-                $object       = $this->readValueRecipient($entry);
-                $recipients[] = $object;
+                $object            = $this->readValueRecipient($entry);
+                $valueRecipients[] = $object;
             }
 
-            $valueObject->recipients = $recipients;
-            $values[]                = $valueObject;
+            $valueObject->valueRecipients = $valueRecipients;
+            $values[]                     = $valueObject;
         }
 
         $this->data['values'] = $values;
@@ -642,9 +642,9 @@ class Feed extends Extension\AbstractFeed
     }
 
     /**
-     * Read single remote item
+     * Read single value recipient
      *
-     * @return RemoteItemObject
+     * @return ValueRecipientObject
      */
     protected function readValueRecipient(DOMElement $entry): object
     {
