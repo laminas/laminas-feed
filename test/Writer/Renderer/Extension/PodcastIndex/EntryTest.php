@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 namespace LaminasTest\Feed\Writer\Renderer\Extension\PodcastIndex;
 
-use DateTime;
-use DateTimeInterface;
 use Laminas\Feed\Writer;
 use Laminas\Feed\Writer\Renderer;
 use PHPUnit\Framework\TestCase;
 
-use function implode;
 use function number_format;
 use function substr_count;
 
@@ -222,7 +219,7 @@ class EntryTest extends TestCase
         $this->assertStringContainsString($data[1]['accountUrl'], $xml);
     }
 
-    public function testRendersRssValueTagsWithChildren(): void
+    public function testRendersRssValueTagsWithRecipientsAndTimeSplits(): void
     {
         $value = [
             'type'      => "lightning",
@@ -244,7 +241,35 @@ class EntryTest extends TestCase
                 'split'   => 60,
             ],
         ];
-        $this->validEntry->addPodcastIndexValue($value, $valueRecipients);
+
+        $timeSplitRecipients = [
+            [
+                'name'        => "Alice (Podcaster)",
+                'type'        => "node",
+                'address'     => "02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52",
+                'split'       => 40,
+                'customKey'   => "Some_custom_key",
+                'customValue' => "Some_custom_value",
+                'fee'         => true,
+            ],
+            [
+                'name'    => "Malcolm (Guest)",
+                'type'    => "node",
+                'address' => "02dd306e68c46681aa21d88a436fb35355a8579dd30201581cefa17cb179fc4c15",
+                'split'   => 20,
+                'fee'     => true,
+            ],
+        ];
+
+        $valueTimeSplits = [
+            [
+                'startTime'       => 63,
+                'duration'        => 388,
+                'valueRecipients' => $timeSplitRecipients,
+            ],
+        ];
+
+        $this->validEntry->addPodcastIndexValue($value, $valueRecipients, $valueTimeSplits);
 
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $xml     = $rssFeed->render()->saveXml();
@@ -257,6 +282,13 @@ class EntryTest extends TestCase
         $this->assertStringContainsString($valueRecipients[0]['type'], $xml);
         $this->assertStringContainsString($valueRecipients[1]['address'], $xml);
         $this->assertStringContainsString((string) $valueRecipients[1]['split'], $xml);
+        $this->assertStringContainsString((string) $valueTimeSplits[0]['startTime'], $xml);
+        $this->assertStringContainsString((string) $valueTimeSplits[0]['duration'], $xml);
+        $this->assertStringContainsString($timeSplitRecipients[0]['name'], $xml);
+        $this->assertStringContainsString($timeSplitRecipients[0]['type'], $xml);
+        $this->assertStringContainsString($timeSplitRecipients[0]['address'], $xml);
+        $this->assertStringContainsString((string) $timeSplitRecipients[1]['split'], $xml);
+        $this->assertStringContainsString('fee="true"', $xml);
 
         $newValue      = [
             'type'      => "lightning",

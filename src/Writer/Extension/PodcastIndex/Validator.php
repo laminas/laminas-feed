@@ -80,7 +80,7 @@ use const FILTER_VALIDATE_URL;
  *       duration: int,
  *       remoteStartTime?: int,
  *       remotePercentage?: int,
- *       valueRecipients: list<ValueRecipientArray>,
+ *       valueRecipients?: list<ValueRecipientArray>,
  *       remoteItem?: RemoteItemArray
  *     }
  * @psalm-type ValueArray = array{

@@ -156,6 +156,16 @@
                     <podcast:valueRecipient name="Malcolm (Guest)" type="node" address="02dd306e68c46681aa21d88a436fb35355a8579dd30201581cefa17cb179fc4c15" split="20" />
                 </podcast:valueTimeSplit>
             </podcast:value>
+            <podcast:value type="lightning" method="keysend" suggested="0.00000005000">
+                <podcast:valueRecipient name="Alice (Podcaster)" type="node" address="02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52" split="40"/>
+                <podcast:valueRecipient name="Bob (Podcaster)" type="node" address="032f4ffbbafffbe51726ad3c164a3d0d37ec27bc67b29a159b0f49ae8ac21b8508" split="60"/>
+                <podcast:valueTimeSplit startTime="60" duration="237" remotePercentage="95">
+                    <podcast:remoteItem itemGuid="https://podcastindex.org/podcast/4148683#1" feedGuid="a94f5cc9-8c58-55fc-91fe-a324087a655b" medium="music" />
+                </podcast:valueTimeSplit>
+                <podcast:valueTimeSplit startTime="330" duration="53" remoteStartTime="174" remotePercentage="95">
+                    <podcast:remoteItem itemGuid="https://podcastindex.org/podcast/4148683#3" feedGuid="b83f5cc9-8c58-55fc-91fe-a324087a644c" medium="music" />
+                </podcast:valueTimeSplit>
+            </podcast:value>
         </item>
 
         <item>
@@ -181,18 +191,6 @@
             <podcast:chapters
                     url="https://example.com/podcasts/everything/ChaptersEpisode2.json"
                     type="application/json+chapters" />
-            <podcast:value type="lightning" method="keysend" suggested="0.00000005000">
-                <podcast:valueRecipient name="Alice (Podcaster)" type="node" address="02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52" split="40"/>
-                <podcast:valueRecipient name="Bob (Podcaster)" type="node" address="032f4ffbbafffbe51726ad3c164a3d0d37ec27bc67b29a159b0f49ae8ac21b8508" split="60"/>
-
-                <podcast:valueTimeSplit startTime="60" duration="237" remotePercentage="95">
-                    <podcast:remoteItem itemGuid="https://podcastindex.org/podcast/4148683#1" feedGuid="a94f5cc9-8c58-55fc-91fe-a324087a655b" medium="music" />
-                </podcast:valueTimeSplit>
-
-                <podcast:valueTimeSplit startTime="330" duration="53" remoteStartTime="174" remotePercentage="95">
-                    <podcast:remoteItem itemGuid="https://podcastindex.org/podcast/4148683#3" feedGuid="a94f5cc9-8c58-55fc-91fe-a324087a655b" medium="music" />
-                </podcast:valueTimeSplit>
-            </podcast:value>
         </item>
 
         <item>

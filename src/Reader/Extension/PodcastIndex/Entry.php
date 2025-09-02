@@ -23,6 +23,7 @@ use function assert;
  * @psalm-import-type TrailerObject from AttributesReader
  * @psalm-import-type RemoteItemObject from AttributesReader
  * @psalm-import-type ValueRecipientObject from AttributesReader
+ * @psalm-import-type ValueTimeSplitObject from AttributesReader
  * @psalm-import-type ValueObject from AttributesReader
  * @psalm-import-type ImageObject from AttributesReader
  * @psalm-import-type SocialInteractObject from AttributesReader
@@ -320,14 +321,58 @@ class Entry extends Extension\AbstractEntry
                 $object            = AttributesReader::readValueRecipient($entry);
                 $valueRecipients[] = $object;
             }
-
             $valueObject->valueRecipients = $valueRecipients;
+
+            /** @psalm-suppress TooManyArguments */
+            $timeSplitsNodeList = $this->xpath->query('podcast:valueTimeSplit', $valueNode);
+            if ($timeSplitsNodeList->length > 0) {
+                $valueTimeSplits = [];
+                foreach ($timeSplitsNodeList as $entry) {
+                    assert($entry instanceof DOMElement);
+                    $object            = $this->getValueTimeSplit($entry);
+                    $valueTimeSplits[] = $object;
+                }
+                $valueObject->valueTimeSplits = $valueTimeSplits;
+            }
+
             $values[]                     = $valueObject;
         }
 
         $this->data['values'] = $values;
 
         return $this->data['values'];
+    }
+
+    /**
+     * Get value time split
+     *
+     * @return ValueTimeSplitObject
+     */
+    private function getValueTimeSplit(DOMElement $entry): object
+    {
+        $object = AttributesReader::readValueTimeSplit($entry);
+
+        /** @psalm-suppress TooManyArguments */
+        $itemsNodeList = $this->xpath->query('podcast:remoteItem', $entry);
+        if ($itemsNodeList->length > 0) {
+            assert($itemsNodeList[0] instanceof DOMElement);
+            $itemsObject        = AttributesReader::readRemoteItem($itemsNodeList[0]);
+            $object->remoteItem = $itemsObject;
+        }
+
+        /** @psalm-suppress TooManyArguments */
+        $recipientsNodeList = $this->xpath->query('podcast:valueRecipient', $entry);
+        if ($recipientsNodeList->length > 0) {
+            $valueRecipients = [];
+            foreach ($recipientsNodeList as $node) {
+                assert($node instanceof DOMElement);
+                $recipientObject   = AttributesReader::readValueRecipient($node);
+                $valueRecipients[] = $recipientObject;
+            }
+            $object->valueRecipients = $valueRecipients;
+        }
+
+        return $object;
     }
 
     /**

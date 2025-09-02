@@ -572,7 +572,7 @@ class PodcastIndexRss2Test extends TestCase
         $this->assertEquals($expectedB, $response[1]);
     }
 
-    public function testGetsEntryValues(): void
+    public function testGetsEntryValuesWithTimeSplitRecipients(): void
     {
         $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
@@ -581,31 +581,139 @@ class PodcastIndexRss2Test extends TestCase
         /** @var Reader\Extension\PodcastIndex\Entry $entry */
         $entry = $feed->current();
 
-        $recipA              = new stdClass();
-        $recipA->name        = "Alice (Podcaster)";
-        $recipA->type        = "node";
-        $recipA->address     = "02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52";
-        $recipA->split       = '40';
-        $recipA->customKey   = '';
-        $recipA->customValue = '';
-        $recipA->fee         = '';
+        // prepare value recipients as child elements of value time split
 
-        $recipB              = new stdClass();
-        $recipB->name        = "Bob (Podcaster)";
-        $recipB->type        = "node";
-        $recipB->address     = "032f4ffbbafffbe51726ad3c164a3d0d37ec27bc67b29a159b0f49ae8ac21b8508";
-        $recipB->split       = '60';
-        $recipB->customKey   = '';
-        $recipB->customValue = '';
-        $recipB->fee         = '';
+        $timeSplitRecipientA              = new stdClass();
+        $timeSplitRecipientA->name        = "Alice (Podcaster)";
+        $timeSplitRecipientA->type        = "node";
+        $timeSplitRecipientA->address     = "02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52";
+        $timeSplitRecipientA->split       = '80';
+        $timeSplitRecipientA->customKey   = '';
+        $timeSplitRecipientA->customValue = '';
+        $timeSplitRecipientA->fee         = '';
+
+        $timeSplitRecipientB              = new stdClass();
+        $timeSplitRecipientB->name        = "Malcolm (Guest)";
+        $timeSplitRecipientB->type        = "node";
+        $timeSplitRecipientB->address     = "02dd306e68c46681aa21d88a436fb35355a8579dd30201581cefa17cb179fc4c15";
+        $timeSplitRecipientB->split       = '20';
+        $timeSplitRecipientB->customKey   = '';
+        $timeSplitRecipientB->customValue = '';
+        $timeSplitRecipientB->fee         = '';
+
+        // prepare value time split as child element of value
+
+        $valueTimeSplit                   = new stdClass();
+        $valueTimeSplit->startTime        = '63';
+        $valueTimeSplit->duration         = '388';
+        $valueTimeSplit->remoteStartTime  = '';
+        $valueTimeSplit->remotePercentage = '';
+        $valueTimeSplit->valueRecipients  = [$timeSplitRecipientA, $timeSplitRecipientB];
+
+        // prepare value recipients as child elements of value
+
+        $valueRecipientA              = new stdClass();
+        $valueRecipientA->name        = "Alice (Podcaster)";
+        $valueRecipientA->type        = "node";
+        $valueRecipientA->address     = "02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52";
+        $valueRecipientA->split       = '40';
+        $valueRecipientA->customKey   = '';
+        $valueRecipientA->customValue = '';
+        $valueRecipientA->fee         = '';
+
+        $valueRecipientB              = new stdClass();
+        $valueRecipientB->name        = "Bob (Podcaster)";
+        $valueRecipientB->type        = "node";
+        $valueRecipientB->address     = "032f4ffbbafffbe51726ad3c164a3d0d37ec27bc67b29a159b0f49ae8ac21b8508";
+        $valueRecipientB->split       = '60';
+        $valueRecipientB->customKey   = '';
+        $valueRecipientB->customValue = '';
+        $valueRecipientB->fee         = '';
+
+        // prepare value and assign recipients and value time split to it
 
         $expected                  = new stdClass();
         $expected->type            = 'lightning';
         $expected->method          = 'keysend';
         $expected->suggested       = '0.00000005000';
-        $expected->valueRecipients = [$recipA, $recipB];
+        $expected->valueRecipients = [$valueRecipientA, $valueRecipientB];
+        $expected->valueTimeSplits = [$valueTimeSplit];
 
         $values = $entry->getPodcastIndexValues();
         $this->assertEquals($expected, $values[0]);
+    }
+
+    public function testGetsEntryValuesWithTimeSplitRemoteItems(): void
+    {
+        $feed = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath)
+        );
+
+        /** @var Reader\Extension\PodcastIndex\Entry $entry */
+        $entry = $feed->current();
+
+        // prepare value recipients as child elements of value
+
+        $valueRecipientA              = new stdClass();
+        $valueRecipientA->name        = "Alice (Podcaster)";
+        $valueRecipientA->type        = "node";
+        $valueRecipientA->address     = "02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52";
+        $valueRecipientA->split       = '40';
+        $valueRecipientA->customKey   = '';
+        $valueRecipientA->customValue = '';
+        $valueRecipientA->fee         = '';
+
+        $valueRecipientB              = new stdClass();
+        $valueRecipientB->name        = "Bob (Podcaster)";
+        $valueRecipientB->type        = "node";
+        $valueRecipientB->address     = "032f4ffbbafffbe51726ad3c164a3d0d37ec27bc67b29a159b0f49ae8ac21b8508";
+        $valueRecipientB->split       = '60';
+        $valueRecipientB->customKey   = '';
+        $valueRecipientB->customValue = '';
+        $valueRecipientB->fee         = '';
+
+        // prepare first value time split with remote item
+
+        $remoteItemA           = new stdClass();
+        $remoteItemA->itemGuid = 'https://podcastindex.org/podcast/4148683#1';
+        $remoteItemA->feedGuid = 'a94f5cc9-8c58-55fc-91fe-a324087a655b';
+        $remoteItemA->medium   = 'music';
+        $remoteItemA->feedUrl  = '';
+        $remoteItemA->title    = '';
+
+        $valueTimeSplitA                   = new stdClass();
+        $valueTimeSplitA->startTime        = '60';
+        $valueTimeSplitA->duration         = '237';
+        $valueTimeSplitA->remoteStartTime  = '';
+        $valueTimeSplitA->remotePercentage = '95';
+        $valueTimeSplitA->remoteItem       = $remoteItemA;
+
+        // prepare second value time split with remote item
+
+        $remoteItemB           = new stdClass();
+        $remoteItemB->itemGuid = 'https://podcastindex.org/podcast/4148683#3';
+        $remoteItemB->feedGuid = 'b83f5cc9-8c58-55fc-91fe-a324087a644c';
+        $remoteItemB->medium   = 'music';
+        $remoteItemB->feedUrl  = '';
+        $remoteItemB->title    = '';
+
+        $valueTimeSplitB                   = new stdClass();
+        $valueTimeSplitB->startTime        = '330';
+        $valueTimeSplitB->duration         = '53';
+        $valueTimeSplitB->remoteStartTime  = '174';
+        $valueTimeSplitB->remotePercentage = '95';
+        $valueTimeSplitB->remoteItem       = $remoteItemB;
+
+        // prepare value and assign recipients and value time splits to it
+
+        $expected                  = new stdClass();
+        $expected->type            = 'lightning';
+        $expected->method          = 'keysend';
+        $expected->suggested       = '0.00000005000';
+        $expected->valueRecipients = [$valueRecipientA, $valueRecipientB];
+        $expected->valueTimeSplits = [$valueTimeSplitA, $valueTimeSplitB];
+
+        $values = $entry->getPodcastIndexValues();
+        $this->assertEquals($expected, $values[1]);
     }
 }

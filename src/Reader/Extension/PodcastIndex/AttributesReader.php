@@ -74,7 +74,7 @@ use stdClass;
  *        duration: int,
  *        remoteStartTime?: int,
  *        remotePercentage?: int,
- *        valueRecipients: list<ValueRecipientObject>,
+ *        valueRecipients?: list<ValueRecipientObject>,
  *        remoteItem?: RemoteItemObject
  *      }
  * @psalm-type ValueObject = object{
@@ -320,6 +320,22 @@ class AttributesReader
         $object->customKey   = $item->getAttribute('customKey');
         $object->customValue = $item->getAttribute('customValue');
         $object->fee         = $item->getAttribute('fee');
+
+        return $object;
+    }
+
+    /**
+     * Read single value time split
+     *
+     * @return ValueTimeSplitObject
+     */
+    public static function readValueTimeSplit(DOMElement $entry): object
+    {
+        $object                   = new stdClass();
+        $object->startTime        = $entry->getAttribute('startTime');
+        $object->duration         = $entry->getAttribute('duration');
+        $object->remoteStartTime  = $entry->getAttribute('remoteStartTime');
+        $object->remotePercentage = $entry->getAttribute('remotePercentage');
 
         return $object;
     }
