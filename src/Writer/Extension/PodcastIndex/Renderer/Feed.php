@@ -547,7 +547,8 @@ class Feed extends Extension\AbstractRenderer
             $el->setAttribute('customValue', $valueRecipient['customValue']);
         }
         if (isset($valueRecipient['fee'])) {
-            $el->setAttribute('fee', (string) $valueRecipient['fee']);
+            $fee = $valueRecipient['fee'] ? 'true' : 'false';
+            $el->setAttribute('fee', $fee);
         }
 
         return $el;
