@@ -123,6 +123,27 @@ use stdClass;
  *         value: int|float,
  *         display?: string
  *       }
+ * @psalm-type SourceObject = object{
+ *        uri: string,
+ *        contentType?: string
+ *      }
+ * @psalm-type IntegrityObject = object{
+ *        type: string,
+ *        value: string
+ *      }
+ * @psalm-type AlternateEnclosureObject = object{
+ *        type: string,
+ *        length?: int,
+ *        bitrate?: int,
+ *        height?: int,
+ *        lang?: string,
+ *        title?: string,
+ *        rel?: string,
+ *        codecs?: string,
+ *        default?: bool,
+ *       sources: list<SourceObject>,
+ *       integrity?: IntegrityObject,
+ *      }
  */
 class AttributesReader
 {

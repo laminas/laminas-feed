@@ -129,6 +129,27 @@ use const FILTER_VALIDATE_URL;
  *        value: int|float,
  *        display?: string
  *      }
+ * @psalm-type SourceArray = array{
+ *       uri: string,
+ *       contentType?: string
+ *     }
+ * @psalm-type IntegrityArray = array{
+ *       type: string,
+ *       value: string
+ *     }
+ * @psalm-type AlternateEnclosureArray = array{
+ *       type: string,
+ *       length?: int,
+ *       bitrate?: int,
+ *       height?: int,
+ *       lang?: string,
+ *       title?: string,
+ *       rel?: string,
+ *       codecs?: string,
+ *       default?: bool,
+ *      sources: list<SourceArray>,
+ *      integrity?: IntegrityArray,
+ *     }
  */
 class Validator
 {
@@ -553,6 +574,116 @@ class Validator
             }
         } else {
             self::validateRemoteItem($value['remoteItem']);
+        }
+    }
+
+    /**
+     * Validates alternate enclosure
+     *
+     * @param AlternateEnclosureArray $value
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public static function validateAlternateEnclosure(array $value): void
+    {
+        if (! isset($value['type'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "alternateEnclosure" must be an array containing at least the key "type"'
+            );
+        }
+        if (! is_string($value['type'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "type" of "alternateEnclosure" must be of type string'
+            );
+        }
+        if (isset($value['length']) && ! is_int($value['length'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "length" of "alternateEnclosure" must be of type integer'
+            );
+        }
+        if (isset($value['bitrate']) && ! is_int($value['bitrate'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "bitrate" of "alternateEnclosure" must be of type integer'
+            );
+        }
+        if (isset($value['height']) && ! is_int($value['height'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "height" of "alternateEnclosure" must be of type integer'
+            );
+        }
+        if (isset($value['lang']) && ! is_string($value['lang'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "lang" of "alternateEnclosure" must be of type string'
+            );
+        }
+        if (isset($value['title']) && ! is_string($value['title'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "title" of "alternateEnclosure" must be of type string'
+            );
+        }
+        if (isset($value['rel']) && ! is_string($value['rel'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "rel" of "alternateEnclosure" must be of type string'
+            );
+        }
+        if (isset($value['codecs']) && ! is_string($value['codecs'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "codecs" of "alternateEnclosure" must be of type string'
+            );
+        }
+        if (isset($value['default']) && ! is_bool($value['default'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "default" of "alternateEnclosure" must be of type boolean'
+            );
+        }
+    }
+
+    /**
+     * Validates source
+     *
+     * @param SourceArray $value
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public static function validateSource(array $value): void
+    {
+        if (! isset($value['uri'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "source" must be an array containing at least the key "uri"'
+            );
+        }
+        if (! is_string($value['uri'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "uri" of "source" must be of type string'
+            );
+        }
+        if (isset($value['contentType']) && ! is_string($value['contentType'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "contentType" of "source" must be of type string'
+            );
+        }
+    }
+
+    /**
+     * Validates integrity
+     *
+     * @param IntegrityArray $value
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public static function validateIntegrity(array $value): void
+    {
+        if (! isset($value['type'], $value['value'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "integrity" must be an array containing the keys "type" and "value"'
+            );
+        }
+        if (! is_string($value['type'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "type" of "integrity" must be of type string'
+            );
+        }
+        if (! is_string($value['value'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "value" of "integrity" must be of type string'
+            );
         }
     }
 }
