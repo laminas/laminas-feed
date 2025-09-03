@@ -167,6 +167,7 @@
                 </podcast:valueTimeSplit>
             </podcast:value>
             <podcast:season name="The Yearling - Chapter 3">3</podcast:season>
+            <podcast:episode display="Day 5">9</podcast:episode>
         </item>
 
         <item>

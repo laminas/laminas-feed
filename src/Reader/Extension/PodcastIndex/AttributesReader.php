@@ -115,6 +115,14 @@ use stdClass;
  *       startTime: string,
  *       duration: string
  *     }
+ * @psalm-type SeasonObject = object{
+ *         value: int,
+ *         name?: string
+ *       }
+ * @psalm-type EpisodeObject = object{
+ *         value: int|float,
+ *         display?: string
+ *       }
  */
 class AttributesReader
 {

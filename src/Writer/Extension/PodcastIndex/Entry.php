@@ -10,6 +10,7 @@ use Laminas\Stdlib\StringWrapper\StringWrapperInterface;
 
 use function array_key_exists;
 use function count;
+use function is_float;
 use function is_int;
 use function is_numeric;
 use function is_string;
@@ -35,6 +36,8 @@ use function ucfirst;
  * @psalm-import-type ValueArray from Validator
  * @psalm-import-type ImageArray from Validator
  * @psalm-import-type SocialInteractArray from Validator
+ * @psalm-import-type SeasonArray from Validator
+ * @psalm-import-type EpisodeArray from Validator
  */
 class Entry
 {
@@ -409,7 +412,7 @@ class Entry
     /**
      * Set entry season
      *
-     * @param array{value: int, name?: string} $value
+     * @param SeasonArray $value
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
@@ -431,6 +434,34 @@ class Entry
             );
         }
         $this->data['season'] = $value;
+        return $this;
+    }
+
+    /**
+     * Set entry episode
+     *
+     * @param EpisodeArray $value
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function setPodcastIndexEpisode(array $value): Entry
+    {
+        if (! isset($value['value'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "episode" must be an array containing at least the key "value"'
+            );
+        }
+        if (! (is_int($value['value']) || is_float($value['value']))) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "value" of "episode" must be of type integer or type float'
+            );
+        }
+        if (isset($value['display']) && ! is_string($value['display'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "display" of "episode" must be of type string'
+            );
+        }
+        $this->data['episode'] = $value;
         return $this;
     }
 

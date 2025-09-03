@@ -30,6 +30,8 @@ use function assert;
  * @psalm-import-type TranscriptObject from AttributesReader
  * @psalm-import-type ChaptersObject from AttributesReader
  * @psalm-import-type SoundbiteObject from AttributesReader
+ * @psalm-import-type SeasonObject from AttributesReader
+ * @psalm-import-type EpisodeObject from AttributesReader
  */
 class Entry extends Extension\AbstractEntry
 {
@@ -381,7 +383,7 @@ class Entry extends Extension\AbstractEntry
     public function getPodcastIndexSeason(): object|null
     {
         if (array_key_exists('season', $this->data)) {
-            /** @psalm-var stdClass */
+            /** @psalm-var SeasonObject */
             return $this->data['season'];
         }
 
@@ -400,6 +402,33 @@ class Entry extends Extension\AbstractEntry
         $this->data['season'] = $season;
 
         return $this->data['season'];
+    }
+
+    /**
+     * Get the entry episode
+     */
+    public function getPodcastIndexEpisode(): object|null
+    {
+        if (array_key_exists('episode', $this->data)) {
+            /** @psalm-var EpisodeObject */
+            return $this->data['episode'];
+        }
+
+        $episode = null;
+
+        $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:episode');
+
+        if ($nodeList->length > 0) {
+            $node = $nodeList->item(0);
+            assert($node instanceof DOMElement);
+            $episode          = new stdClass();
+            $episode->value   = $node->nodeValue;
+            $episode->display = $node->getAttribute('display');
+        }
+
+        $this->data['episode'] = $episode;
+
+        return $this->data['episode'];
     }
 
     /**

@@ -3061,6 +3061,8 @@
       <code><![CDATA[! is_string($value['startTime'])]]></code>
       <code><![CDATA[is_int($value['value'])]]></code>
       <code><![CDATA[isset($value['name']) && ! is_string($value['name'])]]></code>
+      <code><![CDATA[is_int($value['value']) || is_float($value['value'])]]></code>
+      <code><![CDATA[isset($value['display']) && ! is_string($value['display'])]]></code>
     </DocblockTypeContradiction>
     <MixedArrayAssignment>
       <code><![CDATA[$this->data['soundbites'][]]]></code>
@@ -3082,6 +3084,7 @@
       <code>setPodcastIndexTranscript</code>
       <code>setPodcastIndexTxts</code>
       <code>setPodcastIndexSeason</code>
+      <code>setPodcastIndexEpisode</code>
     </PossiblyUnusedMethod>
     <PossiblyUnusedParam>
       <code>$params</code>
@@ -3176,11 +3179,7 @@
       <code>$stringWrapper</code>
     </PossiblyUnusedProperty>
   </file>
-  <file src="src/Writer/Extension/PodcastIndex/Renderer/Entry.php">
-    <RedundantCastGivenDocblockType>
-      <code><![CDATA[(string) $soundbite['title']]]></code>
-    </RedundantCastGivenDocblockType>
-  </file>
+  
   <file src="src/Writer/Extension/PodcastIndex/Renderer/Feed.php">
     <RedundantCastGivenDocblockType>
       <code><![CDATA[(string) $funding['title']]]></code>

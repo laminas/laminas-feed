@@ -733,4 +733,21 @@ class PodcastIndexRss2Test extends TestCase
         $season = $entry->getPodcastIndexSeason();
         $this->assertEquals($expected, $season);
     }
+
+    public function testGetsEntryEpisode(): void
+    {
+        $feed = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath)
+        );
+
+        /** @var Reader\Extension\PodcastIndex\Entry $entry */
+        $entry = $feed->current();
+
+        $expected          = new stdClass();
+        $expected->value   = '9';
+        $expected->display = 'Day 5';
+
+        $episode = $entry->getPodcastIndexEpisode();
+        $this->assertEquals($expected, $episode);
+    }
 }

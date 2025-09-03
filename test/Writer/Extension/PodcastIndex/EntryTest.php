@@ -862,11 +862,72 @@ class EntryTest extends TestCase
         $entry = new Writer\Entry();
 
         $season = [
-            'value' => '3',
+            'value' => 3,
             'name'  => 123,
         ];
 
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $entry->setPodcastIndexSeason($season);
+    }
+
+    public function testSetEpisode(): void
+    {
+        $entry = new Writer\Entry();
+
+        $episode = [
+            'value'   => 3,
+            'display' => 'Day 5',
+        ];
+        $entry->setPodcastIndexEpisode($episode);
+        $this->assertEquals($episode, $entry->getPodcastIndexEpisode());
+    }
+
+    public function testSetEpisodeUsingDecimal(): void
+    {
+        $entry = new Writer\Entry();
+
+        $episode = [
+            'value' => 3.5,
+        ];
+        $entry->setPodcastIndexEpisode($episode);
+        $this->assertEquals($episode, $entry->getPodcastIndexEpisode());
+    }
+
+    public function testSetEpisodeThrowsExceptionOnInvalidArgument(): void
+    {
+        $entry = new Writer\Entry();
+
+        $episode = [
+            'something' => 123,
+        ];
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $entry->setPodcastIndexEpisode($episode);
+    }
+
+    public function testSetEpisodeThrowsExceptionOnInvalidValue(): void
+    {
+        $entry = new Writer\Entry();
+
+        $episode = [
+            'value'   => '3',
+            'display' => 'Day 5',
+        ];
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $entry->setPodcastIndexEpisode($episode);
+    }
+
+    public function testSetEpisodeThrowsExceptionOnInvalidDisplay(): void
+    {
+        $entry = new Writer\Entry();
+
+        $episode = [
+            'value'   => 3,
+            'display' => 123,
+        ];
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $entry->setPodcastIndexEpisode($episode);
     }
 }

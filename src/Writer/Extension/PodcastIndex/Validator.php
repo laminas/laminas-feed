@@ -117,10 +117,18 @@ use const FILTER_VALIDATE_URL;
  *      type: string
  *    }
  * @psalm-type SoundbiteArray = array{
- *      title?: string,
- *      startTime: string,
- *      duration: string
- *    }
+ *       title?: string,
+ *       startTime: string,
+ *       duration: string
+ *     }
+ * @psalm-type SeasonArray = array{
+ *        value: int,
+ *        name?: string
+ *      }
+ * @psalm-type EpisodeArray = array{
+ *        value: int|float,
+ *        display?: string
+ *      }
  */
 class Validator
 {

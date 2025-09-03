@@ -371,4 +371,18 @@ class EntryTest extends TestCase
 
         $this->assertStringContainsString('<podcast:season name="The Yearling - Chapter 3">3</podcast:season>', $xml);
     }
+
+    public function testRendersRssEpisodeTag(): void
+    {
+        $episode = [
+            'value'   => 9,
+            'display' => 'Day 5',
+        ];
+        $this->validEntry->setPodcastIndexEpisode($episode);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $this->assertStringContainsString('<podcast:episode display="Day 5">9</podcast:episode>', $xml);
+    }
 }

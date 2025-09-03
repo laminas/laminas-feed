@@ -26,6 +26,8 @@ use function array_key_exists;
  * @psalm-import-type ValueArray from Validator
  * @psalm-import-type ImageArray from Validator
  * @psalm-import-type SocialInteractArray from Validator
+ * @psalm-import-type SeasonArray from Validator
+ * @psalm-import-type EpisodeArray from Validator
  */
 class Entry extends Extension\AbstractRenderer
 {
@@ -45,7 +47,6 @@ class Entry extends Extension\AbstractRenderer
     {
         $this->setTranscript($this->dom, $this->base);
         $this->setChapters($this->dom, $this->base);
-        $this->setSeason($this->dom, $this->base);
         $this->setSoundbites($this->dom, $this->base);
         $this->setLocation($this->dom, $this->base);
         $this->setLicense($this->dom, $this->base);
@@ -53,6 +54,8 @@ class Entry extends Extension\AbstractRenderer
         $this->setTxts($this->dom, $this->base);
         $this->setSocialInteracts($this->dom, $this->base);
         $this->setValues($this->dom, $this->base);
+        $this->setSeason($this->dom, $this->base);
+        $this->setEpisode($this->dom, $this->base);
         if ($this->called) {
             $this->_appendNamespaces();
         }
@@ -132,7 +135,7 @@ class Entry extends Extension\AbstractRenderer
         foreach ($soundbites as $soundbite) {
             $el = $dom->createElement('podcast:soundbite');
             if (array_key_exists('title', $soundbite)) {
-                $text = $dom->createTextNode((string) $soundbite['title']);
+                $text = $dom->createTextNode($soundbite['title']);
                 $el->appendChild($text);
             }
             $el->setAttribute('startTime', $soundbite['startTime']);
@@ -285,7 +288,7 @@ class Entry extends Extension\AbstractRenderer
         /** @psalm-var EntryWriter $container */
         $container = $this->getDataContainer();
 
-        /** @psalm-var null|array{value: int, name?: string} $season */
+        /** @psalm-var null|SeasonArray $season */
         $season = $container->getPodcastIndexSeason();
         if ($season === null) {
             return;
@@ -295,6 +298,29 @@ class Entry extends Extension\AbstractRenderer
         $el->appendChild($value);
         if (isset($season['name'])) {
             $el->setAttribute('name', $season['name']);
+        }
+        $root->appendChild($el);
+        $this->called = true;
+    }
+
+    /**
+     * Set entry episode
+     */
+    protected function setEpisode(DOMDocument $dom, DOMElement $root): void
+    {
+        /** @psalm-var EntryWriter $container */
+        $container = $this->getDataContainer();
+
+        /** @psalm-var null|EpisodeArray $episode */
+        $episode = $container->getPodcastIndexEpisode();
+        if ($episode === null) {
+            return;
+        }
+        $el    = $dom->createElement('podcast:episode');
+        $value = $dom->createTextNode((string) $episode['value']);
+        $el->appendChild($value);
+        if (isset($episode['display'])) {
+            $el->setAttribute('display', $episode['display']);
         }
         $root->appendChild($el);
         $this->called = true;
