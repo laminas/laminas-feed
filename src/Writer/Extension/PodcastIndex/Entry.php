@@ -377,7 +377,8 @@ class Entry
         // validate the valueRecipients array
         if (count($valueRecipients) < 1) {
             throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: the second argument of "value" must be an array containing at least one valueRecipient'
+                'invalid parameter: the second argument of "value" must be an array containing
+                 at least one valueRecipient'
             );
         }
         foreach ($valueRecipients as $valueRecipient) {
@@ -386,7 +387,7 @@ class Entry
         $value['valueRecipients'] = $valueRecipients;
 
         // validate and add valueTimeSplits
-        if (isset($valueTimeSplits) && count($valueTimeSplits) > 0) {
+        if (count($valueTimeSplits) > 0) {
             foreach ($valueTimeSplits as $split) {
                 Validator::validateValueTimeSplit($split);
             }

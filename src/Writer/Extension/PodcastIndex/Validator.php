@@ -87,7 +87,8 @@ use const FILTER_VALIDATE_URL;
  *      type: string,
  *      method: string,
  *      suggested?: float,
- *      valueRecipients: list<ValueRecipientArray>
+ *      valueRecipients?: list<ValueRecipientArray>,
+ *      valueTimeSplits?: list<ValueTimeSplitArray>
  *    }
  * @psalm-type ImageArray = array{
  *      href: string,

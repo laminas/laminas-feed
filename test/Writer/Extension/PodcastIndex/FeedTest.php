@@ -1103,7 +1103,7 @@ class FeedTest extends TestCase
     {
         $feed = new Writer\Feed();
 
-        $value      = [
+        $value           = [
             'type'      => "lightning",
             'method'    => "keysend",
             'suggested' => 0.00000005000,
@@ -1134,7 +1134,7 @@ class FeedTest extends TestCase
     {
         $feed = new Writer\Feed();
 
-        $value      = [
+        $value           = [
             'type'   => "lightning",
             'method' => "keysend",
         ];
@@ -1170,7 +1170,7 @@ class FeedTest extends TestCase
     {
         $feed = new Writer\Feed();
 
-        $value      = [
+        $value           = [
             'type'   => "lightning",
             'method' => "keysend",
         ];
@@ -1189,7 +1189,7 @@ class FeedTest extends TestCase
     {
         $feed = new Writer\Feed();
 
-        $value      = [
+        $value           = [
             'type'   => "lightning",
             'method' => "keysend",
         ];
@@ -1209,7 +1209,7 @@ class FeedTest extends TestCase
     {
         $feed = new Writer\Feed();
 
-        $value      = [
+        $value           = [
             'type'      => "lightning",
             'method'    => "keysend",
             'suggested' => 5.0E-8, // scientific notation for 0.00000005000
@@ -1235,7 +1235,7 @@ class FeedTest extends TestCase
     {
         $feed = new Writer\Feed();
 
-        $value      = [
+        $value           = [
             'type'   => "lightning",
             'method' => "keysend",
         ];

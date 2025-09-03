@@ -260,8 +260,7 @@ class EntryTest extends TestCase
                 'fee'     => true,
             ],
         ];
-
-        $valueTimeSplits = [
+        $valueTimeSplits     = [
             [
                 'startTime'       => 63,
                 'duration'        => 388,
@@ -290,12 +289,12 @@ class EntryTest extends TestCase
         $this->assertStringContainsString((string) $timeSplitRecipients[1]['split'], $xml);
         $this->assertStringContainsString('fee="true"', $xml);
 
-        $newValue      = [
+        $newValue             = [
             'type'      => "lightning",
             'method'    => "keysend",
             'suggested' => 0.00000005000,
         ];
-        $newRecipients = [
+        $newRecipients        = [
             [
                 'name'    => "Louis (Podcaster)",
                 'type'    => "node",
@@ -309,8 +308,34 @@ class EntryTest extends TestCase
                 'split'   => 50,
             ],
         ];
+        $timeSplitRemoteItems = [
+            [
+                'itemGuid' => "https://podcastindex.org/podcast/4148683#1",
+                'feedGuid' => "a94f5cc9-8c58-55fc-91fe-a324087a655b",
+                'medium'   => "music",
+            ],
+            [
+                'itemGuid' => "https://podcastindex.org/podcast/4148683#3",
+                'feedGuid' => "b83f5cc9-8c58-55fc-91fe-a324087a644c",
+                'medium'   => "podcast",
+                'feedUrl'  => "https://podcastindex.org/podcast/4148683",
+                'title'    => "My Fancy Podcast",
+            ],
+        ];
+        $valueTimeSplits      = [
+            [
+                'startTime'  => 82,
+                'duration'   => 200,
+                'remoteItem' => $timeSplitRemoteItems[0],
+            ],
+            [
+                'startTime'  => 134,
+                'duration'   => 123,
+                'remoteItem' => $timeSplitRemoteItems[1],
+            ],
+        ];
 
-        $this->validEntry->addPodcastIndexValue($newValue, $newRecipients);
+        $this->validEntry->addPodcastIndexValue($newValue, $newRecipients, $valueTimeSplits);
 
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $xml     = $rssFeed->render()->saveXml();
@@ -318,5 +343,18 @@ class EntryTest extends TestCase
         $this->assertStringContainsString(number_format($newValue['suggested'], 11), $xml);
         $this->assertStringContainsString($newRecipients[0]['name'], $xml);
         $this->assertStringContainsString((string) $newRecipients[1]['split'], $xml);
+        $this->assertStringContainsString((string) $valueTimeSplits[0]['startTime'], $xml);
+        $this->assertStringContainsString((string) $valueTimeSplits[0]['duration'], $xml);
+        $this->assertStringContainsString((string) $valueTimeSplits[1]['startTime'], $xml);
+        $this->assertStringContainsString((string) $valueTimeSplits[1]['duration'], $xml);
+        $this->assertStringContainsString($timeSplitRemoteItems[0]['itemGuid'], $xml);
+        $this->assertStringContainsString($timeSplitRemoteItems[0]['feedGuid'], $xml);
+        $this->assertStringContainsString($timeSplitRemoteItems[0]['medium'], $xml);
+        $this->assertStringContainsString($timeSplitRemoteItems[1]['itemGuid'], $xml);
+        $this->assertStringContainsString($timeSplitRemoteItems[1]['feedGuid'], $xml);
+        $this->assertStringContainsString($timeSplitRemoteItems[1]['medium'], $xml);
+        $this->assertStringContainsString($timeSplitRemoteItems[1]['itemGuid'], $xml);
+        $this->assertStringContainsString($timeSplitRemoteItems[1]['feedUrl'], $xml);
+        $this->assertStringContainsString($timeSplitRemoteItems[1]['title'], $xml);
     }
 }

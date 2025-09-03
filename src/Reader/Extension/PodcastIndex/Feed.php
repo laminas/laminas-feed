@@ -549,12 +549,12 @@ class Feed extends Extension\AbstractFeed
 
             foreach ($valueRecipientsNodeList as $entry) {
                 assert($entry instanceof DOMElement);
-                $object       = AttributesReader::readValueRecipient($entry);
+                $object            = AttributesReader::readValueRecipient($entry);
                 $valueRecipients[] = $object;
             }
 
             $valueObject->valueRecipients = $valueRecipients;
-            $values[]                = $valueObject;
+            $values[]                     = $valueObject;
         }
 
         $this->data['values'] = $values;

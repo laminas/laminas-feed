@@ -8,6 +8,9 @@ use Laminas\Feed\Reader\Extension\PodcastIndex\AttributesReader;
 use Laminas\Feed\Writer;
 use PHPUnit\Framework\TestCase;
 
+use function count;
+use function in_array;
+
 /**
  * @psalm-import-type LicenseObject from AttributesReader
  * @psalm-import-type LocationObject from AttributesReader
@@ -581,11 +584,11 @@ class EntryTest extends TestCase
         $entry->addPodcastIndexSocialInteract($data);
     }
 
-    public function testAddValue(): void
+    public function testAddValueWithTimeSplitRecipients(): void
     {
         $entry = new Writer\Entry();
 
-        $value      = [
+        $value           = [
             'type'      => "lightning",
             'method'    => "keysend",
             'suggested' => 0.00000005000,
@@ -604,11 +607,83 @@ class EntryTest extends TestCase
                 'split'   => 60,
             ],
         ];
-        $entry->addPodcastIndexValue($value, $valueRecipients);
+        $valueTimeSplits = [
+            [
+                'startTime'       => 63,
+                'duration'        => 388,
+                'valueRecipients' => [
+                    [
+                        'name'        => "Alice (Podcaster)",
+                        'type'        => "node",
+                        'address'     => "02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52",
+                        'split'       => 40,
+                        'customKey'   => "Some_custom_key",
+                        'customValue' => "Some_custom_value",
+                        'fee'         => true,
+                    ],
+                    [
+                        'name'    => "Malcolm (Guest)",
+                        'type'    => "node",
+                        'address' => "02dd306e68c46681aa21d88a436fb35355a8579dd30201581cefa17cb179fc4c15",
+                        'split'   => 20,
+                        'fee'     => true,
+                    ],
+                ],
+            ],
+        ];
+        $entry->addPodcastIndexValue($value, $valueRecipients, $valueTimeSplits);
         $value['valueRecipients'] = $valueRecipients;
+        $value['valueTimeSplits'] = $valueTimeSplits;
 
         /** @psalm-var list<ValueObject> $values */
         $values = $entry->getPodcastIndexValues();
+        $this->assertContains($value, $values);
+    }
+
+    public function testAddValueWithTimeSplitRemoteItems(): void
+    {
+        $entry = new Writer\Entry();
+
+        $value           = [
+            'type'   => "lightning",
+            'method' => "keysend",
+        ];
+        $valueRecipients = [
+            [
+                'type'    => "node",
+                'address' => "02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52",
+                'split'   => 40,
+            ],
+        ];
+        $valueTimeSplits = [
+            [
+                'startTime'  => 82,
+                'duration'   => 200,
+                'remoteItem' => [
+                    'itemGuid' => "https://podcastindex.org/podcast/4148683#1",
+                    'feedGuid' => "a94f5cc9-8c58-55fc-91fe-a324087a655b",
+                    'medium'   => "music",
+                ],
+            ],
+            [
+                'startTime'  => 134,
+                'duration'   => 123,
+                'remoteItem' => [
+                    'itemGuid' => "https://podcastindex.org/podcast/4148683#3",
+                    'feedGuid' => "b83f5cc9-8c58-55fc-91fe-a324087a644c",
+                    'medium'   => "podcast",
+                    'feedUrl'  => "https://podcastindex.org/podcast/4148683",
+                    'title'    => "My Fancy Podcast",
+                ],
+            ],
+        ];
+        $entry->addPodcastIndexValue($value, $valueRecipients, $valueTimeSplits);
+        $value['valueRecipients'] = $valueRecipients;
+        $value['valueTimeSplits'] = $valueTimeSplits;
+
+        /** @psalm-var list<ValueObject> $values */
+        $values = $entry->getPodcastIndexValues();
+
         $this->assertContains($value, $values);
     }
 
@@ -616,7 +691,7 @@ class EntryTest extends TestCase
     {
         $entry = new Writer\Entry();
 
-        $value      = [
+        $value           = [
             'type'   => "lightning",
             'method' => "keysend",
         ];
@@ -652,7 +727,7 @@ class EntryTest extends TestCase
     {
         $entry = new Writer\Entry();
 
-        $value      = [
+        $value           = [
             'type'   => "lightning",
             'method' => "keysend",
         ];
@@ -671,7 +746,7 @@ class EntryTest extends TestCase
     {
         $entry = new Writer\Entry();
 
-        $value      = [
+        $value           = [
             'type'   => "lightning",
             'method' => "keysend",
         ];
@@ -691,7 +766,7 @@ class EntryTest extends TestCase
     {
         $entry = new Writer\Entry();
 
-        $value      = [
+        $value           = [
             'type'      => "lightning",
             'method'    => "keysend",
             'suggested' => 5.0E-8, // scientific notation for 0.00000005000
@@ -717,7 +792,7 @@ class EntryTest extends TestCase
     {
         $entry = new Writer\Entry();
 
-        $value      = [
+        $value           = [
             'type'   => "lightning",
             'method' => "keysend",
         ];
@@ -744,4 +819,6 @@ class EntryTest extends TestCase
         $empty = $entry->getPodcastIndexValues();
         $this->assertEmpty($empty);
     }
+
+    // TODO: add test for value time split
 }

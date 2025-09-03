@@ -3066,13 +3066,16 @@
     <PossiblyUnusedMethod>
       <code>__construct</code>
       <code>addPodcastIndexSoundbites</code>
+      <code>addPodcastIndexValue</code>
       <code>getEncoding</code>
       <code>getPodcastIndexPersons</code>
+      <code>resetPodcastIndexValues</code>
       <code>setEncoding</code>
       <code>setPodcastIndexChapters</code>
       <code>setPodcastIndexLicense</code>
       <code>setPodcastIndexLocation</code>
       <code>setPodcastIndexPersons</code>
+      <code>setPodcastIndexSocialInteracts</code>
       <code>setPodcastIndexSoundbites</code>
       <code>setPodcastIndexTranscript</code>
       <code>setPodcastIndexTxts</code>
@@ -3087,7 +3090,9 @@
   <file src="src/Writer/Extension/PodcastIndex/Validator.php">
     <DocblockTypeContradiction>
       <code><![CDATA[! is_string($value['url'])]]></code>
+      <code><![CDATA[is_int($value['duration'])]]></code>
       <code><![CDATA[is_int($value['split'])]]></code>
+      <code><![CDATA[is_int($value['startTime'])]]></code>
       <code><![CDATA[is_string($value['address'])]]></code>
       <code><![CDATA[is_string($value['description'])]]></code>
       <code><![CDATA[is_string($value['description'])]]></code>
@@ -3111,6 +3116,8 @@
       <code><![CDATA[isset($value['priority']) && ! is_int($value['priority'])]]></code>
       <code><![CDATA[isset($value['purpose']) && ! is_string($value['purpose'])]]></code>
       <code><![CDATA[isset($value['rel']) && ! is_string($value['rel'])]]></code>
+      <code><![CDATA[isset($value['remotePercentage']) && ! is_int($value['remotePercentage'])]]></code>
+      <code><![CDATA[isset($value['remoteStartTime']) && ! is_int($value['remoteStartTime'])]]></code>
       <code><![CDATA[isset($value['role']) && ! is_string($value['role'])]]></code>
       <code><![CDATA[isset($value['suggested']) && ! is_float($value['suggested'])]]></code>
     </DocblockTypeContradiction>

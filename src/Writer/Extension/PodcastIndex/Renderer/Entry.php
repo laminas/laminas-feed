@@ -6,9 +6,10 @@ namespace Laminas\Feed\Writer\Extension\PodcastIndex\Renderer;
 
 use DOMDocument;
 use DOMElement;
-use Laminas\Feed\Writer\Extension;
 use Laminas\Feed\Writer\Entry as EntryWriter;
+use Laminas\Feed\Writer\Extension;
 use Laminas\Feed\Writer\Extension\PodcastIndex\Validator;
+
 use function array_key_exists;
 
 /**

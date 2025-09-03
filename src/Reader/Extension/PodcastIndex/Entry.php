@@ -335,7 +335,7 @@ class Entry extends Extension\AbstractEntry
                 $valueObject->valueTimeSplits = $valueTimeSplits;
             }
 
-            $values[]                     = $valueObject;
+            $values[] = $valueObject;
         }
 
         $this->data['values'] = $values;

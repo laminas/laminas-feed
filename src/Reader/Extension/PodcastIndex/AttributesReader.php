@@ -81,7 +81,8 @@ use stdClass;
  *       type: string,
  *       method: string,
  *       suggested?: float,
- *       valueRecipients: list<ValueRecipientObject>
+ *       valueRecipients: list<ValueRecipientObject>,
+ *       valueTimeSplits?: list<ValueTimeSplitObject>,
  *     }
  * @psalm-type ImageObject = object{
  *       href: string,
@@ -145,7 +146,7 @@ class AttributesReader
         $location->geo         = $item->getAttribute('geo');
         $location->osm         = $item->getAttribute('osm');
         $location->rel         = $item->getAttribute('rel');
-        $location->country         = $item->getAttribute('country');
+        $location->country     = $item->getAttribute('country');
         return $location;
     }
 
