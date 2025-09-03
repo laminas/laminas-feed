@@ -3059,6 +3059,8 @@
     <DocblockTypeContradiction>
       <code><![CDATA[! is_string($value['duration'])]]></code>
       <code><![CDATA[! is_string($value['startTime'])]]></code>
+      <code><![CDATA[is_int($value['value'])]]></code>
+      <code><![CDATA[isset($value['name']) && ! is_string($value['name'])]]></code>
     </DocblockTypeContradiction>
     <MixedArrayAssignment>
       <code><![CDATA[$this->data['soundbites'][]]]></code>
@@ -3079,6 +3081,7 @@
       <code>setPodcastIndexSoundbites</code>
       <code>setPodcastIndexTranscript</code>
       <code>setPodcastIndexTxts</code>
+      <code>setPodcastIndexSeason</code>
     </PossiblyUnusedMethod>
     <PossiblyUnusedParam>
       <code>$params</code>

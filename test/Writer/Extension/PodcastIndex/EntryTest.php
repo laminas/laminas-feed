@@ -820,5 +820,53 @@ class EntryTest extends TestCase
         $this->assertEmpty($empty);
     }
 
-    // TODO: add test for value time split
+    public function testSetSeason(): void
+    {
+        $entry = new Writer\Entry();
+
+        $season = [
+            'value' => 3,
+            'name'  => 'The Yearling - Chapter 3',
+        ];
+        $entry->setPodcastIndexSeason($season);
+        $this->assertEquals($season, $entry->getPodcastIndexSeason());
+    }
+
+    public function testSetSeasonThrowsExceptionOnInvalidArgument(): void
+    {
+        $entry = new Writer\Entry();
+
+        $season = [
+            'something' => 123,
+        ];
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $entry->setPodcastIndexSeason($season);
+    }
+
+    public function testSetSeasonThrowsExceptionOnInvalidValue(): void
+    {
+        $entry = new Writer\Entry();
+
+        $season = [
+            'value' => '3',
+            'name'  => 'The Yearling - Chapter 3',
+        ];
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $entry->setPodcastIndexSeason($season);
+    }
+
+    public function testSetSeasonThrowsExceptionOnInvalidName(): void
+    {
+        $entry = new Writer\Entry();
+
+        $season = [
+            'value' => '3',
+            'name'  => 123,
+        ];
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $entry->setPodcastIndexSeason($season);
+    }
 }

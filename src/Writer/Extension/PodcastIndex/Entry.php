@@ -10,6 +10,7 @@ use Laminas\Stdlib\StringWrapper\StringWrapperInterface;
 
 use function array_key_exists;
 use function count;
+use function is_int;
 use function is_numeric;
 use function is_string;
 use function lcfirst;
@@ -402,6 +403,34 @@ class Entry
         /** @var list<ValueArray> $this->data['values'] */
         $this->data['values'][] = $value;
 
+        return $this;
+    }
+
+    /**
+     * Set entry season
+     *
+     * @param array{value: int, name?: string} $value
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function setPodcastIndexSeason(array $value): Entry
+    {
+        if (! isset($value['value'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "season" must be an array containing at least the key "value"'
+            );
+        }
+        if (! is_int($value['value'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "value" of "season" must be of type integer'
+            );
+        }
+        if (isset($value['name']) && ! is_string($value['name'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "name" of "season" must be of type string'
+            );
+        }
+        $this->data['season'] = $value;
         return $this;
     }
 

@@ -357,4 +357,18 @@ class EntryTest extends TestCase
         $this->assertStringContainsString($timeSplitRemoteItems[1]['feedUrl'], $xml);
         $this->assertStringContainsString($timeSplitRemoteItems[1]['title'], $xml);
     }
+
+    public function testRendersRssSeasonTag(): void
+    {
+        $season = [
+            'value' => 3,
+            'name'  => 'The Yearling - Chapter 3',
+        ];
+        $this->validEntry->setPodcastIndexSeason($season);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $this->assertStringContainsString('<podcast:season name="The Yearling - Chapter 3">3</podcast:season>', $xml);
+    }
 }

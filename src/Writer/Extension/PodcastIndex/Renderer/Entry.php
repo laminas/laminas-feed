@@ -45,6 +45,7 @@ class Entry extends Extension\AbstractRenderer
     {
         $this->setTranscript($this->dom, $this->base);
         $this->setChapters($this->dom, $this->base);
+        $this->setSeason($this->dom, $this->base);
         $this->setSoundbites($this->dom, $this->base);
         $this->setLocation($this->dom, $this->base);
         $this->setLicense($this->dom, $this->base);
@@ -273,6 +274,29 @@ class Entry extends Extension\AbstractRenderer
             $root->appendChild($valueElement);
         }
 
+        $this->called = true;
+    }
+
+    /**
+     * Set entry season
+     */
+    protected function setSeason(DOMDocument $dom, DOMElement $root): void
+    {
+        /** @psalm-var EntryWriter $container */
+        $container = $this->getDataContainer();
+
+        /** @psalm-var null|array{value: int, name?: string} $season */
+        $season = $container->getPodcastIndexSeason();
+        if ($season === null) {
+            return;
+        }
+        $el    = $dom->createElement('podcast:season');
+        $value = $dom->createTextNode((string) $season['value']);
+        $el->appendChild($value);
+        if (isset($season['name'])) {
+            $el->setAttribute('name', $season['name']);
+        }
+        $root->appendChild($el);
         $this->called = true;
     }
 }

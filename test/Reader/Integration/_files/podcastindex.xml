@@ -166,6 +166,7 @@
                     <podcast:remoteItem itemGuid="https://podcastindex.org/podcast/4148683#3" feedGuid="b83f5cc9-8c58-55fc-91fe-a324087a644c" medium="music" />
                 </podcast:valueTimeSplit>
             </podcast:value>
+            <podcast:season name="The Yearling - Chapter 3">3</podcast:season>
         </item>
 
         <item>

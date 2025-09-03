@@ -376,6 +376,33 @@ class Entry extends Extension\AbstractEntry
     }
 
     /**
+     * Get the entry season
+     */
+    public function getPodcastIndexSeason(): object|null
+    {
+        if (array_key_exists('season', $this->data)) {
+            /** @psalm-var stdClass */
+            return $this->data['season'];
+        }
+
+        $season = null;
+
+        $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:season');
+
+        if ($nodeList->length > 0) {
+            $node = $nodeList->item(0);
+            assert($node instanceof DOMElement);
+            $season        = new stdClass();
+            $season->value = $node->nodeValue;
+            $season->name  = $node->getAttribute('name');
+        }
+
+        $this->data['season'] = $season;
+
+        return $this->data['season'];
+    }
+
+    /**
      * Register PodcastIndex namespace
      */
     protected function registerNamespaces(): void

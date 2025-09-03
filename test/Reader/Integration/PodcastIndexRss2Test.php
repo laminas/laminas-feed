@@ -716,4 +716,21 @@ class PodcastIndexRss2Test extends TestCase
         $values = $entry->getPodcastIndexValues();
         $this->assertEquals($expected, $values[1]);
     }
+
+    public function testGetsEntrySeason(): void
+    {
+        $feed = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath)
+        );
+
+        /** @var Reader\Extension\PodcastIndex\Entry $entry */
+        $entry = $feed->current();
+
+        $expected        = new stdClass();
+        $expected->value = '3';
+        $expected->name  = 'The Yearling - Chapter 3';
+
+        $season = $entry->getPodcastIndexSeason();
+        $this->assertEquals($expected, $season);
+    }
 }
