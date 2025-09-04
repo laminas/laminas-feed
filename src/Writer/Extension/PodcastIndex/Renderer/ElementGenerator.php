@@ -53,8 +53,12 @@ class ElementGenerator
                     $element->setAttribute($key, (string) $value);
                     break;
                 case 'double':
-                    // ensure float instead of scientific notation
-                    $num = number_format($value, 11);
+                    // ensure decimal number instead of scientific notation, and remove thousands comma seperator
+                    if($name === 'value' && $key === 'suggested'){
+                        $num = number_format($value, 11, '.', '');
+                    } else {
+                        $num = number_format($value, 2, '.', '');
+                    }
                     $element->setAttribute($key, $num);
                     break;
                 case 'boolean':

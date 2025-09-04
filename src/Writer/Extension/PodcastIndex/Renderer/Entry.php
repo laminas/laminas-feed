@@ -57,6 +57,7 @@ class Entry extends Extension\AbstractRenderer
         $this->setValues($this->dom, $this->base);
         $this->setSeason($this->dom, $this->base);
         $this->setEpisode($this->dom, $this->base);
+        $this->setAlternateEnclosures($this->dom, $this->base);
         if ($this->called) {
             $this->_appendNamespaces();
         }
@@ -336,13 +337,13 @@ class Entry extends Extension\AbstractRenderer
             if (! isset($enclosure['sources'])) {
                 continue;
             }
-            $enclosureElement = ElementGenerator::createPodcastIndexElement($dom, $enclosure);
+            $enclosureElement = ElementGenerator::createPodcastIndexElement($dom, $enclosure, 'alternateEnclosure');
             foreach ($enclosure['sources'] as $source) {
-                $sourceElement = ElementGenerator::createPodcastIndexElement($dom, $source);
+                $sourceElement = ElementGenerator::createPodcastIndexElement($dom, $source, 'source');
                 $enclosureElement->appendChild($sourceElement);
             }
             if (isset($enclosure['integrity'])) {
-                    $integrityElement = ElementGenerator::createPodcastIndexElement($dom, $enclosure['integrity']);
+                    $integrityElement = ElementGenerator::createPodcastIndexElement($dom, $enclosure['integrity'], 'integrity');
                     $enclosureElement->appendChild($integrityElement);
             }
             $root->appendChild($enclosureElement);

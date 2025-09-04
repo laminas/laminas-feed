@@ -435,6 +435,56 @@ class Entry extends Extension\AbstractEntry
     }
 
     /**
+     * Get the entry alternateEnclosures
+     *
+     * @return list<AlternateEnclosureObject>
+     */
+    public function getPodcastIndexAlternateEnclosures(): array
+    {
+        if (array_key_exists('alternateEnclosures', $this->data)) {
+            /** @var list<ValueObject> $enclosures */
+            $enclosures = $this->data['alternateEnclosures'];
+            return $enclosures;
+        }
+
+        $enclosures         = [];
+        $enclosuresNodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:alternateEnclosure');
+
+        foreach ($enclosuresNodeList as $enclosureNode) {
+            assert($enclosureNode instanceof DOMElement);
+            $enclosureObject = AttributesReader::readAlternateEnclosure($enclosureNode);
+
+            /** @psalm-suppress TooManyArguments */
+            $sourcesNodeList = $this->xpath->query('podcast:source', $enclosureNode);
+            $sources         = [];
+
+            if ($sourcesNodeList->length > 0) {
+                foreach ($sourcesNodeList as $entry) {
+                    assert($entry instanceof DOMElement);
+                    $object = AttributesReader::readSource($entry);
+                    $sources[] = $object;
+                }
+                $enclosureObject->sources = $sources;
+            }
+
+            /** @psalm-suppress TooManyArguments */
+            $integrityNodeList = $this->xpath->query('podcast:integrity', $enclosureNode);
+            if ($integrityNodeList->length > 0) {
+                $node = $integrityNodeList->item(0);
+                assert($node instanceof DOMElement);
+                $integrity = AttributesReader::readIntegrity($node);
+                $enclosureObject->integrity = $integrity;
+            }
+
+            $enclosures[] = $enclosureObject;
+        }
+
+        $this->data['alternateEnclosures'] = $enclosures;
+
+        return $this->data['alternateEnclosures'];
+    }
+
+    /**
      * Register PodcastIndex namespace
      */
     protected function registerNamespaces(): void

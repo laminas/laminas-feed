@@ -600,9 +600,9 @@ class Validator
                 'invalid parameter: key "length" of "alternateEnclosure" must be of type integer'
             );
         }
-        if (isset($value['bitrate']) && ! is_int($value['bitrate'])) {
+        if (isset($value['bitrate']) && ! (is_int($value['bitrate']) || is_float($value['bitrate']))) {
             throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "bitrate" of "alternateEnclosure" must be of type integer'
+                'invalid parameter: "bitrate" of "alternateEnclosure" must be of type integer or type float'
             );
         }
         if (isset($value['height']) && ! is_int($value['height'])) {

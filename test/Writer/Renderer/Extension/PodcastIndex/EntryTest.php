@@ -385,4 +385,79 @@ class EntryTest extends TestCase
 
         $this->assertStringContainsString('<podcast:episode display="Day 5">9</podcast:episode>', $xml);
     }
+
+    public function testRendersRssAlternateEnclosureTag(): void
+    {
+        $sources = [
+            [
+                'uri' => 'https://example.com/file-720.torrent',
+                'contentType' => 'application/x-bittorrent',
+            ],
+            [
+                'uri' => 'ipfs://QmX33FYehk6ckGQ6g1D9D3FqZPix5JpKstKQKbaS8quUFb',
+            ]
+        ];
+        $integrity = [
+            'type' => 'sri',
+            'value' => 'sha384-ExVqijgYHm15PqQqdXfW95x+Rs6C+d6E/ICxyQOeFevnxNLR/wtJNrNYTjIysUBo',
+        ];
+        $alternateEnclosure = [
+            'type' => 'video/mp4',
+            'length' => 7924786,
+            'bitrate' => 511276.52,
+            'height' => 720,
+            'lang' => 'en',
+            'title' => 'Standard',
+            'rel' => 'default',
+            'codecs' => 'avc1.42E01E, mp4a.40.2',
+            'default' => true
+        ];
+
+        $this->validEntry->addPodcastIndexAlternateEnclosure($alternateEnclosure, $sources, $integrity);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $this->assertStringContainsString('<podcast:alternateEnclosure', $xml);
+        $this->assertStringContainsString('<podcast:source uri="ipfs://QmX33FYehk6ckGQ6g1D9D3FqZPix5JpKstKQKbaS8quUFb"/>', $xml);
+
+        foreach($alternateEnclosure as $att){
+            $att = (!is_string($att)) ? (string) $att : $att;
+            $this->assertStringContainsString($att, $xml);
+        }
+        foreach($sources[0] as $att){
+            $att = (!is_string($att)) ? (string) $att : $att;
+            $this->assertStringContainsString($att, $xml);
+        }
+        foreach($sources[1] as $att){
+            $att = (!is_string($att)) ? (string) $att : $att;
+            $this->assertStringContainsString($att, $xml);
+        }
+        foreach($integrity as $att){
+            $att = (!is_string($att)) ? (string) $att : $att;
+            $this->assertStringContainsString($att, $xml);
+        }
+    }
+
+    public function testRendersRssAlternateEnclosureMinimal(): void
+    {
+        $sources = [
+            [
+                'uri' => 'ipfs://QmX33FYehk6ckGQ6g1D9D3FqZPix5JpKstKQKbaS8quUFb',
+            ],
+        ];
+        $alternateEnclosure = [
+            'type'    => 'video/mp4',
+        ];
+
+        $this->validEntry->addPodcastIndexAlternateEnclosure($alternateEnclosure, $sources);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $parent = '<podcast:alternateEnclosure type="video/mp4">';
+        $child = '<podcast:source uri="ipfs://QmX33FYehk6ckGQ6g1D9D3FqZPix5JpKstKQKbaS8quUFb"/>';
+        $this->assertStringContainsString($parent, $xml);
+        $this->assertStringContainsString($child, $xml);
+    }
 }

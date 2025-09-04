@@ -378,12 +378,61 @@ class AttributesReader
      */
     public static function readSocialInteract(DOMElement $item): object
     {
-        $socialInteract             = new stdClass();
-        $socialInteract->protocol   = $item->getAttribute('protocol');
-        $socialInteract->uri        = $item->getAttribute('uri');
-        $socialInteract->priority   = $item->getAttribute('priority');
-        $socialInteract->accountId  = $item->getAttribute('accountId');
-        $socialInteract->accountUrl = $item->getAttribute('accountUrl');
-        return $socialInteract;
+        $object             = new stdClass();
+        $object->protocol   = $item->getAttribute('protocol');
+        $object->uri        = $item->getAttribute('uri');
+        $object->priority   = $item->getAttribute('priority');
+        $object->accountId  = $item->getAttribute('accountId');
+        $object->accountUrl = $item->getAttribute('accountUrl');
+        return $object;
+    }
+
+    /**
+     * Read podcast alternate enclosure
+     *
+     * @psalm-param DOMElement $item
+     * @psalm-return AlternateEnclosureObject
+     */
+    public static function readAlternateEnclosure(DOMElement $item): object
+    {
+        $object          = new stdClass();
+        $object->type    = $item->getAttribute('type');
+        $object->length  = $item->getAttribute('length');
+        $object->bitrate = $item->getAttribute('bitrate');
+        $object->height  = $item->getAttribute('height');
+        $object->lang    = $item->getAttribute('lang');
+        $object->title   = $item->getAttribute('title');
+        $object->rel     = $item->getAttribute('rel');
+        $object->codecs  = $item->getAttribute('codecs');
+        $object->default = $item->getAttribute('default');
+        return $object;
+    }
+
+    /**
+     * Read podcast source
+     *
+     * @psalm-param DOMElement $item
+     * @psalm-return SourceObject
+     */
+    public static function readSource(DOMElement $item): object
+    {
+        $object              = new stdClass();
+        $object->uri         = $item->getAttribute('uri');
+        $object->contentType = $item->getAttribute('contentType');
+        return $object;
+    }
+
+    /**
+     * Read podcast integrity
+     *
+     * @psalm-param DOMElement $item
+     * @psalm-return SourceObject
+     */
+    public static function readIntegrity(DOMElement $item): object
+    {
+        $object        = new stdClass();
+        $object->type  = $item->getAttribute('type');
+        $object->value = $item->getAttribute('value');
+        return $object;
     }
 }
