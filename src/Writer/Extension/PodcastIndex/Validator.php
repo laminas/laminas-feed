@@ -147,8 +147,8 @@ use const FILTER_VALIDATE_URL;
  *       rel?: string,
  *       codecs?: string,
  *       default?: bool,
- *      sources: list<SourceArray>,
- *      integrity?: IntegrityArray,
+ *       sources?: list<SourceArray>,
+ *       integrity?: IntegrityArray,
  *     }
  */
 class Validator

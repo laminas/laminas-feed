@@ -32,6 +32,9 @@ use function assert;
  * @psalm-import-type SoundbiteObject from AttributesReader
  * @psalm-import-type SeasonObject from AttributesReader
  * @psalm-import-type EpisodeObject from AttributesReader
+ * @psalm-import-type SourceObject from AttributesReader
+ * @psalm-import-type IntegrityObject from AttributesReader
+ * @psalm-import-type AlternateEnclosureObject from AttributesReader
  */
 class Entry extends Extension\AbstractEntry
 {

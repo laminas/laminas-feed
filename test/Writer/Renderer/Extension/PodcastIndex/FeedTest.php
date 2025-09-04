@@ -44,7 +44,9 @@ class FeedTest extends TestCase
 
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $xml     = $rssFeed->render()->saveXml();
-        $this->assertStringContainsString('<podcast:locked', $xml);
+
+        $expected = '<podcast:locked owner="john.doe@example.com">yes</podcast:locked>';
+        $this->assertStringContainsString($expected, $xml);
     }
 
     public function testRendersRssFundingTag(): void
@@ -58,7 +60,8 @@ class FeedTest extends TestCase
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $xml     = $rssFeed->render()->saveXml();
 
-        $this->assertStringContainsString('<podcast:funding', $xml);
+        $expected = '<podcast:funding url="http://example.com/donate">Support the show!</podcast:funding>';
+        $this->assertStringContainsString($expected, $xml);
     }
 
     public function testRendersRssLicenseTag(): void
@@ -75,9 +78,8 @@ class FeedTest extends TestCase
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $xml     = $rssFeed->render()->saveXml();
 
-        $this->assertStringContainsString('<podcast:license', $xml);
-        $this->assertStringContainsString($url, $xml);
-        $this->assertStringContainsString($identifier, $xml);
+        $expected = '<podcast:license url="https://spdx.org/licenses/CC-BY-4.0.html">cc-by-4.0</podcast:license>';
+        $this->assertStringContainsString($expected, $xml);
     }
 
     public function testRendersRssLocationTag(): void
@@ -268,10 +270,8 @@ class FeedTest extends TestCase
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $xml     = $rssFeed->render()->saveXml();
 
-        $this->assertStringContainsString('<podcast:block', $xml);
-        $this->assertStringContainsString($data['value'], $xml);
-        $this->assertStringContainsString($data['id'], $xml);
-        $this->assertSame(1, substr_count($xml, $data['id']));
+        $expected = '<podcast:block id="google">no</podcast:block>';
+        $this->assertStringContainsString($expected, $xml);
     }
 
     public function testRendersRssBlockTags(): void
@@ -308,10 +308,8 @@ class FeedTest extends TestCase
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $xml     = $rssFeed->render()->saveXml();
 
-        $this->assertStringContainsString('<podcast:txt', $xml);
-        $this->assertStringContainsString($data['value'], $xml);
-        $this->assertStringContainsString($data['purpose'], $xml);
-        $this->assertSame(1, substr_count($xml, $data['purpose']));
+        $expected = '<podcast:txt purpose="verify">S6lpp-7ZCn8-dZfGc-OoyaG</podcast:txt>';
+        $this->assertStringContainsString($expected, $xml);
     }
 
     public function testRendersMultipleRssTxtTags(): void

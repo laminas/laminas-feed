@@ -90,10 +90,7 @@ class Feed extends Extension\AbstractRenderer
         if ($locked === null) {
             return;
         }
-        $el   = $dom->createElement('podcast:locked');
-        $text = $dom->createTextNode((string) $locked['value']);
-        $el->appendChild($text);
-        $el->setAttribute('owner', $locked['owner']);
+        $el = ElementGenerator::createPodcastIndexElement($dom, $locked, 'locked', 'value');
         $root->appendChild($el);
         $this->called = true;
     }
@@ -111,10 +108,7 @@ class Feed extends Extension\AbstractRenderer
         if ($funding === null) {
             return;
         }
-        $el   = $dom->createElement('podcast:funding');
-        $text = $dom->createTextNode((string) $funding['title']);
-        $el->appendChild($text);
-        $el->setAttribute('url', $funding['url']);
+        $el = ElementGenerator::createPodcastIndexElement($dom, $funding, 'funding', 'title');
         $root->appendChild($el);
         $this->called = true;
     }
@@ -132,7 +126,7 @@ class Feed extends Extension\AbstractRenderer
         if ($license === null) {
             return;
         }
-        $el = ElementGenerator::createLicenseElement($dom, $license);
+        $el = ElementGenerator::createPodcastIndexElement($dom, $license, 'license', 'identifier');
 
         $root->appendChild($el);
         $this->called = true;
@@ -151,7 +145,7 @@ class Feed extends Extension\AbstractRenderer
         if ($location === null) {
             return;
         }
-        $el = ElementGenerator::createLocationElement($dom, $location);
+        $el = ElementGenerator::createPodcastIndexElement($dom, $location, 'location', 'description');
         $root->appendChild($el);
         $this->called = true;
     }
@@ -169,8 +163,7 @@ class Feed extends Extension\AbstractRenderer
         if ($images === null) {
             return;
         }
-        $el = $dom->createElement('podcast:images');
-        $el->setAttribute('srcset', $images['srcset']);
+        $el = ElementGenerator::createPodcastIndexElement($dom, $images, 'images');
         $root->appendChild($el);
         $this->called = true;
     }
@@ -188,7 +181,7 @@ class Feed extends Extension\AbstractRenderer
         if ($updateFrequency === null) {
             return;
         }
-        $el = ElementGenerator::createUpdateFrequencyElement($dom, $updateFrequency);
+        $el = ElementGenerator::createPodcastIndexElement($dom, $updateFrequency, 'updateFrequency', 'description');
         $root->appendChild($el);
         $this->called = true;
     }
@@ -207,7 +200,7 @@ class Feed extends Extension\AbstractRenderer
             return;
         }
         foreach ($people as $person) {
-            $el = ElementGenerator::createPersonElement($dom, $person);
+            $el = ElementGenerator::createPodcastIndexElement($dom, $person, 'person', 'name');
             $root->appendChild($el);
         }
         $this->called = true;
@@ -226,7 +219,7 @@ class Feed extends Extension\AbstractRenderer
         if ($trailer === null) {
             return;
         }
-        $el = ElementGenerator::createTrailerElement($dom, $trailer);
+        $el = ElementGenerator::createPodcastIndexElement($dom, $trailer, 'trailer', 'title');
         $root->appendChild($el);
         $this->called = true;
     }
@@ -244,9 +237,7 @@ class Feed extends Extension\AbstractRenderer
         if ($guid === null) {
             return;
         }
-        $el   = $dom->createElement('podcast:guid');
-        $text = $dom->createTextNode($guid['value']);
-        $el->appendChild($text);
+        $el = ElementGenerator::createPodcastIndexElement($dom, $guid, 'guid', 'value');
         $root->appendChild($el);
         $this->called = true;
     }
@@ -264,9 +255,7 @@ class Feed extends Extension\AbstractRenderer
         if ($medium === null) {
             return;
         }
-        $el   = $dom->createElement('podcast:medium');
-        $text = $dom->createTextNode($medium['value']);
-        $el->appendChild($text);
+        $el = ElementGenerator::createPodcastIndexElement($dom, $medium, 'medium', 'value');
         $root->appendChild($el);
         $this->called = true;
     }
@@ -286,7 +275,7 @@ class Feed extends Extension\AbstractRenderer
         }
 
         foreach ($blocks as $block) {
-            $el = ElementGenerator::createBlockElement($dom, $block);
+            $el = ElementGenerator::createPodcastIndexElement($dom, $block, 'block', 'value');
             $root->appendChild($el);
         }
         $this->called = true;
@@ -307,7 +296,7 @@ class Feed extends Extension\AbstractRenderer
         }
 
         foreach ($txts as $txt) {
-            $el = ElementGenerator::createTxtElement($dom, $txt);
+            $el = ElementGenerator::createPodcastIndexElement($dom, $txt, 'txt', 'value');
             $root->appendChild($el);
         }
         $this->called = true;
@@ -327,10 +316,7 @@ class Feed extends Extension\AbstractRenderer
             return;
         }
 
-        $usesPodping = $podping['usesPodping'] ? 'true' : 'false';
-
-        $el = $dom->createElement('podcast:podping');
-        $el->setAttribute('usesPodping', $usesPodping);
+        $el = ElementGenerator::createPodcastIndexElement($dom, $podping, 'podping');
         $root->appendChild($el);
         $this->called = true;
     }
@@ -350,7 +336,7 @@ class Feed extends Extension\AbstractRenderer
         }
 
         foreach ($remoteItems as $remoteItem) {
-            $el = ElementGenerator::createRemoteItemElement($dom, $remoteItem);
+            $el = ElementGenerator::createPodcastIndexElement($dom, $remoteItem, 'remoteItem');
             $root->appendChild($el);
         }
 
@@ -374,7 +360,7 @@ class Feed extends Extension\AbstractRenderer
         $podroll = $dom->createElement('podcast:podroll');
 
         foreach ($podrollItems as $remoteItem) {
-            $el = ElementGenerator::createRemoteItemElement($dom, $remoteItem);
+            $el = ElementGenerator::createPodcastIndexElement($dom, $remoteItem, 'remoteItem');
             $podroll->appendChild($el);
         }
 
@@ -398,7 +384,7 @@ class Feed extends Extension\AbstractRenderer
         }
 
         $publisher = $dom->createElement('podcast:publisher');
-        $el        = ElementGenerator::createRemoteItemElement($dom, $publisherItem);
+        $el        = ElementGenerator::createPodcastIndexElement($dom, $publisherItem, 'remoteItem');
         $publisher->appendChild($el);
         $root->appendChild($publisher);
 
@@ -423,9 +409,9 @@ class Feed extends Extension\AbstractRenderer
             if (! isset($value['valueRecipients'])) {
                 continue;
             }
-            $valueElement = ElementGenerator::createValueElement($dom, $value);
+            $valueElement = ElementGenerator::createPodcastIndexElement($dom, $value, 'value');
             foreach ($value['valueRecipients'] as $valueRecipient) {
-                $valueRecipientElement = ElementGenerator::createValueRecipientElement($dom, $valueRecipient);
+                $valueRecipientElement = ElementGenerator::createPodcastIndexElement($dom, $valueRecipient, 'valueRecipient');
                 $valueElement->appendChild($valueRecipientElement);
             }
             $root->appendChild($valueElement);
@@ -449,7 +435,7 @@ class Feed extends Extension\AbstractRenderer
         }
 
         foreach ($socialInteracts as $socialInteract) {
-            $el = ElementGenerator::createSocialInteractElement($dom, $socialInteract);
+            $el = ElementGenerator::createPodcastIndexElement($dom, $socialInteract, 'socialInteract');
             $root->appendChild($el);
         }
 

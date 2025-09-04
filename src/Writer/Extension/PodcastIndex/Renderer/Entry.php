@@ -10,8 +10,6 @@ use Laminas\Feed\Writer\Entry as EntryWriter;
 use Laminas\Feed\Writer\Extension;
 use Laminas\Feed\Writer\Extension\PodcastIndex\Validator;
 
-use function array_key_exists;
-
 /**
  * Renders PodcastIndex data of an entry in a RSS Feed
  *
@@ -28,6 +26,9 @@ use function array_key_exists;
  * @psalm-import-type SocialInteractArray from Validator
  * @psalm-import-type SeasonArray from Validator
  * @psalm-import-type EpisodeArray from Validator
+ * @psalm-import-type SourceArray from Validator
+ * @psalm-import-type IntegrityArray from Validator
+ * @psalm-import-type AlternateEnclosureArray from Validator
  */
 class Entry extends Extension\AbstractRenderer
 {
@@ -81,20 +82,12 @@ class Entry extends Extension\AbstractRenderer
         /** @psalm-var EntryWriter $container */
         $container = $this->getDataContainer();
 
-        /** @psalm-var null|TranscriptArray $locked */
-        $locked = $container->getPodcastIndexTranscript();
-        if ($locked === null) {
+        /** @psalm-var null|TranscriptArray $transcript */
+        $transcript = $container->getPodcastIndexTranscript();
+        if ($transcript === null) {
             return;
         }
-        $el = $dom->createElement('podcast:transcript');
-        $el->setAttribute('url', $locked['url']);
-        $el->setAttribute('type', $locked['type']);
-        if (array_key_exists('language', $locked)) {
-            $el->setAttribute('language', $locked['language']);
-        }
-        if (array_key_exists('rel', $locked)) {
-            $el->setAttribute('rel', $locked['rel']);
-        }
+        $el = ElementGenerator::createPodcastIndexElement($dom, $transcript, 'transcript');
         $root->appendChild($el);
         $this->called = true;
     }
@@ -112,9 +105,7 @@ class Entry extends Extension\AbstractRenderer
         if ($chapters === null) {
             return;
         }
-        $el = $dom->createElement('podcast:chapters');
-        $el->setAttribute('url', $chapters['url']);
-        $el->setAttribute('type', $chapters['type']);
+        $el = ElementGenerator::createPodcastIndexElement($dom, $chapters, 'chapters');
         $root->appendChild($el);
         $this->called = true;
     }
@@ -133,13 +124,7 @@ class Entry extends Extension\AbstractRenderer
             return;
         }
         foreach ($soundbites as $soundbite) {
-            $el = $dom->createElement('podcast:soundbite');
-            if (array_key_exists('title', $soundbite)) {
-                $text = $dom->createTextNode($soundbite['title']);
-                $el->appendChild($text);
-            }
-            $el->setAttribute('startTime', $soundbite['startTime']);
-            $el->setAttribute('duration', $soundbite['duration']);
+            $el = ElementGenerator::createPodcastIndexElement($dom, $soundbite, 'soundbite');
             $root->appendChild($el);
             $this->called = true;
         }
@@ -158,7 +143,7 @@ class Entry extends Extension\AbstractRenderer
         if ($location === null) {
             return;
         }
-        $el = ElementGenerator::createLocationElement($dom, $location);
+        $el = ElementGenerator::createPodcastIndexElement($dom, $location, 'location', 'description');
         $root->appendChild($el);
         $this->called = true;
     }
@@ -176,7 +161,7 @@ class Entry extends Extension\AbstractRenderer
         if ($license === null) {
             return;
         }
-        $el = ElementGenerator::createLicenseElement($dom, $license);
+        $el = ElementGenerator::createPodcastIndexElement($dom, $license, 'license', 'identifier');
 
         $root->appendChild($el);
         $this->called = true;
@@ -196,7 +181,7 @@ class Entry extends Extension\AbstractRenderer
             return;
         }
         foreach ($people as $person) {
-            $el = ElementGenerator::createPersonElement($dom, $person);
+            $el = ElementGenerator::createPodcastIndexElement($dom, $person, 'person', 'name');
             $root->appendChild($el);
         }
         $this->called = true;
@@ -217,7 +202,7 @@ class Entry extends Extension\AbstractRenderer
         }
 
         foreach ($txts as $txt) {
-            $el = ElementGenerator::createTxtElement($dom, $txt);
+            $el = ElementGenerator::createPodcastIndexElement($dom, $txt, 'txt', 'value');
             $root->appendChild($el);
         }
         $this->called = true;
@@ -238,7 +223,7 @@ class Entry extends Extension\AbstractRenderer
         }
 
         foreach ($socialInteracts as $socialInteract) {
-            $el = ElementGenerator::createSocialInteractElement($dom, $socialInteract);
+            $el = ElementGenerator::createPodcastIndexElement($dom, $socialInteract, 'socialInteract');
             $root->appendChild($el);
         }
 
@@ -246,7 +231,7 @@ class Entry extends Extension\AbstractRenderer
     }
 
     /**
-     * Set the valueRecipients
+     * Set the values
      */
     private function setValues(DOMDocument $dom, DOMElement $root): void
     {
@@ -263,14 +248,31 @@ class Entry extends Extension\AbstractRenderer
             if (! isset($value['valueRecipients'])) {
                 continue;
             }
-            $valueElement = ElementGenerator::createValueElement($dom, $value);
-            foreach ($value['valueRecipients'] as $valueRecipient) {
-                $valueRecipientElement = ElementGenerator::createValueRecipientElement($dom, $valueRecipient);
-                $valueElement->appendChild($valueRecipientElement);
+            $valueElement = ElementGenerator::createPodcastIndexElement($dom, $value, 'value');
+
+            foreach ($value['valueRecipients'] as $recipient) {
+                $recipientElement = ElementGenerator::createPodcastIndexElement($dom, $recipient, 'valueRecipient');
+                $valueElement->appendChild($recipientElement);
             }
+
             if (isset($value['valueTimeSplits'])) {
                 foreach ($value['valueTimeSplits'] as $split) {
-                    $splitElement = ElementGenerator::createValueTimeSplitElement($dom, $split);
+                    $splitElement = ElementGenerator::createPodcastIndexElement($dom, $split, 'valueTimeSplit');
+
+                    // set 1-n child nodes: valueRecipients
+                    if (isset($split['valueRecipients'])) {
+                        foreach ($split['valueRecipients'] as $splitRecipient) {
+                            $element = ElementGenerator::createPodcastIndexElement($dom, $splitRecipient, 'valueRecipient');
+                            $splitElement->appendChild($element);
+                        }
+                    }
+
+                    // set 1 child node: value remote item
+                    if (isset($split['remoteItem'])) {
+                        $element = ElementGenerator::createPodcastIndexElement($dom, $split['remoteItem'], 'remoteItem');
+                        $splitElement->appendChild($element);
+                    }
+
                     $valueElement->appendChild($splitElement);
                 }
             }
@@ -293,12 +295,7 @@ class Entry extends Extension\AbstractRenderer
         if ($season === null) {
             return;
         }
-        $el    = $dom->createElement('podcast:season');
-        $value = $dom->createTextNode((string) $season['value']);
-        $el->appendChild($value);
-        if (isset($season['name'])) {
-            $el->setAttribute('name', $season['name']);
-        }
+        $el = ElementGenerator::createPodcastIndexElement($dom, $season, 'season', 'value');
         $root->appendChild($el);
         $this->called = true;
     }
@@ -316,13 +313,41 @@ class Entry extends Extension\AbstractRenderer
         if ($episode === null) {
             return;
         }
-        $el    = $dom->createElement('podcast:episode');
-        $value = $dom->createTextNode((string) $episode['value']);
-        $el->appendChild($value);
-        if (isset($episode['display'])) {
-            $el->setAttribute('display', $episode['display']);
-        }
+        $el = ElementGenerator::createPodcastIndexElement($dom, $episode, 'episode', 'value');
         $root->appendChild($el);
+        $this->called = true;
+    }
+
+    /**
+     * Set the alternate enclosures
+     */
+    private function setAlternateEnclosures(DOMDocument $dom, DOMElement $root): void
+    {
+        /** @psalm-var EntryWriter $container */
+        $container = $this->getDataContainer();
+
+        /** @psalm-var list<AlternateEnclosureArray>|null $values */
+        $enclosures = $container->getPodcastIndexAlternateEnclosures();
+        if ($enclosures === null || $enclosures === []) {
+            return;
+        }
+
+        foreach ($enclosures as $enclosure) {
+            if (! isset($enclosure['sources'])) {
+                continue;
+            }
+            $enclosureElement = ElementGenerator::createPodcastIndexElement($dom, $enclosure);
+            foreach ($enclosure['sources'] as $source) {
+                $sourceElement = ElementGenerator::createPodcastIndexElement($dom, $source);
+                $enclosureElement->appendChild($sourceElement);
+            }
+            if (isset($enclosure['integrity'])) {
+                    $integrityElement = ElementGenerator::createPodcastIndexElement($dom, $enclosure['integrity']);
+                    $enclosureElement->appendChild($integrityElement);
+            }
+            $root->appendChild($enclosureElement);
+        }
+
         $this->called = true;
     }
 }

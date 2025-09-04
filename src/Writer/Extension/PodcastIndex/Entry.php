@@ -38,6 +38,9 @@ use function ucfirst;
  * @psalm-import-type SocialInteractArray from Validator
  * @psalm-import-type SeasonArray from Validator
  * @psalm-import-type EpisodeArray from Validator
+ * @psalm-import-type SourceArray from Validator
+ * @psalm-import-type IntegrityArray from Validator
+ * @psalm-import-type AlternateEnclosureArray from Validator
  */
 class Entry
 {
@@ -352,7 +355,7 @@ class Entry
 
     /**
      * Reset all value elements.
-     * All value entries will be removed, including their nested valueRecipients.
+     * All value entries will be removed, including their nested valueRecipients and valueTimeSplits.
      *
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
@@ -462,6 +465,58 @@ class Entry
             );
         }
         $this->data['episode'] = $value;
+        return $this;
+    }
+
+    /**
+     * Set entry alternateEnclosure
+     *
+     * @param AlternateEnclosureArray $enclosure
+     * @param list<SourceArray> $sources
+     * @param IntegrityArray $integrity
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function addPodcastIndexAlternateEnclosure(array $enclosure, array $sources, array $integrity = []): Entry
+    {
+        if (count($sources) < 1) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: the second argument to "alternateEnclosure" must be an array containing
+                 at least one source'
+            );
+        }
+
+        Validator::validateAlternateEnclosure($enclosure);
+
+        foreach ($sources as $source) {
+            Validator::validateSource($source);
+        }
+        $enclosure['sources'] = $sources;
+
+        if (count($integrity) > 0) {
+            Validator::validateIntegrity($integrity);
+            $enclosure['integrity'] = $integrity;
+        }
+
+        if (! isset($this->data['alternateEnclosures'])) {
+            $this->data['alternateEnclosures'] = [];
+        }
+
+        /** @var list<AlternateEnclosureArray> $this->data['alternateEnclosures'] */
+        $this->data['alternateEnclosures'][] = $enclosure;
+        return $this;
+    }
+
+    /**
+     * Reset all alternate enclosure elements.
+     * All alternate enclosure entries will be removed, including their nested sources and integrities.
+     *
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function resetPodcastIndexAlternateEnclosures(): self
+    {
+        $this->data['alternateEnclosures'] = [];
         return $this;
     }
 
