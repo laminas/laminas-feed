@@ -21,12 +21,18 @@ use function in_array;
  * @psalm-import-type TrailerObject from AttributesReader
  * @psalm-import-type RemoteItemObject from AttributesReader
  * @psalm-import-type ValueRecipientObject from AttributesReader
+ * @psalm-import-type ValueTimeSplitObject from AttributesReader
  * @psalm-import-type ValueObject from AttributesReader
  * @psalm-import-type ImageObject from AttributesReader
  * @psalm-import-type SocialInteractObject from AttributesReader
  * @psalm-import-type TranscriptObject from AttributesReader
  * @psalm-import-type ChaptersObject from AttributesReader
  * @psalm-import-type SoundbiteObject from AttributesReader
+ * @psalm-import-type SeasonObject from AttributesReader
+ * @psalm-import-type EpisodeObject from AttributesReader
+ * @psalm-import-type SourceObject from AttributesReader
+ * @psalm-import-type IntegrityObject from AttributesReader
+ * @psalm-import-type AlternateEnclosureObject from AttributesReader
  */
 class EntryTest extends TestCase
 {
@@ -935,7 +941,7 @@ class EntryTest extends TestCase
     {
         $entry = new Writer\Entry();
 
-        $sources = [
+        $sources            = [
             [
                 'uri'         => 'https://example.com/file-720.torrent',
                 'contentType' => 'application/x-bittorrent',
@@ -944,7 +950,7 @@ class EntryTest extends TestCase
                 'uri' => 'ipfs://QmX33FYehk6ckGQ6g1D9D3FqZPix5JpKstKQKbaS8quUFb',
             ],
         ];
-        $integrity = [
+        $integrity          = [
             'type'  => 'sri',
             'value' => 'sha384-ExVqijgYHm15PqQqdXfW95x+Rs6C+d6E/ICxyQOeFevnxNLR/wtJNrNYTjIysUBo',
         ];
@@ -964,23 +970,29 @@ class EntryTest extends TestCase
 
         $alternateEnclosure['sources']   = $sources;
         $alternateEnclosure['integrity'] = $integrity;
-        $this->assertEquals($alternateEnclosure, $entry->getPodcastIndexAlternateEnclosures()[0]);
+
+        /** @psalm-var list<AlternateEnclosureObject> $actual */
+        $actual = $entry->getPodcastIndexAlternateEnclosures();
+        $this->assertEquals($alternateEnclosure, $actual[0]);
     }
 
     public function testSetAlternateEnclosureWithMinimalAttributes(): void
     {
-        $entry = new Writer\Entry();
-        $sources = [
+        $entry              = new Writer\Entry();
+        $sources            = [
             ['uri' => 'ipfs://QmX33FYehk6ckGQ6g1D9D3FqZPix5JpKstKQKbaS8quUFb'],
         ];
         $alternateEnclosure = [
-            'type'    => 'video/mp4',
+            'type' => 'video/mp4',
         ];
 
         $entry->addPodcastIndexAlternateEnclosure($alternateEnclosure, $sources);
 
-        $alternateEnclosure['sources']   = $sources;
-        $this->assertEquals($alternateEnclosure, $entry->getPodcastIndexAlternateEnclosures()[0]);
+        $alternateEnclosure['sources'] = $sources;
+
+        /** @psalm-var list<AlternateEnclosureObject> $actual */
+        $actual = $entry->getPodcastIndexAlternateEnclosures();
+        $this->assertEquals($alternateEnclosure, $actual[0]);
     }
 
     public function testSetAlternateEnclosureThrowsExceptionOnInvalidArgument(): void
@@ -992,15 +1004,15 @@ class EntryTest extends TestCase
 
         // missing type
         $alternateEnclosure = [
-            'something_wrong'    => 1234,
+            'something_wrong' => 1234,
         ];
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $entry->addPodcastIndexAlternateEnclosure($alternateEnclosure, $sources);
 
         // invalid length
         $alternateEnclosure = [
-            'type'    => 'video/mp4',
-            'length'  => '7924786 seconds',
+            'type'   => 'video/mp4',
+            'length' => '7924786 seconds',
         ];
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $entry->addPodcastIndexAlternateEnclosure($alternateEnclosure, $sources);
@@ -1015,40 +1027,40 @@ class EntryTest extends TestCase
 
         // invalid height
         $alternateEnclosure = [
-            'type'    => 'video/mp4',
-            'height'  => '720px',
+            'type'   => 'video/mp4',
+            'height' => '720px',
         ];
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $entry->addPodcastIndexAlternateEnclosure($alternateEnclosure, $sources);
 
         // invalid lang
         $alternateEnclosure = [
-            'type'    => 'video/mp4',
-            'lang'    => 1234,
+            'type' => 'video/mp4',
+            'lang' => 1234,
         ];
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $entry->addPodcastIndexAlternateEnclosure($alternateEnclosure, $sources);
 
         // invalid title
         $alternateEnclosure = [
-            'type'    => 'video/mp4',
-            'title'   => false,
+            'type'  => 'video/mp4',
+            'title' => false,
         ];
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $entry->addPodcastIndexAlternateEnclosure($alternateEnclosure, $sources);
 
         // invalid rel
         $alternateEnclosure = [
-            'type'    => 'video/mp4',
-            'rel'   => true,
+            'type' => 'video/mp4',
+            'rel'  => true,
         ];
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $entry->addPodcastIndexAlternateEnclosure($alternateEnclosure, $sources);
 
         // invalid codecs
         $alternateEnclosure = [
-            'type'    => 'video/mp4',
-            'codecs'   => true,
+            'type'   => 'video/mp4',
+            'codecs' => true,
         ];
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $entry->addPodcastIndexAlternateEnclosure($alternateEnclosure, $sources);
@@ -1056,7 +1068,7 @@ class EntryTest extends TestCase
         // invalid default
         $alternateEnclosure = [
             'type'    => 'video/mp4',
-            'default'   => 'yes',
+            'default' => 'yes',
         ];
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $entry->addPodcastIndexAlternateEnclosure($alternateEnclosure, $sources);
@@ -1064,10 +1076,10 @@ class EntryTest extends TestCase
 
     public function testSetAlternateEnclosureThrowsExceptionOnMissingSources(): void
     {
-        $entry   = new Writer\Entry();
-        $sources = [];
+        $entry              = new Writer\Entry();
+        $sources            = [];
         $alternateEnclosure = [
-            'type'    => 'video/mp4',
+            'type' => 'video/mp4',
         ];
 
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
@@ -1076,12 +1088,12 @@ class EntryTest extends TestCase
 
     public function testSetAlternateEnclosureThrowsExceptionOnInvalidSourceUri(): void
     {
-        $entry = new Writer\Entry();
-        $sources = [
+        $entry              = new Writer\Entry();
+        $sources            = [
             ['uri' => 1234],
         ];
         $alternateEnclosure = [
-            'type'    => 'video/mp4',
+            'type' => 'video/mp4',
         ];
 
         $this->expectException(Writer\Exception\InvalidArgumentException::class);

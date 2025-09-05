@@ -411,8 +411,8 @@ class Feed extends Extension\AbstractRenderer
             }
             $valueElement = ElementGenerator::createPodcastIndexElement($dom, $value, 'value');
             foreach ($value['valueRecipients'] as $valueRecipient) {
-                $valueRecipientElement = ElementGenerator::createPodcastIndexElement($dom, $valueRecipient, 'valueRecipient');
-                $valueElement->appendChild($valueRecipientElement);
+                $el = ElementGenerator::createPodcastIndexElement($dom, $valueRecipient, 'valueRecipient');
+                $valueElement->appendChild($el);
             }
             $root->appendChild($valueElement);
         }

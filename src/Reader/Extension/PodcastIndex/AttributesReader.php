@@ -134,7 +134,7 @@ use stdClass;
  * @psalm-type AlternateEnclosureObject = object{
  *        type: string,
  *        length?: int,
- *        bitrate?: int,
+ *        bitrate?: int|float,
  *        height?: int,
  *        lang?: string,
  *        title?: string,

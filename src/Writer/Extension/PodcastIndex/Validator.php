@@ -140,7 +140,7 @@ use const FILTER_VALIDATE_URL;
  * @psalm-type AlternateEnclosureArray = array{
  *       type: string,
  *       length?: int,
- *       bitrate?: int,
+ *       bitrate?: int|float,
  *       height?: int,
  *       lang?: string,
  *       title?: string,

@@ -760,29 +760,29 @@ class PodcastIndexRss2Test extends TestCase
         /** @var Reader\Extension\PodcastIndex\Entry $entry */
         $entry = $feed->current();
 
-        $sourceA = new StdClass();
+        $sourceA              = new stdClass();
         $sourceA->uri         = 'https://example.com/file-720.torrent';
         $sourceA->contentType = 'application/x-bittorrent';
 
-        $sourceB = new StdClass();
+        $sourceB              = new stdClass();
         $sourceB->uri         = 'ipfs://QmX33FYehk6ckGQ6g1D9D3FqZPix5JpKstKQKbaS8quUFb';
         $sourceB->contentType = '';
-        
+
         $integrity        = new stdClass();
         $integrity->type  = 'sri';
         $integrity->value = 'sha384-ExVqijgYHm15PqQqdXfW95x+Rs6C+d6E/ICxyQOeFevnxNLR/wtJNrNYTjIysUBo';
 
-        $expected          = new stdClass();
-        $expected->type    = 'video/mp4';
-        $expected->length  = '7924786';
-        $expected->bitrate = '511276.52';
-        $expected->height  = '720';
-        $expected->lang    = 'en';
-        $expected->title   = 'Standard';
-        $expected->rel     = '';
-        $expected->codecs  = '';
-        $expected->default = 'true';
-        $expected->sources = [$sourceA, $sourceB];
+        $expected            = new stdClass();
+        $expected->type      = 'video/mp4';
+        $expected->length    = '7924786';
+        $expected->bitrate   = '511276.52';
+        $expected->height    = '720';
+        $expected->lang      = 'en';
+        $expected->title     = 'Standard';
+        $expected->rel       = '';
+        $expected->codecs    = '';
+        $expected->default   = 'true';
+        $expected->sources   = [$sourceA, $sourceB];
         $expected->integrity = $integrity;
 
         $enclosure = $entry->getPodcastIndexAlternateEnclosures();

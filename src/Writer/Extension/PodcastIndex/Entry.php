@@ -229,7 +229,7 @@ class Entry
     /**
      * Add entry person
      *
-     * @psalm-param PersonArray $value
+     * @param PersonArray $value
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
@@ -250,7 +250,7 @@ class Entry
      * Set a new array of people.
      * If no argument is passed, it will just remove all existing people.
      *
-     * @psalm-param list<PersonArray> $values
+     * @param list<PersonArray> $values
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
@@ -268,7 +268,7 @@ class Entry
      * Set a new array of persons. (alias of setPodcastIndexPeople)
      * If no argument is passed, it will just remove all existing persons.
      *
-     * @psalm-param list<PersonArray> $values
+     * @param list<PersonArray> $values
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
@@ -302,7 +302,7 @@ class Entry
      * Set a new array of txts.
      * If no argument is passed, it will just remove all existing txt entries.
      *
-     * @psalm-param list<TxtArray> $values
+     * @param list<TxtArray> $values
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
@@ -340,7 +340,7 @@ class Entry
      * Create a new set of social interacts for the entry.
      * If no argument is passed, existing social interacts will be removed.
      *
-     * @psalm-param list<SocialInteractArray> $values
+     * @param list<SocialInteractArray> $values
      * @return $this
      */
     public function setPodcastIndexSocialInteracts(array $values = []): self
@@ -370,13 +370,13 @@ class Entry
      * Adds a value element with one or more valueRecipients as children.
      * Optionally, a set of value time splits can also be attached.
      *
-     * @psalm-param ValueArray $value
-     * @psalm-param list<ValueRecipientArray> $valueRecipients
-     * @psalm-param list<ValueTimeSplitArray> $valueTimeSplits
+     * @param ValueArray $value
+     * @param list<ValueRecipientArray> $valueRecipients
+     * @param null|list<ValueTimeSplitArray> $valueTimeSplits
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public function addPodcastIndexValue(array $value, array $valueRecipients, array $valueTimeSplits = []): self
+    public function addPodcastIndexValue(array $value, array $valueRecipients, ?array $valueTimeSplits): self
     {
         // validate the value attributes
         Validator::validateValue($value);
@@ -394,7 +394,7 @@ class Entry
         $value['valueRecipients'] = $valueRecipients;
 
         // validate and add valueTimeSplits
-        if (count($valueTimeSplits) > 0) {
+        if ($valueTimeSplits && count($valueTimeSplits) > 0) {
             foreach ($valueTimeSplits as $split) {
                 Validator::validateValueTimeSplit($split);
             }
@@ -419,7 +419,7 @@ class Entry
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public function setPodcastIndexSeason(array $value): Entry
+    public function setPodcastIndexSeason(array $value): self
     {
         if (! isset($value['value'])) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -447,7 +447,7 @@ class Entry
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public function setPodcastIndexEpisode(array $value): Entry
+    public function setPodcastIndexEpisode(array $value): self
     {
         if (! isset($value['value'])) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -473,16 +473,16 @@ class Entry
      *
      * @param AlternateEnclosureArray $enclosure
      * @param list<SourceArray> $sources
-     * @param IntegrityArray $integrity
+     * @param null|IntegrityArray $integrity
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public function addPodcastIndexAlternateEnclosure(array $enclosure, array $sources, array $integrity = []): Entry
+    public function addPodcastIndexAlternateEnclosure(array $enclosure, array $sources, ?array $integrity): self
     {
         if (count($sources) < 1) {
             throw new Writer\Exception\InvalidArgumentException(
                 'invalid parameter: the second argument to "alternateEnclosure" must be an array containing
-                 at least one source'
+                 at least one source entry'
             );
         }
 
@@ -493,7 +493,7 @@ class Entry
         }
         $enclosure['sources'] = $sources;
 
-        if (count($integrity) > 0) {
+        if ($integrity && count($integrity) > 0) {
             Validator::validateIntegrity($integrity);
             $enclosure['integrity'] = $integrity;
         }

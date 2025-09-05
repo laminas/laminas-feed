@@ -262,16 +262,16 @@ class Entry extends Extension\AbstractRenderer
 
                     // set 1-n child nodes: valueRecipients
                     if (isset($split['valueRecipients'])) {
-                        foreach ($split['valueRecipients'] as $splitRecipient) {
-                            $element = ElementGenerator::createPodcastIndexElement($dom, $splitRecipient, 'valueRecipient');
+                        foreach ($split['valueRecipients'] as $recip) {
+                            $element = ElementGenerator::createPodcastIndexElement($dom, $recip, 'valueRecipient');
                             $splitElement->appendChild($element);
                         }
                     }
 
                     // set 1 child node: value remote item
                     if (isset($split['remoteItem'])) {
-                        $element = ElementGenerator::createPodcastIndexElement($dom, $split['remoteItem'], 'remoteItem');
-                        $splitElement->appendChild($element);
+                        $el = ElementGenerator::createPodcastIndexElement($dom, $split['remoteItem'], 'remoteItem');
+                        $splitElement->appendChild($el);
                     }
 
                     $valueElement->appendChild($splitElement);
@@ -327,7 +327,7 @@ class Entry extends Extension\AbstractRenderer
         /** @psalm-var EntryWriter $container */
         $container = $this->getDataContainer();
 
-        /** @psalm-var list<AlternateEnclosureArray>|null $values */
+        /** @psalm-var list<AlternateEnclosureArray>|null $enclosures */
         $enclosures = $container->getPodcastIndexAlternateEnclosures();
         if ($enclosures === null || $enclosures === []) {
             return;
@@ -339,12 +339,12 @@ class Entry extends Extension\AbstractRenderer
             }
             $enclosureElement = ElementGenerator::createPodcastIndexElement($dom, $enclosure, 'alternateEnclosure');
             foreach ($enclosure['sources'] as $source) {
-                $sourceElement = ElementGenerator::createPodcastIndexElement($dom, $source, 'source');
-                $enclosureElement->appendChild($sourceElement);
+                $el = ElementGenerator::createPodcastIndexElement($dom, $source, 'source');
+                $enclosureElement->appendChild($el);
             }
             if (isset($enclosure['integrity'])) {
-                    $integrityElement = ElementGenerator::createPodcastIndexElement($dom, $enclosure['integrity'], 'integrity');
-                    $enclosureElement->appendChild($integrityElement);
+                    $el = ElementGenerator::createPodcastIndexElement($dom, $enclosure['integrity'], 'integrity');
+                    $enclosureElement->appendChild($el);
             }
             $root->appendChild($enclosureElement);
         }

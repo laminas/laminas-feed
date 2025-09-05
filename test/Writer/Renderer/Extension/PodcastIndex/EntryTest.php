@@ -8,6 +8,8 @@ use Laminas\Feed\Writer;
 use Laminas\Feed\Writer\Renderer;
 use PHPUnit\Framework\TestCase;
 
+use function is_float;
+use function is_string;
 use function number_format;
 use function substr_count;
 
@@ -275,6 +277,8 @@ class EntryTest extends TestCase
 
         $this->assertStringContainsString('<podcast:value', $xml);
         $this->assertStringContainsString('<podcast:valueRecipient', $xml);
+        $this->assertStringContainsString('<podcast:valueTimeSplit', $xml);
+
         $this->assertStringContainsString($value['type'], $xml);
         $this->assertStringContainsString($value['method'], $xml);
         $this->assertStringContainsString($valueRecipients[0]['name'], $xml);
@@ -388,29 +392,29 @@ class EntryTest extends TestCase
 
     public function testRendersRssAlternateEnclosureTag(): void
     {
-        $sources = [
+        $sources            = [
             [
-                'uri' => 'https://example.com/file-720.torrent',
+                'uri'         => 'https://example.com/file-720.torrent',
                 'contentType' => 'application/x-bittorrent',
             ],
             [
                 'uri' => 'ipfs://QmX33FYehk6ckGQ6g1D9D3FqZPix5JpKstKQKbaS8quUFb',
-            ]
+            ],
         ];
-        $integrity = [
-            'type' => 'sri',
+        $integrity          = [
+            'type'  => 'sri',
             'value' => 'sha384-ExVqijgYHm15PqQqdXfW95x+Rs6C+d6E/ICxyQOeFevnxNLR/wtJNrNYTjIysUBo',
         ];
         $alternateEnclosure = [
-            'type' => 'video/mp4',
-            'length' => 7924786,
+            'type'    => 'video/mp4',
+            'length'  => 7924786,
             'bitrate' => 511276.52,
-            'height' => 720,
-            'lang' => 'en',
-            'title' => 'Standard',
-            'rel' => 'default',
-            'codecs' => 'avc1.42E01E, mp4a.40.2',
-            'default' => true
+            'height'  => 720,
+            'lang'    => 'en',
+            'title'   => 'Standard',
+            'rel'     => 'default',
+            'codecs'  => 'avc1.42E01E, mp4a.40.2',
+            'default' => true,
         ];
 
         $this->validEntry->addPodcastIndexAlternateEnclosure($alternateEnclosure, $sources, $integrity);
@@ -419,35 +423,31 @@ class EntryTest extends TestCase
         $xml     = $rssFeed->render()->saveXml();
 
         $this->assertStringContainsString('<podcast:alternateEnclosure', $xml);
-        $this->assertStringContainsString('<podcast:source uri="ipfs://QmX33FYehk6ckGQ6g1D9D3FqZPix5JpKstKQKbaS8quUFb"/>', $xml);
 
-        foreach($alternateEnclosure as $att){
-            $att = (!is_string($att)) ? (string) $att : $att;
+        foreach ($alternateEnclosure as $att) {
+            $att = ! is_string($att) ? (string) $att : $att;
             $this->assertStringContainsString($att, $xml);
         }
-        foreach($sources[0] as $att){
-            $att = (!is_string($att)) ? (string) $att : $att;
+        foreach ($sources[0] as $att) {
             $this->assertStringContainsString($att, $xml);
         }
-        foreach($sources[1] as $att){
-            $att = (!is_string($att)) ? (string) $att : $att;
+        foreach ($sources[1] as $att) {
             $this->assertStringContainsString($att, $xml);
         }
-        foreach($integrity as $att){
-            $att = (!is_string($att)) ? (string) $att : $att;
+        foreach ($integrity as $att) {
             $this->assertStringContainsString($att, $xml);
         }
     }
 
     public function testRendersRssAlternateEnclosureMinimal(): void
     {
-        $sources = [
+        $sources            = [
             [
                 'uri' => 'ipfs://QmX33FYehk6ckGQ6g1D9D3FqZPix5JpKstKQKbaS8quUFb',
             ],
         ];
         $alternateEnclosure = [
-            'type'    => 'video/mp4',
+            'type' => 'video/mp4',
         ];
 
         $this->validEntry->addPodcastIndexAlternateEnclosure($alternateEnclosure, $sources);
@@ -456,7 +456,7 @@ class EntryTest extends TestCase
         $xml     = $rssFeed->render()->saveXml();
 
         $parent = '<podcast:alternateEnclosure type="video/mp4">';
-        $child = '<podcast:source uri="ipfs://QmX33FYehk6ckGQ6g1D9D3FqZPix5JpKstKQKbaS8quUFb"/>';
+        $child  = '<podcast:source uri="ipfs://QmX33FYehk6ckGQ6g1D9D3FqZPix5JpKstKQKbaS8quUFb"/>';
         $this->assertStringContainsString($parent, $xml);
         $this->assertStringContainsString($child, $xml);
     }

@@ -9,7 +9,9 @@ use DateTimeInterface;
 use DOMDocument;
 use DOMElement;
 
+use function assert;
 use function gettype;
+use function is_string;
 use function number_format;
 
 /**
@@ -34,9 +36,13 @@ class ElementGenerator
         $tagName = 'podcast:' . $name;
         $element = $dom->createElement($tagName);
 
+        /**
+         * @psalm-var string $key
+         * @psalm-var mixed $value
+         */
         foreach ($data as $key => $value) {
             if ($key === $nodeValue) {
-                if(! is_string($value)){
+                if (! is_string($value)) {
                     $value = (string) $value;
                 }
                 $text = $dom->createTextNode($value);
@@ -54,7 +60,7 @@ class ElementGenerator
                     break;
                 case 'double':
                     // ensure decimal number instead of scientific notation, and remove thousands comma seperator
-                    if($name === 'value' && $key === 'suggested'){
+                    if ($name === 'value' && $key === 'suggested') {
                         $num = number_format($value, 11, '.', '');
                     } else {
                         $num = number_format($value, 2, '.', '');
@@ -71,10 +77,7 @@ class ElementGenerator
                         $element->setAttribute($key, $date);
                     }
                     break;
-                case 'array':
-                    break;
                 default:
-                    $element->setAttribute($key, $value);
                     break;
             }
         }

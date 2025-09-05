@@ -442,7 +442,7 @@ class Entry extends Extension\AbstractEntry
     public function getPodcastIndexAlternateEnclosures(): array
     {
         if (array_key_exists('alternateEnclosures', $this->data)) {
-            /** @var list<ValueObject> $enclosures */
+            /** @var list<AlternateEnclosureObject> $enclosures */
             $enclosures = $this->data['alternateEnclosures'];
             return $enclosures;
         }
@@ -461,7 +461,7 @@ class Entry extends Extension\AbstractEntry
             if ($sourcesNodeList->length > 0) {
                 foreach ($sourcesNodeList as $entry) {
                     assert($entry instanceof DOMElement);
-                    $object = AttributesReader::readSource($entry);
+                    $object    = AttributesReader::readSource($entry);
                     $sources[] = $object;
                 }
                 $enclosureObject->sources = $sources;
@@ -472,7 +472,7 @@ class Entry extends Extension\AbstractEntry
             if ($integrityNodeList->length > 0) {
                 $node = $integrityNodeList->item(0);
                 assert($node instanceof DOMElement);
-                $integrity = AttributesReader::readIntegrity($node);
+                $integrity                  = AttributesReader::readIntegrity($node);
                 $enclosureObject->integrity = $integrity;
             }
 
