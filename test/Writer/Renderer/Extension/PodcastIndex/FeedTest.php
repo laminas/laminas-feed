@@ -462,10 +462,13 @@ class FeedTest extends TestCase
 
         $valueRecipients = [
             [
-                'name'    => "Alice (Podcaster)",
-                'type'    => "node",
-                'address' => "02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52",
-                'split'   => 40,
+                'name'        => "Alice (Podcaster)",
+                'type'        => "node",
+                'address'     => "02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52",
+                'split'       => 40,
+                'customKey'   => 'some_custom_key',
+                'customValue' => 'some_custom_value',
+                'fee'         => true,
             ],
             [
                 'name'    => "Bob (Podcaster)",
@@ -487,6 +490,9 @@ class FeedTest extends TestCase
         $this->assertStringContainsString($valueRecipients[0]['type'], $xml);
         $this->assertStringContainsString($valueRecipients[1]['address'], $xml);
         $this->assertStringContainsString((string) $valueRecipients[1]['split'], $xml);
+        $this->assertStringContainsString($valueRecipients[0]['customKey'], $xml);
+        $this->assertStringContainsString($valueRecipients[0]['customValue'], $xml);
+        $this->assertStringContainsString('fee="true"', $xml);
 
         $newValue      = [
             'type'      => "lightning",
