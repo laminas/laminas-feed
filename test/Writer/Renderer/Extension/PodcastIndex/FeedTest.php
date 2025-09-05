@@ -11,6 +11,7 @@ use Laminas\Feed\Writer\Renderer;
 use PHPUnit\Framework\TestCase;
 
 use function implode;
+use function is_string;
 use function number_format;
 use function substr_count;
 
@@ -123,6 +124,42 @@ class FeedTest extends TestCase
 
         $this->assertStringContainsString('<podcast:images', $xml);
         $this->assertStringContainsString($images['srcset'], $xml);
+    }
+
+    public function testRendersRssDetailedImageTag(): void
+    {
+        $images = [
+            [
+                'alt'         => "An antenna emanating signal waves",
+                'purpose'     => "artwork",
+                'type'        => "image/jpeg",
+                'aspectRatio' => "1/1",
+                'href'        => "https://example.com/images/ep1/pci_square-massive.jpg",
+                'width'       => 1400,
+                'height'      => 1400,
+            ],
+            [
+                'alt'         => "Another antenna emanating signal waves",
+                'purpose'     => "artwork social",
+                'type'        => "image/jpeg",
+                'aspectRatio' => "16/9",
+                'href'        => "https://example.com/images/ep1/pci_landscape-massive_wide.jpg",
+            ],
+        ];
+
+        $this->validWriter->setPodcastIndexDetailedImages($images);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $this->assertStringContainsString('<podcast:image', $xml);
+
+        foreach ($images as $image) {
+            foreach ($image as $attribute) {
+                $attribute = is_string($attribute) ? $attribute : (string) $attribute;
+                $this->assertStringContainsString($attribute, $xml);
+            }
+        }
     }
 
     public function testRendersRssUpdateFrequencyTag(): void

@@ -9,7 +9,6 @@ use DateTimeInterface;
 use DOMDocument;
 use DOMElement;
 
-use function assert;
 use function gettype;
 use function is_string;
 use function number_format;
@@ -48,6 +47,9 @@ class ElementGenerator
                 $text = $dom->createTextNode($value);
                 $element->appendChild($text);
                 continue;
+            }
+            if ($key === "aspectRatio") {
+                $key = "aspect-ratio";
             }
             switch (gettype($value)) {
                 case 'string':

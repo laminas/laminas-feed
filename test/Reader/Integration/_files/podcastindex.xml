@@ -86,11 +86,11 @@
                 height="1400"
         />
         <podcast:image
-                alt="An antenna emanating signal waves"
+                alt="Another antenna emanating signal waves"
                 purpose="artwork social"
                 type="image/jpeg"
                 aspect-ratio="16/9"
-                href="https://example.com/images/ep1/pci_landscape-massive.jpg"
+                href="https://example.com/images/ep1/pci_landscape-massive_wide.jpg"
         />
 
         <item>

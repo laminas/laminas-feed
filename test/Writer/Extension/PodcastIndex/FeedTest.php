@@ -284,6 +284,33 @@ class FeedTest extends TestCase
         $feed->setPodcastIndexImages($images);
     }
 
+    public function testSetDetailedImages(): void
+    {
+        $feed = new Writer\Feed();
+
+        $images = [
+            [
+                'alt'         => "An antenna emanating signal waves",
+                'purpose'     => "artwork",
+                'type'        => "image/jpeg",
+                'aspectRatio' => "1/1",
+                'href'        => "https://example.com/images/ep1/pci_square-massive.jpg",
+                'width'       => 1400,
+                'height'      => 1400,
+            ],
+            [
+                'alt'         => "Another antenna emanating signal waves",
+                'purpose'     => "artwork social",
+                'type'        => "image/jpeg",
+                'aspectRatio' => "16/9",
+                'href'        => "https://example.com/images/ep1/pci_landscape-massive_wide.jpg",
+            ],
+        ];
+
+        $feed->setPodcastIndexDetailedImages($images);
+        $this->assertEquals($images, $feed->getPodcastIndexDetailedImages());
+    }
+
     public function testSetUpdateFrequency(): void
     {
         $date = new DateTime();

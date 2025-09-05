@@ -84,15 +84,18 @@ use stdClass;
  *       valueRecipients: list<ValueRecipientObject>,
  *       valueTimeSplits?: list<ValueTimeSplitObject>,
  *     }
+ * @psalm-type ImagesObject = object{
+ *        srcset: string,
+ *      }
  * @psalm-type ImageObject = object{
- *       href: string,
- *       alt?: string,
- *       purpose?: string,
- *       type?: string,
- *       aspect-ratio?: string,
- *       width?: int,
- *       height?: int,
- *     }
+ *        href: string,
+ *        alt?: string,
+ *        purpose?: string,
+ *        type?: string,
+ *        aspectRatio?: string,
+ *        width?: int,
+ *        height?: int,
+ *      }
  * @psalm-type SocialInteractObject = object{
  *       protocol: string,
  *       uri: string,
@@ -183,13 +186,32 @@ class AttributesReader
      * Read podcast images
      *
      * @psalm-param DOMElement $item
-     * @psalm-return object{srcset: string}
+     * @psalm-return ImagesObject
      */
     public static function readImages(DOMElement $item): object
     {
         $images         = new stdClass();
         $images->srcset = $item->getAttribute('srcset');
         return $images;
+    }
+
+    /**
+     * Read podcast images
+     *
+     * @psalm-param DOMElement $item
+     * @psalm-return ImageObject
+     */
+    public static function readDetailedImage(DOMElement $item): object
+    {
+        $image              = new stdClass();
+        $image->href        = $item->getAttribute('href');
+        $image->alt         = $item->getAttribute('alt');
+        $image->aspectRatio = $item->getAttribute('aspect-ratio');
+        $image->width       = $item->getAttribute('width');
+        $image->height      = $item->getAttribute('height');
+        $image->type        = $item->getAttribute('type');
+        $image->purpose     = $item->getAttribute('purpose');
+        return $image;
     }
 
     /**

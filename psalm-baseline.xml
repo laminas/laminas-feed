@@ -3103,7 +3103,6 @@
       <code><![CDATA[is_int($value['startTime'])]]></code>
       <code><![CDATA[is_string($value['address'])]]></code>
       <code><![CDATA[is_string($value['description'])]]></code>
-      <code><![CDATA[is_string($value['description'])]]></code>
       <code><![CDATA[is_string($value['identifier'])]]></code>
       <code><![CDATA[is_string($value['method'])]]></code>
       <code><![CDATA[is_string($value['name'])]]></code>
@@ -3147,7 +3146,6 @@
     <DocblockTypeContradiction>
       <code><![CDATA[! is_string($value['value'])]]></code>
       <code><![CDATA[is_bool($value['usesPodping'])]]></code>
-      <code><![CDATA[is_string($value['description'])]]></code>
       <code><![CDATA[is_string($value['description'])]]></code>
       <code><![CDATA[is_string($value['pubdate'])]]></code>
       <code><![CDATA[is_string($value['title'])]]></code>

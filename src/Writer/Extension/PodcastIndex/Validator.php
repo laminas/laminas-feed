@@ -90,15 +90,18 @@ use const FILTER_VALIDATE_URL;
  *      valueRecipients?: list<ValueRecipientArray>,
  *      valueTimeSplits?: list<ValueTimeSplitArray>
  *    }
+ * @psalm-type ImagesArray = array{
+ *       srcset: string,
+ *     }
  * @psalm-type ImageArray = array{
- *      href: string,
- *      alt?: string,
- *      purpose?: string,
- *      type?: string,
- *      aspect-ratio?: string,
- *      width?: int,
- *      height?: int,
- *    }
+ *       href: string,
+ *       alt?: string,
+ *       purpose?: string,
+ *       type?: string,
+ *       aspectRatio?: string,
+ *       width?: int,
+ *       height?: int,
+ *     }
  * @psalm-type SocialInteractArray = array{
  *      protocol: string,
  *      uri: string,
@@ -309,7 +312,7 @@ class Validator
      * @param ImageArray $value
      * @throws Writer\Exception\InvalidArgumentException
      */
-    /*public static function validateImage(array $value): void
+    public static function validateDetailedImage(array $value): void
     {
         if (! isset($value['href'])) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -326,9 +329,9 @@ class Validator
                 'invalid parameter: key "alt" of "image" must be of type string'
             );
         }
-        if (isset($value['aspect-ratio']) && ! is_string($value['aspect-ratio'])) {
+        if (isset($value['aspectRatio']) && ! is_string($value['aspectRatio'])) {
             throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "aspect-ratio" of "image" must be a string. examples: "1/1", "16/9", "4/1"'
+                'invalid parameter: key "aspectRatio" of "image" must be a string. examples: "1/1", "16/9", "4/1"'
             );
         }
         if (isset($value['width']) && ! is_int($value['width'])) {
@@ -351,7 +354,7 @@ class Validator
                 'invalid parameter: key "purpose" of "image" must be of type string'
             );
         }
-    }*/
+    }
 
     /**
      * Validates social interact

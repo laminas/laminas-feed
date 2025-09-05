@@ -39,6 +39,7 @@ use const FILTER_VALIDATE_URL;
  * @psalm-import-type RemoteItemArray from Validator
  * @psalm-import-type ValueRecipientArray from Validator
  * @psalm-import-type ValueArray from Validator
+ * @psalm-import-type ImagesArray from Validator
  * @psalm-import-type ImageArray from Validator
  * @psalm-import-type SocialInteractArray from Validator
  */
@@ -157,12 +158,13 @@ class Feed
     }
 
     /**
-     * Set feed images srcset.
-     * This method is deprecated, please use "addPodcastIndexImage" instead.
+     * Sets a single `images` element with a srcset value.
+     * _Note: The namespace `images` is deprecated in PodcastIndex.
+     * Instead, you may set one or more `image` tags using the `setPodcastIndexDetailedImages()` method._
      *
      * @deprecated
      *
-     * @param array{srcset: string} $value
+     * @param ImagesArray $value
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
@@ -174,23 +176,40 @@ class Feed
     }
 
     /**
-     * Add feed image. Replaces "setPodcastIndexImages" method.
+     * Adds a feed `image` element.
      *
      * @param ImageArray $value
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
-    /*public function addPodcastIndexImage(array $value): self
+    public function addPodcastIndexDetailedImage(array $value): self
     {
-        Validator::validateImage($value);
+        Validator::validateDetailedImage($value);
 
-        if (! isset($this->data['images'])) {
-            $this->data['images'] = [];
+        if (! isset($this->data['detailedImages'])) {
+            $this->data['detailedImages'] = [];
         }
 
-        $this->data['images'][] = $value;
+        $this->data['detailedImages'][] = $value;
         return $this;
-    }*/
+    }
+
+    /**
+     * Sets multiple feed `image` elements.
+     * If no argument is passed, all existing image entries are removed.
+     *
+     * @param list<ImageArray> $values
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function setPodcastIndexDetailedImages(array $values = []): self
+    {
+        $this->data['detailedImages'] = [];
+        foreach ($values as $value) {
+            $this->addPodcastIndexDetailedImage($value);
+        }
+        return $this;
+    }
 
     /**
      * Set feed update frequency
@@ -252,7 +271,7 @@ class Feed
 
     /**
      * Set a new array of people.
-     * If no argument is passed, it will just remove all existing people.
+     * If no argument is passed, all existing person entries are removed.
      *
      * @psalm-param list<PersonArray> $values
      * @return $this
@@ -270,7 +289,7 @@ class Feed
 
     /**
      * Set a new array of persons. (alias of setPodcastIndexPeople)
-     * If no argument is passed, it will just remove all existing persons.
+     *  If no argument is passed, all existing person entries are removed.
      *
      * @psalm-param list<PersonArray> $values
      * @return $this

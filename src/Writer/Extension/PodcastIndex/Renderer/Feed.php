@@ -23,6 +23,7 @@ use Laminas\Feed\Writer\Feed as FeedWriter;
  * @psalm-import-type RemoteItemArray from Validator
  * @psalm-import-type ValueRecipientArray from Validator
  * @psalm-import-type ValueArray from Validator
+ * @psalm-import-type ImagesArray from Validator
  * @psalm-import-type ImageArray from Validator
  * @psalm-import-type SocialInteractArray from Validator
  */
@@ -47,6 +48,7 @@ class Feed extends Extension\AbstractRenderer
         $this->setLicense($this->dom, $this->base);
         $this->setLocation($this->dom, $this->base);
         $this->setImages($this->dom, $this->base);
+        $this->setDetailedImages($this->dom, $this->base);
         $this->setUpdateFrequency($this->dom, $this->base);
         $this->setPeople($this->dom, $this->base);
         $this->setTrailer($this->dom, $this->base);
@@ -151,20 +153,40 @@ class Feed extends Extension\AbstractRenderer
     }
 
     /**
-     * Set feed images
+     * Set feed images srcset
      */
     private function setImages(DOMDocument $dom, DOMElement $root): void
     {
         /** @psalm-var FeedWriter $container */
         $container = $this->getDataContainer();
 
-        /** @psalm-var null|array{srcset: string} $images */
+        /** @psalm-var null|ImagesArray $images */
         $images = $container->getPodcastIndexImages();
         if ($images === null) {
             return;
         }
         $el = ElementGenerator::createPodcastIndexElement($dom, $images, 'images');
         $root->appendChild($el);
+        $this->called = true;
+    }
+
+    /**
+     * Set feed detailed images
+     */
+    private function setDetailedImages(DOMDocument $dom, DOMElement $root): void
+    {
+        /** @psalm-var FeedWriter $container */
+        $container = $this->getDataContainer();
+
+        /** @psalm-var null|list<ImageArray> $images */
+        $images = $container->getPodcastIndexDetailedImages();
+        if ($images === null || $images = []) {
+            return;
+        }
+        foreach ($images as $image) {
+            $el = ElementGenerator::createPodcastIndexElement($dom, $image, 'image');
+            $root->appendChild($el);
+        }
         $this->called = true;
     }
 

@@ -372,11 +372,11 @@ class Entry
      *
      * @param ValueArray $value
      * @param list<ValueRecipientArray> $valueRecipients
-     * @param null|list<ValueTimeSplitArray> $valueTimeSplits
+     * @param list<ValueTimeSplitArray> $valueTimeSplits
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public function addPodcastIndexValue(array $value, array $valueRecipients, ?array $valueTimeSplits): self
+    public function addPodcastIndexValue(array $value, array $valueRecipients, array $valueTimeSplits = []): self
     {
         // validate the value attributes
         Validator::validateValue($value);
@@ -473,11 +473,11 @@ class Entry
      *
      * @param AlternateEnclosureArray $enclosure
      * @param list<SourceArray> $sources
-     * @param null|IntegrityArray $integrity
+     * @param IntegrityArray $integrity
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public function addPodcastIndexAlternateEnclosure(array $enclosure, array $sources, ?array $integrity): self
+    public function addPodcastIndexAlternateEnclosure(array $enclosure, array $sources, array $integrity = []): self
     {
         if (count($sources) < 1) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -493,7 +493,7 @@ class Entry
         }
         $enclosure['sources'] = $sources;
 
-        if ($integrity && count($integrity) > 0) {
+        if (count($integrity) > 0) {
             Validator::validateIntegrity($integrity);
             $enclosure['integrity'] = $integrity;
         }

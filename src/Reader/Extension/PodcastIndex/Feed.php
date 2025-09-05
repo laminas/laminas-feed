@@ -25,6 +25,7 @@ use function assert;
  * @psalm-import-type RemoteItemObject from AttributesReader
  * @psalm-import-type ValueRecipientObject from AttributesReader
  * @psalm-import-type ValueObject from AttributesReader
+ * @psalm-import-type ImagesObject from AttributesReader
  * @psalm-import-type ImageObject from AttributesReader
  * @psalm-import-type SocialInteractObject from AttributesReader
  */
@@ -172,14 +173,17 @@ class Feed extends Extension\AbstractFeed
     }
 
     /**
-     * Get the podcast images
+     * Get the podcast images.
+     * Returns the content of a single `<podcast:images>` tag.
      *
-     * @psalm-return null|object{srcset: string}
+     * @deprecated
+     *
+     * @psalm-return null|ImagesObject
      */
     public function getPodcastIndexImages(): object|null
     {
         if (array_key_exists('images', $this->data)) {
-            /** @psalm-var null|object{srcset: string} */
+            /** @psalm-var null|ImagesObject */
             return $this->data['images'];
         }
 
@@ -191,6 +195,36 @@ class Feed extends Extension\AbstractFeed
             $item = $nodeList->item(0);
             assert($item instanceof DOMElement);
             $images = AttributesReader::readImages($item);
+        }
+
+        $this->data['images'] = $images;
+
+        return $this->data['images'];
+    }
+
+    /**
+     * Get the podcast detailed images.
+     * Returns the contents of one or more `<podcast:image>` tags.
+     *
+     * @psalm-return list<ImageObject>
+     */
+    public function getPodcastIndexDetailedImages(): array
+    {
+        if (array_key_exists('detailedImages', $this->data)) {
+            /** @psalm-var null|list<ImageObject> */
+            return $this->data['detailedImages'];
+        }
+
+        $images = null;
+
+        $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:image');
+
+        if ($nodeList->length > 0) {
+            foreach ($nodeList as $entry) {
+                assert($entry instanceof DOMElement);
+                $image    = AttributesReader::readDetailedImage($entry);
+                $images[] = $image;
+            }
         }
 
         $this->data['images'] = $images;
