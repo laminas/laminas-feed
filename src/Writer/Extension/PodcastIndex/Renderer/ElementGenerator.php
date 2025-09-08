@@ -83,11 +83,6 @@ class ElementGenerator
                     break;
             }
         }
-
-        if($name === 'image'){
-            print_r($element);
-            die();
-        }
         return $element;
     }
 }

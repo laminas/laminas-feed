@@ -178,15 +178,17 @@ class Feed extends Extension\AbstractRenderer
         /** @psalm-var FeedWriter $container */
         $container = $this->getDataContainer();
 
-        /** @psalm-var null|list<DetailedImageArray> $images */
-        $images = $container->getPodcastIndexDetailedImages();
-        if ($images === null || $images = []) {
+        /** @psalm-var list<DetailedImageArray>|null $detailedImages */
+        $detailedImages = $container->getPodcastIndexDetailedImages();
+        if ($detailedImages === null || $detailedImages === []) {
             return;
         }
-        foreach ($images as $image) {
-            $el = ElementGenerator::createPodcastIndexElement($dom, $image, 'image');
+
+        foreach ($detailedImages as $detailedImage) {
+            $el = ElementGenerator::createPodcastIndexElement($dom, $detailedImage, 'image');
             $root->appendChild($el);
         }
+
         $this->called = true;
     }
 

@@ -311,6 +311,85 @@ class FeedTest extends TestCase
         $this->assertEquals($images, $feed->getPodcastIndexDetailedImages());
     }
 
+    public function testAddDetailedImageWithMinimalData(): void
+    {
+        $feed = new Writer\Feed();
+
+        $image = [
+            'href' => "https://example.com/images/ep1/pci_square-massive.jpg",
+        ];
+
+        $feed->addPodcastIndexDetailedImage($image);
+        $this->assertEquals($image, $feed->getPodcastIndexDetailedImages()[0]);
+    }
+
+    public function testAddDetailedImageThrowsExceptionOnInvalidArguments(): void
+    {
+        $feed = new Writer\Feed();
+
+        // missing href
+        $image = [
+            'abc' => "https://example.com/images/ep1/pci_square-massive.jpg",
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->addPodcastIndexDetailedImage($image);
+
+        // invalid href
+        $image = [
+            'href' => "example.com/images/ep1/pci_square-massive.jpg",
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->addPodcastIndexDetailedImage($image);
+
+        // invalid alt
+        $image = [
+            'href' => "https://example.com/images/ep1/pci_square-massive.jpg",
+            'alt'  => 1234,
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->addPodcastIndexDetailedImage($image);
+
+        // invalid aspectRatio
+        $image = [
+            'href'        => "https://example.com/images/ep1/pci_square-massive.jpg",
+            'aspectRatio' => 1234,
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->addPodcastIndexDetailedImage($image);
+
+        // invalid width
+        $image = [
+            'href'  => "https://example.com/images/ep1/pci_square-massive.jpg",
+            'width' => '1234',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->addPodcastIndexDetailedImage($image);
+
+        // invalid height
+        $image = [
+            'href'   => "https://example.com/images/ep1/pci_square-massive.jpg",
+            'height' => '1234',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->addPodcastIndexDetailedImage($image);
+
+        // invalid type
+        $image = [
+            'href' => "https://example.com/images/ep1/pci_square-massive.jpg",
+            'type' => true,
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->addPodcastIndexDetailedImage($image);
+
+        // invalid purpose
+        $image = [
+            'href'    => "https://example.com/images/ep1/pci_square-massive.jpg",
+            'purpose' => true,
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->addPodcastIndexDetailedImage($image);
+    }
+
     public function testSetUpdateFrequency(): void
     {
         $date = new DateTime();
