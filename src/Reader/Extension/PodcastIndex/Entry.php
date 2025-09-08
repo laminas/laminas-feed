@@ -25,7 +25,7 @@ use function assert;
  * @psalm-import-type ValueRecipientObject from AttributesReader
  * @psalm-import-type ValueTimeSplitObject from AttributesReader
  * @psalm-import-type ValueObject from AttributesReader
- * @psalm-import-type ImageObject from AttributesReader
+ * @psalm-import-type DetailedImageObject from AttributesReader
  * @psalm-import-type SocialInteractObject from AttributesReader
  * @psalm-import-type TranscriptObject from AttributesReader
  * @psalm-import-type ChaptersObject from AttributesReader
@@ -482,6 +482,36 @@ class Entry extends Extension\AbstractEntry
         $this->data['alternateEnclosures'] = $enclosures;
 
         return $this->data['alternateEnclosures'];
+    }
+
+    /**
+     * Get the episode detailed images.
+     * Returns the contents of one or more `<podcast:image>` tags.
+     *
+     * @psalm-return null|list<DetailedImageObject>
+     */
+    public function getPodcastIndexDetailedImages(): null|array
+    {
+        if (array_key_exists('detailedImages', $this->data)) {
+            /** @psalm-var null|list<DetailedImageObject> */
+            return $this->data['detailedImages'];
+        }
+
+        $images = null;
+
+        $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:image');
+
+        if ($nodeList->length > 0) {
+            foreach ($nodeList as $entry) {
+                assert($entry instanceof DOMElement);
+                $image    = AttributesReader::readDetailedImage($entry);
+                $images[] = $image;
+            }
+        }
+
+        $this->data['detailedImages'] = $images;
+
+        return $this->data['detailedImages'];
     }
 
     /**

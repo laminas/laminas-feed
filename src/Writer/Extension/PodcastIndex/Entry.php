@@ -34,7 +34,7 @@ use function ucfirst;
  * @psalm-import-type ValueRecipientArray from Validator
  * @psalm-import-type ValueTimeSplitArray from Validator
  * @psalm-import-type ValueArray from Validator
- * @psalm-import-type ImageArray from Validator
+ * @psalm-import-type DetailedImageArray from Validator
  * @psalm-import-type SocialInteractArray from Validator
  * @psalm-import-type SeasonArray from Validator
  * @psalm-import-type EpisodeArray from Validator
@@ -473,11 +473,11 @@ class Entry
      *
      * @param AlternateEnclosureArray $enclosure
      * @param list<SourceArray> $sources
-     * @param IntegrityArray $integrity
+     * @param null|IntegrityArray $integrity
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public function addPodcastIndexAlternateEnclosure(array $enclosure, array $sources, array $integrity = []): self
+    public function addPodcastIndexAlternateEnclosure(array $enclosure, array $sources, ?array $integrity): self
     {
         if (count($sources) < 1) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -493,7 +493,7 @@ class Entry
         }
         $enclosure['sources'] = $sources;
 
-        if (count($integrity) > 0) {
+        if ($integrity !== null && count($integrity) > 0) {
             Validator::validateIntegrity($integrity);
             $enclosure['integrity'] = $integrity;
         }
@@ -517,6 +517,43 @@ class Entry
     public function resetPodcastIndexAlternateEnclosures(): self
     {
         $this->data['alternateEnclosures'] = [];
+        return $this;
+    }
+
+    /**
+     * Adds an `image` element to the episode.
+     *
+     * @param DetailedImageArray $value
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function addPodcastIndexDetailedImage(array $value): self
+    {
+        Validator::validateDetailedImage($value);
+
+        if (! isset($this->data['detailedImages'])) {
+            $this->data['detailedImages'] = [];
+        }
+
+        /** @var list<DetailedImageArray> $this->data['detailedImages'] */
+        $this->data['detailedImages'][] = $value;
+        return $this;
+    }
+
+    /**
+     * Sets multiple episode `image` elements.
+     * If no argument is passed, all existing image entries are removed.
+     *
+     * @param list<DetailedImageArray> $values
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function setPodcastIndexDetailedImages(array $values = []): self
+    {
+        $this->data['detailedImages'] = [];
+        foreach ($values as $value) {
+            $this->addPodcastIndexDetailedImage($value);
+        }
         return $this;
     }
 

@@ -87,7 +87,7 @@ use stdClass;
  * @psalm-type ImagesObject = object{
  *        srcset: string,
  *      }
- * @psalm-type ImageObject = object{
+ * @psalm-type DetailedImageObject = object{
  *        href: string,
  *        alt?: string,
  *        purpose?: string,
@@ -199,7 +199,7 @@ class AttributesReader
      * Read podcast images
      *
      * @psalm-param DOMElement $item
-     * @psalm-return ImageObject
+     * @psalm-return DetailedImageObject
      */
     public static function readDetailedImage(DOMElement $item): object
     {

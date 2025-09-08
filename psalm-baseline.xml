@@ -3087,6 +3087,7 @@
       <code>setPodcastIndexSoundbites</code>
       <code>setPodcastIndexTranscript</code>
       <code>setPodcastIndexTxts</code>
+      <code>setPodcastIndexDetailedImages</code>
     </PossiblyUnusedMethod>
     <PossiblyUnusedParam>
       <code>$params</code>
@@ -3184,6 +3185,7 @@
       <code>setPodcastIndexTrailer</code>
       <code>setPodcastIndexTxts</code>
       <code>setPodcastIndexUpdateFrequency</code>
+      <code>setPodcastIndexDetailedImages</code>
     </PossiblyUnusedMethod>
     <PossiblyUnusedParam>
       <code>$params</code>

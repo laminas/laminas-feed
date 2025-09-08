@@ -93,7 +93,7 @@ use const FILTER_VALIDATE_URL;
  * @psalm-type ImagesArray = array{
  *       srcset: string,
  *     }
- * @psalm-type ImageArray = array{
+ * @psalm-type DetailedImageArray = array{
  *       href: string,
  *       alt?: string,
  *       purpose?: string,
@@ -309,7 +309,7 @@ class Validator
     /**
      * Validates image
      *
-     * @param ImageArray $value
+     * @param DetailedImageArray $value
      * @throws Writer\Exception\InvalidArgumentException
      */
     public static function validateDetailedImage(array $value): void

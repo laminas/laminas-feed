@@ -140,8 +140,9 @@ class PodcastIndexRss2Test extends TestCase
         $expectedB->width       = "";
         $expectedB->height      = "";
 
-        $this->assertEquals($expectedA, $feed->getPodcastIndexDetailedImages()[0]);
-        $this->assertEquals($expectedB, $feed->getPodcastIndexDetailedImages()[1]);
+        $images = $feed->getPodcastIndexDetailedImages();
+        $this->assertEquals($expectedA, $images[0]);
+        $this->assertEquals($expectedB, $images[1]);
     }
 
     public function testGetsUpdateFrequency(): void
@@ -816,5 +817,37 @@ class PodcastIndexRss2Test extends TestCase
 
         $enclosure = $entry->getPodcastIndexAlternateEnclosures();
         $this->assertEquals($expected, $enclosure[0]);
+    }
+
+    public function testGetsEntryDetailedImages(): void
+    {
+        $feed = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath)
+        );
+
+        /** @var Reader\Extension\PodcastIndex\Entry $entry */
+        $entry = $feed->current();
+
+        $expectedA              = new stdClass();
+        $expectedA->alt         = "An antenna emanating signal waves";
+        $expectedA->purpose     = "artwork";
+        $expectedA->type        = "image/jpeg";
+        $expectedA->aspectRatio = "1/1";
+        $expectedA->href        = "https://example.com/images/ep1/pci_square-massive.jpg";
+        $expectedA->width       = "1400";
+        $expectedA->height      = "1400";
+
+        $expectedB              = new stdClass();
+        $expectedB->alt         = "Another antenna emanating signal waves";
+        $expectedB->purpose     = "artwork social";
+        $expectedB->type        = "image/jpeg";
+        $expectedB->aspectRatio = "16/9";
+        $expectedB->href        = "https://example.com/images/ep1/pci_landscape-massive_wide.jpg";
+        $expectedB->width       = "";
+        $expectedB->height      = "";
+
+        $images = $entry->getPodcastIndexDetailedImages();
+        $this->assertEquals($expectedA, $images[0]);
+        $this->assertEquals($expectedB, $images[1]);
     }
 }

@@ -22,7 +22,7 @@ use Laminas\Feed\Writer\Extension\PodcastIndex\Validator;
  * @psalm-import-type PersonArray from Validator
  * @psalm-import-type ValueRecipientArray from Validator
  * @psalm-import-type ValueArray from Validator
- * @psalm-import-type ImageArray from Validator
+ * @psalm-import-type DetailedImageArray from Validator
  * @psalm-import-type SocialInteractArray from Validator
  * @psalm-import-type SeasonArray from Validator
  * @psalm-import-type EpisodeArray from Validator
@@ -58,6 +58,7 @@ class Entry extends Extension\AbstractRenderer
         $this->setSeason($this->dom, $this->base);
         $this->setEpisode($this->dom, $this->base);
         $this->setAlternateEnclosures($this->dom, $this->base);
+        $this->setDetailedImages($this->dom, $this->base);
         if ($this->called) {
             $this->_appendNamespaces();
         }
@@ -349,6 +350,26 @@ class Entry extends Extension\AbstractRenderer
             $root->appendChild($enclosureElement);
         }
 
+        $this->called = true;
+    }
+
+    /**
+     * Set episode detailed images
+     */
+    private function setDetailedImages(DOMDocument $dom, DOMElement $root): void
+    {
+        /** @psalm-var EntryWriter $container */
+        $container = $this->getDataContainer();
+
+        /** @psalm-var list<DetailedImageArray>|null $images */
+        $images = $container->getPodcastIndexDetailedImages();
+        if ($images === null || $images = []) {
+            return;
+        }
+        foreach ($images as $image) {
+            $el = ElementGenerator::createPodcastIndexElement($dom, $image, 'image');
+            $root->appendChild($el);
+        }
         $this->called = true;
     }
 }

@@ -40,7 +40,7 @@ use const FILTER_VALIDATE_URL;
  * @psalm-import-type ValueRecipientArray from Validator
  * @psalm-import-type ValueArray from Validator
  * @psalm-import-type ImagesArray from Validator
- * @psalm-import-type ImageArray from Validator
+ * @psalm-import-type DetailedImageArray from Validator
  * @psalm-import-type SocialInteractArray from Validator
  */
 class Feed
@@ -178,7 +178,7 @@ class Feed
     /**
      * Adds a feed `image` element.
      *
-     * @param ImageArray $value
+     * @param DetailedImageArray $value
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
@@ -190,6 +190,7 @@ class Feed
             $this->data['detailedImages'] = [];
         }
 
+        /** @var list<DetailedImageArray> $this->data['detailedImages'] */
         $this->data['detailedImages'][] = $value;
         return $this;
     }
@@ -198,7 +199,7 @@ class Feed
      * Sets multiple feed `image` elements.
      * If no argument is passed, all existing image entries are removed.
      *
-     * @param list<ImageArray> $values
+     * @param list<DetailedImageArray> $values
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */

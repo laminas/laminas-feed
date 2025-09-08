@@ -23,7 +23,7 @@ use function in_array;
  * @psalm-import-type ValueRecipientObject from AttributesReader
  * @psalm-import-type ValueTimeSplitObject from AttributesReader
  * @psalm-import-type ValueObject from AttributesReader
- * @psalm-import-type ImageObject from AttributesReader
+ * @psalm-import-type DetailedImageObject from AttributesReader
  * @psalm-import-type SocialInteractObject from AttributesReader
  * @psalm-import-type TranscriptObject from AttributesReader
  * @psalm-import-type ChaptersObject from AttributesReader

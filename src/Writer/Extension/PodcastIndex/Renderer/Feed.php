@@ -24,7 +24,7 @@ use Laminas\Feed\Writer\Feed as FeedWriter;
  * @psalm-import-type ValueRecipientArray from Validator
  * @psalm-import-type ValueArray from Validator
  * @psalm-import-type ImagesArray from Validator
- * @psalm-import-type ImageArray from Validator
+ * @psalm-import-type DetailedImageArray from Validator
  * @psalm-import-type SocialInteractArray from Validator
  */
 class Feed extends Extension\AbstractRenderer
@@ -178,7 +178,7 @@ class Feed extends Extension\AbstractRenderer
         /** @psalm-var FeedWriter $container */
         $container = $this->getDataContainer();
 
-        /** @psalm-var null|list<ImageArray> $images */
+        /** @psalm-var null|list<DetailedImageArray> $images */
         $images = $container->getPodcastIndexDetailedImages();
         if ($images === null || $images = []) {
             return;
