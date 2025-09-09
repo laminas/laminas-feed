@@ -320,7 +320,9 @@ class FeedTest extends TestCase
         ];
 
         $feed->addPodcastIndexDetailedImage($image);
-        $this->assertEquals($image, $feed->getPodcastIndexDetailedImages()[0]);
+        $images = $feed->getPodcastIndexDetailedImages();
+        $this->assertIsArray($images);
+        $this->assertEquals($image, $images[0]);
     }
 
     public function testAddDetailedImageThrowsExceptionOnInvalidArguments(): void

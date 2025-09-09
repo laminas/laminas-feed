@@ -8,7 +8,6 @@ use Laminas\Feed\Writer;
 use Laminas\Feed\Writer\Renderer;
 use PHPUnit\Framework\TestCase;
 
-use function is_float;
 use function is_string;
 use function number_format;
 use function substr_count;

@@ -473,11 +473,11 @@ class Entry
      *
      * @param AlternateEnclosureArray $enclosure
      * @param list<SourceArray> $sources
-     * @param IntegrityArray $integrity
+     * @param null|IntegrityArray $integrity
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public function addPodcastIndexAlternateEnclosure(array $enclosure, array $sources, array $integrity = []): self
+    public function addPodcastIndexAlternateEnclosure(array $enclosure, array $sources, ?array $integrity = null): self
     {
         if (count($sources) < 1) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -493,7 +493,7 @@ class Entry
         }
         $enclosure['sources'] = $sources;
 
-        if (count($integrity) > 0) {
+        if ($integrity !== null) {
             Validator::validateIntegrity($integrity);
             $enclosure['integrity'] = $integrity;
         }

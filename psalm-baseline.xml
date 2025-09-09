@@ -3141,6 +3141,12 @@
       <code><![CDATA[isset($value['role']) && ! is_string($value['role'])]]></code>
       <code><![CDATA[isset($value['suggested']) && ! is_float($value['suggested'])]]></code>
       <code><![CDATA[isset($value['title']) && ! is_string($value['title'])]]></code>
+      <code><![CDATA[isset($value['alt']) && ! is_string($value['alt'])]]></code>
+      <code><![CDATA[isset($value['aspectRatio']) && ! is_string($value['aspectRatio'])]]></code>
+      <code><![CDATA[isset($value['width']) && ! is_int($value['width'])]]></code>
+      <code><![CDATA[isset($value['type']) && ! is_string($value['type'])]]></code>
+      <code><![CDATA[isset($value['purpose']) && ! is_string($value['purpose'])]]></code>
+      <code><![CDATA[isset($value['height']) && ! is_int($value['height'])]]></code>
     </DocblockTypeContradiction>
   </file>
   <file src="src/Writer/Extension/PodcastIndex/Feed.php">
