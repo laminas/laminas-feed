@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laminas\Feed\Writer\Extension\PodcastIndex;
 
 use Laminas\Feed\Writer;
+use Laminas\Feed\Writer\Exception\InvalidArgumentException;
 use Laminas\Stdlib\StringUtils;
 use Laminas\Stdlib\StringWrapper\StringWrapperInterface;
 
@@ -35,6 +36,7 @@ use function ucfirst;
  * @psalm-import-type ImagesArray from Validator
  * @psalm-import-type DetailedImageArray from Validator
  * @psalm-import-type SocialInteractArray from Validator
+ * @psalm-import-type LiveItemArray from Validator
  */
 class Feed
 {
@@ -44,6 +46,20 @@ class Feed
      * @var array
      */
     protected $data = [];
+
+    /**
+     * Contains all live item objects
+     *
+     * @var array<int, LiveItem>
+     */
+    protected $liveItems = [];
+
+    /**
+     * A pointer for the iterator to keep track of the live items array
+     *
+     * @var int
+     */
+    protected $liveItemKey = 0;
 
     /**
      * Encoding of all text values
@@ -574,6 +590,51 @@ class Feed
     }
 
     /**
+     * Creates a new Laminas\Feed\Writer\Extension\PodcastIndex\LiveItem data container for use.
+     * This is NOT added to the current feed automatically, but is necessary to create a
+     * container with some initial values preset based on the current feed data.
+     *
+     * @param LiveItemArray $value
+     */
+    public function createPodcastIndexLiveItem(array $value): LiveItem
+    {
+        $liveItem = new LiveItem($value);
+        if ($this->getEncoding()) {
+            $liveItem->setEncoding($this->getEncoding());
+        }
+        return $liveItem;
+    }
+
+    /**
+     * Appends a Laminas\Feed\Writer\Extension\PodcastIndex\LiveItem object.
+     *
+     * @return $this
+     */
+    public function addPodcastIndexLiveItem(LiveItem $liveItem): self
+    {
+        $this->liveItems[] = $liveItem;
+        return $this;
+    }
+
+    /**
+     * Removes a specific indexed liveItem from the internal queue. LiveItems must be
+     * added to a feed container in order to be indexed.
+     *
+     * @param  int $index
+     * @return $this
+     * @throws InvalidArgumentException
+     */
+    public function removePodcastIndexLiveItem($index)
+    {
+        if (! isset($this->liveItems[$index])) {
+            throw new InvalidArgumentException('Undefined index: ' . $index . '. LiveItem does not exist.');
+        }
+        unset($this->liveItems[$index]);
+
+        return $this;
+    }
+
+    /**
      * Overloading: proxy to internal setters
      *
      * @return mixed
@@ -650,5 +711,17 @@ class Feed
         /** @var list<PersonArray> $persons */
         $persons = $this->getPodcastIndexPeople();
         return $persons;
+    }
+
+    /**
+     * Get live items.
+     * Specific get call for non-default naming.
+     */
+    public function getPodcastIndexLiveItems(): array|null
+    {
+        if (count($this->liveItems) > 0) {
+            return $this->liveItems;
+        }
+        return null;
     }
 }

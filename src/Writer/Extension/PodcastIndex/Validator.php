@@ -156,6 +156,11 @@ use const FILTER_VALIDATE_URL;
  *       sources?: list<SourceArray>,
  *       integrity?: IntegrityArray,
  *     }
+ * @psalm-type LiveItemArray = array{
+ *        status: string,
+ *        start: string,
+ *        end?: string
+ *      }
  * @psalm-internal Laminas\Feed
  * @psalm-internal LaminasTest\Feed
  */
@@ -933,6 +938,36 @@ final class Validator
         if (isset($value['display']) && ! is_string($value['display'])) {
             throw new Writer\Exception\InvalidArgumentException(
                 'invalid parameter: "display" of "episode" must be of type string'
+            );
+        }
+    }
+
+    /**
+     * Validates live item
+     *
+     * @param LiveItemArray $value
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public static function validateLiveItem(array $value): void
+    {
+        if (! isset($value['status'], $value['start'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "liveItem" must be an array containing at least the keys "status" and "start"'
+            );
+        }
+        if (! is_string($value['status'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "status" of "liveItem" must be of type string'
+            );
+        }
+        if (! is_string($value['start'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "start" of "liveItem" must be of type string'
+            );
+        }
+        if (isset($value['end']) && ! is_string($value['end'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "end" of "liveItem" must be of type string'
             );
         }
     }

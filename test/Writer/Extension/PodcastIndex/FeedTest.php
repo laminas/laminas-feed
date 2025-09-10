@@ -7,6 +7,7 @@ namespace LaminasTest\Feed\Writer\Extension\PodcastIndex;
 use DateTime;
 use Laminas\Feed\Reader\Extension\PodcastIndex\AttributesReader;
 use Laminas\Feed\Writer;
+use Laminas\Feed\Writer\Extension\PodcastIndex\LiveItem;
 use PHPUnit\Framework\TestCase;
 
 use function count;
@@ -1430,5 +1431,30 @@ class FeedTest extends TestCase
 
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $feed->addPodcastIndexSocialInteract($data);
+    }
+
+    public function testCreatePodcastIndexLiveItem(): void
+    {
+        $feed = new Writer\Feed();
+
+        $data = [
+            'status' => 'live',
+            'start'  => 'now',
+            'end'    => 'later',
+        ];
+
+        /** @psalm-var LiveItem $liveItem */
+        $liveItem = $feed->createPodcastIndexLiveItem($data);
+        $this->assertInstanceOf(LiveItem::class, $liveItem);
+        $status = $liveItem->getStatus();
+        $this->assertEquals('live', $status);
+
+        $chapters = [
+            'url' => 'https://example.org/chapters.json',
+            'type' => 'application/json+chapters',
+        ];
+
+        $liveItem->setPodcastIndexChapters($chapters);
+        $this->assertEquals($chapters, $liveItem->getPodcastIndexChapters());
     }
 }

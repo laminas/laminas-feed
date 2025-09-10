@@ -92,6 +92,26 @@
                 aspect-ratio="16/9"
                 href="https://example.com/images/ep1/pci_landscape-massive_wide.jpg"
         />
+        <podcast:liveItem status="live" start="2021-09-26T07:30:00.000-0600" end="2021-09-26T09:30:00.000-0600">
+            <title>Podcasting 2.0 Live Show</title>
+            <description>A look into the future of podcasting and how we get to Podcasting 2.0!</description>
+            <link>https://example.com/podcast/live</link>
+            <guid isPermaLink="true">https://example.com/live</guid>
+            <author>John Doe (john@example.com)</author>
+            <podcast:person href="https://www.podchaser.com/creators/adam-curry-107ZzmWE5f"
+                            img="https://example.com/images/adamcurry.jpg">Adam Curry</podcast:person>
+            <podcast:person role="guest" href="https://github.com/daveajones/"
+                            img="https://example.com/images/davejones.jpg">Dave Jones</podcast:person>
+            <podcast:person group="visuals" role="cover art designer"
+                            href="https://example.com/artist/beckysmith">Becky Smith</podcast:person>
+            <podcast:alternateEnclosure type="audio/mpeg" length="312" default="true">
+                <podcast:source uri="https://example.com/pc20/livestream" />
+            </podcast:alternateEnclosure>
+            <enclosure url="https://example.com/pc20/livestream?format=.mp3" type="audio/mpeg" length="312" />
+            <podcast:contentLink href="https://youtube.com/pc20/livestream">YouTube!</podcast:contentLink>
+            <podcast:contentLink href="https://twitch.com/pc20/livestream">Twitch!</podcast:contentLink>
+            <podcast:contentLink href="https://example.com/html/livestream">Listen Live!</podcast:contentLink>
+        </podcast:liveItem>
 
         <item>
             <title>Shake Shake Shake Your Spices</title>

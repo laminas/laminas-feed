@@ -7,7 +7,7 @@ namespace Laminas\Feed\Writer\Extension\PodcastIndex\Renderer;
 use DOMDocument;
 use DOMElement;
 use Laminas\Feed\Writer\Extension;
-use Laminas\Feed\Writer\Extension\PodcastIndex\Validator;
+use Laminas\Feed\Writer\Extension\PodcastIndex;
 use Laminas\Feed\Writer\Feed as FeedWriter;
 
 use function assert;
@@ -15,19 +15,20 @@ use function assert;
 /**
  * Renders PodcastIndex data of a RSS Feed
  *
- * @psalm-import-type LicenseArray from Validator
- * @psalm-import-type LocationArray from Validator
- * @psalm-import-type BlockArray from Validator
- * @psalm-import-type TxtArray from Validator
- * @psalm-import-type PersonArray from Validator
- * @psalm-import-type UpdateFrequencyArray from Validator
- * @psalm-import-type TrailerArray from Validator
- * @psalm-import-type RemoteItemArray from Validator
- * @psalm-import-type ValueRecipientArray from Validator
- * @psalm-import-type ValueArray from Validator
- * @psalm-import-type ImagesArray from Validator
- * @psalm-import-type DetailedImageArray from Validator
- * @psalm-import-type SocialInteractArray from Validator
+ * @psalm-import-type LicenseArray from PodcastIndex\Validator
+ * @psalm-import-type LocationArray from PodcastIndex\Validator
+ * @psalm-import-type BlockArray from PodcastIndex\Validator
+ * @psalm-import-type TxtArray from PodcastIndex\Validator
+ * @psalm-import-type PersonArray from PodcastIndex\Validator
+ * @psalm-import-type UpdateFrequencyArray from PodcastIndex\Validator
+ * @psalm-import-type TrailerArray from PodcastIndex\Validator
+ * @psalm-import-type RemoteItemArray from PodcastIndex\Validator
+ * @psalm-import-type ValueRecipientArray from PodcastIndex\Validator
+ * @psalm-import-type ValueArray from PodcastIndex\Validator
+ * @psalm-import-type ImagesArray from PodcastIndex\Validator
+ * @psalm-import-type DetailedImageArray from PodcastIndex\Validator
+ * @psalm-import-type SocialInteractArray from PodcastIndex\Validator
+ * @psalm-import-type LiveItemArray from PodcastIndex\Validator
  */
 class Feed extends Extension\AbstractRenderer
 {
@@ -64,6 +65,9 @@ class Feed extends Extension\AbstractRenderer
         $this->setPublisher($this->dom, $this->base);
         $this->setValues($this->dom, $this->base);
         $this->setSocialInteracts($this->dom, $this->base);
+        $this->setLiveItems($this->dom, $this->base);
+
+
         if ($this->called) {
             $this->_appendNamespaces();
         }
@@ -453,6 +457,48 @@ class Feed extends Extension\AbstractRenderer
             $el = ElementGenerator::createPodcastIndexElement($dom, $socialInteract, 'socialInteract');
             $root->appendChild($el);
         }
+
+        $this->called = true;
+    }
+
+    /**
+     * Set feed live items
+     */
+    private function setLiveItems(DOMDocument $dom, DOMElement $root): void
+    {
+        /** @psalm-var FeedWriter $container */
+        $container = $this->getDataContainer();
+
+        /** @psalm-var list<LiveItemArray>|null $liveItems */
+        $liveItems = $container->getPodcastIndexSocialInteracts();
+        if ($liveItems === null || $liveItems === []) {
+            return;
+        }
+
+        foreach ($liveItems as $liveItem) {
+            if ($container->getEncoding()) {
+                $liveItem->setEncoding($container->getEncoding());
+            }
+            if ($liveItem instanceof PodcastIndex\LiveItem) {
+                $renderer = new LiveItem($liveItem);
+            } else {
+                continue;
+            }
+            if ($this->ignoreExceptions === true) {
+                $renderer->ignoreExceptions();
+            }
+            $renderer->setType($this->getType());
+            $renderer->setRootElement($this->dom->documentElement);
+            $renderer->render();
+            $element  = $renderer->getElement();
+            $imported = $this->dom->importNode($element, true);
+            $channel->appendChild($imported);
+        }
+
+        /*foreach ($liveItems as $liveItem) {
+            $el = ElementGenerator::createPodcastIndexElement($dom, $liveItem, 'liveItem');
+            $root->appendChild($el);
+        }*/
 
         $this->called = true;
     }
