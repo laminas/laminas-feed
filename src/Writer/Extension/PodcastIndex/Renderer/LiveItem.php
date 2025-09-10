@@ -14,7 +14,7 @@ use Laminas\Feed\Writer\Renderer;
 /**
  * Renders PodcastIndex LiveItem data in a RSS Feed
  */
-class LiveItem extends Entry\Rss
+class LiveItem extends Entry\Rss implements Renderer\RendererInterface
 {
     /**
      * Set to TRUE if a rendering method actually renders something. This
@@ -31,28 +31,36 @@ class LiveItem extends Entry\Rss
     }
 
     /**
-     * Render entry
+     * Render live item
      */
-    public function render(): void
+    public function render()
     {
         $this->dom                     = new DOMDocument('1.0', $this->container->getEncoding());
         $this->dom->formatOutput       = true;
         $this->dom->substituteEntities = false;
-        $entry                         = $this->dom->createElement('item');
-        $this->dom->appendChild($entry);
-    }
+        $liveItem                      = $this->dom->createElement('liveItem');
+        $this->dom->appendChild($liveItem);
 
-    /**
-     * Append namespaces to entry root
-     */
-    // phpcs:ignore PSR2.Methods.MethodDeclaration.Underscore
-    /*protected function _appendNamespaces(): void
-    {
-        $this->getRootElement()->setAttribute(
-            'xmlns:podcast',
-            'https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/1.0.md'
-        );
-    }*/
+        $this->_setTitle($this->dom, $liveItem);
+        $this->_setDescription($this->dom, $liveItem);
+        $this->_setDateCreated($this->dom, $liveItem);
+        $this->_setDateModified($this->dom, $liveItem);
+        $this->_setLink($this->dom, $liveItem);
+        $this->_setId($this->dom, $liveItem);
+        $this->_setAuthors($this->dom, $liveItem);
+        $this->_setEnclosure($this->dom, $liveItem);
+        $this->_setCommentLink($this->dom, $liveItem);
+        $this->_setCategories($this->dom, $liveItem);
+        foreach ($this->extensions as $ext) {
+            $ext->setType($this->getType());
+            $ext->setRootElement($this->getRootElement());
+            $ext->setDomDocument($this->getDomDocument(), $liveItem);
+            $ext->render();
+        }
+
+       // $this->setContentLink($this->dom, $liveItem);
+        return $this;
+    }
 
     /**
      * Set live item content link
@@ -60,5 +68,6 @@ class LiveItem extends Entry\Rss
     protected function setContentLink(DOMDocument $dom, DOMElement $root): void
     {
         // TODO
+        return;
     }
 }

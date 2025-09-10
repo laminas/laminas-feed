@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace LaminasTest\Feed\Writer\Renderer\Extension\PodcastIndex;
 
 use Laminas\Feed\Writer;
+use Laminas\Feed\Writer\Extension\PodcastIndex;
 use Laminas\Feed\Writer\Renderer;
 use PHPUnit\Framework\TestCase;
 
@@ -15,7 +16,7 @@ use function substr_count;
 class LiveItemTest extends TestCase
 {
     protected Writer\Feed $validWriter;
-    protected Writer\Entry $validEntry;
+    protected PodcastIndex\LiveItem $validEntry;
 
     protected function setUp(): void
     {
@@ -50,6 +51,13 @@ class LiveItemTest extends TestCase
     protected function tearDown(): void
     {
         Writer\Writer::reset();
+    }
+
+    public function testRendersRss(): void
+    {
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+        $this->assertStringContainsString('<podcast:liveItem>', $xml);
     }
 
     public function testRendersRssLocationTag(): void

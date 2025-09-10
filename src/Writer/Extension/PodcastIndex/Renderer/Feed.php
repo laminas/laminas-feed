@@ -65,8 +65,27 @@ class Feed extends Extension\AbstractRenderer
         $this->setPublisher($this->dom, $this->base);
         $this->setValues($this->dom, $this->base);
         $this->setSocialInteracts($this->dom, $this->base);
-        $this->setLiveItems($this->dom, $this->base);
 
+        $liveItems = $this->getDataContainer()->getPodcastIndexLiveItems();
+        foreach ($liveItems as $liveItem) {
+            if ($this->getDataContainer()->getEncoding()) {
+                $liveItem->setEncoding($this->getDataContainer()->getEncoding());
+            }
+            if ($liveItem instanceof PodcastIndex\LiveItem) {
+                $renderer = new LiveItem($liveItem);
+            } else {
+                continue;
+            }
+            if ($this->getDataContainer()->ignoreExceptions === true) {
+                $renderer->ignoreExceptions();
+            }
+            $renderer->setType($this->getType());
+            $renderer->setRootElement($this->dom->documentElement);
+            $renderer->render();
+            $element  = $renderer->getElement();
+            $imported = $this->dom->importNode($element, true);
+            $this->base->appendChild($imported);
+        }
 
         if ($this->called) {
             $this->_appendNamespaces();
@@ -470,30 +489,12 @@ class Feed extends Extension\AbstractRenderer
         $container = $this->getDataContainer();
 
         /** @psalm-var list<LiveItemArray>|null $liveItems */
-        $liveItems = $container->getPodcastIndexSocialInteracts();
+        $liveItems = $container->getPodcastIndexLiveItems();
         if ($liveItems === null || $liveItems === []) {
             return;
         }
 
-        foreach ($liveItems as $liveItem) {
-            if ($container->getEncoding()) {
-                $liveItem->setEncoding($container->getEncoding());
-            }
-            if ($liveItem instanceof PodcastIndex\LiveItem) {
-                $renderer = new LiveItem($liveItem);
-            } else {
-                continue;
-            }
-            if ($this->ignoreExceptions === true) {
-                $renderer->ignoreExceptions();
-            }
-            $renderer->setType($this->getType());
-            $renderer->setRootElement($this->dom->documentElement);
-            $renderer->render();
-            $element  = $renderer->getElement();
-            $imported = $this->dom->importNode($element, true);
-            $channel->appendChild($imported);
-        }
+
 
         /*foreach ($liveItems as $liveItem) {
             $el = ElementGenerator::createPodcastIndexElement($dom, $liveItem, 'liveItem');
