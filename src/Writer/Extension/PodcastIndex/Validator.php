@@ -9,6 +9,7 @@ use Laminas\Feed\Writer;
 
 use function count;
 use function filter_var;
+use function in_array;
 use function is_bool;
 use function is_float;
 use function is_int;
