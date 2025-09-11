@@ -18,7 +18,9 @@ use function is_string;
 use const FILTER_VALIDATE_URL;
 
 /**
- * Validates PodcastIndex data that exists for both, Feeds and Entries
+ * Validates PodcastIndex data that exists for both, Feeds and Entries.
+ * This class is internal to the library and should not be referenced by consumer code.
+ * Backwards Incompatible changes can occur in Minor and Patch Releases.
  *
  * @psalm-type LicenseArray = array{
  *       identifier: string,
@@ -154,8 +156,10 @@ use const FILTER_VALIDATE_URL;
  *       sources?: list<SourceArray>,
  *       integrity?: IntegrityArray,
  *     }
+ * @psalm-internal Laminas\Feed
+ * @psalm-internal LaminasTest\Feed
  */
-class Validator
+final class Validator
 {
     /**
      * Validate person

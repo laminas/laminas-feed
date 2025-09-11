@@ -11,7 +11,9 @@ use DOMElement;
 use stdClass;
 
 /**
- * Reads PodcastIndex data that exists for both, Feeds and Entries
+ * Reads PodcastIndex data that exists for both, Feeds and Entries.
+ * This class is internal to the library and should not be referenced by consumer code.
+ * Backwards Incompatible changes can occur in Minor and Patch Releases.
  *
  * @psalm-type LicenseObject = object{
  *        identifier: string,
@@ -147,10 +149,6 @@ use stdClass;
  *       sources: list<SourceObject>,
  *       integrity?: IntegrityObject,
  * }
- *
- * This class is internal to the library and should not be referenced by consumer code.
- * Backwards Incompatible changes can occur in Minor and Patch Releases.
- * 
  * @psalm-internal Laminas\Feed
  * @psalm-internal LaminasTest\Feed
  */

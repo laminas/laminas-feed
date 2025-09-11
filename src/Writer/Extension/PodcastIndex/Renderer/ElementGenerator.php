@@ -14,9 +14,14 @@ use function is_string;
 use function number_format;
 
 /**
- * Creates PodcastIndex elements for feed and entry renderer
+ * Creates PodcastIndex elements for feed and entry renderer.
+ * This class is internal to the library and should not be referenced by consumer code.
+ * Backwards Incompatible changes can occur in Minor and Patch Releases.
+ *
+ * @psalm-internal Laminas\Feed
+ * @psalm-internal LaminasTest\Feed
  */
-class ElementGenerator
+final class ElementGenerator
 {
     /**
      * Create PodcastIndex element
