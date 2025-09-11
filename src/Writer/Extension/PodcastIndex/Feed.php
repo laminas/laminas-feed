@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Laminas\Feed\Writer\Extension\PodcastIndex;
 
-use DateTimeInterface;
 use Laminas\Feed\Writer;
 use Laminas\Stdlib\StringUtils;
 use Laminas\Stdlib\StringWrapper\StringWrapperInterface;
@@ -12,10 +11,6 @@ use Laminas\Stdlib\StringWrapper\StringWrapperInterface;
 use function array_key_exists;
 use function count;
 use function ctype_alpha;
-use function filter_var;
-use function in_array;
-use function is_bool;
-use function is_int;
 use function is_string;
 use function lcfirst;
 use function method_exists;
@@ -23,8 +18,6 @@ use function rtrim;
 use function strlen;
 use function substr;
 use function ucfirst;
-
-use const FILTER_VALIDATE_URL;
 
 /**
  * Describes PodcastIndex data of a RSS Feed
@@ -221,31 +214,7 @@ class Feed
      */
     public function setPodcastIndexUpdateFrequency(array $value): self
     {
-        if (! isset($value['description'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: "updateFrequency" must be an array containing at least the key "description"'
-            );
-        }
-        if (! is_string($value['description'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "description" of "updateFrequency" must be of type string'
-            );
-        }
-        if (isset($value['complete']) && ! is_bool($value['complete'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "complete" of "updateFrequency": must be of type boolean'
-            );
-        }
-        if (isset($value['dtstart']) && ! $value['dtstart'] instanceof DateTimeInterface) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "dtstart" of "updateFrequency" must be of type DateTimeInterface'
-            );
-        }
-        if (isset($value['rrule']) && ! is_string($value['rrule'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "rrule" of "updateFrequency" must be of type string'
-            );
-        }
+        Validator::validateUpdateFrequency($value);
         $this->data['updateFrequency'] = $value;
         return $this;
     }
@@ -310,42 +279,7 @@ class Feed
      */
     public function setPodcastIndexTrailer(array $value): self
     {
-        if (! isset($value['title']) || ! isset($value['pubdate']) || ! isset($value['url'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: "trailer" must be an array containing the keys "title", "pubdate" and "url"'
-            );
-        }
-        if (! is_string($value['title'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "title" of "trailer" must be of type string'
-            );
-        }
-        if (! is_string($value['pubdate'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "pubdate" of "trailer" must be an RFC2822 formatted date string'
-            );
-        }
-        /** @psalm-suppress DocblockTypeContradiction */
-        if (! is_string($value['url']) || ! filter_var($value['url'], FILTER_VALIDATE_URL)) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "url" of "trailer" must be a url, starting with "http://" or "https://'
-            );
-        }
-        if (isset($value['length']) && ! is_int($value['length'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "length" of "trailer": must be of type integer'
-            );
-        }
-        if (isset($value['type']) && ! is_string($value['type'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "type" of "trailer" must be of type string'
-            );
-        }
-        if (isset($value['season']) && ! is_int($value['season'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "season" of "trailer" must be of type integer'
-            );
-        }
+        Validator::validateTrailer($value);
         $this->data['trailer'] = $value;
         return $this;
     }
@@ -359,16 +293,7 @@ class Feed
      */
     public function setPodcastIndexGuid(array $value): self
     {
-        if (! isset($value['value'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: "guid" must be an array containing the key "value"'
-            );
-        }
-        if (! is_string($value['value'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "value" of "guid" must be a UUIDv5 string'
-            );
-        }
+        Validator::validateGuid($value);
         $this->data['guid'] = $value;
         return $this;
     }
@@ -382,17 +307,7 @@ class Feed
      */
     public function setPodcastIndexMedium(array $value): self
     {
-        if (! isset($value['value'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: "medium" must be an array containing the key "value"'
-            );
-        }
-        /** @psalm-suppress DocblockTypeContradiction */
-        if (! is_string($value['value'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "value" of "medium" must be a UUIDv5 string'
-            );
-        }
+        Validator::validateMedium($value);
         $this->data['medium'] = $value;
         return $this;
     }
@@ -406,27 +321,13 @@ class Feed
      */
     public function addPodcastIndexBlock(array $value): self
     {
-        if (! isset($value['value'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: "block" must be an array containing the key "value"'
-            );
-        }
-        if (! is_string($value['value']) || ! in_array($value['value'], ['yes', 'no'], true)) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "value" of "block" must be set to either "yes" or "no"'
-            );
-        }
-        if (isset($value['id']) && ! is_string($value['id'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "id" of "block" must be of type string'
-            );
-        }
+        Validator::validateBlock($value);
 
         if (! isset($this->data['blocks'])) {
             $this->data['blocks'] = [];
         }
 
-        /** @var list<array{value: string, id?: string}> $this->data['blocks'] */
+        /** @var list<BlockArray> $this->data['blocks'] */
         $this->data['blocks'][] = $value;
         return $this;
     }
@@ -497,16 +398,7 @@ class Feed
      */
     public function setPodcastIndexPodping(array $value): self
     {
-        if (! isset($value['usesPodping'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: "podping" must be an array containing the key "usesPodping"'
-            );
-        }
-        if (! is_bool($value['usesPodping'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: key "usesPodping" of "podping" must be of type boolean'
-            );
-        }
+        Validator::validatePodping($value);
         $this->data['podping'] = $value;
         return $this;
     }

@@ -357,6 +357,87 @@ class Validator
     }
 
     /**
+     * Validates update frequency
+     *
+     * @param UpdateFrequencyArray $value
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public static function validateUpdateFrequency(array $value): void
+    {
+        if (! isset($value['description'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "updateFrequency" must be an array containing at least the key "description"'
+            );
+        }
+        if (! is_string($value['description'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "description" of "updateFrequency" must be of type string'
+            );
+        }
+        if (isset($value['complete']) && ! is_bool($value['complete'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "complete" of "updateFrequency": must be of type boolean'
+            );
+        }
+        if (isset($value['dtstart']) && ! $value['dtstart'] instanceof DateTimeInterface) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "dtstart" of "updateFrequency" must be of type DateTimeInterface'
+            );
+        }
+        if (isset($value['rrule']) && ! is_string($value['rrule'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "rrule" of "updateFrequency" must be of type string'
+            );
+        }
+    }
+
+    /**
+     * Validates trailer
+     *
+     * @param TrailerArray $value
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public static function validateTrailer(array $value): void
+    {
+        if (! isset($value['title']) || ! isset($value['pubdate']) || ! isset($value['url'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "trailer" must be an array containing the keys "title", "pubdate" and "url"'
+            );
+        }
+        if (! is_string($value['title'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "title" of "trailer" must be of type string'
+            );
+        }
+        if (! is_string($value['pubdate'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "pubdate" of "trailer" must be an RFC2822 formatted date string'
+            );
+        }
+        /** @psalm-suppress DocblockTypeContradiction */
+        if (! is_string($value['url']) || ! filter_var($value['url'], FILTER_VALIDATE_URL)) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "url" of "trailer" must be a url, starting with "http://" or "https://'
+            );
+        }
+        if (isset($value['length']) && ! is_int($value['length'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "length" of "trailer": must be of type integer'
+            );
+        }
+        if (isset($value['type']) && ! is_string($value['type'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "type" of "trailer" must be of type string'
+            );
+        }
+        if (isset($value['season']) && ! is_int($value['season'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "season" of "trailer" must be of type integer'
+            );
+        }
+    }
+
+    /**
      * Validates social interact
      *
      * @param SocialInteractArray $value
@@ -393,6 +474,92 @@ class Validator
             throw new Writer\Exception\InvalidArgumentException(
                 'invalid parameter: key "accountUrl" of "socialInteract" must be a url 
                 starting with "http://" or "https://"'
+            );
+        }
+    }
+
+    /**
+     * Validates guid
+     *
+     * @param array{value: string} $value
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public static function validateGuid(array $value): void
+    {
+        if (! isset($value['value'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "guid" must be an array containing the key "value"'
+            );
+        }
+        if (! is_string($value['value'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "value" of "guid" must be a UUIDv5 string'
+            );
+        }
+    }
+
+    /**
+     * Validates medium
+     *
+     * @param array{value: string} $value
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public static function validateMedium(array $value): void
+    {
+        if (! isset($value['value'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "medium" must be an array containing the key "value"'
+            );
+        }
+        /** @psalm-suppress DocblockTypeContradiction */
+        if (! is_string($value['value'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "value" of "medium" must be a UUIDv5 string'
+            );
+        }
+    }
+
+    /**
+     * Validates block
+     *
+     * @param BlockArray $value
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public static function validateBlock(array $value): void
+    {
+        if (! isset($value['value'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "block" must be an array containing the key "value"'
+            );
+        }
+        if (! is_string($value['value']) || ! in_array($value['value'], ['yes', 'no'], true)) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "value" of "block" must be set to either "yes" or "no"'
+            );
+        }
+        if (isset($value['id']) && ! is_string($value['id'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "id" of "block" must be of type string'
+            );
+        }
+    }
+
+    /**
+     * Validates block
+     *
+     * @param array{usesPodping: bool} $value
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public static function validatePodping(array $value): void
+    {
+        if (! isset($value['usesPodping'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "podping" must be an array containing the key "usesPodping"'
+            );
+        }
+        if (! is_bool($value['usesPodping'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "usesPodping" of "podping" must be of type boolean'
             );
         }
     }
@@ -686,6 +853,56 @@ class Validator
         if (! is_string($value['value'])) {
             throw new Writer\Exception\InvalidArgumentException(
                 'invalid parameter: key "value" of "integrity" must be of type string'
+            );
+        }
+    }
+
+    /**
+     * Validates season
+     *
+     * @param SeasonArray $value
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public static function validateSeason(array $value): void
+    {
+        if (! isset($value['value'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "season" must be an array containing at least the key "value"'
+            );
+        }
+        if (! is_int($value['value'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "value" of "season" must be of type integer'
+            );
+        }
+        if (isset($value['name']) && ! is_string($value['name'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "name" of "season" must be of type string'
+            );
+        }
+    }
+
+    /**
+     * Validates episode
+     *
+     * @param EpisodeArray $value
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public static function validateEpisode(array $value): void
+    {
+        if (! isset($value['value'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "episode" must be an array containing at least the key "value"'
+            );
+        }
+        if (! (is_int($value['value']) || is_float($value['value']))) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "value" of "episode" must be of type integer or type float'
+            );
+        }
+        if (isset($value['display']) && ! is_string($value['display'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "display" of "episode" must be of type string'
             );
         }
     }

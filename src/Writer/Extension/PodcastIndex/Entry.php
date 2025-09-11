@@ -10,8 +10,6 @@ use Laminas\Stdlib\StringWrapper\StringWrapperInterface;
 
 use function array_key_exists;
 use function count;
-use function is_float;
-use function is_int;
 use function is_numeric;
 use function is_string;
 use function lcfirst;
@@ -126,7 +124,7 @@ class Entry
     }
 
     /**
-     * Add entry soundbites
+     * Add multiple entry soundbites
      *
      * @param list<SoundbiteArray> $values
      * @return $this
@@ -161,7 +159,7 @@ class Entry
     }
 
     /**
-     * Add entry soundbite
+     * Add a single entry soundbite
      *
      * @param SoundbiteArray $value
      * @return $this
@@ -421,21 +419,7 @@ class Entry
      */
     public function setPodcastIndexSeason(array $value): self
     {
-        if (! isset($value['value'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: "season" must be an array containing at least the key "value"'
-            );
-        }
-        if (! is_int($value['value'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: "value" of "season" must be of type integer'
-            );
-        }
-        if (isset($value['name']) && ! is_string($value['name'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: "name" of "season" must be of type string'
-            );
-        }
+        Validator::validateSeason($value);
         $this->data['season'] = $value;
         return $this;
     }
@@ -449,21 +433,7 @@ class Entry
      */
     public function setPodcastIndexEpisode(array $value): self
     {
-        if (! isset($value['value'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: "episode" must be an array containing at least the key "value"'
-            );
-        }
-        if (! (is_int($value['value']) || is_float($value['value']))) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: "value" of "episode" must be of type integer or type float'
-            );
-        }
-        if (isset($value['display']) && ! is_string($value['display'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: "display" of "episode" must be of type string'
-            );
-        }
+        Validator::validateEpisode($value);
         $this->data['episode'] = $value;
         return $this;
     }
