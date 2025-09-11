@@ -146,9 +146,15 @@ use stdClass;
  *        default?: bool,
  *       sources: list<SourceObject>,
  *       integrity?: IntegrityObject,
- *      }
+ * }
+ *
+ * This class is internal to the library and should not be referenced by consumer code.
+ * Backwards Incompatible changes can occur in Minor and Patch Releases.
+ * 
+ * @psalm-internal Laminas\Feed
+ * @psalm-internal LaminasTest\Feed
  */
-class AttributesReader
+final class AttributesReader
 {
     /**
      * Read feed or item license
