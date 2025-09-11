@@ -112,8 +112,8 @@ See the [Podcast Index website](https://podcastindex.org) for more information a
 | `addPodcastIndexValue()`                             | Adds a [podcast:value](https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/value.md) tag.  Expects three arguments: First, an array of the `value` attributes. Second, an array of one or more `valueRecipient` entries. The third argument is optional: An array of one or more `valueTimeSplit` elements. _Note: This method is quite complex, so please consider the [examples below](#episode-value), as well as the official PodcastIndex documentation for the detailed structure._ |
 | `resetPodcastIndexValues()`                          | Expects no arguments. Removes existing value entries.                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 
-# Examples
-## Channel
+## Examples
+
 ### Channel Value
 
 Please also consider the official PodcastIndex documentation on the
@@ -154,7 +154,6 @@ Rendered value tag:
 </podcast:value>
 ```
 
-## Episode
 ### Episode Value
 
 Please consider the official PodcastIndex documentation on the
@@ -162,7 +161,7 @@ Please consider the official PodcastIndex documentation on the
 [valueRecipient](https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/value-recipient.md)
 and [valueTimeSplit](https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/value-time-split.md) namespaces.
 
-#### Using `valueTimeSplit` with nested `remoteItem`
+#### 1. Using `valueTimeSplit` with nested `remoteItem`
 
 Usage:
 
@@ -209,7 +208,7 @@ $valueTimeSplits = [
         ],
     ],
 ];
-$entryWriter->addPodcastIndexValue($value, $newRecipients, $valueRecipients);
+$entryWriter->addPodcastIndexValue($value, $valueRecipients, $valueTimeSplits);
 ```
 
 Rendered value tag:
@@ -227,7 +226,7 @@ Rendered value tag:
 </podcast:value>
 ```
 
-#### Using `valueTimeSplit` with nested `valueRecipient`
+#### 2. Using `valueTimeSplit` with nested `valueRecipient`
 
 Usage:
 
@@ -271,7 +270,7 @@ $valueTimeSplits = [
         ],
     ],
 ];
-$entryWriter->addPodcastIndexValue($value, $newRecipients, $valueRecipients);
+$entryWriter->addPodcastIndexValue($value, $valueRecipients, $valueTimeSplits);
 ```
 
 Rendered value tag:
@@ -294,11 +293,22 @@ Please also consider the official PodcastIndex documentation on the
 [source](https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/source.md)
 and [integrity](https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/integrity.md) namespaces.
 
-#### With all attributes set
+#### 1. With all attributes set
 
 Usage:
 
 ```php
+$alternateEnclosure = [
+    'type' => 'video/mp4',
+    'length' => 7924786,
+    'bitrate' => 511276.52,
+    'height' => 720,
+    'lang' => 'en',
+    'title' => 'Standard',
+    'rel' => 'default',
+    'codecs' => 'avc1.42E01E, mp4a.40.2',
+    'default' => true
+];
 $sources = [
     [
         'uri' => 'https://example.com/file-720.torrent',
@@ -312,18 +322,6 @@ $integrity = [
     'type' => 'sri',
     'value' => 'sha384-ExVqijgYHm15PqQqdXfW95x+Rs6C+d6E/ICxyQOeFevnxNLR/wtJNrNYTjIysUBo',
 ];
-$alternateEnclosure = [
-    'type' => 'video/mp4',
-    'length' => 7924786,
-    'bitrate' => 511276.52,
-    'height' => 720,
-    'lang' => 'en',
-    'title' => 'Standard',
-    'rel' => 'default',
-    'codecs' => 'avc1.42E01E, mp4a.40.2',
-    'default' => true
-];
-
 $entryWriter->addPodcastIndexAlternateEnclosure($alternateEnclosure, $sources, $integrity);
 ```
 
@@ -337,19 +335,18 @@ Rendered alternate enclosure tag:
 </podcast:alternateEnclosure>
 ```
 
-#### With minimal data set
+#### 2. With minimal data set
 
 Usage:
 
 ```php
-$sources = [
-    ['uri' => 'ipfs://QmX33FYehk6ckGQ6g1D9D3FqZPix5JpKstKQKbaS8quUFb'],
-];
 $alternateEnclosure = [
     'type'    => 'video/mp4',
 ];
-
-$entryWriter->addPodcastIndexAlternateEnclosure($alternateEnclosure, $sources, $integrity);
+$sources = [
+    ['uri' => 'ipfs://QmX33FYehk6ckGQ6g1D9D3FqZPix5JpKstKQKbaS8quUFb'],
+];
+$entryWriter->addPodcastIndexAlternateEnclosure($alternateEnclosure, $sources);
 ```
 
 Rendered alternate enclosure tag:
