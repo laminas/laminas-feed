@@ -6,15 +6,14 @@ namespace Laminas\Feed\Writer\Extension\PodcastIndex\Renderer;
 
 use DOMDocument;
 use DOMElement;
-use Laminas\Feed\Writer\Renderer\Entry;
-use Laminas\Feed\Writer\Extension;
 use Laminas\Feed\Writer\Extension\PodcastIndex\LiveItem as LiveItemWriter;
-use Laminas\Feed\Writer\Renderer;
+use Laminas\Feed\Writer\Renderer\Entry;
+use Laminas\Feed\Writer\Writer;
 
 /**
  * Renders PodcastIndex LiveItem data in a RSS Feed
  */
-class LiveItem extends Entry\Rss implements Renderer\RendererInterface
+class LiveItem extends Entry\Rss
 {
     /**
      * Set to TRUE if a rendering method actually renders something. This
@@ -38,7 +37,7 @@ class LiveItem extends Entry\Rss implements Renderer\RendererInterface
         $this->dom                     = new DOMDocument('1.0', $this->container->getEncoding());
         $this->dom->formatOutput       = true;
         $this->dom->substituteEntities = false;
-        $liveItem                      = $this->dom->createElement('liveItem');
+        $liveItem                      = $this->dom->createElement('podcast:liveItem');
         $this->dom->appendChild($liveItem);
 
         $this->_setTitle($this->dom, $liveItem);
@@ -69,5 +68,25 @@ class LiveItem extends Entry\Rss implements Renderer\RendererInterface
     {
         // TODO
         return;
+    }
+
+    /**
+     * Load extensions from Laminas\Feed\Writer\Entry
+     *
+     * @return void
+     */
+    // phpcs:ignore PSR2.Methods.MethodDeclaration.Underscore
+    protected function _loadExtensions()
+    {
+        Writer::registerCoreExtensions();
+        $manager = Writer::getExtensionManager();
+        $all     = Writer::getExtensions();
+        $exts    = $all['entryRenderer'];
+        foreach ($exts as $extension) {
+            $plugin = $manager->get($extension);
+            $plugin->setDataContainer($this->getDataContainer());
+            $plugin->setEncoding($this->getEncoding());
+            $this->extensions[$extension] = $plugin;
+        }
     }
 }

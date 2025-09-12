@@ -119,31 +119,4 @@ class LiveItem extends Entry
     {
         // TODO
     }
-
-    /**
-     * Overloading: proxy to internal setters
-     *
-     * @return mixed
-     * @throws Writer\Exception\BadMethodCallException
-     */
-   /* public function __call(string $method, array $params)
-    {
-        $point = lcfirst(substr($method, 15));
-        if (
-            ! method_exists($this, 'set' . ucfirst($point))
-            && ! method_exists($this, 'setPodcastIndex' . ucfirst($point))
-            && ! method_exists($this, 'addPodcastIndex' . ucfirst($point))
-        ) {
-            throw new Writer\Exception\BadMethodCallException(
-                'invalid method: ' . $method
-            );
-        }
-        if (
-            ! array_key_exists($point, $this->data)
-            || empty($this->data[$point])
-        ) {
-            return;
-        }
-        return $this->data[$point];
-    }*/
 }
