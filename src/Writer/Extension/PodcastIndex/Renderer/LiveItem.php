@@ -37,8 +37,19 @@ class LiveItem extends Entry\Rss
         $this->dom                     = new DOMDocument('1.0', $this->container->getEncoding());
         $this->dom->formatOutput       = true;
         $this->dom->substituteEntities = false;
-        $liveItem                      = $this->dom->createElement('podcast:liveItem');
+
+        /** @psalm-var LiveItemWriter $liveItemWriter */
+        $liveItemWriter = $this->getDataContainer();
+        $attributes = [
+            'status' => $liveItemWriter->getStatus(),
+            'start'  => $liveItemWriter->getStart(),
+            'end'    => $liveItemWriter->getEnd(),
+        ];
+
+        $liveItem = ElementGenerator::createPodcastIndexElement($this->dom, $attributes, 'liveItem');
         $this->dom->appendChild($liveItem);
+
+        // TODO: just loop through all existing entry methods?
 
         $this->_setTitle($this->dom, $liveItem);
         $this->_setDescription($this->dom, $liveItem);
@@ -59,6 +70,19 @@ class LiveItem extends Entry\Rss
 
        // $this->setContentLink($this->dom, $liveItem);
         return $this;
+    }
+
+    protected function setAttributes(DOMDocument $dom, DOMElement $root): void
+    {
+
+        /** @psalm-var null|TranscriptArray $transcript */
+        $transcript = $container->getPodcastIndexTranscript();
+        if ($transcript === null) {
+            return;
+        }
+        $el = ElementGenerator::createPodcastIndexElement($dom, $transcript, 'transcript');
+        $root->appendChild($el);
+        $this->called = true;
     }
 
     /**

@@ -30,8 +30,8 @@ class LiveItemTest extends TestCase
 
         $liveItem = [
             'status' => 'live',
-            'start'  => '2024-10-01T12:00:00Z',
-            'end'    => '2024-10-01T14:00:00Z',
+            'start'  => '2021-09-26T07:30:00.000-0600',
+            'end'    => '2021-09-26T09:30:00.000-0600',
         ];
 
         $this->validEntry = $this->validWriter->createPodcastIndexLiveItem($liveItem);
@@ -57,7 +57,11 @@ class LiveItemTest extends TestCase
     {
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $xml     = $rssFeed->render()->saveXml();
-        $this->assertStringContainsString('<podcast:liveItem>', $xml);
+
+        $expected = '<podcast:liveItem status="live" start="2021-09-26T07:30:00.000-0600" end="2021-09-26T09:30:00.000-0600">';
+        $this->assertStringContainsString($expected, $xml);
+
+        $this->assertStringContainsString($this->validEntry->getTitle(), $xml);
     }
 
     public function testRendersRssLocationTag(): void
