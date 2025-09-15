@@ -6,6 +6,7 @@ namespace Laminas\Feed\Reader\Extension\PodcastIndex;
 
 use DOMElement;
 use Laminas\Feed\Reader\Entry\Rss as EntryReader;
+use Laminas\Feed\Reader\Extension\PodcastIndex\Entry;
 
 use function array_key_exists;
 use function assert;
@@ -27,6 +28,14 @@ class LiveItem extends EntryReader
         $index               = $this->entryKey + 1;
         $this->xpathQueryRss = '//podcast:liveItem[' . $index . ']';
         $this->xpathQueryRdf = '//podcast:liveItem[' . $index . ']';
+
+        // also ensure that for the PodcastIndex extension entries
+        $prefix = $this->xpathQueryRss;
+        foreach ($this->extensions as $extension) {
+            if ($extension instanceof Entry) {
+                $extension->setXpathPrefix($prefix);
+            }
+        }
     }
 
     public function getStatus(): ?string
@@ -68,6 +77,7 @@ class LiveItem extends EntryReader
         $this->data['start'] = $start;
         return $this->data['start'];
     }
+
     public function getEnd(): ?string
     {
         if (array_key_exists('end', $this->data)) {
@@ -75,7 +85,7 @@ class LiveItem extends EntryReader
             return $this->data['end'];
         }
 
-        $end    = null;
+        $end      = null;
         $nodeList = $this->xpath->query($this->getXpathPrefix() . '/@end');
 
         if ($nodeList->length > 0) {

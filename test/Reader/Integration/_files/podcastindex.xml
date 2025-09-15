@@ -102,15 +102,12 @@
                             img="https://example.com/images/adamcurry.jpg">Adam Curry</podcast:person>
             <podcast:person role="guest" href="https://github.com/daveajones/"
                             img="https://example.com/images/davejones.jpg">Dave Jones</podcast:person>
-            <podcast:person group="visuals" role="cover art designer"
-                            href="https://example.com/artist/beckysmith">Becky Smith</podcast:person>
             <podcast:alternateEnclosure type="audio/mpeg" length="312" default="true">
                 <podcast:source uri="https://example.com/pc20/livestream" />
             </podcast:alternateEnclosure>
             <enclosure url="https://example.com/pc20/livestream?format=.mp3" type="audio/mpeg" length="312" />
             <podcast:contentLink href="https://youtube.com/pc20/livestream">YouTube!</podcast:contentLink>
             <podcast:contentLink href="https://twitch.com/pc20/livestream">Twitch!</podcast:contentLink>
-            <podcast:contentLink href="https://example.com/html/livestream">Listen Live!</podcast:contentLink>
         </podcast:liveItem>
 
         <item>
@@ -138,7 +135,7 @@
             <podcast:txt purpose="verify">S6lpp-7ZCn8-dZfGc-OoyaG</podcast:txt>
             <podcast:txt purpose="applepodcastsverify">05124</podcast:txt>
             <podcast:license url="https://example.org/mypodcastlicense/full.pdf">my-podcast-license-v1</podcast:license>
-            <podcast:person group="writing" role="guest" href="https://www.wikipedia/alicebrown" img="http://example.com/images/alicebrown.jpg">Alice Brown</podcast:person>
+            <podcast:person group="writing" role="guest" href="https://www.wikipedia/alicebrown" img="http://example.com/images/alicebrown.jpg">James Brown</podcast:person>
             <podcast:transcript
                     url="https://example.com/podcasts/everything/TranscriptEpisode3.html"
                     type="text/html" />

@@ -62,9 +62,11 @@ class LiveItemTest extends TestCase
         $this->assertStringContainsString($expected, $xml);
 
         $this->assertStringContainsString($this->validEntry->getTitle(), $xml);
+        $this->assertStringContainsString($this->validEntry->getLink(), $xml);
+        $this->assertStringContainsString($this->validEntry->getAuthors()[0]['email'], $xml);
     }
 
-    /*public function testRendersRssLocationTag(): void
+    public function testRendersRssLocationTag(): void
     {
         $location = [
             'description' => 'London, Baker Street',
@@ -512,5 +514,5 @@ class LiveItemTest extends TestCase
                 $this->assertStringContainsString($attribute, $xml);
             }
         }
-    }*/
+    }
 }

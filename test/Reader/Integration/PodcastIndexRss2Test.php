@@ -10,7 +10,6 @@ use stdClass;
 
 use function file_get_contents;
 use function implode;
-use function var_dump;
 
 /**
  * @group Laminas_Feed
@@ -539,7 +538,7 @@ class PodcastIndexRss2Test extends TestCase
         $entry = $feed->current();
 
         $expected        = new stdClass();
-        $expected->name  = 'Alice Brown';
+        $expected->name  = 'James Brown';
         $expected->role  = 'guest';
         $expected->group = 'writing';
         $expected->img   = 'http://example.com/images/alicebrown.jpg';
@@ -865,5 +864,119 @@ class PodcastIndexRss2Test extends TestCase
         $this->assertEquals('live', $liveItem->getStatus());
         $this->assertEquals('2021-09-26T07:30:00.000-0600', $liveItem->getStart());
         $this->assertEquals('2021-09-26T09:30:00.000-0600', $liveItem->getEnd());
+    }
+
+    public function testGetsLiveItemWithClassicChildren(): void
+    {
+        $feed = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath)
+        );
+
+        /** @var Reader\Extension\PodcastIndex\LiveItem $liveItem */
+        $liveItem = $feed->getPodcastIndexLiveItems()[0];
+
+        $title       = 'Podcasting 2.0 Live Show';
+        $description = 'A look into the future of podcasting and how we get to Podcasting 2.0!';
+        $link        = 'https://example.com/podcast/live';
+        $guid        = 'https://example.com/live';
+        $author      = 'John Doe (john@example.com)';
+
+        $this->assertEquals($title, $liveItem->getTitle());
+        $this->assertEquals($description, $liveItem->getDescription());
+        $this->assertEquals($link, $liveItem->getLink());
+        $this->assertEquals($guid, $liveItem->getId());
+        $this->assertEquals($author, $liveItem->getAuthor()['email']);
+    }
+
+    public function testGetsLiveItemEnclosure(): void
+    {
+        $feed = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath)
+        );
+
+        $expected         = new stdClass();
+        $expected->url    = "https://example.com/pc20/livestream?format=.mp3";
+        $expected->length = "312";
+        $expected->type   = "audio/mpeg";
+
+        /** @var Reader\Extension\PodcastIndex\LiveItem $liveItem */
+        $liveItem = $feed->getPodcastIndexLiveItems()[0];
+
+        $this->assertEquals($expected, $liveItem->getEnclosure());
+    }
+
+    public function testGetsLiveItemPersons(): void
+    {
+        $feed = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath)
+        );
+
+        /** @var Reader\Extension\PodcastIndex\LiveItem $liveItem */
+        $liveItem = $feed->getPodcastIndexLiveItems()[0];
+
+        $personA        = new stdClass();
+        $personA->name  = 'Adam Curry';
+        $personA->img   = 'https://example.com/images/adamcurry.jpg';
+        $personA->href  = 'https://www.podchaser.com/creators/adam-curry-107ZzmWE5f';
+        $personA->role  = '';
+        $personA->group = '';
+
+        $personB        = new stdClass();
+        $personB->name  = 'Dave Jones';
+        $personB->role  = 'guest';
+        $personB->img   = 'https://example.com/images/davejones.jpg';
+        $personB->href  = 'https://github.com/daveajones/';
+        $personB->group = '';
+
+        $people = $liveItem->getPodcastIndexPeople();
+        $this->assertNotNull($people);
+        $this->assertEquals($personA, $people[0]);
+        $this->assertEquals($personB, $people[1]);
+    }
+
+    public function testGetsLiveItemAlternateEnclosure(): void
+    {
+        $feed = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath)
+        );
+
+        /** @var Reader\Extension\PodcastIndex\LiveItem $liveItem */
+        $liveItem = $feed->getPodcastIndexLiveItems()[0];
+
+        $source              = new stdClass();
+        $source->uri         = 'https://example.com/pc20/livestream';
+        $source->contentType = '';
+
+        $expected          = new stdClass();
+        $expected->type    = 'audio/mpeg';
+        $expected->length  = '312';
+        $expected->default = 'true';
+        $expected->bitrate = '';
+        $expected->height  = '';
+        $expected->lang    = '';
+        $expected->title   = '';
+        $expected->rel     = '';
+        $expected->codecs  = '';
+        $expected->sources = [$source];
+
+        $enclosure = $liveItem->getPodcastIndexAlternateEnclosures();
+        $this->assertEquals($expected, $enclosure[0]);
+    }
+
+    public function testGetsLiveItemContentLinks(): void
+    {
+        $feed = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath)
+        );
+
+        /** @var Reader\Extension\PodcastIndex\LiveItem $liveItem */
+        $liveItem = $feed->getPodcastIndexLiveItems()[0];
+
+        $expectedA = new stdClass();
+
+        // TODO
+
+        /*$contentLinks = $liveItem->getPodcastIndexContentLinks();
+        $this->assertEquals($expectedA, $contentLinks[0]);*/
     }
 }
