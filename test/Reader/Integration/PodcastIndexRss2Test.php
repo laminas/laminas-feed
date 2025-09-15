@@ -10,6 +10,7 @@ use stdClass;
 
 use function file_get_contents;
 use function implode;
+use function var_dump;
 
 /**
  * @group Laminas_Feed
@@ -850,5 +851,19 @@ class PodcastIndexRss2Test extends TestCase
         $images = $entry->getPodcastIndexDetailedImages();
         $this->assertEquals($expectedA, $images[0]);
         $this->assertEquals($expectedB, $images[1]);
+    }
+
+    public function testGetsLiveItemWithAttributes(): void
+    {
+        $feed = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath)
+        );
+
+        /** @var Reader\Extension\PodcastIndex\LiveItem $liveItem */
+        $liveItem = $feed->getPodcastIndexLiveItems()[0];
+
+        $this->assertEquals('live', $liveItem->getStatus());
+        $this->assertEquals('2021-09-26T07:30:00.000-0600', $liveItem->getStart());
+        $this->assertEquals('2021-09-26T09:30:00.000-0600', $liveItem->getEnd());
     }
 }

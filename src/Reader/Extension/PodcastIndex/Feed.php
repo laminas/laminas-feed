@@ -6,7 +6,7 @@ namespace Laminas\Feed\Reader\Extension\PodcastIndex;
 
 use DOMElement;
 use Laminas\Feed\Reader\Extension;
-use Laminas\Feed\Reader\Extension\PodcastIndex\AttributesReader;
+use Laminas\Feed\Reader\Extension\PodcastIndex\LiveItem as LiveItemReader;
 use stdClass;
 
 use function array_key_exists;
@@ -620,6 +620,40 @@ class Feed extends Extension\AbstractFeed
         $this->data['socialInteracts'] = $socialInteracts;
 
         return $this->data['socialInteracts'];
+    }
+
+    /**
+     * Get the podcast live items
+     *
+     * @psalm-return null|list<LiveItemReader>
+     */
+    public function getPodcastIndexLiveItems(): null|array
+    {
+        if (array_key_exists('liveItems', $this->data)) {
+            /** @psalm-var null|list<LiveItemReader> */
+            return $this->data['liveItems'];
+        }
+
+        $liveItems = null;
+
+        $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:liveItem');
+
+        if ($nodeList->length > 0) {
+            $liveItems = [];
+            $index     = 0;
+            foreach ($nodeList as $entry) {
+                assert($entry instanceof DOMElement);
+                $reader = new LiveItemReader($entry, (string) $index, $this->getType());
+                $reader->setXpath($this->xpath);
+                $reader->setXpathPrefix('//podcast:liveItem[' . ($index + 1) . ']');
+                $liveItems[] = $reader;
+                $index++;
+            }
+        }
+
+        $this->data['liveItems'] = $liveItems;
+
+        return $this->data['liveItems'];
     }
 
     /**

@@ -49,8 +49,6 @@ class LiveItem extends Entry\Rss
         $liveItem = ElementGenerator::createPodcastIndexElement($this->dom, $attributes, 'liveItem');
         $this->dom->appendChild($liveItem);
 
-        // TODO: just loop through all existing entry methods?
-
         $this->_setTitle($this->dom, $liveItem);
         $this->_setDescription($this->dom, $liveItem);
         $this->_setDateCreated($this->dom, $liveItem);
@@ -61,37 +59,15 @@ class LiveItem extends Entry\Rss
         $this->_setEnclosure($this->dom, $liveItem);
         $this->_setCommentLink($this->dom, $liveItem);
         $this->_setCategories($this->dom, $liveItem);
+        // TODO: $this->setContentLink($this->dom, $liveItem);
+
         foreach ($this->extensions as $ext) {
             $ext->setType($this->getType());
             $ext->setRootElement($this->getRootElement());
             $ext->setDomDocument($this->getDomDocument(), $liveItem);
             $ext->render();
         }
-
-       // $this->setContentLink($this->dom, $liveItem);
         return $this;
-    }
-
-    protected function setAttributes(DOMDocument $dom, DOMElement $root): void
-    {
-
-        /** @psalm-var null|TranscriptArray $transcript */
-        $transcript = $container->getPodcastIndexTranscript();
-        if ($transcript === null) {
-            return;
-        }
-        $el = ElementGenerator::createPodcastIndexElement($dom, $transcript, 'transcript');
-        $root->appendChild($el);
-        $this->called = true;
-    }
-
-    /**
-     * Set live item content link
-     */
-    protected function setContentLink(DOMDocument $dom, DOMElement $root): void
-    {
-        // TODO
-        return;
     }
 
     /**

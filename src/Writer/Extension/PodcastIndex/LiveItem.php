@@ -95,28 +95,4 @@ class LiveItem extends Entry
     {
         return $this->end;
     }
-
-    /**
-     * Get the podcast index live item data
-     */
-    /*public function getData(): array
-    {
-        return $this->data;
-    }*/
-
-    /**
-     * Set the podcast index live item content link
-     */
-    public function setPodcastIndexContentLink()
-    {
-        // TODO
-    }
-
-    /**
-     * Get the podcast index live item content link
-     */
-    public function getPodcastIndexContentLink()
-    {
-        // TODO
-    }
 }
