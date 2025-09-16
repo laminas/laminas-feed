@@ -33,6 +33,7 @@ use function in_array;
  * @psalm-import-type SourceObject from AttributesReader
  * @psalm-import-type IntegrityObject from AttributesReader
  * @psalm-import-type AlternateEnclosureObject from AttributesReader
+ * @psalm-import-type ContentLinkObject from AttributesReader
  */
 class EntryTest extends TestCase
 {
@@ -1098,5 +1099,69 @@ class EntryTest extends TestCase
 
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $entry->addPodcastIndexAlternateEnclosure($alternateEnclosure, $sources);
+    }
+
+    public function testSetContentLinks(): void
+    {
+        $entry = new Writer\Entry();
+
+        $contentLinks = [
+            [
+                'href'        => 'https://youtube.com/pc20/livestream',
+                'description' => 'YouTube!',
+            ],
+            [
+                'href'        => 'https://twitch.com/pc20/livestream',
+                'description' => 'Twitch!',
+            ],
+        ];
+
+        $entry->setPodcastIndexContentLinks($contentLinks);
+
+        /** @psalm-var list<ContentLinkObject> $actual */
+        $actual = $entry->getPodcastIndexContentLinks();
+        $this->assertEquals($contentLinks[0], $actual[0]);
+        $this->assertEquals($contentLinks[1], $actual[1]);
+    }
+
+    public function testAddContentLinkThrowsExceptionOnInvalidArgument(): void
+    {
+        $entry = new Writer\Entry();
+
+        $contentLink = [
+            'href'        => 'www.youtube.com/pc20/livestream',
+            'description' => 'YouTube!',
+        ];
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $entry->addPodcastIndexContentLink($contentLink);
+
+        $contentLink = [
+            'href'        => 'https://youtube.com/pc20/livestream',
+            'description' => 123,
+        ];
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $entry->addPodcastIndexContentLink($contentLink);
+
+        $contentLink = [
+            'href'        => true,
+            'description' => 'YouTube!',
+        ];
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $entry->addPodcastIndexContentLink($contentLink);
+    }
+
+    public function testAddContentLinkThrowsExceptionOnMissingArgument(): void
+    {
+        $entry = new Writer\Entry();
+
+        $contentLink = [
+            'href' => 'https://youtube.com/pc20/livestream',
+        ];
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $entry->addPodcastIndexContentLink($contentLink);
     }
 }

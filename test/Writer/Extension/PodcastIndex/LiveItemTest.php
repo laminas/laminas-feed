@@ -35,6 +35,7 @@ use function in_array;
  * @psalm-import-type SourceObject from AttributesReader
  * @psalm-import-type IntegrityObject from AttributesReader
  * @psalm-import-type AlternateEnclosureObject from AttributesReader
+ * @psalm-import-type ContentLinkObject from AttributesReader
  */
 class LiveItemTest extends TestCase
 {
@@ -369,5 +370,28 @@ class LiveItemTest extends TestCase
         /** @psalm-var list<AlternateEnclosureObject> $actual */
         $actual = $this->liveItem->getPodcastIndexAlternateEnclosures();
         $this->assertEquals($alternateEnclosure, $actual[0]);
+    }
+
+    public function testSetContentLink(): void
+    {
+        $entry = new Writer\Entry();
+
+        $contentLinks = [
+            [
+                'href'        => 'https://youtube.com/pc20/livestream',
+                'description' => 'YouTube!',
+            ],
+            [
+                'href'        => 'https://twitch.com/pc20/livestream',
+                'description' => 'Twitch!',
+            ],
+        ];
+
+        $entry->setPodcastIndexContentLinks($contentLinks);
+
+        /** @psalm-var list<ContentLinkObject> $actual */
+        $actual = $entry->getPodcastIndexContentLinks();
+        $this->assertEquals($contentLinks[0], $actual[0]);
+        $this->assertEquals($contentLinks[1], $actual[1]);
     }
 }

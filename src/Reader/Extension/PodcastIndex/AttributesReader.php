@@ -458,7 +458,7 @@ final class AttributesReader
     {
         $object              = new stdClass();
         $object->href        = $item->getAttribute('href');
-        $object->description = $item->getAttribute('description');
+        $object->description = $item->nodeValue;
         return $object;
     }
 }

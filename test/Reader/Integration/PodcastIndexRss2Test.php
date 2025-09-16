@@ -8,6 +8,7 @@ use Laminas\Feed\Reader;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
+use function count;
 use function file_get_contents;
 use function implode;
 
@@ -852,6 +853,24 @@ class PodcastIndexRss2Test extends TestCase
         $this->assertEquals($expectedB, $images[1]);
     }
 
+    public function testGetsEntryContentLinks(): void
+    {
+        $feed = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath)
+        );
+
+        /** @var Reader\Extension\PodcastIndex\Entry $entry */
+        $entry = $feed->current();
+
+        $expectedA              = new stdClass();
+        $expectedA->href        = 'https://youtube.com/pc20/livestream';
+        $expectedA->description = 'YouTube!';
+
+        $contentLinks = $entry->getPodcastIndexContentLinks();
+        $this->assertEquals(1, count($contentLinks));
+        $this->assertEquals($expectedA, $contentLinks[0]);
+    }
+
     public function testGetsLiveItemWithAttributes(): void
     {
         $feed = Reader\Reader::importString(
@@ -972,11 +991,17 @@ class PodcastIndexRss2Test extends TestCase
         /** @var Reader\Extension\PodcastIndex\LiveItem $liveItem */
         $liveItem = $feed->getPodcastIndexLiveItems()[0];
 
-        $expectedA = new stdClass();
+        $expectedA              = new stdClass();
+        $expectedA->href        = 'https://youtube.com/pc20/livestream';
+        $expectedA->description = 'YouTube!';
 
-        // TODO
+        $expectedB              = new stdClass();
+        $expectedB->href        = 'https://twitch.com/pc20/livestream';
+        $expectedB->description = 'Twitch!';
 
-        /*$contentLinks = $liveItem->getPodcastIndexContentLinks();
-        $this->assertEquals($expectedA, $contentLinks[0]);*/
+        $contentLinks = $liveItem->getPodcastIndexContentLinks();
+        $this->assertEquals(2, count($contentLinks));
+        $this->assertEquals($expectedA, $contentLinks[0]);
+        $this->assertEquals($expectedB, $contentLinks[1]);
     }
 }

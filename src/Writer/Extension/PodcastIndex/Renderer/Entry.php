@@ -62,6 +62,7 @@ class Entry extends Extension\AbstractRenderer
         $this->setEpisode($this->dom, $this->base);
         $this->setAlternateEnclosures($this->dom, $this->base);
         $this->setDetailedImages($this->dom, $this->base);
+        $this->setContentLinks($this->dom, $this->base);
         if ($this->called) {
             $this->_appendNamespaces();
         }

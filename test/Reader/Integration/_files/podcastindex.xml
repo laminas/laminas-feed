@@ -190,7 +190,6 @@
                 <podcast:source uri="ipfs://QmX33FYehk6ckGQ6g1D9D3FqZPix5JpKstKQKbaS8quUFb" />
                 <podcast:integrity type="sri" value="sha384-ExVqijgYHm15PqQqdXfW95x+Rs6C+d6E/ICxyQOeFevnxNLR/wtJNrNYTjIysUBo" />
             </podcast:alternateEnclosure>
-
             <podcast:image
                     alt="An antenna emanating signal waves"
                     purpose="artwork"
@@ -207,6 +206,7 @@
                     aspect-ratio="16/9"
                     href="https://example.com/images/ep1/pci_landscape-massive_wide.jpg"
             />
+            <podcast:contentLink href="https://youtube.com/pc20/livestream">YouTube!</podcast:contentLink>
         </item>
 
         <item>

@@ -495,4 +495,28 @@ class EntryTest extends TestCase
             }
         }
     }
+
+    public function testRendersRssContentLinkTag(): void
+    {
+        $data = [
+            [
+                'href'        => 'https://youtube.com/pc20/livestream',
+                'description' => 'YouTube!',
+            ],
+            [
+                'href'        => 'https://twitch.com/pc20/livestream',
+                'description' => 'Twitch!',
+            ],
+        ];
+
+        $this->validEntry->setPodcastIndexContentLinks($data);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $expected1 = '<podcast:contentLink href="https://youtube.com/pc20/livestream">YouTube!</podcast:contentLink>';
+        $expected2 = '<podcast:contentLink href="https://twitch.com/pc20/livestream">Twitch!</podcast:contentLink>';
+        $this->assertStringContainsString($expected1, $xml);
+        $this->assertStringContainsString($expected2, $xml);
+    }
 }
