@@ -42,7 +42,6 @@ class LiveItem extends Entry
     {
         parent::__construct();
 
-        Validator::validateLiveItem($value);
         $this->status = $this->data['status'] = $value['status'];
         $this->start  = $this->data['start'] = $value['start'];
         $this->end    = $this->data['end'] = $value['end'] ?? '';

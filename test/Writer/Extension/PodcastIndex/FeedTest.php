@@ -1450,11 +1450,69 @@ class FeedTest extends TestCase
         $this->assertEquals('live', $status);
 
         $chapters = [
-            'url' => 'https://example.org/chapters.json',
+            'url'  => 'https://example.org/chapters.json',
             'type' => 'application/json+chapters',
         ];
 
         $liveItem->setPodcastIndexChapters($chapters);
         $this->assertEquals($chapters, $liveItem->getPodcastIndexChapters());
+    }
+
+    public function testCreateMultiplePodcastIndexLiveItems(): void
+    {
+        $feed = new Writer\Feed();
+
+        $data = [
+            'status' => 'live',
+            'start'  => '2021-09-26T07:30:00.000-0600',
+            'end'    => '2021-09-26T09:30:00.000-0600',
+        ];
+
+        $liveItem = $feed->createPodcastIndexLiveItem($data);
+        $feed->addPodcastIndexLiveItem($liveItem);
+
+        $data2     = [
+            'status' => 'live',
+            'start'  => '2021-10-03T07:30:00.000-0600',
+            'end'    => '2021-10-03T09:30:00.000-0600',
+        ];
+        $liveItem2 = $feed->createPodcastIndexLiveItem($data2);
+        $feed->addPodcastIndexLiveItem($liveItem2);
+
+        $liveItems = $feed->getPodcastIndexLiveItems();
+        $this->assertCount(2, $liveItems);
+        $this->assertContains($liveItem, $liveItems);
+        $this->assertContains($liveItem2, $liveItems);
+    }
+
+    public function testRemovePodcastIndexLiveItem(): void
+    {
+        $feed = new Writer\Feed();
+
+        $data = [
+            'status' => 'live',
+            'start'  => '2021-09-26T07:30:00.000-0600',
+            'end'    => '2021-09-26T09:30:00.000-0600',
+        ];
+
+        $liveItem = $feed->createPodcastIndexLiveItem($data);
+        $feed->addPodcastIndexLiveItem($liveItem);
+
+        $data2     = [
+            'status' => 'live',
+            'start'  => '2021-10-03T07:30:00.000-0600',
+            'end'    => '2021-10-03T09:30:00.000-0600',
+        ];
+        $liveItem2 = $feed->createPodcastIndexLiveItem($data2);
+        $feed->addPodcastIndexLiveItem($liveItem2);
+
+        $feed->removePodcastIndexLiveItem(1);
+        $liveItems = $feed->getPodcastIndexLiveItems();
+        $this->assertCount(1, $liveItems);
+        $this->assertContains($liveItem, $liveItems);
+        $this->assertNotContains($liveItem2, $liveItems);
+
+        $feed->removePodcastIndexLiveItem(0);
+        $this->assertNull($feed->getPodcastIndexLiveItems());
     }
 }

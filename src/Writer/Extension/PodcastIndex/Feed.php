@@ -598,6 +598,7 @@ class Feed
      */
     public function createPodcastIndexLiveItem(array $value): LiveItem
     {
+        Validator::validateLiveItem($value);
         $liveItem = new LiveItem($value);
         if ($this->getEncoding()) {
             $liveItem->setEncoding($this->getEncoding());
