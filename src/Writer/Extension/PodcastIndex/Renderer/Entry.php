@@ -64,7 +64,7 @@ class Entry extends Extension\AbstractRenderer
         $this->setAlternateEnclosures($this->dom, $this->base);
         $this->setDetailedImages($this->dom, $this->base);
         $this->setContentLinks($this->dom, $this->base);
-        $this->setFunding($this->dom, $this->base);
+        $this->setFundings($this->dom, $this->base);
         if ($this->called) {
             $this->_appendNamespaces();
         }
@@ -401,18 +401,22 @@ class Entry extends Extension\AbstractRenderer
     /**
      * Set episode funding
      */
-    protected function setFunding(DOMDocument $dom, DOMElement $root): void
+    protected function setFundings(DOMDocument $dom, DOMElement $root): void
     {
         /** @psalm-var EntryWriter $container */
         $container = $this->getDataContainer();
 
-        /** @psalm-var null|list<FundingArray> $funding */
-        $funding = $container->getPodcastIndexFunding();
-        if ($funding === null) {
+        /** @psalm-var null|list<FundingArray> $fundings */
+        $fundings = $container->getPodcastIndexFundings();
+        if ($fundings === null) {
             return;
         }
-        $el = ElementGenerator::createPodcastIndexElement($dom, $funding, 'funding', 'title');
-        $root->appendChild($el);
+
+        foreach ($fundings as $funding) {
+            $el = ElementGenerator::createPodcastIndexElement($dom, $funding, 'funding', 'title');
+            $root->appendChild($el);
+        }
+
         $this->called = true;
     }
 }

@@ -566,16 +566,35 @@ class Entry
     }
 
     /**
-     * Set entry funding
+     * Adds a funding tag.
      *
-     * @param FundingArray $values
+     * @param FundingArray $value
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public function setPodcastIndexFunding(array $value): self
+    public function addPodcastIndexFunding(array $value): self
     {
         Validator::validateFunding($value);
-        $this->data['funding'] = $value;
+        if (! isset($this->data['fundings'])) {
+            $this->data['fundings'] = [];
+        }
+        $this->data['fundings'][] = $value;
+        return $this;
+    }
+
+    /**
+     * Set multiple funding tags
+     *
+     * @param list<FundingArray> $values
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function setPodcastIndexFundings(array $values = []): self
+    {
+        $this->data['fundings'] = [];
+        foreach ($values as $value) {
+            $this->addPodcastIndexFunding($value);
+        }
         return $this;
     }
 

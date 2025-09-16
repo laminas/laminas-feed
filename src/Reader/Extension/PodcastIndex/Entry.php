@@ -555,36 +555,32 @@ class Entry extends Extension\AbstractEntry
     }
 
     /**
-     * Get the episode funding link
+     * Get the episode fundings
+     *
+     * @psalm-return null|list<FundingObject>
      */
-    public function getFunding(): object|null
+    public function getPodcastIndexFundings(): null|array
     {
-        return $this->getPodcastIndexFunding();
-    }
-
-    /**
-     * Get the episode funding link
-     */
-    public function getPodcastIndexFunding(): object|null
-    {
-        if (array_key_exists('funding', $this->data)) {
-            /** @psalm-var null|FundingObject */
-            return $this->data['funding'];
+        if (array_key_exists('fundings', $this->data)) {
+            /** @psalm-var null|list<FundingObject> */
+            return $this->data['fundings'];
         }
 
-        $funding = null;
+        $fundings = null;
 
         $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:funding');
 
         if ($nodeList->length > 0) {
-            $item = $nodeList->item(0);
-            assert($item instanceof DOMElement);
-            $funding = AttributesReader::readFunding($item);
+            foreach ($nodeList as $entry) {
+                assert($entry instanceof DOMElement);
+                $funding    = AttributesReader::readFunding($entry);
+                $fundings[] = $funding;
+            }
         }
 
-        $this->data['funding'] = $funding;
+        $this->data['fundings'] = $fundings;
 
-        return $this->data['funding'];
+        return $this->data['fundings'];
     }
 
     /**
