@@ -22,6 +22,10 @@ use const FILTER_VALIDATE_URL;
  * This class is internal to the library and should not be referenced by consumer code.
  * Backwards Incompatible changes can occur in Minor and Patch Releases.
  *
+ * @psalm-type FundingArray = array{
+ *        title: string,
+ *        url: string
+ *      }
  * @psalm-type LicenseArray = array{
  *       identifier: string,
  *       url?: string
@@ -233,6 +237,31 @@ final class Validator
         if (! is_string($value['url']) || ! filter_var($value['url'], FILTER_VALIDATE_URL)) {
             throw new Writer\Exception\InvalidArgumentException(
                 'invalid parameter: "url" of "license": must be a url starting with "http://" or "https://"'
+            );
+        }
+    }
+
+    /**
+     * Validate funding
+     *
+     * @param FundingArray $value
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public static function validateFunding(array $value): void
+    {
+        if (! isset($value['title']) || ! isset($value['url'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "funding" must be an array containing keys "title" and "url"'
+            );
+        }
+        if (! is_string($value['title'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "title" of "funding" must be of type string.'
+            );
+        }
+        if (! is_string($value['url']) || ! filter_var($value['url'], FILTER_VALIDATE_URL)) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "url" of "funding": must be a url starting with "http://" or "https://"'
             );
         }
     }

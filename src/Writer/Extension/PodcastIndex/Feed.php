@@ -129,11 +129,7 @@ class Feed
      */
     public function setPodcastIndexFunding(array $value): Feed
     {
-        if (! isset($value['title']) || ! isset($value['url'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: "funding" must be an array containing keys "title" and "url"'
-            );
-        }
+        Validator::validateFunding($value);
         $this->data['funding'] = $value;
         return $this;
     }

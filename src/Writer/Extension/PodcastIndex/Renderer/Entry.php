@@ -32,6 +32,7 @@ use function assert;
  * @psalm-import-type IntegrityArray from Validator
  * @psalm-import-type AlternateEnclosureArray from Validator
  * @psalm-import-type ContentLinkArray from Validator
+ * @psalm-import-type FundingArray from Validator
  */
 class Entry extends Extension\AbstractRenderer
 {
@@ -63,6 +64,7 @@ class Entry extends Extension\AbstractRenderer
         $this->setAlternateEnclosures($this->dom, $this->base);
         $this->setDetailedImages($this->dom, $this->base);
         $this->setContentLinks($this->dom, $this->base);
+        $this->setFunding($this->dom, $this->base);
         if ($this->called) {
             $this->_appendNamespaces();
         }
@@ -393,6 +395,24 @@ class Entry extends Extension\AbstractRenderer
             $root->appendChild($el);
         }
 
+        $this->called = true;
+    }
+
+    /**
+     * Set episode funding
+     */
+    protected function setFunding(DOMDocument $dom, DOMElement $root): void
+    {
+        /** @psalm-var EntryWriter $container */
+        $container = $this->getDataContainer();
+
+        /** @psalm-var null|list<FundingArray> $funding */
+        $funding = $container->getPodcastIndexFunding();
+        if ($funding === null) {
+            return;
+        }
+        $el = ElementGenerator::createPodcastIndexElement($dom, $funding, 'funding', 'title');
+        $root->appendChild($el);
         $this->called = true;
     }
 }

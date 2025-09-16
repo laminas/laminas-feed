@@ -40,6 +40,7 @@ use function ucfirst;
  * @psalm-import-type IntegrityArray from Validator
  * @psalm-import-type AlternateEnclosureArray from Validator
  * @psalm-import-type ContentLinkArray from Validator
+ * @psalm-import-type FundingArray from Validator
  */
 class Entry
 {
@@ -561,6 +562,20 @@ class Entry
         foreach ($values as $value) {
             $this->addPodcastIndexContentLink($value);
         }
+        return $this;
+    }
+
+    /**
+     * Set entry funding
+     *
+     * @param FundingArray $values
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function setPodcastIndexFunding(array $value): self
+    {
+        Validator::validateFunding($value);
+        $this->data['funding'] = $value;
         return $this;
     }
 

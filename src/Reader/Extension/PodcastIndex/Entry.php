@@ -14,6 +14,7 @@ use function assert;
 /**
  * Describes PodcastIndex data of an entry in a RSS Feed
  *
+ * @psalm-import-type FundingObject from AttributesReader
  * @psalm-import-type LicenseObject from AttributesReader
  * @psalm-import-type LocationObject from AttributesReader
  * @psalm-import-type BlockObject from AttributesReader
@@ -551,6 +552,39 @@ class Entry extends Extension\AbstractEntry
         $this->data['contentLinks'] = $contentLinks;
 
         return $this->data['contentLinks'];
+    }
+
+    /**
+     * Get the episode funding link
+     */
+    public function getFunding(): object|null
+    {
+        return $this->getPodcastIndexFunding();
+    }
+
+    /**
+     * Get the episode funding link
+     */
+    public function getPodcastIndexFunding(): object|null
+    {
+        if (array_key_exists('funding', $this->data)) {
+            /** @psalm-var null|FundingObject */
+            return $this->data['funding'];
+        }
+
+        $funding = null;
+
+        $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:funding');
+
+        if ($nodeList->length > 0) {
+            $item = $nodeList->item(0);
+            assert($item instanceof DOMElement);
+            $funding = AttributesReader::readFunding($item);
+        }
+
+        $this->data['funding'] = $funding;
+
+        return $this->data['funding'];
     }
 
     /**

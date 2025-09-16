@@ -15,6 +15,10 @@ use stdClass;
  * This class is internal to the library and should not be referenced by consumer code.
  * Backwards Incompatible changes can occur in Minor and Patch Releases.
  *
+ * @psalm-type FundingObject = object{
+ *         title: string,
+ *         url: string
+ *       }
  * @psalm-type LicenseObject = object{
  *        identifier: string,
  *        url?: string
@@ -459,6 +463,20 @@ final class AttributesReader
         $object              = new stdClass();
         $object->href        = $item->getAttribute('href');
         $object->description = $item->nodeValue;
+        return $object;
+    }
+
+    /**
+     * Read podcast funding
+     *
+     * @psalm-param DOMElement $item
+     * @psalm-return FundingObject
+     */
+    public static function readFunding(DOMElement $item): object
+    {
+        $object        = new stdClass();
+        $object->url   = $item->getAttribute('url');
+        $object->title = $item->nodeValue;
         return $object;
     }
 }
