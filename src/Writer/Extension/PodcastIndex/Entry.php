@@ -39,6 +39,7 @@ use function ucfirst;
  * @psalm-import-type SourceArray from Validator
  * @psalm-import-type IntegrityArray from Validator
  * @psalm-import-type AlternateEnclosureArray from Validator
+ * @psalm-import-type ContentLinkArray from Validator
  */
 class Entry
 {
@@ -522,6 +523,43 @@ class Entry
         $this->data['detailedImages'] = [];
         foreach ($values as $value) {
             $this->addPodcastIndexDetailedImage($value);
+        }
+        return $this;
+    }
+
+    /**
+     * Adds an `contentLink` element to the episode.
+     *
+     * @param ContentLinkArray $value
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function addPodcastIndexContentLink(array $value): self
+    {
+        Validator::validateContentLink($value);
+
+        if (! isset($this->data['contentLinks'])) {
+            $this->data['contentLinks'] = [];
+        }
+
+        /** @var list<ContentLinkArray> $this->data['contentLinks'] */
+        $this->data['contentLinks'][] = $value;
+        return $this;
+    }
+
+    /**
+     * Sets multiple episode `contentLink` elements.
+     * If no argument is passed, all existing entries are removed.
+     *
+     * @param list<ContentLinkArray> $values
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function setPodcastIndexContentLinks(array $values = []): self
+    {
+        $this->data['contentLinks'] = [];
+        foreach ($values as $value) {
+            $this->addPodcastIndexContentLink($value);
         }
         return $this;
     }

@@ -35,6 +35,7 @@ use function assert;
  * @psalm-import-type SourceObject from AttributesReader
  * @psalm-import-type IntegrityObject from AttributesReader
  * @psalm-import-type AlternateEnclosureObject from AttributesReader
+ * @psalm-import-type ContentLinkObject from AttributesReader
  */
 class Entry extends Extension\AbstractEntry
 {
@@ -521,6 +522,35 @@ class Entry extends Extension\AbstractEntry
         $this->data['detailedImages'] = $images;
 
         return $this->data['detailedImages'];
+    }
+
+    /**
+     * Get the episode content links.
+     *
+     * @psalm-return null|list<ContentLinkObject>
+     */
+    public function getPodcastIndexContentLinks(): null|array
+    {
+        if (array_key_exists('contentLinks', $this->data)) {
+            /** @psalm-var null|list<ContentLinkObject> */
+            return $this->data['contentLinks'];
+        }
+
+        $contentLinks = null;
+
+        $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:contentLink');
+
+        if ($nodeList->length > 0) {
+            foreach ($nodeList as $entry) {
+                assert($entry instanceof DOMElement);
+                $contentLink    = AttributesReader::readContentLink($entry);
+                $contentLinks[] = $contentLink;
+            }
+        }
+
+        $this->data['contentLinks'] = $contentLinks;
+
+        return $this->data['contentLinks'];
     }
 
     /**

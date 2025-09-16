@@ -149,6 +149,10 @@ use stdClass;
  *       sources: list<SourceObject>,
  *       integrity?: IntegrityObject,
  * }
+ * @psalm-type ContentLinkObject = object{
+ *        href: string,
+ *        description: string,
+ *     }
  * @psalm-internal Laminas\Feed
  * @psalm-internal LaminasTest\Feed
  */
@@ -441,6 +445,20 @@ final class AttributesReader
         $object        = new stdClass();
         $object->type  = $item->getAttribute('type');
         $object->value = $item->getAttribute('value');
+        return $object;
+    }
+
+    /**
+     * Read podcast integrity
+     *
+     * @psalm-param DOMElement $item
+     * @psalm-return ContentLinkObject
+     */
+    public static function readContentLink(DOMElement $item): object
+    {
+        $object              = new stdClass();
+        $object->href        = $item->getAttribute('href');
+        $object->description = $item->getAttribute('description');
         return $object;
     }
 }

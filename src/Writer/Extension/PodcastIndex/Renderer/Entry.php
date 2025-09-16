@@ -31,6 +31,7 @@ use function assert;
  * @psalm-import-type SourceArray from Validator
  * @psalm-import-type IntegrityArray from Validator
  * @psalm-import-type AlternateEnclosureArray from Validator
+ * @psalm-import-type ContentLinkArray from Validator
  */
 class Entry extends Extension\AbstractRenderer
 {
@@ -366,6 +367,28 @@ class Entry extends Extension\AbstractRenderer
 
         foreach ($detailedImages as $detailedImage) {
             $el = ElementGenerator::createPodcastIndexElement($dom, $detailedImage, 'image');
+            $root->appendChild($el);
+        }
+
+        $this->called = true;
+    }
+
+    /**
+     * Set episode content links
+     */
+    private function setContentLinks(DOMDocument $dom, DOMElement $root): void
+    {
+        /** @psalm-var EntryWriter $container */
+        $container = $this->getDataContainer();
+
+        /** @psalm-var list<ContentLinkArray>|null $contentLinks */
+        $contentLinks = $container->getPodcastIndexContentLinks();
+        if ($contentLinks === null || $contentLinks === []) {
+            return;
+        }
+
+        foreach ($contentLinks as $contentLink) {
+            $el = ElementGenerator::createPodcastIndexElement($dom, $contentLink, 'contentLink', 'description');
             $root->appendChild($el);
         }
 

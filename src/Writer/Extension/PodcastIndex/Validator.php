@@ -161,6 +161,10 @@ use const FILTER_VALIDATE_URL;
  *        start: string,
  *        end?: string
  *      }
+ * @psalm-type ContentLinkArray = array{
+ *        href: string,
+ *        description: string,
+ *      }
  * @psalm-internal Laminas\Feed
  * @psalm-internal LaminasTest\Feed
  */
@@ -968,6 +972,31 @@ final class Validator
         if (isset($value['end']) && ! is_string($value['end'])) {
             throw new Writer\Exception\InvalidArgumentException(
                 'invalid parameter: key "end" of "liveItem" must be of type string'
+            );
+        }
+    }
+
+    /**
+     * Validates content link
+     *
+     * @param ContentLinkArray $value
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public static function validateContentLink(array $value): void
+    {
+        if (! isset($value['href'], $value['description'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "contentLink" must be an array containing the keys "href" and "description"'
+            );
+        }
+        if (! filter_var($value['href'], FILTER_VALIDATE_URL)) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "href" of "contentLink" must be a url, starting with "http://" or "https://"'
+            );
+        }
+        if (! is_string($value['description'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "description" of "contentLink" must be of type string'
             );
         }
     }
