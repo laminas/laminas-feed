@@ -164,7 +164,8 @@ final class Validator
     /**
      * Validate person
      *
-     * @psalm-param PersonArray $value
+     * @param array<array-key, mixed> $value
+     * @psalm-assert PersonArray $value
      * @throws Writer\Exception\InvalidArgumentException
      */
     public static function validatePerson(array $value): void
@@ -204,7 +205,8 @@ final class Validator
     /**
      * Validate license
      *
-     * @param LicenseArray $value
+     * @param array<array-key, mixed> $value
+     * @psalm-assert LicenseArray $value
      * @throws Writer\Exception\InvalidArgumentException
      */
     public static function validateLicense(array $value): void
@@ -229,7 +231,8 @@ final class Validator
     /**
      * Validate location
      *
-     * @param LocationArray $value
+     * @param array<array-key, mixed> $value
+     * @psalm-assert LocationArray $value
      * @throws Writer\Exception\InvalidArgumentException
      */
     public static function validateLocation(array $value): void
@@ -269,7 +272,8 @@ final class Validator
     /**
      * Validates txt
      *
-     * @param TxtArray $value
+     * @param array<array-key, mixed> $value
+     * @psalm-assert TxtArray $value
      * @throws Writer\Exception\InvalidArgumentException
      */
     public static function validateTxt(array $value): void
@@ -294,7 +298,8 @@ final class Validator
     /**
      * Validates images srcset
      *
-     * @param array{srcset: string} $value
+     * @param array<array-key, mixed> $value
+     * @psalm-assert array{srcset: string} $value
      * @throws Writer\Exception\InvalidArgumentException
      */
     public static function validateImages(array $value): void
@@ -314,7 +319,8 @@ final class Validator
     /**
      * Validates image
      *
-     * @param DetailedImageArray $value
+     * @param array<array-key, mixed> $value
+     * @psalm-assert DetailedImageArray $value
      * @throws Writer\Exception\InvalidArgumentException
      */
     public static function validateDetailedImage(array $value): void
@@ -364,7 +370,8 @@ final class Validator
     /**
      * Validates update frequency
      *
-     * @param UpdateFrequencyArray $value
+     * @param array<array-key, mixed> $value
+     * @psalm-assert UpdateFrequencyArray $value
      * @throws Writer\Exception\InvalidArgumentException
      */
     public static function validateUpdateFrequency(array $value): void
@@ -399,7 +406,8 @@ final class Validator
     /**
      * Validates trailer
      *
-     * @param TrailerArray $value
+     * @param array<array-key, mixed> $value
+     * @psalm-assert TrailerArray $value
      * @throws Writer\Exception\InvalidArgumentException
      */
     public static function validateTrailer(array $value): void
@@ -445,7 +453,8 @@ final class Validator
     /**
      * Validates social interact
      *
-     * @param SocialInteractArray $value
+     * @param array<array-key, mixed> $value
+     * @psalm-assert SocialInteractArray $value
      * @throws Writer\Exception\InvalidArgumentException
      */
     public static function validateSocialInteract(array $value): void
@@ -486,7 +495,8 @@ final class Validator
     /**
      * Validates guid
      *
-     * @param array{value: string} $value
+     * @param array<array-key, mixed> $value
+     * @psalm-assert array{value: string} $value
      * @throws Writer\Exception\InvalidArgumentException
      */
     public static function validateGuid(array $value): void
@@ -506,7 +516,8 @@ final class Validator
     /**
      * Validates medium
      *
-     * @param array{value: string} $value
+     * @param array<array-key, mixed> $value
+     * @psalm-assert array{value: string} $value
      * @throws Writer\Exception\InvalidArgumentException
      */
     public static function validateMedium(array $value): void
@@ -527,7 +538,8 @@ final class Validator
     /**
      * Validates block
      *
-     * @param BlockArray $value
+     * @param array<array-key, mixed> $value
+     * @psalm-assert BlockArray $value
      * @throws Writer\Exception\InvalidArgumentException
      */
     public static function validateBlock(array $value): void
@@ -552,7 +564,8 @@ final class Validator
     /**
      * Validates block
      *
-     * @param array{usesPodping: bool} $value
+     * @param array<array-key, mixed> $value
+     * @psalm-assert array{usesPodping: bool} $value
      * @throws Writer\Exception\InvalidArgumentException
      */
     public static function validatePodping(array $value): void
@@ -572,7 +585,8 @@ final class Validator
     /**
      * Validate the values of the remote item.
      *
-     * @param RemoteItemArray $value
+     * @param array<array-key, mixed> $value
+     * @psalm-assert RemoteItemArray $value
      * @throws Writer\Exception\InvalidArgumentException
      * @psalm-suppress DocblockTypeContradiction
      */
@@ -616,7 +630,8 @@ final class Validator
     /**
      * Validates value
      *
-     * @param ValueArray $value
+     * @param array<array-key, mixed> $value
+     * @psalm-assert ValueArray $value
      * @throws Writer\Exception\InvalidArgumentException
      */
     public static function validateValue(array $value): void
@@ -647,7 +662,8 @@ final class Validator
     /**
      * Validates valueRecipient
      *
-     * @param ValueRecipientArray $value
+     * @param array<array-key, mixed> $value
+     * @psalm-assert ValueRecipientArray $value
      * @throws Writer\Exception\InvalidArgumentException
      */
     public static function validateValueRecipient(array $value): void
@@ -698,7 +714,8 @@ final class Validator
     /**
      * Validate the attributes of the value time split.
      *
-     * @psalm-param ValueTimeSplitArray $value
+     * @param array<array-key, mixed> $value
+     * @psalm-assert ValueTimeSplitArray $value
      * @throws Writer\Exception\InvalidArgumentException
      */
     public static function validateValueTimeSplit(array $value): void
@@ -729,9 +746,15 @@ final class Validator
             );
         }
 
+        /** @var list<array<array-key, mixed>> $valueRecipients */
+        $valueRecipients = $value['valueRecipients'] ?? [];
+
+        /** @var array<array-key, mixed> $remoteItem */
+        $remoteItem = $value['remoteItem'] ?? [];
+
         // check that exactly one of valueRecipients or remoteItem is set
-        $usesRecipients = isset($value['valueRecipients']) && count($value['valueRecipients']) > 0;
-        $usesRemoteItem = isset($value['remoteItem']) && count($value['remoteItem']) > 0;
+        $usesRecipients = count($valueRecipients) > 0;
+        $usesRemoteItem = count($remoteItem) > 0;
 
         if (! $usesRecipients && ! $usesRemoteItem) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -744,18 +767,19 @@ final class Validator
             );
         }
         if ($usesRecipients) {
-            foreach ($value['valueRecipients'] as $valueRecipient) {
+            foreach ($valueRecipients as $valueRecipient) {
                 self::validateValueRecipient($valueRecipient);
             }
         } else {
-            self::validateRemoteItem($value['remoteItem']);
+            self::validateRemoteItem($remoteItem);
         }
     }
 
     /**
      * Validates alternate enclosure
      *
-     * @param AlternateEnclosureArray $value
+     * @param array<array-key, mixed> $value
+     * @psalm-assert AlternateEnclosureArray $value
      * @throws Writer\Exception\InvalidArgumentException
      */
     public static function validateAlternateEnclosure(array $value): void
@@ -815,7 +839,8 @@ final class Validator
     /**
      * Validates source
      *
-     * @param SourceArray $value
+     * @param array<array-key, mixed> $value
+     * @psalm-assert SourceArray $value
      * @throws Writer\Exception\InvalidArgumentException
      */
     public static function validateSource(array $value): void
@@ -840,7 +865,8 @@ final class Validator
     /**
      * Validates integrity
      *
-     * @param IntegrityArray $value
+     * @param array<array-key, mixed> $value
+     * @psalm-assert IntegrityArray $value
      * @throws Writer\Exception\InvalidArgumentException
      */
     public static function validateIntegrity(array $value): void
@@ -865,7 +891,8 @@ final class Validator
     /**
      * Validates season
      *
-     * @param SeasonArray $value
+     * @param array<array-key, mixed> $value
+     * @psalm-assert SeasonArray $value
      * @throws Writer\Exception\InvalidArgumentException
      */
     public static function validateSeason(array $value): void
@@ -890,7 +917,8 @@ final class Validator
     /**
      * Validates episode
      *
-     * @param EpisodeArray $value
+     * @param array<array-key, mixed> $value
+     * @psalm-assert EpisodeArray $value
      * @throws Writer\Exception\InvalidArgumentException
      */
     public static function validateEpisode(array $value): void

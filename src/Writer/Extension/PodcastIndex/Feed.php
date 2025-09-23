@@ -127,7 +127,6 @@ class Feed
      *
      * @param LicenseArray $value
      * @return $this
-     * @throws Writer\Exception\InvalidArgumentException
      */
     public function setPodcastIndexLicense(array $value): self
     {
@@ -141,7 +140,6 @@ class Feed
      *
      * @param LocationArray $value
      * @return $this
-     * @throws Writer\Exception\InvalidArgumentException
      */
     public function setPodcastIndexLocation(array $value): self
     {
@@ -159,7 +157,6 @@ class Feed
      *
      * @param ImagesArray $value
      * @return $this
-     * @throws Writer\Exception\InvalidArgumentException
      */
     public function setPodcastIndexImages(array $value): self
     {
@@ -173,7 +170,6 @@ class Feed
      *
      * @param DetailedImageArray $value
      * @return $this
-     * @throws Writer\Exception\InvalidArgumentException
      */
     public function addPodcastIndexDetailedImage(array $value): self
     {
@@ -194,7 +190,6 @@ class Feed
      *
      * @param list<DetailedImageArray> $values
      * @return $this
-     * @throws Writer\Exception\InvalidArgumentException
      */
     public function setPodcastIndexDetailedImages(array $values = []): self
     {
@@ -210,7 +205,6 @@ class Feed
      *
      * @param UpdateFrequencyArray $value
      * @return $this
-     * @throws Writer\Exception\InvalidArgumentException
      */
     public function setPodcastIndexUpdateFrequency(array $value): self
     {
@@ -224,7 +218,6 @@ class Feed
      *
      * @psalm-param PersonArray $value
      * @return $this
-     * @throws Writer\Exception\InvalidArgumentException
      */
     public function addPodcastIndexPerson(array $value): self
     {
@@ -245,7 +238,6 @@ class Feed
      *
      * @psalm-param list<PersonArray> $values
      * @return $this
-     * @throws Writer\Exception\InvalidArgumentException
      */
     public function setPodcastIndexPeople(array $values = []): self
     {
@@ -263,7 +255,6 @@ class Feed
      *
      * @psalm-param list<PersonArray> $values
      * @return $this
-     * @throws Writer\Exception\InvalidArgumentException
      */
     public function setPodcastIndexPersons(array $values = []): self
     {
@@ -275,7 +266,6 @@ class Feed
      *
      * @param TrailerArray $value
      * @return $this
-     * @throws Writer\Exception\InvalidArgumentException
      */
     public function setPodcastIndexTrailer(array $value): self
     {
@@ -289,7 +279,6 @@ class Feed
      *
      * @param array{value: string} $value
      * @return $this
-     * @throws Writer\Exception\InvalidArgumentException
      */
     public function setPodcastIndexGuid(array $value): self
     {
@@ -303,7 +292,6 @@ class Feed
      *
      * @param array{value: string} $value
      * @return $this
-     * @throws Writer\Exception\InvalidArgumentException
      */
     public function setPodcastIndexMedium(array $value): self
     {
@@ -317,7 +305,6 @@ class Feed
      *
      * @param BlockArray $value
      * @return $this
-     * @throws Writer\Exception\InvalidArgumentException
      */
     public function addPodcastIndexBlock(array $value): self
     {
@@ -338,7 +325,6 @@ class Feed
      *
      * @psalm-param list<BlockArray> $values
      * @return $this
-     * @throws Writer\Exception\InvalidArgumentException
      */
     public function setPodcastIndexBlocks(array $values = []): self
     {
@@ -355,7 +341,6 @@ class Feed
      *
      * @param TxtArray $value
      * @return $this
-     * @throws Writer\Exception\InvalidArgumentException
      * @psalm-suppress DocblockTypeContradiction
      */
     public function addPodcastIndexTxt(array $value): self
@@ -377,7 +362,6 @@ class Feed
      *
      * @psalm-param list<TxtArray> $values
      * @return $this
-     * @throws Writer\Exception\InvalidArgumentException
      */
     public function setPodcastIndexTxts(array $values = []): self
     {
@@ -394,7 +378,6 @@ class Feed
      *
      * @param array{usesPodping: bool} $value
      * @return $this
-     * @throws Writer\Exception\InvalidArgumentException
      */
     public function setPodcastIndexPodping(array $value): self
     {
@@ -451,7 +434,6 @@ class Feed
      *
      * @psalm-param list<RemoteItemArray> $values
      * @return $this
-     * @throws Writer\Exception\InvalidArgumentException
      */
     public function setPodcastIndexPodroll(array $values = []): self
     {
@@ -469,7 +451,6 @@ class Feed
      *
      * @psalm-param RemoteItemArray $value
      * @return $this
-     * @throws Writer\Exception\InvalidArgumentException
      */
     public function addPodcastIndexPodrollRemoteItem(array $value): self
     {
@@ -493,7 +474,6 @@ class Feed
      *
      * @psalm-param null|RemoteItemArray $value
      * @return $this
-     * @throws Writer\Exception\InvalidArgumentException
      */
     public function setPodcastIndexPublisher(?array $value = null): self
     {
@@ -512,7 +492,6 @@ class Feed
      * All value entries will be removed, including their nested valueRecipients.
      *
      * @return $this
-     * @throws Writer\Exception\InvalidArgumentException
      */
     public function resetPodcastIndexValues(): self
     {
