@@ -23,6 +23,7 @@ use function ucfirst;
 /**
  * Describes PodcastIndex data of a RSS Feed
  *
+ * @psalm-import-type FundingArray from Validator
  * @psalm-import-type LicenseArray from Validator
  * @psalm-import-type LocationArray from Validator
  * @psalm-import-type BlockArray from Validator
@@ -123,14 +124,51 @@ class Feed
     }
 
     /**
-     * Set feed funding
+     * Sets a single feed funding tag.
      *
+     * @deprecated Use `setPodcastIndexFundings()` or `addPodcastIndexFunding()` instead.
+     *
+     * @param FundingArray $value
+     * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
     public function setPodcastIndexFunding(array $value): Feed
     {
         Validator::validateFunding($value);
         $this->data['funding'] = $value;
+        return $this;
+    }
+
+    /**
+     * Adds a feed funding tag.
+     *
+     * @param FundingArray $value
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function addPodcastIndexFunding(array $value): Feed
+    {
+        Validator::validateFunding($value);
+        if (! isset($this->data['fundings'])) {
+            $this->data['fundings'] = [];
+        }
+        $this->data['fundings'][] = $value;
+        return $this;
+    }
+
+    /**
+     * Set multiple funding tags
+     *
+     * @param list<FundingArray> $values
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function setPodcastIndexFundings(array $values = []): self
+    {
+        $this->data['fundings'] = [];
+        foreach ($values as $value) {
+            $this->addPodcastIndexFunding($value);
+        }
         return $this;
     }
 

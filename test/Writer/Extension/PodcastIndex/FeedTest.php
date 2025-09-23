@@ -10,6 +10,8 @@ use Laminas\Feed\Writer;
 use Laminas\Feed\Writer\Extension\PodcastIndex\LiveItem;
 use PHPUnit\Framework\TestCase;
 
+use function array_diff_key;
+use function array_key_first;
 use function count;
 use function implode;
 use function in_array;
@@ -102,15 +104,30 @@ class FeedTest extends TestCase
         $this->assertEquals($funding, $feed->getPodcastIndexFunding());
     }
 
+    public function testSetFundingHandleDeprecated(): void
+    {
+        // TODO: use new get method and test if deprecated setter is still handled!
+        $feed = new Writer\Feed();
+
+        $funding = [
+            'title' => 'Support the show!',
+            'url'   => 'http://example.com/donate',
+        ];
+        $feed->setPodcastIndexFunding($funding);
+        /*var_dump($feed->getPodcastIndexFunding());
+        die();*/
+        $this->assertEquals($funding, $feed->getPodcastIndexFundings()[0]);
+    }
+
     public function testSetFundingThrowsExceptionOnInvalidArguments(): void
     {
         $feed = new Writer\Feed();
 
-        $locked = [
+        $funding = [
             'abc' => 'def',
         ];
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
-        $feed->setPodcastIndexFunding($locked);
+        $feed->setPodcastIndexFunding($funding);
     }
 
     public function testSetLicense(): void
@@ -326,7 +343,7 @@ class FeedTest extends TestCase
         $this->assertEquals($image, $images[0]);
     }
 
-    public function testAddDetailedImageThrowsExceptionOnInvalidArguments(): void
+    public function testAddDetailedImageThrowsExceptionOnMissingHref(): void
     {
         $feed = new Writer\Feed();
 
@@ -336,61 +353,59 @@ class FeedTest extends TestCase
         ];
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $feed->addPodcastIndexDetailedImage($image);
+    }
 
-        // invalid href
+    public function testAddDetailedImageThrowsExceptionOnInvalidHref(): void
+    {
+        $feed = new Writer\Feed();
+
         $image = [
             'href' => "example.com/images/ep1/pci_square-massive.jpg",
         ];
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $feed->addPodcastIndexDetailedImage($image);
+    }
 
-        // invalid alt
-        $image = [
-            'href' => "https://example.com/images/ep1/pci_square-massive.jpg",
-            'alt'  => 1234,
-        ];
-        $this->expectException(Writer\Exception\InvalidArgumentException::class);
-        $feed->addPodcastIndexDetailedImage($image);
+    public function testAddDetailedImageThrowsExceptionOnInvalidArguments(): void
+    {
+        $feed = new Writer\Feed();
 
-        // invalid aspectRatio
-        $image = [
-            'href'        => "https://example.com/images/ep1/pci_square-massive.jpg",
-            'aspectRatio' => 1234,
+        $invalidImages = [
+            [
+                'href' => "https://example.com/images/ep1/pci_square-massive.jpg",
+                'alt'  => 1234,
+            ],
+            [
+                'href'        => "https://example.com/images/ep1/pci_square-massive.jpg",
+                'aspectRatio' => 1234,
+            ],
+            [
+                'href'  => "https://example.com/images/ep1/pci_square-massive.jpg",
+                'width' => '1234',
+            ],
+            [
+                'href'   => "https://example.com/images/ep1/pci_square-massive.jpg",
+                'height' => '1234',
+            ],
+            [
+                'href' => "https://example.com/images/ep1/pci_square-massive.jpg",
+                'type' => true,
+            ],
+            [
+                'href'    => "https://example.com/images/ep1/pci_square-massive.jpg",
+                'purpose' => true,
+            ],
         ];
-        $this->expectException(Writer\Exception\InvalidArgumentException::class);
-        $feed->addPodcastIndexDetailedImage($image);
 
-        // invalid width
-        $image = [
-            'href'  => "https://example.com/images/ep1/pci_square-massive.jpg",
-            'width' => '1234',
-        ];
-        $this->expectException(Writer\Exception\InvalidArgumentException::class);
-        $feed->addPodcastIndexDetailedImage($image);
-
-        // invalid height
-        $image = [
-            'href'   => "https://example.com/images/ep1/pci_square-massive.jpg",
-            'height' => '1234',
-        ];
-        $this->expectException(Writer\Exception\InvalidArgumentException::class);
-        $feed->addPodcastIndexDetailedImage($image);
-
-        // invalid type
-        $image = [
-            'href' => "https://example.com/images/ep1/pci_square-massive.jpg",
-            'type' => true,
-        ];
-        $this->expectException(Writer\Exception\InvalidArgumentException::class);
-        $feed->addPodcastIndexDetailedImage($image);
-
-        // invalid purpose
-        $image = [
-            'href'    => "https://example.com/images/ep1/pci_square-massive.jpg",
-            'purpose' => true,
-        ];
-        $this->expectException(Writer\Exception\InvalidArgumentException::class);
-        $feed->addPodcastIndexDetailedImage($image);
+        foreach ($invalidImages as $image) {
+            try {
+                $feed->addPodcastIndexDetailedImage($image);
+                $invalidKey = array_key_first(array_diff_key($image, ['href' => true]));
+                $this->assertTrue(false, "Expected exception was not thrown on the invalid key `$invalidKey`");
+            } catch (Writer\Exception\InvalidArgumentException $e) {
+                $this->assertTrue(true);
+            }
+        }
     }
 
     public function testSetUpdateFrequency(): void

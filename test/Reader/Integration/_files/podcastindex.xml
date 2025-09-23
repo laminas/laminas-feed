@@ -98,6 +98,7 @@
             <link>https://example.com/podcast/live</link>
             <guid isPermaLink="true">https://example.com/live</guid>
             <author>John Doe (john@example.com)</author>
+            <podcast:funding url="http://example.com/live-item/donate">Support the live Episode!</podcast:funding>
             <podcast:person href="https://www.podchaser.com/creators/adam-curry-107ZzmWE5f"
                             img="https://example.com/images/adamcurry.jpg">Adam Curry</podcast:person>
             <podcast:person role="guest" href="https://github.com/daveajones/"
@@ -134,6 +135,7 @@
             <itunes:isClosedCaptioned>Yes</itunes:isClosedCaptioned>
             <podcast:txt purpose="verify">S6lpp-7ZCn8-dZfGc-OoyaG</podcast:txt>
             <podcast:txt purpose="applepodcastsverify">05124</podcast:txt>
+            <podcast:funding url="http://example.com/item/donate">Support the first Episode!</podcast:funding>
             <podcast:license url="https://example.org/mypodcastlicense/full.pdf">my-podcast-license-v1</podcast:license>
             <podcast:person group="writing" role="guest" href="https://www.wikipedia/alicebrown" img="http://example.com/images/alicebrown.jpg">James Brown</podcast:person>
             <podcast:transcript

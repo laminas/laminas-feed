@@ -89,7 +89,9 @@ class Feed extends Extension\AbstractFeed
     }
 
     /**
-     * Get the podcast funding link
+     * Get a single feed funding
+     *
+     * @deprecated Multiple `funding` tags are allowed now. Use `getPodcastIndexFundings()` instead.
      */
     public function getFunding(): object|null
     {
@@ -97,7 +99,9 @@ class Feed extends Extension\AbstractFeed
     }
 
     /**
-     * Get the podcast funding link
+     * Get a single feed funding
+     *
+     * @deprecated Multiple `funding` tags are allowed now. Use `getPodcastIndexFundings()` instead.
      */
     public function getPodcastIndexFunding(): object|null
     {
@@ -119,6 +123,40 @@ class Feed extends Extension\AbstractFeed
         $this->data['funding'] = $funding;
 
         return $this->data['funding'];
+    }
+
+    /**
+     * Get multiple feed fundings
+     *
+     * @psalm-return null|list<FundingObject>
+     */
+    public function getPodcastIndexFundings(): null|array
+    {
+        $fundings = null;
+
+        // include deprecated single funding entry if exists
+        if (array_key_exists('fundings', $this->data) || array_key_exists('funding', $this->data)) {
+            /** @psalm-var null|list<FundingObject> $fundings */
+            $fundings = $this->data['fundings'];
+            if (isset($this->data['funding'])) {
+                $fundings[] = $this->data['funding'];
+            }
+            return $fundings;
+        }
+
+        $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:funding');
+
+        if ($nodeList->length > 0) {
+            foreach ($nodeList as $entry) {
+                assert($entry instanceof DOMElement);
+                $funding    = AttributesReader::readFunding($entry);
+                $fundings[] = $funding;
+            }
+        }
+
+        $this->data['fundings'] = $fundings;
+
+        return $this->data['fundings'];
     }
 
     /**

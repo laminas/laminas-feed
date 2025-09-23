@@ -394,4 +394,16 @@ class LiveItemTest extends TestCase
         $this->assertEquals($contentLinks[0], $actual[0]);
         $this->assertEquals($contentLinks[1], $actual[1]);
     }
+
+    public function testAddFunding(): void
+    {
+        $entry = new Writer\Entry();
+
+        $funding = [
+            'title' => 'Support the show!',
+            'url'   => 'http://example.com/donate',
+        ];
+        $entry->addPodcastIndexFunding($funding);
+        $this->assertEquals($funding, $entry->getPodcastIndexFundings()[0]);
+    }
 }

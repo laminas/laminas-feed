@@ -65,6 +65,20 @@ class PodcastIndexRss2Test extends TestCase
         $this->assertEquals($expected, $feed->getPodcastIndexFunding());
     }
 
+    public function testGetsFundings(): void
+    {
+        /** @var Reader\Extension\PodcastIndex\Feed $feed */
+        $feed = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath)
+        );
+
+        $expected        = new stdClass();
+        $expected->url   = 'http://example.com/donate';
+        $expected->title = 'Support the show!';
+
+        $this->assertEquals($expected, $feed->getPodcastIndexFundings()[0]);
+    }
+
     public function testGetsLicense(): void
     {
         /** @var Reader\Extension\PodcastIndex\Feed $feed */
@@ -511,6 +525,22 @@ class PodcastIndexRss2Test extends TestCase
         $expected->country     = 'US';
 
         $this->assertEquals($expected, $entry->getPodcastIndexLocation());
+    }
+
+    public function testGetsEntryFundings(): void
+    {
+        $feed = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath)
+        );
+
+        /** @var Reader\Extension\PodcastIndex\Entry $entry */
+        $entry = $feed->current();
+
+        $expected        = new stdClass();
+        $expected->url   = 'http://example.com/item/donate';
+        $expected->title = 'Support the first Episode!';
+
+        $this->assertEquals($expected, $entry->getPodcastIndexFundings()[0]);
     }
 
     public function testGetsEntryLicense(): void
@@ -1003,5 +1033,21 @@ class PodcastIndexRss2Test extends TestCase
         $this->assertEquals(2, count($contentLinks));
         $this->assertEquals($expectedA, $contentLinks[0]);
         $this->assertEquals($expectedB, $contentLinks[1]);
+    }
+
+    public function testGetsLiveItemFundings(): void
+    {
+        $feed = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath)
+        );
+
+        /** @var Reader\Extension\PodcastIndex\LiveItem $liveItem */
+        $liveItem = $feed->getPodcastIndexLiveItems()[0];
+
+        $expected        = new stdClass();
+        $expected->url   = 'http://example.com/live-item/donate';
+        $expected->title = 'Support the live Episode!';
+
+        $this->assertEquals($expected, $liveItem->getPodcastIndexFundings()[0]);
     }
 }

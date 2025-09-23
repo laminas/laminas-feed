@@ -15,6 +15,7 @@ use function assert;
 /**
  * Renders PodcastIndex data of a RSS Feed
  *
+ * @psalm-import-type FundingArray from PodcastIndex\Validator
  * @psalm-import-type LicenseArray from PodcastIndex\Validator
  * @psalm-import-type LocationArray from PodcastIndex\Validator
  * @psalm-import-type BlockArray from PodcastIndex\Validator
@@ -130,19 +131,41 @@ class Feed extends Extension\AbstractRenderer
     }
 
     /**
-     * Set feed funding
+     * Set a single feed funding tag
      */
     protected function setFunding(DOMDocument $dom, DOMElement $root): void
     {
         $container = $this->getFeedWriter();
 
-        /** @psalm-var null|array<string, string> $funding */
+        /** @psalm-var null|FundingArray $funding */
         $funding = $container->getPodcastIndexFunding();
         if ($funding === null) {
             return;
         }
         $el = ElementGenerator::createPodcastIndexElement($dom, $funding, 'funding', 'title');
         $root->appendChild($el);
+        $this->called = true;
+    }
+
+    /**
+     * Set multiple funding tags
+     */
+    protected function setFundings(DOMDocument $dom, DOMElement $root): void
+    {
+        /** @psalm-var FeedWriter $container */
+        $container = $this->getDataContainer();
+
+        /** @psalm-var null|list<FundingArray> $fundings */
+        $fundings = $container->getPodcastIndexFundings();
+        if ($fundings === null) {
+            return;
+        }
+
+        foreach ($fundings as $funding) {
+            $el = ElementGenerator::createPodcastIndexElement($dom, $funding, 'funding', 'title');
+            $root->appendChild($el);
+        }
+
         $this->called = true;
     }
 

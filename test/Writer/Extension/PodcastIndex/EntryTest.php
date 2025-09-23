@@ -8,6 +8,8 @@ use Laminas\Feed\Reader\Extension\PodcastIndex\AttributesReader;
 use Laminas\Feed\Writer;
 use PHPUnit\Framework\TestCase;
 
+use function array_diff_key;
+use function array_key_first;
 use function count;
 use function in_array;
 
@@ -1003,76 +1005,53 @@ class EntryTest extends TestCase
             ['uri' => 'ipfs://QmX33FYehk6ckGQ6g1D9D3FqZPix5JpKstKQKbaS8quUFb'],
         ];
 
-        // missing type
-        $alternateEnclosure = [
-            'something_wrong' => 1234,
+        $invalidEnclosures = [
+            [
+                'something_wrong' => 1234,
+            ],
+            [
+                'type'   => 'video/mp4',
+                'length' => '7924786 seconds',
+            ],
+            [
+                'type'    => 'video/mp4',
+                'bitrate' => '511276.52',
+            ],
+            [
+                'type'   => 'video/mp4',
+                'height' => '720px',
+            ],
+            [
+                'type' => 'video/mp4',
+                'lang' => 1234,
+            ],
+            [
+                'type'  => 'video/mp4',
+                'title' => false,
+            ],
+            [
+                'type' => 'video/mp4',
+                'rel'  => true,
+            ],
+            [
+                'type'   => 'video/mp4',
+                'codecs' => true,
+            ],
+            [
+                'type'    => 'video/mp4',
+                'default' => 'yes',
+            ],
         ];
-        $this->expectException(Writer\Exception\InvalidArgumentException::class);
-        $entry->addPodcastIndexAlternateEnclosure($alternateEnclosure, $sources);
 
-        // invalid length
-        $alternateEnclosure = [
-            'type'   => 'video/mp4',
-            'length' => '7924786 seconds',
-        ];
-        $this->expectException(Writer\Exception\InvalidArgumentException::class);
-        $entry->addPodcastIndexAlternateEnclosure($alternateEnclosure, $sources);
-
-        // invalid bitrate
-        $alternateEnclosure = [
-            'type'    => 'video/mp4',
-            'bitrate' => '511276.52',
-        ];
-        $this->expectException(Writer\Exception\InvalidArgumentException::class);
-        $entry->addPodcastIndexAlternateEnclosure($alternateEnclosure, $sources);
-
-        // invalid height
-        $alternateEnclosure = [
-            'type'   => 'video/mp4',
-            'height' => '720px',
-        ];
-        $this->expectException(Writer\Exception\InvalidArgumentException::class);
-        $entry->addPodcastIndexAlternateEnclosure($alternateEnclosure, $sources);
-
-        // invalid lang
-        $alternateEnclosure = [
-            'type' => 'video/mp4',
-            'lang' => 1234,
-        ];
-        $this->expectException(Writer\Exception\InvalidArgumentException::class);
-        $entry->addPodcastIndexAlternateEnclosure($alternateEnclosure, $sources);
-
-        // invalid title
-        $alternateEnclosure = [
-            'type'  => 'video/mp4',
-            'title' => false,
-        ];
-        $this->expectException(Writer\Exception\InvalidArgumentException::class);
-        $entry->addPodcastIndexAlternateEnclosure($alternateEnclosure, $sources);
-
-        // invalid rel
-        $alternateEnclosure = [
-            'type' => 'video/mp4',
-            'rel'  => true,
-        ];
-        $this->expectException(Writer\Exception\InvalidArgumentException::class);
-        $entry->addPodcastIndexAlternateEnclosure($alternateEnclosure, $sources);
-
-        // invalid codecs
-        $alternateEnclosure = [
-            'type'   => 'video/mp4',
-            'codecs' => true,
-        ];
-        $this->expectException(Writer\Exception\InvalidArgumentException::class);
-        $entry->addPodcastIndexAlternateEnclosure($alternateEnclosure, $sources);
-
-        // invalid default
-        $alternateEnclosure = [
-            'type'    => 'video/mp4',
-            'default' => 'yes',
-        ];
-        $this->expectException(Writer\Exception\InvalidArgumentException::class);
-        $entry->addPodcastIndexAlternateEnclosure($alternateEnclosure, $sources);
+        foreach ($invalidEnclosures as $alternateEnclosure) {
+            try {
+                $entry->addPodcastIndexAlternateEnclosure($alternateEnclosure, $sources);
+                $invalidKey = array_key_first(array_diff_key($alternateEnclosure, ['type' => true]));
+                $this->assertTrue(false, "Expected exception was not thrown on the invalid key `$invalidKey`");
+            } catch (Writer\Exception\InvalidArgumentException $e) {
+                $this->assertTrue(true);
+            }
+        }
     }
 
     public function testSetAlternateEnclosureThrowsExceptionOnMissingSources(): void
@@ -1101,6 +1080,32 @@ class EntryTest extends TestCase
         $entry->addPodcastIndexAlternateEnclosure($alternateEnclosure, $sources);
     }
 
+    public function testSetDetailedImages(): void
+    {
+        $entry  = new Writer\Entry();
+        $images = [
+            [
+                'alt'         => "An antenna emanating signal waves",
+                'purpose'     => "artwork",
+                'type'        => "image/jpeg",
+                'aspectRatio' => "1/1",
+                'href'        => "https://example.com/images/ep1/pci_square-massive.jpg",
+                'width'       => 1400,
+                'height'      => 1400,
+            ],
+            [
+                'alt'         => "Another antenna emanating signal waves",
+                'purpose'     => "artwork social",
+                'type'        => "image/jpeg",
+                'aspectRatio' => "16/9",
+                'href'        => "https://example.com/images/ep1/pci_landscape-massive_wide.jpg",
+            ],
+        ];
+
+        $entry->setPodcastIndexDetailedImages($images);
+        $this->assertEquals($images, $entry->getPodcastIndexDetailedImages());
+    }
+
     public function testSetContentLinks(): void
     {
         $entry = new Writer\Entry();
@@ -1124,36 +1129,7 @@ class EntryTest extends TestCase
         $this->assertEquals($contentLinks[1], $actual[1]);
     }
 
-    public function testAddContentLinkThrowsExceptionOnInvalidArgument(): void
-    {
-        $entry = new Writer\Entry();
-
-        $contentLink = [
-            'href'        => 'www.youtube.com/pc20/livestream',
-            'description' => 'YouTube!',
-        ];
-
-        $this->expectException(Writer\Exception\InvalidArgumentException::class);
-        $entry->addPodcastIndexContentLink($contentLink);
-
-        $contentLink = [
-            'href'        => 'https://youtube.com/pc20/livestream',
-            'description' => 123,
-        ];
-
-        $this->expectException(Writer\Exception\InvalidArgumentException::class);
-        $entry->addPodcastIndexContentLink($contentLink);
-
-        $contentLink = [
-            'href'        => true,
-            'description' => 'YouTube!',
-        ];
-
-        $this->expectException(Writer\Exception\InvalidArgumentException::class);
-        $entry->addPodcastIndexContentLink($contentLink);
-    }
-
-    public function testAddContentLinkThrowsExceptionOnMissingArgument(): void
+    public function testAddContentLinkThrowsExceptionOnMissingDescription(): void
     {
         $entry = new Writer\Entry();
 
@@ -1163,5 +1139,84 @@ class EntryTest extends TestCase
 
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $entry->addPodcastIndexContentLink($contentLink);
+    }
+
+    public function testAddContentLinkThrowsExceptionOnInvalidHref(): void
+    {
+        $entry = new Writer\Entry();
+
+        $contentLink = [
+            'href'        => 'youtube.com/pc20/livestream',
+            'description' => 'YouTube!',
+        ];
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $entry->addPodcastIndexContentLink($contentLink);
+    }
+
+    public function testAddContentLinkThrowsExceptionOnInvalidDescription(): void
+    {
+        $entry = new Writer\Entry();
+
+        $contentLink = [
+            'href'        => 'https://youtube.com/pc20/livestream',
+            'description' => true,
+        ];
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $entry->addPodcastIndexContentLink($contentLink);
+    }
+
+    public function testAddFunding(): void
+    {
+        $entry = new Writer\Entry();
+
+        $funding = [
+            'title' => 'Support the show!',
+            'url'   => 'http://example.com/donate',
+        ];
+        $entry->addPodcastIndexFunding($funding);
+        $this->assertEquals($funding, $entry->getPodcastIndexFundings()[0]);
+    }
+
+    public function testAddFundingThrowsExceptionOnInvalidArguments(): void
+    {
+        $entry = new Writer\Entry();
+
+        $funding = [
+            'abc' => 'def',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $entry->addPodcastIndexFunding($funding);
+    }
+
+    public function testAddFundingThrowsExceptionOnInvalidUrl(): void
+    {
+        $entry = new Writer\Entry();
+
+        $funding = [
+            'title' => 'Support the show!',
+            'url'   => 'example.com/donate',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $entry->addPodcastIndexFunding($funding);
+    }
+
+    public function testSetFundings(): void
+    {
+        $entry = new Writer\Entry();
+
+        $fundings = [
+            [
+                'title' => 'Support the show!',
+                'url'   => 'http://example.com/donate',
+            ],
+            [
+                'title' => 'Buy me a coffee',
+                'url'   => 'http://example.com/coffee',
+            ],
+        ];
+        $entry->setPodcastIndexFundings($fundings);
+        $this->assertEquals($fundings, $entry->getPodcastIndexFundings());
     }
 }
