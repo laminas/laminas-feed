@@ -157,7 +157,6 @@ final class AttributesReader
     /**
      * Read feed or item license
      *
-     * @psalm-param DOMElement $item
      * @psalm-return LicenseObject
      */
     public static function readLicense(DOMElement $item): object
@@ -172,7 +171,6 @@ final class AttributesReader
     /**
      * Read podcast location
      *
-     * @psalm-param DOMElement $item
      * @psalm-return LocationObject
      */
     public static function readLocation(DOMElement $item): object
@@ -189,7 +187,6 @@ final class AttributesReader
     /**
      * Read podcast images
      *
-     * @psalm-param DOMElement $item
      * @psalm-return ImagesObject
      */
     public static function readImages(DOMElement $item): object
@@ -202,7 +199,6 @@ final class AttributesReader
     /**
      * Read podcast images
      *
-     * @psalm-param DOMElement $item
      * @psalm-return DetailedImageObject
      */
     public static function readDetailedImage(DOMElement $item): object
@@ -221,7 +217,6 @@ final class AttributesReader
     /**
      * Read podcast update frequency
      *
-     * @psalm-param DOMElement $item
      * @psalm-return UpdateFrequencyObject
      */
     public static function readUpdateFrequency(DOMElement $item): object
@@ -238,7 +233,6 @@ final class AttributesReader
     /**
      * Read podcast people
      *
-     * @psalm-param DOMElement $item
      * @psalm-return PersonObject
      */
     public static function readPerson(DOMElement $item): object
@@ -256,7 +250,6 @@ final class AttributesReader
     /**
      * Read podcast trailer
      *
-     * @psalm-param DOMElement $item
      * @psalm-return TrailerObject
      */
     public static function readTrailer(DOMElement $item): object
@@ -275,7 +268,6 @@ final class AttributesReader
     /**
      * Read podcast guid
      *
-     * @psalm-param DOMElement $item
      * @psalm-return object{value: string}
      */
     public static function readGuid(DOMElement $item): object
@@ -289,7 +281,6 @@ final class AttributesReader
     /**
      * Read podcast medium
      *
-     * @psalm-param DOMElement $item
      * @psalm-return object{value: string}
      */
     public static function readMedium(DOMElement $item): object
@@ -302,7 +293,6 @@ final class AttributesReader
     /**
      * Read podcast blocks
      *
-     * @psalm-param DOMElement $item
      * @psalm-return BlockObject
      */
     public static function readBlock(DOMElement $item): object
@@ -316,7 +306,6 @@ final class AttributesReader
     /**
      * Read podcast txts
      *
-     * @psalm-param DOMElement $item
      * @psalm-return TxtObject
      */
     public static function readTxt(DOMElement $item): object
@@ -330,7 +319,6 @@ final class AttributesReader
     /**
      * Read podcast remote item
      *
-     * @psalm-param DOMElement $item
      * @psalm-return RemoteItemObject
      */
     public static function readRemoteItem(DOMElement $item): object
@@ -348,7 +336,6 @@ final class AttributesReader
     /**
      * Read podcast podroll remote items
      *
-     * @psalm-param DOMElement $item
      * @psalm-return ValueObject
      */
     public static function readValue(DOMElement $item): object
@@ -363,7 +350,6 @@ final class AttributesReader
     /**
      * Read single remote item
      *
-     * @psalm-param DOMElement $item
      * @psalm-return ValueRecipientObject
      */
     public static function readValueRecipient(DOMElement $item): object
@@ -399,7 +385,6 @@ final class AttributesReader
     /**
      * Read podcast social interacts
      *
-     * @psalm-param DOMElement $item
      * @psalm-return SocialInteractObject
      */
     public static function readSocialInteract(DOMElement $item): object
@@ -416,7 +401,6 @@ final class AttributesReader
     /**
      * Read podcast alternate enclosure
      *
-     * @psalm-param DOMElement $item
      * @psalm-return AlternateEnclosureObject
      */
     public static function readAlternateEnclosure(DOMElement $item): object
@@ -437,7 +421,6 @@ final class AttributesReader
     /**
      * Read podcast source
      *
-     * @psalm-param DOMElement $item
      * @psalm-return SourceObject
      */
     public static function readSource(DOMElement $item): object
@@ -451,7 +434,6 @@ final class AttributesReader
     /**
      * Read podcast integrity
      *
-     * @psalm-param DOMElement $item
      * @psalm-return SourceObject
      */
     public static function readIntegrity(DOMElement $item): object
