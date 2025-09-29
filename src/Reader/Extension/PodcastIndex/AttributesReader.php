@@ -453,9 +453,8 @@ final class AttributesReader
     }
 
     /**
-     * Read podcast integrity
+     * Read content link
      *
-     * @psalm-param DOMElement $item
      * @psalm-return ContentLinkObject
      */
     public static function readContentLink(DOMElement $item): object
@@ -469,7 +468,6 @@ final class AttributesReader
     /**
      * Read podcast funding
      *
-     * @psalm-param DOMElement $item
      * @psalm-return FundingObject
      */
     public static function readFunding(DOMElement $item): object

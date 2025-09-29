@@ -244,12 +244,13 @@ final class Validator
     /**
      * Validate funding
      *
-     * @param FundingArray $value
+     * @param array<array-key, mixed> $value
+     * @psalm-assert FundingArray $value
      * @throws Writer\Exception\InvalidArgumentException
      */
     public static function validateFunding(array $value): void
     {
-        if (! isset($value['title']) || ! isset($value['url'])) {
+        if (!isset($value['title'], $value['url'])) {
             throw new Writer\Exception\InvalidArgumentException(
                 'invalid parameter: "funding" must be an array containing keys "title" and "url"'
             );
@@ -978,7 +979,8 @@ final class Validator
     /**
      * Validates live item
      *
-     * @param LiveItemArray $value
+     * @param array<array-key, mixed> $value
+     * @psalm-assert LiveItemArray $value
      * @throws Writer\Exception\InvalidArgumentException
      */
     public static function validateLiveItem(array $value): void
@@ -1008,7 +1010,8 @@ final class Validator
     /**
      * Validates content link
      *
-     * @param ContentLinkArray $value
+     * @param array<array-key, mixed> $value
+     * @psalm-assert ContentLinkArray $value
      * @throws Writer\Exception\InvalidArgumentException
      */
     public static function validateContentLink(array $value): void

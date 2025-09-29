@@ -130,7 +130,6 @@ class Feed
      *
      * @param FundingArray $value
      * @return $this
-     * @throws Writer\Exception\InvalidArgumentException
      */
     public function setPodcastIndexFunding(array $value): Feed
     {
@@ -144,7 +143,6 @@ class Feed
      *
      * @param FundingArray $value
      * @return $this
-     * @throws Writer\Exception\InvalidArgumentException
      */
     public function addPodcastIndexFunding(array $value): Feed
     {
@@ -161,7 +159,6 @@ class Feed
      *
      * @param list<FundingArray> $values
      * @return $this
-     * @throws Writer\Exception\InvalidArgumentException
      */
     public function setPodcastIndexFundings(array $values = []): self
     {
@@ -758,5 +755,22 @@ class Feed
             return $this->liveItems;
         }
         return null;
+    }
+
+    /**
+     * Get multiple funding tags
+     *  Specific get call for non-default naming.
+     */
+    public function getPodcastIndexFundings(): array|null
+    {
+        /** @var null|list<FundingArray> $fundings */
+        $fundings = null;
+        if (isset($this->data['fundings']) || isset($this->data['funding'])) {
+            $fundings = $this->data['fundings'] ?? null;
+            if (isset($this->data['funding'])) {
+                $fundings[] = $this->data['funding'];
+            }
+        }
+        return $fundings;
     }
 }

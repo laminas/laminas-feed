@@ -104,9 +104,20 @@ class FeedTest extends TestCase
         $this->assertEquals($funding, $feed->getPodcastIndexFunding());
     }
 
+    public function testAddFunding(): void
+    {
+        $feed = new Writer\Feed();
+
+        $funding = [
+            'title' => 'Support the show!',
+            'url'   => 'http://example.com/donate',
+        ];
+        $feed->addPodcastIndexFunding($funding);
+        $this->assertEquals($funding, $feed->getPodcastIndexFundings()[0]);
+    }
+
     public function testSetFundingHandleDeprecated(): void
     {
-        // TODO: use new get method and test if deprecated setter is still handled!
         $feed = new Writer\Feed();
 
         $funding = [
@@ -114,9 +125,25 @@ class FeedTest extends TestCase
             'url'   => 'http://example.com/donate',
         ];
         $feed->setPodcastIndexFunding($funding);
-        /*var_dump($feed->getPodcastIndexFunding());
-        die();*/
         $this->assertEquals($funding, $feed->getPodcastIndexFundings()[0]);
+    }
+
+    public function testSetFundings(): void
+    {
+        $feed = new Writer\Feed();
+
+        $fundings = [
+            [
+                'title' => 'Support the show!',
+                'url'   => 'http://example.com/donate',
+            ],
+            [
+                'title' => 'Become Supporting member!',
+                'url'   => 'http://example.com/membership',
+            ],
+        ];
+        $feed->setPodcastIndexFundings($fundings);
+        $this->assertEquals($fundings, $feed->getPodcastIndexFundings());
     }
 
     public function testSetFundingThrowsExceptionOnInvalidArguments(): void

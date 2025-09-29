@@ -92,6 +92,7 @@ class Feed extends Extension\AbstractFeed
      * Get a single feed funding
      *
      * @deprecated Multiple `funding` tags are allowed now. Use `getPodcastIndexFundings()` instead.
+     * @psalm-suppress DeprecatedMethod
      */
     public function getFunding(): object|null
     {
@@ -137,7 +138,7 @@ class Feed extends Extension\AbstractFeed
         // include deprecated single funding entry if exists
         if (array_key_exists('fundings', $this->data) || array_key_exists('funding', $this->data)) {
             /** @psalm-var null|list<FundingObject> $fundings */
-            $fundings = $this->data['fundings'];
+            $fundings = $this->data['fundings'] ?? null;
             if (isset($this->data['funding'])) {
                 $fundings[] = $this->data['funding'];
             }
