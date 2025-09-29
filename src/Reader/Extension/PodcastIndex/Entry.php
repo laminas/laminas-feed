@@ -40,6 +40,9 @@ class Entry extends Extension\AbstractEntry
 {
     /**
      * Get the entry transcript
+     *
+     * @psalm-suppress MismatchingDocblockReturnType
+     * @return null|TranscriptObject
      */
     public function getTranscript(): ?stdClass
     {
@@ -69,6 +72,9 @@ class Entry extends Extension\AbstractEntry
 
     /**
      * Get the entry transcript
+     *
+     * @psalm-suppress MismatchingDocblockReturnType
+     * @return null|TranscriptObject
      */
     public function getPodcastIndexTranscript(): ?stdClass
     {
@@ -78,6 +84,9 @@ class Entry extends Extension\AbstractEntry
 
     /**
      * Get the entry chapters
+     *
+     * @psalm-suppress MismatchingDocblockReturnType
+     * @return null|ChaptersObject
      */
     public function getChapters(): ?stdClass
     {
@@ -105,6 +114,9 @@ class Entry extends Extension\AbstractEntry
 
     /**
      * Get the entry chapters
+     *
+     * @psalm-suppress MismatchingDocblockReturnType
+     * @return null|ChaptersObject
      */
     public function getPodcastIndexChapters(): ?stdClass
     {
@@ -114,11 +126,13 @@ class Entry extends Extension\AbstractEntry
 
     /**
      * Get the entry soundbites
+     *
+     * @return list<SoundbiteObject>
      */
     public function getSoundbites(): array
     {
         if (array_key_exists('soundbites', $this->data)) {
-            /** @psalm-var array */
+            /** @psalm-var list<SoundbiteObject> */
             return $this->data['soundbites'];
         }
 
@@ -145,15 +159,19 @@ class Entry extends Extension\AbstractEntry
 
     /**
      * Get the entry soundbites
+     *
+     * @return list<SoundbiteObject>
      */
     public function getPodcastIndexSoundbites(): array
     {
-        /** @psalm-var array */
+        /** @psalm-var list<SoundbiteObject> */
         return $this->getSoundbites();
     }
 
     /**
      * Get the entry location
+     *
+     * @return null|LocationObject
      */
     public function getPodcastIndexLocation(): object|null
     {
@@ -179,6 +197,8 @@ class Entry extends Extension\AbstractEntry
 
     /**
      * Get the entry license
+     *
+     * @return null|LicenseObject
      */
     public function getPodcastIndexLicense(): object|null
     {
@@ -205,7 +225,7 @@ class Entry extends Extension\AbstractEntry
     /**
      * Get the entry people
      *
-     * @psalm-return list<PersonObject>
+     * @return list<PersonObject>
      */
     public function getPodcastIndexPeople(): array
     {
@@ -235,7 +255,7 @@ class Entry extends Extension\AbstractEntry
     /**
      * Get the entry persons (alias of getPodcastIndexPeople)
      *
-     * @psalm-return list<PersonObject>
+     * @return list<PersonObject>
      */
     public function getPodcastIndexPersons(): array
     {
@@ -382,6 +402,8 @@ class Entry extends Extension\AbstractEntry
 
     /**
      * Get the entry season
+     *
+     * @return null|SeasonObject
      */
     public function getPodcastIndexSeason(): object|null
     {
@@ -409,6 +431,8 @@ class Entry extends Extension\AbstractEntry
 
     /**
      * Get the entry episode
+     *
+     * @return null|EpisodeObject
      */
     public function getPodcastIndexEpisode(): object|null
     {
@@ -488,7 +512,7 @@ class Entry extends Extension\AbstractEntry
      * Get the episode detailed images.
      * Returns the contents of one or more `<podcast:image>` tags.
      *
-     * @psalm-return null|list<DetailedImageObject>
+     * @return null|list<DetailedImageObject>
      */
     public function getPodcastIndexDetailedImages(): null|array
     {
