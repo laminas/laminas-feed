@@ -150,13 +150,19 @@ use stdClass;
  *        rel?: string,
  *        codecs?: string,
  *        default?: bool,
- *       sources: list<SourceObject>,
- *       integrity?: IntegrityObject,
- * }
+ *        sources: list<SourceObject>,
+ *        integrity?: IntegrityObject,
+ *     }
  * @psalm-type ContentLinkObject = object{
  *        href: string,
  *        description: string,
  *     }
+ * @psalm-type ChatObject = object{
+ *        server: string,
+ *        protocol: string,
+ *        accountId?: string,
+ *        space?: string,
+ *      }
  * @psalm-internal Laminas\Feed
  * @psalm-internal LaminasTest\Feed
  */
@@ -475,6 +481,21 @@ final class AttributesReader
         $object        = new stdClass();
         $object->url   = $item->getAttribute('url');
         $object->title = $item->nodeValue;
+        return $object;
+    }
+
+    /**
+     * Read podcast chat
+     *
+     * @psalm-return ChatObject
+     */
+    public static function readChat(DOMElement $item): object
+    {
+        $object            = new stdClass();
+        $object->server    = $item->getAttribute('server');
+        $object->protocol  = $item->getAttribute('protocol');
+        $object->accountId = $item->getAttribute('accountId');
+        $object->space     = $item->getAttribute('space');
         return $object;
     }
 }

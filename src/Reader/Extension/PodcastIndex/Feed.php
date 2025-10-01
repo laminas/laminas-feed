@@ -29,6 +29,7 @@ use function assert;
  * @psalm-import-type ImagesObject from AttributesReader
  * @psalm-import-type DetailedImageObject from AttributesReader
  * @psalm-import-type SocialInteractObject from AttributesReader
+ * @psalm-import-type ChatObject from AttributesReader
  */
 class Feed extends Extension\AbstractFeed
 {
@@ -692,6 +693,31 @@ class Feed extends Extension\AbstractFeed
         $this->data['liveItems'] = $liveItems;
 
         return $this->data['liveItems'];
+    }
+
+    /**
+     * Get the podcast chat
+     *
+     * @return null|ChatObject
+     */
+    public function getPodcastIndexChat(): object|null
+    {
+        if (array_key_exists('chat', $this->data)) {
+            /** @psalm-var null|ChatObject */
+            return $this->data['chat'];
+        }
+
+        $object = null;
+        $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:chat');
+
+        if ($nodeList->length > 0) {
+            $item = $nodeList->item(0);
+            assert($item instanceof DOMElement);
+            $object = AttributesReader::readChat($item);
+        }
+
+        $this->data['chat'] = $object;
+        return $this->data['chat'];
     }
 
     /**

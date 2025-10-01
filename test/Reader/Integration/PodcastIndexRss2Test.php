@@ -441,6 +441,23 @@ class PodcastIndexRss2Test extends TestCase
         $this->assertEquals($expectedB, $response[1]);
     }
 
+    public function testGetsChat(): void
+    {
+        /** @var Reader\Extension\PodcastIndex\Feed $feed */
+        $feed = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath)
+        );
+
+        $expected            = new stdClass();
+        $expected->server    = 'irc.zeronode.net';
+        $expected->protocol  = 'irc';
+        $expected->accountId = '@jsmith';
+        $expected->space     = '#myawesomepodcast';
+
+        $actual = $feed->getPodcastIndexChat();
+        $this->assertEquals($expected, $actual);
+    }
+
     /**
      * Entry level testing
      */

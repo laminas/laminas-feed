@@ -92,6 +92,12 @@
                 aspect-ratio="16/9"
                 href="https://example.com/images/ep1/pci_landscape-massive_wide.jpg"
         />
+        <podcast:chat
+                server="irc.zeronode.net"
+                protocol="irc"
+                accountId="@jsmith"
+                space="#myawesomepodcast"
+        />
         <podcast:liveItem status="live" start="2021-09-26T07:30:00.000-0600" end="2021-09-26T09:30:00.000-0600">
             <title>Podcasting 2.0 Live Show</title>
             <description>A look into the future of podcasting and how we get to Podcasting 2.0!</description>
@@ -109,6 +115,12 @@
             <enclosure url="https://example.com/pc20/livestream?format=.mp3" type="audio/mpeg" length="312" />
             <podcast:contentLink href="https://youtube.com/pc20/livestream">YouTube!</podcast:contentLink>
             <podcast:contentLink href="https://twitch.com/pc20/livestream">Twitch!</podcast:contentLink>
+            <podcast:chat
+                    server="jabber.example.com"
+                    protocol="xmpp"
+                    accountId="jsmith@jabber.example.org"
+                    space="myawesomepodcast@jabber.example.org"
+            />
         </podcast:liveItem>
 
         <item>
@@ -209,6 +221,12 @@
                     href="https://example.com/images/ep1/pci_landscape-massive_wide.jpg"
             />
             <podcast:contentLink href="https://youtube.com/pc20/livestream">YouTube!</podcast:contentLink>
+            <podcast:chat
+                    server="relay.example.com"
+                    protocol="nostr"
+                    accountId="npub1pvdw7mm7k20t9dn9gful8n5xua5yv8rmgd9wul88qq5dxj80lpxqd39r3u"
+                    space="#myawesomepodcast_episode129"
+            />
         </item>
 
         <item>

@@ -1557,4 +1557,20 @@ class FeedTest extends TestCase
         $feed->removePodcastIndexLiveItem(0);
         $this->assertNull($feed->getPodcastIndexLiveItems());
     }
+
+    public function testSetPodcastIndexChat(): void
+    {
+        $feed = new Writer\Feed();
+
+        $data = [
+            'server'    => "irc.zeronode.net",
+            'protocol'  => "irc",
+            'accountId' => "@jsmith",
+            'space'     => "#myawesomepodcast",
+        ];
+
+        $feed->setPodcastIndexChat($data);
+        $chat = $feed->getPodcastIndexChat();
+        $this->assertEquals($data, $chat);
+    }
 }

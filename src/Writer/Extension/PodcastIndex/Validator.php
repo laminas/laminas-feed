@@ -166,9 +166,15 @@ use const FILTER_VALIDATE_URL;
  *        end?: string
  *      }
  * @psalm-type ContentLinkArray = array{
- *        href: string,
- *        description: string,
- *      }
+ *         href: string,
+ *         description: string,
+ *       }
+ * @psalm-type ChatArray = array{
+ *         server: string,
+ *         protocol: string,
+ *         accountId?: string,
+ *         space?: string,
+ *       }
  * @psalm-internal Laminas\Feed
  * @psalm-internal LaminasTest\Feed
  */
@@ -1029,6 +1035,42 @@ final class Validator
         if (! is_string($value['description'])) {
             throw new Writer\Exception\InvalidArgumentException(
                 'invalid parameter: key "description" of "contentLink" must be of type string'
+            );
+        }
+    }
+
+    /**
+     * Validates chat
+     *
+     * @param array<array-key, mixed> $value
+     * @psalm-assert ChatArray $value
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public static function validateChat(array $value): void
+    {
+        if (! isset($value['server'], $value['protocol'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "chat" must be an array containing at least the keys "server" and "protocol"'
+            );
+        }
+        if (! is_string($value['server'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "server" of "chat" must be of type string'
+            );
+        }
+        if (! is_string($value['protocol'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "protocol" of "chat" must be of type string'
+            );
+        }
+        if (isset($value['accountId']) && ! is_string($value['accountId'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "accountId" of "chat" must be of type string'
+            );
+        }
+        if (isset($value['space']) && ! is_string($value['space'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "space" of "chat" must be of type string'
             );
         }
     }

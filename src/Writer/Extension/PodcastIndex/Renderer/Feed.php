@@ -30,6 +30,7 @@ use function assert;
  * @psalm-import-type DetailedImageArray from PodcastIndex\Validator
  * @psalm-import-type SocialInteractArray from PodcastIndex\Validator
  * @psalm-import-type LiveItemArray from PodcastIndex\Validator
+ * @psalm-import-type ChatArray from PodcastIndex\Validator
  */
 class Feed extends Extension\AbstractRenderer
 {
@@ -66,6 +67,7 @@ class Feed extends Extension\AbstractRenderer
         $this->setPublisher($this->dom, $this->base);
         $this->setValues($this->dom, $this->base);
         $this->setSocialInteracts($this->dom, $this->base);
+        $this->setChat($this->dom, $this->base);
 
         $liveItems = $this->getDataContainer()->getPodcastIndexLiveItems();
         foreach ($liveItems as $liveItem) {
@@ -523,6 +525,28 @@ class Feed extends Extension\AbstractRenderer
             $el = ElementGenerator::createPodcastIndexElement($dom, $liveItem, 'liveItem');
             $root->appendChild($el);
         }*/
+
+        $this->called = true;
+    }
+
+    /**
+     * Set chat element
+     */
+    private function setChat(DOMDocument $dom, DOMElement $root): void
+    {
+        /** @psalm-var FeedWriter $container */
+        $container = $this->getDataContainer();
+
+        /** @psalm-var ChatArray|null $chat */
+        $chat = $container->getPodcastIndexChat();
+        if ($chat === null) {
+            return;
+        }
+
+        $chatElement = $dom->createElement('podcast:chat');
+        $el          = ElementGenerator::createPodcastIndexElement($dom, $chat, 'chat');
+        $chatElement->appendChild($el);
+        $root->appendChild($chatElement);
 
         $this->called = true;
     }

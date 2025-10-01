@@ -38,6 +38,7 @@ use function ucfirst;
  * @psalm-import-type DetailedImageArray from Validator
  * @psalm-import-type SocialInteractArray from Validator
  * @psalm-import-type LiveItemArray from Validator
+ * @psalm-import-type ChatArray from Validator
  */
 class Feed
 {
@@ -662,6 +663,25 @@ class Feed
             throw new InvalidArgumentException('Undefined index: ' . $index . '. LiveItem does not exist.');
         }
         unset($this->liveItems[$index]);
+
+        return $this;
+    }
+
+    /**
+     * Set a chat element.
+     * If no argument is passed, any existing chat entry will be removed.
+     *
+     * @psalm-param null|ChatArray $value
+     * @return $this
+     */
+    public function setPodcastIndexChat(?array $value = null): self
+    {
+        $this->data['chat'] = [];
+
+        if ($value && count($value) > 0) {
+            Validator::validateChat($value);
+            $this->data['chat'] = $value;
+        }
 
         return $this;
     }
