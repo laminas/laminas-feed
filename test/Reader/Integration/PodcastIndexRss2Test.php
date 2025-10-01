@@ -918,6 +918,29 @@ class PodcastIndexRss2Test extends TestCase
         $this->assertEquals($expectedA, $contentLinks[0]);
     }
 
+    public function testGetsEntryChat(): void
+    {
+        $feed = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath)
+        );
+
+        /** @var Reader\Extension\PodcastIndex\Entry $entry */
+        $entry = $feed->current();
+
+        $expected            = new stdClass();
+        $expected->server    = 'relay.example.com';
+        $expected->protocol  = 'nostr';
+        $expected->accountId = 'npub1pvdw7mm7k20t9dn9gful8n5xua5yv8rmgd9wul88qq5dxj80lpxqd39r3u';
+        $expected->space     = '#myawesomepodcast_episode129';
+
+        $actual = $entry->getPodcastIndexChat();
+        $this->assertEquals($expected, $actual);
+    }
+
+
+    /**
+     * LiveItem level testing
+     */
     public function testGetsLiveItemWithAttributes(): void
     {
         $feed = Reader\Reader::importString(
@@ -1066,5 +1089,24 @@ class PodcastIndexRss2Test extends TestCase
         $expected->title = 'Support the live Episode!';
 
         $this->assertEquals($expected, $liveItem->getPodcastIndexFundings()[0]);
+    }
+
+    public function testGetsLiveItemChat(): void
+    {
+        $feed = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath)
+        );
+
+        /** @var Reader\Extension\PodcastIndex\LiveItem $liveItem */
+        $liveItem = $feed->getPodcastIndexLiveItems()[0];
+
+        $expected            = new stdClass();
+        $expected->server    = 'jabber.example.com';
+        $expected->protocol  = 'xmpp';
+        $expected->accountId = 'jsmith@jabber.example.org';
+        $expected->space     = 'myawesomepodcast@jabber.example.org';
+
+        $actual = $liveItem->getPodcastIndexChat();
+        $this->assertEquals($expected, $actual);
     }
 }

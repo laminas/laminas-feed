@@ -33,6 +33,7 @@ use function assert;
  * @psalm-import-type AlternateEnclosureArray from Validator
  * @psalm-import-type ContentLinkArray from Validator
  * @psalm-import-type FundingArray from Validator
+ * @psalm-import-type ChatArray from Validator
  */
 class Entry extends Extension\AbstractRenderer
 {
@@ -65,6 +66,7 @@ class Entry extends Extension\AbstractRenderer
         $this->setDetailedImages($this->dom, $this->base);
         $this->setContentLinks($this->dom, $this->base);
         $this->setFundings($this->dom, $this->base);
+        $this->setChat($this->dom, $this->base);
         if ($this->called) {
             $this->_appendNamespaces();
         }
@@ -417,6 +419,25 @@ class Entry extends Extension\AbstractRenderer
             $root->appendChild($el);
         }
 
+        $this->called = true;
+    }
+
+    /**
+     * Set chat element
+     */
+    private function setChat(DOMDocument $dom, DOMElement $root): void
+    {
+        /** @psalm-var EntryWriter $container */
+        $container = $this->getDataContainer();
+
+        /** @psalm-var ChatArray|null $chat */
+        $chat = $container->getPodcastIndexChat();
+        if ($chat === null) {
+            return;
+        }
+
+        $el = ElementGenerator::createPodcastIndexElement($dom, $chat, 'chat');
+        $root->appendChild($el);
         $this->called = true;
     }
 }

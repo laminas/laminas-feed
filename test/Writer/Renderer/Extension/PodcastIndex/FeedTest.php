@@ -608,7 +608,7 @@ class FeedTest extends TestCase
         $xml     = $rssFeed->render()->saveXml();
 
         $this->assertStringContainsString('<podcast:chat', $xml);
-        $this->assertStringContainsString((string) $data['server'], $xml);
+        $this->assertStringContainsString($data['server'], $xml);
         $this->assertStringContainsString($data['protocol'], $xml);
         $this->assertStringContainsString($data['accountId'], $xml);
         $this->assertStringContainsString($data['space'], $xml);

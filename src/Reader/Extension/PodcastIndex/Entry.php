@@ -37,6 +37,7 @@ use function assert;
  * @psalm-import-type IntegrityObject from AttributesReader
  * @psalm-import-type AlternateEnclosureObject from AttributesReader
  * @psalm-import-type ContentLinkObject from AttributesReader
+ * @psalm-import-type ChatObject from AttributesReader
  */
 class Entry extends Extension\AbstractEntry
 {
@@ -581,6 +582,31 @@ class Entry extends Extension\AbstractEntry
         $this->data['fundings'] = $fundings;
 
         return $this->data['fundings'];
+    }
+
+    /**
+     * Get the podcast chat
+     *
+     * @return null|ChatObject
+     */
+    public function getPodcastIndexChat(): object|null
+    {
+        if (array_key_exists('chat', $this->data)) {
+            /** @psalm-var null|ChatObject */
+            return $this->data['chat'];
+        }
+
+        $object   = null;
+        $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:chat');
+
+        if ($nodeList->length > 0) {
+            $item = $nodeList->item(0);
+            assert($item instanceof DOMElement);
+            $object = AttributesReader::readChat($item);
+        }
+
+        $this->data['chat'] = $object;
+        return $this->data['chat'];
     }
 
     /**

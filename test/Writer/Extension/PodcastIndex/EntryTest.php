@@ -1219,4 +1219,75 @@ class EntryTest extends TestCase
         $entry->setPodcastIndexFundings($fundings);
         $this->assertEquals($fundings, $entry->getPodcastIndexFundings());
     }
+
+    public function testSetChat(): void
+    {
+        $entry = new Writer\Entry();
+
+        $data = [
+            'server'    => "irc.zeronode.net",
+            'protocol'  => "irc",
+            'accountId' => "@jsmith",
+            'space'     => "#myawesomepodcast",
+        ];
+
+        $entry->setPodcastIndexChat($data);
+        $this->assertEquals($data, $entry->getPodcastIndexChat());
+    }
+
+    public function testSetPodcastIndexChatWithMinimalData(): void
+    {
+        $entry = new Writer\Entry();
+
+        $data = [
+            'server'    => "irc.zeronode.net",
+            'protocol'  => "irc",
+        ];
+
+        $entry->setPodcastIndexChat($data);
+        $chat = $entry->getPodcastIndexChat();
+        $this->assertEquals($data, $chat);
+    }
+
+    public function testSetPodcastIndexChatThrowsExceptionOnInvalidArgument(): void
+    {
+        $entry = new Writer\Entry();
+
+        $data = [
+            'abc'    => 123,
+        ];
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $entry->setPodcastIndexChat($data);
+    }
+
+    public function testSetPodcastIndexChatThrowsExceptionOnInvalidServer(): void
+    {
+        $entry = new Writer\Entry();
+
+        $data = [
+            'server'    => 123,
+            'protocol'  => "irc",
+            'accountId' => "@jsmith",
+            'space'     => "#myawesomepodcast",
+        ];
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $entry->setPodcastIndexChat($data);
+    }
+
+    public function testSetPodcastIndexChatThrowsExceptionOnInvalidSpace(): void
+    {
+        $entry = new Writer\Entry();
+
+        $data = [
+            'server'    => 'server_name',
+            'protocol'  => "irc",
+            'accountId' => "@jsmith",
+            'space'     => true,
+        ];
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $entry->setPodcastIndexChat($data);
+    }
 }

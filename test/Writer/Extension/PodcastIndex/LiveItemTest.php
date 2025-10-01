@@ -6,7 +6,6 @@ namespace LaminasTest\Feed\Writer\Extension\PodcastIndex;
 
 use Laminas\Feed\Reader\Extension\PodcastIndex\AttributesReader;
 use Laminas\Feed\Writer;
-use Laminas\Feed\Writer\Exception\ExceptionInterface;
 use Laminas\Feed\Writer\Extension\PodcastIndex;
 use PHPUnit\Framework\TestCase;
 
@@ -374,8 +373,6 @@ class LiveItemTest extends TestCase
 
     public function testSetContentLink(): void
     {
-        $entry = new Writer\Entry();
-
         $contentLinks = [
             [
                 'href'        => 'https://youtube.com/pc20/livestream',
@@ -387,23 +384,46 @@ class LiveItemTest extends TestCase
             ],
         ];
 
-        $entry->setPodcastIndexContentLinks($contentLinks);
+        $this->liveItem->setPodcastIndexContentLinks($contentLinks);
 
         /** @psalm-var list<ContentLinkObject> $actual */
-        $actual = $entry->getPodcastIndexContentLinks();
+        $actual = $this->liveItem->getPodcastIndexContentLinks();
         $this->assertEquals($contentLinks[0], $actual[0]);
         $this->assertEquals($contentLinks[1], $actual[1]);
     }
 
     public function testAddFunding(): void
     {
-        $entry = new Writer\Entry();
-
         $funding = [
             'title' => 'Support the show!',
             'url'   => 'http://example.com/donate',
         ];
-        $entry->addPodcastIndexFunding($funding);
-        $this->assertEquals($funding, $entry->getPodcastIndexFundings()[0]);
+        $this->liveItem->addPodcastIndexFunding($funding);
+        $this->assertEquals($funding, $this->liveItem->getPodcastIndexFundings()[0]);
+    }
+
+    public function testSetChat(): void
+    {
+        $data = [
+            'server'    => "irc.zeronode.net",
+            'protocol'  => "irc",
+            'accountId' => "@jsmith",
+            'space'     => "#myawesomepodcast",
+        ];
+
+        $this->liveItem->setPodcastIndexChat($data);
+        $this->assertEquals($data, $this->liveItem->getPodcastIndexChat());
+    }
+
+    public function testSetPodcastIndexChatWithMinimalData(): void
+    {
+        $data = [
+            'server'   => "irc.zeronode.net",
+            'protocol' => "irc",
+        ];
+
+        $this->liveItem->setPodcastIndexChat($data);
+        $chat = $this->liveItem->getPodcastIndexChat();
+        $this->assertEquals($data, $chat);
     }
 }

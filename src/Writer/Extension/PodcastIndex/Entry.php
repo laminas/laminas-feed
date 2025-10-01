@@ -41,6 +41,7 @@ use function ucfirst;
  * @psalm-import-type AlternateEnclosureArray from Validator
  * @psalm-import-type ContentLinkArray from Validator
  * @psalm-import-type FundingArray from Validator
+ * @psalm-import-type ChatArray from Validator
  */
 class Entry
 {
@@ -595,6 +596,25 @@ class Entry
         foreach ($values as $value) {
             $this->addPodcastIndexFunding($value);
         }
+        return $this;
+    }
+
+    /**
+     * Set a chat element.
+     * If no argument is passed, any existing chat entry will be removed.
+     *
+     * @psalm-param null|ChatArray $value
+     * @return $this
+     */
+    public function setPodcastIndexChat(?array $value = null): self
+    {
+        $this->data['chat'] = [];
+
+        if ($value && count($value) > 0) {
+            Validator::validateChat($value);
+            $this->data['chat'] = $value;
+        }
+
         return $this;
     }
 

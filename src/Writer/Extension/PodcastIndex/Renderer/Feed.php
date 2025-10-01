@@ -543,11 +543,8 @@ class Feed extends Extension\AbstractRenderer
             return;
         }
 
-        $chatElement = $dom->createElement('podcast:chat');
-        $el          = ElementGenerator::createPodcastIndexElement($dom, $chat, 'chat');
-        $chatElement->appendChild($el);
-        $root->appendChild($chatElement);
-
+        $el = ElementGenerator::createPodcastIndexElement($dom, $chat, 'chat');
+        $root->appendChild($el);
         $this->called = true;
     }
 }

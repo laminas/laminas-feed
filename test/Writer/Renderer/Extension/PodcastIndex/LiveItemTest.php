@@ -539,4 +539,25 @@ class LiveItemTest extends TestCase
         $this->assertStringContainsString($expected1, $xml);
         $this->assertStringContainsString($expected2, $xml);
     }
+
+    public function testRendersRssChatTag(): void
+    {
+        $data = [
+            'server'    => "irc.zeronode.net",
+            'protocol'  => "irc",
+            'accountId' => "@jsmith",
+            'space'     => "#myawesomepodcast",
+        ];
+
+        $this->validEntry->setPodcastIndexChat($data);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $this->assertStringContainsString('<podcast:chat', $xml);
+        $this->assertStringContainsString($data['server'], $xml);
+        $this->assertStringContainsString($data['protocol'], $xml);
+        $this->assertStringContainsString($data['accountId'], $xml);
+        $this->assertStringContainsString($data['space'], $xml);
+    }
 }

@@ -1573,4 +1573,60 @@ class FeedTest extends TestCase
         $chat = $feed->getPodcastIndexChat();
         $this->assertEquals($data, $chat);
     }
+
+    public function testSetPodcastIndexChatWithMinimalData(): void
+    {
+        $feed = new Writer\Feed();
+
+        $data = [
+            'server'   => "irc.zeronode.net",
+            'protocol' => "irc",
+        ];
+
+        $feed->setPodcastIndexChat($data);
+        $chat = $feed->getPodcastIndexChat();
+        $this->assertEquals($data, $chat);
+    }
+
+    public function testSetPodcastIndexChatThrowsExceptionOnInvalidArgument(): void
+    {
+        $feed = new Writer\Feed();
+
+        $data = [
+            'abc' => 123,
+        ];
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->setPodcastIndexChat($data);
+    }
+
+    public function testSetPodcastIndexChatThrowsExceptionOnInvalidServer(): void
+    {
+        $feed = new Writer\Feed();
+
+        $data = [
+            'server'    => 123,
+            'protocol'  => "irc",
+            'accountId' => "@jsmith",
+            'space'     => "#myawesomepodcast",
+        ];
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->setPodcastIndexChat($data);
+    }
+
+    public function testSetPodcastIndexChatThrowsExceptionOnInvalidSpace(): void
+    {
+        $feed = new Writer\Feed();
+
+        $data = [
+            'server'    => 'server_name',
+            'protocol'  => "irc",
+            'accountId' => "@jsmith",
+            'space'     => true,
+        ];
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->setPodcastIndexChat($data);
+    }
 }
