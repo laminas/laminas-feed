@@ -10,6 +10,8 @@ use Laminas\Feed\Writer\Extension;
 use Laminas\Feed\Writer\Extension\PodcastIndex\Validator;
 use Laminas\Feed\Writer\Feed as FeedWriter;
 
+use function assert;
+
 /**
  * Renders PodcastIndex data of a RSS Feed
  *
