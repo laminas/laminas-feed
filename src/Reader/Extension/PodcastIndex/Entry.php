@@ -41,13 +41,12 @@ class Entry extends Extension\AbstractEntry
     /**
      * Get the entry transcript
      *
-     * @psalm-suppress MismatchingDocblockReturnType
      * @return null|TranscriptObject
      */
     public function getTranscript(): ?stdClass
     {
         if (array_key_exists('transcript', $this->data)) {
-            /** @psalm-var stdClass */
+            /** @psalm-var null|TranscriptObject */
             return $this->data['transcript'];
         }
 
@@ -73,25 +72,22 @@ class Entry extends Extension\AbstractEntry
     /**
      * Get the entry transcript
      *
-     * @psalm-suppress MismatchingDocblockReturnType
      * @return null|TranscriptObject
      */
-    public function getPodcastIndexTranscript(): ?stdClass
+    public function getPodcastIndexTranscript(): object|null
     {
-        /** @psalm-var stdClass */
         return $this->getTranscript();
     }
 
     /**
      * Get the entry chapters
      *
-     * @psalm-suppress MismatchingDocblockReturnType
      * @return null|ChaptersObject
      */
     public function getChapters(): ?stdClass
     {
         if (array_key_exists('chapters', $this->data)) {
-            /** @psalm-var stdClass */
+            /** @psalm-var null|ChaptersObject */
             return $this->data['chapters'];
         }
 
@@ -115,12 +111,10 @@ class Entry extends Extension\AbstractEntry
     /**
      * Get the entry chapters
      *
-     * @psalm-suppress MismatchingDocblockReturnType
      * @return null|ChaptersObject
      */
-    public function getPodcastIndexChapters(): ?stdClass
+    public function getPodcastIndexChapters(): object|null
     {
-        /** @psalm-var stdClass */
         return $this->getChapters();
     }
 
@@ -159,12 +153,9 @@ class Entry extends Extension\AbstractEntry
 
     /**
      * Get the entry soundbites
-     *
-     * @return list<SoundbiteObject>
      */
     public function getPodcastIndexSoundbites(): array
     {
-        /** @psalm-var list<SoundbiteObject> */
         return $this->getSoundbites();
     }
 
@@ -337,7 +328,6 @@ class Entry extends Extension\AbstractEntry
             assert($valueNode instanceof DOMElement);
             $valueObject = AttributesReader::readValue($valueNode);
 
-            /** @psalm-suppress TooManyArguments */
             $valueRecipientsNodeList = $this->xpath->query('podcast:valueRecipient', $valueNode);
             $valueRecipients         = [];
 
@@ -348,7 +338,6 @@ class Entry extends Extension\AbstractEntry
             }
             $valueObject->valueRecipients = $valueRecipients;
 
-            /** @psalm-suppress TooManyArguments */
             $timeSplitsNodeList = $this->xpath->query('podcast:valueTimeSplit', $valueNode);
             if ($timeSplitsNodeList->length > 0) {
                 $valueTimeSplits = [];
@@ -377,7 +366,6 @@ class Entry extends Extension\AbstractEntry
     {
         $object = AttributesReader::readValueTimeSplit($entry);
 
-        /** @psalm-suppress TooManyArguments */
         $itemsNodeList = $this->xpath->query('podcast:remoteItem', $entry);
         if ($itemsNodeList->length > 0) {
             assert($itemsNodeList[0] instanceof DOMElement);
@@ -385,7 +373,6 @@ class Entry extends Extension\AbstractEntry
             $object->remoteItem = $itemsObject;
         }
 
-        /** @psalm-suppress TooManyArguments */
         $recipientsNodeList = $this->xpath->query('podcast:valueRecipient', $entry);
         if ($recipientsNodeList->length > 0) {
             $valueRecipients = [];
@@ -478,7 +465,6 @@ class Entry extends Extension\AbstractEntry
             assert($enclosureNode instanceof DOMElement);
             $enclosureObject = AttributesReader::readAlternateEnclosure($enclosureNode);
 
-            /** @psalm-suppress TooManyArguments */
             $sourcesNodeList = $this->xpath->query('podcast:source', $enclosureNode);
             $sources         = [];
 
@@ -491,7 +477,6 @@ class Entry extends Extension\AbstractEntry
                 $enclosureObject->sources = $sources;
             }
 
-            /** @psalm-suppress TooManyArguments */
             $integrityNodeList = $this->xpath->query('podcast:integrity', $enclosureNode);
             if ($integrityNodeList->length > 0) {
                 $node = $integrityNodeList->item(0);
@@ -512,16 +497,16 @@ class Entry extends Extension\AbstractEntry
      * Get the episode detailed images.
      * Returns the contents of one or more `<podcast:image>` tags.
      *
-     * @return null|list<DetailedImageObject>
+     * @return list<DetailedImageObject>
      */
-    public function getPodcastIndexDetailedImages(): null|array
+    public function getPodcastIndexDetailedImages(): array
     {
         if (array_key_exists('detailedImages', $this->data)) {
-            /** @psalm-var null|list<DetailedImageObject> */
+            /** @psalm-var list<DetailedImageObject> */
             return $this->data['detailedImages'];
         }
 
-        $images = null;
+        $images = [];
 
         $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:image');
 

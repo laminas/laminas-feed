@@ -206,16 +206,16 @@ class Feed extends Extension\AbstractFeed
      * Get the podcast detailed images.
      * Returns the contents of one or more `<podcast:image>` tags.
      *
-     * @psalm-return null|list<DetailedImageObject>
+     * @psalm-return list<DetailedImageObject>
      */
-    public function getPodcastIndexDetailedImages(): null|array
+    public function getPodcastIndexDetailedImages(): array
     {
         if (array_key_exists('detailedImages', $this->data)) {
-            /** @psalm-var null|list<DetailedImageObject> */
+            /** @psalm-var list<DetailedImageObject> */
             return $this->data['detailedImages'];
         }
 
-        $images = null;
+        $images = [];
 
         $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:image');
 
@@ -262,12 +262,12 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get the podcast people
      *
-     * @psalm-return null|list<PersonObject>
+     * @psalm-return list<PersonObject>
      */
-    public function getPodcastIndexPeople(): null|array
+    public function getPodcastIndexPeople(): array
     {
         if (array_key_exists('people', $this->data)) {
-            /** @psalm-var null|list<PersonObject> */
+            /** @psalm-var list<PersonObject> */
             return $this->data['people'];
         }
 
@@ -292,9 +292,9 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get the podcast persons (alias of getPodcastIndexPeople)
      *
-     * @psalm-return null|list<PersonObject>
+     * @psalm-return list<PersonObject>
      */
-    public function getPodcastIndexPersons(): null|array
+    public function getPodcastIndexPersons(): array
     {
         return $this->getPodcastIndexPeople();
     }
@@ -383,12 +383,12 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get the podcast blocks
      *
-     * @return null|list<object{value: string, id?: string}>
+     * @return list<object{value: string, id?: string}>
      */
-    public function getPodcastIndexBlocks(): null|array
+    public function getPodcastIndexBlocks(): array
     {
         if (array_key_exists('blocks', $this->data)) {
-            /** @psalm-var null|list<object{value: string, id?: string}> */
+            /** @psalm-var list<object{value: string, id?: string}> */
             return $this->data['blocks'];
         }
 
@@ -410,12 +410,12 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get the podcast txts
      *
-     * @return null|list<TxtObject>
+     * @return list<TxtObject>
      */
-    public function getPodcastIndexTxts(): null|array
+    public function getPodcastIndexTxts(): array
     {
         if (array_key_exists('txts', $this->data)) {
-            /** @psalm-var null|list<TxtObject> */
+            /** @psalm-var list<TxtObject> */
             return $this->data['txts'];
         }
 
@@ -465,12 +465,12 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get the podcast remoteItems
      *
-     * @return null|list<RemoteItemObject>
+     * @return list<RemoteItemObject>
      */
-    public function getPodcastIndexRemoteItems(): null|array
+    public function getPodcastIndexRemoteItems(): array
     {
         if (array_key_exists('remoteItems', $this->data)) {
-            /** @var null|list<RemoteItemObject> $remoteItems */
+            /** @var list<RemoteItemObject> $remoteItems */
             $remoteItems = $this->data['remoteItems'];
             return $remoteItems;
         }
@@ -493,12 +493,12 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get the podcast podroll remote items
      *
-     * @return null|list<RemoteItemObject>
+     * @return list<RemoteItemObject>
      */
-    public function getPodcastIndexPodroll(): null|array
+    public function getPodcastIndexPodroll(): array
     {
         if (array_key_exists('podroll', $this->data)) {
-            /** @var null|list<RemoteItemObject> $podrollItems */
+            /** @var list<RemoteItemObject> $podrollItems */
             $podrollItems = $this->data['podroll'];
             return $podrollItems;
         }
@@ -510,7 +510,6 @@ class Feed extends Extension\AbstractFeed
             $podrollNode = $podrollNodeList->item(0);
             assert($podrollNode instanceof DOMElement);
 
-            /** @psalm-suppress TooManyArguments */
             $remoteItems = $this->xpath->query('podcast:remoteItem', $podrollNode);
             foreach ($remoteItems as $entry) {
                 assert($entry instanceof DOMElement);
@@ -543,7 +542,7 @@ class Feed extends Extension\AbstractFeed
         if ($publisherNodeList->length > 0) {
             $publisherNode = $publisherNodeList->item(0);
             assert($publisherNode instanceof DOMElement);
-            /** @psalm-suppress TooManyArguments */
+
             $remoteItemList = $this->xpath->query('podcast:remoteItem', $publisherNode);
             if ($remoteItemList->length > 0) {
                 $remoteItem = $remoteItemList->item(0);
@@ -560,12 +559,12 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get the podcast values
      *
-     * @return null|list<ValueObject>
+     * @return list<ValueObject>
      */
-    public function getPodcastIndexValues(): null|array
+    public function getPodcastIndexValues(): array
     {
         if (array_key_exists('values', $this->data)) {
-            /** @var null|list<ValueObject> $values */
+            /** @var list<ValueObject> $values */
             $values = $this->data['values'];
             return $values;
         }
@@ -577,7 +576,6 @@ class Feed extends Extension\AbstractFeed
             assert($valueNode instanceof DOMElement);
             $valueObject = AttributesReader::readValue($valueNode);
 
-            /** @psalm-suppress TooManyArguments */
             $valueRecipientsNodeList = $this->xpath->query('podcast:valueRecipient', $valueNode);
             $valueRecipients         = [];
 
@@ -599,12 +597,12 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get the podcast social interacts
      *
-     * @return null|list<SocialInteractObject>
+     * @return list<SocialInteractObject>
      */
-    public function getPodcastIndexSocialInteracts(): null|array
+    public function getPodcastIndexSocialInteracts(): array
     {
         if (array_key_exists('socialInteracts', $this->data)) {
-            /** @var null|list<SocialInteractObject> $socialInteracts */
+            /** @var list<SocialInteractObject> $socialInteracts */
             $socialInteracts = $this->data['socialInteracts'];
             return $socialInteracts;
         }

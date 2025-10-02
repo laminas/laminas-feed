@@ -299,7 +299,7 @@ final class Validator
      * Validates images srcset
      *
      * @param array<array-key, mixed> $value
-     * @psalm-assert array{srcset: string} $value
+     * @psalm-assert ImagesArray $value
      * @throws Writer\Exception\InvalidArgumentException
      */
     public static function validateImages(array $value): void

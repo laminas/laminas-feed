@@ -147,7 +147,7 @@ class Entry
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public function setPodcastIndexSoundbites(array $values = []): Entry
+    public function setPodcastIndexSoundbites(array $values = []): self
     {
         $this->data['soundbites'] = [];
 
@@ -281,7 +281,6 @@ class Entry
      * @param TxtArray $value
      * @return $this
      * @throws Writer\Exception\InvalidArgumentException
-     * @psalm-suppress DocblockTypeContradiction
      */
     public function addPodcastIndexTxt(array $value): self
     {

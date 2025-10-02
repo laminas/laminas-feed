@@ -142,7 +142,6 @@ class PodcastIndexRss2Test extends TestCase
         $expectedB->height      = "";
 
         $images = $feed->getPodcastIndexDetailedImages();
-        $this->assertNotNull($images);
         $this->assertEquals($expectedA, $images[0]);
         $this->assertEquals($expectedB, $images[1]);
     }
@@ -178,7 +177,6 @@ class PodcastIndexRss2Test extends TestCase
         $expected->href  = 'https://www.wikipedia/alicebrown';
 
         $people = $feed->getPodcastIndexPeople();
-        $this->assertNotNull($people);
         $this->assertEquals($expected, $people[0]);
     }
 
@@ -197,7 +195,6 @@ class PodcastIndexRss2Test extends TestCase
         $expected->href  = 'https://www.wikipedia/alicebrown';
 
         $people = $feed->getPodcastIndexPersons();
-        $this->assertNotNull($people);
         $this->assertEquals($expected, $people[0]);
     }
 
@@ -261,7 +258,6 @@ class PodcastIndexRss2Test extends TestCase
         $expectedB->id    = 'google';
 
         $blocks = $feed->getPodcastIndexBlocks();
-        $this->assertNotNull($blocks);
         $this->assertEquals($expectedA, $blocks[0]);
         $this->assertEquals($expectedB, $blocks[1]);
     }
@@ -282,7 +278,6 @@ class PodcastIndexRss2Test extends TestCase
         $expectedB->purpose = 'release';
 
         $txts = $feed->getPodcastIndexTxts();
-        $this->assertNotNull($txts);
         $this->assertEquals($expectedA, $txts[0]);
         $this->assertEquals($expectedB, $txts[1]);
     }
@@ -322,7 +317,6 @@ class PodcastIndexRss2Test extends TestCase
         $expectedB->title    = 'Some Example';
 
         $items = $feed->getPodcastIndexRemoteItems();
-        $this->assertNotNull($items);
         $this->assertEquals($expectedA, $items[0]);
         $this->assertEquals($expectedB, $items[1]);
     }
@@ -349,7 +343,6 @@ class PodcastIndexRss2Test extends TestCase
         $expectedB->title    = 'Here Comes the Sun';
 
         $items = $feed->getPodcastIndexPodroll();
-        $this->assertNotNull($items);
         $this->assertEquals($expectedA, $items[0]);
         $this->assertEquals($expectedB, $items[1]);
     }
@@ -404,7 +397,6 @@ class PodcastIndexRss2Test extends TestCase
         $expected->valueRecipients = [$recipA, $recipB];
 
         $values = $feed->getPodcastIndexValues();
-        $this->assertNotNull($values);
         $this->assertEquals($expected, $values[0]);
     }
 
@@ -430,7 +422,6 @@ class PodcastIndexRss2Test extends TestCase
         $expectedB->accountUrl = "https://twitter.com/PodcastindexOrg";
 
         $response = $feed->getPodcastIndexSocialInteracts();
-        $this->assertNotNull($response);
         $this->assertEquals($expectedA, $response[0]);
         $this->assertEquals($expectedB, $response[1]);
     }
@@ -857,7 +848,6 @@ class PodcastIndexRss2Test extends TestCase
         $expectedB->height      = "";
 
         $images = $entry->getPodcastIndexDetailedImages();
-        $this->assertNotNull($images);
         $this->assertEquals($expectedA, $images[0]);
         $this->assertEquals($expectedB, $images[1]);
     }

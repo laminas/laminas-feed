@@ -76,13 +76,20 @@ class Entry extends Extension\AbstractRenderer
         );
     }
 
+    private function getEntryWriter(): EntryWriter
+    {
+        $container = $this->getDataContainer();
+        assert($container instanceof EntryWriter);
+
+        return $container;
+    }
+
     /**
      * Set entry transcript
      */
     protected function setTranscript(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var EntryWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getEntryWriter();
 
         /** @psalm-var null|TranscriptArray $transcript */
         $transcript = $container->getPodcastIndexTranscript();
@@ -99,8 +106,7 @@ class Entry extends Extension\AbstractRenderer
      */
     protected function setChapters(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var EntryWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getEntryWriter();
 
         /** @psalm-var null|ChaptersArray $chapters */
         $chapters = $container->getPodcastIndexChapters();
@@ -117,8 +123,7 @@ class Entry extends Extension\AbstractRenderer
      */
     protected function setSoundbites(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var EntryWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getEntryWriter();
 
         /** @psalm-var null|list<SoundbiteArray> $soundbites */
         $soundbites = $container->getPodcastIndexSoundbites();
@@ -137,8 +142,7 @@ class Entry extends Extension\AbstractRenderer
      */
     private function setLocation(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var EntryWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getEntryWriter();
 
         /** @psalm-var null|LocationArray $location */
         $location = $container->getPodcastIndexLocation();
@@ -155,8 +159,7 @@ class Entry extends Extension\AbstractRenderer
      */
     private function setLicense(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var EntryWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getEntryWriter();
 
         /** @psalm-var null|LicenseArray $license */
         $license = $container->getPodcastIndexLicense();
@@ -174,8 +177,7 @@ class Entry extends Extension\AbstractRenderer
      */
     private function setPeople(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var EntryWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getEntryWriter();
 
         /** @psalm-var null|list<PersonArray> $people */
         $people = $container->getPodcastIndexPeople();
@@ -194,8 +196,7 @@ class Entry extends Extension\AbstractRenderer
      */
     private function setTxts(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var EntryWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getEntryWriter();
 
         /** @psalm-var list<TxtArray>|null $txts */
         $txts = $container->getPodcastIndexTxts();
@@ -215,8 +216,7 @@ class Entry extends Extension\AbstractRenderer
      */
     private function setSocialInteracts(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var EntryWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getEntryWriter();
 
         /** @psalm-var list<SocialInteractArray>|null $socialInteracts */
         $socialInteracts = $container->getPodcastIndexSocialInteracts();
@@ -237,8 +237,7 @@ class Entry extends Extension\AbstractRenderer
      */
     private function setValues(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var EntryWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getEntryWriter();
 
         /** @psalm-var list<ValueArray>|null $values */
         $values = $container->getPodcastIndexValues();
@@ -289,8 +288,7 @@ class Entry extends Extension\AbstractRenderer
      */
     protected function setSeason(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var EntryWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getEntryWriter();
 
         /** @psalm-var null|SeasonArray $season */
         $season = $container->getPodcastIndexSeason();
@@ -307,8 +305,7 @@ class Entry extends Extension\AbstractRenderer
      */
     protected function setEpisode(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var EntryWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getEntryWriter();
 
         /** @psalm-var null|EpisodeArray $episode */
         $episode = $container->getPodcastIndexEpisode();
@@ -325,8 +322,7 @@ class Entry extends Extension\AbstractRenderer
      */
     private function setAlternateEnclosures(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var EntryWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getEntryWriter();
 
         /** @psalm-var list<AlternateEnclosureArray>|null $enclosures */
         $enclosures = $container->getPodcastIndexAlternateEnclosures();
@@ -358,8 +354,7 @@ class Entry extends Extension\AbstractRenderer
      */
     private function setDetailedImages(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var EntryWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getEntryWriter();
 
         /** @psalm-var list<DetailedImageArray>|null $detailedImages */
         $detailedImages = $container->getPodcastIndexDetailedImages();

@@ -1567,6 +1567,24 @@
       <code>getAttribute</code>
     </UndefinedMethod>
   </file>
+  <file src="src/Reader/Extension/PodcastIndex/Entry.php">
+    <MismatchingDocblockReturnType>
+      <code>null|ChaptersObject</code>
+      <code>null|TranscriptObject</code>
+    </MismatchingDocblockReturnType>
+    <MixedInferredReturnType>
+      <code>null|ChaptersObject</code>
+      <code>null|TranscriptObject</code>
+    </MixedInferredReturnType>
+    <TooManyArguments>
+      <code>query</code>
+      <code>query</code>
+      <code>query</code>
+      <code>query</code>
+      <code>query</code>
+      <code>query</code>
+    </TooManyArguments>
+  </file>
   <file src="src/Reader/Extension/PodcastIndex/Feed.php">
     <MixedAssignment>
       <code>$locked</code>
@@ -1582,6 +1600,11 @@
       <code><![CDATA[$this->data['owner']]]></code>
       <code><![CDATA[$this->data['owner']]]></code>
     </MixedReturnStatement>
+    <TooManyArguments>
+      <code>query</code>
+      <code>query</code>
+      <code>query</code>
+    </TooManyArguments>
   </file>
   <file src="src/Reader/Extension/Slash/Entry.php">
     <InvalidOperand>
