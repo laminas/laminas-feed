@@ -79,13 +79,20 @@ class Feed extends Extension\AbstractRenderer
         );
     }
 
+    private function getFeedWriter(): FeedWriter
+    {
+        $container = $this->getDataContainer();
+        assert($container instanceof FeedWriter);
+
+        return $container;
+    }
+
     /**
      * Set feed lock
      */
     protected function setLocked(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var FeedWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getFeedWriter();
 
         /** @psalm-var null|array<string, string> $locked */
         $locked = $container->getPodcastIndexLocked();
@@ -102,8 +109,7 @@ class Feed extends Extension\AbstractRenderer
      */
     protected function setFunding(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var FeedWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getFeedWriter();
 
         /** @psalm-var null|array<string, string> $funding */
         $funding = $container->getPodcastIndexFunding();
@@ -120,8 +126,7 @@ class Feed extends Extension\AbstractRenderer
      */
     private function setLicense(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var FeedWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getFeedWriter();
 
         /** @psalm-var null|LicenseArray $license */
         $license = $container->getPodcastIndexLicense();
@@ -139,8 +144,7 @@ class Feed extends Extension\AbstractRenderer
      */
     private function setLocation(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var FeedWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getFeedWriter();
 
         /** @psalm-var null|LocationArray $location */
         $location = $container->getPodcastIndexLocation();
@@ -157,8 +161,7 @@ class Feed extends Extension\AbstractRenderer
      */
     private function setImages(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var FeedWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getFeedWriter();
 
         /** @psalm-var null|ImagesArray $images */
         $images = $container->getPodcastIndexImages();
@@ -175,8 +178,7 @@ class Feed extends Extension\AbstractRenderer
      */
     private function setDetailedImages(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var FeedWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getFeedWriter();
 
         /** @psalm-var list<DetailedImageArray>|null $detailedImages */
         $detailedImages = $container->getPodcastIndexDetailedImages();
@@ -197,8 +199,7 @@ class Feed extends Extension\AbstractRenderer
      */
     private function setUpdateFrequency(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var FeedWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getFeedWriter();
 
         /** @psalm-var null|UpdateFrequencyArray $updateFrequency */
         $updateFrequency = $container->getPodcastIndexUpdateFrequency();
@@ -215,8 +216,7 @@ class Feed extends Extension\AbstractRenderer
      */
     private function setPeople(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var FeedWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getFeedWriter();
 
         /** @psalm-var null|list<PersonArray> $people */
         $people = $container->getPodcastIndexPeople();
@@ -235,8 +235,7 @@ class Feed extends Extension\AbstractRenderer
      */
     private function setTrailer(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var FeedWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getFeedWriter();
 
         /** @psalm-var null|TrailerArray $trailer */
         $trailer = $container->getPodcastIndexTrailer();
@@ -253,8 +252,7 @@ class Feed extends Extension\AbstractRenderer
      */
     private function setGuid(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var FeedWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getFeedWriter();
 
         /** @psalm-var null|array{value: string} $guid */
         $guid = $container->getPodcastIndexGuid();
@@ -271,8 +269,7 @@ class Feed extends Extension\AbstractRenderer
      */
     private function setMedium(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var FeedWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getFeedWriter();
 
         /** @psalm-var null|array{value: string} $medium */
         $medium = $container->getPodcastIndexMedium();
@@ -289,8 +286,7 @@ class Feed extends Extension\AbstractRenderer
      */
     private function setBlocks(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var FeedWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getFeedWriter();
 
         /** @psalm-var list<BlockArray>|null $blocks */
         $blocks = $container->getPodcastIndexBlocks();
@@ -310,8 +306,7 @@ class Feed extends Extension\AbstractRenderer
      */
     private function setTxts(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var FeedWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getFeedWriter();
 
         /** @psalm-var list<TxtArray>|null $txts */
         $txts = $container->getPodcastIndexTxts();
@@ -331,8 +326,7 @@ class Feed extends Extension\AbstractRenderer
      */
     private function setPodping(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var FeedWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getFeedWriter();
 
         /** @psalm-var null|array{usesPodping: bool} $podping */
         $podping = $container->getPodcastIndexPodping();
@@ -350,8 +344,7 @@ class Feed extends Extension\AbstractRenderer
      */
     private function setRemoteItems(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var FeedWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getFeedWriter();
 
         /** @psalm-var list<RemoteItemArray>|null $remoteItems */
         $remoteItems = $container->getPodcastIndexRemoteItems();
@@ -372,8 +365,7 @@ class Feed extends Extension\AbstractRenderer
      */
     private function setPodroll(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var FeedWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getFeedWriter();
 
         /** @psalm-var list<RemoteItemArray>|null $podrollItems */
         $podrollItems = $container->getPodcastIndexPodroll();
@@ -398,8 +390,7 @@ class Feed extends Extension\AbstractRenderer
      */
     private function setPublisher(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var FeedWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getFeedWriter();
 
         /** @psalm-var RemoteItemArray|null $publisherItem */
         $publisherItem = $container->getPodcastIndexPublisher();
@@ -420,8 +411,7 @@ class Feed extends Extension\AbstractRenderer
      */
     private function setValues(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var FeedWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getFeedWriter();
 
         /** @psalm-var list<ValueArray>|null $values */
         $values = $container->getPodcastIndexValues();
@@ -449,8 +439,7 @@ class Feed extends Extension\AbstractRenderer
      */
     private function setSocialInteracts(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var FeedWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getFeedWriter();
 
         /** @psalm-var list<SocialInteractArray>|null $socialInteracts */
         $socialInteracts = $container->getPodcastIndexSocialInteracts();
