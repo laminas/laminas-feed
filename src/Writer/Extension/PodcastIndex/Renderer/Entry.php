@@ -383,8 +383,7 @@ class Entry extends Extension\AbstractRenderer
      */
     private function setContentLinks(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var EntryWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getEntryWriter();
 
         /** @psalm-var list<ContentLinkArray>|null $contentLinks */
         $contentLinks = $container->getPodcastIndexContentLinks();
@@ -405,8 +404,7 @@ class Entry extends Extension\AbstractRenderer
      */
     protected function setFundings(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var EntryWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getEntryWriter();
 
         /** @psalm-var null|list<FundingArray> $fundings */
         $fundings = $container->getPodcastIndexFundings();
@@ -427,8 +425,7 @@ class Entry extends Extension\AbstractRenderer
      */
     private function setChat(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var EntryWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getEntryWriter();
 
         /** @psalm-var ChatArray|null $chat */
         $chat = $container->getPodcastIndexChat();

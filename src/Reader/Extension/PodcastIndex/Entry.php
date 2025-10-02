@@ -529,16 +529,16 @@ class Entry extends Extension\AbstractEntry
     /**
      * Get the episode content links.
      *
-     * @psalm-return null|list<ContentLinkObject>
+     * @psalm-return list<ContentLinkObject>
      */
-    public function getPodcastIndexContentLinks(): null|array
+    public function getPodcastIndexContentLinks(): array
     {
         if (array_key_exists('contentLinks', $this->data)) {
-            /** @psalm-var null|list<ContentLinkObject> */
+            /** @psalm-var list<ContentLinkObject> */
             return $this->data['contentLinks'];
         }
 
-        $contentLinks = null;
+        $contentLinks = [];
 
         $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:contentLink');
 
@@ -558,16 +558,16 @@ class Entry extends Extension\AbstractEntry
     /**
      * Get the episode fundings
      *
-     * @psalm-return null|list<FundingObject>
+     * @psalm-return list<FundingObject>
      */
-    public function getPodcastIndexFundings(): null|array
+    public function getPodcastIndexFundings(): array
     {
         if (array_key_exists('fundings', $this->data)) {
-            /** @psalm-var null|list<FundingObject> */
+            /** @psalm-var list<FundingObject> */
             return $this->data['fundings'];
         }
 
-        $fundings = null;
+        $fundings = [];
 
         $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:funding');
 

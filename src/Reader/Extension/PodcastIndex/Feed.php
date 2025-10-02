@@ -93,7 +93,6 @@ class Feed extends Extension\AbstractFeed
      * Get a single feed funding
      *
      * @deprecated Multiple `funding` tags are allowed now. Use `getPodcastIndexFundings()` instead.
-     * @psalm-suppress DeprecatedMethod
      */
     public function getFunding(): object|null
     {
@@ -130,16 +129,16 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get multiple feed fundings
      *
-     * @psalm-return null|list<FundingObject>
+     * @psalm-return list<FundingObject>
      */
-    public function getPodcastIndexFundings(): null|array
+    public function getPodcastIndexFundings(): array
     {
-        $fundings = null;
+        $fundings = [];
 
         // include deprecated single funding entry if exists
         if (array_key_exists('fundings', $this->data) || array_key_exists('funding', $this->data)) {
-            /** @psalm-var null|list<FundingObject> $fundings */
-            $fundings = $this->data['fundings'] ?? null;
+            /** @psalm-var list<FundingObject> $fundings */
+            $fundings = $this->data['fundings'] ?? [];
             if (isset($this->data['funding'])) {
                 $fundings[] = $this->data['funding'];
             }
@@ -664,22 +663,21 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get the podcast live items
      *
-     * @psalm-return null|list<LiveItemReader>
+     * @psalm-return list<LiveItemReader>
      */
-    public function getPodcastIndexLiveItems(): null|array
+    public function getPodcastIndexLiveItems(): array
     {
         if (array_key_exists('liveItems', $this->data)) {
-            /** @psalm-var null|list<LiveItemReader> */
+            /** @psalm-var list<LiveItemReader> */
             return $this->data['liveItems'];
         }
 
-        $liveItems = null;
+        $liveItems = [];
 
         $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:liveItem');
 
         if ($nodeList->length > 0) {
-            $liveItems = [];
-            $index     = 0;
+            $index = 0;
             foreach ($nodeList as $entry) {
                 assert($entry instanceof DOMElement);
                 $reader = new LiveItemReader($entry, (string) $index, $this->getType());
@@ -707,7 +705,7 @@ class Feed extends Extension\AbstractFeed
             return $this->data['chat'];
         }
 
-        $object = null;
+        $object   = null;
         $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:chat');
 
         if ($nodeList->length > 0) {

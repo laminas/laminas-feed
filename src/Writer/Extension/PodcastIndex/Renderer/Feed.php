@@ -510,8 +510,7 @@ class Feed extends Extension\AbstractRenderer
      */
     private function setLiveItems(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var FeedWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getFeedWriter();
 
         /** @psalm-var list<LiveItemArray>|null $liveItems */
         $liveItems = $container->getPodcastIndexLiveItems();
@@ -519,7 +518,7 @@ class Feed extends Extension\AbstractRenderer
             return;
         }
 
-
+        // TODO
 
         /*foreach ($liveItems as $liveItem) {
             $el = ElementGenerator::createPodcastIndexElement($dom, $liveItem, 'liveItem');
@@ -534,8 +533,7 @@ class Feed extends Extension\AbstractRenderer
      */
     private function setChat(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var FeedWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getFeedWriter();
 
         /** @psalm-var ChatArray|null $chat */
         $chat = $container->getPodcastIndexChat();
