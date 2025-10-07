@@ -108,24 +108,28 @@ class FeedTest extends TestCase
     {
         $feed = new Writer\Feed();
 
-        $funding = [
+        $data = [
             'title' => 'Support the show!',
             'url'   => 'http://example.com/donate',
         ];
-        $feed->addPodcastIndexFunding($funding);
-        $this->assertEquals($funding, $feed->getPodcastIndexFundings()[0]);
+        $feed->addPodcastIndexFunding($data);
+        /** @var array $fundings */
+        $fundings = $feed->getPodcastIndexFundings();
+        $this->assertEquals($data, $fundings[0]);
     }
 
     public function testSetFundingHandleDeprecated(): void
     {
         $feed = new Writer\Feed();
 
-        $funding = [
+        $data = [
             'title' => 'Support the show!',
             'url'   => 'http://example.com/donate',
         ];
-        $feed->setPodcastIndexFunding($funding);
-        $this->assertEquals($funding, $feed->getPodcastIndexFundings()[0]);
+        $feed->setPodcastIndexFunding($data);
+        /** @var array $fundings */
+        $fundings = $feed->getPodcastIndexFundings();
+        $this->assertEquals($data, $fundings[0]);
     }
 
     public function testSetFundings(): void
@@ -1510,6 +1514,7 @@ class FeedTest extends TestCase
             'end'    => '2021-09-26T09:30:00.000-0600',
         ];
 
+        /** @var LiveItem $liveItem */
         $liveItem = $feed->createPodcastIndexLiveItem($data);
         $feed->addPodcastIndexLiveItem($liveItem);
 
@@ -1518,9 +1523,11 @@ class FeedTest extends TestCase
             'start'  => '2021-10-03T07:30:00.000-0600',
             'end'    => '2021-10-03T09:30:00.000-0600',
         ];
+        /** @var LiveItem $liveItem2 */
         $liveItem2 = $feed->createPodcastIndexLiveItem($data2);
         $feed->addPodcastIndexLiveItem($liveItem2);
 
+        /** @var list<LiveItem> $liveItems */
         $liveItems = $feed->getPodcastIndexLiveItems();
         $this->assertCount(2, $liveItems);
         $this->assertContains($liveItem, $liveItems);
@@ -1537,18 +1544,22 @@ class FeedTest extends TestCase
             'end'    => '2021-09-26T09:30:00.000-0600',
         ];
 
+        /** @var LiveItem $liveItem */
         $liveItem = $feed->createPodcastIndexLiveItem($data);
         $feed->addPodcastIndexLiveItem($liveItem);
 
-        $data2     = [
+        $data2 = [
             'status' => 'live',
             'start'  => '2021-10-03T07:30:00.000-0600',
             'end'    => '2021-10-03T09:30:00.000-0600',
         ];
+        /** @var LiveItem $liveItem2 */
         $liveItem2 = $feed->createPodcastIndexLiveItem($data2);
         $feed->addPodcastIndexLiveItem($liveItem2);
 
         $feed->removePodcastIndexLiveItem(1);
+
+        /** @var list<LiveItem> $liveItems */
         $liveItems = $feed->getPodcastIndexLiveItems();
         $this->assertCount(1, $liveItems);
         $this->assertContains($liveItem, $liveItems);
@@ -1570,8 +1581,7 @@ class FeedTest extends TestCase
         ];
 
         $feed->setPodcastIndexChat($data);
-        $chat = $feed->getPodcastIndexChat();
-        $this->assertEquals($data, $chat);
+        $this->assertEquals($data, $feed->getPodcastIndexChat());
     }
 
     public function testSetPodcastIndexChatWithMinimalData(): void
@@ -1584,8 +1594,7 @@ class FeedTest extends TestCase
         ];
 
         $feed->setPodcastIndexChat($data);
-        $chat = $feed->getPodcastIndexChat();
-        $this->assertEquals($data, $chat);
+        $this->assertEquals($data, $feed->getPodcastIndexChat());
     }
 
     public function testSetPodcastIndexChatThrowsExceptionOnInvalidArgument(): void

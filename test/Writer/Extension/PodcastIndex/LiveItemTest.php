@@ -50,6 +50,7 @@ class LiveItemTest extends TestCase
             'end'    => '2021-09-26T09:30:00.000-0600',
         ];
 
+        /** @psalm-var PodcastIndex\LiveItem $this->liveItem */
         $this->liveItem = $feeWriter->createPodcastIndexLiveItem($liveItem);
     }
 
@@ -394,12 +395,15 @@ class LiveItemTest extends TestCase
 
     public function testAddFunding(): void
     {
-        $funding = [
+        $data = [
             'title' => 'Support the show!',
             'url'   => 'http://example.com/donate',
         ];
-        $this->liveItem->addPodcastIndexFunding($funding);
-        $this->assertEquals($funding, $this->liveItem->getPodcastIndexFundings()[0]);
+        $this->liveItem->addPodcastIndexFunding($data);
+
+        /** @var list<array> $fundings */
+        $fundings = $this->liveItem->getPodcastIndexFundings();
+        $this->assertEquals($data, $fundings[0]);
     }
 
     public function testSetChat(): void
@@ -423,7 +427,6 @@ class LiveItemTest extends TestCase
         ];
 
         $this->liveItem->setPodcastIndexChat($data);
-        $chat = $this->liveItem->getPodcastIndexChat();
-        $this->assertEquals($data, $chat);
+        $this->assertEquals($data, $this->liveItem->getPodcastIndexChat());
     }
 }

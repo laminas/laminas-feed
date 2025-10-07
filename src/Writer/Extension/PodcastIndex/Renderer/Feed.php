@@ -70,24 +70,23 @@ class Feed extends Extension\AbstractRenderer
         $this->setChat($this->dom, $this->base);
 
         $liveItems = $this->getDataContainer()->getPodcastIndexLiveItems();
-        foreach ($liveItems as $liveItem) {
-            if ($this->getDataContainer()->getEncoding()) {
-                $liveItem->setEncoding($this->getDataContainer()->getEncoding());
+        if ($liveItems) {
+            foreach ($liveItems as $liveItem) {
+                if ($this->getDataContainer()->getEncoding()) {
+                    $liveItem->setEncoding($this->getDataContainer()->getEncoding());
+                }
+                if ($liveItem instanceof PodcastIndex\LiveItem) {
+                    $renderer = new LiveItem($liveItem);
+                } else {
+                    continue;
+                }
+                $renderer->setType($this->getType());
+                $renderer->setRootElement($this->dom->documentElement);
+                $renderer->render();
+                $element  = $renderer->getElement();
+                $imported = $this->dom->importNode($element, true);
+                $this->base->appendChild($imported);
             }
-            if ($liveItem instanceof PodcastIndex\LiveItem) {
-                $renderer = new LiveItem($liveItem);
-            } else {
-                continue;
-            }
-            if ($this->getDataContainer()->ignoreExceptions === true) {
-                $renderer->ignoreExceptions();
-            }
-            $renderer->setType($this->getType());
-            $renderer->setRootElement($this->dom->documentElement);
-            $renderer->render();
-            $element  = $renderer->getElement();
-            $imported = $this->dom->importNode($element, true);
-            $this->base->appendChild($imported);
         }
 
         if ($this->called) {

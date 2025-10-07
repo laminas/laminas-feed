@@ -943,11 +943,11 @@ class PodcastIndexRss2Test extends TestCase
      */
     public function testGetsLiveItemWithAttributes(): void
     {
+        /** @var Reader\Extension\PodcastIndex\Feed $feed */
         $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
 
-        /** @var Reader\Extension\PodcastIndex\LiveItem $liveItem */
         $liveItem = $feed->getPodcastIndexLiveItems()[0];
 
         $this->assertEquals('live', $liveItem->getStatus());
@@ -957,11 +957,11 @@ class PodcastIndexRss2Test extends TestCase
 
     public function testGetsLiveItemWithClassicChildren(): void
     {
+        /** @var Reader\Extension\PodcastIndex\Feed $feed */
         $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
 
-        /** @var Reader\Extension\PodcastIndex\LiveItem $liveItem */
         $liveItem = $feed->getPodcastIndexLiveItems()[0];
 
         $title       = 'Podcasting 2.0 Live Show';
@@ -974,11 +974,15 @@ class PodcastIndexRss2Test extends TestCase
         $this->assertEquals($description, $liveItem->getDescription());
         $this->assertEquals($link, $liveItem->getLink());
         $this->assertEquals($guid, $liveItem->getId());
-        $this->assertEquals($author, $liveItem->getAuthor()['email']);
+
+        /** @var array $author */
+        $resAuthor = $liveItem->getAuthor();
+        $this->assertEquals($author, $resAuthor['email']);
     }
 
     public function testGetsLiveItemEnclosure(): void
     {
+        /** @var Reader\Extension\PodcastIndex\Feed $feed */
         $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
@@ -988,7 +992,6 @@ class PodcastIndexRss2Test extends TestCase
         $expected->length = "312";
         $expected->type   = "audio/mpeg";
 
-        /** @var Reader\Extension\PodcastIndex\LiveItem $liveItem */
         $liveItem = $feed->getPodcastIndexLiveItems()[0];
 
         $this->assertEquals($expected, $liveItem->getEnclosure());
@@ -996,11 +999,11 @@ class PodcastIndexRss2Test extends TestCase
 
     public function testGetsLiveItemPersons(): void
     {
+        /** @var Reader\Extension\PodcastIndex\Feed $feed */
         $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
 
-        /** @var Reader\Extension\PodcastIndex\LiveItem $liveItem */
         $liveItem = $feed->getPodcastIndexLiveItems()[0];
 
         $personA        = new stdClass();
@@ -1017,19 +1020,19 @@ class PodcastIndexRss2Test extends TestCase
         $personB->href  = 'https://github.com/daveajones/';
         $personB->group = '';
 
+        /** @var array $people */
         $people = $liveItem->getPodcastIndexPeople();
-        $this->assertNotNull($people);
         $this->assertEquals($personA, $people[0]);
         $this->assertEquals($personB, $people[1]);
     }
 
     public function testGetsLiveItemAlternateEnclosure(): void
     {
+        /** @var Reader\Extension\PodcastIndex\Feed $feed */
         $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
 
-        /** @var Reader\Extension\PodcastIndex\LiveItem $liveItem */
         $liveItem = $feed->getPodcastIndexLiveItems()[0];
 
         $source              = new stdClass();
@@ -1048,17 +1051,18 @@ class PodcastIndexRss2Test extends TestCase
         $expected->codecs  = '';
         $expected->sources = [$source];
 
+        /** @var array $enclosure */
         $enclosure = $liveItem->getPodcastIndexAlternateEnclosures();
         $this->assertEquals($expected, $enclosure[0]);
     }
 
     public function testGetsLiveItemContentLinks(): void
     {
+        /** @var Reader\Extension\PodcastIndex\Feed $feed */
         $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
 
-        /** @var Reader\Extension\PodcastIndex\LiveItem $liveItem */
         $liveItem = $feed->getPodcastIndexLiveItems()[0];
 
         $expectedA              = new stdClass();
@@ -1069,6 +1073,7 @@ class PodcastIndexRss2Test extends TestCase
         $expectedB->href        = 'https://twitch.com/pc20/livestream';
         $expectedB->description = 'Twitch!';
 
+        /** @var list<array> $contentLinks */
         $contentLinks = $liveItem->getPodcastIndexContentLinks();
         $this->assertEquals(2, count($contentLinks));
         $this->assertEquals($expectedA, $contentLinks[0]);
@@ -1077,27 +1082,29 @@ class PodcastIndexRss2Test extends TestCase
 
     public function testGetsLiveItemFundings(): void
     {
+        /** @var Reader\Extension\PodcastIndex\Feed $feed */
         $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
 
-        /** @var Reader\Extension\PodcastIndex\LiveItem $liveItem */
         $liveItem = $feed->getPodcastIndexLiveItems()[0];
 
         $expected        = new stdClass();
         $expected->url   = 'http://example.com/live-item/donate';
         $expected->title = 'Support the live Episode!';
 
-        $this->assertEquals($expected, $liveItem->getPodcastIndexFundings()[0]);
+        /** @var array $fundings */
+        $fundings = $liveItem->getPodcastIndexFundings();
+        $this->assertEquals($expected, $fundings[0]);
     }
 
     public function testGetsLiveItemChat(): void
     {
+        /** @var Reader\Extension\PodcastIndex\Feed $feed */
         $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath)
         );
 
-        /** @var Reader\Extension\PodcastIndex\LiveItem $liveItem */
         $liveItem = $feed->getPodcastIndexLiveItems()[0];
 
         $expected            = new stdClass();
@@ -1106,7 +1113,6 @@ class PodcastIndexRss2Test extends TestCase
         $expected->accountId = 'jsmith@jabber.example.org';
         $expected->space     = 'myawesomepodcast@jabber.example.org';
 
-        $actual = $liveItem->getPodcastIndexChat();
-        $this->assertEquals($expected, $actual);
+        $this->assertEquals($expected, $liveItem->getPodcastIndexChat());
     }
 }

@@ -1176,7 +1176,9 @@ class EntryTest extends TestCase
             'url'   => 'http://example.com/donate',
         ];
         $entry->addPodcastIndexFunding($funding);
-        $this->assertEquals($funding, $entry->getPodcastIndexFundings()[0]);
+        /** @var array $fundings */
+        $fundings = $entry->getPodcastIndexFundings();
+        $this->assertEquals($funding, $fundings[0]);
     }
 
     public function testAddFundingThrowsExceptionOnInvalidArguments(): void
@@ -1240,13 +1242,12 @@ class EntryTest extends TestCase
         $entry = new Writer\Entry();
 
         $data = [
-            'server'    => "irc.zeronode.net",
-            'protocol'  => "irc",
+            'server'   => "irc.zeronode.net",
+            'protocol' => "irc",
         ];
 
         $entry->setPodcastIndexChat($data);
-        $chat = $entry->getPodcastIndexChat();
-        $this->assertEquals($data, $chat);
+        $this->assertEquals($data, $entry->getPodcastIndexChat());
     }
 
     public function testSetPodcastIndexChatThrowsExceptionOnInvalidArgument(): void
@@ -1254,7 +1255,7 @@ class EntryTest extends TestCase
         $entry = new Writer\Entry();
 
         $data = [
-            'abc'    => 123,
+            'abc' => 123,
         ];
 
         $this->expectException(Writer\Exception\InvalidArgumentException::class);

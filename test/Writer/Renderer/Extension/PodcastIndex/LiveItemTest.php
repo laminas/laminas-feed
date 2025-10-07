@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace LaminasTest\Feed\Writer\Renderer\Extension\PodcastIndex;
 
 use Laminas\Feed\Writer;
-use Laminas\Feed\Writer\Extension\PodcastIndex;
+use Laminas\Feed\Writer\Extension\PodcastIndex\LiveItem;
 use Laminas\Feed\Writer\Renderer;
 use PHPUnit\Framework\TestCase;
 
@@ -16,7 +16,7 @@ use function substr_count;
 class LiveItemTest extends TestCase
 {
     protected Writer\Feed $validWriter;
-    protected PodcastIndex\LiveItem $validEntry;
+    protected LiveItem $validEntry;
 
     protected function setUp(): void
     {
@@ -34,7 +34,9 @@ class LiveItemTest extends TestCase
             'end'    => '2021-09-26T09:30:00.000-0600',
         ];
 
+        /** @psalm-var LiveItem $this->validEntry */
         $this->validEntry = $this->validWriter->createPodcastIndexLiveItem($liveItem);
+
         $this->validEntry->setTitle('This is a test live item.');
         $this->validEntry->setDateModified(1_234_567_890);
         $this->validEntry->setDateCreated(1_234_567_000);
@@ -62,8 +64,14 @@ class LiveItemTest extends TestCase
         $this->assertStringContainsString($expected, $xml);
 
         $this->assertStringContainsString($this->validEntry->getTitle(), $xml);
-        $this->assertStringContainsString($this->validEntry->getLink(), $xml);
-        $this->assertStringContainsString($this->validEntry->getAuthors()[0]['email'], $xml);
+
+        $link = $this->validEntry->getLink();
+        $this->assertNotNull($link);
+        $this->assertStringContainsString($link, $xml);
+
+        /** @var array<array-key,string> $author */
+        $author = $this->validEntry->getAuthors()[0];
+        $this->assertStringContainsString($author['email'], $xml);
     }
 
     public function testRendersRssLocationTag(): void
