@@ -256,7 +256,7 @@ final class Validator
      */
     public static function validateFunding(array $value): void
     {
-        if (!isset($value['title'], $value['url'])) {
+        if (! isset($value['title'], $value['url'])) {
             throw new Writer\Exception\InvalidArgumentException(
                 'invalid parameter: "funding" must be an array containing keys "title" and "url"'
             );

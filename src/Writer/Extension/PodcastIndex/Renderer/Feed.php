@@ -50,6 +50,7 @@ class Feed extends Extension\AbstractRenderer
     {
         $this->setLocked($this->dom, $this->base);
         $this->setFunding($this->dom, $this->base);
+        $this->setFundings($this->dom, $this->base);
         $this->setLicense($this->dom, $this->base);
         $this->setLocation($this->dom, $this->base);
         $this->setImages($this->dom, $this->base);
@@ -69,17 +70,17 @@ class Feed extends Extension\AbstractRenderer
         $this->setSocialInteracts($this->dom, $this->base);
         $this->setChat($this->dom, $this->base);
 
-        $liveItems = $this->getDataContainer()->getPodcastIndexLiveItems();
+        /** @var FeedWriter $feedWriter */
+        $feedWriter = $this->getDataContainer();
+        /** @var list<PodcastIndex\LiveItem> $liveItems */
+        $liveItems = $feedWriter->getPodcastIndexLiveItems();
         if ($liveItems) {
             foreach ($liveItems as $liveItem) {
-                if ($this->getDataContainer()->getEncoding()) {
-                    $liveItem->setEncoding($this->getDataContainer()->getEncoding());
+                $encoding = $feedWriter->getEncoding();
+                if ($encoding) {
+                    $liveItem->setEncoding($encoding);
                 }
-                if ($liveItem instanceof PodcastIndex\LiveItem) {
-                    $renderer = new LiveItem($liveItem);
-                } else {
-                    continue;
-                }
+                $renderer = new LiveItem($liveItem, $this->dom, $this->base);
                 $renderer->setType($this->getType());
                 $renderer->setRootElement($this->dom->documentElement);
                 $renderer->render();
@@ -500,29 +501,6 @@ class Feed extends Extension\AbstractRenderer
             $el = ElementGenerator::createPodcastIndexElement($dom, $socialInteract, 'socialInteract');
             $root->appendChild($el);
         }
-
-        $this->called = true;
-    }
-
-    /**
-     * Set feed live items
-     */
-    private function setLiveItems(DOMDocument $dom, DOMElement $root): void
-    {
-        $container = $this->getFeedWriter();
-
-        /** @psalm-var list<LiveItemArray>|null $liveItems */
-        $liveItems = $container->getPodcastIndexLiveItems();
-        if ($liveItems === null || $liveItems === []) {
-            return;
-        }
-
-        // TODO
-
-        /*foreach ($liveItems as $liveItem) {
-            $el = ElementGenerator::createPodcastIndexElement($dom, $liveItem, 'liveItem');
-            $root->appendChild($el);
-        }*/
 
         $this->called = true;
     }

@@ -137,10 +137,12 @@ class Feed extends Extension\AbstractFeed
 
         // include deprecated single funding entry if exists
         if (array_key_exists('fundings', $this->data) || array_key_exists('funding', $this->data)) {
-            /** @psalm-var list<FundingObject> $fundings */
+            /** @var list<FundingObject> $fundings */
             $fundings = $this->data['fundings'] ?? [];
             if (isset($this->data['funding'])) {
-                $fundings[] = $this->data['funding'];
+                /** @var FundingObject $single */
+                $single     = $this->data['funding'];
+                $fundings[] = $single;
             }
             return $fundings;
         }

@@ -50,6 +50,10 @@ class PodcastIndexRss2Test extends TestCase
         $this->assertEquals('john.doe@example.com', $feed->getPodcastIndexLockOwner());
     }
 
+
+    /**
+     * @psalm-suppress DeprecatedMethod
+     */
     public function testGetsFunding(): void
     {
         /** @var Reader\Extension\PodcastIndex\Feed $feed */
@@ -937,7 +941,6 @@ class PodcastIndexRss2Test extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-
     /**
      * LiveItem level testing
      */
@@ -975,7 +978,7 @@ class PodcastIndexRss2Test extends TestCase
         $this->assertEquals($link, $liveItem->getLink());
         $this->assertEquals($guid, $liveItem->getId());
 
-        /** @var array $author */
+        /** @var array $resAuthor */
         $resAuthor = $liveItem->getAuthor();
         $this->assertEquals($author, $resAuthor['email']);
     }

@@ -15,32 +15,27 @@ use Laminas\Feed\Writer\Writer;
  */
 class LiveItem extends Entry\Rss
 {
-    /**
-     * Set to TRUE if a rendering method actually renders something. This
-     * is used to prevent premature appending of a XML namespace declaration
-     * until an element which requires it is actually appended.
-     *
-     * @var bool
-     */
-    protected $called = false;
-
-    public function __construct(LiveItemWriter $container)
+    public function __construct(LiveItemWriter $container, DOMDocument $dom, DOMElement $rootElement)
     {
         parent::__construct($container);
+        $this->dom         = $dom;
+        $this->rootElement = $rootElement;
     }
 
     /**
      * Render live item
      */
-    public function render()
+    public function render(): self
     {
-        $this->dom                     = new DOMDocument('1.0', $this->container->getEncoding());
+        /** @psalm-var string $encoding */
+        $encoding                      = $this->container->getEncoding();
+        $this->dom                     = new DOMDocument('1.0', $encoding);
         $this->dom->formatOutput       = true;
         $this->dom->substituteEntities = false;
 
         /** @psalm-var LiveItemWriter $liveItemWriter */
         $liveItemWriter = $this->getDataContainer();
-        $attributes = [
+        $attributes     = [
             'status' => $liveItemWriter->getStatus(),
             'start'  => $liveItemWriter->getStart(),
             'end'    => $liveItemWriter->getEnd(),
@@ -59,7 +54,6 @@ class LiveItem extends Entry\Rss
         $this->_setEnclosure($this->dom, $liveItem);
         $this->_setCommentLink($this->dom, $liveItem);
         $this->_setCategories($this->dom, $liveItem);
-        // TODO: $this->setContentLink($this->dom, $liveItem);
 
         foreach ($this->extensions as $ext) {
             $ext->setType($this->getType());
@@ -72,17 +66,19 @@ class LiveItem extends Entry\Rss
 
     /**
      * Load extensions from Laminas\Feed\Writer\Entry
+     * Override abstract renderer method to only fetch entry extensions
      *
      * @return void
      */
-    // phpcs:ignore PSR2.Methods.MethodDeclaration.Underscore
     protected function _loadExtensions()
     {
         Writer::registerCoreExtensions();
         $manager = Writer::getExtensionManager();
         $all     = Writer::getExtensions();
-        $exts    = $all['entryRenderer'];
+        /** @var array<array-key,string> $exts */
+        $exts = $all['entryRenderer'];
         foreach ($exts as $extension) {
+            /** @var mixed $plugin */
             $plugin = $manager->get($extension);
             $plugin->setDataContainer($this->getDataContainer());
             $plugin->setEncoding($this->getEncoding());

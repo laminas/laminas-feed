@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Feed\Writer\Extension\PodcastIndex;
 
-use Laminas\Feed\Writer;
 use Laminas\Feed\Writer\Entry;
-use Laminas\Stdlib\StringWrapper\StringWrapperInterface;
 
 /**
  * Describes LiveItem data in a RSS Feed
@@ -45,6 +43,7 @@ class LiveItem extends Entry
         $this->status = $this->data['status'] = $value['status'];
         $this->start  = $this->data['start'] = $value['start'];
         $this->end    = $this->data['end'] = $value['end'] ?? '';
+        $this->type   = 'rss';
     }
 
     /**

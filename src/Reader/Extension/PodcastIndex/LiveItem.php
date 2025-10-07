@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Laminas\Feed\Reader\Extension\PodcastIndex;
 
+use DOMAttr;
 use DOMElement;
 use Laminas\Feed\Reader\Entry\Rss as EntryReader;
-use Laminas\Feed\Reader\Extension\PodcastIndex\Entry;
 
 use function array_key_exists;
 use function assert;
@@ -16,11 +16,7 @@ use function assert;
  */
 class LiveItem extends EntryReader
 {
-    /**
-     * @param string $liveItemKey
-     * @param null|string $type
-     */
-    public function __construct(DOMElement $liveItem, $liveItemKey, $type = null)
+    public function __construct(DOMElement $liveItem, string $liveItemKey, ?string $type = null)
     {
         parent::__construct($liveItem, $liveItemKey, $type);
 
@@ -31,6 +27,7 @@ class LiveItem extends EntryReader
 
         // also ensure that for the PodcastIndex extension entries
         $prefix = $this->xpathQueryRss;
+        /** @psalm-var mixed $extension */
         foreach ($this->extensions as $extension) {
             if ($extension instanceof Entry) {
                 $extension->setXpathPrefix($prefix);
@@ -45,12 +42,14 @@ class LiveItem extends EntryReader
             return $this->data['status'];
         }
 
-        $status   = null;
-        $nodeList = $this->xpath->query($this->getXpathPrefix() . '/@status');
+        $status = null;
+        /** @var string $prefix*/
+        $prefix   = $this->getXpathPrefix();
+        $nodeList = $this->xpath->query($prefix . '/@status');
 
         if ($nodeList->length > 0) {
             $node = $nodeList->item(0);
-            assert($node instanceof DOMElement);
+            assert($node instanceof DOMAttr);
             $status = $node->value;
         }
 
@@ -65,12 +64,14 @@ class LiveItem extends EntryReader
             return $this->data['start'];
         }
 
-        $start    = null;
-        $nodeList = $this->xpath->query($this->getXpathPrefix() . '/@start');
+        $start = null;
+        /** @var string $prefix*/
+        $prefix   = $this->getXpathPrefix();
+        $nodeList = $this->xpath->query($prefix . '/@start');
 
         if ($nodeList->length > 0) {
             $node = $nodeList->item(0);
-            assert($node instanceof DOMElement);
+            assert($node instanceof DOMAttr);
             $start = $node->value;
         }
 
@@ -85,12 +86,14 @@ class LiveItem extends EntryReader
             return $this->data['end'];
         }
 
-        $end      = null;
-        $nodeList = $this->xpath->query($this->getXpathPrefix() . '/@end');
+        $end = null;
+        /** @var string $prefix*/
+        $prefix   = $this->getXpathPrefix();
+        $nodeList = $this->xpath->query($prefix . '/@end');
 
         if ($nodeList->length > 0) {
             $node = $nodeList->item(0);
-            assert($node instanceof DOMElement);
+            assert($node instanceof DOMAttr);
             $end = $node->value;
         }
 

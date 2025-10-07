@@ -1518,7 +1518,7 @@ class FeedTest extends TestCase
         $liveItem = $feed->createPodcastIndexLiveItem($data);
         $feed->addPodcastIndexLiveItem($liveItem);
 
-        $data2     = [
+        $data2 = [
             'status' => 'live',
             'start'  => '2021-10-03T07:30:00.000-0600',
             'end'    => '2021-10-03T09:30:00.000-0600',

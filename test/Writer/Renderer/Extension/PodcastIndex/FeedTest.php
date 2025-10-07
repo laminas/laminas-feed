@@ -65,6 +65,29 @@ class FeedTest extends TestCase
         $this->assertStringContainsString($expected, $xml);
     }
 
+    public function testRendersMultipleRssFundingTags(): void
+    {
+        $fundings = [
+            [
+                'title' => 'Support the show!',
+                'url'   => 'http://example.com/donate',
+            ],
+            [
+                'title' => 'Support our partner!',
+                'url'   => 'http://example.com/partner/donate',
+            ],
+        ];
+        $this->validWriter->setPodcastIndexFundings($fundings);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $expectedA = '<podcast:funding url="http://example.com/donate">Support the show!</podcast:funding>';
+        $expectedB = '<podcast:funding url="http://example.com/partner/donate">Support our partner!</podcast:funding>';
+        $this->assertStringContainsString($expectedA, $xml);
+        $this->assertStringContainsString($expectedB, $xml);
+    }
+
     public function testRendersRssLicenseTag(): void
     {
         $identifier = 'cc-by-4.0';

@@ -151,6 +151,7 @@ class Feed
         if (! isset($this->data['fundings'])) {
             $this->data['fundings'] = [];
         }
+        /** @var list<FundingArray> $this->data['fundings'] */
         $this->data['fundings'][] = $value;
         return $this;
     }
@@ -758,7 +759,7 @@ class Feed
      * Get persons.
      * Specific get call for non-default naming.
      */
-    public function getPodcastIndexPersons(): array
+    public function getPodcastIndexPersons(): array|null
     {
         /** @var list<PersonArray> $persons */
         $persons = $this->getPodcastIndexPeople();
@@ -779,17 +780,21 @@ class Feed
 
     /**
      * Get multiple funding tags
-     *  Specific get call for non-default naming.
+     * Specific get call for non-default naming.
+     *
+     * @return null|list<FundingArray>
      */
     public function getPodcastIndexFundings(): array|null
     {
-        /** @var null|list<FundingArray> $fundings */
         $fundings = null;
-        if (isset($this->data['fundings']) || isset($this->data['funding'])) {
-            $fundings = $this->data['fundings'] ?? null;
-            if (isset($this->data['funding'])) {
-                $fundings[] = $this->data['funding'];
-            }
+        if (isset($this->data['fundings'])) {
+            /** @var list<FundingArray> $fundings */
+            $fundings = $this->data['fundings'];
+        }
+        if (isset($this->data['funding'])) {
+            /** @var FundingArray $single */
+            $single     = $this->data['funding'];
+            $fundings[] = $single;
         }
         return $fundings;
     }

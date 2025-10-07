@@ -579,6 +579,7 @@ class Entry
         if (! isset($this->data['fundings'])) {
             $this->data['fundings'] = [];
         }
+        /** @var list<FundingArray> $this->data['fundings'] */
         $this->data['fundings'][] = $value;
         return $this;
     }
