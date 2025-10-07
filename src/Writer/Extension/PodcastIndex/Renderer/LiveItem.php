@@ -70,6 +70,7 @@ class LiveItem extends Entry\Rss
      *
      * @return void
      */
+    // phpcs:disable PSR2.Methods.MethodDeclaration.Underscore
     protected function _loadExtensions()
     {
         Writer::registerCoreExtensions();

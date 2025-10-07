@@ -50,7 +50,6 @@ class PodcastIndexRss2Test extends TestCase
         $this->assertEquals('john.doe@example.com', $feed->getPodcastIndexLockOwner());
     }
 
-
     /**
      * @psalm-suppress DeprecatedMethod
      */
