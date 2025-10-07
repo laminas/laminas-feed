@@ -427,7 +427,6 @@ final class Validator
                 'invalid parameter: key "pubdate" of "trailer" must be an RFC2822 formatted date string'
             );
         }
-        /** @psalm-suppress DocblockTypeContradiction */
         if (! is_string($value['url']) || ! filter_var($value['url'], FILTER_VALIDATE_URL)) {
             throw new Writer\Exception\InvalidArgumentException(
                 'invalid parameter: key "url" of "trailer" must be a url, starting with "http://" or "https://'
@@ -527,7 +526,6 @@ final class Validator
                 'invalid parameter: "medium" must be an array containing the key "value"'
             );
         }
-        /** @psalm-suppress DocblockTypeContradiction */
         if (! is_string($value['value'])) {
             throw new Writer\Exception\InvalidArgumentException(
                 'invalid parameter: key "value" of "medium" must be a UUIDv5 string'
@@ -588,7 +586,6 @@ final class Validator
      * @param array<array-key, mixed> $value
      * @psalm-assert RemoteItemArray $value
      * @throws Writer\Exception\InvalidArgumentException
-     * @psalm-suppress DocblockTypeContradiction
      */
     public static function validateRemoteItem(array $value): void
     {

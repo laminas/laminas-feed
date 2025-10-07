@@ -341,7 +341,6 @@ class Feed
      *
      * @param TxtArray $value
      * @return $this
-     * @psalm-suppress DocblockTypeContradiction
      */
     public function addPodcastIndexTxt(array $value): self
     {
