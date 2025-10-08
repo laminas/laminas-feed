@@ -37,7 +37,7 @@
         <podcast:locked owner="john.doe@example.com">yes</podcast:locked>
         <podcast:funding url="http://example.com/donate">Support the show!</podcast:funding>
         <podcast:license url="https://example.org/mypodcastlicense/full.pdf">my-podcast-license-v1</podcast:license>
-        <podcast:location geo="geo:30.2711286,-97.7436995" osm="R113314">Austin</podcast:location>
+        <podcast:location rel="subject" geo="geo:30.2711286,-97.7436995" osm="R113314" country="US">Austin</podcast:location>
         <podcast:images srcset="https://example.com/images/ep1/pci_avatar-massive.jpg 1500w, https://example.com/images/ep1/pci_avatar-middle.jpg 600w, https://example.com/images/ep1/pci_avatar-small.jpg 300w, https://example.com/images/ep1/pci_avatar-tiny.jpg 150w"/>
         <podcast:updateFrequency rrule="FREQ=WEEKLY" dtstart="2023-08-28T00:00:00.000Z" complete="false">Every other Monday</podcast:updateFrequency>
         <podcast:person group="writing" role="guest" href="https://www.wikipedia/alicebrown" img="http://example.com/images/alicebrown.jpg">Alice Brown</podcast:person>
@@ -49,6 +49,49 @@
         <podcast:txt purpose="verify">S6lpp-7ZCn8-dZfGc-OoyaG</podcast:txt>
         <podcast:txt purpose="release">2022-10-26T04:45:30.742Z</podcast:txt>
         <podcast:podping usesPodping="true"/>
+        <podcast:remoteItem feedGuid="29cdca4a-xxxx-yyyy-b48b-09a011c5daa9"/>
+        <podcast:remoteItem feedGuid="917393e3-1b1e-5cef-ace4-edaa54e1f810" feedUrl="https://feeds.example.org/917393e3-1b1e-5cef-ace4-edaa54e1f810/rss.xml" medium="podcast" title="Some Example"/>
+        <podcast:podroll>
+            <podcast:remoteItem feedGuid="29cdca4a-32d8-56ba-b48b-09a011c5daa9" />
+            <podcast:remoteItem feedGuid="917393e3-1b1e-5cef-ace4-edaa54e1f810" feedUrl="https://feeds.example.org/917393e3-1b1e-5cef-ace4-edaa54e1f810/rss.xml" itemGuid="asdf089j0-ep240-20230510" medium="music" title="Here Comes the Sun"/>
+        </podcast:podroll>
+        <podcast:publisher>
+            <podcast:remoteItem feedGuid="publisher-guid-56ba-b48b-09a011c5daa9" />
+        </podcast:publisher>
+        <podcast:value type="lightning" method="keysend" suggested="0.00000005000">
+            <podcast:valueRecipient name="Alice (Podcaster)" type="node" address="02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52" split="40"/>
+            <podcast:valueRecipient name="Bob (Podcaster)" type="node" address="032f4ffbbafffbe51726ad3c164a3d0d37ec27bc67b29a159b0f49ae8ac21b8508" split="60"/>
+        </podcast:value>
+        <podcast:socialInteract
+                priority="1"
+                protocol="activitypub"
+                uri="https://podcastindex.social/web/@dave/108013847520053258"
+                accountId="@dave"
+                accountUrl="https://podcastindex.social/web/@dave"
+        />
+        <podcast:socialInteract
+                priority="2"
+                protocol="twitter"
+                uri="https://twitter.com/PodcastindexOrg/status/1507120226361647115"
+                accountId="@podcastindexorg"
+                accountUrl="https://twitter.com/PodcastindexOrg"
+        />
+        <podcast:image
+                alt="An antenna emanating signal waves"
+                purpose="artwork"
+                type="image/jpeg"
+                aspect-ratio="1/1"
+                href="https://example.com/images/ep1/pci_square-massive.jpg"
+                width="1400"
+                height="1400"
+        />
+        <podcast:image
+                alt="Another antenna emanating signal waves"
+                purpose="artwork social"
+                type="image/jpeg"
+                aspect-ratio="16/9"
+                href="https://example.com/images/ep1/pci_landscape-massive_wide.jpg"
+        />
 
         <item>
             <title>Shake Shake Shake Your Spices</title>
@@ -72,6 +115,10 @@
             </itunes:keywords>
             <itunes:image href="https://www.example.com/podcasts/everything/episode.png" />
             <itunes:isClosedCaptioned>Yes</itunes:isClosedCaptioned>
+            <podcast:txt purpose="verify">S6lpp-7ZCn8-dZfGc-OoyaG</podcast:txt>
+            <podcast:txt purpose="applepodcastsverify">05124</podcast:txt>
+            <podcast:license url="https://example.org/mypodcastlicense/full.pdf">my-podcast-license-v1</podcast:license>
+            <podcast:person group="writing" role="guest" href="https://www.wikipedia/alicebrown" img="http://example.com/images/alicebrown.jpg">Alice Brown</podcast:person>
             <podcast:transcript
                     url="https://example.com/podcasts/everything/TranscriptEpisode3.html"
                     type="text/html" />
@@ -81,6 +128,68 @@
             <podcast:soundbite
                     startTime="66.0"
                     duration="39.0">Pepper shakers comparison</podcast:soundbite>
+            <podcast:location
+                    rel="subject"
+                    geo="geo:30.2711286,-97.7436995"
+                    osm="R113314"
+                    country="US"
+            >Austin</podcast:location>
+            <podcast:socialInteract
+                    priority="1"
+                    protocol="activitypub"
+                    uri="https://podcastindex.social/web/@dave/108013847520053258"
+                    accountId="@dave"
+                    accountUrl="https://podcastindex.social/web/@dave"
+            />
+            <podcast:socialInteract
+                    priority="2"
+                    protocol="twitter"
+                    uri="https://twitter.com/PodcastindexOrg/status/1507120226361647115"
+                    accountId="@podcastindexorg"
+                    accountUrl="https://twitter.com/PodcastindexOrg"
+            />
+            <podcast:value type="lightning" method="keysend" suggested="0.00000005000">
+                <podcast:valueRecipient name="Alice (Podcaster)" type="node" address="02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52" split="40"/>
+                <podcast:valueRecipient name="Bob (Podcaster)" type="node" address="032f4ffbbafffbe51726ad3c164a3d0d37ec27bc67b29a159b0f49ae8ac21b8508" split="60"/>
+                <podcast:valueTimeSplit startTime="63" duration="388">
+                    <podcast:valueRecipient name="Alice (Podcaster)" type="node" address="02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52" split="80" />
+                    <podcast:valueRecipient name="Malcolm (Guest)" type="node" address="02dd306e68c46681aa21d88a436fb35355a8579dd30201581cefa17cb179fc4c15" split="20" />
+                </podcast:valueTimeSplit>
+            </podcast:value>
+            <podcast:value type="lightning" method="keysend" suggested="0.00000005000">
+                <podcast:valueRecipient name="Alice (Podcaster)" type="node" address="02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52" split="40"/>
+                <podcast:valueRecipient name="Bob (Podcaster)" type="node" address="032f4ffbbafffbe51726ad3c164a3d0d37ec27bc67b29a159b0f49ae8ac21b8508" split="60"/>
+                <podcast:valueTimeSplit startTime="60" duration="237" remotePercentage="95">
+                    <podcast:remoteItem itemGuid="https://podcastindex.org/podcast/4148683#1" feedGuid="a94f5cc9-8c58-55fc-91fe-a324087a655b" medium="music" />
+                </podcast:valueTimeSplit>
+                <podcast:valueTimeSplit startTime="330" duration="53" remoteStartTime="174" remotePercentage="95">
+                    <podcast:remoteItem itemGuid="https://podcastindex.org/podcast/4148683#3" feedGuid="b83f5cc9-8c58-55fc-91fe-a324087a644c" medium="music" />
+                </podcast:valueTimeSplit>
+            </podcast:value>
+            <podcast:season name="The Yearling - Chapter 3">3</podcast:season>
+            <podcast:episode display="Day 5">9</podcast:episode>
+            <podcast:alternateEnclosure type="video/mp4" length="7924786" bitrate="511276.52" height="720" lang="en" default="true" title="Standard">
+                <podcast:source uri="https://example.com/file-720.torrent" contentType="application/x-bittorrent" />
+                <podcast:source uri="ipfs://QmX33FYehk6ckGQ6g1D9D3FqZPix5JpKstKQKbaS8quUFb" />
+                <podcast:integrity type="sri" value="sha384-ExVqijgYHm15PqQqdXfW95x+Rs6C+d6E/ICxyQOeFevnxNLR/wtJNrNYTjIysUBo" />
+            </podcast:alternateEnclosure>
+
+            <podcast:image
+                    alt="An antenna emanating signal waves"
+                    purpose="artwork"
+                    type="image/jpeg"
+                    aspect-ratio="1/1"
+                    href="https://example.com/images/ep1/pci_square-massive.jpg"
+                    width="1400"
+                    height="1400"
+            />
+            <podcast:image
+                    alt="Another antenna emanating signal waves"
+                    purpose="artwork social"
+                    type="image/jpeg"
+                    aspect-ratio="16/9"
+                    href="https://example.com/images/ep1/pci_landscape-massive_wide.jpg"
+            />
         </item>
 
         <item>

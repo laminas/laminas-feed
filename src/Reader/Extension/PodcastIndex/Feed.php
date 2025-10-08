@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace Laminas\Feed\Reader\Extension\PodcastIndex;
 
-// phpcs:disable SlevomatCodingStandard.Namespaces.UnusedUses.UnusedUse
-use DateTimeInterface;
-// phpcs:enable SlevomatCodingStandard.Namespaces.UnusedUses.UnusedUse
 use DOMElement;
 use Laminas\Feed\Reader\Extension;
+use Laminas\Feed\Reader\Extension\PodcastIndex\AttributesReader;
 use stdClass;
 
 use function array_key_exists;
@@ -17,27 +15,19 @@ use function assert;
 /**
  * Describes PodcastIndex data of a RSS Feed
  *
- * @psalm-type UpdateFrequencyObject = object{
- *     description: string,
- *     complete?: bool,
- *     dtstart?: DateTimeInterface,
- *     rrule?: string
- *     }
- * @psalm-type PersonObject = object{
- *     name: string,
- *     role?: string,
- *     group?: string,
- *     img?: string,
- *     href?: string
- *  }
- * @psalm-type TrailerObject = object{
- *     title: string,
- *     pubdate: string,
- *     url: string,
- *     length?: int,
- *     type?: string,
- *     season?: int
- * }
+ * @psalm-import-type LicenseObject from AttributesReader
+ * @psalm-import-type LocationObject from AttributesReader
+ * @psalm-import-type BlockObject from AttributesReader
+ * @psalm-import-type TxtObject from AttributesReader
+ * @psalm-import-type PersonObject from AttributesReader
+ * @psalm-import-type UpdateFrequencyObject from AttributesReader
+ * @psalm-import-type TrailerObject from AttributesReader
+ * @psalm-import-type RemoteItemObject from AttributesReader
+ * @psalm-import-type ValueRecipientObject from AttributesReader
+ * @psalm-import-type ValueObject from AttributesReader
+ * @psalm-import-type ImagesObject from AttributesReader
+ * @psalm-import-type DetailedImageObject from AttributesReader
+ * @psalm-import-type SocialInteractObject from AttributesReader
  */
 class Feed extends Extension\AbstractFeed
 {
@@ -134,13 +124,11 @@ class Feed extends Extension\AbstractFeed
 
     /**
      * Get the podcast license
-     *
-     * @return null|object{identifier: string, url: string}
      */
     public function getPodcastIndexLicense(): object|null
     {
         if (array_key_exists('license', $this->data)) {
-            /** @psalm-var null|object{identifier: string, url: string} */
+            /** @psalm-var null|LicenseObject */
             return $this->data['license'];
         }
 
@@ -151,9 +139,7 @@ class Feed extends Extension\AbstractFeed
         if ($nodeList->length > 0) {
             $item = $nodeList->item(0);
             assert($item instanceof DOMElement);
-            $license             = new stdClass();
-            $license->identifier = $item->nodeValue;
-            $license->url        = $item->getAttribute('url');
+            $license = AttributesReader::readLicense($item);
         }
 
         $this->data['license'] = $license;
@@ -163,13 +149,11 @@ class Feed extends Extension\AbstractFeed
 
     /**
      * Get the podcast location
-     *
-     * @return null|object{description: string, geo?: string, osm?: string}
      */
     public function getPodcastIndexLocation(): object|null
     {
         if (array_key_exists('location', $this->data)) {
-            /** @psalm-var null|object{description: string, geo?: string, osm?: string} */
+            /** @psalm-var null|LocationObject */
             return $this->data['location'];
         }
 
@@ -180,10 +164,7 @@ class Feed extends Extension\AbstractFeed
         if ($nodeList->length > 0) {
             $item = $nodeList->item(0);
             assert($item instanceof DOMElement);
-            $location              = new stdClass();
-            $location->description = $item->nodeValue;
-            $location->geo         = $item->getAttribute('geo');
-            $location->osm         = $item->getAttribute('osm');
+            $location = AttributesReader::readLocation($item);
         }
 
         $this->data['location'] = $location;
@@ -192,14 +173,17 @@ class Feed extends Extension\AbstractFeed
     }
 
     /**
-     * Get the podcast images
+     * Get the podcast images.
+     * Returns the content of a single `<podcast:images>` tag.
      *
-     * @return null|object{srcset: string}
+     * @deprecated
+     *
+     * @psalm-return null|ImagesObject
      */
     public function getPodcastIndexImages(): object|null
     {
         if (array_key_exists('images', $this->data)) {
-            /** @psalm-var null|object{srcset: string} */
+            /** @psalm-var null|ImagesObject */
             return $this->data['images'];
         }
 
@@ -210,13 +194,42 @@ class Feed extends Extension\AbstractFeed
         if ($nodeList->length > 0) {
             $item = $nodeList->item(0);
             assert($item instanceof DOMElement);
-            $images         = new stdClass();
-            $images->srcset = $item->getAttribute('srcset');
+            $images = AttributesReader::readImages($item);
         }
 
         $this->data['images'] = $images;
 
         return $this->data['images'];
+    }
+
+    /**
+     * Get the podcast detailed images.
+     * Returns the contents of one or more `<podcast:image>` tags.
+     *
+     * @psalm-return list<DetailedImageObject>
+     */
+    public function getPodcastIndexDetailedImages(): array
+    {
+        if (array_key_exists('detailedImages', $this->data)) {
+            /** @psalm-var list<DetailedImageObject> */
+            return $this->data['detailedImages'];
+        }
+
+        $images = [];
+
+        $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:image');
+
+        if ($nodeList->length > 0) {
+            foreach ($nodeList as $entry) {
+                assert($entry instanceof DOMElement);
+                $image    = AttributesReader::readDetailedImage($entry);
+                $images[] = $image;
+            }
+        }
+
+        $this->data['detailedImages'] = $images;
+
+        return $this->data['detailedImages'];
     }
 
     /**
@@ -238,11 +251,7 @@ class Feed extends Extension\AbstractFeed
         if ($nodeList->length > 0) {
             $item = $nodeList->item(0);
             assert($item instanceof DOMElement);
-            $updateFrequency              = new stdClass();
-            $updateFrequency->description = $item->nodeValue;
-            $updateFrequency->complete    = $item->getAttribute('complete');
-            $updateFrequency->dtstart     = $item->getAttribute('dtstart');
-            $updateFrequency->rrule       = $item->getAttribute('rrule');
+            $updateFrequency = AttributesReader::readUpdateFrequency($item);
         }
 
         $this->data['updateFrequency'] = $updateFrequency;
@@ -269,12 +278,7 @@ class Feed extends Extension\AbstractFeed
         if ($nodeList->length > 0) {
             foreach ($nodeList as $entry) {
                 assert($entry instanceof DOMElement);
-                $person        = new stdClass();
-                $person->name  = $entry->nodeValue;
-                $person->role  = $entry->getAttribute('role');
-                $person->group = $entry->getAttribute('group');
-                $person->img   = $entry->getAttribute('img');
-                $person->href  = $entry->getAttribute('href');
+                $person = AttributesReader::readPerson($entry);
 
                 $personCollection[] = $person;
             }
@@ -283,6 +287,16 @@ class Feed extends Extension\AbstractFeed
         $this->data['people'] = $personCollection;
 
         return $this->data['people'];
+    }
+
+    /**
+     * Get the podcast persons (alias of getPodcastIndexPeople)
+     *
+     * @psalm-return list<PersonObject>
+     */
+    public function getPodcastIndexPersons(): array
+    {
+        return $this->getPodcastIndexPeople();
     }
 
     /**
@@ -304,13 +318,7 @@ class Feed extends Extension\AbstractFeed
         if ($nodeList->length > 0) {
             $item = $nodeList->item(0);
             assert($item instanceof DOMElement);
-            $object          = new stdClass();
-            $object->title   = $item->nodeValue;
-            $object->pubdate = $item->getAttribute('pubdate');
-            $object->url     = $item->getAttribute('url');
-            $object->length  = $item->getAttribute('length');
-            $object->type    = $item->getAttribute('type');
-            $object->season  = $item->getAttribute('season');
+            $object = AttributesReader::readTrailer($item);
         }
 
         $this->data['trailer'] = $object;
@@ -337,8 +345,7 @@ class Feed extends Extension\AbstractFeed
         if ($nodeList->length > 0) {
             $item = $nodeList->item(0);
             assert($item instanceof DOMElement);
-            $object        = new stdClass();
-            $object->value = $item->nodeValue;
+            $object = AttributesReader::readGuid($item);
         }
 
         $this->data['guid'] = $object;
@@ -365,8 +372,7 @@ class Feed extends Extension\AbstractFeed
         if ($nodeList->length > 0) {
             $item = $nodeList->item(0);
             assert($item instanceof DOMElement);
-            $object        = new stdClass();
-            $object->value = $item->nodeValue;
+            $object = AttributesReader::readMedium($item);
         }
 
         $this->data['medium'] = $object;
@@ -392,10 +398,7 @@ class Feed extends Extension\AbstractFeed
 
         foreach ($nodeList as $entry) {
             assert($entry instanceof DOMElement);
-            $object        = new stdClass();
-            $object->value = $entry->nodeValue;
-            $object->id    = $entry->getAttribute('id');
-
+            $object   = AttributesReader::readBlock($entry);
             $blocks[] = $object;
         }
 
@@ -407,12 +410,12 @@ class Feed extends Extension\AbstractFeed
     /**
      * Get the podcast txts
      *
-     * @return list<object{value: string, purpose?: string}>
+     * @return list<TxtObject>
      */
     public function getPodcastIndexTxts(): array
     {
         if (array_key_exists('txts', $this->data)) {
-            /** @psalm-var list<object{value: string, purpose?: string}> */
+            /** @psalm-var list<TxtObject> */
             return $this->data['txts'];
         }
 
@@ -422,10 +425,7 @@ class Feed extends Extension\AbstractFeed
 
         foreach ($nodeList as $entry) {
             assert($entry instanceof DOMElement);
-            $object          = new stdClass();
-            $object->value   = $entry->nodeValue;
-            $object->purpose = $entry->getAttribute('purpose');
-
+            $object = AttributesReader::readTxt($entry);
             $txts[] = $object;
         }
 
@@ -453,15 +453,173 @@ class Feed extends Extension\AbstractFeed
         if ($nodeList->length > 0) {
             $item = $nodeList->item(0);
             assert($item instanceof DOMElement);
-
-            $object = new stdClass();
-
+            $object              = new stdClass();
             $object->usesPodping = $item->getAttribute('usesPodping') === 'true';
         }
 
         $this->data['podping'] = $object;
 
         return $this->data['podping'];
+    }
+
+    /**
+     * Get the podcast remoteItems
+     *
+     * @return list<RemoteItemObject>
+     */
+    public function getPodcastIndexRemoteItems(): array
+    {
+        if (array_key_exists('remoteItems', $this->data)) {
+            /** @var list<RemoteItemObject> $remoteItems */
+            $remoteItems = $this->data['remoteItems'];
+            return $remoteItems;
+        }
+
+        $remoteItems = [];
+
+        $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:remoteItem');
+
+        foreach ($nodeList as $entry) {
+            assert($entry instanceof DOMElement);
+            $object        = AttributesReader::readRemoteItem($entry);
+            $remoteItems[] = $object;
+        }
+
+        $this->data['remoteItems'] = $remoteItems;
+
+        return $this->data['remoteItems'];
+    }
+
+    /**
+     * Get the podcast podroll remote items
+     *
+     * @return list<RemoteItemObject>
+     */
+    public function getPodcastIndexPodroll(): array
+    {
+        if (array_key_exists('podroll', $this->data)) {
+            /** @var list<RemoteItemObject> $podrollItems */
+            $podrollItems = $this->data['podroll'];
+            return $podrollItems;
+        }
+
+        $podrollItems    = [];
+        $podrollNodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:podroll');
+
+        if ($podrollNodeList->length > 0) {
+            $podrollNode = $podrollNodeList->item(0);
+            assert($podrollNode instanceof DOMElement);
+
+            $remoteItems = $this->xpath->query('podcast:remoteItem', $podrollNode);
+            foreach ($remoteItems as $entry) {
+                assert($entry instanceof DOMElement);
+                $object         = AttributesReader::readRemoteItem($entry);
+                $podrollItems[] = $object;
+            }
+        }
+
+        $this->data['podroll'] = $podrollItems;
+
+        return $this->data['podroll'];
+    }
+
+    /**
+     * Get the podcast publisher remote items
+     *
+     * @return RemoteItemObject|null
+     */
+    public function getPodcastIndexPublisher(): object|null
+    {
+        if (array_key_exists('publisher', $this->data)) {
+            /** @var null|RemoteItemObject $publisherItem */
+            $publisherItem = $this->data['publisher'];
+            return $publisherItem;
+        }
+
+        $publisherItem     = null;
+        $publisherNodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:publisher');
+
+        if ($publisherNodeList->length > 0) {
+            $publisherNode = $publisherNodeList->item(0);
+            assert($publisherNode instanceof DOMElement);
+
+            $remoteItemList = $this->xpath->query('podcast:remoteItem', $publisherNode);
+            if ($remoteItemList->length > 0) {
+                $remoteItem = $remoteItemList->item(0);
+                assert($remoteItem instanceof DOMElement);
+                $publisherItem = AttributesReader::readRemoteItem($remoteItem);
+            }
+        }
+
+        $this->data['publisher'] = $publisherItem;
+
+        return $this->data['publisher'];
+    }
+
+    /**
+     * Get the podcast values
+     *
+     * @return list<ValueObject>
+     */
+    public function getPodcastIndexValues(): array
+    {
+        if (array_key_exists('values', $this->data)) {
+            /** @var list<ValueObject> $values */
+            $values = $this->data['values'];
+            return $values;
+        }
+
+        $values         = [];
+        $valuesNodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:value');
+
+        foreach ($valuesNodeList as $valueNode) {
+            assert($valueNode instanceof DOMElement);
+            $valueObject = AttributesReader::readValue($valueNode);
+
+            $valueRecipientsNodeList = $this->xpath->query('podcast:valueRecipient', $valueNode);
+            $valueRecipients         = [];
+
+            foreach ($valueRecipientsNodeList as $entry) {
+                assert($entry instanceof DOMElement);
+                $object            = AttributesReader::readValueRecipient($entry);
+                $valueRecipients[] = $object;
+            }
+
+            $valueObject->valueRecipients = $valueRecipients;
+            $values[]                     = $valueObject;
+        }
+
+        $this->data['values'] = $values;
+
+        return $this->data['values'];
+    }
+
+    /**
+     * Get the podcast social interacts
+     *
+     * @return list<SocialInteractObject>
+     */
+    public function getPodcastIndexSocialInteracts(): array
+    {
+        if (array_key_exists('socialInteracts', $this->data)) {
+            /** @var list<SocialInteractObject> $socialInteracts */
+            $socialInteracts = $this->data['socialInteracts'];
+            return $socialInteracts;
+        }
+
+        $socialInteracts = [];
+
+        $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:socialInteract');
+
+        foreach ($nodeList as $entry) {
+            assert($entry instanceof DOMElement);
+            $object            = AttributesReader::readSocialInteract($entry);
+            $socialInteracts[] = $object;
+        }
+
+        $this->data['socialInteracts'] = $socialInteracts;
+
+        return $this->data['socialInteracts'];
     }
 
     /**

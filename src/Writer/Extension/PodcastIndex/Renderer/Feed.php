@@ -4,18 +4,30 @@ declare(strict_types=1);
 
 namespace Laminas\Feed\Writer\Extension\PodcastIndex\Renderer;
 
-use DateTimeInterface;
 use DOMDocument;
 use DOMElement;
 use Laminas\Feed\Writer\Extension;
+use Laminas\Feed\Writer\Extension\PodcastIndex\Validator;
 use Laminas\Feed\Writer\Feed as FeedWriter;
+
+use function assert;
 
 /**
  * Renders PodcastIndex data of a RSS Feed
  *
- * @psalm-import-type PersonArray from \Laminas\Feed\Writer\Extension\PodcastIndex\Feed
- * @psalm-import-type UpdateFrequencyArray from \Laminas\Feed\Writer\Extension\PodcastIndex\Feed
- * @psalm-import-type TrailerArray from \Laminas\Feed\Writer\Extension\PodcastIndex\Feed
+ * @psalm-import-type LicenseArray from Validator
+ * @psalm-import-type LocationArray from Validator
+ * @psalm-import-type BlockArray from Validator
+ * @psalm-import-type TxtArray from Validator
+ * @psalm-import-type PersonArray from Validator
+ * @psalm-import-type UpdateFrequencyArray from Validator
+ * @psalm-import-type TrailerArray from Validator
+ * @psalm-import-type RemoteItemArray from Validator
+ * @psalm-import-type ValueRecipientArray from Validator
+ * @psalm-import-type ValueArray from Validator
+ * @psalm-import-type ImagesArray from Validator
+ * @psalm-import-type DetailedImageArray from Validator
+ * @psalm-import-type SocialInteractArray from Validator
  */
 class Feed extends Extension\AbstractRenderer
 {
@@ -38,6 +50,7 @@ class Feed extends Extension\AbstractRenderer
         $this->setLicense($this->dom, $this->base);
         $this->setLocation($this->dom, $this->base);
         $this->setImages($this->dom, $this->base);
+        $this->setDetailedImages($this->dom, $this->base);
         $this->setUpdateFrequency($this->dom, $this->base);
         $this->setPeople($this->dom, $this->base);
         $this->setTrailer($this->dom, $this->base);
@@ -46,6 +59,11 @@ class Feed extends Extension\AbstractRenderer
         $this->setBlocks($this->dom, $this->base);
         $this->setTxts($this->dom, $this->base);
         $this->setPodping($this->dom, $this->base);
+        $this->setRemoteItems($this->dom, $this->base);
+        $this->setPodroll($this->dom, $this->base);
+        $this->setPublisher($this->dom, $this->base);
+        $this->setValues($this->dom, $this->base);
+        $this->setSocialInteracts($this->dom, $this->base);
         if ($this->called) {
             $this->_appendNamespaces();
         }
@@ -63,23 +81,27 @@ class Feed extends Extension\AbstractRenderer
         );
     }
 
+    private function getFeedWriter(): FeedWriter
+    {
+        $container = $this->getDataContainer();
+        assert($container instanceof FeedWriter);
+
+        return $container;
+    }
+
     /**
      * Set feed lock
      */
     protected function setLocked(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var FeedWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getFeedWriter();
 
         /** @psalm-var null|array<string, string> $locked */
         $locked = $container->getPodcastIndexLocked();
         if ($locked === null) {
             return;
         }
-        $el   = $dom->createElement('podcast:locked');
-        $text = $dom->createTextNode((string) $locked['value']);
-        $el->appendChild($text);
-        $el->setAttribute('owner', $locked['owner']);
+        $el = ElementGenerator::createPodcastIndexElement($dom, $locked, 'locked', 'value');
         $root->appendChild($el);
         $this->called = true;
     }
@@ -89,18 +111,14 @@ class Feed extends Extension\AbstractRenderer
      */
     protected function setFunding(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var FeedWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getFeedWriter();
 
         /** @psalm-var null|array<string, string> $funding */
         $funding = $container->getPodcastIndexFunding();
         if ($funding === null) {
             return;
         }
-        $el   = $dom->createElement('podcast:funding');
-        $text = $dom->createTextNode((string) $funding['title']);
-        $el->appendChild($text);
-        $el->setAttribute('url', $funding['url']);
+        $el = ElementGenerator::createPodcastIndexElement($dom, $funding, 'funding', 'title');
         $root->appendChild($el);
         $this->called = true;
     }
@@ -110,18 +128,15 @@ class Feed extends Extension\AbstractRenderer
      */
     private function setLicense(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var FeedWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getFeedWriter();
 
-        /** @psalm-var null|array{identifier: string, url: string} $license */
+        /** @psalm-var null|LicenseArray $license */
         $license = $container->getPodcastIndexLicense();
         if ($license === null) {
             return;
         }
-        $el   = $dom->createElement('podcast:license');
-        $text = $dom->createTextNode($license['identifier']);
-        $el->appendChild($text);
-        $el->setAttribute('url', $license['url']);
+        $el = ElementGenerator::createPodcastIndexElement($dom, $license, 'license', 'identifier');
+
         $root->appendChild($el);
         $this->called = true;
     }
@@ -131,43 +146,53 @@ class Feed extends Extension\AbstractRenderer
      */
     private function setLocation(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var FeedWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getFeedWriter();
 
-        /** @psalm-var null|array{description: string, geo?: string, osm?: string} $location */
+        /** @psalm-var null|LocationArray $location */
         $location = $container->getPodcastIndexLocation();
         if ($location === null) {
             return;
         }
-        $el   = $dom->createElement('podcast:location');
-        $text = $dom->createTextNode($location['description']);
-        $el->appendChild($text);
-        if (isset($location['geo']) && $location['geo'] !== '') {
-            $el->setAttribute('geo', $location['geo']);
-        }
-        if (isset($location['osm']) && $location['osm'] !== '') {
-            $el->setAttribute('osm', $location['osm']);
-        }
+        $el = ElementGenerator::createPodcastIndexElement($dom, $location, 'location', 'description');
         $root->appendChild($el);
         $this->called = true;
     }
 
     /**
-     * Set feed images
+     * Set feed images srcset
      */
     private function setImages(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var FeedWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getFeedWriter();
 
-        /** @psalm-var null|array{srcset: string} $images */
+        /** @psalm-var null|ImagesArray $images */
         $images = $container->getPodcastIndexImages();
         if ($images === null) {
             return;
         }
-        $el = $dom->createElement('podcast:images');
-        $el->setAttribute('srcset', $images['srcset']);
+        $el = ElementGenerator::createPodcastIndexElement($dom, $images, 'images');
         $root->appendChild($el);
+        $this->called = true;
+    }
+
+    /**
+     * Set feed detailed images
+     */
+    private function setDetailedImages(DOMDocument $dom, DOMElement $root): void
+    {
+        $container = $this->getFeedWriter();
+
+        /** @psalm-var list<DetailedImageArray>|null $detailedImages */
+        $detailedImages = $container->getPodcastIndexDetailedImages();
+        if ($detailedImages === null || $detailedImages === []) {
+            return;
+        }
+
+        foreach ($detailedImages as $detailedImage) {
+            $el = ElementGenerator::createPodcastIndexElement($dom, $detailedImage, 'image');
+            $root->appendChild($el);
+        }
+
         $this->called = true;
     }
 
@@ -176,26 +201,14 @@ class Feed extends Extension\AbstractRenderer
      */
     private function setUpdateFrequency(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var FeedWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getFeedWriter();
 
         /** @psalm-var null|UpdateFrequencyArray $updateFrequency */
         $updateFrequency = $container->getPodcastIndexUpdateFrequency();
         if ($updateFrequency === null) {
             return;
         }
-        $el   = $dom->createElement('podcast:updateFrequency');
-        $text = $dom->createTextNode($updateFrequency['description']);
-        $el->appendChild($text);
-        if (($updateFrequency['complete'] ?? null) === true) {
-            $el->setAttribute('complete', 'true');
-        }
-        if (isset($updateFrequency['dtstart'])) {
-            $el->setAttribute('dtstart', $updateFrequency['dtstart']->format(DateTimeInterface::ATOM));
-        }
-        if (isset($updateFrequency['rrule']) && $updateFrequency['rrule'] !== '') {
-            $el->setAttribute('rrule', $updateFrequency['rrule']);
-        }
+        $el = ElementGenerator::createPodcastIndexElement($dom, $updateFrequency, 'updateFrequency', 'description');
         $root->appendChild($el);
         $this->called = true;
     }
@@ -205,8 +218,7 @@ class Feed extends Extension\AbstractRenderer
      */
     private function setPeople(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var FeedWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getFeedWriter();
 
         /** @psalm-var null|list<PersonArray> $people */
         $people = $container->getPodcastIndexPeople();
@@ -214,22 +226,7 @@ class Feed extends Extension\AbstractRenderer
             return;
         }
         foreach ($people as $person) {
-            $el   = $dom->createElement('podcast:person');
-            $text = $dom->createTextNode($person['name']);
-            $el->appendChild($text);
-
-            if (isset($person['role']) && $person['role'] !== '') {
-                $el->setAttribute('role', $person['role']);
-            }
-            if (isset($person['group']) && $person['group'] !== '') {
-                $el->setAttribute('group', $person['group']);
-            }
-            if (isset($person['img']) && $person['img'] !== '') {
-                $el->setAttribute('img', $person['img']);
-            }
-            if (isset($person['href']) && $person['href'] !== '') {
-                $el->setAttribute('href', $person['href']);
-            }
+            $el = ElementGenerator::createPodcastIndexElement($dom, $person, 'person', 'name');
             $root->appendChild($el);
         }
         $this->called = true;
@@ -240,28 +237,14 @@ class Feed extends Extension\AbstractRenderer
      */
     private function setTrailer(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var FeedWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getFeedWriter();
 
         /** @psalm-var null|TrailerArray $trailer */
         $trailer = $container->getPodcastIndexTrailer();
         if ($trailer === null) {
             return;
         }
-        $el   = $dom->createElement('podcast:trailer');
-        $text = $dom->createTextNode($trailer['title']);
-        $el->appendChild($text);
-        $el->setAttribute('pubdate', $trailer['pubdate']);
-        $el->setAttribute('url', $trailer['url']);
-        if (isset($trailer['length'])) {
-            $el->setAttribute('length', (string) $trailer['length']);
-        }
-        if (isset($trailer['type'])) {
-            $el->setAttribute('type', $trailer['type']);
-        }
-        if (isset($trailer['season'])) {
-            $el->setAttribute('season', (string) $trailer['season']);
-        }
+        $el = ElementGenerator::createPodcastIndexElement($dom, $trailer, 'trailer', 'title');
         $root->appendChild($el);
         $this->called = true;
     }
@@ -271,17 +254,14 @@ class Feed extends Extension\AbstractRenderer
      */
     private function setGuid(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var FeedWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getFeedWriter();
 
         /** @psalm-var null|array{value: string} $guid */
         $guid = $container->getPodcastIndexGuid();
         if ($guid === null) {
             return;
         }
-        $el   = $dom->createElement('podcast:guid');
-        $text = $dom->createTextNode($guid['value']);
-        $el->appendChild($text);
+        $el = ElementGenerator::createPodcastIndexElement($dom, $guid, 'guid', 'value');
         $root->appendChild($el);
         $this->called = true;
     }
@@ -291,17 +271,14 @@ class Feed extends Extension\AbstractRenderer
      */
     private function setMedium(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var FeedWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getFeedWriter();
 
         /** @psalm-var null|array{value: string} $medium */
         $medium = $container->getPodcastIndexMedium();
         if ($medium === null) {
             return;
         }
-        $el   = $dom->createElement('podcast:medium');
-        $text = $dom->createTextNode($medium['value']);
-        $el->appendChild($text);
+        $el = ElementGenerator::createPodcastIndexElement($dom, $medium, 'medium', 'value');
         $root->appendChild($el);
         $this->called = true;
     }
@@ -311,22 +288,16 @@ class Feed extends Extension\AbstractRenderer
      */
     private function setBlocks(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var FeedWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getFeedWriter();
 
-        /** @psalm-var list<array{value: string, id?: string}>|null $blocks */
+        /** @psalm-var list<BlockArray>|null $blocks */
         $blocks = $container->getPodcastIndexBlocks();
         if ($blocks === null || $blocks === []) {
             return;
         }
 
         foreach ($blocks as $block) {
-            $el   = $dom->createElement('podcast:block');
-            $text = $dom->createTextNode($block['value']);
-            $el->appendChild($text);
-            if (isset($block['id']) && $block['id'] !== '') {
-                $el->setAttribute('id', $block['id']);
-            }
+            $el = ElementGenerator::createPodcastIndexElement($dom, $block, 'block', 'value');
             $root->appendChild($el);
         }
         $this->called = true;
@@ -337,22 +308,16 @@ class Feed extends Extension\AbstractRenderer
      */
     private function setTxts(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var FeedWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getFeedWriter();
 
-        /** @psalm-var list<array{value: string, purpose?: string}>|null $txts */
+        /** @psalm-var list<TxtArray>|null $txts */
         $txts = $container->getPodcastIndexTxts();
         if ($txts === null || $txts === []) {
             return;
         }
 
         foreach ($txts as $txt) {
-            $el   = $dom->createElement('podcast:txt');
-            $text = $dom->createTextNode($txt['value']);
-            $el->appendChild($text);
-            if (isset($txt['purpose']) && $txt['purpose'] !== '') {
-                $el->setAttribute('purpose', $txt['purpose']);
-            }
+            $el = ElementGenerator::createPodcastIndexElement($dom, $txt, 'txt', 'value');
             $root->appendChild($el);
         }
         $this->called = true;
@@ -363,8 +328,7 @@ class Feed extends Extension\AbstractRenderer
      */
     private function setPodping(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var FeedWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getFeedWriter();
 
         /** @psalm-var null|array{usesPodping: bool} $podping */
         $podping = $container->getPodcastIndexPodping();
@@ -372,11 +336,124 @@ class Feed extends Extension\AbstractRenderer
             return;
         }
 
-        $usesPodping = $podping['usesPodping'] ? 'true' : 'false';
-
-        $el = $dom->createElement('podcast:podping');
-        $el->setAttribute('usesPodping', $usesPodping);
+        $el = ElementGenerator::createPodcastIndexElement($dom, $podping, 'podping');
         $root->appendChild($el);
+        $this->called = true;
+    }
+
+    /**
+     * Set feed remote items
+     */
+    private function setRemoteItems(DOMDocument $dom, DOMElement $root): void
+    {
+        $container = $this->getFeedWriter();
+
+        /** @psalm-var list<RemoteItemArray>|null $remoteItems */
+        $remoteItems = $container->getPodcastIndexRemoteItems();
+        if ($remoteItems === null || $remoteItems === []) {
+            return;
+        }
+
+        foreach ($remoteItems as $remoteItem) {
+            $el = ElementGenerator::createPodcastIndexElement($dom, $remoteItem, 'remoteItem');
+            $root->appendChild($el);
+        }
+
+        $this->called = true;
+    }
+
+    /**
+     * Set podroll element with remote items
+     */
+    private function setPodroll(DOMDocument $dom, DOMElement $root): void
+    {
+        $container = $this->getFeedWriter();
+
+        /** @psalm-var list<RemoteItemArray>|null $podrollItems */
+        $podrollItems = $container->getPodcastIndexPodroll();
+        if ($podrollItems === null || $podrollItems === []) {
+            return;
+        }
+
+        $podroll = $dom->createElement('podcast:podroll');
+
+        foreach ($podrollItems as $remoteItem) {
+            $el = ElementGenerator::createPodcastIndexElement($dom, $remoteItem, 'remoteItem');
+            $podroll->appendChild($el);
+        }
+
+        $root->appendChild($podroll);
+
+        $this->called = true;
+    }
+
+    /**
+     * Set publisher element with remote items
+     */
+    private function setPublisher(DOMDocument $dom, DOMElement $root): void
+    {
+        $container = $this->getFeedWriter();
+
+        /** @psalm-var RemoteItemArray|null $publisherItem */
+        $publisherItem = $container->getPodcastIndexPublisher();
+        if ($publisherItem === null) {
+            return;
+        }
+
+        $publisher = $dom->createElement('podcast:publisher');
+        $el        = ElementGenerator::createPodcastIndexElement($dom, $publisherItem, 'remoteItem');
+        $publisher->appendChild($el);
+        $root->appendChild($publisher);
+
+        $this->called = true;
+    }
+
+    /**
+     * Set values with the valueRecipients
+     */
+    private function setValues(DOMDocument $dom, DOMElement $root): void
+    {
+        $container = $this->getFeedWriter();
+
+        /** @psalm-var list<ValueArray>|null $values */
+        $values = $container->getPodcastIndexValues();
+        if ($values === null || $values === []) {
+            return;
+        }
+
+        foreach ($values as $value) {
+            if (! isset($value['valueRecipients'])) {
+                continue;
+            }
+            $valueElement = ElementGenerator::createPodcastIndexElement($dom, $value, 'value');
+            foreach ($value['valueRecipients'] as $valueRecipient) {
+                $el = ElementGenerator::createPodcastIndexElement($dom, $valueRecipient, 'valueRecipient');
+                $valueElement->appendChild($el);
+            }
+            $root->appendChild($valueElement);
+        }
+
+        $this->called = true;
+    }
+
+    /**
+     * Set feed social interacts
+     */
+    private function setSocialInteracts(DOMDocument $dom, DOMElement $root): void
+    {
+        $container = $this->getFeedWriter();
+
+        /** @psalm-var list<SocialInteractArray>|null $socialInteracts */
+        $socialInteracts = $container->getPodcastIndexSocialInteracts();
+        if ($socialInteracts === null || $socialInteracts === []) {
+            return;
+        }
+
+        foreach ($socialInteracts as $socialInteract) {
+            $el = ElementGenerator::createPodcastIndexElement($dom, $socialInteract, 'socialInteract');
+            $root->appendChild($el);
+        }
+
         $this->called = true;
     }
 }

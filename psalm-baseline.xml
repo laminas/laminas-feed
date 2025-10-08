@@ -1569,17 +1569,21 @@
   </file>
   <file src="src/Reader/Extension/PodcastIndex/Entry.php">
     <MismatchingDocblockReturnType>
-      <code>null|object{url: string, type: string, language: string, rel: string}</code>
-      <code>null|object{url: string, type: string}</code>
+      <code>null|ChaptersObject</code>
+      <code>null|TranscriptObject</code>
     </MismatchingDocblockReturnType>
     <MixedInferredReturnType>
-      <code><![CDATA[array<int, object{title: string, startTime: string, duration: string}>]]></code>
-      <code>null|object{url: string, type: string, language: string, rel: string}</code>
-      <code>null|object{url: string, type: string}</code>
+      <code>null|ChaptersObject</code>
+      <code>null|TranscriptObject</code>
     </MixedInferredReturnType>
-    <MixedReturnStatement>
-      <code><![CDATA[$this->data['soundbites']]]></code>
-    </MixedReturnStatement>
+    <TooManyArguments>
+      <code>query</code>
+      <code>query</code>
+      <code>query</code>
+      <code>query</code>
+      <code>query</code>
+      <code>query</code>
+    </TooManyArguments>
   </file>
   <file src="src/Reader/Extension/PodcastIndex/Feed.php">
     <MixedAssignment>
@@ -1596,6 +1600,11 @@
       <code><![CDATA[$this->data['owner']]]></code>
       <code><![CDATA[$this->data['owner']]]></code>
     </MixedReturnStatement>
+    <TooManyArguments>
+      <code>query</code>
+      <code>query</code>
+      <code>query</code>
+    </TooManyArguments>
   </file>
   <file src="src/Reader/Extension/Slash/Entry.php">
     <InvalidOperand>
@@ -3070,23 +3079,34 @@
     </TypeDoesNotContainType>
   </file>
   <file src="src/Writer/Extension/PodcastIndex/Entry.php">
-    <MixedArgument>
-      <code>$value</code>
-    </MixedArgument>
+    <DocblockTypeContradiction>
+      <code><![CDATA[! is_string($value['duration'])]]></code>
+      <code><![CDATA[! is_string($value['startTime'])]]></code>
+    </DocblockTypeContradiction>
     <MixedArrayAssignment>
       <code><![CDATA[$this->data['soundbites'][]]]></code>
     </MixedArrayAssignment>
-    <MixedAssignment>
-      <code>$value</code>
-    </MixedAssignment>
     <PossiblyUnusedMethod>
-      <code>__call</code>
       <code>__construct</code>
+      <code>addPodcastIndexAlternateEnclosure</code>
       <code>addPodcastIndexSoundbites</code>
+      <code>addPodcastIndexValue</code>
       <code>getEncoding</code>
+      <code>getPodcastIndexPersons</code>
+      <code>resetPodcastIndexAlternateEnclosures</code>
+      <code>resetPodcastIndexValues</code>
       <code>setEncoding</code>
       <code>setPodcastIndexChapters</code>
+      <code>setPodcastIndexDetailedImages</code>
+      <code>setPodcastIndexEpisode</code>
+      <code>setPodcastIndexLicense</code>
+      <code>setPodcastIndexLocation</code>
+      <code>setPodcastIndexPersons</code>
+      <code>setPodcastIndexSeason</code>
+      <code>setPodcastIndexSocialInteracts</code>
+      <code>setPodcastIndexSoundbites</code>
       <code>setPodcastIndexTranscript</code>
+      <code>setPodcastIndexTxts</code>
     </PossiblyUnusedMethod>
     <PossiblyUnusedParam>
       <code>$params</code>
@@ -3096,35 +3116,18 @@
     </PossiblyUnusedProperty>
   </file>
   <file src="src/Writer/Extension/PodcastIndex/Feed.php">
-    <DocblockTypeContradiction>
-      <code><![CDATA[! is_string($value['url'])]]></code>
-      <code><![CDATA[! is_string($value['value'])]]></code>
-      <code><![CDATA[is_bool($value['usesPodping'])]]></code>
-      <code><![CDATA[is_string($value['description'])]]></code>
-      <code><![CDATA[is_string($value['description'])]]></code>
-      <code><![CDATA[is_string($value['identifier'])]]></code>
-      <code><![CDATA[is_string($value['name'])]]></code>
-      <code><![CDATA[is_string($value['pubdate'])]]></code>
-      <code><![CDATA[is_string($value['srcset'])]]></code>
-      <code><![CDATA[is_string($value['title'])]]></code>
-      <code><![CDATA[is_string($value['value'])]]></code>
-      <code><![CDATA[isset($value['complete']) && ! is_bool($value['complete'])]]></code>
-      <code><![CDATA[isset($value['geo']) && ! is_string($value['geo'])]]></code>
-      <code><![CDATA[isset($value['group']) && ! is_string($value['group'])]]></code>
-      <code><![CDATA[isset($value['id']) && ! is_string($value['id'])]]></code>
-      <code><![CDATA[isset($value['length']) && ! is_int($value['length'])]]></code>
-      <code><![CDATA[isset($value['osm']) && ! is_string($value['osm'])]]></code>
-      <code><![CDATA[isset($value['role']) && ! is_string($value['role'])]]></code>
-      <code><![CDATA[isset($value['rrule']) && ! is_string($value['rrule'])]]></code>
-      <code><![CDATA[isset($value['season']) && ! is_int($value['season'])]]></code>
-      <code><![CDATA[isset($value['type']) && ! is_string($value['type'])]]></code>
-    </DocblockTypeContradiction>
     <PossiblyUnusedMethod>
-      <code>__call</code>
       <code>__construct</code>
+      <code>addPodcastIndexPodrollRemoteItem</code>
+      <code>addPodcastIndexValue</code>
       <code>getEncoding</code>
+      <code>getLockOwner</code>
+      <code>getPodcastIndexPersons</code>
+      <code>isLocked</code>
+      <code>resetPodcastIndexValues</code>
       <code>setEncoding</code>
       <code>setPodcastIndexBlocks</code>
+      <code>setPodcastIndexDetailedImages</code>
       <code>setPodcastIndexFunding</code>
       <code>setPodcastIndexGuid</code>
       <code>setPodcastIndexImages</code>
@@ -3132,8 +3135,12 @@
       <code>setPodcastIndexLocation</code>
       <code>setPodcastIndexLocked</code>
       <code>setPodcastIndexMedium</code>
-      <code>setPodcastIndexPeople</code>
+      <code>setPodcastIndexPersons</code>
       <code>setPodcastIndexPodping</code>
+      <code>setPodcastIndexPodroll</code>
+      <code>setPodcastIndexPublisher</code>
+      <code>setPodcastIndexRemoteItems</code>
+      <code>setPodcastIndexSocialInteracts</code>
       <code>setPodcastIndexTrailer</code>
       <code>setPodcastIndexTxts</code>
       <code>setPodcastIndexUpdateFrequency</code>
@@ -3144,25 +3151,6 @@
     <PossiblyUnusedProperty>
       <code>$stringWrapper</code>
     </PossiblyUnusedProperty>
-  </file>
-  <file src="src/Writer/Extension/PodcastIndex/Renderer/Entry.php">
-    <MixedAssignment>
-      <code>$soundbite</code>
-    </MixedAssignment>
-    <MixedMethodCall>
-      <code>getPodcastIndexChapters</code>
-      <code>getPodcastIndexSoundbites</code>
-      <code>getPodcastIndexTranscript</code>
-    </MixedMethodCall>
-    <RedundantCastGivenDocblockType>
-      <code><![CDATA[(string) $soundbite['title']]]></code>
-    </RedundantCastGivenDocblockType>
-  </file>
-  <file src="src/Writer/Extension/PodcastIndex/Renderer/Feed.php">
-    <RedundantCastGivenDocblockType>
-      <code><![CDATA[(string) $funding['title']]]></code>
-      <code><![CDATA[(string) $locked['value']]]></code>
-    </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Writer/Extension/RendererInterface.php">
     <PossiblyUnusedMethod>

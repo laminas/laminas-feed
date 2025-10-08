@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace LaminasTest\Feed\Writer\Extension\PodcastIndex;
 
 use DateTime;
-use Laminas\Feed\Reader\Extension\PodcastIndex\Feed;
+use Laminas\Feed\Reader\Extension\PodcastIndex\AttributesReader;
 use Laminas\Feed\Writer;
 use PHPUnit\Framework\TestCase;
 
@@ -15,7 +15,17 @@ use function in_array;
 use function time;
 
 /**
- * @psalm-import-type PersonObject from Feed
+ * @psalm-import-type LocationObject from AttributesReader
+ * @psalm-import-type BlockObject from AttributesReader
+ * @psalm-import-type TxtObject from AttributesReader
+ * @psalm-import-type PersonObject from AttributesReader
+ * @psalm-import-type UpdateFrequencyObject from AttributesReader
+ * @psalm-import-type TrailerObject from AttributesReader
+ * @psalm-import-type RemoteItemObject from AttributesReader
+ * @psalm-import-type ValueRecipientObject from AttributesReader
+ * @psalm-import-type ValueObject from AttributesReader
+ * @psalm-import-type DetailedImageObject from AttributesReader
+ * @psalm-import-type SocialInteractObject from AttributesReader
  */
 class FeedTest extends TestCase
 {
@@ -29,6 +39,10 @@ class FeedTest extends TestCase
         ];
         $feed->setPodcastIndexLocked($locked);
         $this->assertEquals($locked, $feed->getPodcastIndexLocked());
+        $this->assertEquals($locked['owner'], $feed->getLockOwner());
+        $this->assertEquals($locked['owner'], $feed->getPodcastIndexLockOwner());
+        $this->assertTrue($feed->isLocked());
+        $this->assertTrue($feed->isPodcastIndexLocked());
     }
 
     public function testSetLockedThrowsExceptionOnInvalidArguments(): void
@@ -164,6 +178,8 @@ class FeedTest extends TestCase
             'description' => 'London, Baker Street',
             'geo'         => 'geo:-27.86159,153.3169',
             'osm'         => 'W43678282',
+            'rel'         => 'subject',
+            'country'     => 'GB',
         ];
         $feed->setPodcastIndexLocation($location);
         $this->assertEquals($location, $feed->getPodcastIndexLocation());
@@ -199,6 +215,8 @@ class FeedTest extends TestCase
             'description' => 'London, Baker Street',
             'geo'         => [-27.86159, 153.3169],
             'osm'         => 'W43678282',
+            'rel'         => 'subject',
+            'country'     => 'GB',
         ];
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $feed->setPodcastIndexLocation($location);
@@ -212,6 +230,8 @@ class FeedTest extends TestCase
             'description' => 'London, Baker Street',
             'geo'         => 'geo:-27.86159,153.3169',
             'osm'         => false,
+            'rel'         => 'subject',
+            'country'     => 'GB',
         ];
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $feed->setPodcastIndexLocation($location);
@@ -262,6 +282,114 @@ class FeedTest extends TestCase
 
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $feed->setPodcastIndexImages($images);
+    }
+
+    public function testSetDetailedImages(): void
+    {
+        $feed = new Writer\Feed();
+
+        $images = [
+            [
+                'alt'         => "An antenna emanating signal waves",
+                'purpose'     => "artwork",
+                'type'        => "image/jpeg",
+                'aspectRatio' => "1/1",
+                'href'        => "https://example.com/images/ep1/pci_square-massive.jpg",
+                'width'       => 1400,
+                'height'      => 1400,
+            ],
+            [
+                'alt'         => "Another antenna emanating signal waves",
+                'purpose'     => "artwork social",
+                'type'        => "image/jpeg",
+                'aspectRatio' => "16/9",
+                'href'        => "https://example.com/images/ep1/pci_landscape-massive_wide.jpg",
+            ],
+        ];
+
+        $feed->setPodcastIndexDetailedImages($images);
+        $this->assertEquals($images, $feed->getPodcastIndexDetailedImages());
+    }
+
+    public function testAddDetailedImageWithMinimalData(): void
+    {
+        $feed = new Writer\Feed();
+
+        $image = [
+            'href' => "https://example.com/images/ep1/pci_square-massive.jpg",
+        ];
+
+        $feed->addPodcastIndexDetailedImage($image);
+        $images = $feed->getPodcastIndexDetailedImages();
+        $this->assertIsArray($images);
+        $this->assertEquals($image, $images[0]);
+    }
+
+    public function testAddDetailedImageThrowsExceptionOnInvalidArguments(): void
+    {
+        $feed = new Writer\Feed();
+
+        // missing href
+        $image = [
+            'abc' => "https://example.com/images/ep1/pci_square-massive.jpg",
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->addPodcastIndexDetailedImage($image);
+
+        // invalid href
+        $image = [
+            'href' => "example.com/images/ep1/pci_square-massive.jpg",
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->addPodcastIndexDetailedImage($image);
+
+        // invalid alt
+        $image = [
+            'href' => "https://example.com/images/ep1/pci_square-massive.jpg",
+            'alt'  => 1234,
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->addPodcastIndexDetailedImage($image);
+
+        // invalid aspectRatio
+        $image = [
+            'href'        => "https://example.com/images/ep1/pci_square-massive.jpg",
+            'aspectRatio' => 1234,
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->addPodcastIndexDetailedImage($image);
+
+        // invalid width
+        $image = [
+            'href'  => "https://example.com/images/ep1/pci_square-massive.jpg",
+            'width' => '1234',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->addPodcastIndexDetailedImage($image);
+
+        // invalid height
+        $image = [
+            'href'   => "https://example.com/images/ep1/pci_square-massive.jpg",
+            'height' => '1234',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->addPodcastIndexDetailedImage($image);
+
+        // invalid type
+        $image = [
+            'href' => "https://example.com/images/ep1/pci_square-massive.jpg",
+            'type' => true,
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->addPodcastIndexDetailedImage($image);
+
+        // invalid purpose
+        $image = [
+            'href'    => "https://example.com/images/ep1/pci_square-massive.jpg",
+            'purpose' => true,
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->addPodcastIndexDetailedImage($image);
     }
 
     public function testSetUpdateFrequency(): void
@@ -387,6 +515,32 @@ class FeedTest extends TestCase
         // delete
         $feed->setPodcastIndexPeople();
         $this->assertNull($feed->getPodcastIndexPeople());
+    }
+
+    public function testSetPersons(): void
+    {
+        $feed = new Writer\Feed();
+
+        $people = [
+            [
+                'name'  => 'Hercules Poirot',
+                'role'  => 'guest',
+                'group' => 'starring',
+                'img'   => 'https://poirot.com/about/my-moustage.jpg',
+                'href'  => 'https://poirot.com/my-cases',
+            ],
+            [
+                'name'  => 'Agatha Christie',
+                'role'  => 'guest',
+                'group' => 'writing',
+            ],
+        ];
+        $feed->setPodcastIndexPersons($people);
+        /** @var list<PersonObject> $peopleSaved */
+        $peopleSaved = $feed->getPodcastIndexPersons();
+        foreach ($people as $person) {
+            $this->assertTrue(in_array($person, $peopleSaved));
+        }
     }
 
     public function testAddPersonWithOneArgument(): void
@@ -673,19 +827,6 @@ class FeedTest extends TestCase
             $this->assertTrue(in_array($txt, $txtsSaved));
         }
 
-        // add
-        $singleTxt = [
-            'value'   => 'naj3eEZaWVVY9a38uhX8FekACyhtqP4JN',
-            'purpose' => 'verify',
-        ];
-        $feed->addPodcastIndexTxt($singleTxt);
-        /** @psalm-var list<object{value: string, purpose?: string}> $moreTxtsSaved */
-        $moreTxtsSaved = $feed->getPodcastIndexTxts();
-        foreach ($txts as $txt) {
-            $this->assertTrue(in_array($txt, $moreTxtsSaved));
-        }
-        $this->assertTrue(in_array($singleTxt, $moreTxtsSaved));
-
         // update
         $newTxts = [
             [
@@ -762,5 +903,532 @@ class FeedTest extends TestCase
         ];
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $feed->setPodcastIndexPodping($data);
+    }
+
+    public function testAddRemoteItem(): void
+    {
+        $feed = new Writer\Feed();
+
+        $remoteItem = [
+            'feedGuid' => "917393e3-1b1e-5cef-ace4-edaa54e1f810",
+            'feedUrl'  => "https://feeds.example.org/917393e3-1b1e-5cef-ace4-edaa54e1f810/rss.xml",
+            'medium'   => "podcast",
+            'title'    => "Some Example",
+        ];
+        $feed->addPodcastIndexRemoteItem($remoteItem);
+
+        /** @var list<RemoteItemObject> $remoteItems */
+        $remoteItems = $feed->getPodcastIndexRemoteItems();
+        $this->assertContains($remoteItem, $remoteItems);
+    }
+
+    public function testSetRemoteItems(): void
+    {
+        $feed = new Writer\Feed();
+
+        $remoteItems = [
+            [
+                'feedGuid' => "917393e3-1b1e-5cef-ace4-edaa54e1f810",
+                'feedUrl'  => "https://feeds.example.org/917393e3-1b1e-5cef-ace4-edaa54e1f810/rss.xml",
+                'medium'   => "podcast",
+                'title'    => "Some Example",
+            ],
+            [
+                'feedGuid' => "917393e3-xxxx-yyyy-ace4-edaa54e1f810",
+                'feedUrl'  => "https://feeds.other-example.org/917393e3-xxxx-yyyy-ace4-edaa54e1f810/rss.xml",
+                'medium'   => "podcast",
+                'title'    => "Some Other Example",
+            ],
+        ];
+
+        // set
+        $feed->setPodcastIndexRemoteItems($remoteItems);
+        /** @var list<RemoteItemObject> $remoteItemsSaved */
+        $remoteItemsSaved = $feed->getPodcastIndexRemoteItems();
+        foreach ($remoteItems as $remoteItem) {
+            $this->assertContains($remoteItem, $remoteItemsSaved);
+        }
+
+        // add
+        $singleRemoteItem = [
+            'feedGuid' => "917393e3-xxxx-very-news-edaa54e1f810",
+            'feedUrl'  => "https://feeds.new-other-example.org/917393e3-xxxx-news-ace4-edaa54e1f810/rss.xml",
+            'medium'   => "podcast",
+            'title'    => "New Other Example",
+        ];
+        $feed->addPodcastIndexRemoteItem($singleRemoteItem);
+        /** @psalm-var list<RemoteItemObject> $moreRemoteItemsSaved */
+        $moreRemoteItemsSaved = $feed->getPodcastIndexRemoteItems();
+        foreach ($remoteItems as $remoteItem) {
+            $this->assertContains($remoteItem, $moreRemoteItemsSaved);
+        }
+        $this->assertContains($singleRemoteItem, $moreRemoteItemsSaved);
+
+        // update
+        $newRemoteItems = [
+            [
+                'feedGuid' => "917393e3-some-thing-else-edaa54e1f810",
+                'feedUrl'  => "https://feeds.other.org/edaa54e1f810/rss.xml",
+                'medium'   => "podcast",
+                'title'    => "Something Else",
+            ],
+        ];
+        $feed->setPodcastIndexRemoteItems($newRemoteItems);
+        /** @var list<RemoteItemObject> $updated */
+        $updated = $feed->getPodcastIndexRemoteItems();
+        $this->assertEquals(1, count($updated));
+        $this->assertEquals($newRemoteItems, $updated);
+
+        // delete
+        $feed->setPodcastIndexRemoteItems();
+        $this->assertNull($feed->getPodcastIndexRemoteItems());
+    }
+
+    public function testAddRemoteItemWithOneArgument(): void
+    {
+        $feed = new Writer\Feed();
+
+        $data = [
+            'feedGuid' => "917393e3-xxxx-very-news-edaa54e1f810",
+        ];
+        $feed->addPodcastIndexRemoteItem($data);
+
+        /** @psalm-var list<RemoteItemObject> $items */
+        $items = $feed->getPodcastIndexRemoteItems();
+        $this->assertContains($data, $items);
+    }
+
+    public function testAddRemoteItemThrowsExceptionOnInvalidArguments(): void
+    {
+        $feed = new Writer\Feed();
+
+        $data = [
+            'abc' => 'def',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->addPodcastIndexRemoteItem($data);
+    }
+
+    public function testAddRemoteItemThrowsExceptionOnInvalidValue(): void
+    {
+        $feed = new Writer\Feed();
+
+        $data = [
+            'feedGuid' => "917393e3-zzzz-yyyy-gggg-edaa54e1f810",
+            'feedUrl'  => 'www.google.com',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->addPodcastIndexRemoteItem($data);
+    }
+
+    public function testAddPodrollRemoteItem(): void
+    {
+        $feed = new Writer\Feed();
+
+        $remoteItem = [
+            'feedGuid' => "917393e3-1b1e-5cef-ace4-edaa54e1f810",
+            'feedUrl'  => "https://feeds.example.org/917393e3-1b1e-5cef-ace4-edaa54e1f810/rss.xml",
+            'medium'   => "podcast",
+            'title'    => "Some Example",
+        ];
+        $feed->addPodcastIndexPodrollRemoteItem($remoteItem);
+
+        /** @var list<RemoteItemObject> $remoteItems */
+        $remoteItems = $feed->getPodcastIndexPodroll();
+        $this->assertContains($remoteItem, $remoteItems);
+    }
+
+    public function testSetPodroll(): void
+    {
+        $feed = new Writer\Feed();
+
+        $remoteItems = [
+            [
+                'feedGuid' => "917393e3-1b1e-5cef-ace4-edaa54e1f810",
+                'feedUrl'  => "https://feeds.example.org/917393e3-1b1e-5cef-ace4-edaa54e1f810/rss.xml",
+                'medium'   => "podcast",
+                'title'    => "Some Example",
+            ],
+            [
+                'feedGuid' => "917393e3-xxxx-yyyy-ace4-edaa54e1f810",
+                'feedUrl'  => "https://feeds.other-example.org/917393e3-xxxx-yyyy-ace4-edaa54e1f810/rss.xml",
+                'medium'   => "podcast",
+                'title'    => "Some Other Example",
+            ],
+        ];
+
+        // set
+        $feed->setPodcastIndexPodroll($remoteItems);
+        /** @var list<RemoteItemObject> $remoteItemsSaved */
+        $remoteItemsSaved = $feed->getPodcastIndexPodroll();
+        foreach ($remoteItems as $remoteItem) {
+            $this->assertContains($remoteItem, $remoteItemsSaved);
+        }
+
+        // add
+        $singleRemoteItem = [
+            'feedGuid' => "917393e3-xxxx-very-news-edaa54e1f810",
+            'feedUrl'  => "https://feeds.new-other-example.org/917393e3-xxxx-news-ace4-edaa54e1f810/rss.xml",
+            'medium'   => "podcast",
+            'title'    => "New Other Example",
+        ];
+        $feed->addPodcastIndexPodrollRemoteItem($singleRemoteItem);
+        /** @psalm-var list<RemoteItemObject> $moreRemoteItemsSaved */
+        $moreRemoteItemsSaved = $feed->getPodcastIndexPodroll();
+        foreach ($remoteItems as $remoteItem) {
+            $this->assertContains($remoteItem, $moreRemoteItemsSaved);
+        }
+        $this->assertContains($singleRemoteItem, $moreRemoteItemsSaved);
+
+        // update
+        $newRemoteItems = [
+            [
+                'feedGuid' => "917393e3-some-thing-else-edaa54e1f810",
+                'feedUrl'  => "https://feeds.other.org/edaa54e1f810/rss.xml",
+                'medium'   => "podcast",
+                'title'    => "Something Else",
+            ],
+        ];
+        $feed->setPodcastIndexPodroll($newRemoteItems);
+        /** @var list<RemoteItemObject> $updated */
+        $updated = $feed->getPodcastIndexPodroll();
+        $this->assertEquals(1, count($updated));
+        $this->assertEquals($newRemoteItems, $updated);
+
+        // delete
+        $feed->setPodcastIndexPodroll();
+        $this->assertNull($feed->getPodcastIndexPodroll());
+    }
+
+    public function testAddPodrollRemoteItemWithOneArgument(): void
+    {
+        $feed = new Writer\Feed();
+
+        $data = [
+            'feedGuid' => "917393e3-xxxx-very-news-edaa54e1f810",
+        ];
+        $feed->addPodcastIndexPodrollRemoteItem($data);
+
+        /** @psalm-var list<RemoteItemObject> $items */
+        $items = $feed->getPodcastIndexPodroll();
+        $this->assertContains($data, $items);
+    }
+
+    public function testAddPodrollRemoteItemThrowsExceptionOnInvalidArguments(): void
+    {
+        $feed = new Writer\Feed();
+
+        $data = [
+            'abc' => 'def',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->addPodcastIndexPodrollRemoteItem($data);
+    }
+
+    public function testAddPodrollRemoteItemThrowsExceptionOnInvalidValue(): void
+    {
+        $feed = new Writer\Feed();
+
+        $data = [
+            'feedGuid' => "917393e3-zzzz-yyyy-gggg-edaa54e1f810",
+            'feedUrl'  => 'www.google.com',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->addPodcastIndexPodrollRemoteItem($data);
+    }
+
+    public function testSetPublisher(): void
+    {
+        $feed = new Writer\Feed();
+
+        $remoteItem = [
+            'feedGuid' => "917393e3-1b1e-5cef-ace4-edaa54e1f810",
+            'feedUrl'  => "https://feeds.example.org/917393e3-1b1e-5cef-ace4-edaa54e1f810/rss.xml",
+            'medium'   => "podcast",
+            'title'    => "Some Example",
+        ];
+        $feed->setPodcastIndexPublisher($remoteItem);
+        $this->assertEquals($remoteItem, $feed->getPodcastIndexPublisher());
+    }
+
+    public function testRemovePublisher(): void
+    {
+        $feed = new Writer\Feed();
+
+        $remoteItem = [
+            'feedGuid' => "917393e3-1b1e-5cef-ace4-edaa54e1f810",
+            'feedUrl'  => "https://feeds.example.org/917393e3-1b1e-5cef-ace4-edaa54e1f810/rss.xml",
+            'medium'   => "podcast",
+            'title'    => "Some Example",
+        ];
+
+        // set
+        $feed->setPodcastIndexPublisher($remoteItem);
+        $this->assertEquals($remoteItem, $feed->getPodcastIndexPublisher());
+
+        // remove
+        $feed->setPodcastIndexPublisher();
+        $this->assertNull($feed->getPodcastIndexPublisher());
+    }
+
+    public function testSetPublisherWithOneArgument(): void
+    {
+        $feed = new Writer\Feed();
+
+        $remoteItem = [
+            'feedGuid' => "917393e3-1b1e-5cef-ace4-edaa54e1f810",
+        ];
+        $feed->setPodcastIndexPublisher($remoteItem);
+        $this->assertEquals($remoteItem, $feed->getPodcastIndexPublisher());
+    }
+
+    public function testSetPublisherThrowsExceptionOnMissingGuid(): void
+    {
+        $feed = new Writer\Feed();
+
+        $remoteItem = [
+            'feedUrl' => "https://feeds.example.org/917393e3-1b1e-5cef-ace4-edaa54e1f810/rss.xml",
+            'medium'  => "podcast",
+            'title'   => "Some Example",
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->setPodcastIndexPublisher($remoteItem);
+    }
+
+    public function testSetPublisherThrowsExceptionOnInvalidUrl(): void
+    {
+        $feed = new Writer\Feed();
+
+        $remoteItem = [
+            'feedGuid' => "917393e3-1b1e-5cef-ace4-edaa54e1f810",
+            'feedUrl'  => "feeds.example.org",
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->setPodcastIndexPublisher($remoteItem);
+    }
+
+    public function testAddValue(): void
+    {
+        $feed = new Writer\Feed();
+
+        $value           = [
+            'type'      => "lightning",
+            'method'    => "keysend",
+            'suggested' => 0.00000005000,
+        ];
+        $valueRecipients = [
+            [
+                'name'    => "Alice (Podcaster)",
+                'type'    => "node",
+                'address' => "02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52",
+                'split'   => 40,
+            ],
+            [
+                'name'    => "Bob (Podcaster)",
+                'type'    => "node",
+                'address' => "032f4ffbbafffbe51726ad3c164a3d0d37ec27bc67b29a159b0f49ae8ac21b8508",
+                'split'   => 60,
+            ],
+        ];
+        $feed->addPodcastIndexValue($value, $valueRecipients);
+        $value['valueRecipients'] = $valueRecipients;
+
+        /** @psalm-var list<ValueObject> $values */
+        $values = $feed->getPodcastIndexValues();
+        $this->assertContains($value, $values);
+    }
+
+    public function testAddValueWithMinimalArguments(): void
+    {
+        $feed = new Writer\Feed();
+
+        $value           = [
+            'type'   => "lightning",
+            'method' => "keysend",
+        ];
+        $valueRecipients = [
+            [
+                'type'    => "node",
+                'address' => "02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52",
+                'split'   => 40,
+            ],
+        ];
+        $feed->addPodcastIndexValue($value, $valueRecipients);
+        $value['valueRecipients'] = $valueRecipients;
+
+        /** @psalm-var list<ValueObject> $values */
+        $values = $feed->getPodcastIndexValues();
+        $this->assertContains($value, $values);
+    }
+
+    public function testAddValueThrowsExceptionOnMissingRecipients(): void
+    {
+        $feed = new Writer\Feed();
+
+        $value = [
+            'type'   => "lightning",
+            'method' => "keysend",
+        ];
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->addPodcastIndexValue($value, []);
+    }
+
+    public function testAddValueThrowsExceptionOnMissingRecipientType(): void
+    {
+        $feed = new Writer\Feed();
+
+        $value           = [
+            'type'   => "lightning",
+            'method' => "keysend",
+        ];
+        $valueRecipients = [
+            [
+                'address' => "02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52",
+                'split'   => 40,
+            ],
+        ];
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->addPodcastIndexValue($value, $valueRecipients);
+    }
+
+    public function testAddValueThrowsExceptionOnInvalidRecipientType(): void
+    {
+        $feed = new Writer\Feed();
+
+        $value           = [
+            'type'   => "lightning",
+            'method' => "keysend",
+        ];
+        $valueRecipients = [
+            [
+                'type'    => true,
+                'address' => "02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52",
+                'split'   => 40,
+            ],
+        ];
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->addPodcastIndexValue($value, $valueRecipients);
+    }
+
+    public function testAddValueUsingScientificNotation(): void
+    {
+        $feed = new Writer\Feed();
+
+        $value           = [
+            'type'      => "lightning",
+            'method'    => "keysend",
+            'suggested' => 5.0E-8, // scientific notation for 0.00000005000
+        ];
+        $valueRecipients = [
+            [
+                'name'    => "Alice (Podcaster)",
+                'type'    => "node",
+                'address' => "02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52",
+                'split'   => 40,
+            ],
+        ];
+        $feed->addPodcastIndexValue($value, $valueRecipients);
+
+        $value['valueRecipients'] = $valueRecipients;
+
+        /** @psalm-var list<ValueObject> $values */
+        $values = $feed->getPodcastIndexValues();
+        $this->assertContains($value, $values);
+    }
+
+    public function testResetValues(): void
+    {
+        $feed = new Writer\Feed();
+
+        $value           = [
+            'type'   => "lightning",
+            'method' => "keysend",
+        ];
+        $valueRecipients = [
+            [
+                'type'    => "node",
+                'address' => "02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52",
+                'split'   => 40,
+            ],
+        ];
+
+        // set values
+        $feed->addPodcastIndexValue($value, $valueRecipients);
+        $value['valueRecipients'] = $valueRecipients;
+
+        /** @psalm-var list<ValueObject> $values */
+        $values = $feed->getPodcastIndexValues();
+        $this->assertContains($value, $values);
+
+        // remove them again
+        $feed->resetPodcastIndexValues();
+
+        /** @psalm-var list<ValueObject> $empty */
+        $empty = $feed->getPodcastIndexValues();
+        $this->assertEmpty($empty);
+    }
+
+    public function testSetSocialInteracts(): void
+    {
+        $feed = new Writer\Feed();
+
+        $data = [
+            [
+                'priority'   => 1,
+                'protocol'   => "activitypub",
+                'uri'        => "https://podcastindex.social/web/@dave/108013847520053258",
+                'accountId'  => "@dave",
+                'accountUrl' => "https://podcastindex.social/web/@dave",
+            ],
+            [
+                'priority'   => 2,
+                'protocol'   => "twitter",
+                'uri'        => "https://twitter.com/PodcastindexOrg/status/1507120226361647115",
+                'accountId'  => "@podcastindexorg",
+                'accountUrl' => "https://twitter.com/PodcastindexOrg",
+            ],
+        ];
+        $feed->setPodcastIndexSocialInteracts($data);
+
+        /** @psalm-var list<SocialInteractObject> $response */
+        $response = $feed->getPodcastIndexSocialInteracts();
+        $this->assertEquals($data, $response);
+    }
+
+    public function testAddSocialInteractThrowsExceptionOnInvalidUri(): void
+    {
+        $feed = new Writer\Feed();
+
+        $data = [
+            [
+                'priority'   => 1,
+                'protocol'   => "activitypub",
+                'uri'        => "podcastindex.social/web/@dave/108013847520053258",
+                'accountId'  => "@dave",
+                'accountUrl' => "https://podcastindex.social/web/@dave",
+            ],
+        ];
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->addPodcastIndexSocialInteract($data);
+    }
+
+    public function testAddSocialInteractThrowsExceptionOnMissingProtocol(): void
+    {
+        $feed = new Writer\Feed();
+
+        $data = [
+            [
+                'priority'  => 1,
+                'uri'       => "https://podcastindex.social/web/@dave",
+                'accountId' => "@dave",
+            ],
+        ];
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $feed->addPodcastIndexSocialInteract($data);
     }
 }
