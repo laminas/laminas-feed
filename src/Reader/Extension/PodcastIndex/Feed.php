@@ -213,6 +213,42 @@ class Feed extends Extension\AbstractFeed
     }
 
     /**
+     * Get multiple feed locations
+     *
+     * @psalm-return list<LocationObject>
+     */
+    public function getPodcastIndexLocations(): array
+    {
+        $locations = [];
+
+        // include deprecated single location entry if exists
+        if (array_key_exists('locations', $this->data) || array_key_exists('location', $this->data)) {
+            /** @var list<LocationObject> $locations */
+            $locations = $this->data['locations'] ?? [];
+            if (isset($this->data['location'])) {
+                /** @var LocationObject $single */
+                $single      = $this->data['location'];
+                $locations[] = $single;
+            }
+            return $locations;
+        }
+
+        $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:location');
+
+        if ($nodeList->length > 0) {
+            foreach ($nodeList as $entry) {
+                assert($entry instanceof DOMElement);
+                $location    = AttributesReader::readLocation($entry);
+                $locations[] = $location;
+            }
+        }
+
+        $this->data['locations'] = $locations;
+
+        return $this->data['locations'];
+    }
+
+    /**
      * Get the podcast images.
      * Returns the content of a single `<podcast:images>` tag.
      *

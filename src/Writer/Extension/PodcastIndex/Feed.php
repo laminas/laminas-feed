@@ -145,7 +145,7 @@ class Feed
      * @param FundingArray $value
      * @return $this
      */
-    public function addPodcastIndexFunding(array $value): Feed
+    public function addPodcastIndexFunding(array $value): self
     {
         Validator::validateFunding($value);
         if (! isset($this->data['fundings'])) {
@@ -185,7 +185,9 @@ class Feed
     }
 
     /**
-     * Set feed location
+     * Sets a single feed location tag
+     *
+     * @deprecated Multiple `location` tags are allowed now. Use `setPodcastIndexLocations()` or `addPodcastIndexLocation()` instead.
      *
      * @param LocationArray $value
      * @return $this
@@ -194,6 +196,38 @@ class Feed
     {
         Validator::validateLocation($value);
         $this->data['location'] = $value;
+        return $this;
+    }
+
+    /**
+     * Adds a feed location tag.
+     *
+     * @param LocationArray $value
+     * @return $this
+     */
+    public function addPodcastIndexLocation(array $value): self
+    {
+        Validator::validateLocation($value);
+        if (! isset($this->data['locations'])) {
+            $this->data['locations'] = [];
+        }
+        /** @var list<LocationArray> $this->data['locations'] */
+        $this->data['locations'][] = $value;
+        return $this;
+    }
+
+    /**
+     * Set multiple location tags
+     *
+     * @param list<LocationArray> $values
+     * @return $this
+     */
+    public function setPodcastIndexLocations(array $values = []): self
+    {
+        $this->data['locations'] = [];
+        foreach ($values as $value) {
+            $this->addPodcastIndexLocation($value);
+        }
         return $this;
     }
 
@@ -797,5 +831,26 @@ class Feed
             $fundings[] = $single;
         }
         return $fundings;
+    }
+
+    /**
+     * Get multiple location tags
+     * Specific get call for non-default naming.
+     *
+     * @return null|list<LocationArray>
+     */
+    public function getPodcastIndexLocations(): array|null
+    {
+        $locations = null;
+        if (isset($this->data['locations'])) {
+            /** @var list<LocationArray> $locations */
+            $locations = $this->data['locations'];
+        }
+        if (isset($this->data['location'])) {
+            /** @var LocationArray $single */
+            $single      = $this->data['location'];
+            $locations[] = $single;
+        }
+        return $locations;
     }
 }

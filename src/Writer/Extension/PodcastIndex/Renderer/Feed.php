@@ -53,6 +53,7 @@ class Feed extends Extension\AbstractRenderer
         $this->setFundings($this->dom, $this->base);
         $this->setLicense($this->dom, $this->base);
         $this->setLocation($this->dom, $this->base);
+        $this->setLocations($this->dom, $this->base);
         $this->setImages($this->dom, $this->base);
         $this->setDetailedImages($this->dom, $this->base);
         $this->setUpdateFrequency($this->dom, $this->base);
@@ -190,7 +191,7 @@ class Feed extends Extension\AbstractRenderer
     }
 
     /**
-     * Set feed location
+     * Set a single feed location
      */
     private function setLocation(DOMDocument $dom, DOMElement $root): void
     {
@@ -203,6 +204,28 @@ class Feed extends Extension\AbstractRenderer
         }
         $el = ElementGenerator::createPodcastIndexElement($dom, $location, 'location', 'description');
         $root->appendChild($el);
+        $this->called = true;
+    }
+
+    /**
+     * Set multiple location tags
+     */
+    protected function setLocations(DOMDocument $dom, DOMElement $root): void
+    {
+        /** @psalm-var FeedWriter $container */
+        $container = $this->getDataContainer();
+
+        /** @psalm-var null|list<LocationArray> $locations */
+        $locations = $container->getPodcastIndexLocations();
+        if ($locations === null) {
+            return;
+        }
+
+        foreach ($locations as $location) {
+            $el = ElementGenerator::createPodcastIndexElement($dom, $location, 'location', 'description');
+            $root->appendChild($el);
+        }
+
         $this->called = true;
     }
 
