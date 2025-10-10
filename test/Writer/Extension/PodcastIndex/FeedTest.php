@@ -246,7 +246,10 @@ class FeedTest extends TestCase
             'country'     => 'GB',
         ];
         $feed->addPodcastIndexLocation($location);
-        $this->assertEquals($location, $feed->getPodcastIndexLocations()[0]);
+
+        /** @var list<LocationObject> $locations */
+        $locations = $feed->getPodcastIndexLocations();
+        $this->assertTrue(in_array($location, $locations));
     }
 
     public function testSetLocations(): void

@@ -74,7 +74,7 @@ class LiveItemTest extends TestCase
         $this->assertStringContainsString($author['email'], $xml);
     }
 
-    /*public function testRendersRssLocationTag(): void
+    public function testRendersRssLocationTag(): void
     {
         $location = [
             'description' => 'London, Baker Street',
@@ -83,7 +83,7 @@ class LiveItemTest extends TestCase
             'rel'         => 'creator',
             'country'     => 'GB',
         ];
-        $this->validEntry->setPodcastIndexLocation($location);
+        $this->validEntry->addPodcastIndexLocation($location);
 
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $xml     = $rssFeed->render()->saveXml();
@@ -94,7 +94,7 @@ class LiveItemTest extends TestCase
         $this->assertStringContainsString($location['osm'], $xml);
         $this->assertStringContainsString($location['rel'], $xml);
         $this->assertStringContainsString($location['country'], $xml);
-    }*/
+    }
 
     public function testRendersRssLicenseTag(): void
     {

@@ -3112,7 +3112,7 @@
       <code>setPodcastIndexEpisode</code>
       <code>setPodcastIndexFundings</code>
       <code>setPodcastIndexLicense</code>
-      <code>setPodcastIndexLocation</code>
+      <code>setPodcastIndexLocations</code>
       <code>setPodcastIndexPersons</code>
       <code>setPodcastIndexSeason</code>
       <code>setPodcastIndexSocialInteracts</code>
@@ -3137,6 +3137,7 @@
       <code>getLockOwner</code>
       <code>getPodcastIndexFundings</code>
       <code>getPodcastIndexLiveItems</code>
+      <code>getPodcastIndexLocations</code>
       <code>getPodcastIndexPersons</code>
       <code>isLocked</code>
       <code>removePodcastIndexLiveItem</code>
@@ -3151,6 +3152,7 @@
       <code>setPodcastIndexImages</code>
       <code>setPodcastIndexLicense</code>
       <code>setPodcastIndexLocation</code>
+      <code>setPodcastIndexLocations</code>
       <code>setPodcastIndexLocked</code>
       <code>setPodcastIndexMedium</code>
       <code>setPodcastIndexPersons</code>

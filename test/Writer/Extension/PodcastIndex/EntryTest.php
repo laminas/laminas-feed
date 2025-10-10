@@ -279,7 +279,10 @@ class EntryTest extends TestCase
             'country'     => 'GB',
         ];
         $entry->addPodcastIndexLocation($location);
-        $this->assertEquals($location, $entry->getPodcastIndexLocations()[0]);
+
+        /** @var list<LocationObject> $locations */
+        $locations = $entry->getPodcastIndexLocations();
+        $this->assertTrue(in_array($location, $locations));
     }
 
     public function testSetLocations(): void
@@ -314,7 +317,10 @@ class EntryTest extends TestCase
             'description' => 'London, Baker Street',
         ];
         $entry->addPodcastIndexLocation($location);
-        $this->assertEquals($location, $entry->getPodcastIndexLocations()[0]);
+
+        /** @var list<LocationObject> $locations */
+        $locations = $entry->getPodcastIndexLocations();
+        $this->assertTrue(in_array($location, $locations));
     }
 
     public function testAddLocationThrowsExceptionOnInvalidArguments(): void
