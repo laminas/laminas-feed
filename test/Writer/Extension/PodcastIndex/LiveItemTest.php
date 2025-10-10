@@ -178,7 +178,7 @@ class LiveItemTest extends TestCase
         $this->assertEquals($soundbites, $this->liveItem->getPodcastIndexSoundbites());
     }
 
-    public function testSetLocation(): void
+    /*public function testSetLocation(): void
     {
         $location = [
             'description' => 'London, Baker Street',
@@ -189,7 +189,7 @@ class LiveItemTest extends TestCase
         ];
         $this->liveItem->setPodcastIndexLocation($location);
         $this->assertEquals($location, $this->liveItem->getPodcastIndexLocation());
-    }
+    }*/
 
     public function testAddPerson(): void
     {

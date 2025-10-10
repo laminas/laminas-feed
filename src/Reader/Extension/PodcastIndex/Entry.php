@@ -163,30 +163,32 @@ class Entry extends Extension\AbstractEntry
     }
 
     /**
-     * Get the entry location
+     * Get the episode locations
      *
-     * @return null|LocationObject
+     * @psalm-return list<LocationObject>
      */
-    public function getPodcastIndexLocation(): object|null
+    public function getPodcastIndexLocations(): array
     {
-        if (array_key_exists('location', $this->data)) {
-            /** @psalm-var null|LocationObject */
-            return $this->data['location'];
+        if (array_key_exists('locations', $this->data)) {
+            /** @psalm-var list<LocationObject> */
+            return $this->data['locations'];
         }
 
-        $location = null;
+        $locations = [];
 
         $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:location');
 
         if ($nodeList->length > 0) {
-            $item = $nodeList->item(0);
-            assert($item instanceof DOMElement);
-            $location = AttributesReader::readLocation($item);
+            foreach ($nodeList as $entry) {
+                assert($entry instanceof DOMElement);
+                $location    = AttributesReader::readLocation($entry);
+                $locations[] = $location;
+            }
         }
 
-        $this->data['location'] = $location;
+        $this->data['locations'] = $locations;
 
-        return $this->data['location'];
+        return $this->data['locations'];
     }
 
     /**

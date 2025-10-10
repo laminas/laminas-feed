@@ -187,7 +187,7 @@ class Feed
     /**
      * Sets a single feed location tag
      *
-     * @deprecated Multiple `location` tags are allowed now. Use `setPodcastIndexLocations()` or `addPodcastIndexLocation()` instead.
+     * @deprecated Use `setPodcastIndexLocations()` or `addPodcastIndexLocation()` instead.
      *
      * @param LocationArray $value
      * @return $this
@@ -217,7 +217,7 @@ class Feed
     }
 
     /**
-     * Set multiple location tags
+     * Sets multiple location tags
      *
      * @param list<LocationArray> $values
      * @return $this

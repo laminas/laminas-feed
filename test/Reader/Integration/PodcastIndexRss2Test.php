@@ -96,7 +96,7 @@ class PodcastIndexRss2Test extends TestCase
         $this->assertEquals($expected, $feed->getPodcastIndexLicense());
     }
 
-    public function testGetsLocation(): void
+    public function testGetsSingleLocation(): void
     {
         /** @var Reader\Extension\PodcastIndex\Feed $feed */
         $feed = Reader\Reader::importString(
@@ -111,6 +111,31 @@ class PodcastIndexRss2Test extends TestCase
         $expected->country     = 'US';
 
         $this->assertEquals($expected, $feed->getPodcastIndexLocation());
+    }
+
+    public function testGetsMultipleLocations(): void
+    {
+        /** @var Reader\Extension\PodcastIndex\Feed $feed */
+        $feed = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath)
+        );
+
+        $expectedA              = new stdClass();
+        $expectedA->description = 'Austin';
+        $expectedA->geo         = 'geo:30.2711286,-97.7436995';
+        $expectedA->osm         = 'R113314';
+        $expectedA->rel         = 'subject';
+        $expectedA->country     = 'US';
+
+        $expectedB              = new stdClass();
+        $expectedB->description = 'Marlow';
+        $expectedB->geo         = 'geo:51.5718706,-0.7769654';
+        $expectedB->osm         = 'R3727240';
+        $expectedB->rel         = 'creator';
+        $expectedB->country     = 'GB';
+
+        $this->assertEquals($expectedA, $feed->getPodcastIndexLocations()[0]);
+        $this->assertEquals($expectedB, $feed->getPodcastIndexLocations()[1]);
     }
 
     public function testGetsImages(): void
@@ -544,7 +569,7 @@ class PodcastIndexRss2Test extends TestCase
         $expected->rel         = 'subject';
         $expected->country     = 'US';
 
-        $this->assertEquals($expected, $entry->getPodcastIndexLocation());
+        $this->assertEquals($expected, $entry->getPodcastIndexLocations()[0]);
     }
 
     public function testGetsEntryFundings(): void

@@ -155,8 +155,7 @@ class Feed extends Extension\AbstractRenderer
      */
     protected function setFundings(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var FeedWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getFeedWriter();
 
         /** @psalm-var null|list<FundingArray> $fundings */
         $fundings = $container->getPodcastIndexFundings();
@@ -212,8 +211,7 @@ class Feed extends Extension\AbstractRenderer
      */
     protected function setLocations(DOMDocument $dom, DOMElement $root): void
     {
-        /** @psalm-var FeedWriter $container */
-        $container = $this->getDataContainer();
+        $container = $this->getFeedWriter();
 
         /** @psalm-var null|list<LocationArray> $locations */
         $locations = $container->getPodcastIndexLocations();

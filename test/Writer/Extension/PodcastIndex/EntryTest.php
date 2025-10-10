@@ -267,7 +267,7 @@ class EntryTest extends TestCase
         $entry->addPodcastIndexSoundbite($soundbite);
     }
 
-    public function testSetLocation(): void
+    public function testAddLocation(): void
     {
         $entry = new Writer\Entry();
 
@@ -278,22 +278,46 @@ class EntryTest extends TestCase
             'rel'         => 'subject',
             'country'     => 'GB',
         ];
-        $entry->setPodcastIndexLocation($location);
-        $this->assertEquals($location, $entry->getPodcastIndexLocation());
+        $entry->addPodcastIndexLocation($location);
+        $this->assertEquals($location, $entry->getPodcastIndexLocations()[0]);
     }
 
-    public function testSetLocationWithOneArgument(): void
+    public function testSetLocations(): void
+    {
+        $entry = new Writer\Entry();
+
+        $location = [
+            [
+                'description' => 'London, Baker Street',
+                'geo'         => 'geo:-27.86159,153.3169',
+                'osm'         => 'W43678282',
+                'rel'         => 'creator',
+                'country'     => 'GB',
+            ],
+            [
+                'description' => 'Marlow',
+                'geo'         => 'geo:51.5718706,-0.7769654',
+                'osm'         => 'R3727240',
+                'rel'         => 'subject',
+                'country'     => 'US',
+            ],
+        ];
+        $entry->setPodcastIndexLocations($location);
+        $this->assertEquals($location, $entry->getPodcastIndexLocations());
+    }
+
+    public function testAddLocationWithOneArgument(): void
     {
         $entry = new Writer\Entry();
 
         $location = [
             'description' => 'London, Baker Street',
         ];
-        $entry->setPodcastIndexLocation($location);
-        $this->assertEquals($location, $entry->getPodcastIndexLocation());
+        $entry->addPodcastIndexLocation($location);
+        $this->assertEquals($location, $entry->getPodcastIndexLocations()[0]);
     }
 
-    public function testSetLocationThrowsExceptionOnInvalidArguments(): void
+    public function testAddLocationThrowsExceptionOnInvalidArguments(): void
     {
         $entry = new Writer\Entry();
 
@@ -301,10 +325,10 @@ class EntryTest extends TestCase
             'abc' => 'def',
         ];
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
-        $entry->setPodcastIndexLocation($location);
+        $entry->addPodcastIndexLocation($location);
     }
 
-    public function testSetLocationThrowsExceptionOnInvalidGeo(): void
+    public function testAddLocationThrowsExceptionOnInvalidGeo(): void
     {
         $entry = new Writer\Entry();
 
@@ -316,10 +340,10 @@ class EntryTest extends TestCase
             'country'     => 'GB',
         ];
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
-        $entry->setPodcastIndexLocation($location);
+        $entry->addPodcastIndexLocation($location);
     }
 
-    public function testSetLocationThrowsExceptionOnInvalidOsm(): void
+    public function testAddLocationThrowsExceptionOnInvalidOsm(): void
     {
         $entry = new Writer\Entry();
 
@@ -331,10 +355,10 @@ class EntryTest extends TestCase
             'country'     => 'GB',
         ];
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
-        $entry->setPodcastIndexLocation($location);
+        $entry->addPodcastIndexLocation($location);
     }
 
-    public function testSetLocationThrowsExceptionOnInvalidRel(): void
+    public function testAddLocationThrowsExceptionOnInvalidRel(): void
     {
         $entry = new Writer\Entry();
 
@@ -346,7 +370,7 @@ class EntryTest extends TestCase
             'country'     => 'GB',
         ];
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
-        $entry->setPodcastIndexLocation($location);
+        $entry->addPodcastIndexLocation($location);
     }
 
     public function testAddPerson(): void

@@ -55,7 +55,7 @@ class EntryTest extends TestCase
             'rel'         => 'creator',
             'country'     => 'GB',
         ];
-        $this->validEntry->setPodcastIndexLocation($location);
+        $this->validEntry->addPodcastIndexLocation($location);
 
         $rssFeed = new Renderer\Feed\Rss($this->validWriter);
         $xml     = $rssFeed->render()->saveXml();
@@ -66,6 +66,37 @@ class EntryTest extends TestCase
         $this->assertStringContainsString($location['osm'], $xml);
         $this->assertStringContainsString($location['rel'], $xml);
         $this->assertStringContainsString($location['country'], $xml);
+    }
+
+    public function testRendersRssMultipleLocationTags(): void
+    {
+        $locations = [
+            [
+                'description' => 'London, Baker Street',
+                'geo'         => 'geo:-27.86159,153.3169',
+                'osm'         => 'W43678282',
+                'rel'         => 'creator',
+                'country'     => 'GB',
+            ],
+            [
+                'description' => 'Marlow',
+                'geo'         => 'geo:51.5718706,-0.7769654',
+                'osm'         => 'R3727240',
+                'rel'         => 'subject',
+                'country'     => 'US',
+            ],
+        ];
+        $this->validEntry->setPodcastIndexLocations($locations);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $this->assertStringContainsString('<podcast:location', $xml);
+        $this->assertStringContainsString($locations[0]['description'], $xml);
+        $this->assertStringContainsString($locations[0]['geo'], $xml);
+        $this->assertStringContainsString($locations[1]['osm'], $xml);
+        $this->assertStringContainsString($locations[1]['rel'], $xml);
+        $this->assertStringContainsString($locations[1]['country'], $xml);
     }
 
     public function testRendersRssLicenseTag(): void

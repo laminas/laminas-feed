@@ -200,16 +200,34 @@ class Entry
     }
 
     /**
-     * Set entry location
+     * Adds a feed location tag.
      *
      * @param LocationArray $value
      * @return $this
-     * @throws Writer\Exception\InvalidArgumentException
      */
-    public function setPodcastIndexLocation(array $value): self
+    public function addPodcastIndexLocation(array $value): self
     {
         Validator::validateLocation($value);
-        $this->data['location'] = $value;
+        if (! isset($this->data['locations'])) {
+            $this->data['locations'] = [];
+        }
+        /** @var list<LocationArray> $this->data['locations'] */
+        $this->data['locations'][] = $value;
+        return $this;
+    }
+
+    /**
+     * Set multiple location tags
+     *
+     * @param list<LocationArray> $values
+     * @return $this
+     */
+    public function setPodcastIndexLocations(array $values = []): self
+    {
+        $this->data['locations'] = [];
+        foreach ($values as $value) {
+            $this->addPodcastIndexLocation($value);
+        }
         return $this;
     }
 

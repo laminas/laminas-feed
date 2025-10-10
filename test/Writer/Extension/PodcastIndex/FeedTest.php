@@ -234,6 +234,45 @@ class FeedTest extends TestCase
         $this->assertEquals($location, $feed->getPodcastIndexLocation());
     }
 
+    public function testAddLocation(): void
+    {
+        $feed = new Writer\Feed();
+
+        $location = [
+            'description' => 'London, Baker Street',
+            'geo'         => 'geo:-27.86159,153.3169',
+            'osm'         => 'W43678282',
+            'rel'         => 'subject',
+            'country'     => 'GB',
+        ];
+        $feed->addPodcastIndexLocation($location);
+        $this->assertEquals($location, $feed->getPodcastIndexLocations()[0]);
+    }
+
+    public function testSetLocations(): void
+    {
+        $feed = new Writer\Feed();
+
+        $location = [
+            [
+                'description' => 'London, Baker Street',
+                'geo'         => 'geo:-27.86159,153.3169',
+                'osm'         => 'W43678282',
+                'rel'         => 'creator',
+                'country'     => 'GB',
+            ],
+            [
+                'description' => 'Marlow',
+                'geo'         => 'geo:51.5718706,-0.7769654',
+                'osm'         => 'R3727240',
+                'rel'         => 'subject',
+                'country'     => 'US',
+            ],
+        ];
+        $feed->setPodcastIndexLocations($location);
+        $this->assertEquals($location, $feed->getPodcastIndexLocations());
+    }
+
     public function testSetLocationWithOneArgument(): void
     {
         $feed = new Writer\Feed();

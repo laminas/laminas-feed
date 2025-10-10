@@ -54,7 +54,7 @@ class Entry extends Extension\AbstractRenderer
         $this->setTranscript($this->dom, $this->base);
         $this->setChapters($this->dom, $this->base);
         $this->setSoundbites($this->dom, $this->base);
-        $this->setLocation($this->dom, $this->base);
+        $this->setLocations($this->dom, $this->base);
         $this->setLicense($this->dom, $this->base);
         $this->setPeople($this->dom, $this->base);
         $this->setTxts($this->dom, $this->base);
@@ -146,19 +146,23 @@ class Entry extends Extension\AbstractRenderer
     }
 
     /**
-     * Set entry location
+     * Set multiple location tags
      */
-    private function setLocation(DOMDocument $dom, DOMElement $root): void
+    protected function setLocations(DOMDocument $dom, DOMElement $root): void
     {
         $container = $this->getEntryWriter();
 
-        /** @psalm-var null|LocationArray $location */
-        $location = $container->getPodcastIndexLocation();
-        if ($location === null) {
+        /** @psalm-var null|list<LocationArray> $locations */
+        $locations = $container->getPodcastIndexLocations();
+        if ($locations === null) {
             return;
         }
-        $el = ElementGenerator::createPodcastIndexElement($dom, $location, 'location', 'description');
-        $root->appendChild($el);
+
+        foreach ($locations as $location) {
+            $el = ElementGenerator::createPodcastIndexElement($dom, $location, 'location', 'description');
+            $root->appendChild($el);
+        }
+
         $this->called = true;
     }
 
