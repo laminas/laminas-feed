@@ -571,4 +571,33 @@ class EntryTest extends TestCase
         $this->assertStringContainsString($data['accountId'], $xml);
         $this->assertStringContainsString($data['space'], $xml);
     }
+
+    public function testRendersRssSoundbiteTags(): void
+    {
+        $data = [
+            [
+                'startTime' => '66',
+                'duration'  => '39.0',
+                'title'     => 'Pepper shakers comparison',
+            ],
+            [
+                'startTime' => '112.45',
+                'duration'  => '24.83',
+                'title'     => 'Salt shakers comparison',
+            ],
+        ];
+
+        $this->validEntry->setPodcastIndexSoundbites($data);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $this->assertStringContainsString('<podcast:soundbite', $xml);
+        $this->assertStringContainsString($data[0]['startTime'], $xml);
+        $this->assertStringContainsString($data[0]['duration'], $xml);
+        $this->assertStringContainsString($data[0]['title'], $xml);
+        $this->assertStringContainsString($data[1]['startTime'], $xml);
+        $this->assertStringContainsString($data[1]['duration'], $xml);
+        $this->assertStringContainsString($data[1]['title'], $xml);
+    }
 }

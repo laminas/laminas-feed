@@ -139,7 +139,7 @@ class Entry extends Extension\AbstractRenderer
             return;
         }
         foreach ($soundbites as $soundbite) {
-            $el = ElementGenerator::createPodcastIndexElement($dom, $soundbite, 'soundbite');
+            $el = ElementGenerator::createPodcastIndexElement($dom, $soundbite, 'soundbite', 'title');
             $root->appendChild($el);
             $this->called = true;
         }
