@@ -217,9 +217,8 @@ final class Validator
             );
         }
 
-        //$value = array_intersect_key($value, array_flip(['value', 'owner']));
-
         /** @var LockedArray $value */
+        $value = array_intersect_key($value, array_flip(['value', 'owner']));
         return $value;
     }
 
@@ -239,6 +238,7 @@ final class Validator
             );
         }
         /** @var TranscriptArray $value */
+        $value = array_intersect_key($value, array_flip(['url', 'type', 'language', 'rel']));
         return $value;
     }
 
@@ -257,6 +257,7 @@ final class Validator
             );
         }
         /** @var ChaptersArray $value */
+        $value = array_intersect_key($value, array_flip(['url', 'type']));
         return $value;
     }
 
@@ -300,6 +301,7 @@ final class Validator
             );
         }
         /** @var PersonArray $value */
+        $value = array_intersect_key($value, array_flip(['name', 'role', 'group', 'img', 'href']));
         return $value;
     }
 
@@ -328,6 +330,7 @@ final class Validator
             );
         }
         /** @var LicenseArray $value */
+        $value = array_intersect_key($value, array_flip(['identifier', 'url']));
         return $value;
     }
 
@@ -356,6 +359,7 @@ final class Validator
             );
         }
         /** @var FundingArray $value */
+        $value = array_intersect_key($value, array_flip(['title', 'url']));
         return $value;
     }
 
@@ -399,6 +403,7 @@ final class Validator
             );
         }
         /** @var LocationArray $value */
+        $value = array_intersect_key($value, array_flip(['description', 'geo', 'osm', 'rel', 'country']));
         return $value;
     }
 
@@ -427,6 +432,7 @@ final class Validator
             );
         }
         /** @var TxtArray $value */
+        $value = array_intersect_key($value, array_flip(['value', 'purpose']));
         return $value;
     }
 
@@ -450,6 +456,7 @@ final class Validator
             );
         }
         /** @var ImagesArray $value */
+        $value = array_intersect_key($value, array_flip(['srcset']));
         return $value;
     }
 
@@ -503,6 +510,7 @@ final class Validator
             );
         }
         /** @var DetailedImageArray $value */
+        $value = array_intersect_key($value, array_flip(['href', 'alt', 'purpose', 'type', 'aspectRatio', 'width', 'height']));
         return $value;
     }
 
@@ -541,6 +549,7 @@ final class Validator
             );
         }
         /** @var UpdateFrequencyArray $value */
+        $value = array_intersect_key($value, array_flip(['description', 'complete', 'dtstart', 'rrule']));
         return $value;
     }
 
@@ -589,6 +598,7 @@ final class Validator
             );
         }
         /** @var TrailerArray $value */
+        $value = array_intersect_key($value, array_flip(['title', 'pubdate', 'url', 'length', 'type', 'season']));
         return $value;
     }
 
@@ -633,6 +643,7 @@ final class Validator
             );
         }
         /** @var SocialInteractArray $value */
+        $value = array_intersect_key($value, array_flip(['protocol', 'uri', 'priority', 'accountId', 'accountUrl']));
         return $value;
     }
 
@@ -656,6 +667,7 @@ final class Validator
             );
         }
         /** @var array{value: string} $value */
+        $value = array_intersect_key($value, array_flip(['value']));
         return $value;
     }
 
@@ -679,6 +691,7 @@ final class Validator
             );
         }
         /** @var array{value: string} $value */
+        $value = array_intersect_key($value, array_flip(['value']));
         return $value;
     }
 
@@ -707,6 +720,7 @@ final class Validator
             );
         }
         /** @var BlockArray $value */
+        $value = array_intersect_key($value, array_flip(['value', 'id']));
         return $value;
     }
 
@@ -730,6 +744,7 @@ final class Validator
             );
         }
         /** @var array{usesPodping: bool} $value */
+        $value = array_intersect_key($value, array_flip(['usesPodping']));
         return $value;
     }
 
@@ -776,6 +791,7 @@ final class Validator
             );
         }
         /** @var RemoteItemArray $value */
+        $value = array_intersect_key($value, array_flip(['feedGuid', 'feedUrl', 'itemGuid', 'medium', 'title']));
         return $value;
     }
 
@@ -810,6 +826,7 @@ final class Validator
             );
         }
         /** @var ValueArray $value */
+        $value = array_intersect_key($value, array_flip(['type', 'method', 'suggested', 'valueRecipients', 'valueTimeSplits']));
         return $value;
     }
 
@@ -864,6 +881,7 @@ final class Validator
             );
         }
         /** @var ValueRecipientArray $value */
+        $value = array_intersect_key($value, array_flip(['type', 'address', 'split', 'name', 'customKey', 'customValue', 'fee']));
         return $value;
     }
 
@@ -925,10 +943,14 @@ final class Validator
         if ($usesRecipients) {
             $value['valueRecipients'] = [];
             foreach ($valueRecipients as $valueRecipient) {
-                $value['valueRecipients'][] = self::validateValueRecipient($valueRecipient);
+                $valueRecipient = self::validateValueRecipient($valueRecipient);
+                $valueRecipient = array_intersect_key($valueRecipient, array_flip(['type', 'address', 'split', 'name', 'customKey', 'customValue', 'fee']));
+                $value['valueRecipients'][] = $valueRecipient;
             }
         } else {
-            $value['remoteItem'] = self::validateRemoteItem($remoteItem);
+            $remoteItem = self::validateRemoteItem($remoteItem);
+            $remoteItem = array_intersect_key($remoteItem, array_flip(['feedGuid', 'feedUrl', 'itemGuid', 'medium', 'title']));
+            $value['remoteItem'] = $remoteItem;
         }
         /** @var ValueTimeSplitArray $value */
         return $value;
@@ -994,6 +1016,7 @@ final class Validator
             );
         }
         /** @var AlternateEnclosureArray $value */
+        $value = array_intersect_key($value, array_flip(['type', 'length', 'bitrate', 'height', 'lang', 'title', 'rel', 'codecs', 'default']));
         return $value;
     }
 
@@ -1022,6 +1045,7 @@ final class Validator
             );
         }
         /** @var SourceArray $value */
+        $value = array_intersect_key($value, array_flip(['uri', 'contentType']));
         return $value;
     }
 
@@ -1050,6 +1074,7 @@ final class Validator
             );
         }
         /** @var IntegrityArray $value */
+        $value = array_intersect_key($value, array_flip(['type', 'value']));
         return $value;
     }
 
@@ -1079,6 +1104,7 @@ final class Validator
         }
 
         /** @var SeasonArray $value */
+        $value = array_intersect_key($value, array_flip(['value', 'name']));
         return $value;
     }
 
@@ -1107,6 +1133,7 @@ final class Validator
             );
         }
         /** @var EpisodeArray $value */
+        $value = array_intersect_key($value, array_flip(['value', 'display']));
         return $value;
     }
 
@@ -1140,9 +1167,8 @@ final class Validator
             );
         }
 
-        //$value = array_intersect_key($value, array_flip(['status', 'start', 'end']));
-        
         /** @var LiveItemArray $value */
+        $value = array_intersect_key($value, array_flip(['status', 'start', 'end']));
         return $value;
     }
 
@@ -1171,6 +1197,7 @@ final class Validator
             );
         }
         /** @var ContentLinkArray $value */
+        $value = array_intersect_key($value, array_flip(['href', 'description']));
         return $value;
     }
 
@@ -1209,6 +1236,7 @@ final class Validator
             );
         }
         /** @var ChatArray $value */
+        $value = array_intersect_key($value, array_flip(['server', 'protocol', 'accountId', 'space']));
         return $value;
     }
 
@@ -1244,6 +1272,7 @@ final class Validator
             );
         }
         /** @var SoundbiteArray $value */
+        $value = array_intersect_key($value, array_flip(['startTime', 'duration', 'title']));
         return $value;
     }
 }
