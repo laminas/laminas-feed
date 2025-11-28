@@ -11,18 +11,16 @@ use Laminas\Stdlib\StringWrapper\StringWrapperInterface;
 
 use function array_key_exists;
 use function count;
-use function ctype_alpha;
-use function is_string;
 use function lcfirst;
 use function method_exists;
 use function rtrim;
-use function strlen;
 use function substr;
 use function ucfirst;
 
 /**
  * Describes PodcastIndex data of a RSS Feed
  *
+ * @psalm-import-type LockedArray from Validator
  * @psalm-import-type FundingArray from Validator
  * @psalm-import-type LicenseArray from Validator
  * @psalm-import-type LocationArray from Validator
@@ -103,24 +101,12 @@ class Feed
     /**
      * Set a locked value of "yes" or "no" with an "owner" field.
      *
+     * @param LockedArray $value
      * @throws Writer\Exception\InvalidArgumentException
      */
     public function setPodcastIndexLocked(array $value): Feed
     {
-        if (! isset($value['value']) || ! isset($value['owner'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: "locked" must be an array containing keys "value" and "owner"'
-            );
-        }
-        if (
-            ! is_string($value['value'])
-            || ! ctype_alpha($value['value']) && strlen($value['value']) > 0
-        ) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: "value" of "locked" may only contain alphabetic characters'
-            );
-        }
-        $this->data['locked'] = $value;
+        $this->data['locked'] = Validator::validateLocked($value);
         return $this;
     }
 
@@ -134,8 +120,7 @@ class Feed
      */
     public function setPodcastIndexFunding(array $value): Feed
     {
-        Validator::validateFunding($value);
-        $this->data['funding'] = $value;
+        $this->data['funding'] = Validator::validateFunding($value);
         return $this;
     }
 
@@ -147,12 +132,12 @@ class Feed
      */
     public function addPodcastIndexFunding(array $value): self
     {
-        Validator::validateFunding($value);
         if (! isset($this->data['fundings'])) {
             $this->data['fundings'] = [];
         }
+
         /** @var list<FundingArray> $this->data['fundings'] */
-        $this->data['fundings'][] = $value;
+        $this->data['fundings'][] = Validator::validateFunding($value);
         return $this;
     }
 
@@ -179,8 +164,7 @@ class Feed
      */
     public function setPodcastIndexLicense(array $value): self
     {
-        Validator::validateLicense($value);
-        $this->data['license'] = $value;
+        $this->data['license'] = Validator::validateLicense($value);
         return $this;
     }
 
@@ -194,8 +178,7 @@ class Feed
      */
     public function setPodcastIndexLocation(array $value): self
     {
-        Validator::validateLocation($value);
-        $this->data['location'] = $value;
+        $this->data['location'] = Validator::validateLocation($value);
         return $this;
     }
 
@@ -207,12 +190,12 @@ class Feed
      */
     public function addPodcastIndexLocation(array $value): self
     {
-        Validator::validateLocation($value);
         if (! isset($this->data['locations'])) {
             $this->data['locations'] = [];
         }
+
         /** @var list<LocationArray> $this->data['locations'] */
-        $this->data['locations'][] = $value;
+        $this->data['locations'][] = Validator::validateLocation($value);
         return $this;
     }
 
@@ -243,8 +226,7 @@ class Feed
      */
     public function setPodcastIndexImages(array $value): self
     {
-        Validator::validateImages($value);
-        $this->data['images'] = $value;
+        $this->data['images'] = Validator::validateImages($value);
         return $this;
     }
 
@@ -256,14 +238,12 @@ class Feed
      */
     public function addPodcastIndexDetailedImage(array $value): self
     {
-        Validator::validateDetailedImage($value);
-
         if (! isset($this->data['detailedImages'])) {
             $this->data['detailedImages'] = [];
         }
 
         /** @var list<DetailedImageArray> $this->data['detailedImages'] */
-        $this->data['detailedImages'][] = $value;
+        $this->data['detailedImages'][] = Validator::validateDetailedImage($value);
         return $this;
     }
 
@@ -291,8 +271,7 @@ class Feed
      */
     public function setPodcastIndexUpdateFrequency(array $value): self
     {
-        Validator::validateUpdateFrequency($value);
-        $this->data['updateFrequency'] = $value;
+        $this->data['updateFrequency'] = Validator::validateUpdateFrequency($value);
         return $this;
     }
 
@@ -304,14 +283,12 @@ class Feed
      */
     public function addPodcastIndexPerson(array $value): self
     {
-        Validator::validatePerson($value);
-
         if (! isset($this->data['people'])) {
             $this->data['people'] = [];
         }
 
         /** @var list<PersonArray> $this->data['people'] */
-        $this->data['people'][] = $value;
+        $this->data['people'][] = Validator::validatePerson($value);
         return $this;
     }
 
@@ -352,8 +329,7 @@ class Feed
      */
     public function setPodcastIndexTrailer(array $value): self
     {
-        Validator::validateTrailer($value);
-        $this->data['trailer'] = $value;
+        $this->data['trailer'] = Validator::validateTrailer($value);
         return $this;
     }
 
@@ -365,8 +341,7 @@ class Feed
      */
     public function setPodcastIndexGuid(array $value): self
     {
-        Validator::validateGuid($value);
-        $this->data['guid'] = $value;
+        $this->data['guid'] = Validator::validateGuid($value);
         return $this;
     }
 
@@ -378,8 +353,7 @@ class Feed
      */
     public function setPodcastIndexMedium(array $value): self
     {
-        Validator::validateMedium($value);
-        $this->data['medium'] = $value;
+        $this->data['medium'] = Validator::validateMedium($value);
         return $this;
     }
 
@@ -391,14 +365,12 @@ class Feed
      */
     public function addPodcastIndexBlock(array $value): self
     {
-        Validator::validateBlock($value);
-
         if (! isset($this->data['blocks'])) {
             $this->data['blocks'] = [];
         }
 
         /** @var list<BlockArray> $this->data['blocks'] */
-        $this->data['blocks'][] = $value;
+        $this->data['blocks'][] = Validator::validateBlock($value);
         return $this;
     }
 
@@ -427,14 +399,12 @@ class Feed
      */
     public function addPodcastIndexTxt(array $value): self
     {
-        Validator::validateTxt($value);
-
         if (! isset($this->data['txts'])) {
             $this->data['txts'] = [];
         }
 
         /** @var list<TxtArray> $this->data['txts'] */
-        $this->data['txts'][] = $value;
+        $this->data['txts'][] = Validator::validateTxt($value);
         return $this;
     }
 
@@ -463,8 +433,7 @@ class Feed
      */
     public function setPodcastIndexPodping(array $value): self
     {
-        Validator::validatePodping($value);
-        $this->data['podping'] = $value;
+        $this->data['podping'] = Validator::validatePodping($value);
         return $this;
     }
 
@@ -478,14 +447,12 @@ class Feed
      */
     public function addPodcastIndexRemoteItem(array $value): self
     {
-        Validator::validateRemoteItem($value);
-
         if (! isset($this->data['remoteItems'])) {
             $this->data['remoteItems'] = [];
         }
 
         /** @var list<RemoteItemArray> $this->data['remoteItems'] */
-        $this->data['remoteItems'][] = $value;
+        $this->data['remoteItems'][] = Validator::validateRemoteItem($value);
 
         return $this;
     }
@@ -522,8 +489,7 @@ class Feed
         $this->data['podroll'] = [];
 
         foreach ($values as $value) {
-            Validator::validateRemoteItem($value);
-            $this->data['podroll'][] = $value;
+            $this->addPodcastIndexPodrollRemoteItem($value);
         }
         return $this;
     }
@@ -536,14 +502,12 @@ class Feed
      */
     public function addPodcastIndexPodrollRemoteItem(array $value): self
     {
-        Validator::validateRemoteItem($value);
-
         if (! isset($this->data['podroll'])) {
             $this->data['podroll'] = [];
         }
 
         /** @var list<RemoteItemArray> $this->data['podroll'] */
-        $this->data['podroll'][] = $value;
+        $this->data['podroll'][] = Validator::validateRemoteItem($value);
 
         return $this;
     }
@@ -552,20 +516,13 @@ class Feed
      * Set a publisher element.
      * It contains exactly one remote item as child element
      * and expects only an array of the remote item attributes.
-     * If no argument is passed, any existing publisher entry will be removed.
      *
-     * @psalm-param null|RemoteItemArray $value
+     * @psalm-param RemoteItemArray $value
      * @return $this
      */
-    public function setPodcastIndexPublisher(?array $value = null): self
+    public function setPodcastIndexPublisher(array $value): self
     {
-        $this->data['publisher'] = [];
-
-        if ($value && count($value) > 0) {
-            Validator::validateRemoteItem($value);
-            $this->data['publisher'] = $value;
-        }
-
+        $this->data['publisher'] = Validator::validateRemoteItem($value);
         return $this;
     }
 
@@ -593,22 +550,20 @@ class Feed
      */
     public function addPodcastIndexValue(array $value, array $valueRecipients): self
     {
-        // validate the value attributes
-        Validator::validateValue($value);
-
-        // validate the valueRecipients array
         if (count($valueRecipients) < 1) {
             throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: the second argument of "value" must be an array 
-                containing one or more "valueRecipients"'
+                'invalid parameter: the second argument of "value" must be an array '
+                . 'containing one or more "valueRecipients"'
             );
         }
-        foreach ($valueRecipients as $valueRecipient) {
-            Validator::validateValueRecipient($valueRecipient);
-        }
-        $value['valueRecipients'] = $valueRecipients;
+        
+        $value = Validator::validateValue($value);
 
-        // add the values entry
+        foreach ($valueRecipients as $valueRecipient) {
+            /** @var list<ValueRecipientArray> $value['valueRecipients'] */
+            $value['valueRecipients'][] = Validator::validateValueRecipient($valueRecipient);
+        }
+
         if (! isset($this->data['values'])) {
             $this->data['values'] = [];
         }
@@ -627,14 +582,12 @@ class Feed
      */
     public function addPodcastIndexSocialInteract(array $value): self
     {
-        Validator::validateSocialInteract($value);
-
         if (! isset($this->data['socialInteracts'])) {
             $this->data['socialInteracts'] = [];
         }
 
         /** @var list<SocialInteractArray> $this->data['socialInteracts'] */
-        $this->data['socialInteracts'][] = $value;
+        $this->data['socialInteracts'][] = Validator::validateSocialInteract($value);
 
         return $this;
     }
@@ -665,7 +618,7 @@ class Feed
      */
     public function createPodcastIndexLiveItem(array $value): LiveItem
     {
-        Validator::validateLiveItem($value);
+        $value = Validator::validateLiveItem($value);
         $liveItem = new LiveItem($value);
         if ($this->getEncoding()) {
             $liveItem->setEncoding($this->getEncoding());
@@ -704,20 +657,13 @@ class Feed
 
     /**
      * Set a chat element.
-     * If no argument is passed, any existing chat entry will be removed.
      *
-     * @psalm-param null|ChatArray $value
+     * @psalm-param ChatArray $value
      * @return $this
      */
-    public function setPodcastIndexChat(?array $value = null): self
+    public function setPodcastIndexChat(array $value): self
     {
-        $this->data['chat'] = [];
-
-        if ($value && count($value) > 0) {
-            Validator::validateChat($value);
-            $this->data['chat'] = $value;
-        }
-
+        $this->data['chat'] = Validator::validateChat($value);
         return $this;
     }
 

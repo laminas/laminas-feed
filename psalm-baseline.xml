@@ -3088,13 +3088,6 @@
     </TypeDoesNotContainType>
   </file>
   <file src="src/Writer/Extension/PodcastIndex/Entry.php">
-    <DocblockTypeContradiction>
-      <code><![CDATA[! is_string($value['duration'])]]></code>
-      <code><![CDATA[! is_string($value['startTime'])]]></code>
-    </DocblockTypeContradiction>
-    <MixedArrayAssignment>
-      <code><![CDATA[$this->data['soundbites'][]]]></code>
-    </MixedArrayAssignment>
     <PossiblyUnusedMethod>
       <code>__construct</code>
       <code>addPodcastIndexAlternateEnclosure</code>
@@ -3131,7 +3124,6 @@
     <PossiblyUnusedMethod>
       <code>__construct</code>
       <code>addPodcastIndexLiveItem</code>
-      <code>addPodcastIndexPodrollRemoteItem</code>
       <code>addPodcastIndexValue</code>
       <code>createPodcastIndexLiveItem</code>
       <code>getLockOwner</code>

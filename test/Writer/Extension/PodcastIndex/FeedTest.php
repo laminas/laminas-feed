@@ -1254,10 +1254,6 @@ class FeedTest extends TestCase
         // set
         $feed->setPodcastIndexPublisher($remoteItem);
         $this->assertEquals($remoteItem, $feed->getPodcastIndexPublisher());
-
-        // remove
-        $feed->setPodcastIndexPublisher();
-        $this->assertNull($feed->getPodcastIndexPublisher());
     }
 
     public function testSetPublisherWithOneArgument(): void

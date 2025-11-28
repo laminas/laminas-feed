@@ -676,6 +676,11 @@ class EntryTest extends TestCase
 
         /** @psalm-var list<ValueObject> $values */
         $values = $entry->getPodcastIndexValues();
+
+        /* print_r($values);
+        die(); */
+
+
         $this->assertContains($value, $values);
     }
 
