@@ -6,9 +6,11 @@ namespace Laminas\Feed\Writer\Extension\PodcastIndex;
 
 use DateTimeInterface;
 use Laminas\Feed\Writer;
-
 use LockedArray;
 use SeasonArray;
+
+use function array_flip;
+use function array_intersect_key;
 use function count;
 use function ctype_alpha;
 use function filter_var;
@@ -510,7 +512,15 @@ final class Validator
             );
         }
         /** @var DetailedImageArray $value */
-        $value = array_intersect_key($value, array_flip(['href', 'alt', 'purpose', 'type', 'aspectRatio', 'width', 'height']));
+        $value = array_intersect_key($value, array_flip([
+            'href',
+            'alt',
+            'purpose',
+            'type',
+            'aspectRatio',
+            'width',
+            'height',
+        ]));
         return $value;
     }
 
@@ -826,7 +836,13 @@ final class Validator
             );
         }
         /** @var ValueArray $value */
-        $value = array_intersect_key($value, array_flip(['type', 'method', 'suggested', 'valueRecipients', 'valueTimeSplits']));
+        $value = array_intersect_key($value, array_flip([
+            'type',
+            'method',
+            'suggested',
+            'valueRecipients',
+            'valueTimeSplits',
+        ]));
         return $value;
     }
 
@@ -881,7 +897,15 @@ final class Validator
             );
         }
         /** @var ValueRecipientArray $value */
-        $value = array_intersect_key($value, array_flip(['type', 'address', 'split', 'name', 'customKey', 'customValue', 'fee']));
+        $value = array_intersect_key($value, array_flip([
+            'type',
+            'address',
+            'split',
+            'name',
+            'customKey',
+            'customValue',
+            'fee',
+        ]));
         return $value;
     }
 
@@ -919,7 +943,6 @@ final class Validator
                 'invalid parameter: key "remotePercentage" of "valueTimeSplit" must be of type integer'
             );
         }
-
         /** @var list<array<array-key, mixed>> $valueRecipients */
         $valueRecipients = $value['valueRecipients'] ?? [];
 
@@ -929,6 +952,14 @@ final class Validator
         // check that exactly one of valueRecipients or remoteItem is set
         $usesRecipients = count($valueRecipients) > 0;
         $usesRemoteItem = count($remoteItem) > 0;
+
+        /** @var ValueTimeSplitArray $value */
+        $value = array_intersect_key($value, array_flip([
+            'startTime',
+            'duration',
+            'remoteStartTime',
+            'remotePercentage',
+        ]));
 
         if (! $usesRecipients && ! $usesRemoteItem) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -943,16 +974,11 @@ final class Validator
         if ($usesRecipients) {
             $value['valueRecipients'] = [];
             foreach ($valueRecipients as $valueRecipient) {
-                $valueRecipient = self::validateValueRecipient($valueRecipient);
-                $valueRecipient = array_intersect_key($valueRecipient, array_flip(['type', 'address', 'split', 'name', 'customKey', 'customValue', 'fee']));
-                $value['valueRecipients'][] = $valueRecipient;
+                $value['valueRecipients'][] = self::validateValueRecipient($valueRecipient);
             }
         } else {
-            $remoteItem = self::validateRemoteItem($remoteItem);
-            $remoteItem = array_intersect_key($remoteItem, array_flip(['feedGuid', 'feedUrl', 'itemGuid', 'medium', 'title']));
-            $value['remoteItem'] = $remoteItem;
+            $value['remoteItem'] = self::validateRemoteItem($remoteItem);
         }
-        /** @var ValueTimeSplitArray $value */
         return $value;
     }
 
@@ -1016,7 +1042,17 @@ final class Validator
             );
         }
         /** @var AlternateEnclosureArray $value */
-        $value = array_intersect_key($value, array_flip(['type', 'length', 'bitrate', 'height', 'lang', 'title', 'rel', 'codecs', 'default']));
+        $value = array_intersect_key($value, array_flip([
+            'type',
+            'length',
+            'bitrate',
+            'height',
+            'lang',
+            'title',
+            'rel',
+            'codecs',
+            'default',
+        ]));
         return $value;
     }
 

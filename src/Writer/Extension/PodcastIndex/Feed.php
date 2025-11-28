@@ -556,11 +556,10 @@ class Feed
                 . 'containing one or more "valueRecipients"'
             );
         }
-        
+
         $value = Validator::validateValue($value);
 
         foreach ($valueRecipients as $valueRecipient) {
-            /** @var list<ValueRecipientArray> $value['valueRecipients'] */
             $value['valueRecipients'][] = Validator::validateValueRecipient($valueRecipient);
         }
 
@@ -618,7 +617,7 @@ class Feed
      */
     public function createPodcastIndexLiveItem(array $value): LiveItem
     {
-        $value = Validator::validateLiveItem($value);
+        $value    = Validator::validateLiveItem($value);
         $liveItem = new LiveItem($value);
         if ($this->getEncoding()) {
             $liveItem->setEncoding($this->getEncoding());

@@ -361,17 +361,15 @@ class Entry
                 . 'at least one entry with valueRecipient data'
             );
         }
-        
+
         $value = Validator::validateValue($value);
 
         foreach ($valueRecipients as $valueRecipient) {
-            /** @var list<ValueRecipientArray> $value['valueRecipients'] */
             $value['valueRecipients'][] = Validator::validateValueRecipient($valueRecipient);
         }
 
         if ($valueTimeSplits && count($valueTimeSplits) > 0) {
             foreach ($valueTimeSplits as $split) {
-                /** @var list<ValueTimeSplitArray> $value['valueTimeSplits'] */
                 $value['valueTimeSplits'][] = Validator::validateValueTimeSplit($split);
             }
         }
@@ -433,7 +431,6 @@ class Entry
         $enclosure = Validator::validateAlternateEnclosure($enclosure);
 
         foreach ($sources as $source) {
-            /** @var list<SourceArray> $enclosure['sources'] */
             $enclosure['sources'][] = Validator::validateSource($source);
         }
 

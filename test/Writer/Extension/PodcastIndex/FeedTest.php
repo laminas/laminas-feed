@@ -29,6 +29,11 @@ use function time;
  * @psalm-import-type ValueObject from AttributesReader
  * @psalm-import-type DetailedImageObject from AttributesReader
  * @psalm-import-type SocialInteractObject from AttributesReader
+ * @psalm-suppress MixedArgument
+ * @psalm-suppress ArgumentTypeCoercion
+ * @psalm-suppress MixedArrayAccess
+ * @psalm-suppress MixedAssignment
+ * @psalm-suppress InvalidArrayAccess
  */
 class FeedTest extends TestCase
 {
@@ -46,6 +51,19 @@ class FeedTest extends TestCase
         $this->assertEquals($locked['owner'], $feed->getPodcastIndexLockOwner());
         $this->assertTrue($feed->isLocked());
         $this->assertTrue($feed->isPodcastIndexLocked());
+    }
+
+    public function testSetLockedWithUnwantedData(): void
+    {
+        $feed = new Writer\Feed();
+
+        $locked = [
+            'value'    => 'yes',
+            'owner'    => 'john.doe@example.com',
+            'unwanted' => 'data',
+        ];
+        $feed->setPodcastIndexLocked($locked);
+        $this->assertArrayNotHasKey('unwanted', $feed->getPodcastIndexLocked());
     }
 
     public function testSetLockedThrowsExceptionOnInvalidArguments(): void
@@ -104,6 +122,19 @@ class FeedTest extends TestCase
         $this->assertEquals($funding, $feed->getPodcastIndexFunding());
     }
 
+    public function testSetFundingWithUnwantedData(): void
+    {
+        $feed = new Writer\Feed();
+
+        $funding = [
+            'title'    => 'Support the show!',
+            'url'      => 'http://example.com/donate',
+            'unwanted' => 'data',
+        ];
+        $feed->setPodcastIndexFunding($funding);
+        $this->assertArrayNotHasKey('unwanted', $feed->getPodcastIndexFunding());
+    }
+
     public function testAddFunding(): void
     {
         $feed = new Writer\Feed();
@@ -116,6 +147,21 @@ class FeedTest extends TestCase
         /** @var array $fundings */
         $fundings = $feed->getPodcastIndexFundings();
         $this->assertEquals($data, $fundings[0]);
+    }
+
+    public function testAddFundingWithUnwanted(): void
+    {
+        $feed = new Writer\Feed();
+
+        $data = [
+            'title'    => 'Support the show!',
+            'url'      => 'http://example.com/donate',
+            'unwanted' => 'data',
+        ];
+        $feed->addPodcastIndexFunding($data);
+        /** @var array $fundings */
+        $fundings = $feed->getPodcastIndexFundings();
+        $this->assertArrayNotHasKey('unwanted', $fundings[0]);
     }
 
     public function testSetFundingHandleDeprecated(): void
@@ -171,6 +217,19 @@ class FeedTest extends TestCase
         ];
         $feed->setPodcastIndexLicense($license);
         $this->assertEquals($license, $feed->getPodcastIndexLicense());
+    }
+
+    public function testSetLicenseWithUnwanted(): void
+    {
+        $feed = new Writer\Feed();
+
+        $license = [
+            'identifier' => 'cc-by-4.0',
+            'url'        => 'https://spdx.org/licenses/CC-BY-4.0.html',
+            'unwanted'   => 'data',
+        ];
+        $feed->setPodcastIndexLicense($license);
+        $this->assertArrayNotHasKey('unwanted', $feed->getPodcastIndexLicense());
     }
 
     public function testSetLicenseThrowsExceptionOnInvalidArguments(): void
@@ -232,6 +291,22 @@ class FeedTest extends TestCase
         ];
         $feed->setPodcastIndexLocation($location);
         $this->assertEquals($location, $feed->getPodcastIndexLocation());
+    }
+
+    public function testSetLocationWithUnwanted(): void
+    {
+        $feed = new Writer\Feed();
+
+        $location = [
+            'description' => 'London, Baker Street',
+            'geo'         => 'geo:-27.86159,153.3169',
+            'osm'         => 'W43678282',
+            'rel'         => 'subject',
+            'country'     => 'GB',
+            'unwanted'    => 'data',
+        ];
+        $feed->setPodcastIndexLocation($location);
+        $this->assertArrayNotHasKey('unwanted', $feed->getPodcastIndexLocation());
     }
 
     public function testAddLocation(): void
@@ -346,6 +421,25 @@ class FeedTest extends TestCase
         $this->assertEquals($images, $feed->getPodcastIndexImages());
     }
 
+    public function testSetImagesWithUnwanted(): void
+    {
+        $feed = new Writer\Feed();
+
+        $srcset = [
+            "https://example.com/images/ep1/pci_avatar-massive.jpg 1500w",
+            "https://example.com/images/ep1/pci_avatar-middle.jpg 600w",
+            "https://example.com/images/ep1/pci_avatar-small.jpg 300w",
+            "https://example.com/images/ep1/pci_avatar-tiny.jpg 150w",
+        ];
+        $images = [
+            'srcset'   => implode(", ", $srcset), // cast to string
+            'unwanted' => 'data',
+        ];
+
+        $feed->setPodcastIndexImages($images);
+        $this->assertArrayNotHasKey('unwanted', $feed->getPodcastIndexImages());
+    }
+
     public function testSetImagesThrowsExceptionOnInvalidArguments(): void
     {
         $feed = new Writer\Feed();
@@ -414,6 +508,20 @@ class FeedTest extends TestCase
         $images = $feed->getPodcastIndexDetailedImages();
         $this->assertIsArray($images);
         $this->assertEquals($image, $images[0]);
+    }
+
+    public function testAddDetailedImageWithUnwanted(): void
+    {
+        $feed = new Writer\Feed();
+
+        $image = [
+            'href'     => "https://example.com/images/ep1/pci_square-massive.jpg",
+            'unwanted' => 'data',
+        ];
+
+        $feed->addPodcastIndexDetailedImage($image);
+        $images = $feed->getPodcastIndexDetailedImages();
+        $this->assertArrayNotHasKey('unwanted', $images[0]);
     }
 
     public function testAddDetailedImageThrowsExceptionOnMissingHref(): void
@@ -496,6 +604,22 @@ class FeedTest extends TestCase
         $this->assertEquals($updateFrequency, $feed->getPodcastIndexUpdateFrequency());
     }
 
+    public function testSetUpdateFrequencyWithUnwanted(): void
+    {
+        $date = new DateTime();
+        $feed = new Writer\Feed();
+
+        $updateFrequency = [
+            'description' => 'Daily',
+            'complete'    => false,
+            'dtstart'     => $date,
+            'rrule'       => 'FREQ=DAILY',
+            'unwanted'    => 'data',
+        ];
+        $feed->setPodcastIndexUpdateFrequency($updateFrequency);
+        $this->assertArrayNotHasKey('unwanted', $feed->getPodcastIndexUpdateFrequency());
+    }
+
     public function testSetUpdateFrequencyWithOneArgument(): void
     {
         $feed = new Writer\Feed();
@@ -558,6 +682,25 @@ class FeedTest extends TestCase
         /** @var list<PersonObject> $people */
         $people = $feed->getPodcastIndexPeople();
         $this->assertTrue(in_array($person, $people));
+    }
+
+    public function testAddPersonWithUnwanted(): void
+    {
+        $feed = new Writer\Feed();
+
+        $person = [
+            'name'     => 'Hercules Poirot',
+            'role'     => 'guest',
+            'group'    => 'starring',
+            'img'      => 'https://poirot.com/about/my-moustage.jpg',
+            'href'     => 'https://poirot.com/my-cases',
+            'unwanted' => 'data',
+        ];
+        $feed->addPodcastIndexPerson($person);
+
+        /** @var list<PersonObject> $people */
+        $people = $feed->getPodcastIndexPeople();
+        $this->assertArrayNotHasKey('unwanted', $people[0]);
     }
 
     public function testSetPeople(): void
@@ -688,6 +831,24 @@ class FeedTest extends TestCase
         $this->assertEquals($trailer, $feed->getPodcastIndexTrailer());
     }
 
+    public function testSetTrailerWithUnwanted(): void
+    {
+        $feed = new Writer\Feed();
+
+        $trailer = [
+            'title'    => 'Season 4: Race for the Clouds',
+            'pubdate'  => "Thu, 01 Apr 2021 08:00:00 EST",
+            'url'      => "https://example.org/season4teaser.mp4",
+            'length'   => 12345678,
+            'type'     => "video/mp4",
+            'season'   => 4,
+            'unwanted' => 'data',
+        ];
+
+        $feed->setPodcastIndexTrailer($trailer);
+        $this->assertArrayNotHasKey('unwanted', $feed->getPodcastIndexTrailer());
+    }
+
     public function testSetTrailerWithRequiredArguments(): void
     {
         $feed = new Writer\Feed();
@@ -738,6 +899,19 @@ class FeedTest extends TestCase
         $this->assertEquals($data, $feed->getPodcastIndexGuid());
     }
 
+    public function testSetGuidWithUnwanted(): void
+    {
+        $feed = new Writer\Feed();
+
+        $data = [
+            'value'    => '917393e3-1b1e-5cef-ace4-edaa54e1f810',
+            'unwanted' => 'data',
+        ];
+
+        $feed->setPodcastIndexGuid($data);
+        $this->assertArrayNotHasKey('unwanted', $feed->getPodcastIndexGuid());
+    }
+
     public function testSetGuidThrowsExceptionOnInvalidArgument(): void
     {
         $feed = new Writer\Feed();
@@ -759,6 +933,19 @@ class FeedTest extends TestCase
 
         $feed->setPodcastIndexMedium($data);
         $this->assertEquals($data, $feed->getPodcastIndexMedium());
+    }
+
+    public function testSetMediumWithUnwanted(): void
+    {
+        $feed = new Writer\Feed();
+
+        $data = [
+            'value'    => 'audiobook',
+            'unwanted' => 'data',
+        ];
+
+        $feed->setPodcastIndexMedium($data);
+        $this->assertArrayNotHasKey('unwanted', $feed->getPodcastIndexMedium());
     }
 
     public function testSetMediumThrowsExceptionOnInvalidArgument(): void
@@ -785,6 +972,22 @@ class FeedTest extends TestCase
         /** @var list<array{value: string, id?: string}> $blocks */
         $blocks = $feed->getPodcastIndexBlocks();
         $this->assertTrue(in_array($block, $blocks));
+    }
+
+    public function testAddBlockWithUnwanted(): void
+    {
+        $feed = new Writer\Feed();
+
+        $block = [
+            'value'    => 'yes',
+            'id'       => 'google',
+            'unwanted' => 'data',
+        ];
+        $feed->addPodcastIndexBlock($block);
+
+        /** @var list<array{value: string, id?: string}> $blocks */
+        $blocks = $feed->getPodcastIndexBlocks();
+        $this->assertArrayNotHasKey('unwanted', $blocks[0]);
     }
 
     public function testSetBlocks(): void
@@ -893,6 +1096,22 @@ class FeedTest extends TestCase
         $this->assertTrue(in_array($txt, $txts));
     }
 
+    public function testAddTxtWithUnwanted(): void
+    {
+        $feed = new Writer\Feed();
+
+        $txt = [
+            'value'    => 'S6lpp-7ZCn8-dZfGc-OoyaG',
+            'purpose'  => 'verify',
+            'unwanted' => 'data',
+        ];
+        $feed->addPodcastIndexTxt($txt);
+
+        /** @var list<array{value: string, purpose?: string}> $txts */
+        $txts = $feed->getPodcastIndexTxts();
+        $this->assertArrayNotHasKey('unwanted', $txts[0]);
+    }
+
     public function testSetTxts(): void
     {
         $feed = new Writer\Feed();
@@ -983,6 +1202,19 @@ class FeedTest extends TestCase
         $this->assertEquals($data, $feed->getPodcastIndexPodping());
     }
 
+    public function testSetPodpingWithUnwanted(): void
+    {
+        $feed = new Writer\Feed();
+
+        $data = [
+            'usesPodping' => true,
+            'unwanted'    => 'data',
+        ];
+
+        $feed->setPodcastIndexPodping($data);
+        $this->assertArrayNotHasKey('unwanted', $feed->getPodcastIndexPodping());
+    }
+
     public function testSetPodpingThrowsExceptionOnInvalidArgument(): void
     {
         $feed = new Writer\Feed();
@@ -1009,6 +1241,24 @@ class FeedTest extends TestCase
         /** @var list<RemoteItemObject> $remoteItems */
         $remoteItems = $feed->getPodcastIndexRemoteItems();
         $this->assertContains($remoteItem, $remoteItems);
+    }
+
+    public function testAddRemoteItemWithUnwanted(): void
+    {
+        $feed = new Writer\Feed();
+
+        $remoteItem = [
+            'feedGuid' => "917393e3-1b1e-5cef-ace4-edaa54e1f810",
+            'feedUrl'  => "https://feeds.example.org/917393e3-1b1e-5cef-ace4-edaa54e1f810/rss.xml",
+            'medium'   => "podcast",
+            'title'    => "Some Example",
+            'unwanted' => 'data',
+        ];
+        $feed->addPodcastIndexRemoteItem($remoteItem);
+
+        /** @var list<RemoteItemObject> $remoteItems */
+        $remoteItems = $feed->getPodcastIndexRemoteItems();
+        $this->assertArrayNotHasKey('unwanted', $remoteItems[0]);
     }
 
     public function testSetRemoteItems(): void
@@ -1127,6 +1377,24 @@ class FeedTest extends TestCase
         $this->assertContains($remoteItem, $remoteItems);
     }
 
+    public function testAddPodrollRemoteItemWithUnwanted(): void
+    {
+        $feed = new Writer\Feed();
+
+        $remoteItem = [
+            'feedGuid' => "917393e3-1b1e-5cef-ace4-edaa54e1f810",
+            'feedUrl'  => "https://feeds.example.org/917393e3-1b1e-5cef-ace4-edaa54e1f810/rss.xml",
+            'medium'   => "podcast",
+            'title'    => "Some Example",
+            'unwanted' => 'data',
+        ];
+        $feed->addPodcastIndexPodrollRemoteItem($remoteItem);
+
+        /** @var list<RemoteItemObject> $remoteItems */
+        $remoteItems = $feed->getPodcastIndexPodroll();
+        $this->assertArrayNotHasKey('unwanted', $remoteItems[0]);
+    }
+
     public function testSetPodroll(): void
     {
         $feed = new Writer\Feed();
@@ -1240,7 +1508,7 @@ class FeedTest extends TestCase
         $this->assertEquals($remoteItem, $feed->getPodcastIndexPublisher());
     }
 
-    public function testRemovePublisher(): void
+    public function testSetPublisherWithUnwanted(): void
     {
         $feed = new Writer\Feed();
 
@@ -1249,11 +1517,10 @@ class FeedTest extends TestCase
             'feedUrl'  => "https://feeds.example.org/917393e3-1b1e-5cef-ace4-edaa54e1f810/rss.xml",
             'medium'   => "podcast",
             'title'    => "Some Example",
+            'unwanted' => 'data',
         ];
-
-        // set
         $feed->setPodcastIndexPublisher($remoteItem);
-        $this->assertEquals($remoteItem, $feed->getPodcastIndexPublisher());
+        $this->assertArrayNotHasKey('unwanted', $feed->getPodcastIndexPublisher());
     }
 
     public function testSetPublisherWithOneArgument(): void
@@ -1344,6 +1611,31 @@ class FeedTest extends TestCase
         /** @psalm-var list<ValueObject> $values */
         $values = $feed->getPodcastIndexValues();
         $this->assertContains($value, $values);
+    }
+
+    public function testAddValueWithUnwanted(): void
+    {
+        $feed = new Writer\Feed();
+
+        $value           = [
+            'type'     => "lightning",
+            'method'   => "keysend",
+            'unwanted' => 'data',
+        ];
+        $valueRecipients = [
+            [
+                'type'     => "node",
+                'address'  => "02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52",
+                'split'    => 40,
+                'unwanted' => 'data',
+            ],
+        ];
+        $feed->addPodcastIndexValue($value, $valueRecipients);
+
+        /** @psalm-var list<ValueObject> $values */
+        $values = $feed->getPodcastIndexValues();
+        $this->assertArrayNotHasKey('unwanted', $values[0]);
+        $this->assertArrayNotHasKey('unwanted', $values[0]['valueRecipients'][0]);
     }
 
     public function testAddValueThrowsExceptionOnMissingRecipients(): void
@@ -1483,6 +1775,25 @@ class FeedTest extends TestCase
         $this->assertEquals($data, $response);
     }
 
+    public function testAddSocialInteractWithUnwanted(): void
+    {
+        $feed = new Writer\Feed();
+
+        $data = [
+            'priority'   => 1,
+            'protocol'   => "activitypub",
+            'uri'        => "https://podcastindex.social/web/@dave/108013847520053258",
+            'accountId'  => "@dave",
+            'accountUrl' => "https://podcastindex.social/web/@dave",
+            'unwanted'   => 'data',
+        ];
+        $feed->addPodcastIndexSocialInteract($data);
+
+        /** @psalm-var list<SocialInteractObject> $response */
+        $response = $feed->getPodcastIndexSocialInteracts();
+        $this->assertArrayNotHasKey('unwanted', $response[0]);
+    }
+
     public function testAddSocialInteractThrowsExceptionOnInvalidUri(): void
     {
         $feed = new Writer\Feed();
@@ -1620,6 +1931,22 @@ class FeedTest extends TestCase
 
         $feed->setPodcastIndexChat($data);
         $this->assertEquals($data, $feed->getPodcastIndexChat());
+    }
+
+    public function testSetPodcastIndexChatWithUnwanted(): void
+    {
+        $feed = new Writer\Feed();
+
+        $data = [
+            'server'    => "irc.zeronode.net",
+            'protocol'  => "irc",
+            'accountId' => "@jsmith",
+            'space'     => "#myawesomepodcast",
+            'unwanted'  => 'data',
+        ];
+
+        $feed->setPodcastIndexChat($data);
+        $this->assertArrayNotHasKey('unwanted', $feed->getPodcastIndexChat());
     }
 
     public function testSetPodcastIndexChatWithMinimalData(): void
