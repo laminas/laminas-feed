@@ -11,7 +11,7 @@ use Laminas\Feed\Writer\Entry;
  *
  * @psalm-import-type LiveItemArray from Validator
  */
-class LiveItem extends Entry
+final class LiveItem extends Entry
 {
     /**
      * Array of Feed data for rendering by Extension's renderers

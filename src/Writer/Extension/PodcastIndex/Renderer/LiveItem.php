@@ -13,7 +13,7 @@ use Laminas\Feed\Writer\Writer;
 /**
  * Renders PodcastIndex LiveItem data in a RSS Feed
  */
-class LiveItem extends Entry\Rss
+final class LiveItem extends Entry\Rss
 {
     public function __construct(LiveItemWriter $container, DOMDocument $dom, DOMElement $rootElement)
     {

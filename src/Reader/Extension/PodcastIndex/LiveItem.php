@@ -14,7 +14,7 @@ use function assert;
 /**
  * Describes PodcastIndex LiveItem data in a RSS Feed
  */
-class LiveItem extends EntryReader
+final class LiveItem extends EntryReader
 {
     public function __construct(DOMElement $liveItem, string $liveItemKey, ?string $type = null)
     {
