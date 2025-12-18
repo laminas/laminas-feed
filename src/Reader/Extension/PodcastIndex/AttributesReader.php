@@ -15,6 +15,9 @@ use stdClass;
  * This class is internal to the library and should not be referenced by consumer code.
  * Backwards Incompatible changes can occur in Minor and Patch Releases.
  *
+ * @internal Laminas\Feed
+ * @internal LaminasTest\Feed
+ *
  * @psalm-type FundingObject = object{
  *         title: string,
  *         url: string
@@ -163,8 +166,6 @@ use stdClass;
  *        accountId: string,
  *        space: string,
  *      }
- * @internal Laminas\Feed
- * @internal LaminasTest\Feed
  * @psalm-internal Laminas\Feed
  * @psalm-internal LaminasTest\Feed
  */

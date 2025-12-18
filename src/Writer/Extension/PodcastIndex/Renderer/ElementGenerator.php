@@ -20,6 +20,7 @@ use function number_format;
  *
  * @internal Laminas\Feed
  * @internal LaminasTest\Feed
+ *
  * @psalm-internal Laminas\Feed
  * @psalm-internal LaminasTest\Feed
  */
