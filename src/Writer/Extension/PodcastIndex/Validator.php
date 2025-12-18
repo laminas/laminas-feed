@@ -184,6 +184,8 @@ use const FILTER_VALIDATE_URL;
  *         accountId?: string,
  *         space?: string,
  *       }
+ * @internal Laminas\Feed
+ * @internal LaminasTest\Feed
  * @psalm-internal Laminas\Feed
  * @psalm-internal LaminasTest\Feed
  */
