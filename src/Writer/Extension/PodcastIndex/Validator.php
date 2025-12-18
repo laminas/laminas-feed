@@ -6,8 +6,6 @@ namespace Laminas\Feed\Writer\Extension\PodcastIndex;
 
 use DateTimeInterface;
 use Laminas\Feed\Writer;
-use LockedArray;
-use SeasonArray;
 
 use function array_flip;
 use function array_intersect_key;
