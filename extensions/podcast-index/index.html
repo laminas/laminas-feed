@@ -341,6 +341,14 @@
                         <a href="#episode-api" class="toc__link nav-link">Episode API</a>
                     </li>
                 
+                    <li class="toc__entry">
+                        <a href="#liveitem-api" class="toc__link nav-link">LiveItem API</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#examples" class="toc__link nav-link">Examples</a>
+                    </li>
+                
             </ul>
         </div>
     
@@ -393,8 +401,9 @@
 the <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/1.0.md">Podcast Index RSS namespace</a>,
 an open source project which consolidates new features for podcasts into a
 single namespace.</p>
+<p>See the <a href="https://podcastindex.org">Podcast Index website</a> for more information about the project.</p>
 <h2 id="channel-api">Channel API</h2>
-<h3 id="get-methods">GET methods</h3>
+<h3 id="reader">Reader</h3>
 <div class="table-responsive"><table>
 <thead>
 <tr>
@@ -403,6 +412,50 @@ single namespace.</p>
 </tr>
 </thead>
 <tbody>
+<tr>
+<td><code>getPodcastIndexBlocks()</code></td>
+<td>Returns whether or which platforms are allowed to publicly display this feed. The output is an object with the properties <code>value</code> and <code>id</code>.</td>
+</tr>
+<tr>
+<td><code>getPodcastIndexChat()</code></td>
+<td>Returns information on the podcast's official chat. The output is an object with the properties <code>server</code>, <code>protocol</code>, <code>accountId</code> and <code>space</code>.</td>
+</tr>
+<tr>
+<td><code>getFunding()</code> <code>getPodcastIndexFunding()</code></td>
+<td><em>Deprecated:</em> Returns (single) funding information. The output is an object with <code>url</code> and <code>title</code> properties. <em>Note: This method is deprecated since multiple <code>podcast:funding</code> tags are supported now.</em></td>
+</tr>
+<tr>
+<td><code>getPodcastIndexFundings()</code></td>
+<td>Returns information of multiple funding entries. The output is an array of objects, each with the <code>url</code> and <code>title</code> properties.</td>
+</tr>
+<tr>
+<td><code>getPodcastIndexGuid()</code></td>
+<td>Returns the podcast guid. The output is an object with the property <code>value</code>.</td>
+</tr>
+<tr>
+<td><code>getPodcastIndexDetailedImages()</code></td>
+<td>Returns the images. The output is an array of objects, each with the properties <code>href</code>, <code>alt</code>, <code>aspectRatio</code>, <code>width</code>, <code>height</code>, <code>type</code> and <code>purpose</code>.</td>
+</tr>
+<tr>
+<td><code>getPodcastIndexImages()</code></td>
+<td><em>Deprecated:</em> Returns information on responsive images. The output is an object with a <code>srcset</code> property.</td>
+</tr>
+<tr>
+<td><code>getPodcastIndexLicense()</code></td>
+<td>Returns license information. The output is an object with <code>identifier</code> and <code>url</code> properties.</td>
+</tr>
+<tr>
+<td><code>getPodcastIndexLiveItems()</code></td>
+<td>Returns an array of <code>LiveItem</code> reader instances. Please see the chapter on the <a href="#liveitem-api">LiveItem namespace</a> for more details.</td>
+</tr>
+<tr>
+<td><code>getPodcastIndexLocation()</code></td>
+<td><em>Deprecated:</em> Returns information on a single location entry. The output is an object with <code>description</code>, <code>geo</code>, <code>osm</code>, <code>rel</code> and <code>country</code> properties.</td>
+</tr>
+<tr>
+<td><code>getPodcastIndexLocations()</code></td>
+<td>Returns information on multiple location entries. The output is an array of objects, each with <code>description</code>, <code>geo</code>, <code>osm</code>, <code>rel</code> and <code>country</code> properties.</td>
+</tr>
 <tr>
 <td><code>isLocked()</code> <code>isPodcastIndexLocked()</code></td>
 <td>Returns whether the feed is open for importing to new platforms.</td>
@@ -412,56 +465,52 @@ single namespace.</p>
 <td>Returns the email address for owner verification.</td>
 </tr>
 <tr>
-<td><code>getFunding()</code> <code>getPodcastIndexFunding()</code></td>
-<td>Returns funding information. The output is an object with "url" and "value" properties.</td>
-</tr>
-<tr>
-<td><code>getPodcastIndexLicense()</code></td>
-<td>Returns license information. The output is an object with "identifier" and "url" properties.</td>
-</tr>
-<tr>
-<td><code>getPodcastIndexLocation()</code></td>
-<td>Returns location information. The output is an object with "description", "geo" and "osm" properties.</td>
-</tr>
-<tr>
-<td><code>getPodcastIndexImages()</code></td>
-<td>Returns information on responsive images. The output is an object with a "srcset" property.</td>
-</tr>
-<tr>
-<td><code>getPodcastIndexUpdateFrequency()</code></td>
-<td>Returns information on the intended release schedule. The output is an object with "description", "complete", "dtstart" and "rrule" properties.</td>
-</tr>
-<tr>
-<td><code>getPodcastIndexPeople()</code></td>
-<td>Returns information on the involved people. The output is an array of objects, each with the properties "name", "role", "group", "img" and "href".</td>
-</tr>
-<tr>
-<td><code>getPodcastIndexTrailer()</code></td>
-<td>Returns information on the podcast trailer. The output is an object with the properties "title", "pubdate", "url", "length", "type" and "season".</td>
-</tr>
-<tr>
-<td><code>getPodcastIndexGuid()</code></td>
-<td>Returns the podcast guid. The output is an object with the property "value".</td>
-</tr>
-<tr>
 <td><code>getPodcastIndexMedium()</code></td>
-<td>Returns the podcast medium. The output is an object with the property "value".</td>
+<td>Returns the podcast medium. The output is an object with the property <code>value</code>.</td>
 </tr>
 <tr>
-<td><code>getPodcastIndexBlocks()</code></td>
-<td>Returns whether or which platforms are allowed to publicly display this feed. The output is an object with the properties "value" and "id".</td>
-</tr>
-<tr>
-<td><code>getPodcastIndexTxts()</code></td>
-<td>Returns information on topics that do not have their own tags. The output is an object with the properties "value" and "purpose".</td>
+<td><code>getPodcastIndexPeople()</code> <code>getPodcastIndexPersons()</code></td>
+<td>Returns information on the involved people. The output is an array of objects, each with the properties <code>name</code>, <code>role</code>, <code>group</code>, <code>img</code> and <code>href</code>.</td>
 </tr>
 <tr>
 <td><code>getPodcastIndexPodping()</code></td>
-<td>Returns whether the feed sends out Podping notifications when changes are made to it. The output is an object with the property "usesPodping".</td>
+<td>Returns whether the feed sends out podping notifications when changes are made to it. The output is an object with the property <code>usesPodping</code>.</td>
+</tr>
+<tr>
+<td><code>getPodcastIndexPodroll()</code></td>
+<td>Returns the remote items assigned to the podroll tag of the feed. The output is an array of objects with each the properties <code>feedGuid</code>, <code>feedUrl</code>, <code>itemGuid</code>, <code>medium</code> and <code>title</code>.</td>
+</tr>
+<tr>
+<td><code>getPodcastIndexPublisher()</code></td>
+<td>Returns one remote item assigned to the publisher tag of the feed. The output is an object with the properties <code>feedGuid</code>, <code>feedUrl</code>, <code>itemGuid</code>, <code>medium</code> and <code>title</code>.</td>
+</tr>
+<tr>
+<td><code>getPodcastIndexRemoteItems()</code></td>
+<td>Returns the remote items assigned as direct children of the feed. The output is an array of objects with each the properties <code>feedGuid</code>, <code>feedUrl</code>, <code>itemGuid</code>, <code>medium</code> and <code>title</code>. Note: Nested remote items that belong to other namespaces need to be managed with the methods of those namespaces.</td>
+</tr>
+<tr>
+<td><code>getPodcastIndexSocialInteracts()</code></td>
+<td>Returns the social interacts. The output is an array of objects, each with the properties <code>protocol</code>, <code>uri</code>, <code>priority</code>, <code>accountId</code> and <code>accountUrl</code>.</td>
+</tr>
+<tr>
+<td><code>getPodcastIndexTrailer()</code></td>
+<td>Returns information on the podcast trailer. The output is an object with the properties <code>title</code> , <code>pubdate</code>, <code>url</code>, <code>length</code>, <code>type</code> and <code>season</code>.</td>
+</tr>
+<tr>
+<td><code>getPodcastIndexTxts()</code></td>
+<td>Returns information on topics that do not have their own tags. The output is an object with the properties <code>value</code> and <code>purpose</code>.</td>
+</tr>
+<tr>
+<td><code>getPodcastIndexUpdateFrequency()</code></td>
+<td>Returns information on the intended release schedule. The output is an object with <code>description</code>, <code>complete</code>, <code>dtstart</code> and <code>rrule</code> properties.</td>
+</tr>
+<tr>
+<td><code>getPodcastIndexValues()</code></td>
+<td>Returns the values and their valueRecipients. The output is an array of objects, each with the properties <code>type</code>, <code>method</code>, <code>suggested</code> and <code>valueRecipients</code>. <code>valueRecipients</code> is an array of objects itself, each containing the attributes <code>name</code>, <code>type</code>, <code>address</code>, <code>split</code>, <code>customKey</code>, <code>customValue</code> and <code>fee</code>.</td>
 </tr>
 </tbody>
 </table></div>
-<h3 id="set-methods">SET methods</h3>
+<h3 id="writer">Writer</h3>
 <div class="table-responsive"><table>
 <thead>
 <tr>
@@ -471,73 +520,145 @@ single namespace.</p>
 </thead>
 <tbody>
 <tr>
-<td><code>setPodcastIndexLocked()</code></td>
-<td>Expects an array with the required keys "value" and "owner".</td>
-</tr>
-<tr>
-<td><code>setPodcastIndexFunding()</code></td>
-<td>Expects an array with the required keys "title" and "url".</td>
-</tr>
-<tr>
-<td><code>setPodcastIndexLicense()</code></td>
-<td>Expects an array with the required keys "identifier" and "url".</td>
-</tr>
-<tr>
-<td><code>setPodcastIndexLocation()</code></td>
-<td>Expects an array with the required key "description" and the optional keys "geo" and "osm".</td>
-</tr>
-<tr>
-<td><code>setPodcastIndexImages()</code></td>
-<td>Expects an array with the required key "srcset".</td>
-</tr>
-<tr>
-<td><code>setPodcastIndexUpdateFrequency()</code></td>
-<td>Expects an array with the required key "description" and the optional keys "complete" (bool), "dtstart" (ISO8601 string) and "rrule".</td>
-</tr>
-<tr>
-<td><code>addPodcastIndexPerson()</code></td>
-<td>Expects an array with the required key "name" and the optional keys "role", "group", "img" and "href".</td>
-</tr>
-<tr>
-<td><code>setPodcastIndexPeople()</code></td>
-<td>Expects an array of arrays with each the required key "name" and the optional keys "role", "group", "img" and "href".</td>
-</tr>
-<tr>
-<td><code>setPodcastIndexTrailer()</code></td>
-<td>Expects an array with the required keys "title", "pubdate" and "url" and the optional keys "length", "type" and "season".</td>
-</tr>
-<tr>
-<td><code>setPodcastIndexGuid()</code></td>
-<td>Expects an array with the required key "value".</td>
-</tr>
-<tr>
-<td><code>setPodcastIndexMedium()</code></td>
-<td>Expects an array with the required key "value".</td>
-</tr>
-<tr>
 <td><code>addPodcastIndexBlock()</code></td>
-<td>Expects an array with the required key "value" and the optional key "id".</td>
+<td>Adds a <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/block.md">podcast:block</a> tag. Expects an array with the required key <code>value</code> (node value) and the optional key <code>id</code>.</td>
 </tr>
 <tr>
 <td><code>setPodcastIndexBlocks()</code></td>
-<td>Expects an array of arrays with each the required key "value" and the optional key "id".</td>
+<td>Sets multiple <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/block.md">podcast:block</a> tags. Expects an array of arrays, each with the keys as defined in <code>addPodcastIndexBlock()</code>.</td>
 </tr>
 <tr>
-<td><code>addPodcastIndexTxt()</code></td>
-<td>Expects an array with the required key "value" and the optional key "purpose".</td>
+<td><code>setPodcastIndexChat()</code></td>
+<td>Sets the tag <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/chat.md">podcast:chat</a>. Expects an array with the required keys <code>server</code> and <code>protocol</code>, and the optional keys <code>accountId</code> and <code>space</code>.</td>
 </tr>
 <tr>
-<td><code>setPodcastIndexTxts()</code></td>
-<td>Expects an array of arrays with each the required key "value" and the optional key "purpose".</td>
+<td><code>addPodcastIndexFunding()</code></td>
+<td>Adds a <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/funding.md">podcast:funding</a> tag. Expects an array with the required keys <code>title</code> (node value) and <code>url</code>.</td>
+</tr>
+<tr>
+<td><code>setPodcastIndexFundings()</code></td>
+<td>Sets multiple <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/funding.md">podcast:funding</a> tags. Expects an array of arrays, each with the required keys <code>title</code> (node value) and <code>url</code>.</td>
+</tr>
+<tr>
+<td><code>setPodcastIndexFunding()</code></td>
+<td><em>Deprecated:</em> Sets a single <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/funding.md">podcast:funding</a> tag. Expects an array with the required keys <code>title</code> (node value) and <code>url</code>.</td>
+</tr>
+<tr>
+<td><code>setPodcastIndexGuid()</code></td>
+<td>Sets the tag <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/guid.md">podcast:guid</a>. Expects an array with the required key <code>value</code> (node value).</td>
+</tr>
+<tr>
+<td><code>addPodcastIndexDetailedImage()</code></td>
+<td>Adds a <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/image.md">podcast:image</a> tag. Expects an array with the required key <code>href</code> and the optional keys <code>alt</code>, <code>aspectRatio</code>, <code>width</code>, <code>height</code>, <code>type</code> and <code>purpose</code>.</td>
+</tr>
+<tr>
+<td><code>setPodcastIndexDetailedImages()</code></td>
+<td>Sets multiple <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/image.md">podcast:image</a> tags. Expects an array of arrays, each with the keys as defined in <code>addPodcastIndexDetailedImage()</code>.</td>
+</tr>
+<tr>
+<td><code>setPodcastIndexImages()</code></td>
+<td><em>Deprecated:</em> Sets the tag <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/images-(deprecated).md">podcast:images</a>. Expects an array with the required key <code>srcset</code>.</td>
+</tr>
+<tr>
+<td><code>setPodcastIndexLicense()</code></td>
+<td>Sets the tag <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/license.md">podcast:license</a>. Expects an array with the required keys <code>identifier</code> (node value) and the optional key <code>url</code>.</td>
+</tr>
+<tr>
+<td><code>createPodcastIndexLiveItem()</code></td>
+<td>Creates and returns a <code>LiveItem</code> writer instance. The method expects an array with the required keys <code>status</code> and <code>start</code> and the optional key <code>end</code>. Please see the chapter on the <a href="#liveitem-api">LiveItem namespace</a> for more details.</td>
+</tr>
+<tr>
+<td><code>addPodcastIndexLiveItem()</code></td>
+<td>Adds a <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/live-item.md">podcast:liveItem</a> tag to the feed. Expects a <code>LiveItem</code> writer instance as argument. Please see the chapter on the <a href="#liveitem-api">LiveItem namespace</a> for more details.</td>
+</tr>
+<tr>
+<td><code>setPodcastIndexLocation()</code></td>
+<td><em>Deprecated:</em> Sets a single <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/location.md">podcast:location</a> tag. Expects an array with the required key <code>description</code> (node value) and the optional keys <code>geo</code>, <code>osm</code>, <code>rel</code> and <code>country</code>.</td>
+</tr>
+<tr>
+<td><code>addPodcastIndexLocation()</code></td>
+<td>Adds a <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/location.md">podcast:location</a> tag. Expects an array with the required key <code>description</code> (node value) and the optional keys <code>geo</code>, <code>osm</code>, <code>rel</code> and <code>country</code>.</td>
+</tr>
+<tr>
+<td><code>setPodcastIndexLocations()</code></td>
+<td>Sets multiple <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/location.md">podcast:location</a> tags. Expects an array of arrays, each with the required key <code>description</code> (node value) and the optional keys <code>geo</code>, <code>osm</code>, <code>rel</code> and <code>country</code>.</td>
+</tr>
+<tr>
+<td><code>setPodcastIndexLocked()</code></td>
+<td>Sets the tag <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/locked.md">podcast:locked</a>. Expects an array with the required keys <code>value</code> (node value) and <code>owner</code>.</td>
+</tr>
+<tr>
+<td><code>setPodcastIndexMedium()</code></td>
+<td>Sets the tag <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/medium.md">podcast:medium</a>. Expects an array with the required key <code>value</code> (node value).</td>
+</tr>
+<tr>
+<td><code>addPodcastIndexPerson()</code></td>
+<td>Adds a <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/person.md">podcast:person</a> tag. Expects an array with the required key <code>name</code> (node value) and the optional keys <code>role</code>, <code>group</code>, <code>img</code> and <code>href</code>.</td>
+</tr>
+<tr>
+<td><code>setPodcastIndexPeople()</code> <code>setPodcastIndexPersons()</code></td>
+<td>Sets multiple <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/person.md">podcast:person</a> tags. Expects an array of arrays, each with the keys as defined in <code>setPodcastIndexPeople()</code>.</td>
 </tr>
 <tr>
 <td><code>setPodcastIndexPodping()</code></td>
-<td>Expects an array with the required key "usesPodping".</td>
+<td>Sets the tag <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/podping.md">podcast:podping</a>. Expects an array with the required key <code>usesPodping</code>.</td>
+</tr>
+<tr>
+<td><code>setPodcastIndexPodroll()</code></td>
+<td>Sets the tag <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/podroll.md">podcast:podroll</a>. Expects an array of arrays, each with the remote item attributes as defined in <code>addPodcastIndexRemoteItem()</code>.</td>
+</tr>
+<tr>
+<td><code>addPodcastIndexPodrollRemoteItem()</code></td>
+<td>Adds a <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/remote-item.md">podcast:remoteItem</a> tag to an existing <code>podcast:podroll</code> element. Expects an array with the remote item attributes as defined in <code>addPodcastIndexRemoteItem()</code>.</td>
+</tr>
+<tr>
+<td><code>setPodcastIndexPublisher()</code></td>
+<td>Sets the tag <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/publisher.md">podcast:publisher</a>. Expects an array with the remote item attributes as defined in <code>addPodcastIndexRemoteItem()</code>.</td>
+</tr>
+<tr>
+<td><code>addPodcastIndexRemoteItem()</code></td>
+<td>Adds a  <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/remote-item.md">podcast:remoteItem</a> tag. Expects an array with the required key <code>feedGuid</code> and the optional keys <code>feedUrl</code>, <code>itemGuid</code>, <code>medium</code> and <code>title</code>.</td>
+</tr>
+<tr>
+<td><code>setPodcastIndexRemoteItems()</code></td>
+<td>Sets multiple <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/remote-item.md">podcast:remoteItem</a> tags. Expects an array of arrays, each with the remote item attributes as defined in <code>addPodcastIndexRemoteItem()</code>. <em>Note: Nested remote items that belong to other namespaces need to be managed with the methods of those namespaces</em>.</td>
+</tr>
+<tr>
+<td><code>addPodcastIndexSocialInteract()</code></td>
+<td>Adds a <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/social-interact.md">podcast:socialInteract</a> tag. Expects an array with the required keys <code>protocol</code> and <code>uri</code>, and the optional keys <code>priority</code>, <code>accountId</code> and <code>accountUrl</code>.</td>
+</tr>
+<tr>
+<td><code>setPodcastIndexSocialInteracts()</code></td>
+<td>Sets multiple <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/social-interact.md">podcast:socialInteract</a> tags. Expects an array of arrays, each with the keys as defined in <code>addPodcastIndexSocialInteract()</code>.</td>
+</tr>
+<tr>
+<td><code>setPodcastIndexTrailer()</code></td>
+<td>Sets the tag <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/trailer.md">podcast:trailer</a>. Expects an array with the required keys <code>title</code> (node value), <code>pubdate</code> and <code>url</code> and the optional keys <code>length</code>, <code>type</code> and <code>season</code>.</td>
+</tr>
+<tr>
+<td><code>addPodcastIndexTxt()</code></td>
+<td>Adds a <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/txt.md">podcast:txt</a> tag. Expects an array with the required key <code>value</code> (node value) and the optional key <code>purpose</code>.</td>
+</tr>
+<tr>
+<td><code>setPodcastIndexTxts()</code></td>
+<td>Sets multiple <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/txt.md">podcast:txt</a> tags. Expects an array of arrays, each with the keys as defined in <code>addPodcastIndexTxt()</code>.</td>
+</tr>
+<tr>
+<td><code>setPodcastIndexUpdateFrequency()</code></td>
+<td>Sets the tag <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/update-frequency.md">podcast:updateFrequency</a>. Expects an array with the required key <code>description</code> (node value) and the optional keys <code>complete</code>, <code>dtstart</code> and <code>rrule</code>.</td>
+</tr>
+<tr>
+<td><code>addPodcastIndexValue()</code></td>
+<td>Adds a <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/value.md">podcast:value</a> tag. Expects two arguments: First, an array of the value attributes, containing the required keys <code>type</code> and <code>method</code> and the optional key <code>suggested</code>. As second argument, an array of one or more valueRecipient entries is expected. Each entry must be of type array, containing the required keys <code>type</code>, <code>address</code> and <code>split</code> and the optional keys <code>name</code>, <code>customKey</code>, <code>customValue</code> and <code>fee</code>. <em>You may consider the <a href="#channel-value">example below</a>.</em></td>
+</tr>
+<tr>
+<td><code>resetPodcastIndexValues()</code></td>
+<td>Expects no arguments. Removes existing value entries.</td>
 </tr>
 </tbody>
 </table></div>
 <h2 id="episode-api">Episode API</h2>
-<h3 id="get-methods_1">GET methods</h3>
+<h3 id="reader_1">Reader</h3>
 <div class="table-responsive"><table>
 <thead>
 <tr>
@@ -547,20 +668,72 @@ single namespace.</p>
 </thead>
 <tbody>
 <tr>
-<td><code>getTranscript()</code></td>
-<td>Returns transcript information for the entry. The output is an object with "url", "type", "language" and "rel" properties.</td>
+<td><code>getPodcastIndexAlternateEnclosures()</code></td>
+<td>Returns the alternate enclosures. The output is an array of objects, each with the properties <code>type</code>, <code>length</code>, <code>bitrate</code>, <code>height</code>, <code>lang</code>, <code>title</code>, <code>rel</code>, <code>codecs</code>, <code>default</code>, as well as the nested objects <code>sources</code> and, if existing, <code>integrity</code>. <em>Note: This is a complex namespace, so please consider the <a href="#episode-alternate-enclosure">examples below</a>.</em></td>
 </tr>
 <tr>
-<td><code>getChapters()</code></td>
-<td>Returns chapter information for the entry. The output is an object with "url" and "type" properties.</td>
+<td><code>getChapters()</code> <code>getPodcastIndexChapters()</code></td>
+<td>Returns chapter information for the entry. The output is an object with <code>url</code> and <code>type</code> properties.</td>
 </tr>
 <tr>
-<td><code>getSoundbites()</code></td>
-<td>Returns soundbites for the entry. The output is an array of objects with "title", "startTime" and "duration" properties.</td>
+<td><code>getPodcastIndexChat()</code></td>
+<td>Returns information on the episode's official chat. The output is an object with the properties <code>server</code>, <code>protocol</code>, <code>accountId</code> and <code>space</code>.</td>
+</tr>
+<tr>
+<td><code>getPodcastIndexContentLinks()</code></td>
+<td>Returns episode content links. The output is an array of objects, each with the properties <code>href</code> and <code>description</code>.</td>
+</tr>
+<tr>
+<td><code>getPodcastIndexEpisode()</code></td>
+<td>Returns episode information. The output is an object with the properties <code>value</code> and <code>display</code>.</td>
+</tr>
+<tr>
+<td><code>getPodcastIndexFundings()</code></td>
+<td>Returns fundings information. The output is an array of objects, each with the <code>url</code> and <code>title</code> properties.</td>
+</tr>
+<tr>
+<td><code>getPodcastIndexDetailedImages()</code></td>
+<td>Returns the images. The output is an array of objects, each with the properties <code>href</code>, <code>alt</code>, <code>aspectRatio</code>, <code>width</code>, <code>height</code>, <code>type</code> and <code>purpose</code>.</td>
+</tr>
+<tr>
+<td><code>getPodcastIndexLicense()</code></td>
+<td>Returns license information. The output is an object with <code>identifier</code> and <code>url</code> properties.</td>
+</tr>
+<tr>
+<td><code>getPodcastIndexLocations()</code></td>
+<td>Returns location information. The output is an array of objects, each with <code>description</code>, <code>geo</code>, <code>osm</code>, <code>rel</code> and <code>country</code> properties.</td>
+</tr>
+<tr>
+<td><code>getPodcastIndexPeople()</code> <code>getPodcastIndexPersons()</code></td>
+<td>Returns information on the involved people. The output is an array of objects, each with the properties <code>name</code>, <code>role</code>, <code>group</code>, <code>img</code> and <code>href</code>.</td>
+</tr>
+<tr>
+<td><code>getPodcastIndexSeason()</code></td>
+<td>Returns season information. The output is an object with the properties <code>value</code> and <code>name</code>.</td>
+</tr>
+<tr>
+<td><code>getPodcastIndexSocialInteracts()</code></td>
+<td>Returns the social interacts. The output is an array of objects, each with the properties <code>protocol</code>, <code>uri</code>, <code>priority</code>, <code>accountId</code> and <code>accountUrl</code>.</td>
+</tr>
+<tr>
+<td><code>getSoundbites()</code> <code>getPodcastIndexSoundbites()</code></td>
+<td>Returns soundbites for the entry. The output is an array of objects with <code>title</code>, <code>startTime</code> and <code>duration</code> properties.</td>
+</tr>
+<tr>
+<td><code>getTranscript()</code> <code>getPodcastIndexTranscript()</code></td>
+<td>Returns transcript information for the entry. The output is an object with <code>url</code>, <code>type</code>, <code>language</code> and <code>rel</code> properties.</td>
+</tr>
+<tr>
+<td><code>getPodcastIndexTxts()</code></td>
+<td>Returns information on topics that do not have their own tags. The output is an object with the properties <code>value</code> and <code>purpose</code>.</td>
+</tr>
+<tr>
+<td><code>getPodcastIndexValues()</code></td>
+<td>Returns the values with nested <code>valueRecipients</code> and, if existing, <code>valueTimeSplits</code>. The output is an array of objects, each with the properties <code>type</code>, <code>method</code> and <code>suggested</code>, and the nested objects <code>valueRecipients</code> and <code>valueTimeSplits</code>. <em>Note: This is a complex namespace, so please consider the <a href="#episode-value">examples below</a>.</em></td>
 </tr>
 </tbody>
 </table></div>
-<h3 id="set-methods_1">SET methods</h3>
+<h3 id="writer_1">Writer</h3>
 <div class="table-responsive"><table>
 <thead>
 <tr>
@@ -570,21 +743,329 @@ single namespace.</p>
 </thead>
 <tbody>
 <tr>
-<td><code>setPodcastIndexTranscript()</code></td>
-<td>Expects an array with the required keys "url" and "type", and with the optional keys "language" and "rel".</td>
+<td><code>addPodcastIndexAlternateEnclosure()</code></td>
+<td>Adds a <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/alternate-enclosure.md">podcast:alternateEnclosure</a> tag.  Expects three arguments: First, an array with the <code>alternateEnclosure</code> attributes. Second, an array of one or more <code>source</code> entries. The third argument is optional: An array of <code>integrity</code> attributes.  <em>Note: This method is quite complex, so please consider the <a href="#episode-alternate-enclosure">examples below</a>.</em></td>
+</tr>
+<tr>
+<td><code>resetPodcastIndexAlternateEnclosures()</code></td>
+<td>Expects no arguments. Removes existing alternate enclosure entries.</td>
 </tr>
 <tr>
 <td><code>setPodcastIndexChapters()</code></td>
-<td>Expects an array with the required keys "url" and "type".</td>
+<td>Sets the tag <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/chapters.md">podcast:chapters</a>.  Expects an array with the required keys <code>url</code> and <code>type</code>.</td>
+</tr>
+<tr>
+<td><code>setPodcastIndexChat()</code></td>
+<td>Sets the tag <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/chat.md">podcast:chat</a>. Expects an array with the required keys <code>server</code> and <code>protocol</code>, and the optional keys <code>accountId</code> and <code>space</code>.</td>
+</tr>
+<tr>
+<td><code>addPodcastIndexContentLink()</code></td>
+<td>Sets the tag <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/content-link.md">podcast:contentLink</a>. Expects an array with the required keys <code>href</code> and <code>description</code> (node value).</td>
+</tr>
+<tr>
+<td><code>setPodcastIndexContentLinks()</code></td>
+<td>Sets multiple <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/content-link.md">podcast:contentLink</a> tags. Expects an array of arrays, each with the required keys <code>href</code> and <code>description</code> (node value).</td>
+</tr>
+<tr>
+<td><code>setPodcastIndexEpisode()</code></td>
+<td>Sets the tag <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/episode.md">podcast:episode</a>.  Expects an array with the required key <code>value</code> (node value) and the optional key <code>display</code>.</td>
+</tr>
+<tr>
+<td><code>addPodcastIndexFunding()</code></td>
+<td>Adds a <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/funding.md">podcast:funding</a> tag. Expects an array with the required keys <code>title</code> (node value) and <code>url</code>.</td>
+</tr>
+<tr>
+<td><code>setPodcastIndexFundings()</code></td>
+<td>Sets multiple <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/funding.md">podcast:funding</a> tags. Expects an array of arrays, each with the required keys <code>title</code> (node value) and <code>url</code>.</td>
+</tr>
+<tr>
+<td><code>addPodcastIndexDetailedImage()</code></td>
+<td>Adds a <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/image.md">podcast:image</a> tag.  Expects an array with the required key <code>href</code> and the optional keys <code>alt</code>, <code>aspectRatio</code>, <code>width</code>, <code>height</code>, <code>type</code> and <code>purpose</code>.</td>
+</tr>
+<tr>
+<td><code>setPodcastIndexDetailedImages()</code></td>
+<td>Sets multiple <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/image.md">podcast:image</a> tags.  Expects an array of arrays, each with the required key <code>href</code> and the optional keys <code>alt</code>, <code>aspectRatio</code>, <code>width</code>, <code>height</code>, <code>type</code> and <code>purpose</code>.</td>
+</tr>
+<tr>
+<td><code>setPodcastIndexLicense()</code></td>
+<td>Sets the tag <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/license.md">podcast:license</a>.  Expects an array with the required key <code>identifier</code> (node value) and the optional key <code>url</code>.</td>
+</tr>
+<tr>
+<td><code>addPodcastIndexLocation()</code></td>
+<td>Adds a <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/location.md">podcast:location</a> tag. Expects an array with the required key <code>description</code> (node value) and the optional keys <code>geo</code>, <code>osm</code>, <code>rel</code> and <code>country</code>.</td>
+</tr>
+<tr>
+<td><code>setPodcastIndexLocations()</code></td>
+<td>Sets multiple <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/location.md">podcast:location</a> tags. Expects an array of arrays, each with the required key <code>description</code> (node value) and the optional keys <code>geo</code>, <code>osm</code>, <code>rel</code> and <code>country</code>.</td>
+</tr>
+<tr>
+<td><code>addPodcastIndexPerson()</code></td>
+<td>Adds a <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/person.md">podcast:person</a> tag.  Expects an array with the required key <code>name</code> (node value) and the optional keys <code>role</code>, <code>group</code>, <code>img</code> and <code>href</code>.</td>
+</tr>
+<tr>
+<td><code>setPodcastIndexPeople()</code> <code>setPodcastIndexPersons()</code></td>
+<td>Sets multiple <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/person.md">podcast:person</a> tags.  Expects an array of arrays, each with the keys as defined in <code>addPodcastIndexPerson()</code>.</td>
+</tr>
+<tr>
+<td><code>setPodcastIndexSeason()</code></td>
+<td>Sets the tag <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/season.md">podcast:season</a>.  Expects an array with the required key <code>value</code> (node value) and the optional key <code>name</code>.</td>
+</tr>
+<tr>
+<td><code>addPodcastIndexSocialInteract()</code></td>
+<td>Adds a <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/social-interact.md">podcast:socialInteract</a> tag.  Expects an array with the required keys <code>protocol</code> and <code>uri</code>, and the optional keys <code>priority</code>, <code>accountId</code> and <code>accountUrl</code>.</td>
+</tr>
+<tr>
+<td><code>setPodcastIndexSocialInteracts()</code></td>
+<td>Sets multiple <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/social-interact.md">podcast:socialInteract</a> tags.  Expects an array of arrays, each with the keys as defined in <code>addPodcastIndexSocialInteract()</code>.</td>
+</tr>
+<tr>
+<td><code>addPodcastIndexSoundbite()</code></td>
+<td>Adds a single <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/soundbite.md">podcast:soundbite</a> tag.  Expects an array with the required keys <code>duration</code> and <code>startTime</code>, and with the optional key <code>title</code> (node value).</td>
 </tr>
 <tr>
 <td><code>addPodcastIndexSoundbites()</code></td>
-<td>Expects an array of soundbite entries, each itself an array with the required keys "title" and "startTime", and with the optional key "duration".</td>
+<td>Adds multiple <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/soundbite.md">podcast:soundbite</a> tags. Expects an array of arrays, each with the keys as defined in <code>addPodcastIndexSoundbite()</code>.</td>
+</tr>
+<tr>
+<td><code>setPodcastIndexSoundbites()</code></td>
+<td>Sets multiple <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/soundbite.md">podcast:soundbite</a> tags. Same as <code>addPodcastIndexSoundbites()</code>, but replaces existing soundbite entries.</td>
+</tr>
+<tr>
+<td><code>setPodcastIndexTranscript()</code></td>
+<td>Sets the tag <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/transcript.md">podcast:transcript</a>. Expects an array with the required keys <code>url</code> and <code>type</code>, and with the optional keys <code>language</code> and <code>rel</code>.</td>
+</tr>
+<tr>
+<td><code>addPodcastIndexTxt()</code></td>
+<td>Adds a <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/txt.md">podcast:txt</a> tag.  Expects an array with the required key <code>value</code> (node value) and the optional key <code>purpose</code>.</td>
+</tr>
+<tr>
+<td><code>setPodcastIndexTxts()</code></td>
+<td>Sets multiple <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/txt.md">podcast:txt</a> tags.  Expects an array of arrays, each with the keys as defined in <code>addPodcastIndexTxt()</code>.</td>
+</tr>
+<tr>
+<td><code>addPodcastIndexValue()</code></td>
+<td>Adds a <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/value.md">podcast:value</a> tag.  Expects three arguments: First, an array of the <code>value</code> attributes. Second, an array of one or more <code>valueRecipient</code> entries. The third argument is optional: An array of one or more <code>valueTimeSplit</code> elements. <em>Note: This method is quite complex, so please consider the <a href="#episode-value">examples below</a>, as well as the official PodcastIndex documentation for the detailed structure.</em></td>
+</tr>
+<tr>
+<td><code>resetPodcastIndexValues()</code></td>
+<td>Expects no arguments. Removes existing value entries.</td>
 </tr>
 </tbody>
 </table></div>
-<p>See the <a href="https://podcastindex.org">Podcast Index website</a> for more information
-about the project.</p>
+<h2 id="liveitem-api">LiveItem API</h2>
+<p>The PodcastIndex extension offers a LiveItem writer class that handles the <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/live-item.md">podcast:liveItem</a> namespace.
+The class must be instantiated with the <code>createPodcastIndexLiveItem()</code> method of the Feed writer class. The method expects the required <code>liveItem</code> attributes <code>status</code> and <code>start</code> and the optional attribute <code>end</code>.
+To add nested data, the instance offers all methods that a <code>Laminas\Feed\Writer\Entry</code> instance does, including the extensions' methods. Note that not all child tags of an <code>item</code> may be as useful within a <code>liveItem</code>.
+Finally, the <code>liveItem</code> entry must be added to the feed with the <code>addPodcastIndexLiveItem()</code> method of the Feed writer class.
+When reading a feed, the <code>getPodcastIndexLiveItems()</code> method of the Feed reader class returns an array of <code>LiveItem</code> reader instances.
+To read nested data, the instance offers all methods that a <code>Laminas\Feed\Reader\Entry</code> instance does, including the extensions' methods.</p>
+<p>Writer example:</p>
+<pre class="highlight"><code class="language-php">$attributes = [
+    'status' =&gt; 'live',
+    'start'  =&gt; '2021-09-26T07:30:00.000-0600',
+    'end'    =&gt; '2021-09-26T09:30:00.000-0600',
+];
+$liveItem = $feedWriter-&gt;createPodcastIndexLiveItem($attributes);
+$liveItem-&gt;setTitle($title);
+$liveItem-&gt;setId($guid);
+$liveItem-&gt;setEnclosure($enclosureData);
+$liveItem-&gt;setPodcastIndexAlternateEnclosure($alternateEnclosureData);
+$liveItem-&gt;setPodcastIndexContentLink($contentLinkData);
+$feedWriter-&gt;addPodcastIndexLiveItem($liveItem);</code></pre>
+<h2 id="examples">Examples</h2>
+<h3 id="channel-value">Channel Value</h3>
+<p>Please also consider the official PodcastIndex documentation on the
+<a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/value.md">value</a>,
+and <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/value-recipient.md">valueRecipient</a> namespaces.</p>
+<p>Usage:</p>
+<pre class="highlight"><code class="language-php">$value = [
+    'type'      =&gt; "lightning",
+    'method'    =&gt; "keysend",
+    'suggested' =&gt; 0.00000005000,
+];
+$valueRecipients = [
+    [
+        'name'    =&gt; "Alice (Podcaster)",
+        'type'    =&gt; "node",
+        'address' =&gt; "02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52",
+        'split'   =&gt; 40,
+    ],
+    [
+        'name'    =&gt; "Bob (Podcaster)",
+        'type'    =&gt; "node",
+        'address' =&gt; "032f4ffbbafffbe51726ad3c164a3d0d37ec27bc67b29a159b0f49ae8ac21b8508",
+        'split'   =&gt; 60,
+    ],
+];
+$feedWriter-&gt;addPodcastIndexValue($value, $valueRecipients);</code></pre>
+<p>Rendered value tag:</p>
+<pre class="highlight"><code class="language-xml">&lt;podcast:value type="lightning" method="keysend" suggested="0.00000005000"&gt;
+    &lt;podcast:valueRecipient name="Alice (Podcaster)" type="node" address="02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52" split="40"/&gt;
+    &lt;podcast:valueRecipient name="Bob (Podcaster)" type="node" address="032f4ffbbafffbe51726ad3c164a3d0d37ec27bc67b29a159b0f49ae8ac21b8508" split="60"/&gt;
+&lt;/podcast:value&gt;</code></pre>
+<h3 id="episode-value">Episode Value</h3>
+<p>Please consider the official PodcastIndex documentation on the
+<a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/value.md">value</a>,
+<a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/value-recipient.md">valueRecipient</a>
+and <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/value-time-split.md">valueTimeSplit</a> namespaces.</p>
+<h4 id="1-using-valuetimesplit-with-nested-remoteitem">1. Using <code>valueTimeSplit</code> with nested <code>remoteItem</code></h4>
+<p>Usage:</p>
+<pre class="highlight"><code class="language-php">$value      = [
+    'type'      =&gt; "lightning",
+    'method'    =&gt; "keysend",
+    'suggested' =&gt; 0.00000005000,
+];
+$valueRecipients = [
+    [
+        'name'    =&gt; "Alice (Podcaster)",
+        'type'    =&gt; "node",
+        'address' =&gt; "02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52",
+        'split'   =&gt; 40,
+    ],
+    [
+        'name'    =&gt; "Bob (Podcaster)",
+        'type'    =&gt; "node",
+        'address' =&gt; "032f4ffbbafffbe51726ad3c164a3d0d37ec27bc67b29a159b0f49ae8ac21b8508",
+        'split'   =&gt; 60,
+    ],
+];
+$valueTimeSplits = [
+    [
+        'startTime'  =&gt; 60,
+        'duration'   =&gt; 237,
+        'remotePercentage' =&gt; 95,
+        'remoteItem' =&gt; [
+            'itemGuid' =&gt; "https://podcastindex.org/podcast/4148683#1",
+            'feedGuid' =&gt; "a94f5cc9-8c58-55fc-91fe-a324087a655b",
+            'medium'   =&gt; "music",
+        ],
+    ],
+    [
+        'startTime'  =&gt; 330,
+        'duration'   =&gt; 53,
+        'remotePercentage' =&gt; 95,
+        'remoteStartTime' =&gt; 174,
+        'remoteItem' =&gt; [
+            'itemGuid' =&gt; "https://podcastindex.org/podcast/4148683#3",
+            'feedGuid' =&gt; "b83f5cc9-8c58-55fc-91fe-a324087a644c",
+            'medium'   =&gt; "music",
+        ],
+    ],
+];
+$entryWriter-&gt;addPodcastIndexValue($value, $valueRecipients, $valueTimeSplits);</code></pre>
+<p>Rendered value tag:</p>
+<pre class="highlight"><code class="language-xml">&lt;podcast:value type="lightning" method="keysend" suggested="0.00000005000"&gt;
+    &lt;podcast:valueRecipient name="Alice (Podcaster)" type="node" address="02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52" split="40"/&gt;
+    &lt;podcast:valueRecipient name="Bob (Podcaster)" type="node" address="032f4ffbbafffbe51726ad3c164a3d0d37ec27bc67b29a159b0f49ae8ac21b8508" split="60"/&gt;
+    &lt;podcast:valueTimeSplit startTime="60" duration="237" remotePercentage="95"&gt;
+        &lt;podcast:remoteItem itemGuid="https://podcastindex.org/podcast/4148683#1" feedGuid="a94f5cc9-8c58-55fc-91fe-a324087a655b" medium="music" /&gt;
+    &lt;/podcast:valueTimeSplit&gt;
+    &lt;podcast:valueTimeSplit startTime="330" duration="53" remoteStartTime="174" remotePercentage="95"&gt;
+        &lt;podcast:remoteItem itemGuid="https://podcastindex.org/podcast/4148683#3" feedGuid="b83f5cc9-8c58-55fc-91fe-a324087a644c" medium="music" /&gt;
+    &lt;/podcast:valueTimeSplit&gt;
+&lt;/podcast:value&gt;</code></pre>
+<h4 id="2-using-valuetimesplit-with-nested-valuerecipient">2. Using <code>valueTimeSplit</code> with nested <code>valueRecipient</code></h4>
+<p>Usage:</p>
+<pre class="highlight"><code class="language-php">$value      = [
+    'type'      =&gt; "lightning",
+    'method'    =&gt; "keysend",
+    'suggested' =&gt; 0.00000005000,
+];
+$valueRecipients = [
+    [
+        'name'    =&gt; "Alice (Podcaster)",
+        'type'    =&gt; "node",
+        'address' =&gt; "02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52",
+        'split'   =&gt; 40,
+    ],
+    [
+        'name'    =&gt; "Bob (Podcaster)",
+        'type'    =&gt; "node",
+        'address' =&gt; "032f4ffbbafffbe51726ad3c164a3d0d37ec27bc67b29a159b0f49ae8ac21b8508",
+        'split'   =&gt; 60,
+    ],
+];
+$valueTimeSplits = [
+    [
+        'startTime'       =&gt; 63,
+        'duration'        =&gt; 388,
+        'valueRecipients' =&gt; [
+            [
+                'name'        =&gt; "Alice (Podcaster)",
+                'type'        =&gt; "node",
+                'address'     =&gt; "02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52",
+                'split'       =&gt; 80,
+            ],
+            [
+                 'name'    =&gt; "Malcolm (Guest)",
+                 'type'    =&gt; "node",
+                 'address' =&gt; "02dd306e68c46681aa21d88a436fb35355a8579dd30201581cefa17cb179fc4c15",
+                 'split'   =&gt; 20,
+            ],
+        ],
+    ],
+];
+$entryWriter-&gt;addPodcastIndexValue($value, $valueRecipients, $valueTimeSplits);</code></pre>
+<p>Rendered value tag:</p>
+<pre class="highlight"><code class="language-xml">&lt;podcast:value type="lightning" method="keysend" suggested="0.00000005000"&gt;
+    &lt;podcast:valueRecipient name="Alice (Podcaster)" type="node" address="02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52" split="40"/&gt;
+    &lt;podcast:valueRecipient name="Bob (Podcaster)" type="node" address="032f4ffbbafffbe51726ad3c164a3d0d37ec27bc67b29a159b0f49ae8ac21b8508" split="60"/&gt;
+    &lt;podcast:valueTimeSplit startTime="63" duration="388"&gt;
+        &lt;podcast:valueRecipient name="Alice (Podcaster)" type="node" address="02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52" split="80" /&gt;
+        &lt;podcast:valueRecipient name="Malcolm (Guest)" type="node" address="02dd306e68c46681aa21d88a436fb35355a8579dd30201581cefa17cb179fc4c15" split="20" /&gt;
+    &lt;/podcast:valueTimeSplit&gt;
+&lt;/podcast:value&gt;</code></pre>
+<h3 id="episode-alternate-enclosure">Episode Alternate Enclosure</h3>
+<p>Please also consider the official PodcastIndex documentation on the
+<a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/alternate-enclosure.md">alternateEnclosure</a>,
+<a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/source.md">source</a>
+and <a href="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/tags/integrity.md">integrity</a> namespaces.</p>
+<h4 id="1-with-all-attributes-set">1. With all attributes set</h4>
+<p>Usage:</p>
+<pre class="highlight"><code class="language-php">$alternateEnclosure = [
+    'type' =&gt; 'video/mp4',
+    'length' =&gt; 7924786,
+    'bitrate' =&gt; 511276.52,
+    'height' =&gt; 720,
+    'lang' =&gt; 'en',
+    'title' =&gt; 'Standard',
+    'rel' =&gt; 'default',
+    'codecs' =&gt; 'avc1.42E01E, mp4a.40.2',
+    'default' =&gt; true
+];
+$sources = [
+    [
+        'uri' =&gt; 'https://example.com/file-720.torrent',
+        'contentType' =&gt; 'application/x-bittorrent',
+    ],
+    [
+        'uri' =&gt; 'ipfs://QmX33FYehk6ckGQ6g1D9D3FqZPix5JpKstKQKbaS8quUFb',
+    ]
+];
+$integrity = [
+    'type' =&gt; 'sri',
+    'value' =&gt; 'sha384-ExVqijgYHm15PqQqdXfW95x+Rs6C+d6E/ICxyQOeFevnxNLR/wtJNrNYTjIysUBo',
+];
+$entryWriter-&gt;addPodcastIndexAlternateEnclosure($alternateEnclosure, $sources, $integrity);</code></pre>
+<p>Rendered alternate enclosure tag:</p>
+<pre class="highlight"><code class="language-xml">&lt;podcast:alternateEnclosure type="video/mp4" length="7924786" bitrate="511276.52" height="720" lang="en" title="Standard" rel="default" codecs="avc1.42E01E, mp4a.40.2" default="true"&gt;
+    &lt;podcast:source uri="https://example.com/file-720.torrent" contentType="application/x-bittorrent"/&gt;
+    &lt;podcast:source uri="ipfs://QmX33FYehk6ckGQ6g1D9D3FqZPix5JpKstKQKbaS8quUFb"/&gt;
+    &lt;podcast:integrity type="sri" value="sha384-ExVqijgYHm15PqQqdXfW95x+Rs6C+d6E/ICxyQOeFevnxNLR/wtJNrNYTjIysUBo"/&gt;
+&lt;/podcast:alternateEnclosure&gt;</code></pre>
+<h4 id="2-with-minimal-data-set">2. With minimal data set</h4>
+<p>Usage:</p>
+<pre class="highlight"><code class="language-php">$alternateEnclosure = [
+    'type'    =&gt; 'video/mp4',
+];
+$sources = [
+    ['uri' =&gt; 'ipfs://QmX33FYehk6ckGQ6g1D9D3FqZPix5JpKstKQKbaS8quUFb'],
+];
+$entryWriter-&gt;addPodcastIndexAlternateEnclosure($alternateEnclosure, $sources);</code></pre>
+<p>Rendered alternate enclosure tag:</p>
+<pre class="highlight"><code class="language-xml">&lt;podcast:alternateEnclosure type="video/mp4"&gt;
+    &lt;podcast:source uri="ipfs://QmX33FYehk6ckGQ6g1D9D3FqZPix5JpKstKQKbaS8quUFb"/&gt;
+&lt;/podcast:alternateEnclosure&gt;</code></pre>
 
 
 
