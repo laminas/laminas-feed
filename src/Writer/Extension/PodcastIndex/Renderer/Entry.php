@@ -31,6 +31,9 @@ use function assert;
  * @psalm-import-type SourceArray from Validator
  * @psalm-import-type IntegrityArray from Validator
  * @psalm-import-type AlternateEnclosureArray from Validator
+ * @psalm-import-type ContentLinkArray from Validator
+ * @psalm-import-type FundingArray from Validator
+ * @psalm-import-type ChatArray from Validator
  */
 class Entry extends Extension\AbstractRenderer
 {
@@ -51,7 +54,7 @@ class Entry extends Extension\AbstractRenderer
         $this->setTranscript($this->dom, $this->base);
         $this->setChapters($this->dom, $this->base);
         $this->setSoundbites($this->dom, $this->base);
-        $this->setLocation($this->dom, $this->base);
+        $this->setLocations($this->dom, $this->base);
         $this->setLicense($this->dom, $this->base);
         $this->setPeople($this->dom, $this->base);
         $this->setTxts($this->dom, $this->base);
@@ -61,6 +64,9 @@ class Entry extends Extension\AbstractRenderer
         $this->setEpisode($this->dom, $this->base);
         $this->setAlternateEnclosures($this->dom, $this->base);
         $this->setDetailedImages($this->dom, $this->base);
+        $this->setContentLinks($this->dom, $this->base);
+        $this->setFundings($this->dom, $this->base);
+        $this->setChat($this->dom, $this->base);
         if ($this->called) {
             $this->_appendNamespaces();
         }
@@ -133,26 +139,30 @@ class Entry extends Extension\AbstractRenderer
             return;
         }
         foreach ($soundbites as $soundbite) {
-            $el = ElementGenerator::createPodcastIndexElement($dom, $soundbite, 'soundbite');
+            $el = ElementGenerator::createPodcastIndexElement($dom, $soundbite, 'soundbite', 'title');
             $root->appendChild($el);
             $this->called = true;
         }
     }
 
     /**
-     * Set entry location
+     * Set multiple location tags
      */
-    private function setLocation(DOMDocument $dom, DOMElement $root): void
+    protected function setLocations(DOMDocument $dom, DOMElement $root): void
     {
         $container = $this->getEntryWriter();
 
-        /** @psalm-var null|LocationArray $location */
-        $location = $container->getPodcastIndexLocation();
-        if ($location === null) {
+        /** @psalm-var null|list<LocationArray> $locations */
+        $locations = $container->getPodcastIndexLocations();
+        if ($locations === null) {
             return;
         }
-        $el = ElementGenerator::createPodcastIndexElement($dom, $location, 'location', 'description');
-        $root->appendChild($el);
+
+        foreach ($locations as $location) {
+            $el = ElementGenerator::createPodcastIndexElement($dom, $location, 'location', 'description');
+            $root->appendChild($el);
+        }
+
         $this->called = true;
     }
 
@@ -369,6 +379,66 @@ class Entry extends Extension\AbstractRenderer
             $root->appendChild($el);
         }
 
+        $this->called = true;
+    }
+
+    /**
+     * Set episode content links
+     */
+    private function setContentLinks(DOMDocument $dom, DOMElement $root): void
+    {
+        $container = $this->getEntryWriter();
+
+        /** @psalm-var list<ContentLinkArray>|null $contentLinks */
+        $contentLinks = $container->getPodcastIndexContentLinks();
+        if ($contentLinks === null || $contentLinks === []) {
+            return;
+        }
+
+        foreach ($contentLinks as $contentLink) {
+            $el = ElementGenerator::createPodcastIndexElement($dom, $contentLink, 'contentLink', 'description');
+            $root->appendChild($el);
+        }
+
+        $this->called = true;
+    }
+
+    /**
+     * Set episode funding
+     */
+    protected function setFundings(DOMDocument $dom, DOMElement $root): void
+    {
+        $container = $this->getEntryWriter();
+
+        /** @psalm-var null|list<FundingArray> $fundings */
+        $fundings = $container->getPodcastIndexFundings();
+        if ($fundings === null) {
+            return;
+        }
+
+        foreach ($fundings as $funding) {
+            $el = ElementGenerator::createPodcastIndexElement($dom, $funding, 'funding', 'title');
+            $root->appendChild($el);
+        }
+
+        $this->called = true;
+    }
+
+    /**
+     * Set chat element
+     */
+    private function setChat(DOMDocument $dom, DOMElement $root): void
+    {
+        $container = $this->getEntryWriter();
+
+        /** @psalm-var ChatArray|null $chat */
+        $chat = $container->getPodcastIndexChat();
+        if ($chat === null) {
+            return;
+        }
+
+        $el = ElementGenerator::createPodcastIndexElement($dom, $chat, 'chat');
+        $root->appendChild($el);
         $this->called = true;
     }
 }

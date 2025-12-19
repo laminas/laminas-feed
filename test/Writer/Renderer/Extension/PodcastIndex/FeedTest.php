@@ -65,6 +65,29 @@ class FeedTest extends TestCase
         $this->assertStringContainsString($expected, $xml);
     }
 
+    public function testRendersMultipleRssFundingTags(): void
+    {
+        $fundings = [
+            [
+                'title' => 'Support the show!',
+                'url'   => 'http://example.com/donate',
+            ],
+            [
+                'title' => 'Support our partner!',
+                'url'   => 'http://example.com/partner/donate',
+            ],
+        ];
+        $this->validWriter->setPodcastIndexFundings($fundings);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $expectedA = '<podcast:funding url="http://example.com/donate">Support the show!</podcast:funding>';
+        $expectedB = '<podcast:funding url="http://example.com/partner/donate">Support our partner!</podcast:funding>';
+        $this->assertStringContainsString($expectedA, $xml);
+        $this->assertStringContainsString($expectedB, $xml);
+    }
+
     public function testRendersRssLicenseTag(): void
     {
         $identifier = 'cc-by-4.0';
@@ -103,6 +126,37 @@ class FeedTest extends TestCase
         $this->assertStringContainsString($location['osm'], $xml);
         $this->assertStringContainsString($location['rel'], $xml);
         $this->assertStringContainsString($location['country'], $xml);
+    }
+
+    public function testRendersRssMultipleLocationTags(): void
+    {
+        $locations = [
+            [
+                'description' => 'London, Baker Street',
+                'geo'         => 'geo:-27.86159,153.3169',
+                'osm'         => 'W43678282',
+                'rel'         => 'creator',
+                'country'     => 'GB',
+            ],
+            [
+                'description' => 'Marlow',
+                'geo'         => 'geo:51.5718706,-0.7769654',
+                'osm'         => 'R3727240',
+                'rel'         => 'subject',
+                'country'     => 'US',
+            ],
+        ];
+        $this->validWriter->setPodcastIndexLocations($locations);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $this->assertStringContainsString('<podcast:location', $xml);
+        $this->assertStringContainsString($locations[0]['description'], $xml);
+        $this->assertStringContainsString($locations[0]['geo'], $xml);
+        $this->assertStringContainsString($locations[1]['osm'], $xml);
+        $this->assertStringContainsString($locations[1]['rel'], $xml);
+        $this->assertStringContainsString($locations[1]['country'], $xml);
     }
 
     public function testRendersRssImagesTag(): void
@@ -591,5 +645,26 @@ class FeedTest extends TestCase
         $this->assertStringContainsString($data[0]['uri'], $xml);
         $this->assertStringContainsString($data[1]['accountId'], $xml);
         $this->assertStringContainsString($data[1]['accountUrl'], $xml);
+    }
+
+    public function testRendersRssChatTag(): void
+    {
+        $data = [
+            'server'    => "irc.zeronode.net",
+            'protocol'  => "irc",
+            'accountId' => "@jsmith",
+            'space'     => "#myawesomepodcast",
+        ];
+
+        $this->validWriter->setPodcastIndexChat($data);
+
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $this->assertStringContainsString('<podcast:chat', $xml);
+        $this->assertStringContainsString($data['server'], $xml);
+        $this->assertStringContainsString($data['protocol'], $xml);
+        $this->assertStringContainsString($data['accountId'], $xml);
+        $this->assertStringContainsString($data['space'], $xml);
     }
 }

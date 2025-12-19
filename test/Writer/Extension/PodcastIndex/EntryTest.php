@@ -8,6 +8,8 @@ use Laminas\Feed\Reader\Extension\PodcastIndex\AttributesReader;
 use Laminas\Feed\Writer;
 use PHPUnit\Framework\TestCase;
 
+use function array_diff_key;
+use function array_key_first;
 use function count;
 use function in_array;
 
@@ -33,6 +35,12 @@ use function in_array;
  * @psalm-import-type SourceObject from AttributesReader
  * @psalm-import-type IntegrityObject from AttributesReader
  * @psalm-import-type AlternateEnclosureObject from AttributesReader
+ * @psalm-import-type ContentLinkObject from AttributesReader
+ * @psalm-suppress MixedArgument
+ * @psalm-suppress ArgumentTypeCoercion
+ * @psalm-suppress MixedArrayAccess
+ * @psalm-suppress MixedAssignment
+ * @psalm-suppress InvalidArrayAccess
  */
 class EntryTest extends TestCase
 {
@@ -74,6 +82,21 @@ class EntryTest extends TestCase
         $entry->setPodcastIndexTranscript($transcript);
     }
 
+    public function testSetTranscriptWithAdditionalData(): void
+    {
+        $entry = new Writer\Entry();
+
+        $transcript = [
+            'url'      => 'https://example.com/podcasts/everything/TranscriptEpisode3.html',
+            'type'     => 'text/html',
+            'unwanted' => 'data',
+        ];
+        $entry->setPodcastIndexTranscript($transcript);
+        $this->assertArrayNotHasKey('unwanted', $entry->getPodcastIndexTranscript());
+        unset($transcript['unwanted']);
+        $this->assertEquals($transcript, $entry->getPodcastIndexTranscript());
+    }
+
     public function testSetChapters(): void
     {
         $entry = new Writer\Entry();
@@ -83,6 +106,21 @@ class EntryTest extends TestCase
             'type' => 'application/json+chapters',
         ];
         $entry->setPodcastIndexChapters($chapters);
+        $this->assertEquals($chapters, $entry->getPodcastIndexChapters());
+    }
+
+    public function testSetChaptersWithAdditionalData(): void
+    {
+        $entry = new Writer\Entry();
+
+        $chapters = [
+            'url'      => 'https://example.com/podcasts/everything/ChaptersEpisode3.json',
+            'type'     => 'application/json+chapters',
+            'unwanted' => 'data',
+        ];
+        $entry->setPodcastIndexChapters($chapters);
+        $this->assertArrayNotHasKey('unwanted', $entry->getPodcastIndexChapters());
+        unset($chapters['unwanted']);
         $this->assertEquals($chapters, $entry->getPodcastIndexChapters());
     }
 
@@ -141,6 +179,31 @@ class EntryTest extends TestCase
         // remove
         $entry->setPodcastIndexSoundbites();
         $this->assertNull($entry->getPodcastIndexSoundbites());
+    }
+
+    public function testAddSoundbitesAndSetSoundbitesWithAdditionalData(): void
+    {
+        $entry = new Writer\Entry();
+
+        $soundbites = [
+            [
+                'startTime' => '66',
+                'duration'  => '39.0',
+                'title'     => 'Pepper shakers comparison',
+                'unwanted'  => 'data',
+            ],
+            [
+                'startTime' => '112.45',
+                'duration'  => '24.83',
+                'title'     => 'Pepper shakers comparison',
+                'unwanted'  => 'data',
+            ],
+        ];
+
+        $entry->addPodcastIndexSoundbites($soundbites);
+        $res = $entry->getPodcastIndexSoundbites();
+        $this->assertArrayNotHasKey('unwanted', $res[0]);
+        $this->assertArrayNotHasKey('unwanted', $res[1]);
     }
 
     public function testAddSoundbitesThrowsExceptionOnInvalidArguments(): void
@@ -264,7 +327,7 @@ class EntryTest extends TestCase
         $entry->addPodcastIndexSoundbite($soundbite);
     }
 
-    public function testSetLocation(): void
+    public function testAddLocation(): void
     {
         $entry = new Writer\Entry();
 
@@ -275,22 +338,71 @@ class EntryTest extends TestCase
             'rel'         => 'subject',
             'country'     => 'GB',
         ];
-        $entry->setPodcastIndexLocation($location);
-        $this->assertEquals($location, $entry->getPodcastIndexLocation());
+        $entry->addPodcastIndexLocation($location);
+
+        /** @var list<LocationObject> $locations */
+        $locations = $entry->getPodcastIndexLocations();
+        $this->assertTrue(in_array($location, $locations));
     }
 
-    public function testSetLocationWithOneArgument(): void
+    public function testAddLocationWithAdditional(): void
+    {
+        $entry = new Writer\Entry();
+
+        $location = [
+            'description' => 'London, Baker Street',
+            'geo'         => 'geo:-27.86159,153.3169',
+            'osm'         => 'W43678282',
+            'rel'         => 'subject',
+            'country'     => 'GB',
+            'unwanted'    => 'data',
+        ];
+        $entry->addPodcastIndexLocation($location);
+
+        /** @var list<LocationObject> $locations */
+        $locations = $entry->getPodcastIndexLocations();
+        $this->assertArrayNotHasKey('unwanted', $locations[0]);
+    }
+
+    public function testSetLocations(): void
+    {
+        $entry = new Writer\Entry();
+
+        $location = [
+            [
+                'description' => 'London, Baker Street',
+                'geo'         => 'geo:-27.86159,153.3169',
+                'osm'         => 'W43678282',
+                'rel'         => 'creator',
+                'country'     => 'GB',
+            ],
+            [
+                'description' => 'Marlow',
+                'geo'         => 'geo:51.5718706,-0.7769654',
+                'osm'         => 'R3727240',
+                'rel'         => 'subject',
+                'country'     => 'US',
+            ],
+        ];
+        $entry->setPodcastIndexLocations($location);
+        $this->assertEquals($location, $entry->getPodcastIndexLocations());
+    }
+
+    public function testAddLocationWithOneArgument(): void
     {
         $entry = new Writer\Entry();
 
         $location = [
             'description' => 'London, Baker Street',
         ];
-        $entry->setPodcastIndexLocation($location);
-        $this->assertEquals($location, $entry->getPodcastIndexLocation());
+        $entry->addPodcastIndexLocation($location);
+
+        /** @var list<LocationObject> $locations */
+        $locations = $entry->getPodcastIndexLocations();
+        $this->assertTrue(in_array($location, $locations));
     }
 
-    public function testSetLocationThrowsExceptionOnInvalidArguments(): void
+    public function testAddLocationThrowsExceptionOnInvalidArguments(): void
     {
         $entry = new Writer\Entry();
 
@@ -298,10 +410,10 @@ class EntryTest extends TestCase
             'abc' => 'def',
         ];
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
-        $entry->setPodcastIndexLocation($location);
+        $entry->addPodcastIndexLocation($location);
     }
 
-    public function testSetLocationThrowsExceptionOnInvalidGeo(): void
+    public function testAddLocationThrowsExceptionOnInvalidGeo(): void
     {
         $entry = new Writer\Entry();
 
@@ -313,10 +425,10 @@ class EntryTest extends TestCase
             'country'     => 'GB',
         ];
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
-        $entry->setPodcastIndexLocation($location);
+        $entry->addPodcastIndexLocation($location);
     }
 
-    public function testSetLocationThrowsExceptionOnInvalidOsm(): void
+    public function testAddLocationThrowsExceptionOnInvalidOsm(): void
     {
         $entry = new Writer\Entry();
 
@@ -328,10 +440,10 @@ class EntryTest extends TestCase
             'country'     => 'GB',
         ];
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
-        $entry->setPodcastIndexLocation($location);
+        $entry->addPodcastIndexLocation($location);
     }
 
-    public function testSetLocationThrowsExceptionOnInvalidRel(): void
+    public function testAddLocationThrowsExceptionOnInvalidRel(): void
     {
         $entry = new Writer\Entry();
 
@@ -343,7 +455,7 @@ class EntryTest extends TestCase
             'country'     => 'GB',
         ];
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
-        $entry->setPodcastIndexLocation($location);
+        $entry->addPodcastIndexLocation($location);
     }
 
     public function testAddPerson(): void
@@ -362,6 +474,25 @@ class EntryTest extends TestCase
         /** @var list<PersonObject> $people */
         $people = $entry->getPodcastIndexPeople();
         $this->assertTrue(in_array($person, $people));
+    }
+
+    public function testAddPersonWithAdditional(): void
+    {
+        $entry = new Writer\Entry();
+
+        $person = [
+            'name'     => 'Hercules Poirot',
+            'role'     => 'guest',
+            'group'    => 'starring',
+            'img'      => 'https://poirot.com/about/my-moustage.jpg',
+            'href'     => 'https://poirot.com/my-cases',
+            'unwanted' => 'data',
+        ];
+        $entry->addPodcastIndexPerson($person);
+
+        /** @var list<PersonObject> $people */
+        $people = $entry->getPodcastIndexPeople();
+        $this->assertArrayNotHasKey('unwanted', $people[0]);
     }
 
     public function testSetPeopleAndSetPersons(): void
@@ -464,6 +595,22 @@ class EntryTest extends TestCase
         $this->assertTrue(in_array($txt, $txts));
     }
 
+    public function testAddTxtWithAdditional(): void
+    {
+        $entry = new Writer\Entry();
+
+        $txt = [
+            'value'    => 'S6lpp-7ZCn8-dZfGc-OoyaG',
+            'purpose'  => 'verify',
+            'unwanted' => 'data',
+        ];
+        $entry->addPodcastIndexTxt($txt);
+
+        /** @var list<array{value: string, purpose?: string}> $txts */
+        $txts = $entry->getPodcastIndexTxts();
+        $this->assertArrayNotHasKey('unwanted', $txts[0]);
+    }
+
     public function testSetTxts(): void
     {
         $entry = new Writer\Entry();
@@ -556,6 +703,27 @@ class EntryTest extends TestCase
         $this->assertEquals($data, $response);
     }
 
+    public function testSetSocialInteractsWithAdditional(): void
+    {
+        $entry = new Writer\Entry();
+
+        $data = [
+            [
+                'priority'   => 1,
+                'protocol'   => "activitypub",
+                'uri'        => "https://podcastindex.social/web/@dave/108013847520053258",
+                'accountId'  => "@dave",
+                'accountUrl' => "https://podcastindex.social/web/@dave",
+                'unwanted'   => 'data',
+            ],
+        ];
+        $entry->setPodcastIndexSocialInteracts($data);
+
+        /** @psalm-var list<SocialInteractObject> $response */
+        $response = $entry->getPodcastIndexSocialInteracts();
+        $this->assertArrayNotHasKey('unwanted', $response[0]);
+    }
+
     public function testAddSocialInteractThrowsExceptionOnInvalidUri(): void
     {
         $entry = new Writer\Entry();
@@ -643,7 +811,10 @@ class EntryTest extends TestCase
 
         /** @psalm-var list<ValueObject> $values */
         $values = $entry->getPodcastIndexValues();
+
         $this->assertContains($value, $values);
+        //$this->assertArrayNotHasKey('unwanted', $values[0]['valueTimeSplits'][0]);
+        //$this->assertArrayNotHasKey('unwanted', $values[0]['valueTimeSplits'][0]['valueRecipients'][0]);
     }
 
     public function testAddValueWithTimeSplitRemoteItems(): void
@@ -714,6 +885,48 @@ class EntryTest extends TestCase
         /** @psalm-var list<ValueObject> $values */
         $values = $entry->getPodcastIndexValues();
         $this->assertContains($value, $values);
+    }
+
+    public function testAddValueWithAdditional(): void
+    {
+        $entry = new Writer\Entry();
+
+        $value           = [
+            'type'     => "lightning",
+            'method'   => "keysend",
+            'unwanted' => 'data',
+        ];
+        $valueRecipients = [
+            [
+                'type'     => "node",
+                'address'  => "02d5c1bf8b940dc9cadca86d1b0a3c37fbe39cee4c7e839e33bef9174531d27f52",
+                'split'    => 40,
+                'unwanted' => 'data',
+            ],
+        ];
+        $valueTimeSplits = [
+            [
+                'startTime'  => 82,
+                'duration'   => 200,
+                'unwanted'   => 'data',
+                'remoteItem' => [
+                    'itemGuid' => "https://podcastindex.org/podcast/4148683#1",
+                    'feedGuid' => "a94f5cc9-8c58-55fc-91fe-a324087a655b",
+                    'medium'   => "music",
+                    'unwanted' => 'data',
+                ],
+            ],
+        ];
+        $entry->addPodcastIndexValue($value, $valueRecipients, $valueTimeSplits);
+        $value['valueRecipients'] = $valueRecipients;
+        $value['valueTimeSplits'] = $valueTimeSplits;
+
+        /** @psalm-var list<ValueObject> $values */
+        $values = $entry->getPodcastIndexValues();
+        $this->assertArrayNotHasKey('unwanted', $values[0]);
+        $this->assertArrayNotHasKey('unwanted', $values[0]['valueRecipients'][0]);
+        $this->assertArrayNotHasKey('unwanted', $values[0]['valueTimeSplits'][0]);
+        $this->assertArrayNotHasKey('unwanted', $values[0]['valueTimeSplits'][0]['remoteItem']);
     }
 
     public function testAddValueThrowsExceptionOnMissingRecipients(): void
@@ -838,6 +1051,20 @@ class EntryTest extends TestCase
         $this->assertEquals($season, $entry->getPodcastIndexSeason());
     }
 
+    public function testSetSeasonWithAdditional(): void
+    {
+        $entry = new Writer\Entry();
+
+        $season = [
+            'value'    => 3,
+            'name'     => 'The Yearling - Chapter 3',
+            'unwanted' => 'data',
+        ];
+        $entry->setPodcastIndexSeason($season);
+        $res = $entry->getPodcastIndexSeason();
+        $this->assertArrayNotHasKey('unwanted', $res);
+    }
+
     public function testSetSeasonThrowsExceptionOnInvalidArgument(): void
     {
         $entry = new Writer\Entry();
@@ -886,6 +1113,20 @@ class EntryTest extends TestCase
         ];
         $entry->setPodcastIndexEpisode($episode);
         $this->assertEquals($episode, $entry->getPodcastIndexEpisode());
+    }
+
+    public function testSetEpisodeWithAdditional(): void
+    {
+        $entry = new Writer\Entry();
+
+        $episode = [
+            'value'    => 3,
+            'display'  => 'Day 5',
+            'unwanted' => 'data',
+        ];
+        $entry->setPodcastIndexEpisode($episode);
+        $res = $entry->getPodcastIndexEpisode();
+        $this->assertArrayNotHasKey('unwanted', $res);
     }
 
     public function testSetEpisodeUsingDecimal(): void
@@ -995,6 +1236,37 @@ class EntryTest extends TestCase
         $this->assertEquals($alternateEnclosure, $actual[0]);
     }
 
+    public function testSetAlternateEnclosureWithAdditional(): void
+    {
+        $entry              = new Writer\Entry();
+        $sources            = [
+            [
+                'uri'      => 'ipfs://QmX33FYehk6ckGQ6g1D9D3FqZPix5JpKstKQKbaS8quUFb',
+                'unwanted' => 'data',
+            ],
+        ];
+        $alternateEnclosure = [
+            'type'     => 'video/mp4',
+            'unwanted' => 'data',
+        ];
+        $integrity          = [
+            'type'     => 'sri',
+            'value'    => 'sha384-ExVqijgYHm15PqQqdXfW95x+Rs6C+d6E/ICxyQOeFevnxNLR/wtJNrNYTjIysUBo',
+            'unwanted' => 'data',
+        ];
+
+        $entry->addPodcastIndexAlternateEnclosure($alternateEnclosure, $sources, $integrity);
+
+        $alternateEnclosure['sources']   = $sources;
+        $alternateEnclosure['integrity'] = $integrity;
+
+        /** @psalm-var list<AlternateEnclosureObject> $actual */
+        $actual = $entry->getPodcastIndexAlternateEnclosures();
+        $this->assertArrayNotHasKey('unwanted', $actual[0]);
+        $this->assertArrayNotHasKey('unwanted', $actual[0]['sources']);
+        $this->assertArrayNotHasKey('unwanted', $actual[0]['integrity']);
+    }
+
     public function testSetAlternateEnclosureThrowsExceptionOnInvalidArgument(): void
     {
         $entry   = new Writer\Entry();
@@ -1002,76 +1274,53 @@ class EntryTest extends TestCase
             ['uri' => 'ipfs://QmX33FYehk6ckGQ6g1D9D3FqZPix5JpKstKQKbaS8quUFb'],
         ];
 
-        // missing type
-        $alternateEnclosure = [
-            'something_wrong' => 1234,
+        $invalidEnclosures = [
+            [
+                'something_wrong' => 1234,
+            ],
+            [
+                'type'   => 'video/mp4',
+                'length' => '7924786 seconds',
+            ],
+            [
+                'type'    => 'video/mp4',
+                'bitrate' => '511276.52',
+            ],
+            [
+                'type'   => 'video/mp4',
+                'height' => '720px',
+            ],
+            [
+                'type' => 'video/mp4',
+                'lang' => 1234,
+            ],
+            [
+                'type'  => 'video/mp4',
+                'title' => false,
+            ],
+            [
+                'type' => 'video/mp4',
+                'rel'  => true,
+            ],
+            [
+                'type'   => 'video/mp4',
+                'codecs' => true,
+            ],
+            [
+                'type'    => 'video/mp4',
+                'default' => 'yes',
+            ],
         ];
-        $this->expectException(Writer\Exception\InvalidArgumentException::class);
-        $entry->addPodcastIndexAlternateEnclosure($alternateEnclosure, $sources);
 
-        // invalid length
-        $alternateEnclosure = [
-            'type'   => 'video/mp4',
-            'length' => '7924786 seconds',
-        ];
-        $this->expectException(Writer\Exception\InvalidArgumentException::class);
-        $entry->addPodcastIndexAlternateEnclosure($alternateEnclosure, $sources);
-
-        // invalid bitrate
-        $alternateEnclosure = [
-            'type'    => 'video/mp4',
-            'bitrate' => '511276.52',
-        ];
-        $this->expectException(Writer\Exception\InvalidArgumentException::class);
-        $entry->addPodcastIndexAlternateEnclosure($alternateEnclosure, $sources);
-
-        // invalid height
-        $alternateEnclosure = [
-            'type'   => 'video/mp4',
-            'height' => '720px',
-        ];
-        $this->expectException(Writer\Exception\InvalidArgumentException::class);
-        $entry->addPodcastIndexAlternateEnclosure($alternateEnclosure, $sources);
-
-        // invalid lang
-        $alternateEnclosure = [
-            'type' => 'video/mp4',
-            'lang' => 1234,
-        ];
-        $this->expectException(Writer\Exception\InvalidArgumentException::class);
-        $entry->addPodcastIndexAlternateEnclosure($alternateEnclosure, $sources);
-
-        // invalid title
-        $alternateEnclosure = [
-            'type'  => 'video/mp4',
-            'title' => false,
-        ];
-        $this->expectException(Writer\Exception\InvalidArgumentException::class);
-        $entry->addPodcastIndexAlternateEnclosure($alternateEnclosure, $sources);
-
-        // invalid rel
-        $alternateEnclosure = [
-            'type' => 'video/mp4',
-            'rel'  => true,
-        ];
-        $this->expectException(Writer\Exception\InvalidArgumentException::class);
-        $entry->addPodcastIndexAlternateEnclosure($alternateEnclosure, $sources);
-
-        // invalid codecs
-        $alternateEnclosure = [
-            'type'   => 'video/mp4',
-            'codecs' => true,
-        ];
-        $this->expectException(Writer\Exception\InvalidArgumentException::class);
-        $entry->addPodcastIndexAlternateEnclosure($alternateEnclosure, $sources);
-
-        // invalid default
-        $alternateEnclosure = [
-            'type'    => 'video/mp4',
-            'default' => 'yes',
-        ];
-        $this->expectException(Writer\Exception\InvalidArgumentException::class);
-        $entry->addPodcastIndexAlternateEnclosure($alternateEnclosure, $sources);
+        foreach ($invalidEnclosures as $alternateEnclosure) {
+            try {
+                $entry->addPodcastIndexAlternateEnclosure($alternateEnclosure, $sources);
+                $invalidKey = array_key_first(array_diff_key($alternateEnclosure, ['type' => true]));
+                $this->assertTrue(false, "Expected exception was not thrown on the invalid key `$invalidKey`");
+            } catch (Writer\Exception\InvalidArgumentException $e) {
+                $this->assertTrue(true);
+            }
+        }
     }
 
     public function testSetAlternateEnclosureThrowsExceptionOnMissingSources(): void
@@ -1098,5 +1347,288 @@ class EntryTest extends TestCase
 
         $this->expectException(Writer\Exception\InvalidArgumentException::class);
         $entry->addPodcastIndexAlternateEnclosure($alternateEnclosure, $sources);
+    }
+
+    public function testSetDetailedImages(): void
+    {
+        $entry  = new Writer\Entry();
+        $images = [
+            [
+                'alt'         => "An antenna emanating signal waves",
+                'purpose'     => "artwork",
+                'type'        => "image/jpeg",
+                'aspectRatio' => "1/1",
+                'href'        => "https://example.com/images/ep1/pci_square-massive.jpg",
+                'width'       => 1400,
+                'height'      => 1400,
+            ],
+            [
+                'alt'         => "Another antenna emanating signal waves",
+                'purpose'     => "artwork social",
+                'type'        => "image/jpeg",
+                'aspectRatio' => "16/9",
+                'href'        => "https://example.com/images/ep1/pci_landscape-massive_wide.jpg",
+            ],
+        ];
+
+        $entry->setPodcastIndexDetailedImages($images);
+        $this->assertEquals($images, $entry->getPodcastIndexDetailedImages());
+    }
+
+    public function testSetDetailedImagesWithAdditional(): void
+    {
+        $entry  = new Writer\Entry();
+        $images = [
+            [
+                'alt'         => "An antenna emanating signal waves",
+                'purpose'     => "artwork",
+                'type'        => "image/jpeg",
+                'aspectRatio' => "1/1",
+                'href'        => "https://example.com/images/ep1/pci_square-massive.jpg",
+                'width'       => 1400,
+                'height'      => 1400,
+                'unwanted'    => 'data',
+            ],
+        ];
+
+        $entry->setPodcastIndexDetailedImages($images);
+        $res = $entry->getPodcastIndexDetailedImages();
+        $this->assertArrayNotHasKey('unwanted', $res[0]);
+    }
+
+    public function testSetContentLinks(): void
+    {
+        $entry = new Writer\Entry();
+
+        $contentLinks = [
+            [
+                'href'        => 'https://youtube.com/pc20/livestream',
+                'description' => 'YouTube!',
+            ],
+            [
+                'href'        => 'https://twitch.com/pc20/livestream',
+                'description' => 'Twitch!',
+            ],
+        ];
+
+        $entry->setPodcastIndexContentLinks($contentLinks);
+
+        /** @psalm-var list<ContentLinkObject> $actual */
+        $actual = $entry->getPodcastIndexContentLinks();
+        $this->assertEquals($contentLinks[0], $actual[0]);
+        $this->assertEquals($contentLinks[1], $actual[1]);
+    }
+
+    public function testSetContentLinksWithAdditional(): void
+    {
+        $entry = new Writer\Entry();
+
+        $contentLinks = [
+            [
+                'href'        => 'https://youtube.com/pc20/livestream',
+                'description' => 'YouTube!',
+                'unwanted'    => 'data',
+            ],
+        ];
+
+        $entry->setPodcastIndexContentLinks($contentLinks);
+
+        /** @psalm-var list<ContentLinkObject> $actual */
+        $actual = $entry->getPodcastIndexContentLinks();
+        $this->assertArrayNotHasKey('unwanted', $actual[0]);
+    }
+
+    public function testAddContentLinkThrowsExceptionOnMissingDescription(): void
+    {
+        $entry = new Writer\Entry();
+
+        $contentLink = [
+            'href' => 'https://youtube.com/pc20/livestream',
+        ];
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $entry->addPodcastIndexContentLink($contentLink);
+    }
+
+    public function testAddContentLinkThrowsExceptionOnInvalidHref(): void
+    {
+        $entry = new Writer\Entry();
+
+        $contentLink = [
+            'href'        => 'youtube.com/pc20/livestream',
+            'description' => 'YouTube!',
+        ];
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $entry->addPodcastIndexContentLink($contentLink);
+    }
+
+    public function testAddContentLinkThrowsExceptionOnInvalidDescription(): void
+    {
+        $entry = new Writer\Entry();
+
+        $contentLink = [
+            'href'        => 'https://youtube.com/pc20/livestream',
+            'description' => true,
+        ];
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $entry->addPodcastIndexContentLink($contentLink);
+    }
+
+    public function testAddFunding(): void
+    {
+        $entry = new Writer\Entry();
+
+        $funding = [
+            'title' => 'Support the show!',
+            'url'   => 'http://example.com/donate',
+        ];
+        $entry->addPodcastIndexFunding($funding);
+        /** @var array $fundings */
+        $fundings = $entry->getPodcastIndexFundings();
+        $this->assertEquals($funding, $fundings[0]);
+    }
+
+    public function testAddFundingWithAdditional(): void
+    {
+        $entry = new Writer\Entry();
+
+        $funding = [
+            'title'    => 'Support the show!',
+            'url'      => 'http://example.com/donate',
+            'unwanted' => 'data',
+        ];
+        $entry->addPodcastIndexFunding($funding);
+        /** @var array $fundings */
+        $fundings = $entry->getPodcastIndexFundings();
+        $this->assertArrayNotHasKey('unwanted', $fundings[0]);
+    }
+
+    public function testAddFundingThrowsExceptionOnInvalidArguments(): void
+    {
+        $entry = new Writer\Entry();
+
+        $funding = [
+            'abc' => 'def',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $entry->addPodcastIndexFunding($funding);
+    }
+
+    public function testAddFundingThrowsExceptionOnInvalidUrl(): void
+    {
+        $entry = new Writer\Entry();
+
+        $funding = [
+            'title' => 'Support the show!',
+            'url'   => 'example.com/donate',
+        ];
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $entry->addPodcastIndexFunding($funding);
+    }
+
+    public function testSetFundings(): void
+    {
+        $entry = new Writer\Entry();
+
+        $fundings = [
+            [
+                'title' => 'Support the show!',
+                'url'   => 'http://example.com/donate',
+            ],
+            [
+                'title' => 'Buy me a coffee',
+                'url'   => 'http://example.com/coffee',
+            ],
+        ];
+        $entry->setPodcastIndexFundings($fundings);
+        $this->assertEquals($fundings, $entry->getPodcastIndexFundings());
+    }
+
+    public function testSetChat(): void
+    {
+        $entry = new Writer\Entry();
+
+        $data = [
+            'server'    => "irc.zeronode.net",
+            'protocol'  => "irc",
+            'accountId' => "@jsmith",
+            'space'     => "#myawesomepodcast",
+        ];
+
+        $entry->setPodcastIndexChat($data);
+        $this->assertEquals($data, $entry->getPodcastIndexChat());
+    }
+
+    public function testSetChatWithAdditional(): void
+    {
+        $entry = new Writer\Entry();
+
+        $data = [
+            'server'    => "irc.zeronode.net",
+            'protocol'  => "irc",
+            'accountId' => "@jsmith",
+            'space'     => "#myawesomepodcast",
+            'unwanted'  => 'data',
+        ];
+
+        $entry->setPodcastIndexChat($data);
+        $this->assertArrayNotHasKey('unwanted', $entry->getPodcastIndexChat());
+    }
+
+    public function testSetPodcastIndexChatWithMinimalData(): void
+    {
+        $entry = new Writer\Entry();
+
+        $data = [
+            'server'   => "irc.zeronode.net",
+            'protocol' => "irc",
+        ];
+
+        $entry->setPodcastIndexChat($data);
+        $this->assertEquals($data, $entry->getPodcastIndexChat());
+    }
+
+    public function testSetPodcastIndexChatThrowsExceptionOnInvalidArgument(): void
+    {
+        $entry = new Writer\Entry();
+
+        $data = [
+            'abc' => 123,
+        ];
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $entry->setPodcastIndexChat($data);
+    }
+
+    public function testSetPodcastIndexChatThrowsExceptionOnInvalidServer(): void
+    {
+        $entry = new Writer\Entry();
+
+        $data = [
+            'server'    => 123,
+            'protocol'  => "irc",
+            'accountId' => "@jsmith",
+            'space'     => "#myawesomepodcast",
+        ];
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $entry->setPodcastIndexChat($data);
+    }
+
+    public function testSetPodcastIndexChatThrowsExceptionOnInvalidSpace(): void
+    {
+        $entry = new Writer\Entry();
+
+        $data = [
+            'server'    => 'server_name',
+            'protocol'  => "irc",
+            'accountId' => "@jsmith",
+            'space'     => true,
+        ];
+
+        $this->expectException(Writer\Exception\InvalidArgumentException::class);
+        $entry->setPodcastIndexChat($data);
     }
 }

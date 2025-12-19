@@ -7,13 +7,18 @@ namespace Laminas\Feed\Writer\Extension\PodcastIndex;
 use DateTimeInterface;
 use Laminas\Feed\Writer;
 
+use function array_flip;
+use function array_intersect_key;
 use function count;
+use function ctype_alpha;
 use function filter_var;
 use function in_array;
 use function is_bool;
 use function is_float;
 use function is_int;
+use function is_numeric;
 use function is_string;
+use function strlen;
 
 use const FILTER_VALIDATE_URL;
 
@@ -22,6 +27,19 @@ use const FILTER_VALIDATE_URL;
  * This class is internal to the library and should not be referenced by consumer code.
  * Backwards Incompatible changes can occur in Minor and Patch Releases.
  *
+ * @internal
+ *
+ * @psalm-internal Laminas\Feed
+ * @psalm-internal LaminasTest\Feed
+ *
+ * @psalm-type LockedArray = array{
+ *        value: string,
+ *        owner: string
+ *      }
+ * @psalm-type FundingArray = array{
+ *        title: string,
+ *        url: string
+ *      }
  * @psalm-type LicenseArray = array{
  *       identifier: string,
  *       url?: string
@@ -156,19 +174,104 @@ use const FILTER_VALIDATE_URL;
  *       sources?: list<SourceArray>,
  *       integrity?: IntegrityArray,
  *     }
- * @psalm-internal Laminas\Feed
- * @psalm-internal LaminasTest\Feed
+ * @psalm-type LiveItemArray = array{
+ *        status: string,
+ *        start: string,
+ *        end?: string
+ *      }
+ * @psalm-type ContentLinkArray = array{
+ *         href: string,
+ *         description: string,
+ *       }
+ * @psalm-type ChatArray = array{
+ *         server: string,
+ *         protocol: string,
+ *         accountId?: string,
+ *         space?: string,
+ *       }
  */
 final class Validator
 {
     /**
+     * Validate locked
+     *
+     * @param array<array-key, mixed> $value
+     * @return LockedArray
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public static function validateLocked(array $value): array
+    {
+        if (! isset($value['value']) || ! isset($value['owner'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "locked" must be an array containing keys "value" and "owner"'
+            );
+        }
+        if (
+            ! is_string($value['value'])
+            || ! ctype_alpha($value['value']) && strlen($value['value']) > 0
+        ) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "value" of "locked" may only contain alphabetic characters'
+            );
+        }
+        if (! is_string($value['owner'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "owner" of "locked" must be of type string'
+            );
+        }
+
+        /** @var LockedArray $value */
+        $value = array_intersect_key($value, array_flip(['value', 'owner']));
+        return $value;
+    }
+
+    /**
+     * Validate transcript
+     *
+     * @param array<array-key, mixed> $value
+     * @return TranscriptArray
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public static function validateTranscript(array $value): array
+    {
+        if (! isset($value['url']) || ! isset($value['type'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "transcript" must be an array containing keys'
+                . ' "url" and "type" and optionally "language" and "rel"'
+            );
+        }
+        /** @var TranscriptArray $value */
+        $value = array_intersect_key($value, array_flip(['url', 'type', 'language', 'rel']));
+        return $value;
+    }
+
+    /**
+     * Validate chapters
+     *
+     * @param array<array-key, mixed> $value
+     * @return ChaptersArray
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public static function validateChapters(array $value): array
+    {
+        if (! isset($value['url']) || ! isset($value['type'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "chapters" must be an array containing keys "url" and "type"'
+            );
+        }
+        /** @var ChaptersArray $value */
+        $value = array_intersect_key($value, array_flip(['url', 'type']));
+        return $value;
+    }
+
+    /**
      * Validate person
      *
      * @param array<array-key, mixed> $value
-     * @psalm-assert PersonArray $value
+     * @return PersonArray
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public static function validatePerson(array $value): void
+    public static function validatePerson(array $value): array
     {
         if (! isset($value['name'])) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -200,16 +303,19 @@ final class Validator
                 'invalid parameter: key "href" of "person" must be a url, starting with "http://" or "https://"'
             );
         }
+        /** @var PersonArray $value */
+        $value = array_intersect_key($value, array_flip(['name', 'role', 'group', 'img', 'href']));
+        return $value;
     }
 
     /**
      * Validate license
      *
      * @param array<array-key, mixed> $value
-     * @psalm-assert LicenseArray $value
+     * @return LicenseArray
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public static function validateLicense(array $value): void
+    public static function validateLicense(array $value): array
     {
         if (! isset($value['identifier'], $value['url'])) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -226,16 +332,48 @@ final class Validator
                 'invalid parameter: "url" of "license": must be a url starting with "http://" or "https://"'
             );
         }
+        /** @var LicenseArray $value */
+        $value = array_intersect_key($value, array_flip(['identifier', 'url']));
+        return $value;
+    }
+
+    /**
+     * Validate funding
+     *
+     * @param array<array-key, mixed> $value
+     * @return FundingArray
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public static function validateFunding(array $value): array
+    {
+        if (! isset($value['title'], $value['url'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "funding" must be an array containing keys "title" and "url"'
+            );
+        }
+        if (! is_string($value['title'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "title" of "funding" must be of type string.'
+            );
+        }
+        if (! is_string($value['url']) || ! filter_var($value['url'], FILTER_VALIDATE_URL)) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "url" of "funding": must be a url starting with "http://" or "https://"'
+            );
+        }
+        /** @var FundingArray $value */
+        $value = array_intersect_key($value, array_flip(['title', 'url']));
+        return $value;
     }
 
     /**
      * Validate location
      *
      * @param array<array-key, mixed> $value
-     * @psalm-assert LocationArray $value
+     * @return LocationArray
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public static function validateLocation(array $value): void
+    public static function validateLocation(array $value): array
     {
         if (! isset($value['description'])) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -267,16 +405,19 @@ final class Validator
                 'invalid parameter: key "country" of "location" must be of type string. example: "US"'
             );
         }
+        /** @var LocationArray $value */
+        $value = array_intersect_key($value, array_flip(['description', 'geo', 'osm', 'rel', 'country']));
+        return $value;
     }
 
     /**
      * Validates txt
      *
      * @param array<array-key, mixed> $value
-     * @psalm-assert TxtArray $value
+     * @return TxtArray
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public static function validateTxt(array $value): void
+    public static function validateTxt(array $value): array
     {
         if (! isset($value['value'])) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -293,16 +434,19 @@ final class Validator
                 'invalid parameter: key "purpose" of "txt" must be of type string'
             );
         }
+        /** @var TxtArray $value */
+        $value = array_intersect_key($value, array_flip(['value', 'purpose']));
+        return $value;
     }
 
     /**
      * Validates images srcset
      *
      * @param array<array-key, mixed> $value
-     * @psalm-assert ImagesArray $value
+     * @return ImagesArray
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public static function validateImages(array $value): void
+    public static function validateImages(array $value): array
     {
         if (! isset($value['srcset'])) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -314,16 +458,19 @@ final class Validator
                 'invalid parameter: key "srcset" of "images" must be of type string containing comma-seperated urls'
             );
         }
+        /** @var ImagesArray $value */
+        $value = array_intersect_key($value, array_flip(['srcset']));
+        return $value;
     }
 
     /**
      * Validates image
      *
      * @param array<array-key, mixed> $value
-     * @psalm-assert DetailedImageArray $value
+     * @return DetailedImageArray
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public static function validateDetailedImage(array $value): void
+    public static function validateDetailedImage(array $value): array
     {
         if (! isset($value['href'])) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -365,16 +512,27 @@ final class Validator
                 'invalid parameter: key "purpose" of "image" must be of type string'
             );
         }
+        /** @var DetailedImageArray $value */
+        $value = array_intersect_key($value, array_flip([
+            'href',
+            'alt',
+            'purpose',
+            'type',
+            'aspectRatio',
+            'width',
+            'height',
+        ]));
+        return $value;
     }
 
     /**
      * Validates update frequency
      *
      * @param array<array-key, mixed> $value
-     * @psalm-assert UpdateFrequencyArray $value
+     * @return UpdateFrequencyArray
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public static function validateUpdateFrequency(array $value): void
+    public static function validateUpdateFrequency(array $value): array
     {
         if (! isset($value['description'])) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -401,16 +559,19 @@ final class Validator
                 'invalid parameter: key "rrule" of "updateFrequency" must be of type string'
             );
         }
+        /** @var UpdateFrequencyArray $value */
+        $value = array_intersect_key($value, array_flip(['description', 'complete', 'dtstart', 'rrule']));
+        return $value;
     }
 
     /**
      * Validates trailer
      *
      * @param array<array-key, mixed> $value
-     * @psalm-assert TrailerArray $value
+     * @return TrailerArray
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public static function validateTrailer(array $value): void
+    public static function validateTrailer(array $value): array
     {
         if (! isset($value['title']) || ! isset($value['pubdate']) || ! isset($value['url'])) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -447,16 +608,19 @@ final class Validator
                 'invalid parameter: key "season" of "trailer" must be of type integer'
             );
         }
+        /** @var TrailerArray $value */
+        $value = array_intersect_key($value, array_flip(['title', 'pubdate', 'url', 'length', 'type', 'season']));
+        return $value;
     }
 
     /**
      * Validates social interact
      *
      * @param array<array-key, mixed> $value
-     * @psalm-assert SocialInteractArray $value
+     * @return SocialInteractArray
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public static function validateSocialInteract(array $value): void
+    public static function validateSocialInteract(array $value): array
     {
         if (! isset($value['protocol'], $value['uri'])) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -489,16 +653,19 @@ final class Validator
                 starting with "http://" or "https://"'
             );
         }
+        /** @var SocialInteractArray $value */
+        $value = array_intersect_key($value, array_flip(['protocol', 'uri', 'priority', 'accountId', 'accountUrl']));
+        return $value;
     }
 
     /**
      * Validates guid
      *
      * @param array<array-key, mixed> $value
-     * @psalm-assert array{value: string} $value
+     * @return array{value: string}
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public static function validateGuid(array $value): void
+    public static function validateGuid(array $value): array
     {
         if (! isset($value['value'])) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -510,16 +677,19 @@ final class Validator
                 'invalid parameter: key "value" of "guid" must be a UUIDv5 string'
             );
         }
+        /** @var array{value: string} $value */
+        $value = array_intersect_key($value, array_flip(['value']));
+        return $value;
     }
 
     /**
      * Validates medium
      *
      * @param array<array-key, mixed> $value
-     * @psalm-assert array{value: string} $value
+     * @return array{value: string}
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public static function validateMedium(array $value): void
+    public static function validateMedium(array $value): array
     {
         if (! isset($value['value'])) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -531,16 +701,19 @@ final class Validator
                 'invalid parameter: key "value" of "medium" must be a UUIDv5 string'
             );
         }
+        /** @var array{value: string} $value */
+        $value = array_intersect_key($value, array_flip(['value']));
+        return $value;
     }
 
     /**
      * Validates block
      *
      * @param array<array-key, mixed> $value
-     * @psalm-assert BlockArray $value
+     * @return BlockArray
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public static function validateBlock(array $value): void
+    public static function validateBlock(array $value): array
     {
         if (! isset($value['value'])) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -557,16 +730,19 @@ final class Validator
                 'invalid parameter: key "id" of "block" must be of type string'
             );
         }
+        /** @var BlockArray $value */
+        $value = array_intersect_key($value, array_flip(['value', 'id']));
+        return $value;
     }
 
     /**
      * Validates block
      *
      * @param array<array-key, mixed> $value
-     * @psalm-assert array{usesPodping: bool} $value
+     * @return array{usesPodping: bool}
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public static function validatePodping(array $value): void
+    public static function validatePodping(array $value): array
     {
         if (! isset($value['usesPodping'])) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -578,16 +754,19 @@ final class Validator
                 'invalid parameter: key "usesPodping" of "podping" must be of type boolean'
             );
         }
+        /** @var array{usesPodping: bool} $value */
+        $value = array_intersect_key($value, array_flip(['usesPodping']));
+        return $value;
     }
 
     /**
      * Validate the values of the remote item.
      *
      * @param array<array-key, mixed> $value
-     * @psalm-assert RemoteItemArray $value
+     * @return RemoteItemArray
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public static function validateRemoteItem(array $value): void
+    public static function validateRemoteItem(array $value): array
     {
         if (! isset($value['feedGuid'])) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -622,16 +801,19 @@ final class Validator
                 'invalid parameter: key "title" of "remoteItem" must be of type string'
             );
         }
+        /** @var RemoteItemArray $value */
+        $value = array_intersect_key($value, array_flip(['feedGuid', 'feedUrl', 'itemGuid', 'medium', 'title']));
+        return $value;
     }
 
     /**
      * Validates value
      *
      * @param array<array-key, mixed> $value
-     * @psalm-assert ValueArray $value
+     * @return ValueArray
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public static function validateValue(array $value): void
+    public static function validateValue(array $value): array
     {
         if (! isset($value['type'], $value['method'])) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -654,16 +836,25 @@ final class Validator
                 'invalid parameter: key "suggested" of "value" must be of type float'
             );
         }
+        /** @var ValueArray $value */
+        $value = array_intersect_key($value, array_flip([
+            'type',
+            'method',
+            'suggested',
+            'valueRecipients',
+            'valueTimeSplits',
+        ]));
+        return $value;
     }
 
     /**
      * Validates valueRecipient
      *
      * @param array<array-key, mixed> $value
-     * @psalm-assert ValueRecipientArray $value
+     * @return ValueRecipientArray
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public static function validateValueRecipient(array $value): void
+    public static function validateValueRecipient(array $value): array
     {
         if (! isset($value['type'], $value['address'], $value['split'])) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -706,16 +897,27 @@ final class Validator
                 'invalid parameter: key "fee" of "valueRecipient" must be of type boolean'
             );
         }
+        /** @var ValueRecipientArray $value */
+        $value = array_intersect_key($value, array_flip([
+            'type',
+            'address',
+            'split',
+            'name',
+            'customKey',
+            'customValue',
+            'fee',
+        ]));
+        return $value;
     }
 
     /**
      * Validate the attributes of the value time split.
      *
      * @param array<array-key, mixed> $value
-     * @psalm-assert ValueTimeSplitArray $value
+     * @return ValueTimeSplitArray
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public static function validateValueTimeSplit(array $value): void
+    public static function validateValueTimeSplit(array $value): array
     {
         if (! isset($value['startTime'], $value['duration'])) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -742,7 +944,6 @@ final class Validator
                 'invalid parameter: key "remotePercentage" of "valueTimeSplit" must be of type integer'
             );
         }
-
         /** @var list<array<array-key, mixed>> $valueRecipients */
         $valueRecipients = $value['valueRecipients'] ?? [];
 
@@ -752,6 +953,14 @@ final class Validator
         // check that exactly one of valueRecipients or remoteItem is set
         $usesRecipients = count($valueRecipients) > 0;
         $usesRemoteItem = count($remoteItem) > 0;
+
+        /** @var ValueTimeSplitArray $value */
+        $value = array_intersect_key($value, array_flip([
+            'startTime',
+            'duration',
+            'remoteStartTime',
+            'remotePercentage',
+        ]));
 
         if (! $usesRecipients && ! $usesRemoteItem) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -764,22 +973,24 @@ final class Validator
             );
         }
         if ($usesRecipients) {
+            $value['valueRecipients'] = [];
             foreach ($valueRecipients as $valueRecipient) {
-                self::validateValueRecipient($valueRecipient);
+                $value['valueRecipients'][] = self::validateValueRecipient($valueRecipient);
             }
         } else {
-            self::validateRemoteItem($remoteItem);
+            $value['remoteItem'] = self::validateRemoteItem($remoteItem);
         }
+        return $value;
     }
 
     /**
      * Validates alternate enclosure
      *
      * @param array<array-key, mixed> $value
-     * @psalm-assert AlternateEnclosureArray $value
+     * @return AlternateEnclosureArray
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public static function validateAlternateEnclosure(array $value): void
+    public static function validateAlternateEnclosure(array $value): array
     {
         if (! isset($value['type'])) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -831,16 +1042,29 @@ final class Validator
                 'invalid parameter: key "default" of "alternateEnclosure" must be of type boolean'
             );
         }
+        /** @var AlternateEnclosureArray $value */
+        $value = array_intersect_key($value, array_flip([
+            'type',
+            'length',
+            'bitrate',
+            'height',
+            'lang',
+            'title',
+            'rel',
+            'codecs',
+            'default',
+        ]));
+        return $value;
     }
 
     /**
      * Validates source
      *
      * @param array<array-key, mixed> $value
-     * @psalm-assert SourceArray $value
+     * @return SourceArray
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public static function validateSource(array $value): void
+    public static function validateSource(array $value): array
     {
         if (! isset($value['uri'])) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -857,16 +1081,19 @@ final class Validator
                 'invalid parameter: key "contentType" of "source" must be of type string'
             );
         }
+        /** @var SourceArray $value */
+        $value = array_intersect_key($value, array_flip(['uri', 'contentType']));
+        return $value;
     }
 
     /**
      * Validates integrity
      *
      * @param array<array-key, mixed> $value
-     * @psalm-assert IntegrityArray $value
+     * @return IntegrityArray
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public static function validateIntegrity(array $value): void
+    public static function validateIntegrity(array $value): array
     {
         if (! isset($value['type'], $value['value'])) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -883,16 +1110,19 @@ final class Validator
                 'invalid parameter: key "value" of "integrity" must be of type string'
             );
         }
+        /** @var IntegrityArray $value */
+        $value = array_intersect_key($value, array_flip(['type', 'value']));
+        return $value;
     }
 
     /**
      * Validates season
      *
      * @param array<array-key, mixed> $value
-     * @psalm-assert SeasonArray $value
+     * @return SeasonArray
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public static function validateSeason(array $value): void
+    public static function validateSeason(array $value): array
     {
         if (! isset($value['value'])) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -909,16 +1139,20 @@ final class Validator
                 'invalid parameter: "name" of "season" must be of type string'
             );
         }
+
+        /** @var SeasonArray $value */
+        $value = array_intersect_key($value, array_flip(['value', 'name']));
+        return $value;
     }
 
     /**
      * Validates episode
      *
      * @param array<array-key, mixed> $value
-     * @psalm-assert EpisodeArray $value
+     * @return EpisodeArray
      * @throws Writer\Exception\InvalidArgumentException
      */
-    public static function validateEpisode(array $value): void
+    public static function validateEpisode(array $value): array
     {
         if (! isset($value['value'])) {
             throw new Writer\Exception\InvalidArgumentException(
@@ -935,5 +1169,147 @@ final class Validator
                 'invalid parameter: "display" of "episode" must be of type string'
             );
         }
+        /** @var EpisodeArray $value */
+        $value = array_intersect_key($value, array_flip(['value', 'display']));
+        return $value;
+    }
+
+    /**
+     * Validates live item
+     *
+     * @param array<array-key, mixed> $value
+     * @return LiveItemArray
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public static function validateLiveItem(array $value): array
+    {
+        if (! isset($value['status'], $value['start'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "liveItem" must be an array containing at least the keys "status" and "start"'
+            );
+        }
+        if (! is_string($value['status'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "status" of "liveItem" must be of type string'
+            );
+        }
+        if (! is_string($value['start'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "start" of "liveItem" must be of type string'
+            );
+        }
+        if (isset($value['end']) && ! is_string($value['end'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "end" of "liveItem" must be of type string'
+            );
+        }
+
+        /** @var LiveItemArray $value */
+        $value = array_intersect_key($value, array_flip(['status', 'start', 'end']));
+        return $value;
+    }
+
+    /**
+     * Validates content link
+     *
+     * @param array<array-key, mixed> $value
+     * @return ContentLinkArray
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public static function validateContentLink(array $value): array
+    {
+        if (! isset($value['href'], $value['description'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "contentLink" must be an array containing the keys "href" and "description"'
+            );
+        }
+        if (! filter_var($value['href'], FILTER_VALIDATE_URL)) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "href" of "contentLink" must be a url, starting with "http://" or "https://"'
+            );
+        }
+        if (! is_string($value['description'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "description" of "contentLink" must be of type string'
+            );
+        }
+        /** @var ContentLinkArray $value */
+        $value = array_intersect_key($value, array_flip(['href', 'description']));
+        return $value;
+    }
+
+    /**
+     * Validates chat
+     *
+     * @param array<array-key, mixed> $value
+     * @return ChatArray
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public static function validateChat(array $value): array
+    {
+        if (! isset($value['server'], $value['protocol'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "chat" must be an array containing at least the keys "server" and "protocol"'
+            );
+        }
+        if (! is_string($value['server'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "server" of "chat" must be of type string'
+            );
+        }
+        if (! is_string($value['protocol'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "protocol" of "chat" must be of type string'
+            );
+        }
+        if (isset($value['accountId']) && ! is_string($value['accountId'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "accountId" of "chat" must be of type string'
+            );
+        }
+        if (isset($value['space']) && ! is_string($value['space'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: key "space" of "chat" must be of type string'
+            );
+        }
+        /** @var ChatArray $value */
+        $value = array_intersect_key($value, array_flip(['server', 'protocol', 'accountId', 'space']));
+        return $value;
+    }
+
+    /**
+     * Validates soundbite
+     *
+     * @param array<array-key, mixed> $value
+     * @return SoundbiteArray
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public static function validateSoundbite(array $value): array
+    {
+        if (! isset($value['startTime']) || ! isset($value['duration'])) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: any "soundbite" must be an array containing'
+                . ' keys "startTime" and "duration" and optionally "title"'
+            );
+        }
+        if (
+            ! is_string($value['startTime'])
+            || (! is_numeric($value['startTime']) && strlen($value['startTime']) > 0)
+        ) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "startTime" of "soundbite" may only contain numeric characters and dots'
+            );
+        }
+        if (
+            ! is_string($value['duration'])
+            || (! is_numeric($value['duration']) && strlen($value['duration']) > 0)
+        ) {
+            throw new Writer\Exception\InvalidArgumentException(
+                'invalid parameter: "duration" may only contain numeric characters and dots'
+            );
+        }
+        /** @var SoundbiteArray $value */
+        $value = array_intersect_key($value, array_flip(['startTime', 'duration', 'title']));
+        return $value;
     }
 }

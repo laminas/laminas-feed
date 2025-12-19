@@ -6,7 +6,7 @@ namespace Laminas\Feed\Reader\Extension\PodcastIndex;
 
 use DOMElement;
 use Laminas\Feed\Reader\Extension;
-use Laminas\Feed\Reader\Extension\PodcastIndex\AttributesReader;
+use Laminas\Feed\Reader\Extension\PodcastIndex\LiveItem as LiveItemReader;
 use stdClass;
 
 use function array_key_exists;
@@ -15,6 +15,7 @@ use function assert;
 /**
  * Describes PodcastIndex data of a RSS Feed
  *
+ * @psalm-import-type FundingObject from AttributesReader
  * @psalm-import-type LicenseObject from AttributesReader
  * @psalm-import-type LocationObject from AttributesReader
  * @psalm-import-type BlockObject from AttributesReader
@@ -28,6 +29,7 @@ use function assert;
  * @psalm-import-type ImagesObject from AttributesReader
  * @psalm-import-type DetailedImageObject from AttributesReader
  * @psalm-import-type SocialInteractObject from AttributesReader
+ * @psalm-import-type ChatObject from AttributesReader
  */
 class Feed extends Extension\AbstractFeed
 {
@@ -88,20 +90,24 @@ class Feed extends Extension\AbstractFeed
     }
 
     /**
-     * Get the entry funding link
+     * Get a single feed funding
+     *
+     * @deprecated Multiple `funding` tags are allowed now. Use `getPodcastIndexFundings()` instead.
      */
-    public function getFunding(): ?stdClass
+    public function getFunding(): object|null
     {
         return $this->getPodcastIndexFunding();
     }
 
     /**
-     * Get the entry funding link
+     * Get a single feed funding
+     *
+     * @deprecated Multiple `funding` tags are allowed now. Use `getPodcastIndexFundings()` instead.
      */
-    public function getPodcastIndexFunding(): ?stdClass
+    public function getPodcastIndexFunding(): object|null
     {
         if (array_key_exists('funding', $this->data)) {
-            /** @psalm-var stdClass */
+            /** @psalm-var null|FundingObject */
             return $this->data['funding'];
         }
 
@@ -112,14 +118,48 @@ class Feed extends Extension\AbstractFeed
         if ($nodeList->length > 0) {
             $item = $nodeList->item(0);
             assert($item instanceof DOMElement);
-            $funding        = new stdClass();
-            $funding->url   = $item->getAttribute('url');
-            $funding->title = $item->nodeValue;
+            $funding = AttributesReader::readFunding($item);
         }
 
         $this->data['funding'] = $funding;
 
         return $this->data['funding'];
+    }
+
+    /**
+     * Get multiple feed fundings
+     *
+     * @psalm-return list<FundingObject>
+     */
+    public function getPodcastIndexFundings(): array
+    {
+        $fundings = [];
+
+        // include deprecated single funding entry if exists
+        if (array_key_exists('fundings', $this->data) || array_key_exists('funding', $this->data)) {
+            /** @var list<FundingObject> $fundings */
+            $fundings = $this->data['fundings'] ?? [];
+            if (isset($this->data['funding'])) {
+                /** @var FundingObject $single */
+                $single     = $this->data['funding'];
+                $fundings[] = $single;
+            }
+            return $fundings;
+        }
+
+        $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:funding');
+
+        if ($nodeList->length > 0) {
+            foreach ($nodeList as $entry) {
+                assert($entry instanceof DOMElement);
+                $funding    = AttributesReader::readFunding($entry);
+                $fundings[] = $funding;
+            }
+        }
+
+        $this->data['fundings'] = $fundings;
+
+        return $this->data['fundings'];
     }
 
     /**
@@ -170,6 +210,42 @@ class Feed extends Extension\AbstractFeed
         $this->data['location'] = $location;
 
         return $this->data['location'];
+    }
+
+    /**
+     * Get multiple feed locations
+     *
+     * @psalm-return list<LocationObject>
+     */
+    public function getPodcastIndexLocations(): array
+    {
+        $locations = [];
+
+        // include deprecated single location entry if exists
+        if (array_key_exists('locations', $this->data) || array_key_exists('location', $this->data)) {
+            /** @var list<LocationObject> $locations */
+            $locations = $this->data['locations'] ?? [];
+            if (isset($this->data['location'])) {
+                /** @var LocationObject $single */
+                $single      = $this->data['location'];
+                $locations[] = $single;
+            }
+            return $locations;
+        }
+
+        $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:location');
+
+        if ($nodeList->length > 0) {
+            foreach ($nodeList as $entry) {
+                assert($entry instanceof DOMElement);
+                $location    = AttributesReader::readLocation($entry);
+                $locations[] = $location;
+            }
+        }
+
+        $this->data['locations'] = $locations;
+
+        return $this->data['locations'];
     }
 
     /**
@@ -620,6 +696,64 @@ class Feed extends Extension\AbstractFeed
         $this->data['socialInteracts'] = $socialInteracts;
 
         return $this->data['socialInteracts'];
+    }
+
+    /**
+     * Get the podcast live items
+     *
+     * @psalm-return list<LiveItemReader>
+     */
+    public function getPodcastIndexLiveItems(): array
+    {
+        if (array_key_exists('liveItems', $this->data)) {
+            /** @psalm-var list<LiveItemReader> */
+            return $this->data['liveItems'];
+        }
+
+        $liveItems = [];
+
+        $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:liveItem');
+
+        if ($nodeList->length > 0) {
+            $index = 0;
+            foreach ($nodeList as $entry) {
+                assert($entry instanceof DOMElement);
+                $reader = new LiveItemReader($entry, (string) $index, $this->getType());
+                $reader->setXpath($this->xpath);
+                $reader->setXpathPrefix('//podcast:liveItem[' . ($index + 1) . ']');
+                $liveItems[] = $reader;
+                $index++;
+            }
+        }
+
+        $this->data['liveItems'] = $liveItems;
+
+        return $this->data['liveItems'];
+    }
+
+    /**
+     * Get the podcast chat
+     *
+     * @return null|ChatObject
+     */
+    public function getPodcastIndexChat(): object|null
+    {
+        if (array_key_exists('chat', $this->data)) {
+            /** @psalm-var null|ChatObject */
+            return $this->data['chat'];
+        }
+
+        $object   = null;
+        $nodeList = $this->xpath->query($this->getXpathPrefix() . '/podcast:chat');
+
+        if ($nodeList->length > 0) {
+            $item = $nodeList->item(0);
+            assert($item instanceof DOMElement);
+            $object = AttributesReader::readChat($item);
+        }
+
+        $this->data['chat'] = $object;
+        return $this->data['chat'];
     }
 
     /**

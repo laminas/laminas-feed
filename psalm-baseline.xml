@@ -528,9 +528,7 @@
       <code><![CDATA[$entry->ownerDocument]]></code>
     </PossiblyNullPropertyAssignmentValue>
     <PossiblyUnusedMethod>
-      <code>__call</code>
       <code>getExtensions</code>
-      <code>getXpath</code>
       <code>saveXml</code>
     </PossiblyUnusedMethod>
     <PropertyNotSetInConstructor>
@@ -1586,6 +1584,9 @@
     </TooManyArguments>
   </file>
   <file src="src/Reader/Extension/PodcastIndex/Feed.php">
+    <DeprecatedMethod>
+      <code>getPodcastIndexFunding</code>
+    </DeprecatedMethod>
     <MixedAssignment>
       <code>$locked</code>
       <code>$owner</code>
@@ -1605,6 +1606,14 @@
       <code>query</code>
       <code>query</code>
     </TooManyArguments>
+  </file>
+  <file src="src/Reader/Extension/PodcastIndex/LiveItem.php">
+    <PossiblyUnusedMethod>
+      <code>registerNamespaces</code>
+    </PossiblyUnusedMethod>
+    <PropertyNotSetInConstructor>
+      <code>LiveItem</code>
+    </PropertyNotSetInConstructor>
   </file>
   <file src="src/Reader/Extension/Slash/Entry.php">
     <InvalidOperand>
@@ -3079,13 +3088,6 @@
     </TypeDoesNotContainType>
   </file>
   <file src="src/Writer/Extension/PodcastIndex/Entry.php">
-    <DocblockTypeContradiction>
-      <code><![CDATA[! is_string($value['duration'])]]></code>
-      <code><![CDATA[! is_string($value['startTime'])]]></code>
-    </DocblockTypeContradiction>
-    <MixedArrayAssignment>
-      <code><![CDATA[$this->data['soundbites'][]]]></code>
-    </MixedArrayAssignment>
     <PossiblyUnusedMethod>
       <code>__construct</code>
       <code>addPodcastIndexAlternateEnclosure</code>
@@ -3097,10 +3099,13 @@
       <code>resetPodcastIndexValues</code>
       <code>setEncoding</code>
       <code>setPodcastIndexChapters</code>
+      <code>setPodcastIndexChat</code>
+      <code>setPodcastIndexContentLinks</code>
       <code>setPodcastIndexDetailedImages</code>
       <code>setPodcastIndexEpisode</code>
+      <code>setPodcastIndexFundings</code>
       <code>setPodcastIndexLicense</code>
-      <code>setPodcastIndexLocation</code>
+      <code>setPodcastIndexLocations</code>
       <code>setPodcastIndexPersons</code>
       <code>setPodcastIndexSeason</code>
       <code>setPodcastIndexSocialInteracts</code>
@@ -3118,21 +3123,28 @@
   <file src="src/Writer/Extension/PodcastIndex/Feed.php">
     <PossiblyUnusedMethod>
       <code>__construct</code>
-      <code>addPodcastIndexPodrollRemoteItem</code>
+      <code>addPodcastIndexLiveItem</code>
       <code>addPodcastIndexValue</code>
-      <code>getEncoding</code>
+      <code>createPodcastIndexLiveItem</code>
       <code>getLockOwner</code>
+      <code>getPodcastIndexFundings</code>
+      <code>getPodcastIndexLiveItems</code>
+      <code>getPodcastIndexLocations</code>
       <code>getPodcastIndexPersons</code>
       <code>isLocked</code>
+      <code>removePodcastIndexLiveItem</code>
       <code>resetPodcastIndexValues</code>
       <code>setEncoding</code>
       <code>setPodcastIndexBlocks</code>
+      <code>setPodcastIndexChat</code>
       <code>setPodcastIndexDetailedImages</code>
       <code>setPodcastIndexFunding</code>
+      <code>setPodcastIndexFundings</code>
       <code>setPodcastIndexGuid</code>
       <code>setPodcastIndexImages</code>
       <code>setPodcastIndexLicense</code>
       <code>setPodcastIndexLocation</code>
+      <code>setPodcastIndexLocations</code>
       <code>setPodcastIndexLocked</code>
       <code>setPodcastIndexMedium</code>
       <code>setPodcastIndexPersons</code>
@@ -3149,8 +3161,32 @@
       <code>$params</code>
     </PossiblyUnusedParam>
     <PossiblyUnusedProperty>
+      <code>$liveItemKey</code>
       <code>$stringWrapper</code>
     </PossiblyUnusedProperty>
+  </file>
+  <file src="src/Writer/Extension/PodcastIndex/LiveItem.php">
+    <PossiblyUnusedMethod>
+      <code>setEnd</code>
+      <code>setStart</code>
+      <code>setStatus</code>
+    </PossiblyUnusedMethod>
+    <PossiblyUnusedProperty>
+      <code>$encoding</code>
+    </PossiblyUnusedProperty>
+  </file>
+  <file src="src/Writer/Extension/PodcastIndex/Renderer/LiveItem.php">
+    <MixedAssignment>
+      <code>$ext</code>
+    </MixedAssignment>
+    <MixedMethodCall>
+      <code>render</code>
+      <code>setDataContainer</code>
+      <code>setDomDocument</code>
+      <code>setEncoding</code>
+      <code>setRootElement</code>
+      <code>setType</code>
+    </MixedMethodCall>
   </file>
   <file src="src/Writer/Extension/RendererInterface.php">
     <PossiblyUnusedMethod>

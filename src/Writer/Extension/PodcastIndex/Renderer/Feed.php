@@ -7,7 +7,7 @@ namespace Laminas\Feed\Writer\Extension\PodcastIndex\Renderer;
 use DOMDocument;
 use DOMElement;
 use Laminas\Feed\Writer\Extension;
-use Laminas\Feed\Writer\Extension\PodcastIndex\Validator;
+use Laminas\Feed\Writer\Extension\PodcastIndex;
 use Laminas\Feed\Writer\Feed as FeedWriter;
 
 use function assert;
@@ -15,19 +15,22 @@ use function assert;
 /**
  * Renders PodcastIndex data of a RSS Feed
  *
- * @psalm-import-type LicenseArray from Validator
- * @psalm-import-type LocationArray from Validator
- * @psalm-import-type BlockArray from Validator
- * @psalm-import-type TxtArray from Validator
- * @psalm-import-type PersonArray from Validator
- * @psalm-import-type UpdateFrequencyArray from Validator
- * @psalm-import-type TrailerArray from Validator
- * @psalm-import-type RemoteItemArray from Validator
- * @psalm-import-type ValueRecipientArray from Validator
- * @psalm-import-type ValueArray from Validator
- * @psalm-import-type ImagesArray from Validator
- * @psalm-import-type DetailedImageArray from Validator
- * @psalm-import-type SocialInteractArray from Validator
+ * @psalm-import-type FundingArray from PodcastIndex\Validator
+ * @psalm-import-type LicenseArray from PodcastIndex\Validator
+ * @psalm-import-type LocationArray from PodcastIndex\Validator
+ * @psalm-import-type BlockArray from PodcastIndex\Validator
+ * @psalm-import-type TxtArray from PodcastIndex\Validator
+ * @psalm-import-type PersonArray from PodcastIndex\Validator
+ * @psalm-import-type UpdateFrequencyArray from PodcastIndex\Validator
+ * @psalm-import-type TrailerArray from PodcastIndex\Validator
+ * @psalm-import-type RemoteItemArray from PodcastIndex\Validator
+ * @psalm-import-type ValueRecipientArray from PodcastIndex\Validator
+ * @psalm-import-type ValueArray from PodcastIndex\Validator
+ * @psalm-import-type ImagesArray from PodcastIndex\Validator
+ * @psalm-import-type DetailedImageArray from PodcastIndex\Validator
+ * @psalm-import-type SocialInteractArray from PodcastIndex\Validator
+ * @psalm-import-type LiveItemArray from PodcastIndex\Validator
+ * @psalm-import-type ChatArray from PodcastIndex\Validator
  */
 class Feed extends Extension\AbstractRenderer
 {
@@ -47,8 +50,10 @@ class Feed extends Extension\AbstractRenderer
     {
         $this->setLocked($this->dom, $this->base);
         $this->setFunding($this->dom, $this->base);
+        $this->setFundings($this->dom, $this->base);
         $this->setLicense($this->dom, $this->base);
         $this->setLocation($this->dom, $this->base);
+        $this->setLocations($this->dom, $this->base);
         $this->setImages($this->dom, $this->base);
         $this->setDetailedImages($this->dom, $this->base);
         $this->setUpdateFrequency($this->dom, $this->base);
@@ -64,6 +69,28 @@ class Feed extends Extension\AbstractRenderer
         $this->setPublisher($this->dom, $this->base);
         $this->setValues($this->dom, $this->base);
         $this->setSocialInteracts($this->dom, $this->base);
+        $this->setChat($this->dom, $this->base);
+
+        /** @var FeedWriter $feedWriter */
+        $feedWriter = $this->getDataContainer();
+        /** @var list<PodcastIndex\LiveItem> $liveItems */
+        $liveItems = $feedWriter->getPodcastIndexLiveItems();
+        if ($liveItems) {
+            foreach ($liveItems as $liveItem) {
+                $encoding = $feedWriter->getEncoding();
+                if ($encoding) {
+                    $liveItem->setEncoding($encoding);
+                }
+                $renderer = new LiveItem($liveItem, $this->dom, $this->base);
+                $renderer->setType($this->getType());
+                $renderer->setRootElement($this->dom->documentElement);
+                $renderer->render();
+                $element  = $renderer->getElement();
+                $imported = $this->dom->importNode($element, true);
+                $this->base->appendChild($imported);
+            }
+        }
+
         if ($this->called) {
             $this->_appendNamespaces();
         }
@@ -107,19 +134,40 @@ class Feed extends Extension\AbstractRenderer
     }
 
     /**
-     * Set feed funding
+     * Set a single feed funding tag
      */
     protected function setFunding(DOMDocument $dom, DOMElement $root): void
     {
         $container = $this->getFeedWriter();
 
-        /** @psalm-var null|array<string, string> $funding */
+        /** @psalm-var null|FundingArray $funding */
         $funding = $container->getPodcastIndexFunding();
         if ($funding === null) {
             return;
         }
         $el = ElementGenerator::createPodcastIndexElement($dom, $funding, 'funding', 'title');
         $root->appendChild($el);
+        $this->called = true;
+    }
+
+    /**
+     * Set multiple funding tags
+     */
+    protected function setFundings(DOMDocument $dom, DOMElement $root): void
+    {
+        $container = $this->getFeedWriter();
+
+        /** @psalm-var null|list<FundingArray> $fundings */
+        $fundings = $container->getPodcastIndexFundings();
+        if ($fundings === null) {
+            return;
+        }
+
+        foreach ($fundings as $funding) {
+            $el = ElementGenerator::createPodcastIndexElement($dom, $funding, 'funding', 'title');
+            $root->appendChild($el);
+        }
+
         $this->called = true;
     }
 
@@ -142,7 +190,7 @@ class Feed extends Extension\AbstractRenderer
     }
 
     /**
-     * Set feed location
+     * Set a single feed location
      */
     private function setLocation(DOMDocument $dom, DOMElement $root): void
     {
@@ -155,6 +203,27 @@ class Feed extends Extension\AbstractRenderer
         }
         $el = ElementGenerator::createPodcastIndexElement($dom, $location, 'location', 'description');
         $root->appendChild($el);
+        $this->called = true;
+    }
+
+    /**
+     * Set multiple location tags
+     */
+    protected function setLocations(DOMDocument $dom, DOMElement $root): void
+    {
+        $container = $this->getFeedWriter();
+
+        /** @psalm-var null|list<LocationArray> $locations */
+        $locations = $container->getPodcastIndexLocations();
+        if ($locations === null) {
+            return;
+        }
+
+        foreach ($locations as $location) {
+            $el = ElementGenerator::createPodcastIndexElement($dom, $location, 'location', 'description');
+            $root->appendChild($el);
+        }
+
         $this->called = true;
     }
 
@@ -454,6 +523,24 @@ class Feed extends Extension\AbstractRenderer
             $root->appendChild($el);
         }
 
+        $this->called = true;
+    }
+
+    /**
+     * Set chat element
+     */
+    private function setChat(DOMDocument $dom, DOMElement $root): void
+    {
+        $container = $this->getFeedWriter();
+
+        /** @psalm-var ChatArray|null $chat */
+        $chat = $container->getPodcastIndexChat();
+        if ($chat === null) {
+            return;
+        }
+
+        $el = ElementGenerator::createPodcastIndexElement($dom, $chat, 'chat');
+        $root->appendChild($el);
         $this->called = true;
     }
 }

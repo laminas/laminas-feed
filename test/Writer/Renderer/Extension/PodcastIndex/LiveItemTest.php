@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace LaminasTest\Feed\Writer\Renderer\Extension\PodcastIndex;
 
 use Laminas\Feed\Writer;
+use Laminas\Feed\Writer\Extension\PodcastIndex\LiveItem;
 use Laminas\Feed\Writer\Renderer;
 use PHPUnit\Framework\TestCase;
 
@@ -12,10 +13,10 @@ use function is_string;
 use function number_format;
 use function substr_count;
 
-class EntryTest extends TestCase
+class LiveItemTest extends TestCase
 {
     protected Writer\Feed $validWriter;
-    protected Writer\Entry $validEntry;
+    protected LiveItem $validEntry;
 
     protected function setUp(): void
     {
@@ -27,8 +28,16 @@ class EntryTest extends TestCase
         $this->validWriter->setLink('http://www.example.com');
         $this->validWriter->setType('rss');
 
-        $this->validEntry = $this->validWriter->createEntry();
-        $this->validEntry->setTitle('This is a test entry.');
+        $liveItem = [
+            'status' => 'live',
+            'start'  => '2021-09-26T07:30:00.000-0600',
+            'end'    => '2021-09-26T09:30:00.000-0600',
+        ];
+
+        /** @psalm-var LiveItem $this->validEntry */
+        $this->validEntry = $this->validWriter->createPodcastIndexLiveItem($liveItem);
+
+        $this->validEntry->setTitle('This is a test live item.');
         $this->validEntry->setDateModified(1_234_567_890);
         $this->validEntry->setDateCreated(1_234_567_000);
         $this->validEntry->setLink('http://www.example.com/1');
@@ -38,12 +47,31 @@ class EntryTest extends TestCase
             'uri'   => 'http://www.example.com/jane',
         ]);
 
-        $this->validWriter->addEntry($this->validEntry);
+        $this->validWriter->addPodcastIndexLiveItem($this->validEntry);
     }
 
     protected function tearDown(): void
     {
         Writer\Writer::reset();
+    }
+
+    public function testRendersRss(): void
+    {
+        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
+        $xml     = $rssFeed->render()->saveXml();
+
+        $expected = '<podcast:liveItem status="live" start="2021-09-26T07:30:00.000-0600"';
+        $this->assertStringContainsString($expected, $xml);
+
+        $this->assertStringContainsString($this->validEntry->getTitle(), $xml);
+
+        $link = $this->validEntry->getLink();
+        $this->assertNotNull($link);
+        $this->assertStringContainsString($link, $xml);
+
+        /** @var array<array-key,string> $author */
+        $author = $this->validEntry->getAuthors()[0];
+        $this->assertStringContainsString($author['email'], $xml);
     }
 
     public function testRendersRssLocationTag(): void
@@ -66,37 +94,6 @@ class EntryTest extends TestCase
         $this->assertStringContainsString($location['osm'], $xml);
         $this->assertStringContainsString($location['rel'], $xml);
         $this->assertStringContainsString($location['country'], $xml);
-    }
-
-    public function testRendersRssMultipleLocationTags(): void
-    {
-        $locations = [
-            [
-                'description' => 'London, Baker Street',
-                'geo'         => 'geo:-27.86159,153.3169',
-                'osm'         => 'W43678282',
-                'rel'         => 'creator',
-                'country'     => 'GB',
-            ],
-            [
-                'description' => 'Marlow',
-                'geo'         => 'geo:51.5718706,-0.7769654',
-                'osm'         => 'R3727240',
-                'rel'         => 'subject',
-                'country'     => 'US',
-            ],
-        ];
-        $this->validEntry->setPodcastIndexLocations($locations);
-
-        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
-        $xml     = $rssFeed->render()->saveXml();
-
-        $this->assertStringContainsString('<podcast:location', $xml);
-        $this->assertStringContainsString($locations[0]['description'], $xml);
-        $this->assertStringContainsString($locations[0]['geo'], $xml);
-        $this->assertStringContainsString($locations[1]['osm'], $xml);
-        $this->assertStringContainsString($locations[1]['rel'], $xml);
-        $this->assertStringContainsString($locations[1]['country'], $xml);
     }
 
     public function testRendersRssLicenseTag(): void
@@ -570,34 +567,5 @@ class EntryTest extends TestCase
         $this->assertStringContainsString($data['protocol'], $xml);
         $this->assertStringContainsString($data['accountId'], $xml);
         $this->assertStringContainsString($data['space'], $xml);
-    }
-
-    public function testRendersRssSoundbiteTags(): void
-    {
-        $data = [
-            [
-                'startTime' => '66',
-                'duration'  => '39.0',
-                'title'     => 'Pepper shakers comparison',
-            ],
-            [
-                'startTime' => '112.45',
-                'duration'  => '24.83',
-                'title'     => 'Salt shakers comparison',
-            ],
-        ];
-
-        $this->validEntry->setPodcastIndexSoundbites($data);
-
-        $rssFeed = new Renderer\Feed\Rss($this->validWriter);
-        $xml     = $rssFeed->render()->saveXml();
-
-        $this->assertStringContainsString('<podcast:soundbite', $xml);
-        $this->assertStringContainsString($data[0]['startTime'], $xml);
-        $this->assertStringContainsString($data[0]['duration'], $xml);
-        $this->assertStringContainsString($data[0]['title'], $xml);
-        $this->assertStringContainsString($data[1]['startTime'], $xml);
-        $this->assertStringContainsString($data[1]['duration'], $xml);
-        $this->assertStringContainsString($data[1]['title'], $xml);
     }
 }

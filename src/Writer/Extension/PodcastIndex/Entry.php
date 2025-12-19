@@ -10,12 +10,9 @@ use Laminas\Stdlib\StringWrapper\StringWrapperInterface;
 
 use function array_key_exists;
 use function count;
-use function is_numeric;
-use function is_string;
 use function lcfirst;
 use function method_exists;
 use function rtrim;
-use function strlen;
 use function substr;
 use function ucfirst;
 
@@ -39,6 +36,9 @@ use function ucfirst;
  * @psalm-import-type SourceArray from Validator
  * @psalm-import-type IntegrityArray from Validator
  * @psalm-import-type AlternateEnclosureArray from Validator
+ * @psalm-import-type ContentLinkArray from Validator
+ * @psalm-import-type FundingArray from Validator
+ * @psalm-import-type ChatArray from Validator
  */
 class Entry
 {
@@ -95,13 +95,7 @@ class Entry
      */
     public function setPodcastIndexTranscript(array $value): Entry
     {
-        if (! isset($value['url']) || ! isset($value['type'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: "transcript" must be an array containing keys'
-                . ' "url" and "type" and optionally "language" and "rel"'
-            );
-        }
-        $this->data['transcript'] = $value;
+        $this->data['transcript'] = Validator::validateTranscript($value);
         return $this;
     }
 
@@ -114,12 +108,7 @@ class Entry
      */
     public function setPodcastIndexChapters(array $value): Entry
     {
-        if (! isset($value['url']) || ! isset($value['type'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: "chapters" must be an array containing keys "url" and "type"'
-            );
-        }
-        $this->data['chapters'] = $value;
+        $this->data['chapters'] = Validator::validateChapters($value);
         return $this;
     }
 
@@ -167,46 +156,44 @@ class Entry
      */
     public function addPodcastIndexSoundbite(array $value): Entry
     {
-        if (! isset($value['startTime']) || ! isset($value['duration'])) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: any "soundbite" must be an array containing'
-                . ' keys "startTime" and "duration" and optionally "title"'
-            );
-        }
-        if (
-            ! is_string($value['startTime'])
-            || (! is_numeric($value['startTime']) && strlen($value['startTime']) > 0)
-        ) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: "startTime" of "soundbite" may only contain numeric characters and dots'
-            );
-        }
-        if (
-            ! is_string($value['duration'])
-            || (! is_numeric($value['duration']) && strlen($value['duration']) > 0)
-        ) {
-            throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: "duration" may only contain numeric characters and dots'
-            );
-        }
         if (! isset($this->data['soundbites'])) {
             $this->data['soundbites'] = [];
         }
-        $this->data['soundbites'][] = $value;
+
+        /** @var list<SoundbiteArray> $this->data['soundbites'] */
+        $this->data['soundbites'][] = Validator::validateSoundbite($value);
         return $this;
     }
 
     /**
-     * Set entry location
+     * Adds a feed location tag.
      *
      * @param LocationArray $value
      * @return $this
-     * @throws Writer\Exception\InvalidArgumentException
      */
-    public function setPodcastIndexLocation(array $value): self
+    public function addPodcastIndexLocation(array $value): self
     {
-        Validator::validateLocation($value);
-        $this->data['location'] = $value;
+        if (! isset($this->data['locations'])) {
+            $this->data['locations'] = [];
+        }
+
+        /** @var list<LocationArray> $this->data['locations'] */
+        $this->data['locations'][] = Validator::validateLocation($value);
+        return $this;
+    }
+
+    /**
+     * Set multiple location tags
+     *
+     * @param list<LocationArray> $values
+     * @return $this
+     */
+    public function setPodcastIndexLocations(array $values = []): self
+    {
+        $this->data['locations'] = [];
+        foreach ($values as $value) {
+            $this->addPodcastIndexLocation($value);
+        }
         return $this;
     }
 
@@ -219,8 +206,7 @@ class Entry
      */
     public function setPodcastIndexLicense(array $value): self
     {
-        Validator::validateLicense($value);
-        $this->data['license'] = $value;
+        $this->data['license'] = Validator::validateLicense($value);
         return $this;
     }
 
@@ -233,14 +219,12 @@ class Entry
      */
     public function addPodcastIndexPerson(array $value): self
     {
-        Validator::validatePerson($value);
-
         if (! isset($this->data['people'])) {
             $this->data['people'] = [];
         }
 
         /** @var list<PersonArray> $this->data['people'] */
-        $this->data['people'][] = $value;
+        $this->data['people'][] = Validator::validatePerson($value);
         return $this;
     }
 
@@ -284,14 +268,12 @@ class Entry
      */
     public function addPodcastIndexTxt(array $value): self
     {
-        Validator::validateTxt($value);
-
         if (! isset($this->data['txts'])) {
             $this->data['txts'] = [];
         }
 
         /** @var list<TxtArray> $this->data['txts'] */
-        $this->data['txts'][] = $value;
+        $this->data['txts'][] = Validator::validateTxt($value);
         return $this;
     }
 
@@ -321,14 +303,12 @@ class Entry
      */
     public function addPodcastIndexSocialInteract(array $value): self
     {
-        Validator::validateSocialInteract($value);
-
         if (! isset($this->data['socialInteracts'])) {
             $this->data['socialInteracts'] = [];
         }
 
         /** @var list<SocialInteractArray> $this->data['socialInteracts'] */
-        $this->data['socialInteracts'][] = $value;
+        $this->data['socialInteracts'][] = Validator::validateSocialInteract($value);
 
         return $this;
     }
@@ -375,30 +355,25 @@ class Entry
      */
     public function addPodcastIndexValue(array $value, array $valueRecipients, array $valueTimeSplits = []): self
     {
-        // validate the value attributes
-        Validator::validateValue($value);
-
-        // validate the valueRecipients array
         if (count($valueRecipients) < 1) {
             throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: the second argument of "value" must be an array containing
-                 at least one valueRecipient'
+                'invalid parameter: the second argument of "value" must be an array containing '
+                . 'at least one entry with valueRecipient data'
             );
         }
-        foreach ($valueRecipients as $valueRecipient) {
-            Validator::validateValueRecipient($valueRecipient);
-        }
-        $value['valueRecipients'] = $valueRecipients;
 
-        // validate and add valueTimeSplits
+        $value = Validator::validateValue($value);
+
+        foreach ($valueRecipients as $valueRecipient) {
+            $value['valueRecipients'][] = Validator::validateValueRecipient($valueRecipient);
+        }
+
         if ($valueTimeSplits && count($valueTimeSplits) > 0) {
             foreach ($valueTimeSplits as $split) {
-                Validator::validateValueTimeSplit($split);
+                $value['valueTimeSplits'][] = Validator::validateValueTimeSplit($split);
             }
-            $value['valueTimeSplits'] = $valueTimeSplits;
         }
 
-        // add the values entry
         if (! isset($this->data['values'])) {
             $this->data['values'] = [];
         }
@@ -418,8 +393,7 @@ class Entry
      */
     public function setPodcastIndexSeason(array $value): self
     {
-        Validator::validateSeason($value);
-        $this->data['season'] = $value;
+        $this->data['season'] = Validator::validateSeason($value);
         return $this;
     }
 
@@ -432,8 +406,7 @@ class Entry
      */
     public function setPodcastIndexEpisode(array $value): self
     {
-        Validator::validateEpisode($value);
-        $this->data['episode'] = $value;
+        $this->data['episode'] = Validator::validateEpisode($value);
         return $this;
     }
 
@@ -450,21 +423,19 @@ class Entry
     {
         if (count($sources) < 1) {
             throw new Writer\Exception\InvalidArgumentException(
-                'invalid parameter: the second argument to "alternateEnclosure" must be an array containing
-                 at least one source entry'
+                'invalid parameter: the second argument to "alternateEnclosure" must be an array containing '
+                . 'at least one source entry'
             );
         }
 
-        Validator::validateAlternateEnclosure($enclosure);
+        $enclosure = Validator::validateAlternateEnclosure($enclosure);
 
         foreach ($sources as $source) {
-            Validator::validateSource($source);
+            $enclosure['sources'][] = Validator::validateSource($source);
         }
-        $enclosure['sources'] = $sources;
 
         if ($integrity !== null) {
-            Validator::validateIntegrity($integrity);
-            $enclosure['integrity'] = $integrity;
+            $enclosure['integrity'] = Validator::validateIntegrity($integrity);
         }
 
         if (! isset($this->data['alternateEnclosures'])) {
@@ -498,14 +469,12 @@ class Entry
      */
     public function addPodcastIndexDetailedImage(array $value): self
     {
-        Validator::validateDetailedImage($value);
-
         if (! isset($this->data['detailedImages'])) {
             $this->data['detailedImages'] = [];
         }
 
         /** @var list<DetailedImageArray> $this->data['detailedImages'] */
-        $this->data['detailedImages'][] = $value;
+        $this->data['detailedImages'][] = Validator::validateDetailedImage($value);
         return $this;
     }
 
@@ -523,6 +492,87 @@ class Entry
         foreach ($values as $value) {
             $this->addPodcastIndexDetailedImage($value);
         }
+        return $this;
+    }
+
+    /**
+     * Adds an `contentLink` element to the episode.
+     *
+     * @param ContentLinkArray $value
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function addPodcastIndexContentLink(array $value): self
+    {
+        if (! isset($this->data['contentLinks'])) {
+            $this->data['contentLinks'] = [];
+        }
+
+        /** @var list<ContentLinkArray> $this->data['contentLinks'] */
+        $this->data['contentLinks'][] = Validator::validateContentLink($value);
+        return $this;
+    }
+
+    /**
+     * Sets multiple episode `contentLink` elements.
+     * If no argument is passed, all existing entries are removed.
+     *
+     * @param list<ContentLinkArray> $values
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function setPodcastIndexContentLinks(array $values = []): self
+    {
+        $this->data['contentLinks'] = [];
+        foreach ($values as $value) {
+            $this->addPodcastIndexContentLink($value);
+        }
+        return $this;
+    }
+
+    /**
+     * Adds a funding tag.
+     *
+     * @param FundingArray $value
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function addPodcastIndexFunding(array $value): self
+    {
+        if (! isset($this->data['fundings'])) {
+            $this->data['fundings'] = [];
+        }
+
+        /** @var list<FundingArray> $this->data['fundings'] */
+        $this->data['fundings'][] = Validator::validateFunding($value);
+        return $this;
+    }
+
+    /**
+     * Set multiple funding tags
+     *
+     * @param list<FundingArray> $values
+     * @return $this
+     * @throws Writer\Exception\InvalidArgumentException
+     */
+    public function setPodcastIndexFundings(array $values = []): self
+    {
+        $this->data['fundings'] = [];
+        foreach ($values as $value) {
+            $this->addPodcastIndexFunding($value);
+        }
+        return $this;
+    }
+
+    /**
+     * Set a chat element.
+     *
+     * @psalm-param ChatArray $value
+     * @return $this
+     */
+    public function setPodcastIndexChat(array $value): self
+    {
+        $this->data['chat'] = Validator::validateChat($value);
         return $this;
     }
 

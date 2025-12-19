@@ -15,122 +15,131 @@ use stdClass;
  * This class is internal to the library and should not be referenced by consumer code.
  * Backwards Incompatible changes can occur in Minor and Patch Releases.
  *
+ * @internal
+ *
+ * @psalm-internal Laminas\Feed
+ * @psalm-internal LaminasTest\Feed
+ *
+ * @psalm-type FundingObject = object{
+ *         title: string,
+ *         url: string
+ *       }
  * @psalm-type LicenseObject = object{
  *        identifier: string,
- *        url?: string
+ *        url: string
  *      }
  * @psalm-type LocationObject = object{
  *        description: string,
- *        geo?: string,
- *        osm?: string,
- *        rel?: string,
- *        country?: string,
+ *        geo: string,
+ *        osm: string,
+ *        rel: string,
+ *        country: string,
  *      }
  * @psalm-type BlockObject = object{
  *        value: string,
- *        id?: string
+ *        id: string
  *      }
  * @psalm-type TxtObject = object{
  *        value: string,
- *        purpose?: string
+ *        purpose: string
  *      }
  * @psalm-type UpdateFrequencyObject = object{
  *        description: string,
- *        complete?: bool,
- *        dtstart?: DateTimeInterface,
- *        rrule?: string
+ *        complete: bool,
+ *        dtstart: DateTimeInterface,
+ *        rrule: string
  *      }
  * @psalm-type PersonObject = object{
  *       name: string,
- *       role?: string,
- *       group?: string,
- *       img?: string,
- *       href?: string
+ *       role: string,
+ *       group: string,
+ *       img: string,
+ *       href: string
  *     }
  * @psalm-type TrailerObject = object{
  *       title: string,
  *       pubdate: string,
  *       url: string,
- *       length?: int,
- *       type?: string,
- *       season?: int
+ *       length: int,
+ *       type: string,
+ *       season: int
  *     }
  * @psalm-type RemoteItemObject = object{
  *       feedGuid: string,
- *       feedUrl?: string,
- *       itemGuid?: string,
- *       medium?: string,
- *       title?: string
+ *       feedUrl: string,
+ *       itemGuid: string,
+ *       medium: string,
+ *       title: string
  *     }
  * @psalm-type ValueRecipientObject = object{
  *       type: string,
  *       address: string,
  *       split: int,
- *       name?: string,
- *       customKey?: string,
- *       customValue?: string,
- *       fee?: bool,
+ *       name: string,
+ *       customKey: string,
+ *       customValue: string,
+ *       fee: bool,
  *     }
  * @psalm-type ValueTimeSplitObject = object{
  *        startTime: int,
  *        duration: int,
- *        remoteStartTime?: int,
- *        remotePercentage?: int,
- *        valueRecipients?: list<ValueRecipientObject>,
- *        remoteItem?: RemoteItemObject
+ *        remoteStartTime: int,
+ *        remotePercentage: int,
+ *        valueRecipients: list<ValueRecipientObject>,
+ *        remoteItem: RemoteItemObject
  *      }
  * @psalm-type ValueObject = object{
  *       type: string,
  *       method: string,
- *       suggested?: float,
+ *       suggested: float,
  *       valueRecipients: list<ValueRecipientObject>,
- *       valueTimeSplits?: list<ValueTimeSplitObject>,
+ *       valueTimeSplits: list<ValueTimeSplitObject>,
  *     }
  * @psalm-type ImagesObject = object{
  *        srcset: string,
  *      }
  * @psalm-type DetailedImageObject = object{
  *        href: string,
- *        alt?: string,
- *        purpose?: string,
- *        type?: string,
- *        aspectRatio?: string,
- *        width?: int,
- *        height?: int,
+ *        alt: string,
+ *        purpose: string,
+ *        type: string,
+ *        aspectRatio: string,
+ *        width: int,
+ *        height: int,
  *      }
  * @psalm-type SocialInteractObject = object{
  *       protocol: string,
  *       uri: string,
- *       priority?: int,
- *       accountId?: string,
- *       accountUrl?: string,
+ *       priority: int,
+ *       accountId: string,
+ *       accountUrl: string,
  *     }
  * @psalm-type TranscriptObject = object{
  *       url: string,
  *       type: string,
- *       language?: string,
- *       rel?: string
+ *       language: string,
+ *       rel: string
  *     }
  * @psalm-type ChaptersObject = object{
  *       url: string,
  *       type: string
  *     }
  * @psalm-type SoundbiteObject = object{
- *       title?: string,
+ *       title: string,
  *       startTime: string,
  *       duration: string
  *     }
  * @psalm-type SeasonObject = object{
  *         value: int,
- *         name?: string
+ *         name: string
  *       }
  * @psalm-type EpisodeObject = object{
  *         value: int|float,
- *         display?: string
+ *         display: string
  *       }
  * @psalm-type SourceObject = object{
  *        uri: string,
- *        contentType?: string
+ *        contentType: string
  *      }
  * @psalm-type IntegrityObject = object{
  *        type: string,
@@ -138,19 +147,27 @@ use stdClass;
  *      }
  * @psalm-type AlternateEnclosureObject = object{
  *        type: string,
- *        length?: int,
- *        bitrate?: int|float,
- *        height?: int,
- *        lang?: string,
- *        title?: string,
- *        rel?: string,
- *        codecs?: string,
- *        default?: bool,
- *       sources: list<SourceObject>,
- *       integrity?: IntegrityObject,
- * }
- * @psalm-internal Laminas\Feed
- * @psalm-internal LaminasTest\Feed
+ *        length: int,
+ *        bitrate: int|float,
+ *        height: int,
+ *        lang: string,
+ *        title: string,
+ *        rel: string,
+ *        codecs: string,
+ *        default: bool,
+ *        sources: list<SourceObject>,
+ *        integrity: IntegrityObject,
+ *     }
+ * @psalm-type ContentLinkObject = object{
+ *        href: string,
+ *        description: string,
+ *     }
+ * @psalm-type ChatObject = object{
+ *        server: string,
+ *        protocol: string,
+ *        accountId: string,
+ *        space: string,
+ *      }
  */
 final class AttributesReader
 {
@@ -441,6 +458,47 @@ final class AttributesReader
         $object        = new stdClass();
         $object->type  = $item->getAttribute('type');
         $object->value = $item->getAttribute('value');
+        return $object;
+    }
+
+    /**
+     * Read content link
+     *
+     * @psalm-return ContentLinkObject
+     */
+    public static function readContentLink(DOMElement $item): object
+    {
+        $object              = new stdClass();
+        $object->href        = $item->getAttribute('href');
+        $object->description = $item->nodeValue;
+        return $object;
+    }
+
+    /**
+     * Read podcast funding
+     *
+     * @psalm-return FundingObject
+     */
+    public static function readFunding(DOMElement $item): object
+    {
+        $object        = new stdClass();
+        $object->url   = $item->getAttribute('url');
+        $object->title = $item->nodeValue;
+        return $object;
+    }
+
+    /**
+     * Read podcast chat
+     *
+     * @psalm-return ChatObject
+     */
+    public static function readChat(DOMElement $item): object
+    {
+        $object            = new stdClass();
+        $object->server    = $item->getAttribute('server');
+        $object->protocol  = $item->getAttribute('protocol');
+        $object->accountId = $item->getAttribute('accountId');
+        $object->space     = $item->getAttribute('space');
         return $object;
     }
 }
