@@ -27,8 +27,10 @@ use const FILTER_VALIDATE_URL;
  * This class is internal to the library and should not be referenced by consumer code.
  * Backwards Incompatible changes can occur in Minor and Patch Releases.
  *
- * @internal Laminas\Feed
- * @internal LaminasTest\Feed
+ * @internal
+ *
+ * @psalm-internal Laminas\Feed
+ * @psalm-internal LaminasTest\Feed
  *
  * @psalm-type LockedArray = array{
  *        value: string,
@@ -187,8 +189,6 @@ use const FILTER_VALIDATE_URL;
  *         accountId?: string,
  *         space?: string,
  *       }
- * @psalm-internal Laminas\Feed
- * @psalm-internal LaminasTest\Feed
  */
 final class Validator
 {
