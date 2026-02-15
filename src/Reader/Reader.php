@@ -363,6 +363,9 @@ class Reader implements ReaderImportInterface
         $disableEntityLoaderFlag = self::disableEntityLoader();
         $dom                     = new DOMDocument();
         $status                  = $dom->loadXML(trim($string));
+        if ($dom->encoding === null) {
+            $dom->encoding = 'UTF-8';
+        }
         foreach ($dom->childNodes as $child) {
             if ($child->nodeType === XML_DOCUMENT_TYPE_NODE) {
                 throw new Exception\InvalidArgumentException(
