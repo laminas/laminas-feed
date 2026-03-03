@@ -250,6 +250,20 @@ class AtomStandaloneEntryTest extends TestCase
     }
 
     /**
+     * XHTML document does not have encoding
+     *
+     * @group LaminasRATOMCONTENT
+     */
+    public function testGetsContentFromAtom10XhtmlNamespacedNoEncoding(): void
+    {
+        $entry = Reader\Reader::importString(
+            file_get_contents($this->feedSamplePath . '/content/atom10_XhtmlNoEncoding.xml')
+        );
+        $this->assertInstanceOf(Atom::class, $entry);
+        $this->assertEquals('<p class="x:"><em>Entry Content &amp;x:</em></p>', $entry->getContent());
+    }
+
+    /**
      * Get Link (Unencoded Text)
      *
      * @group LaminasR002
