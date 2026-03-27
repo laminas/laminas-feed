@@ -179,7 +179,7 @@ class Rss extends AbstractEntry implements EntryInterface
     /**
      * Get the entry's date of creation
      *
-     * @return DateTime
+     * @return null|DateTime
      */
     public function getDateCreated()
     {
@@ -189,7 +189,7 @@ class Rss extends AbstractEntry implements EntryInterface
     /**
      * Get the entry's date of modification
      *
-     * @return DateTime
+     * @return null|DateTime
      * @throws Exception\RuntimeException
      */
     public function getDateModified()
@@ -206,31 +206,15 @@ class Rss extends AbstractEntry implements EntryInterface
         ) {
             $dateModified = $this->xpath->evaluate('string(' . $this->xpathQueryRss . '/pubDate)');
             if ($dateModified) {
-                $dateModifiedParsed = strtotime($dateModified);
-                if ($dateModifiedParsed) {
-                    $date = new DateTime('@' . $dateModifiedParsed);
-                } else {
-                    $dateStandards = [
-                        DateTime::RSS,
-                        DateTime::RFC822,
-                        DateTime::RFC2822,
-                        null,
-                    ];
-                    foreach ($dateStandards as $standard) {
-                        try {
-                            $date = date_create_from_format($standard, $dateModified);
-                            break;
-                        } catch (\Exception $e) {
-                            if ($standard === null) {
-                                throw new Exception\RuntimeException(
-                                    'Could not load date due to unrecognised format'
-                                    . ' (should follow RFC 822 or 2822): ' . $e->getMessage(),
-                                    0,
-                                    $e
-                                );
-                            }
-                        }
-                    }
+                try {
+                    $date = new DateTime($dateModified);
+                } catch (\Exception $e) {
+                    throw new Exception\RuntimeException(
+                        'Could not load date due to unrecognised format'
+                        . ' (should follow RFC 822 or 2822): ' . $e->getMessage(),
+                        0,
+                        $e
+                    );
                 }
             }
         }

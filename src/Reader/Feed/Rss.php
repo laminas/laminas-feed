@@ -185,7 +185,7 @@ class Rss extends AbstractFeed
     /**
      * Get the feed modification date
      *
-     * @return DateTime
+     * @return null|DateTime
      * @throws Exception\RuntimeException
      */
     public function getDateModified()
@@ -205,30 +205,13 @@ class Rss extends AbstractFeed
                 $dateModified = $this->xpath->evaluate('string(/rss/channel/lastBuildDate)');
             }
             if ($dateModified) {
-                $dateModifiedParsed = strtotime($dateModified);
-                if ($dateModifiedParsed) {
-                    $date = new DateTime('@' . $dateModifiedParsed);
-                } else {
-                    $dateStandards = [
-                        DateTime::RSS,
-                        DateTime::RFC822,
-                        DateTime::RFC2822,
-                    ];
-                    foreach ($dateStandards as $standard) {
-                        $date = DateTime::createFromFormat(
-                            $standard,
-                            $dateModified
-                        );
-                        if ($date instanceof DateTime) {
-                            break;
-                        }
-                    }
-                    if (! $date) {
-                        throw new Exception\RuntimeException(
-                            'Could not load date due to unrecognised'
-                            . ' format (should follow RFC 822 or 2822).'
-                        );
-                    }
+                try {
+                    $date = new DateTime($dateModified);
+                } catch (\Exception $e) {
+                    throw new Exception\RuntimeException(
+                        'Could not load date due to unrecognised'
+                        . ' format (should follow RFC 822 or 2822).'
+                    );
                 }
             }
         }
@@ -253,7 +236,7 @@ class Rss extends AbstractFeed
     /**
      * Get the feed lastBuild date
      *
-     * @return DateTime
+     * @return null|DateTime
      * @throws Exception\RuntimeException
      */
     public function getLastBuildDate()
@@ -270,31 +253,15 @@ class Rss extends AbstractFeed
         ) {
             $lastBuildDate = $this->xpath->evaluate('string(/rss/channel/lastBuildDate)');
             if ($lastBuildDate) {
-                $lastBuildDateParsed = strtotime($lastBuildDate);
-                if ($lastBuildDateParsed) {
-                    $date = new DateTime('@' . $lastBuildDateParsed);
-                } else {
-                    $dateStandards = [
-                        DateTime::RSS,
-                        DateTime::RFC822,
-                        DateTime::RFC2822,
-                        null,
-                    ];
-                    foreach ($dateStandards as $standard) {
-                        try {
-                            $date = DateTime::createFromFormat($standard, $lastBuildDateParsed);
-                            break;
-                        } catch (\Exception $e) {
-                            if ($standard === null) {
-                                throw new Exception\RuntimeException(
-                                    'Could not load date due to unrecognised format'
-                                    . ' (should follow RFC 822 or 2822): ' . $e->getMessage(),
-                                    0,
-                                    $e
-                                );
-                            }
-                        }
-                    }
+                try {
+                    $date = new DateTime($lastBuildDate);
+                } catch (\Exception $e) {
+                    throw new Exception\RuntimeException(
+                        'Could not load date due to unrecognised format'
+                        . ' (should follow RFC 822 or 2822): ' . $e->getMessage(),
+                        0,
+                        $e
+                    );
                 }
             }
         }
