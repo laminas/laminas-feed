@@ -1919,7 +1919,7 @@ class RssTest extends TestCase
         ];
     }
 
-    public function testGetDateModifiedShouldThrowExceptionForInvalidDate(): void
+    public function testGetsDateModifiedShouldThrowExceptionForInvalidDate(): void
     {
         $feed = Reader\Reader::importString(
             file_get_contents($this->feedSamplePath . '/datemodified/plain/invalid.xml')
@@ -1930,7 +1930,7 @@ class RssTest extends TestCase
             'Could not load date due to unrecognised format (should follow RFC 822 or 2822)'
         );
         $entry = $feed->current();
-        $date = $entry->getDateModified();
+        $entry->getDateModified();
     }
 
     /**

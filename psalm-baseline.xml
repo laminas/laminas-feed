@@ -2170,7 +2170,6 @@
     <PossiblyUnusedMethod>
       <code>getHubs</code>
       <code>getImage</code>
-      <code>getLastBuildDate</code>
     </PossiblyUnusedMethod>
     <PropertyNotSetInConstructor>
       <code>Rss</code>

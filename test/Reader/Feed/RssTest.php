@@ -5,6 +5,7 @@ namespace LaminasTest\Feed\Reader\Feed;
 use DateTime;
 use DateTimeInterface;
 use Laminas\Feed\Reader;
+use Laminas\Feed\Reader\Feed\Rss;
 use PHPUnit\Framework\TestCase;
 
 use function array_values;
@@ -2122,7 +2123,8 @@ class RssTest extends TestCase
             'Could not load date due to unrecognised format (should follow RFC 822 or 2822)'
         );
 
-        $feed->getLastBuildDate();
+        $this->assertInstanceOf(Rss::class, $feed);
+        $_date = $feed->getLastBuildDate();
     }
 
     /**
