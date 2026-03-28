@@ -639,7 +639,6 @@
     </InvalidReturnStatement>
     <MixedArgument>
       <code>$dateModified</code>
-      <code>$dateModified</code>
     </MixedArgument>
     <MixedArrayAccess>
       <code><![CDATA[$author['name']]]></code>
@@ -717,7 +716,6 @@
     </NullableReturnStatement>
     <PossiblyNullArgument>
       <code><![CDATA[$author->nodeValue]]></code>
-      <code>$standard</code>
     </PossiblyNullArgument>
     <PossiblyUnusedReturnValue>
       <code>array</code>
@@ -1994,13 +1992,11 @@
       <code><![CDATA[null|array<string, string>]]></code>
     </ImplementedReturnTypeMismatch>
     <InvalidArgument>
-      <code>$lastBuildDateParsed</code>
       <code>Reader\Reader::arrayUnique($authors)</code>
     </InvalidArgument>
     <MixedArgument>
       <code>$authors</code>
       <code>$categoryCollection</code>
-      <code>$dateModified</code>
       <code>$dateModified</code>
       <code>$hubs</code>
       <code>$lastBuildDate</code>
@@ -2148,7 +2144,6 @@
     </NullableReturnStatement>
     <PossiblyNullArgument>
       <code><![CDATA[$author->nodeValue]]></code>
-      <code>$standard</code>
     </PossiblyNullArgument>
     <PossiblyNullReference>
       <code>getAuthors</code>
