@@ -22,12 +22,10 @@ use stdClass;
 
 use function array_key_exists;
 use function count;
-use function date_create_from_format;
 use function in_array;
 use function is_array;
 use function is_string;
 use function preg_match;
-use function strtotime;
 use function trim;
 
 class Rss extends AbstractEntry implements EntryInterface
@@ -179,7 +177,7 @@ class Rss extends AbstractEntry implements EntryInterface
     /**
      * Get the entry's date of creation
      *
-     * @return null|DateTime
+     * @return DateTime
      */
     public function getDateCreated()
     {
@@ -189,7 +187,7 @@ class Rss extends AbstractEntry implements EntryInterface
     /**
      * Get the entry's date of modification
      *
-     * @return null|DateTime
+     * @return DateTime
      * @throws Exception\RuntimeException
      */
     public function getDateModified()

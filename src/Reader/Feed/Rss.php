@@ -15,7 +15,6 @@ use function array_unique;
 use function count;
 use function is_array;
 use function preg_match;
-use function strtotime;
 use function trim;
 
 /** @template-extends AbstractFeed<Reader\Entry\Rss> */
@@ -185,7 +184,7 @@ class Rss extends AbstractFeed
     /**
      * Get the feed modification date
      *
-     * @return null|DateTime
+     * @return DateTime
      * @throws Exception\RuntimeException
      */
     public function getDateModified()
@@ -236,7 +235,7 @@ class Rss extends AbstractFeed
     /**
      * Get the feed lastBuild date
      *
-     * @return null|DateTime
+     * @return DateTime
      * @throws Exception\RuntimeException
      */
     public function getLastBuildDate()
