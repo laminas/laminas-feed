@@ -2110,7 +2110,7 @@ class RssTest extends TestCase
         $this->assertEquals(null, $feed->getLastBuildDate());
     }
 
-    public function testGetLastBuildDateShouldThrowExceptionForInvalidDate(): void
+    public function testGetsLastBuildDateShouldThrowExceptionForInvalidDate(): void
     {
         $feed = Reader\Reader::importString(
             file_get_contents(
@@ -2187,7 +2187,7 @@ class RssTest extends TestCase
         ];
     }
 
-    public function testGetDateModifiedShouldThrowExceptionForInvalidDate(): void
+    public function testGetsDateModifiedShouldThrowExceptionForInvalidDate(): void
     {
         $feed = Reader\Reader::importString(
             file_get_contents(
