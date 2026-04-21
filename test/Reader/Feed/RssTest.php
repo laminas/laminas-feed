@@ -2124,7 +2124,7 @@ class RssTest extends TestCase
         );
 
         $this->assertInstanceOf(Rss::class, $feed);
-        $_date = $feed->getLastBuildDate();
+        $feed->getLastBuildDate();
     }
 
     /**
