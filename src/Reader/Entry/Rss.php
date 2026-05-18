@@ -22,12 +22,10 @@ use stdClass;
 
 use function array_key_exists;
 use function count;
-use function date_create_from_format;
 use function in_array;
 use function is_array;
 use function is_string;
 use function preg_match;
-use function strtotime;
 use function trim;
 
 class Rss extends AbstractEntry implements EntryInterface
@@ -206,31 +204,15 @@ class Rss extends AbstractEntry implements EntryInterface
         ) {
             $dateModified = $this->xpath->evaluate('string(' . $this->xpathQueryRss . '/pubDate)');
             if ($dateModified) {
-                $dateModifiedParsed = strtotime($dateModified);
-                if ($dateModifiedParsed) {
-                    $date = new DateTime('@' . $dateModifiedParsed);
-                } else {
-                    $dateStandards = [
-                        DateTime::RSS,
-                        DateTime::RFC822,
-                        DateTime::RFC2822,
-                        null,
-                    ];
-                    foreach ($dateStandards as $standard) {
-                        try {
-                            $date = date_create_from_format($standard, $dateModified);
-                            break;
-                        } catch (\Exception $e) {
-                            if ($standard === null) {
-                                throw new Exception\RuntimeException(
-                                    'Could not load date due to unrecognised format'
-                                    . ' (should follow RFC 822 or 2822): ' . $e->getMessage(),
-                                    0,
-                                    $e
-                                );
-                            }
-                        }
-                    }
+                try {
+                    $date = new DateTime($dateModified);
+                } catch (\Exception $e) {
+                    throw new Exception\RuntimeException(
+                        'Could not load date due to unrecognised format'
+                        . ' (should follow RFC 822 or 2822): ' . $e->getMessage(),
+                        0,
+                        $e
+                    );
                 }
             }
         }
