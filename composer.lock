@@ -1776,21 +1776,21 @@
         },
         {
             "name": "laminas/laminas-db",
-            "version": "2.21.0",
+            "version": "2.22.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-db.git",
-                "reference": "758c2ca28c831188edb8d4dd1eaf46ee28b85625"
+                "reference": "ddde58a7c4124863621ee45041ce60300162e7b9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-db/zipball/758c2ca28c831188edb8d4dd1eaf46ee28b85625",
-                "reference": "758c2ca28c831188edb8d4dd1eaf46ee28b85625",
+                "url": "https://api.github.com/repos/laminas/laminas-db/zipball/ddde58a7c4124863621ee45041ce60300162e7b9",
+                "reference": "ddde58a7c4124863621ee45041ce60300162e7b9",
                 "shasum": ""
             },
             "require": {
                 "laminas/laminas-stdlib": "^3.7.1",
-                "php": "~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0"
+                "php": "~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0"
             },
             "conflict": {
                 "zendframework/zend-db": "*"
@@ -1843,7 +1843,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2026-03-20T16:11:27+00:00"
+            "time": "2026-05-21T08:27:51+00:00"
         },
         {
             "name": "laminas/laminas-eventmanager",
