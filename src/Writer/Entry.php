@@ -36,7 +36,7 @@ class Entry
     protected $extensions = [];
 
     /**
-     * Holds the value "atom" or "rss" depending on the feed type set when
+     * Holds the value "atom" or "rss" depending on the feed type set
      * when last exported.
      *
      * @var string
