@@ -384,7 +384,7 @@ class AbstractFeed
     {
         if (empty($link) || ! is_string($link) || ! Uri::factory($link)->isValid()) {
             throw new Exception\InvalidArgumentException(
-                'Invalid parameter: "link"" must be a non-empty string and valid URI/IRI'
+                'Invalid parameter: "link" must be a non-empty string and valid URI/IRI'
             );
         }
         if (! in_array(strtolower($type), ['rss', 'rdf', 'atom'])) {
