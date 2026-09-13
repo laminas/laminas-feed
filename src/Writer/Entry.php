@@ -349,7 +349,7 @@ class Entry
     }
 
     /**
-     * Set a links to an XML feed for any comments associated with this entry.
+     * Set links to XML feeds for any comments associated with this entry.
      * Each link is an array with keys "uri" and "type", where type is one of:
      * "atom", "rss" or "rdf".
      *
