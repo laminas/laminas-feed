@@ -83,7 +83,7 @@ class Feed extends AbstractFeed implements Iterator, Countable
 
     /**
      * Appends a Laminas\Feed\Writer\Entry object representing a new entry/item
-     * the feed data container's internal group of entries.
+     * to the feed data container's internal group of entries.
      *
      * @return $this
      */
