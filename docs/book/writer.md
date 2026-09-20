@@ -266,6 +266,7 @@ Method | Description
 `setCommentLink()` | Sets a link to an HTML page containing comments associated with this entry.
 `setCommentFeedLink()` | Sets a link to an XML feed containing comments associated with this entry. The parameter is an array containing the keys "uri" and "type", where the type is one of "rdf", "rss", or "atom".
 `setCommentFeedLinks()` | Same as `setCommentFeedLink()`, except it accepts an array of arrays, where each subarray contains the expected parameters of `setCommentFeedLink()`.
+`setEnclosure()` | Adds an enclosure to the entry. The array parameter may contain the keys "uri", "type" and "length". Only "uri" is required for Atom. All three must be provided for RSS, or rendering will throw an Exception.
 `setEncoding()` | Sets the encoding of entry text. This will default to UTF-8, which is the preferred encoding.
 
 > ### Retrieval methods
