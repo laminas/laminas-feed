@@ -379,7 +379,7 @@ specific extension object separately if required.
 Method | Description
 ------ | -----------
 `getId()` | Returns a unique ID associated with this feed
-`getTitle()` |  Returns the title of the feed
+`getTitle()` | Returns the title of the feed
 `getDescription()` | Returns the text description of the feed.
 `getLink()` | Returns a URI to the HTML website containing the same or similar information as this feed (i.e. if the feed is from a blog, it should provide the blog's URI where the HTML version of the entries can be read).
 `getFeedLink()` | Returns the URI of this feed, which may be the same as the URI used to import the feed. There are important cases where the feed link may differ because the source URI is being updated and is intended to be removed in the future.
@@ -387,9 +387,9 @@ Method | Description
 `getAuthor(integer $index = 0)` | Returns either the first author known, or with the optional $index parameter any specific index on the array of authors as described above (returning `NULL` if an invalid index).
 `getDateCreated()` | Returns the date on which this feed was created. Generally only applicable to Atom, where it represents the date the resource described by an Atom 1.0 document was created. The returned date will be a `DateTime` object.
 `getDateModified()` | Returns the date on which this feed was last modified. The returned date will be a `DateTime` object.
-`getLastBuildDate()` |  Returns the date on which this feed was last built. The returned date will be a `DateTime` object. This is only supported by RSS; Atom feeds will always return `NULL`.
+`getLastBuildDate()` | Returns the date on which this feed was last built. The returned date will be a `DateTime` object. This is only supported by RSS; Atom feeds will always return `NULL`.
 `getLanguage()` | Returns the language of the feed (if defined) or simply the language noted in the XML document.
-`getGenerator()` |  Returns the generator of the feed, e.g. the software which generated it. This may differ between RSS and Atom since Atom defines a different notation.
+`getGenerator()` | Returns the generator of the feed, e.g. the software which generated it. This may differ between RSS and Atom since Atom defines a different notation.
 `getCopyright()` | Returns any copyright notice associated with the feed.
 `getHubs()` | Returns an array of all Hub Server URI endpoints which are advertised by the feed for use with the Pubsubhubbub Protocol, allowing subscriptions to the feed for real-time updates.
 `getCategories()` | Returns a `Laminas\Feed\Reader\Collection\Category` object containing the details of any categories associated with the overall feed. The supported fields include "term" (the machine readable category name), "scheme" (the categorisation scheme and domain for this category), and "label" (a HTML decoded human readable category name). Where any of the three fields are absent from the field, they are either set to the closest available alternative or, in the case of "scheme", set to `NULL`.
