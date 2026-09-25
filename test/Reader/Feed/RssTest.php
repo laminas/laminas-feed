@@ -5,6 +5,7 @@ namespace LaminasTest\Feed\Reader\Feed;
 use DateTime;
 use DateTimeInterface;
 use Laminas\Feed\Reader;
+use Laminas\Feed\Reader\Feed\Rss;
 use PHPUnit\Framework\TestCase;
 
 use function array_values;
@@ -2109,6 +2110,23 @@ class RssTest extends TestCase
         $this->assertEquals(null, $feed->getLastBuildDate());
     }
 
+    public function testGetsLastBuildDateShouldThrowExceptionForInvalidDate(): void
+    {
+        $feed = Reader\Reader::importString(
+            file_get_contents(
+                $this->feedSamplePath . '/lastbuilddate/plain/invalid.xml'
+            )
+        );
+
+        $this->expectException(Reader\Exception\RuntimeException::class);
+        $this->expectExceptionMessage(
+            'Could not load date due to unrecognised format (should follow RFC 822 or 2822)'
+        );
+
+        $this->assertInstanceOf(Rss::class, $feed);
+        $feed->getLastBuildDate();
+    }
+
     /**
      * Get DateModified (Unencoded Text)
      *
@@ -2169,7 +2187,7 @@ class RssTest extends TestCase
         ];
     }
 
-    public function testGetDateModifiedShouldThrowExceptionForInvalidDate(): void
+    public function testGetsDateModifiedShouldThrowExceptionForInvalidDate(): void
     {
         $feed = Reader\Reader::importString(
             file_get_contents(
