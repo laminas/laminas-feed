@@ -20,7 +20,7 @@ use const E_USER_DEPRECATED;
  * @group Laminas_Feed
  * @group Laminas_Feed_Reader
  */
-class PodcastRss2Test extends TestCase
+final class PodcastRss2Test extends TestCase
 {
     /** @var string */
     protected $feedSamplePath;

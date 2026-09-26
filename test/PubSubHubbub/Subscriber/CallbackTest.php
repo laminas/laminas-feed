@@ -31,7 +31,7 @@ use function sprintf;
 use function time;
 
 #[BackupGlobals(true)]
-class CallbackTest extends TestCase
+final class CallbackTest extends TestCase
 {
     /** @var CallbackSubscriber */
     public $callback;

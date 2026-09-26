@@ -13,7 +13,7 @@ use function file_get_contents;
  * @group Laminas_Feed
  * @group Laminas_Feed_Reader
  */
-class WordpressRss2DcAtomTest extends TestCase
+final class WordpressRss2DcAtomTest extends TestCase
 {
     /** @var string */
     protected $feedSamplePath;

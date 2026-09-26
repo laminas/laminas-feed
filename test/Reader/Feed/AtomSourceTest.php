@@ -16,7 +16,7 @@ use function file_get_contents;
  * @group Laminas_Feed
  * @group Laminas_Feed_Reader
  */
-class AtomSourceTest extends TestCase
+final class AtomSourceTest extends TestCase
 {
     /** @var string */
     protected $feedSamplePath;

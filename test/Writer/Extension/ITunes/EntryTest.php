@@ -19,7 +19,7 @@ use const E_USER_DEPRECATED;
  * @group Laminas_Feed
  * @group Laminas_Feed_Writer
  */
-class EntryTest extends TestCase
+final class EntryTest extends TestCase
 {
     public function testSetBlock(): void
     {

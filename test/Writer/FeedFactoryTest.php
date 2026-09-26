@@ -11,7 +11,7 @@ use Laminas\Feed\Writer\Feed;
 use Laminas\Feed\Writer\FeedFactory;
 use PHPUnit\Framework\TestCase;
 
-class FeedFactoryTest extends TestCase
+final class FeedFactoryTest extends TestCase
 {
     public function testFactoryShouldCreateFeedWithoutData(): void
     {

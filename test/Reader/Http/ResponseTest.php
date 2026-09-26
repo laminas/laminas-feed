@@ -14,7 +14,7 @@ use function var_export;
 /**
  * @covers \Laminas\Feed\Reader\Http\Response
  */
-class ResponseTest extends TestCase
+final class ResponseTest extends TestCase
 {
     public function testConstructorOnlyRequiresStatusCode(): void
     {

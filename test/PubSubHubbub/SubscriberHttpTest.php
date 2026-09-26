@@ -28,7 +28,7 @@ use function substr;
  * @group Laminas_Feed
  * @group Laminas_Feed_Subsubhubbub
  */
-class SubscriberHttpTest extends TestCase
+final class SubscriberHttpTest extends TestCase
 {
     /** @var Subscriber */
     protected $subscriber;

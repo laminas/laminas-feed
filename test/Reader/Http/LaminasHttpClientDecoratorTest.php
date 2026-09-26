@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @covers \Laminas\Feed\Reader\Http\LaminasHttpClientDecorator
  */
-class LaminasHttpClientDecoratorTest extends TestCase
+final class LaminasHttpClientDecoratorTest extends TestCase
 {
     /** @var Client|mixed|MockObject */
     private $client;
