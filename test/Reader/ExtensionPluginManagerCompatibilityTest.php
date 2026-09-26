@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 
 use function sprintf;
 
-class ExtensionPluginManagerCompatibilityTest extends TestCase
+final class ExtensionPluginManagerCompatibilityTest extends TestCase
 {
     use CommonPluginManagerTrait;
 

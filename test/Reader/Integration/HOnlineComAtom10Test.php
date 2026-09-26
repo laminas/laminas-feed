@@ -13,7 +13,7 @@ use function file_get_contents;
  * @group Laminas_Feed
  * @group Laminas_Feed_Reader
  */
-class HOnlineComAtom10Test extends TestCase
+final class HOnlineComAtom10Test extends TestCase
 {
     /** @var string */
     protected $feedSamplePath;

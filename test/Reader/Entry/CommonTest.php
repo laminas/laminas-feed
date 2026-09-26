@@ -19,7 +19,7 @@ use function str_replace;
  * @group Laminas_Feed
  * @group Laminas_Feed_Reader
  */
-class CommonTest extends TestCase
+final class CommonTest extends TestCase
 {
     /** @var string */
     protected $feedSamplePath;

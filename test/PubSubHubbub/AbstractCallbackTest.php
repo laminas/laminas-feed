@@ -11,7 +11,7 @@ use ReflectionMethod;
 use function array_merge;
 
 #[BackupGlobals(true)]
-class AbstractCallbackTest extends TestCase
+final class AbstractCallbackTest extends TestCase
 {
     public function testDetectCallbackUrlIgnoresXOriginalUrlHeaderWhenXRewriteUrlHeaderIsNotPresent(): void
     {

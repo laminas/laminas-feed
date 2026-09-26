@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="6.15.1@28dc127af1b5aecd52314f6f645bafc10d0e11f9">
+<files psalm-version="6.18.1@79465b8dc674127f442ae31ea114c11bc4dd7ed6">
   <file src="src/PubSubHubbub/AbstractCallback.php">
     <DocblockTypeContradiction>
       <code><![CDATA[$this->httpResponse === null]]></code>
@@ -13,6 +13,10 @@
       <code><![CDATA[$_SERVER[$temp]]]></code>
       <code><![CDATA[$_SERVER[$temp]]]></code>
     </InvalidReturnStatement>
+    <LessSpecificReturnStatement>
+      <code><![CDATA[$this]]></code>
+      <code><![CDATA[$this]]></code>
+    </LessSpecificReturnStatement>
     <MissingOverrideAttribute>
       <code><![CDATA[public function getHttpResponse()]]></code>
       <code><![CDATA[public function sendResponse()]]></code>
@@ -4467,15 +4471,7 @@
       <code><![CDATA[isset(static::$extensionManager)]]></code>
     </RedundantPropertyInitializationCheck>
   </file>
-  <file src="test/PubSubHubbub/AbstractCallbackTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[AbstractCallbackTest]]></code>
-    </ClassMustBeFinal>
-  </file>
   <file src="test/PubSubHubbub/ClientNotReset.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[ClientNotReset]]></code>
-    </ClassMustBeFinal>
     <MissingOverrideAttribute>
       <code><![CDATA[public function resetParameters($clearCookies = false, $clearAuth = true)]]></code>
       <code><![CDATA[public function send(?Request $request = null)]]></code>
@@ -4490,9 +4486,6 @@
     </PropertyNotSetInConstructor>
   </file>
   <file src="test/PubSubHubbub/Model/SubscriptionTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[SubscriptionTest]]></code>
-    </ClassMustBeFinal>
     <MissingReturnType>
       <code><![CDATA[createTable]]></code>
     </MissingReturnType>
@@ -4507,14 +4500,8 @@
     <ArgumentTypeCoercion>
       <code><![CDATA[$feed]]></code>
     </ArgumentTypeCoercion>
-    <ClassMustBeFinal>
-      <code><![CDATA[PubSubHubbubTest]]></code>
-    </ClassMustBeFinal>
   </file>
   <file src="test/PubSubHubbub/PublisherTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[PublisherTest]]></code>
-    </ClassMustBeFinal>
     <InvalidArgument>
       <code><![CDATA[123]]></code>
       <code><![CDATA[123]]></code>
@@ -4524,9 +4511,6 @@
     </MissingOverrideAttribute>
   </file>
   <file src="test/PubSubHubbub/Subscriber/CallbackTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[CallbackTest]]></code>
-    </ClassMustBeFinal>
     <InvalidArgument>
       <code><![CDATA['']]></code>
       <code><![CDATA[new stdClass()]]></code>
@@ -4554,9 +4538,6 @@
     </UnevaluatedCode>
   </file>
   <file src="test/PubSubHubbub/SubscriberHttpTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[SubscriberHttpTest]]></code>
-    </ClassMustBeFinal>
     <InternalMethod>
       <code><![CDATA[nameWithDataSet]]></code>
     </InternalMethod>
@@ -4575,9 +4556,6 @@
     </TooFewArguments>
   </file>
   <file src="test/PubSubHubbub/SubscriberTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[SubscriberTest]]></code>
-    </ClassMustBeFinal>
     <InvalidArgument>
       <code><![CDATA['0aa']]></code>
       <code><![CDATA['10000']]></code>
@@ -4590,9 +4568,6 @@
     </MissingOverrideAttribute>
   </file>
   <file src="test/PubSubHubbub/TestAsset/Callback.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[Callback]]></code>
-    </ClassMustBeFinal>
     <MissingOverrideAttribute>
       <code><![CDATA[public function handle(?array $httpData = null, $sendResponseNow = false)]]></code>
     </MissingOverrideAttribute>
@@ -4605,9 +4580,6 @@
     </PropertyNotSetInConstructor>
   </file>
   <file src="test/Reader/Entry/AtomStandaloneEntryTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[AtomStandaloneEntryTest]]></code>
-    </ClassMustBeFinal>
     <MissingOverrideAttribute>
       <code><![CDATA[protected function setUp(): void]]></code>
     </MissingOverrideAttribute>
@@ -4646,9 +4618,6 @@
     </UndefinedInterfaceMethod>
   </file>
   <file src="test/Reader/Entry/AtomTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[AtomTest]]></code>
-    </ClassMustBeFinal>
     <MissingOverrideAttribute>
       <code><![CDATA[protected function setUp(): void]]></code>
     </MissingOverrideAttribute>
@@ -4746,9 +4715,6 @@
     </PossiblyUndefinedMethod>
   </file>
   <file src="test/Reader/Entry/CommonTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[CommonTest]]></code>
-    </ClassMustBeFinal>
     <DeprecatedMethod>
       <code><![CDATA[getMockForAbstractClass]]></code>
       <code><![CDATA[getMockForAbstractClass]]></code>
@@ -4805,9 +4771,6 @@
     </PossiblyUndefinedMethod>
   </file>
   <file src="test/Reader/Entry/RssTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[RssTest]]></code>
-    </ClassMustBeFinal>
     <InvalidMethodCall>
       <code><![CDATA[getValues]]></code>
       <code><![CDATA[getValues]]></code>
@@ -5448,9 +5411,6 @@
     </PossiblyNullReference>
   </file>
   <file src="test/Reader/ExtensionPluginManagerCompatibilityTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[ExtensionPluginManagerCompatibilityTest]]></code>
-    </ClassMustBeFinal>
     <InvalidReturnType>
       <code><![CDATA[getInstanceOf]]></code>
     </InvalidReturnType>
@@ -5461,9 +5421,6 @@
     </MissingOverrideAttribute>
   </file>
   <file src="test/Reader/Feed/AtomSourceTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[AtomSourceTest]]></code>
-    </ClassMustBeFinal>
     <MissingOverrideAttribute>
       <code><![CDATA[protected function setUp(): void]]></code>
     </MissingOverrideAttribute>
@@ -5559,9 +5516,6 @@
     </PossiblyUnusedProperty>
   </file>
   <file src="test/Reader/Feed/AtomTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[AtomTest]]></code>
-    </ClassMustBeFinal>
     <MissingOverrideAttribute>
       <code><![CDATA[protected function setUp(): void]]></code>
     </MissingOverrideAttribute>
@@ -5641,9 +5595,6 @@
     </UndefinedInterfaceMethod>
   </file>
   <file src="test/Reader/Feed/CommonTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[CommonTest]]></code>
-    </ClassMustBeFinal>
     <MissingOverrideAttribute>
       <code><![CDATA[protected function setUp(): void]]></code>
     </MissingOverrideAttribute>
@@ -5672,9 +5623,6 @@
     </UndefinedInterfaceMethod>
   </file>
   <file src="test/Reader/Feed/RssTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[RssTest]]></code>
-    </ClassMustBeFinal>
     <InvalidMethodCall>
       <code><![CDATA[getValues]]></code>
       <code><![CDATA[getValues]]></code>
@@ -6058,17 +6006,11 @@
     </UndefinedInterfaceMethod>
   </file>
   <file src="test/Reader/FeedSetTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[FeedSetTest]]></code>
-    </ClassMustBeFinal>
     <MissingOverrideAttribute>
       <code><![CDATA[protected function setUp(): void]]></code>
     </MissingOverrideAttribute>
   </file>
   <file src="test/Reader/Http/LaminasHttpClientDecoratorTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[LaminasHttpClientDecoratorTest]]></code>
-    </ClassMustBeFinal>
     <InvalidArgument>
       <code><![CDATA[$headers]]></code>
       <code><![CDATA[$responseHeaders]]></code>
@@ -6130,23 +6072,15 @@
       <code><![CDATA[expects]]></code>
       <code><![CDATA[expects]]></code>
     </PossiblyUndefinedMethod>
-    <PossiblyUnusedParam>
-      <code><![CDATA[$headers]]></code>
-    </PossiblyUnusedParam>
     <TooManyTemplateParams>
       <code><![CDATA[MockObject<Headers>]]></code>
       <code><![CDATA[MockObject<HttpResponse>]]></code>
     </TooManyTemplateParams>
-  </file>
-  <file src="test/Reader/Http/Psr7ResponseDecoratorTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[Psr7ResponseDecoratorTest]]></code>
-    </ClassMustBeFinal>
+    <UnusedParam>
+      <code><![CDATA[$headers]]></code>
+    </UnusedParam>
   </file>
   <file src="test/Reader/Http/ResponseTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[ResponseTest]]></code>
-    </ClassMustBeFinal>
     <MissingReturnType>
       <code><![CDATA[testConstructorRaisesExceptionForInvalidBody]]></code>
       <code><![CDATA[testConstructorRaisesExceptionForInvalidHeaderStructures]]></code>
@@ -6158,9 +6092,6 @@
     </MixedArgument>
   </file>
   <file src="test/Reader/Integration/GooglePlayPodcastRss2Test.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[GooglePlayPodcastRss2Test]]></code>
-    </ClassMustBeFinal>
     <MissingOverrideAttribute>
       <code><![CDATA[protected function setUp(): void]]></code>
     </MissingOverrideAttribute>
@@ -6265,9 +6196,6 @@
     </UndefinedInterfaceMethod>
   </file>
   <file src="test/Reader/Integration/HOnlineComAtom10Test.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[HOnlineComAtom10Test]]></code>
-    </ClassMustBeFinal>
     <MissingOverrideAttribute>
       <code><![CDATA[protected function setUp(): void]]></code>
     </MissingOverrideAttribute>
@@ -6315,9 +6243,6 @@
     </UndefinedInterfaceMethod>
   </file>
   <file src="test/Reader/Integration/LautDeRdfTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[LautDeRdfTest]]></code>
-    </ClassMustBeFinal>
     <MissingOverrideAttribute>
       <code><![CDATA[protected function setUp(): void]]></code>
     </MissingOverrideAttribute>
@@ -6364,9 +6289,6 @@
     </UndefinedInterfaceMethod>
   </file>
   <file src="test/Reader/Integration/PodcastIndexRss2Test.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[PodcastIndexRss2Test]]></code>
-    </ClassMustBeFinal>
     <MissingOverrideAttribute>
       <code><![CDATA[protected function setUp(): void]]></code>
     </MissingOverrideAttribute>
@@ -6430,9 +6352,6 @@
     </UndefinedMagicMethod>
   </file>
   <file src="test/Reader/Integration/PodcastRss2Test.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[PodcastRss2Test]]></code>
-    </ClassMustBeFinal>
     <MissingOverrideAttribute>
       <code><![CDATA[protected function setUp(): void]]></code>
     </MissingOverrideAttribute>
@@ -6541,9 +6460,6 @@
     </UndefinedInterfaceMethod>
   </file>
   <file src="test/Reader/Integration/WordpressAtom10Test.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[WordpressAtom10Test]]></code>
-    </ClassMustBeFinal>
     <MissingOverrideAttribute>
       <code><![CDATA[protected function setUp(): void]]></code>
     </MissingOverrideAttribute>
@@ -6591,9 +6507,6 @@
     </UndefinedInterfaceMethod>
   </file>
   <file src="test/Reader/Integration/WordpressRss2DcAtomTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[WordpressRss2DcAtomTest]]></code>
-    </ClassMustBeFinal>
     <MissingOverrideAttribute>
       <code><![CDATA[protected function setUp(): void]]></code>
     </MissingOverrideAttribute>
@@ -6653,9 +6566,6 @@
       <code><![CDATA[$feed]]></code>
       <code><![CDATA[$feed]]></code>
     </ArgumentTypeCoercion>
-    <ClassMustBeFinal>
-      <code><![CDATA[ReaderTest]]></code>
-    </ClassMustBeFinal>
     <InvalidArgument>
       <code><![CDATA[new stdClass()]]></code>
       <code><![CDATA[static function (int $errno, string $errstr) use ($notices): void {
@@ -6717,9 +6627,6 @@
     </UndefinedMagicMethod>
   </file>
   <file src="test/Reader/StandaloneExtensionManagerTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[StandaloneExtensionManagerTest]]></code>
-    </ClassMustBeFinal>
     <MissingOverrideAttribute>
       <code><![CDATA[protected function setUp(): void]]></code>
     </MissingOverrideAttribute>
@@ -6741,11 +6648,6 @@
       <code><![CDATA[get]]></code>
       <code><![CDATA[has]]></code>
     </PossiblyUnusedMethod>
-  </file>
-  <file src="test/Reader/TestAsset/Psr7Stream.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[Psr7Stream]]></code>
-    </ClassMustBeFinal>
   </file>
   <file src="test/Reader/_files/My/Extension/JungleBooks/Entry.php">
     <ClassMustBeFinal>
@@ -6779,9 +6681,6 @@
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="test/Writer/DeletedTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[DeletedTest]]></code>
-    </ClassMustBeFinal>
     <DocblockTypeContradiction>
       <code><![CDATA[assertNull]]></code>
     </DocblockTypeContradiction>
@@ -6795,9 +6694,6 @@
     </UnevaluatedCode>
   </file>
   <file src="test/Writer/EntryTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[EntryTest]]></code>
-    </ClassMustBeFinal>
     <InvalidArgument>
       <code><![CDATA['abc']]></code>
       <code><![CDATA['abc']]></code>
@@ -6844,9 +6740,6 @@
     </UnevaluatedCode>
   </file>
   <file src="test/Writer/Extension/GooglePlayPodcast/EntryTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[EntryTest]]></code>
-    </ClassMustBeFinal>
     <UndefinedMagicMethod>
       <code><![CDATA[getPlayPodcastBlock]]></code>
       <code><![CDATA[getPlayPodcastDescription]]></code>
@@ -6865,9 +6758,6 @@
     </UndefinedMagicMethod>
   </file>
   <file src="test/Writer/Extension/GooglePlayPodcast/FeedTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[FeedTest]]></code>
-    </ClassMustBeFinal>
     <MissingReturnType>
       <code><![CDATA[testSetPlayPodcastImageRaisesExceptionForInvalidUrl]]></code>
       <code><![CDATA[testSetPlayPodcastImageSetsInternalDataWithValidUrl]]></code>
@@ -6906,9 +6796,6 @@
     </UndefinedMagicMethod>
   </file>
   <file src="test/Writer/Extension/ITunes/EntryTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[EntryTest]]></code>
-    </ClassMustBeFinal>
     <MissingReturnType>
       <code><![CDATA[testEpisodeTypeMaybeMutatedWithAcceptedValues]]></code>
       <code><![CDATA[testSetEpisodeRaisesExceptionForNonNumericEpisodeNumbers]]></code>
@@ -6974,9 +6861,6 @@
     </UndefinedMagicMethod>
   </file>
   <file src="test/Writer/Extension/ITunes/FeedTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[FeedTest]]></code>
-    </ClassMustBeFinal>
     <MissingReturnType>
       <code><![CDATA[testSetExplicit]]></code>
       <code><![CDATA[testSetItunesCompleteRaisesExceptionForInvalidStatus]]></code>
@@ -7047,9 +6931,6 @@
     </UndefinedMagicMethod>
   </file>
   <file src="test/Writer/Extension/PodcastIndex/EntryTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[EntryTest]]></code>
-    </ClassMustBeFinal>
     <UndefinedMagicMethod>
       <code><![CDATA[addPodcastIndexAlternateEnclosure]]></code>
       <code><![CDATA[addPodcastIndexAlternateEnclosure]]></code>
@@ -7198,9 +7079,6 @@
     </UndefinedMagicMethod>
   </file>
   <file src="test/Writer/Extension/PodcastIndex/FeedTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[FeedTest]]></code>
-    </ClassMustBeFinal>
     <UndefinedMagicMethod>
       <code><![CDATA[addPodcastIndexBlock]]></code>
       <code><![CDATA[addPodcastIndexBlock]]></code>
@@ -7428,9 +7306,6 @@
     </UndefinedMagicMethod>
   </file>
   <file src="test/Writer/Extension/PodcastIndex/LiveItemTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[LiveItemTest]]></code>
-    </ClassMustBeFinal>
     <MissingOverrideAttribute>
       <code><![CDATA[protected function setUp(): void]]></code>
       <code><![CDATA[protected function tearDown(): void]]></code>
@@ -7478,9 +7353,6 @@
     </UndefinedMagicMethod>
   </file>
   <file src="test/Writer/ExtensionPluginManagerCompatibilityTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[ExtensionPluginManagerCompatibilityTest]]></code>
-    </ClassMustBeFinal>
     <MissingOverrideAttribute>
       <code><![CDATA[protected function getInstanceOf(): void]]></code>
       <code><![CDATA[protected function getV2InvalidPluginException()]]></code>
@@ -7488,9 +7360,6 @@
     </MissingOverrideAttribute>
   </file>
   <file src="test/Writer/FeedFactoryTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[FeedFactoryTest]]></code>
-    </ClassMustBeFinal>
     <InvalidArgument>
       <code><![CDATA['string']]></code>
     </InvalidArgument>
@@ -7502,9 +7371,6 @@
     </PossiblyNullReference>
   </file>
   <file src="test/Writer/FeedTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[FeedTest]]></code>
-    </ClassMustBeFinal>
     <InvalidArgument>
       <code><![CDATA[static function (int $errno, string $errstr) use ($notices): void {
             $notices->messages[] = $errstr;
@@ -7545,9 +7411,6 @@
     </UnevaluatedCode>
   </file>
   <file src="test/Writer/Renderer/Entry/AtomTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[AtomTest]]></code>
-    </ClassMustBeFinal>
     <InvalidArgument>
       <code><![CDATA[static function (int $errno, string $errstr) use ($notices): void {
             $notices->messages[] = $errstr;
@@ -7605,9 +7468,6 @@
     </UnevaluatedCode>
   </file>
   <file src="test/Writer/Renderer/Entry/RssTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[RssTest]]></code>
-    </ClassMustBeFinal>
     <InvalidArgument>
       <code><![CDATA[static function (int $errno, string $errstr) use ($notices): void {
             $notices->messages[] = $errstr;
@@ -7660,9 +7520,6 @@
     </TooManyArguments>
   </file>
   <file src="test/Writer/Renderer/Extension/PodcastIndex/EntryTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[EntryTest]]></code>
-    </ClassMustBeFinal>
     <MissingOverrideAttribute>
       <code><![CDATA[protected function setUp(): void]]></code>
       <code><![CDATA[protected function tearDown(): void]]></code>
@@ -7690,9 +7547,6 @@
     </UndefinedMagicMethod>
   </file>
   <file src="test/Writer/Renderer/Extension/PodcastIndex/FeedTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[FeedTest]]></code>
-    </ClassMustBeFinal>
     <MissingOverrideAttribute>
       <code><![CDATA[protected function setUp(): void]]></code>
       <code><![CDATA[protected function tearDown(): void]]></code>
@@ -7729,9 +7583,6 @@
     </UndefinedMagicMethod>
   </file>
   <file src="test/Writer/Renderer/Extension/PodcastIndex/LiveItemTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[LiveItemTest]]></code>
-    </ClassMustBeFinal>
     <MissingOverrideAttribute>
       <code><![CDATA[protected function setUp(): void]]></code>
       <code><![CDATA[protected function tearDown(): void]]></code>
@@ -7759,9 +7610,6 @@
     </UndefinedMagicMethod>
   </file>
   <file src="test/Writer/Renderer/Feed/AtomTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[AtomTest]]></code>
-    </ClassMustBeFinal>
     <InvalidArgument>
       <code><![CDATA[static function (int $errno, string $errstr) use ($notices): void {
             $notices->messages[] = $errstr;
@@ -7789,9 +7637,6 @@
     </UndefinedInterfaceMethod>
   </file>
   <file src="test/Writer/Renderer/Feed/RssTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[RssTest]]></code>
-    </ClassMustBeFinal>
     <InvalidArgument>
       <code><![CDATA[static function (int $errno, string $errstr) use ($notices): void {
             $notices->messages[] = $errstr;
@@ -7823,9 +7668,6 @@
     </UndefinedInterfaceMethod>
   </file>
   <file src="test/Writer/StandaloneExtensionManagerTest.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[StandaloneExtensionManagerTest]]></code>
-    </ClassMustBeFinal>
     <MissingOverrideAttribute>
       <code><![CDATA[protected function setUp(): void]]></code>
     </MissingOverrideAttribute>
@@ -7836,9 +7678,6 @@
     </MixedAssignment>
   </file>
   <file src="test/Writer/TestAsset/CustomExtensionManager.php">
-    <ClassMustBeFinal>
-      <code><![CDATA[CustomExtensionManager]]></code>
-    </ClassMustBeFinal>
     <DeprecatedInterface>
       <code><![CDATA[CustomExtensionManager]]></code>
     </DeprecatedInterface>

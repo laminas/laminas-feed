@@ -35,7 +35,7 @@ use function time;
  * @psalm-suppress MixedAssignment
  * @psalm-suppress InvalidArrayAccess
  */
-class FeedTest extends TestCase
+final class FeedTest extends TestCase
 {
     public function testSetLocked(): void
     {
@@ -822,7 +822,7 @@ class FeedTest extends TestCase
             'title'   => 'Season 4: Race for the Clouds',
             'pubdate' => "Thu, 01 Apr 2021 08:00:00 EST",
             'url'     => "https://example.org/season4teaser.mp4",
-            'length'  => 12345678,
+            'length'  => 12_345_678,
             'type'    => "video/mp4",
             'season'  => 4,
         ];
@@ -839,7 +839,7 @@ class FeedTest extends TestCase
             'title'    => 'Season 4: Race for the Clouds',
             'pubdate'  => "Thu, 01 Apr 2021 08:00:00 EST",
             'url'      => "https://example.org/season4teaser.mp4",
-            'length'   => 12345678,
+            'length'   => 12_345_678,
             'type'     => "video/mp4",
             'season'   => 4,
             'unwanted' => 'data',

@@ -33,7 +33,7 @@ use const E_USER_NOTICE;
  * @group Laminas_Feed
  * @group Laminas_Feed_Reader
  */
-class ReaderTest extends TestCase
+final class ReaderTest extends TestCase
 {
     /** @var string */
     protected $feedSamplePath;
