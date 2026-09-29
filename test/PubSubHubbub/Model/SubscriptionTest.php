@@ -20,7 +20,7 @@ use function uniqid;
  * @group Laminas_Feed
  * @group Laminas_Feed_Pubsubhubbub_Model
  */
-class SubscriptionTest extends TestCase
+final class SubscriptionTest extends TestCase
 {
     /**
      * @group Laminas-10069

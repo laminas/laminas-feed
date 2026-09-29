@@ -13,7 +13,7 @@ use function is_string;
 use function number_format;
 use function substr_count;
 
-class LiveItemTest extends TestCase
+final class LiveItemTest extends TestCase
 {
     protected Writer\Feed $validWriter;
     protected LiveItem $validEntry;
@@ -434,7 +434,7 @@ class LiveItemTest extends TestCase
         ];
         $alternateEnclosure = [
             'type'    => 'video/mp4',
-            'length'  => 7924786,
+            'length'  => 7_924_786,
             'bitrate' => 511276.52,
             'height'  => 720,
             'lang'    => 'en',

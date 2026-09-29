@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
  * @group Laminas_Feed
  * @group Laminas_Feed_Subsubhubbub
  */
-class SubscriberTest extends TestCase
+final class SubscriberTest extends TestCase
 {
     /** @var Subscriber */
     protected $subscriber;

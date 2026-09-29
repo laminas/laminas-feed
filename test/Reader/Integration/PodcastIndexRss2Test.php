@@ -16,7 +16,7 @@ use function implode;
  * @group Laminas_Feed
  * @group Laminas_Feed_Reader
  */
-class PodcastIndexRss2Test extends TestCase
+final class PodcastIndexRss2Test extends TestCase
 {
     /** @var string */
     protected $feedSamplePath;
@@ -252,7 +252,7 @@ class PodcastIndexRss2Test extends TestCase
         $expected->title   = 'Season 4: Race for the Clouds';
         $expected->pubdate = "Thu, 01 Apr 2021 08:00:00 EST";
         $expected->url     = "https://example.org/season4teaser.mp4";
-        $expected->length  = 12345678;
+        $expected->length  = 12_345_678;
         $expected->type    = "video/mp4";
         $expected->season  = 4;
 

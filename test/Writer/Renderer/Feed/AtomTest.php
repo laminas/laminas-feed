@@ -25,7 +25,7 @@ use const E_USER_NOTICE;
  * @group Laminas_Feed
  * @group Laminas_Feed_Writer
  */
-class AtomTest extends TestCase
+final class AtomTest extends TestCase
 {
     /** @var Writer\Feed */
     protected $validWriter;

@@ -8,7 +8,7 @@ use Laminas\Feed\Reader\FeedSet;
 use PHPUnit\Framework\TestCase;
 use ReflectionMethod;
 
-class FeedSetTest extends TestCase
+final class FeedSetTest extends TestCase
 {
     /** @var FeedSet */
     protected $feedSet;

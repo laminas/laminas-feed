@@ -6,7 +6,7 @@ namespace LaminasTest\Feed\PubSubHubbub\TestAsset;
 
 use Laminas\Feed\PubSubHubbub\AbstractCallback;
 
-class Callback extends AbstractCallback
+final class Callback extends AbstractCallback
 {
     /**
      * {@inheritDoc}

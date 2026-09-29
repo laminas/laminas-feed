@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 
 use function str_repeat;
 
-class EntryTest extends TestCase
+final class EntryTest extends TestCase
 {
     public function testSetBlock(): void
     {

@@ -8,7 +8,7 @@ use Laminas\Http\Client as HttpClient;
 use Laminas\Http\Request;
 use Laminas\Http\Response;
 
-class ClientNotReset extends HttpClient
+final class ClientNotReset extends HttpClient
 {
     /**
      * @param bool $clearCookies

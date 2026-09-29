@@ -26,7 +26,7 @@ use const E_USER_NOTICE;
  * @group Laminas_Feed
  * @group Laminas_Feed_Writer
  */
-class RssTest extends TestCase
+final class RssTest extends TestCase
 {
     /** @var Writer\Feed */
     protected $validWriter;

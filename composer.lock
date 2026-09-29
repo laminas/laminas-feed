@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fe2f82a6212c1a3ed580dcc967d9023c",
+    "content-hash": "36f84a240c1ac8c26f2b9226b969c10f",
     "packages": [
         {
             "name": "laminas/laminas-escaper",
@@ -946,6 +946,153 @@
             "time": "2024-08-03T19:31:26+00:00"
         },
         {
+            "name": "boundwize/jsonrecast",
+            "version": "1.0.36",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/boundwize/jsonrecast.git",
+                "reference": "c7cfac84d68ce0a89babfeb3aab234db80dce790"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/boundwize/jsonrecast/zipball/c7cfac84d68ce0a89babfeb3aab234db80dce790",
+                "reference": "c7cfac84d68ce0a89babfeb3aab234db80dce790",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.2"
+            },
+            "require-dev": {
+                "boundwize/pyrameter": "^0.5",
+                "boundwize/structarmed": "^0.15",
+                "laminas/laminas-coding-standard": "^3.1",
+                "phpstan/phpstan": "^2.2",
+                "phpunit/phpunit": "^11.5",
+                "rector/rector": "^2.4"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Boundwize\\JsonRecast\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Abdul Malik Ikhsan",
+                    "email": "samsonasik@gmail.com",
+                    "homepage": "http://samsonasik.wordpress.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Editable JSON AST with visitor traversal and formatting-preserving printing.",
+            "homepage": "https://github.com/boundwize/jsonrecast",
+            "keywords": [
+                "ast",
+                "formatting",
+                "json",
+                "parser",
+                "refactoring"
+            ],
+            "support": {
+                "issues": "https://github.com/boundwize/jsonrecast/issues",
+                "source": "https://github.com/boundwize/jsonrecast/tree/1.0.36"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/samsonasik",
+                    "type": "github"
+                }
+            ],
+            "time": "2026-08-15T00:35:36+00:00"
+        },
+        {
+            "name": "boundwize/structarmed",
+            "version": "0.18.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/boundwize/structarmed.git",
+                "reference": "f2728fead5f561ad91aead1a985728403678c88d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/boundwize/structarmed/zipball/f2728fead5f561ad91aead1a985728403678c88d",
+                "reference": "f2728fead5f561ad91aead1a985728403678c88d",
+                "shasum": ""
+            },
+            "require": {
+                "boundwize/jsonrecast": "^1.0",
+                "composer-runtime-api": "^2.0",
+                "fidry/cpu-core-counter": "^1.3",
+                "nikic/php-parser": "^5.9",
+                "php": "^8.2"
+            },
+            "require-dev": {
+                "boundwize/pyrameter": "^0.5",
+                "laminas/laminas-coding-standard": "^3.1",
+                "phpstan/phpstan": "^2.2",
+                "phpunit/phpunit": "^11.5",
+                "rector/rector": "dev-main"
+            },
+            "bin": [
+                "bin/structarmed"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Boundwize\\StructArmed\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Abdul Malik Ikhsan",
+                    "email": "samsonasik@gmail.com",
+                    "homepage": "http://samsonasik.wordpress.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Configurable PHP architecture guards — define your layers and rules, then keep them enforced",
+            "homepage": "https://github.com/boundwize/structarmed",
+            "keywords": [
+                "Enforcement",
+                "analysis",
+                "architecture",
+                "ddd",
+                "dev",
+                "layer",
+                "mvc",
+                "psr1",
+                "psr12",
+                "psr15",
+                "psr4",
+                "static analysis",
+                "yagni"
+            ],
+            "support": {
+                "issues": "https://github.com/boundwize/structarmed/issues",
+                "source": "https://github.com/boundwize/structarmed/tree/0.18.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/samsonasik",
+                    "type": "github"
+                }
+            ],
+            "time": "2026-09-24T03:45:31+00:00"
+        },
+        {
             "name": "composer/pcre",
             "version": "3.4.0",
             "source": {
@@ -1023,16 +1170,16 @@
         },
         {
             "name": "composer/semver",
-            "version": "3.4.4",
+            "version": "3.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/semver.git",
-                "reference": "198166618906cb2de69b95d7d47e5fa8aa1b2b95"
+                "reference": "f7a296f4c4cf8cb8bb83e35d6951a406bb11afa5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/semver/zipball/198166618906cb2de69b95d7d47e5fa8aa1b2b95",
-                "reference": "198166618906cb2de69b95d7d47e5fa8aa1b2b95",
+                "url": "https://api.github.com/repos/composer/semver/zipball/f7a296f4c4cf8cb8bb83e35d6951a406bb11afa5",
+                "reference": "f7a296f4c4cf8cb8bb83e35d6951a406bb11afa5",
                 "shasum": ""
             },
             "require": {
@@ -1074,7 +1221,7 @@
                     "homepage": "http://robbast.nl"
                 }
             ],
-            "description": "Semver library that offers utilities, version constraint parsing and validation.",
+            "description": "Version comparison library that offers utilities, version constraint parsing and validation.",
             "keywords": [
                 "semantic",
                 "semver",
@@ -1084,7 +1231,7 @@
             "support": {
                 "irc": "ircs://irc.libera.chat:6697/composer",
                 "issues": "https://github.com/composer/semver/issues",
-                "source": "https://github.com/composer/semver/tree/3.4.4"
+                "source": "https://github.com/composer/semver/tree/3.5.0"
             },
             "funding": [
                 {
@@ -1096,7 +1243,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-08-20T19:15:30+00:00"
+            "time": "2026-09-24T14:38:51+00:00"
         },
         {
             "name": "composer/xdebug-handler",
@@ -3267,16 +3414,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "10.5.64",
+            "version": "10.5.65",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "0e8c1d19cea35ad97d4887f363d07c78e30fbf06"
+                "reference": "b4f678d4ebb686d6d3bd6a7c193e8a067d1a7f01"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/0e8c1d19cea35ad97d4887f363d07c78e30fbf06",
-                "reference": "0e8c1d19cea35ad97d4887f363d07c78e30fbf06",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/b4f678d4ebb686d6d3bd6a7c193e8a067d1a7f01",
+                "reference": "b4f678d4ebb686d6d3bd6a7c193e8a067d1a7f01",
                 "shasum": ""
             },
             "require": {
@@ -3286,7 +3433,7 @@
                 "ext-libxml": "*",
                 "ext-mbstring": "*",
                 "ext-xmlwriter": "*",
-                "myclabs/deep-copy": "^1.13.4",
+                "myclabs/deep-copy": "^1.14.0",
                 "phar-io/manifest": "^2.0.4",
                 "phar-io/version": "^3.2.1",
                 "php": ">=8.1",
@@ -3303,7 +3450,7 @@
                 "sebastian/exporter": "^5.1.4",
                 "sebastian/global-state": "^6.0.2",
                 "sebastian/object-enumerator": "^5.0.0",
-                "sebastian/recursion-context": "^5.0.1",
+                "sebastian/recursion-context": "^5.0.2",
                 "sebastian/type": "^4.0.0",
                 "sebastian/version": "^4.0.1"
             },
@@ -3348,7 +3495,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.5.64"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.5.65"
             },
             "funding": [
                 {
@@ -3356,7 +3503,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2026-07-06T14:50:35+00:00"
+            "time": "2026-09-23T10:01:12+00:00"
         },
         {
             "name": "psalm/plugin-phpunit",
@@ -5887,16 +6034,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "6.17.2",
+            "version": "6.18.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "dd625545733d24633e5d386a26c13004dae80e19"
+                "reference": "79465b8dc674127f442ae31ea114c11bc4dd7ed6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/dd625545733d24633e5d386a26c13004dae80e19",
-                "reference": "dd625545733d24633e5d386a26c13004dae80e19",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/79465b8dc674127f442ae31ea114c11bc4dd7ed6",
+                "reference": "79465b8dc674127f442ae31ea114c11bc4dd7ed6",
                 "shasum": ""
             },
             "require": {
@@ -6001,7 +6148,7 @@
                 "issues": "https://github.com/vimeo/psalm/issues",
                 "source": "https://github.com/vimeo/psalm"
             },
-            "time": "2026-09-15T12:34:23+00:00"
+            "time": "2026-09-23T10:02:42+00:00"
         },
         {
             "name": "webimpress/coding-standard",

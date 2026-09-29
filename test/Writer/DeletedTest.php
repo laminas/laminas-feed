@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
  * @group Laminas_Feed
  * @group Laminas_Feed_Writer
  */
-class DeletedTest extends TestCase
+final class DeletedTest extends TestCase
 {
     public function testSetsReference(): void
     {

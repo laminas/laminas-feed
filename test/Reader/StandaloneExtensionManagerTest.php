@@ -10,7 +10,7 @@ use Laminas\Feed\Reader\ExtensionManagerInterface;
 use Laminas\Feed\Reader\StandaloneExtensionManager;
 use PHPUnit\Framework\TestCase;
 
-class StandaloneExtensionManagerTest extends TestCase
+final class StandaloneExtensionManagerTest extends TestCase
 {
     private StandaloneExtensionManager $extensions;
 

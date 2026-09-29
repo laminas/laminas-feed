@@ -11,7 +11,7 @@ use Laminas\Feed\Writer\ExtensionManagerInterface;
 use function array_key_exists;
 use function sprintf;
 
-class CustomExtensionManager implements ExtensionManagerInterface
+final class CustomExtensionManager implements ExtensionManagerInterface
 {
     /** @var array<string, class-string> */
     private array $extensions = [
