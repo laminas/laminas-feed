@@ -3196,9 +3196,6 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="src/Writer/Extension/Slash/Renderer/Entry.php">
-    <MixedAssignment>
-      <code>$count</code>
-    </MixedAssignment>
     <MixedMethodCall>
       <code>getCommentCount</code>
     </MixedMethodCall>
