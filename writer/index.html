@@ -596,7 +596,7 @@ detailed below, the class also implements the <code>Countable</code> and <code>I
 </tr>
 <tr>
 <td><code>addAuthors()</code></td>
-<td>Sets the data for authors. The parameter is an array of array,s where each sub-array may contain the keys "name", "email", and "uri". The "uri" value is only applicable for Atom feeds, since RSS contains no facility to show it. For RSS 2.0, rendering will create two elements: an author element containing the email reference with the name in brackets, and a Dublin Core creator element only containing the name.</td>
+<td>Sets the data for authors. The parameter is an array of arrays, where each sub-array may contain the keys "name", "email", and "uri". The "uri" value is only applicable for Atom feeds, since RSS contains no facility to show it. For RSS 2.0, rendering will create two elements: an author element containing the email reference with the name in brackets, and a Dublin Core creator element only containing the name.</td>
 </tr>
 <tr>
 <td><code>addAuthor()</code></td>
@@ -612,7 +612,7 @@ detailed below, the class also implements the <code>Countable</code> and <code>I
 </tr>
 <tr>
 <td><code>setLastBuildDate()</code></td>
-<td>Sets the date on which this feed was last build. The expected parameter may be a UNIX timestamp or an object implementing <code>DateTimeInterface</code> such as <code>DateTime</code> or <code>DateTimeImmutable</code>. This will only be rendered for RSS 2.0 feeds, and is automatically rendered as the current date by default when not explicitly set.</td>
+<td>Sets the date on which this feed was last built. The expected parameter may be a UNIX timestamp or an object implementing <code>DateTimeInterface</code> such as <code>DateTime</code> or <code>DateTimeImmutable</code>. This will only be rendered for RSS 2.0 feeds, and is automatically rendered as the current date by default when not explicitly set.</td>
 </tr>
 <tr>
 <td><code>setLanguage()</code></td>
@@ -709,7 +709,7 @@ specific extension object separately if required.</p>
 </tr>
 <tr>
 <td><code>addAuthors()</code></td>
-<td>Sets the data for authors. The parameter is an array of array,s where each sub-array may contain the keys "name", "email", and "uri". The "uri" value is only applicable for Atom feeds, since RSS contains no facility to show it. For RSS 2.0, rendering will create two elements: an author element containing the email reference with the name in brackets, and a Dublin Core creator element only containing the name.</td>
+<td>Sets the data for authors. The parameter is an array of arrays, where each sub-array may contain the keys "name", "email", and "uri". The "uri" value is only applicable for Atom feeds, since RSS contains no facility to show it. For RSS 2.0, rendering will create two elements: an author element containing the email reference with the name in brackets, and a Dublin Core creator element only containing the name.</td>
 </tr>
 <tr>
 <td><code>addAuthor()</code></td>
@@ -750,6 +750,10 @@ specific extension object separately if required.</p>
 <tr>
 <td><code>setCommentFeedLinks()</code></td>
 <td>Same as <code>setCommentFeedLink()</code>, except it accepts an array of arrays, where each subarray contains the expected parameters of <code>setCommentFeedLink()</code>.</td>
+</tr>
+<tr>
+<td><code>setEnclosure()</code></td>
+<td>Adds an enclosure to the entry. The array parameter may contain the keys "uri", "type", and "length". Only "uri" is required for Atom. All three must be provided for RSS, or rendering will throw an Exception.</td>
 </tr>
 <tr>
 <td><code>setEncoding()</code></td>
