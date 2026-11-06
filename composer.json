@@ -20,16 +20,15 @@
     "config": {
         "sort-packages": true,
         "platform": {
-            "php": "8.2.99"
+            "php": "8.3.99"
         },
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true
         }
     },
-    "extra": {
-    },
+    "extra": [],
     "require": {
-        "php": "~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0",
+        "php": "~8.3.0 || ~8.4.0 || ~8.5.0 || ~8.6.0",
         "ext-dom": "*",
         "ext-filter": "*",
         "ext-libxml": "*",
@@ -38,6 +37,7 @@
     },
     "require-dev": {
         "boundwize/structarmed": "^0.18.0",
+        "laminas/internal-tooling": "^1.0",
         "laminas/laminas-cache": "^2.13.2 || ^3.14",
         "laminas/laminas-cache-storage-adapter-memory": "^1.1.0 || ^2.4",
         "laminas/laminas-coding-standard": "~2.5.0",
