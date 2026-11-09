@@ -61,8 +61,8 @@ class Entry extends Extension\AbstractRenderer
     protected function _setCommentCount(DOMDocument $dom, DOMElement $root)
     {
         $count = $this->getDataContainer()->getCommentCount();
-        if (! $count || ! is_numeric($count)) {
-            $count = 0;
+        if (! is_numeric($count)) {
+            return;
         }
         $tcount            = $this->dom->createElement('slash:comments');
         $tcount->nodeValue = (string) $count;

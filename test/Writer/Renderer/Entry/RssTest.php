@@ -351,6 +351,16 @@ final class RssTest extends TestCase
         $this->assertEquals(22, $entry->getCommentCount());
     }
 
+    public function testCommentCountRendered0(): void
+    {
+        $renderer = new Renderer\Feed\Rss($this->validWriter);
+        $this->validEntry->setCommentCount(0);
+        $feed  = Reader\Reader::importString($renderer->render()->saveXml());
+        $entry = $feed->current();
+        $this->assertNotNull($entry);
+        $this->assertEquals(0, $entry->getCommentCount());
+    }
+
     public function testCommentFeedLinksRendered(): void
     {
         $renderer = new Renderer\Feed\Rss($this->validWriter);

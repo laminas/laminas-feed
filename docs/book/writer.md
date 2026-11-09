@@ -215,7 +215,7 @@ Method | Description
 `addAuthor()` | Sets the data for a single author following the same array format as described above for a single sub-array.
 `setDateCreated()` | Sets the date on which this feed was created. Generally only applicable to Atom, where it represents the date the resource described by an Atom 1.0 document was created. The expected parameter may be a UNIX timestamp or an object implementing `DateTimeInterface` such as `DateTime` or `DateTimeImmutable`.
 `setDateModified()` | Sets the date on which this feed was last modified. The expected parameter may be a UNIX timestamp or an object implementing `DateTimeInterface` such as `DateTime` or `DateTimeImmutable`.
-`setLastBuildDate()` | Sets the date on which this feed was last build. The expected parameter may be a UNIX timestamp or an object implementing `DateTimeInterface` such as `DateTime` or `DateTimeImmutable`. This will only be rendered for RSS 2.0 feeds, and is automatically rendered as the current date by default when not explicitly set.
+`setLastBuildDate()` | Sets the date on which this feed was last built. The expected parameter may be a UNIX timestamp or an object implementing `DateTimeInterface` such as `DateTime` or `DateTimeImmutable`. This will only be rendered for RSS 2.0 feeds, and is automatically rendered as the current date by default when not explicitly set.
 `setLanguage()` | Sets the language of the feed. This will be omitted unless set.
 `setGenerator()` | Allows the setting of a generator. The parameter should be an array containing the keys "name", "version", and "uri". If omitted a default generator will be added referencing `Laminas\Feed\Writer`, the current zend-version version, and the Framework's URI.
 `setCopyright()` | Sets a copyright notice associated with the feed.
@@ -266,6 +266,7 @@ Method | Description
 `setCommentLink()` | Sets a link to an HTML page containing comments associated with this entry.
 `setCommentFeedLink()` | Sets a link to an XML feed containing comments associated with this entry. The parameter is an array containing the keys "uri" and "type", where the type is one of "rdf", "rss", or "atom".
 `setCommentFeedLinks()` | Same as `setCommentFeedLink()`, except it accepts an array of arrays, where each subarray contains the expected parameters of `setCommentFeedLink()`.
+`setEnclosure()` | Adds an enclosure to the entry. The array parameter may contain the keys "uri", "type", and "length". Only "uri" is required for Atom. All three must be provided for RSS, or rendering will throw an Exception.
 `setEncoding()` | Sets the encoding of entry text. This will default to UTF-8, which is the preferred encoding.
 
 > ### Retrieval methods
