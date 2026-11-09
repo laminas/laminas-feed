@@ -11,7 +11,7 @@ use stdClass;
 use function file_get_contents;
 use function str_replace;
 
-class GooglePlayPodcastRss2Test extends TestCase
+final class GooglePlayPodcastRss2Test extends TestCase
 {
     /** @var string */
     protected $feedSamplePath;

@@ -36,7 +36,7 @@ use function in_array;
  * @psalm-import-type AlternateEnclosureObject from AttributesReader
  * @psalm-import-type ContentLinkObject from AttributesReader
  */
-class LiveItemTest extends TestCase
+final class LiveItemTest extends TestCase
 {
     protected PodcastIndex\LiveItem $liveItem;
 
@@ -355,7 +355,7 @@ class LiveItemTest extends TestCase
         ];
         $alternateEnclosure = [
             'type'    => 'video/mp4',
-            'length'  => 7924786,
+            'length'  => 7_924_786,
             'bitrate' => 511276.52,
             'height'  => 720,
             'lang'    => 'en',

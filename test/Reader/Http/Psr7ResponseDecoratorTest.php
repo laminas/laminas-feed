@@ -14,7 +14,7 @@ use Psr\Http\Message\StreamInterface;
 /**
  * @covers \Laminas\Feed\Reader\Http\Psr7ResponseDecorator
  */
-class Psr7ResponseDecoratorTest extends TestCase
+final class Psr7ResponseDecoratorTest extends TestCase
 {
     public function testDecoratorIsAFeedResponse(): void
     {

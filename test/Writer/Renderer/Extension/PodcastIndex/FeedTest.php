@@ -15,7 +15,7 @@ use function is_string;
 use function number_format;
 use function substr_count;
 
-class FeedTest extends TestCase
+final class FeedTest extends TestCase
 {
     protected Writer\Feed $validWriter;
 

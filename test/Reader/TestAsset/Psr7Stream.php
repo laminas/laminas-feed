@@ -10,7 +10,7 @@ namespace LaminasTest\Feed\Reader\TestAsset;
  * as PHP prior to version 7 does not do any return typehinting, making strict
  * adherence unnecessary.
  */
-class Psr7Stream
+final class Psr7Stream
 {
     public function __construct(private string $streamValue)
     {

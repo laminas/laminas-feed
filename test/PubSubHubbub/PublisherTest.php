@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
  * @group Laminas_Feed
  * @group Laminas_Feed_Subsubhubbub
  */
-class PublisherTest extends TestCase
+final class PublisherTest extends TestCase
 {
     /** @var Publisher */
     protected $publisher;

@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
  * @group Laminas_Feed
  * @group Laminas_Feed_Subsubhubbub
  */
-class PubSubHubbubTest extends TestCase
+final class PubSubHubbubTest extends TestCase
 {
     public function testCanDetectHubs(): void
     {

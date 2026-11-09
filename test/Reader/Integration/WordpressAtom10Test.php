@@ -14,7 +14,7 @@ use function str_replace;
  * @group Laminas_Feed
  * @group Laminas_Feed_Reader
  */
-class WordpressAtom10Test extends TestCase
+final class WordpressAtom10Test extends TestCase
 {
     /** @var string */
     protected $feedSamplePath;

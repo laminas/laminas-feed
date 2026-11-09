@@ -25,7 +25,7 @@ use const PHP_INT_MAX;
  * @group Laminas_Feed
  * @group Laminas_Feed_Writer
  */
-class EntryTest extends TestCase
+final class EntryTest extends TestCase
 {
     /** @var string */
     protected $feedSamplePath;
