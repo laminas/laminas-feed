@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="6.18.1@79465b8dc674127f442ae31ea114c11bc4dd7ed6">
+<files psalm-version="6.20.9@f67170ac3c3b931f5088681e21d6c8babc601c08">
   <file src="src/PubSubHubbub/AbstractCallback.php">
     <DocblockTypeContradiction>
       <code><![CDATA[$this->httpResponse === null]]></code>
@@ -183,6 +183,13 @@
     <DocblockTypeContradiction>
       <code><![CDATA[null === static::$escaper]]></code>
     </DocblockTypeContradiction>
+    <MissingClassConstType>
+      <code><![CDATA[VERIFICATION_MODE_SYNC  = 'sync']]></code>
+      <code><![CDATA[VERIFICATION_MODE_ASYNC = 'async']]></code>
+      <code><![CDATA[SUBSCRIPTION_VERIFIED    = 'verified']]></code>
+      <code><![CDATA[SUBSCRIPTION_NOTVERIFIED = 'not_verified']]></code>
+      <code><![CDATA[SUBSCRIPTION_TODELETE    = 'to_delete']]></code>
+    </MissingClassConstType>
     <MixedReturnStatement>
       <code><![CDATA[$feed->getHubs()]]></code>
     </MixedReturnStatement>
@@ -439,6 +446,11 @@
     <RiskyTruthyFalsyComparison>
       <code><![CDATA[empty($verifyTokenKey)]]></code>
     </RiskyTruthyFalsyComparison>
+  </file>
+  <file src="src/PubSubHubbub/Version.php">
+    <MissingClassConstType>
+      <code><![CDATA[VERSION = '2']]></code>
+    </MissingClassConstType>
   </file>
   <file src="src/Reader/AbstractEntry.php">
     <DocblockTypeContradiction>
@@ -2425,6 +2437,28 @@
       <code><![CDATA[Feed\FeedInterface]]></code>
       <code><![CDATA[TInput]]></code>
     </InvalidReturnType>
+    <MissingClassConstType>
+      <code><![CDATA[NAMESPACE_ATOM_03 = 'http://purl.org/atom/ns#']]></code>
+      <code><![CDATA[NAMESPACE_ATOM_10 = 'http://www.w3.org/2005/Atom']]></code>
+      <code><![CDATA[NAMESPACE_RDF     = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#']]></code>
+      <code><![CDATA[NAMESPACE_RSS_090 = 'http://my.netscape.com/rdf/simple/0.9/']]></code>
+      <code><![CDATA[NAMESPACE_RSS_10  = 'http://purl.org/rss/1.0/']]></code>
+      <code><![CDATA[TYPE_ANY              = 'any']]></code>
+      <code><![CDATA[TYPE_ATOM_03          = 'atom-03']]></code>
+      <code><![CDATA[TYPE_ATOM_10          = 'atom-10']]></code>
+      <code><![CDATA[TYPE_ATOM_10_ENTRY    = 'atom-10-entry']]></code>
+      <code><![CDATA[TYPE_ATOM_ANY         = 'atom']]></code>
+      <code><![CDATA[TYPE_RSS_090          = 'rss-090']]></code>
+      <code><![CDATA[TYPE_RSS_091          = 'rss-091']]></code>
+      <code><![CDATA[TYPE_RSS_091_NETSCAPE = 'rss-091n']]></code>
+      <code><![CDATA[TYPE_RSS_091_USERLAND = 'rss-091u']]></code>
+      <code><![CDATA[TYPE_RSS_092          = 'rss-092']]></code>
+      <code><![CDATA[TYPE_RSS_093          = 'rss-093']]></code>
+      <code><![CDATA[TYPE_RSS_094          = 'rss-094']]></code>
+      <code><![CDATA[TYPE_RSS_10           = 'rss-10']]></code>
+      <code><![CDATA[TYPE_RSS_20           = 'rss-20']]></code>
+      <code><![CDATA[TYPE_RSS_ANY          = 'rss']]></code>
+    </MissingClassConstType>
     <MissingOverrideAttribute>
       <code><![CDATA[public static function import($uri, $etag = null, $lastModified = null)]]></code>
       <code><![CDATA[public static function importFile($filename)]]></code>
@@ -4452,6 +4486,27 @@
       <code><![CDATA[ExtensionManagerInterface]]></code>
       <code><![CDATA[ExtensionManagerInterface]]></code>
     </DeprecatedInterface>
+    <MissingClassConstType>
+      <code><![CDATA[NAMESPACE_ATOM_03 = 'http://purl.org/atom/ns#']]></code>
+      <code><![CDATA[NAMESPACE_ATOM_10 = 'http://www.w3.org/2005/Atom']]></code>
+      <code><![CDATA[NAMESPACE_RDF     = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#']]></code>
+      <code><![CDATA[NAMESPACE_RSS_090 = 'http://my.netscape.com/rdf/simple/0.9/']]></code>
+      <code><![CDATA[NAMESPACE_RSS_10  = 'http://purl.org/rss/1.0/']]></code>
+      <code><![CDATA[TYPE_ANY              = 'any']]></code>
+      <code><![CDATA[TYPE_ATOM_03          = 'atom-03']]></code>
+      <code><![CDATA[TYPE_ATOM_10          = 'atom-10']]></code>
+      <code><![CDATA[TYPE_ATOM_ANY         = 'atom']]></code>
+      <code><![CDATA[TYPE_RSS_090          = 'rss-090']]></code>
+      <code><![CDATA[TYPE_RSS_091          = 'rss-091']]></code>
+      <code><![CDATA[TYPE_RSS_091_NETSCAPE = 'rss-091n']]></code>
+      <code><![CDATA[TYPE_RSS_091_USERLAND = 'rss-091u']]></code>
+      <code><![CDATA[TYPE_RSS_092          = 'rss-092']]></code>
+      <code><![CDATA[TYPE_RSS_093          = 'rss-093']]></code>
+      <code><![CDATA[TYPE_RSS_094          = 'rss-094']]></code>
+      <code><![CDATA[TYPE_RSS_10           = 'rss-10']]></code>
+      <code><![CDATA[TYPE_RSS_20           = 'rss-20']]></code>
+      <code><![CDATA[TYPE_RSS_ANY          = 'rss']]></code>
+    </MissingClassConstType>
     <MixedArgument>
       <code><![CDATA[static::$extensions['entry']]]></code>
       <code><![CDATA[static::$extensions['entryRenderer']]]></code>
@@ -4470,6 +4525,11 @@
     <RedundantPropertyInitializationCheck>
       <code><![CDATA[isset(static::$extensionManager)]]></code>
     </RedundantPropertyInitializationCheck>
+  </file>
+  <file src="src/Writer/Version.php">
+    <MissingClassConstType>
+      <code><![CDATA[VERSION = '2']]></code>
+    </MissingClassConstType>
   </file>
   <file src="test/PubSubHubbub/ClientNotReset.php">
     <MissingOverrideAttribute>
