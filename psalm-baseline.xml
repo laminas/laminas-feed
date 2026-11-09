@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="6.20.9@f67170ac3c3b931f5088681e21d6c8babc601c08">
+<files psalm-version="6.20.10@7fc81490f861c801061836a9010603d2393bf8da">
   <file src="src/PubSubHubbub/AbstractCallback.php">
     <DocblockTypeContradiction>
       <code><![CDATA[$this->httpResponse === null]]></code>
@@ -184,11 +184,11 @@
       <code><![CDATA[null === static::$escaper]]></code>
     </DocblockTypeContradiction>
     <MissingClassConstType>
-      <code><![CDATA[VERIFICATION_MODE_SYNC  = 'sync']]></code>
-      <code><![CDATA[VERIFICATION_MODE_ASYNC = 'async']]></code>
-      <code><![CDATA[SUBSCRIPTION_VERIFIED    = 'verified']]></code>
       <code><![CDATA[SUBSCRIPTION_NOTVERIFIED = 'not_verified']]></code>
       <code><![CDATA[SUBSCRIPTION_TODELETE    = 'to_delete']]></code>
+      <code><![CDATA[SUBSCRIPTION_VERIFIED    = 'verified']]></code>
+      <code><![CDATA[VERIFICATION_MODE_ASYNC = 'async']]></code>
+      <code><![CDATA[VERIFICATION_MODE_SYNC  = 'sync']]></code>
     </MissingClassConstType>
     <MixedReturnStatement>
       <code><![CDATA[$feed->getHubs()]]></code>
@@ -3519,9 +3519,6 @@
       <code><![CDATA[protected function _appendNamespaces()]]></code>
       <code><![CDATA[public function render()]]></code>
     </MissingOverrideAttribute>
-    <MixedAssignment>
-      <code><![CDATA[$count]]></code>
-    </MixedAssignment>
     <MixedMethodCall>
       <code><![CDATA[getCommentCount]]></code>
     </MixedMethodCall>
